@@ -1,5 +1,5 @@
 {
-    "hash": "3d8fc311b085e1e9bc4ed181947f205d",
+    "hash": "8e40469c29ed5c0fdfe2eccc4ed499ef",
     "packages": [
         {
             "name": "zendframework/zendframework",
@@ -114,7 +114,59 @@
             "time": "2013-02-21 21:00:16"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+        {
+            "name": "vendor/devenv",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@server:cargo-devenv",
+                "reference": "b71cad06a70131215f32f3bcdb31eb82e69ad20f"
+            },
+            "require": {
+                "zeus/installer": "*"
+            },
+            "type": "vagrant-env",
+            "authors": [
+                {
+                    "name": "Oleg Lobach",
+                    "email": "oleg@lobach.info"
+                }
+            ],
+            "time": "2013-02-27 19:21:17"
+        },
+        {
+            "name": "zeus/installer",
+            "version": "dev-master",
+            "target-dir": "Zeus",
+            "source": {
+                "type": "git",
+                "url": "git@server:vagrant-installer",
+                "reference": "9346d5f6a3eb374a72d2fbd7a67a78e08fde8050"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Zeus\\Composer\\VagrantInstaller"
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zeus\\Composer": ""
+                }
+            },
+            "license": [
+                "custom"
+            ],
+            "authors": [
+                {
+                    "name": "Oleg Lobach",
+                    "email": "oleg@lobach.info",
+                    "homepage": "http://lobach.info"
+                }
+            ],
+            "description": "Composer installer for Vagrant environment.",
+            "time": "2013-02-27 18:57:28"
+        }
+    ],
     "aliases": [
 
     ],

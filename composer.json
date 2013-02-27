@@ -7,8 +7,22 @@
         "zf2"
     ],
     "homepage": "http://framework.zend.com/",
+
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*"
-    }
+        "zendframework/zendframework": "2.1.*"
+    },
+    "require-dev": {
+        "vendor/devenv": "*"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@server:cargo-devenv"
+        },
+        {
+            "type": "git",
+            "url": "git@server:vagrant-installer"
+        }
+    ]
 }
