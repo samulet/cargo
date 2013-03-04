@@ -7,3 +7,5 @@ nbproject
 .project
 .settings
 dev
+.vagrant
+Vagrantfile
