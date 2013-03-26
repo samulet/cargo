@@ -12,7 +12,8 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.1.3",
         "zf-commons/zfc-user-doctrine-mongo-odm": "dev-master",
-        "zendframework/zend-developer-tools": "dev-master"
+        "zendframework/zend-developer-tools": "dev-master",
+        "gedmo/doctrine-extensions": "dev-master"
     },
     "minimum-stability": "dev",
     "require-dev": {

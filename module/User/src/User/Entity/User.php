@@ -2,6 +2,7 @@
 
 namespace User\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use ZfcUser\Entity\UserInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
@@ -45,6 +46,18 @@ class User implements UserInterface
      * @ODM\Field(type="int")
      */
     protected $state;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ODM\Date
+     */
+    protected $created;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ODM\Date
+     */
+    protected $updated;
 
     /**
      * Get id.
@@ -176,5 +189,25 @@ class User implements UserInterface
     {
         $this->state = $state;
         return $this;
+    }
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 }

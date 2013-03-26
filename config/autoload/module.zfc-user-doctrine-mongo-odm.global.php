@@ -15,5 +15,13 @@ return array(
                 )
             ),
         ),
+        'eventmanager' => array(
+            'odm_default' => array(
+                'subscribers' => array(
+                    'Gedmo\Timestampable\TimestampableListener',
+                    'Gedmo\SoftDeleteable\SoftDeleteableListener',
+                ),
+            ),
+        ),
     ),
 );

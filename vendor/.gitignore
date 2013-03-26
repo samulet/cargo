@@ -8,3 +8,4 @@ zf-commons
 symfony
 doctrine
 bin/*
+gedmo
