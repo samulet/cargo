@@ -9,3 +9,13 @@ symfony
 doctrine
 bin/*
 gedmo
+Codeception/
+alexandresalome/
+behat/
+fabpot/
+guzzle/
+instaclick/
+monolog/
+phpunit/
+psr/
+videlalvaro/

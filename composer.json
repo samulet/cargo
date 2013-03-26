@@ -17,7 +17,8 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "vendor/devenv": "*"
+        "vendor/devenv": "*",
+        "codeception/codeception": "@stable"
     },
     "repositories": [
         {
