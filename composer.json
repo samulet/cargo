@@ -17,17 +17,17 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "vendor/devenv": "*",
+        "mashaimedvedi/cargo-devenv": "*",
         "codeception/codeception": "@stable"
     },
     "repositories": [
         {
             "type": "git",
-            "url": "git@server:cargo-devenv"
+            "url": "git@github.com:MashaiMedvedi/cargo-devenv.git"
         },
         {
             "type": "git",
-            "url": "git@server:vagrant-installer"
+            "url": "https://github.com/bladeofsteel/vagrant-installer.git"
         },
         {
             "type": "git",

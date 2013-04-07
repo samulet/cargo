@@ -1,5 +1,5 @@
 {
-    "hash": "7b0ae277ef9f2e5b56e7dd300afec64f",
+    "hash": "f059fe787e7b7962db0f3d6bcc9ea13d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -364,12 +364,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineMongoODMModule.git",
-                "reference": "df9a5b2436dfd0a64e37d56daaa85a901587849a"
+                "reference": "4403ccab8b14a6edf5d36b86b47750737884249f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMongoODMModule/zipball/df9a5b2436dfd0a64e37d56daaa85a901587849a",
-                "reference": "df9a5b2436dfd0a64e37d56daaa85a901587849a",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMongoODMModule/zipball/4403ccab8b14a6edf5d36b86b47750737884249f",
+                "reference": "4403ccab8b14a6edf5d36b86b47750737884249f",
                 "shasum": ""
             },
             "require": {
@@ -405,7 +405,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://marco-pivetta.com/",
+                    "homepage": "http://ocramius.github.com/",
                     "role": "Developer"
                 },
                 {
@@ -432,7 +432,7 @@
                 "odm",
                 "zf2"
             ],
-            "time": "2013-03-22 00:05:59"
+            "time": "2013-04-03 12:13:52"
         },
         {
             "name": "doctrine/inflector",
@@ -625,12 +625,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "7283d3540208504b6976e8e6777ff3a055ea98cc"
+                "reference": "40f7cdb2ba3bab4d9a598d0e0bd4fdfcc2abaafe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/7283d3540208504b6976e8e6777ff3a055ea98cc",
-                "reference": "7283d3540208504b6976e8e6777ff3a055ea98cc",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/40f7cdb2ba3bab4d9a598d0e0bd4fdfcc2abaafe",
+                "reference": "40f7cdb2ba3bab4d9a598d0e0bd4fdfcc2abaafe",
                 "shasum": ""
             },
             "require": {
@@ -667,7 +667,7 @@
                     "homepage": "http://avalanche123.com"
                 },
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -690,7 +690,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2013-03-25 22:01:43"
+            "time": "2013-04-02 20:15:08"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -698,12 +698,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "03799ebed1067cff5bb7fa60b711ce34f3bb689f"
+                "reference": "db0585625f6944a755534688e971b86d1d33ec45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/03799ebed1067cff5bb7fa60b711ce34f3bb689f",
-                "reference": "03799ebed1067cff5bb7fa60b711ce34f3bb689f",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/db0585625f6944a755534688e971b86d1d33ec45",
+                "reference": "db0585625f6944a755534688e971b86d1d33ec45",
                 "shasum": ""
             },
             "require": {
@@ -769,7 +769,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2013-03-26 20:33:31"
+            "time": "2013-04-07 10:44:07"
         },
         {
             "name": "symfony/console",
@@ -778,12 +778,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "d146fc32a9cf13bc479820e515048298a34cd432"
+                "reference": "v2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/d146fc32a9cf13bc479820e515048298a34cd432",
-                "reference": "d146fc32a9cf13bc479820e515048298a34cd432",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.2.1",
+                "reference": "v2.2.1",
                 "shasum": ""
             },
             "require": {
@@ -1047,12 +1047,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "ee9bb997f955c664465622fd343ce1807973e289"
+                "reference": "48a77acdb2fe5ff73241e736ca88b4ed2f6831f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/ee9bb997f955c664465622fd343ce1807973e289",
-                "reference": "ee9bb997f955c664465622fd343ce1807973e289",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/48a77acdb2fe5ff73241e736ca88b4ed2f6831f3",
+                "reference": "48a77acdb2fe5ff73241e736ca88b4ed2f6831f3",
                 "shasum": ""
             },
             "require": {
@@ -1100,7 +1100,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-03-22 18:19:10"
+            "time": "2013-03-27 14:54:31"
         },
         {
             "name": "zf-commons/zfc-user-doctrine-mongo-odm",
@@ -1148,33 +1148,33 @@
     "packages-dev": [
         {
             "name": "Codeception/Codeception",
-            "version": "1.5.7",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "1.5.7"
+                "reference": "1.6.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1.5.7",
-                "reference": "1.5.7",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1.6.0",
+                "reference": "1.6.0",
                 "shasum": ""
             },
             "require": {
-                "behat/mink": "1.4.*@stable",
+                "behat/mink": "1.4.*",
                 "behat/mink-goutte-driver": "*",
                 "behat/mink-selenium-driver": "*",
                 "behat/mink-selenium2-driver": "*",
                 "behat/mink-zombie-driver": "*",
-                "fabpot/goutte": "@stable",
+                "fabpot/goutte": "*",
                 "monolog/monolog": "*",
                 "php": ">=5.3.3",
-                "phpunit/phpunit": "3.7.*@stable",
+                "phpunit/phpunit": "3.7.*",
                 "symfony/console": "*",
                 "symfony/event-dispatcher": "*",
                 "symfony/finder": "*",
                 "symfony/yaml": "*",
-                "videlalvaro/php-amqplib": "2.*"
+                "videlalvaro/php-amqplib": "*"
             },
             "bin": [
                 "codecept"
@@ -1205,7 +1205,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2013-03-25 14:10:13"
+            "time": "2013-04-05 22:52:55"
         },
         {
             "name": "alexandresalome/php-selenium",
@@ -1253,12 +1253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Mink.git",
-                "reference": "0fdb6c102c421105e177addebdbcfb0a070acbc3"
+                "reference": "03d479f7c9a12876cd5816972ebd944ee52b8a38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Mink/zipball/0fdb6c102c421105e177addebdbcfb0a070acbc3",
-                "reference": "0fdb6c102c421105e177addebdbcfb0a070acbc3",
+                "url": "https://api.github.com/repos/Behat/Mink/zipball/03d479f7c9a12876cd5816972ebd944ee52b8a38",
+                "reference": "03d479f7c9a12876cd5816972ebd944ee52b8a38",
                 "shasum": ""
             },
             "require": {
@@ -1300,7 +1300,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2013-03-26 18:28:00"
+            "time": "2013-04-05 10:16:59"
         },
         {
             "name": "behat/mink-browserkit-driver",
@@ -1636,12 +1636,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "6d0908cc56750cdde039f0e92f0f2e0e3a4cc45e"
+                "reference": "81f85f2a03d7d83edf1a9d00c778d52b2394f6e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/6d0908cc56750cdde039f0e92f0f2e0e3a4cc45e",
-                "reference": "6d0908cc56750cdde039f0e92f0f2e0e3a4cc45e",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/81f85f2a03d7d83edf1a9d00c778d52b2394f6e4",
+                "reference": "81f85f2a03d7d83edf1a9d00c778d52b2394f6e4",
                 "shasum": ""
             },
             "require": {
@@ -1722,7 +1722,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-03-25 20:11:22"
+            "time": "2013-04-07 02:35:09"
         },
         {
             "name": "instaclick/php-webdriver",
@@ -1779,17 +1779,37 @@
             "time": "2013-02-21 16:05:33"
         },
         {
+            "name": "mashaimedvedi/cargo-devenv",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:MashaiMedvedi/cargo-devenv.git",
+                "reference": "0eef3329b05b0a31b5b6fa65c374ad15794c7c0a"
+            },
+            "require": {
+                "yassa/vagrant-installer": "*"
+            },
+            "type": "vagrant-env",
+            "authors": [
+                {
+                    "name": "Oleg Lobach",
+                    "email": "oleg@lobach.info"
+                }
+            ],
+            "time": "2013-04-07 19:40:47"
+        },
+        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "434ef8bbf660df5e52d83fb9b28e795864051be6"
+                "reference": "642cdf620bb9d71bd06f64f6636144c471c551b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/434ef8bbf660df5e52d83fb9b28e795864051be6",
-                "reference": "434ef8bbf660df5e52d83fb9b28e795864051be6",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/642cdf620bb9d71bd06f64f6636144c471c551b8",
+                "reference": "642cdf620bb9d71bd06f64f6636144c471c551b8",
                 "shasum": ""
             },
             "require": {
@@ -1838,7 +1858,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-03-26 16:05:11"
+            "time": "2013-04-07 11:22:41"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2294,12 +2314,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/CssSelector.git",
-                "reference": "6ba87b45946163ad13b525932a9050e8570ec7de"
+                "reference": "65072babfc2bda090b26f9634a9af2c98be65ed5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/CssSelector/zipball/6ba87b45946163ad13b525932a9050e8570ec7de",
-                "reference": "6ba87b45946163ad13b525932a9050e8570ec7de",
+                "url": "https://api.github.com/repos/symfony/CssSelector/zipball/65072babfc2bda090b26f9634a9af2c98be65ed5",
+                "reference": "65072babfc2bda090b26f9634a9af2c98be65ed5",
                 "shasum": ""
             },
             "require": {
@@ -2328,11 +2348,15 @@
                 {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
                 }
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "http://symfony.com",
-            "time": "2013-01-31 21:39:01"
+            "time": "2013-03-23 19:31:06"
         },
         {
             "name": "symfony/dom-crawler",
@@ -2341,12 +2365,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DomCrawler.git",
-                "reference": "c9698b3b5b93d18250f627a9001c88fe5bc87908"
+                "reference": "0bcf05b5b461dca5c5d92e345f9114aebb72d35a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/c9698b3b5b93d18250f627a9001c88fe5bc87908",
-                "reference": "c9698b3b5b93d18250f627a9001c88fe5bc87908",
+                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/0bcf05b5b461dca5c5d92e345f9114aebb72d35a",
+                "reference": "0bcf05b5b461dca5c5d92e345f9114aebb72d35a",
                 "shasum": ""
             },
             "require": {
@@ -2385,7 +2409,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-23 07:35:36"
+            "time": "2013-04-07 16:48:09"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2448,12 +2472,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder.git",
-                "reference": "a066c83f57c82ce49b5abc6343a43c132f771c24"
+                "reference": "e2f07c7a4cce2091324afee55a853ec097a07f3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/a066c83f57c82ce49b5abc6343a43c132f771c24",
-                "reference": "a066c83f57c82ce49b5abc6343a43c132f771c24",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/e2f07c7a4cce2091324afee55a853ec097a07f3c",
+                "reference": "e2f07c7a4cce2091324afee55a853ec097a07f3c",
                 "shasum": ""
             },
             "require": {
@@ -2486,7 +2510,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-23 07:42:25"
+            "time": "2013-04-02 09:39:57"
         },
         {
             "name": "symfony/process",
@@ -2542,12 +2566,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "3f6d4ab3fd8226ab4ba0be9fc8a238f4338b79ab"
+                "reference": "v2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/3f6d4ab3fd8226ab4ba0be9fc8a238f4338b79ab",
-                "reference": "3f6d4ab3fd8226ab4ba0be9fc8a238f4338b79ab",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/v2.2.1",
+                "reference": "v2.2.1",
                 "shasum": ""
             },
             "require": {
@@ -2583,37 +2607,17 @@
             "time": "2013-03-23 07:49:54"
         },
         {
-            "name": "vendor/devenv",
+            "name": "videlalvaro/php-amqplib",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@server:cargo-devenv",
-                "reference": "8826b54d1c2b57f6eeb088532472cf8cae8a0fa5"
-            },
-            "require": {
-                "zeus/installer": "*"
-            },
-            "type": "vagrant-env",
-            "authors": [
-                {
-                    "name": "Oleg Lobach",
-                    "email": "oleg@lobach.info"
-                }
-            ],
-            "time": "2013-03-10 20:07:08"
-        },
-        {
-            "name": "videlalvaro/php-amqplib",
-            "version": "v2.0.2",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/videlalvaro/php-amqplib.git",
-                "reference": "v2.0.2"
+                "url": "https://github.com/videlalvaro/php-amqplib.git",
+                "reference": "e56148a7c32ee9c639887834c444a94cce2a6323"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/v2.0.2",
-                "reference": "v2.0.2",
+                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/e56148a7c32ee9c639887834c444a94cce2a6323",
+                "reference": "e56148a7c32ee9c639887834c444a94cce2a6323",
                 "shasum": ""
             },
             "require": {
@@ -2641,24 +2645,24 @@
                 "queue",
                 "rabbitmq"
             ],
-            "time": "2013-02-13 19:43:51"
+            "time": "2013-03-21 13:02:32"
         },
         {
-            "name": "zeus/installer",
+            "name": "yassa/vagrant-installer",
             "version": "dev-master",
-            "target-dir": "Zeus",
+            "target-dir": "Yassa",
             "source": {
                 "type": "git",
-                "url": "git@server:vagrant-installer",
-                "reference": "9346d5f6a3eb374a72d2fbd7a67a78e08fde8050"
+                "url": "https://github.com/bladeofsteel/vagrant-installer.git",
+                "reference": "3f63da2790b2bb655e1924cfe176538c646fb68b"
             },
             "type": "composer-installer",
             "extra": {
-                "class": "Zeus\\Composer\\VagrantInstaller"
+                "class": "Yassa\\Composer\\VagrantInstaller"
             },
             "autoload": {
                 "psr-0": {
-                    "Zeus\\Composer": ""
+                    "Yassa\\Composer": ""
                 }
             },
             "license": [
@@ -2672,7 +2676,7 @@
                 }
             ],
             "description": "Composer installer for Vagrant environment.",
-            "time": "2013-02-27 18:57:28"
+            "time": "2013-04-06 23:40:28"
         }
     ],
     "aliases": [
