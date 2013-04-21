@@ -1,13 +1,20 @@
 {
-    "name": "zendframework/skeleton-application",
-    "description": "Skeleton Application for ZF2",
-    "license": "BSD-3-Clause",
+    "name": "MashaiMedvedi/cargo",
+    "description": "Cargo project",
+    "license": "proprietary",
     "keywords": [
-        "framework",
+        "application",
         "zf2"
     ],
-    "homepage": "http://framework.zend.com/",
-
+    "type": "project",
+    "authors": [
+        {
+            "name": "Oleg Lobach",
+            "email": "oleg@lobach.info",
+            "role": "Architect",
+            "homepage": "http://lobach.info"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.1.*@stable",
