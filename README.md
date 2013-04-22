@@ -16,21 +16,26 @@
 
 1. Клонируем репозиторий
 
+```
     git clone git@github.com:MashaiMedvedi/cargo.git
-
+```
 2. Переходим в каталог с клонированным проектом
 
+```
     cd cargo
-
+```
 3. Устанавливаем пакеты
 
+```
     php composer.phar self-update
     php composer.phar --dev install
     cd dev
     git submodule update --init --recursive
     cd ..
-
+```
 4. Запускаем виртуальную машину
 
+```
     cp dev/Vagrantfile.dist Vagrantfile
     vagrant up
+```
