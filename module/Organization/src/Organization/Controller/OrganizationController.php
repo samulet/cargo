@@ -22,9 +22,17 @@ namespace Organization\Controller {
             ini_set('display_errors', 'On');
 
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-            $org = $objectManager->getRepository('Organization\Entity\Organization')->findBy(array('activated'=>1));
+            $qb = $objectManager->createQueryBuilder('Organization\Entity\Organization')
+                ->eagerCursor(true);
+            $query = $qb->getQuery();
+            $cursor = $query->execute();
 
-       //     die(var_dump($org));
+            $org=array();
+            foreach ($cursor as $cur) {
+                $arr=array('description'=>$cur->getDescription(), 'orgType'=>$cur->getOrgType(), 'orgName'=>$cur->getOrgName());
+                array_push($org,$arr);
+            }
+           // die(var_dump($org));
             return new ViewModel(array(
                 'org' =>$org
             ));
