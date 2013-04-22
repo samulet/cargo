@@ -11,10 +11,11 @@ use Organization\Entity\OrganizationInterface;
 class Organization implements OrganizationInterface
 {
     /**
-     * @ODM\Id
-     * @var int
+     * @ODM\Id(strategy="UUID")
      */
     protected $id;
+
+ //   protected $uuid;
     /**
      * @ODM\Id
      * @var int

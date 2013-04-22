@@ -11,19 +11,16 @@ use Organization\Entity\CompanyUserInterface;
 class CompanyUser implements CompanyUserInterface
 {
     /**
-     * @ODM\Id
-     * @var int
+     * @ODM\Id(strategy="UUID")
      */
     protected $id;
     /**
-     * @ODM\Id
-     * @var int
+     * @ODM\Id(strategy="UUID")
      */
     protected $userId;
-        /**
-         * @ODM\Id
-         * @var int
-         */
+    /**
+     * @ODM\Id(strategy="UUID")
+     */
     protected $companyId;
 
     /**
