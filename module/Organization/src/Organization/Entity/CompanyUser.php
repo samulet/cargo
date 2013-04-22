@@ -11,7 +11,8 @@ use Organization\Entity\CompanyUserInterface;
 class CompanyUser implements CompanyUserInterface
 {
     /**
-     * @ODM\Id(strategy="UUID")
+     * @ODM\Id
+     * @var int
      */
     protected $id;
     /**

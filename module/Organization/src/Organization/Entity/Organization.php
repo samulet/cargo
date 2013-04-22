@@ -5,13 +5,20 @@ namespace Organization\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Organization\Entity\OrganizationInterface;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 /**
  * @ODM\Document(collection="organization")
  */
 class Organization implements OrganizationInterface
 {
+    public function __construct()
+    {
+        $uuid_gen = new UuidGenerator();
+        $this->setId($uuid_gen->generateV4());
+    }
     /**
-     * @ODM\Id(strategy="UUID")
+     *
+     *  @ODM\Id(strategy="UUID")
      */
     protected $id;
 
@@ -46,7 +53,7 @@ class Organization implements OrganizationInterface
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $OrgName;
+    protected $orgName;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -149,13 +156,13 @@ class Organization implements OrganizationInterface
     /**
      * Set OrgName.
      *
-     * @param string $OrgName
+     * @param string $orgName
      * @return OrganizationInterface
      */
 
-    public function setOrgName($OrgName)
+    public function setOrgName($orgName)
     {
-        $this->OrgName = $OrgName;
+        $this->orgName = $orgName;
         return $this;
     }
     /**
