@@ -10,6 +10,7 @@ return array(
         'ZfcUserDoctrineMongoODM',
         'User',
         'Application',
+        'Organization',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
