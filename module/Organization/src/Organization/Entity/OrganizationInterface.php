@@ -68,7 +68,7 @@ interface OrganizationInterface
      * @param string $OrgName
      * @return UserInterface
      */
-    public function setOrgName($OrgName);
+    public function setOrgName($orgName);
 
     /**
      * Get orgType.

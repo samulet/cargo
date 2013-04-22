@@ -145,16 +145,16 @@ class Organization implements OrganizationInterface
     }
 
     /**
-     * Get OrgName.
+     * Get orgName.
      *
      * @return string
      */
     public function getOrgName()
     {
-        return $this->OrgName;
+        return $this->orgName;
     }
     /**
-     * Set OrgName.
+     * Set orgName.
      *
      * @param string $orgName
      * @return OrganizationInterface
