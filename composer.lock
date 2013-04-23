@@ -1,9 +1,5 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
-    ],
-    "hash": "e58e2f0dbcf7510fa87716e76b9034b6",
+    "hash": "4840188473d0c1c4ac73338cc4daf61d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -266,7 +262,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -495,7 +491,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -676,7 +672,7 @@
                     "homepage": "http://avalanche123.com"
                 },
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -707,12 +703,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "cfabd4076c52ae0e86646dd22cc786c86783308c"
+                "reference": "ae5ff75ac8076213af0bfece16ecc012bf3ec151"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/cfabd4076c52ae0e86646dd22cc786c86783308c",
-                "reference": "cfabd4076c52ae0e86646dd22cc786c86783308c",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/ae5ff75ac8076213af0bfece16ecc012bf3ec151",
+                "reference": "ae5ff75ac8076213af0bfece16ecc012bf3ec151",
                 "shasum": ""
             },
             "require": {
@@ -778,7 +774,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2013-04-21 18:56:48"
+            "time": "2013-04-22 12:44:19"
         },
         {
             "name": "symfony/console",
@@ -1530,16 +1526,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "1.6.0.3",
+            "version": "1.6.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "1.6.0.3"
+                "reference": "1.6.0.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1.6.0.3",
-                "reference": "1.6.0.3",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1.6.0.4",
+                "reference": "1.6.0.4",
                 "shasum": ""
             },
             "require": {
@@ -1587,7 +1583,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2013-04-12 06:47:01"
+            "time": "2013-04-22 21:26:01"
         },
         {
             "name": "fabpot/goutte",
@@ -1647,12 +1643,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "69832a03ed0c78b3c7ac7168d7253f52ce85c25d"
+                "reference": "aa33f0708e62de956686ae13129e9e40d69c0cb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/69832a03ed0c78b3c7ac7168d7253f52ce85c25d",
-                "reference": "69832a03ed0c78b3c7ac7168d7253f52ce85c25d",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/aa33f0708e62de956686ae13129e9e40d69c0cb4",
+                "reference": "aa33f0708e62de956686ae13129e9e40d69c0cb4",
                 "shasum": ""
             },
             "require": {
@@ -1733,7 +1729,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-04-18 00:05:38"
+            "time": "2013-04-22 17:58:16"
         },
         {
             "name": "instaclick/php-webdriver",
@@ -1790,37 +1786,17 @@
             "time": "2013-02-21 16:05:33"
         },
         {
-            "name": "mashaimedvedi/cargo-devenv",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:MashaiMedvedi/cargo-devenv.git",
-                "reference": "537add29ae24324953ddf3c39e2485a7dcd9a72c"
-            },
-            "require": {
-                "yassa/vagrant-installer": "*"
-            },
-            "type": "vagrant-env",
-            "authors": [
-                {
-                    "name": "Oleg Lobach",
-                    "email": "oleg@lobach.info"
-                }
-            ],
-            "time": "2013-04-21 15:17:32"
-        },
-        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "642cdf620bb9d71bd06f64f6636144c471c551b8"
+                "reference": "1.5.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/642cdf620bb9d71bd06f64f6636144c471c551b8",
-                "reference": "642cdf620bb9d71bd06f64f6636144c471c551b8",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.5.0",
+                "reference": "1.5.0",
                 "shasum": ""
             },
             "require": {
@@ -1869,7 +1845,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-04-07 11:22:41"
+            "time": "2013-04-23 10:09:48"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2376,12 +2352,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DomCrawler.git",
-                "reference": "44b4acada0209e0420a94e84069526bac62e2a70"
+                "reference": "59b171317b17b60a5df830e09e02961563323e8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/44b4acada0209e0420a94e84069526bac62e2a70",
-                "reference": "44b4acada0209e0420a94e84069526bac62e2a70",
+                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/59b171317b17b60a5df830e09e02961563323e8d",
+                "reference": "59b171317b17b60a5df830e09e02961563323e8d",
                 "shasum": ""
             },
             "require": {
@@ -2420,7 +2396,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "http://symfony.com",
-            "time": "2013-04-20 12:52:51"
+            "time": "2013-04-22 05:03:23"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2483,12 +2459,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder.git",
-                "reference": "04b4a4a823cb6f269efc91a2c6659173a7c9f864"
+                "reference": "4c15248eb0d2949ba7f5c1010262e3f4e70b3977"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/04b4a4a823cb6f269efc91a2c6659173a7c9f864",
-                "reference": "04b4a4a823cb6f269efc91a2c6659173a7c9f864",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/4c15248eb0d2949ba7f5c1010262e3f4e70b3977",
+                "reference": "4c15248eb0d2949ba7f5c1010262e3f4e70b3977",
                 "shasum": ""
             },
             "require": {
@@ -2521,7 +2497,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "http://symfony.com",
-            "time": "2013-04-11 06:50:46"
+            "time": "2013-04-22 13:01:19"
         },
         {
             "name": "symfony/process",
@@ -2657,37 +2633,6 @@
                 "rabbitmq"
             ],
             "time": "2013-04-19 13:55:24"
-        },
-        {
-            "name": "yassa/vagrant-installer",
-            "version": "dev-master",
-            "target-dir": "Yassa",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bladeofsteel/vagrant-installer.git",
-                "reference": "0d4d8c71a001fa062257cc75f48b638f4a998726"
-            },
-            "type": "composer-installer",
-            "extra": {
-                "class": "Yassa\\Composer\\VagrantInstaller"
-            },
-            "autoload": {
-                "psr-0": {
-                    "Yassa\\Composer": ""
-                }
-            },
-            "license": [
-                "custom"
-            ],
-            "authors": [
-                {
-                    "name": "Oleg Lobach",
-                    "email": "oleg@lobach.info",
-                    "homepage": "http://lobach.info"
-                }
-            ],
-            "description": "Composer installer for Vagrant environment.",
-            "time": "2013-04-11 18:29:57"
         }
     ],
     "aliases": [

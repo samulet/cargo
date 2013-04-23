@@ -24,18 +24,9 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "mashaimedvedi/cargo-devenv": "*",
         "codeception/codeception": "@stable"
     },
     "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:MashaiMedvedi/cargo-devenv.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/bladeofsteel/vagrant-installer.git"
-        },
         {
             "type": "git",
             "url": "git://github.com/bladeofsteel/ZfcUserDoctrineMongoODM.git"
