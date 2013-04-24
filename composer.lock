@@ -1,5 +1,5 @@
 {
-    "hash": "4840188473d0c1c4ac73338cc4daf61d",
+    "hash": "7b6df30e9f6915878368f40a97884699",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -698,6 +698,57 @@
             "time": "2013-04-16 16:35:08"
         },
         {
+            "name": "filp/whoops",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filp/whoops.git",
+                "reference": "1.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/1.0.3",
+                "reference": "1.0.3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master",
+                "silex/silex": "1.0.*@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Whoops": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Filipe Dobreira",
+                    "homepage": "https://github.com/filp",
+                    "role": "Developer"
+                }
+            ],
+            "description": "php error handling for cool kids",
+            "homepage": "https://github.com/filp/whoops",
+            "keywords": [
+                "error",
+                "exception",
+                "handling",
+                "library",
+                "silex-provider",
+                "whoops",
+                "zf2"
+            ],
+            "time": "2013-04-23 07:20:17"
+        },
+        {
             "name": "gedmo/doctrine-extensions",
             "version": "dev-master",
             "source": {
@@ -775,6 +826,59 @@
                 "uploadable"
             ],
             "time": "2013-04-22 12:44:19"
+        },
+        {
+            "name": "ghislainf/zf2-whoops",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghislainf/zf2-whoops.git",
+                "reference": "4d22ce16b9c0b67df86829d059826b9c55c1e214"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghislainf/zf2-whoops/zipball/4d22ce16b9c0b67df86829d059826b9c55c1e214",
+                "reference": "4d22ce16b9c0b67df86829d059826b9c55c1e214",
+                "shasum": ""
+            },
+            "require": {
+                "filp/whoops": "1.*",
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "2.*"
+            },
+            "type": "module",
+            "autoload": {
+                "psr-0": {
+                    "zf2-whoops": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Filipe Dobreira",
+                    "homepage": "https://github.com/filp",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Ghislain de Fontenay",
+                    "email": "ghislain.de.fontenay@gmail.com",
+                    "homepage": "http://www.ghislainf.me/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Balázs Németh",
+                    "email": "zsilbi@zsilbi.hu"
+                }
+            ],
+            "description": "PHP whoops error on ZF2 framework",
+            "homepage": "https://github.com/ghislainf/zf2-whoops",
+            "time": "2013-04-24 12:25:34"
         },
         {
             "name": "symfony/console",
@@ -2644,6 +2748,7 @@
         "zf-commons/zfc-user-doctrine-mongo-odm": 20,
         "zendframework/zend-developer-tools": 20,
         "gedmo/doctrine-extensions": 20,
+        "ghislainf/zf2-whoops": 20,
         "codeception/codeception": 0
     },
     "platform": {
