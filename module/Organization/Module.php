@@ -1,6 +1,11 @@
 <?php
 namespace Organization;
 
+use Organization\Entity\Organization;
+use Organization\Model\OrganizationModel;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+
 class Module
 {
     public function getAutoloaderConfig()
@@ -14,6 +19,7 @@ class Module
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
+
         );
     }
 
@@ -21,4 +27,19 @@ class Module
     {
         return include __DIR__ . '/config/module.config.php';
     }
+    public function getServiceConfig()
+    {
+        error_reporting(E_ALL | E_STRICT) ;
+        ini_set('display_errors', 'On');
+
+        return array(
+            'factories' => array(
+                'Organization\Model\OrganizationModel' =>  function($sm) {
+                    $org = new OrganizationModel();
+                    return $org;
+                },
+            ),
+        );
+    }
+
 }
