@@ -6,6 +6,7 @@ namespace Organization\Controller {
     use Zend\Mvc\Controller\AbstractActionController;
     use Zend\View\Model\ViewModel;
     use Organization\Entity\Organization;
+    use Organization\Model\OrganizationModel;
 
     use Doctrine\MongoDB\Connection;
     use Doctrine\ODM\MongoDB\Configuration;
@@ -16,30 +17,28 @@ namespace Organization\Controller {
 
     class OrganizationController extends AbstractActionController
     {
+        protected $organizationModel;
+
         public function indexAction()
         {
+           // $this->getS
             error_reporting(E_ALL | E_STRICT) ;
             ini_set('display_errors', 'On');
+            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
+            $orgModel=$this->getOrganizationModel();
+            $org=$orgModel->returnOrganizations();
 
-            $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-            $qb = $objectManager->createQueryBuilder('Organization\Entity\Organization')
-                ->eagerCursor(true);
-            $query = $qb->getQuery();
-            $cursor = $query->execute();
 
-            $org=array();
-            foreach ($cursor as $cur) {
-                $arr=array('description'=>$cur->getDescription(), 'orgType'=>$cur->getOrgType(), 'orgName'=>$cur->getOrgName());
-                array_push($org,$arr);
-            }
-           // die(var_dump($org));
+
             return new ViewModel(array(
                 'org' =>$org
             ));
+
         }
 
         public function addAction()
         {
+            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $form = new OrganizationCreate();
             return new ViewModel(array(
                 'form' => $form
@@ -48,29 +47,52 @@ namespace Organization\Controller {
 
         public function editAction()
         {
+            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
+            $org_id=$this->getEvent()->getRouteMatch()->getParam('id');
+        }
+
+        public function listAction() {
+            $this->loginControl();
+            $org_id=$this->getEvent()->getRouteMatch()->getParam('id');
+            $orgModel=$this->getOrganizationModel();
+            $org=$orgModel->getOrganization($org_id);
+            if(!$org) $org=false;
+            return new ViewModel(array(
+                'org' =>$org
+            ));
         }
 
         public function deleteAction()
         {
+            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         }
 
         public function createOrganizationAction(){
-            $var=$this->getRequest()->getPost();
-            if(!empty($var->csrf)) {
-                $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-                $org_item=$var->organization;
-                $org = new Organization();
-                $org->setDescription($org_item['description']);
-                $org->setOrgName($org_item['orgName']);
-                $org->setOrgType($org_item['orgType']);
-                $org->setActivated(1);
-                $objectManager->persist($org);
-                $objectManager->flush();
-                return new ViewModel(array(
-                    'result' => 'успешно!'
+            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
+            $post=$this->getRequest()->getPost();
+            $orgModel=$this->getOrganizationModel();
+            if($orgModel->createOrganization($post, $this->zfcUserAuthentication()->getIdentity()->getId())) $result="Успешо";
+            else $result="Ошибка";
+
+            return new ViewModel(array(
+                    'result' =>$result
                 ));
-            }
-            else die();
+
         }
+        private function loginControl() {
+            if ($this->zfcUserAuthentication()->hasIdentity()) return true;
+            else return $this->redirect()->toUrl('/user/login');
+        }
+        public function getOrganizationModel()
+        {
+            error_reporting(E_ALL | E_STRICT) ;
+            ini_set('display_errors', 'On');
+            if (!$this->organizationModel) {
+                $sm = $this->getServiceLocator();
+                $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+            }
+            return $this->organizationModel;
+        }
+
     }
 }
