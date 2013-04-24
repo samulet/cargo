@@ -20,7 +20,8 @@
         "zendframework/zendframework": "2.1.*@stable",
         "zf-commons/zfc-user-doctrine-mongo-odm": "dev-master",
         "zendframework/zend-developer-tools": "dev-master",
-        "gedmo/doctrine-extensions": "dev-master"
+        "gedmo/doctrine-extensions": "dev-master",
+        "ghislainf/zf2-whoops": "dev-master"
     },
     "minimum-stability": "dev",
     "require-dev": {
