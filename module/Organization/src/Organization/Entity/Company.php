@@ -42,6 +42,36 @@ class Company implements CompanyInterface
      */
     protected $description;
     /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $requisites;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $addressFact;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $addressReg;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $generalManager;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $telephone;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $email;
+    /**
      * Get id.
      *
      * @return int
@@ -133,6 +163,66 @@ class Company implements CompanyInterface
     public function setUUID($uuid)
     {
         $this->uuid = $uuid;
+        return $this;
+    }
+    public function getRequisites()
+    {
+        return $this->requisites;
+    }
+
+    public function setRequisites($requisites)
+    {
+        $this->requisites = $requisites;
+        return $this;
+    }
+    public function getAddressFact()
+    {
+        return $this->addressFact;
+    }
+
+    public function setAddressFact($addressFact)
+    {
+        $this->addressFact= $addressFact;
+        return $this;
+    }
+    public function getAddressReg()
+    {
+        return $this->addressReg;
+    }
+
+    public function setAddressReg($addressReg)
+    {
+        $this->addressReg= $addressReg;
+        return $this;
+    }
+    public function getGeneralManager()
+    {
+        return $this->generalManager;
+    }
+
+    public function setGeneralManager($generalManager)
+    {
+        $this->generalManager = $generalManager;
+        return $this;
+    }
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone($telephone)
+    {
+        $this->telephone=$telephone ;
+        return $this;
+    }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email=$email ;
         return $this;
     }
 }

@@ -6,16 +6,18 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Organization\Entity\OrganizationInterface;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 /**
+ *
  * @ODM\Document(collection="organization")
  */
 class Organization implements OrganizationInterface
 {
-    public function __construct()
+    public function __construct($ownerId)
     {
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
-
+        $this->setOwnerId(new \MongoId($ownerId));
     }
     /**
      * @ODM\Id
@@ -29,7 +31,7 @@ class Organization implements OrganizationInterface
     protected $uuid;
 
     /**
-     * @ODM\Id
+     * @ODM\ObjectId
      * @var int
      */
     protected $ownerId;
@@ -58,12 +60,12 @@ class Organization implements OrganizationInterface
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $orgName;
+    protected $name;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $orgType;
+    protected $type;
     /**
      * Get id.
      *
@@ -151,44 +153,44 @@ class Organization implements OrganizationInterface
     }
 
     /**
-     * Get orgName.
+     * Get name.
      *
      * @return string
      */
-    public function getOrgName()
+    public function getName()
     {
-        return $this->orgName;
+        return $this->name;
     }
     /**
-     * Set orgName.
+     * Set name.
      *
-     * @param string $orgName
+     * @param string $name
      * @return OrganizationInterface
      */
 
-    public function setOrgName($orgName)
+    public function setName($name)
     {
-        $this->orgName = $orgName;
+        $this->name = $name;
         return $this;
     }
     /**
-     * Get orgType.
+     * Get type.
      *
      * @return string
      */
-    public function getOrgType()
+    public function getType()
     {
-        return $this->orgType;
+        return $this->type;
     }
     /**
-     * Set orgType.
+     * Set type.
      *
-     * @param string $orgType
+     * @param string $type
      * @return OrganizationInterface
      */
-    public function setOrgType($orgType)
+    public function setType($type)
     {
-        $this->orgType = $orgType;
+        $this->type = $type;
         return $this;
     }
     public function getOwnerId()

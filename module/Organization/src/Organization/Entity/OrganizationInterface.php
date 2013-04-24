@@ -56,34 +56,34 @@ interface OrganizationInterface
     public function getUpdated();
 
     /**
-     * Get OrgName.
+     * Get Name.
      *
      * @return string
      */
-    public function getOrgName();
+    public function getName();
 
     /**
-     * Set OrgName.
+     * Set Name.
      *
-     * @param string $OrgName
+     * @param string $Name
      * @return UserInterface
      */
-    public function setOrgName($orgName);
+    public function setName($name);
 
     /**
-     * Get orgType.
+     * Get type.
      *
      * @return string
      */
-    public function getOrgType();
+    public function getType();
 
     /**
-     * Set orgType.
+     * Set type.
      *
-     * @param string $orgType
+     * @param string $type
      * @return UserInterface
      */
-    public function setOrgType($orgType);
+    public function setType($type);
     public function getOwnerId();
     public function setOwnerId($ownerId);
     public function getUUID();

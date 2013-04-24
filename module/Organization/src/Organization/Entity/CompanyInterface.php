@@ -52,4 +52,23 @@ interface CompanyInterface
     public function getUpdated();
         public function getUUID();
         public function setUUID($uuid);
+
+            public function getRequisites();
+
+            public function setRequisites($requisites);
+            public function getAddressFact();
+
+            public function setAddressFact($addressFact);
+            public function getAddressReg();
+
+            public function setAddressReg($addressReg);
+            public function getGeneralManager();
+
+            public function setGeneralManager($generalManager);
+            public function getTelephone();
+
+            public function setTelephone($telephone);
+            public function getEmail();
+
+            public function setEmail($email);
 }
