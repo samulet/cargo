@@ -1,16 +1,33 @@
-<?php  ?>
+<?php
+$title = 'Организации';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('organization', array('action'=>'add'));?>">Добавить организацию</a>
+</p>
 
-<table>
+<table class="table">
     <tr>
-        <td>Название организации</td>
-        <td>Тип организации</td>
-        <td>Описание организации</td>
+        <th>Название организации</th>
+        <th>Тип организации</th>
+        <th>Описание организации</th>
+        <th>&nbsp;</th>
     </tr>
-    <?php  foreach($this->org as $o) { ?>
+    <?php foreach($this->org as $o) { ?>
         <tr>
             <td><?php echo $o['orgName']; ?></td>
             <td><?php echo $o['orgName']; ?></td>
             <td><?php echo $o['orgName']; ?></td>
+            <td>
+                <a href="<?php echo $this->url('organization',
+                    array('action'=>'edit', 'id' => $o['uuid']));?>">Edit</a>
+                <a href="<?php echo $this->url('organization',
+                    array('action'=>'delete', 'id' => $o['uuid']));?>">Delete</a>
+
+
+            </td>
         </tr>
     <?php } ?>
 </table>
+
