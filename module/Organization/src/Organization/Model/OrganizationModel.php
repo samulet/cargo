@@ -35,7 +35,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         $cursor = $query->execute();
         $org=array();
         foreach ($cursor as $cur) {
-            $arr=array('uuid'=>$cur->getUUID(),'description'=>$cur->getDescription(), 'orgType'=>$cur->getOrgType(), 'orgName'=>$cur->getOrgName());
+            $arr=array('uuid'=>$cur->getUUID(),'description'=>$cur->getDescription(), 'type'=>$cur->getType(), 'name'=>$cur->getName());
             array_push($org,$arr);
         }
         //die(var_dump($org));
@@ -56,8 +56,8 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             $org_item=$post->organization;
             $org = new Organization($user_id);
             $org->setDescription($org_item['description']);
-            $org->setOrgName($org_item['orgName']);
-            $org->setOrgType($org_item['orgType']);
+            $org->setName($org_item['name']);
+            $org->setType($org_item['type']);
             $org->setActivated(1);
             $objectManager->persist($org);
             $objectManager->flush();
@@ -73,6 +73,6 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         $user=$objectManager->find('User\Entity\User', $org->getOwnerId());
         //die(var_dump($user->getDisplayName()));
         if(empty($user)) return false;
-        return array('uuid'=>$org->getUUID(),'description'=>$org->getDescription(), 'orgType'=>$org->getOrgType(), 'orgName'=>$org->getOrgName(), 'orgOwner'=>$user->getDisplayName());
+        return array('uuid'=>$org->getUUID(),'description'=>$org->getDescription(), 'type'=>$org->getType(), 'name'=>$org->getName(), 'orgOwner'=>$user->getDisplayName());
     }
 }
