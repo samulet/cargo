@@ -8,7 +8,6 @@
  */
 namespace Organization\Form;
 
-use Organization\Entity\Organization;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
@@ -18,11 +17,10 @@ class OrganizationFieldset extends Fieldset implements InputFilterProviderInterf
     public function __construct()
     {
         parent::__construct('organization');
-        $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new Organization());
+
 
         $this->add(array(
-            'name' => 'orgName',
+            'name' => 'name',
             'options' => array(
                 'label' => 'Имя организации'
             ),
@@ -32,7 +30,7 @@ class OrganizationFieldset extends Fieldset implements InputFilterProviderInterf
         ));
 
         $this->add(array(
-            'name' => 'orgType',
+            'name' => 'type',
             'options' => array(
                 'label' => 'Тип органзиации'
             ),
