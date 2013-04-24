@@ -17,8 +17,8 @@ $this->headTitle($title);
     <?php foreach($this->org as $o) { ?>
         <tr>
             <td><?php echo $o['orgName']; ?></td>
-            <td><?php echo $o['orgName']; ?></td>
-            <td><?php echo $o['orgName']; ?></td>
+            <td><?php echo $o['orgType']; ?></td>
+            <td><?php echo $o['description']; ?></td>
             <td>
                 <a href="<?php echo $this->url('organization',
                     array('action'=>'edit', 'id' => $o['uuid']));?>">Edit</a>
