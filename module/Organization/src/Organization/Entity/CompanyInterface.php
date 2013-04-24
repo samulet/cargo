@@ -50,4 +50,6 @@ interface CompanyInterface
     public function setUpdated($updated);
 
     public function getUpdated();
+        public function getUUID();
+        public function setUUID($uuid);
 }

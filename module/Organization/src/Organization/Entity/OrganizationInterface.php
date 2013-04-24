@@ -86,4 +86,6 @@ interface OrganizationInterface
     public function setOrgType($orgType);
     public function getOwnerId();
     public function setOwnerId($ownerId);
+    public function getUUID();
+    public function setUUID($uuid);
 }

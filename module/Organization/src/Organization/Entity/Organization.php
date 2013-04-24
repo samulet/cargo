@@ -14,15 +14,20 @@ class Organization implements OrganizationInterface
     public function __construct()
     {
         $uuid_gen = new UuidGenerator();
-        $this->setId($uuid_gen->generateV4());
+        $this->setUUID($uuid_gen->generateV4());
+
     }
     /**
-     *
-     *  @ODM\Id(strategy="UUID")
+     * @ODM\Id
+     * @var int
      */
     protected $id;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $uuid;
 
- //   protected $uuid;
     /**
      * @ODM\Id
      * @var int
@@ -77,6 +82,7 @@ class Organization implements OrganizationInterface
     public function setId($id)
     {
         $this->id = $id;
+       // die($this->id);
         return $this;
     }
 
@@ -193,6 +199,16 @@ class Organization implements OrganizationInterface
     public function setOwnerId($ownerId)
     {
         $this->ownerId = $ownerId;
+        return $this;
+    }
+    public function getUUID()
+    {
+        return $this->uuid;
+    }
+
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
         return $this;
     }
 }

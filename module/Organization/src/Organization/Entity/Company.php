@@ -11,9 +11,15 @@ use Organization\Entity\CompanyInterface;
 class Company implements CompanyInterface
 {
     /**
-     * @ODM\Id(strategy="UUID")
+     * @ODM\Id(strategy="Id")
      */
     protected $id;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $uuid;
+
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
@@ -118,5 +124,15 @@ class Company implements CompanyInterface
     public function getUpdated()
     {
         return $this->updated;
+    }
+    public function getUUID()
+    {
+        return $this->uuid;
+    }
+
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 }
