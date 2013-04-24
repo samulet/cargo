@@ -6,6 +6,7 @@ return array(
         'invokables' => array(
             'Organization\Controller\Organization' => 'Organization\Controller\OrganizationController',
             'Organization\Controller\Company' => 'Organization\Controller\CompanyController',
+
         ),
     ),
     'router' => array(
@@ -16,7 +17,7 @@ return array(
                     'route'    => '/organization[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
+                        'id'     => '[a-z0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\Organization',
