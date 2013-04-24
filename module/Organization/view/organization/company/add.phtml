@@ -1,0 +1,21 @@
+<?php
+
+$form=$this->form;
+$form->setAttribute('action', $this->url('company', array('action' => 'createCompany')))
+    ->prepare();
+
+echo $this->form()->openTag($form);
+
+$org = $form->get('company');
+echo $this->formRow($org->get('name'));
+echo $this->formRow($org->get('type'));
+echo $this->formRow($org->get('description'));
+echo $this->formRow($org->get('requisites'));
+echo $this->formRow($org->get('addressReg'));
+echo $this->formRow($org->get('addressFact'));
+echo $this->formRow($org->get('generalManager'));
+echo $this->formRow($org->get('telephone'));
+echo $this->formRow($org->get('email'));
+echo $this->formHidden($form->get('csrf'));
+echo $this->formElement($form->get('submit'));
+echo $this->form()->closeTag();
