@@ -1,0 +1,19 @@
+<?php
+$o=$this->org;
+if(!$o) echo '<p>Такой организации не существует</p>';
+else {
+
+$title = 'Организация: '.$o['orgName'];
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($o['orgName']); ?></h1>
+<p>Тип организации: <?php echo $o['orgType'];?></p>
+<p>Описание организации: <?php echo $o['orgType'];?></p>
+<p>Владелец организации: <?php echo $o['orgOwner'];?></p>
+</br>
+                <a href="<?php echo $this->url('organization',
+                    array('action'=>'edit', 'id' => $o['uuid']));?>">Edit</a>
+                <a href="<?php echo $this->url('organization',
+                    array('action'=>'delete', 'id' => $o['uuid']));?>">Delete</a>
+
+    <?php } ?>

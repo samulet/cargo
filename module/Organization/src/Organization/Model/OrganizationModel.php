@@ -16,6 +16,8 @@ use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use User\Entity\User;
 
 class OrganizationModel implements ServiceLocatorAwareInterface
 {
@@ -61,5 +63,16 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             $objectManager->flush();
             return true;
         } else return false;
+    }
+    public function getOrganization($id) {
+        $uuid_gen=new UuidGenerator();
+        if(!$uuid_gen->isValid($id)) return false;
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $org=$objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
+        if(empty($org)) return false;
+        $user=$objectManager->find('User\Entity\User', $org->getOwnerId());
+        //die(var_dump($user->getDisplayName()));
+        if(empty($user)) return false;
+        return array('uuid'=>$org->getUUID(),'description'=>$org->getDescription(), 'orgType'=>$org->getOrgType(), 'orgName'=>$org->getOrgName(), 'orgOwner'=>$user->getDisplayName());
     }
 }
