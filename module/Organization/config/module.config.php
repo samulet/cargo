@@ -6,7 +6,7 @@ return array(
         'invokables' => array(
             'Organization\Controller\Organization' => 'Organization\Controller\OrganizationController',
             'Organization\Controller\Company' => 'Organization\Controller\CompanyController',
-
+            'Organization\Controller\CompanyUser' => 'Organization\Controller\CompanyUserController',
         ),
     ),
     'router' => array(
@@ -36,6 +36,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\Company',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'company_user' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/organization/user[/:org_id][/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'org_id'     => '[a-z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Organization\Controller\CompanyUser',
                         'action'     => 'index',
                     ),
                 ),

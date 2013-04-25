@@ -4,6 +4,7 @@ namespace Organization;
 use Organization\Entity\Organization;
 use Organization\Model\OrganizationModel;
 use Organization\Model\CompanyModel;
+use Organization\Model\CompanyUserModel;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -42,6 +43,10 @@ class Module
                 'Organization\Model\CompanyModel' =>  function($sm) {
                     $com = new CompanyModel();
                     return $com;
+                },
+                'Organization\Model\CompanyUserModel' =>  function($sm) {
+                    $comus = new CompanyUserModel();
+                    return $comus;
                 },
             ),
         );

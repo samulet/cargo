@@ -17,7 +17,23 @@ class CompanyController extends AbstractActionController
 
     public function indexAction()
     {
+        error_reporting(E_ALL | E_STRICT) ;
+        ini_set('display_errors', 'On');
+        $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
+        $org_uuid=$this->getEvent()->getRouteMatch()->getParam('org_id');
+        $uuid_gen=new UuidGenerator();
+        if(!$uuid_gen->isValid($org_uuid)) $com="Ошибка";
+        else {
+            $comModel=$this->getCompanyModel();
+            $orgModel=$this->getOrganizationModel();
+            $org_id=$orgModel->getOrgIdByUUID($org_uuid);
+            $com=$comModel->returnCompanies($org_id);
+        }
+        return new ViewModel(array(
+            'org' =>$com,
+            'org_id'=>$org_uuid
 
+        ));
     }
 
     public function addAction()

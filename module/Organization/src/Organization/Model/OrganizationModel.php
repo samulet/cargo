@@ -22,6 +22,7 @@ use User\Entity\User;
 class OrganizationModel implements ServiceLocatorAwareInterface
 {
     protected $companyModel;
+    protected $companyUserModel;
     public function __construct()
     {
 
@@ -70,11 +71,24 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             $org->setName($org_item['name']);
             $org->setType($org_item['type']);
             $org->setActivated(1);
+            $org_uuid=$org->getUUID();
             $objectManager->persist($org);
             $objectManager->flush();
+
+
+            $org_id=$this->getOrgIdByUUID($org_uuid);
+
+            $comUserModel=$this->getCompanyUserModel();
+            $comUserModel->addUserToOrg($org_uuid, $org_id);
+
             return true;
         } else return false;
     }
+
+    public function addUserInOrg($org_id, $user_id) {
+
+    }
+
     public function getOrganization($id) {
         $uuid_gen=new UuidGenerator();
         if(!$uuid_gen->isValid($id)) return false;
@@ -96,4 +110,13 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         }
         return $this->companyModel;
     }
+    public function getCompanyUserModel()
+    {
+        if (!$this->companyUserModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+        }
+        return $this->companyUserModel;
+    }
+
 }

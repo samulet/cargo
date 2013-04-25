@@ -5,22 +5,31 @@ namespace Organization\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Organization\Entity\CompanyUserInterface;
+use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 /**
 * @ODM\Document(collection="companyUser")
 */
 class CompanyUser implements CompanyUserInterface
 {
+    public function __construct($org_id,$user_id)
+    {
+
+        $this->setOrgId(new \MongoId($org_id));
+        $this->setUserId(new \MongoId($user_id));
+    }
     /**
      * @ODM\Id
      * @var int
      */
     protected $id;
     /**
-     * @ODM\Id(strategy="UUID")
+     * @ODM\ObjectId
+     * @var int
      */
     protected $userId;
     /**
-     * @ODM\Id(strategy="UUID")
+     * @ODM\ObjectId
+     * @var int
      */
     protected $companyId;
 
@@ -29,16 +38,22 @@ class CompanyUser implements CompanyUserInterface
      * @ODM\Field(type="string")
      */
     protected $userRights;
-        /**
-         * @ODM\Id
-         * @var int
-         */
+    /**
+     * @ODM\ObjectId
+     * @var int
+     */
     protected $orgId;
 
     public function getId()
     {
         return $this->id;
     }
+
+        function setId($id)
+        {
+            $this->id = $id;
+            return $this;
+        }
     /**
      * Set id.
      *
