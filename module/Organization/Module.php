@@ -38,6 +38,10 @@ class Module
                     $org = new OrganizationModel();
                     return $org;
                 },
+                'Organization\Model\CompanyModel' =>  function($sm) {
+                    $com = new CompanyModel();
+                    return $com;
+                },
             ),
         );
     }
