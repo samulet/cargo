@@ -1,5 +1,5 @@
 {
-    "hash": "7b6df30e9f6915878368f40a97884699",
+    "hash": "8fbec71f2878ca38129c9372e1c2e990",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -881,6 +881,48 @@
             "time": "2013-04-24 12:25:34"
         },
         {
+            "name": "rollbar/rollbar",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rollbar/rollbar-php.git",
+                "reference": "v0.5.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/v0.5.2",
+                "reference": "v0.5.2",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "rollbar.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Rue",
+                    "email": "brian@rollbar.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Monitors errors and exceptions and reports them to Rollbar",
+            "homepage": "http://github.com/rollbar/rollbar-php",
+            "keywords": [
+                "debugging",
+                "errors",
+                "exceptions",
+                "logging",
+                "monitoring"
+            ],
+            "time": "2013-04-02 22:30:29"
+        },
+        {
             "name": "symfony/console",
             "version": "dev-master",
             "target-dir": "Symfony/Component/Console",
@@ -929,6 +971,50 @@
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
             "time": "2013-04-21 10:38:46"
+        },
+        {
+            "name": "yassa/rollbar",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bladeofsteel/yassa-rollbar.git",
+                "reference": "v0.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bladeofsteel/yassa-rollbar/zipball/v0.1.0",
+                "reference": "v0.1.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "rollbar/rollbar": "dev-master",
+                "zendframework/zend-eventmanager": "2.*",
+                "zendframework/zend-loader": "2.*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-0": {
+                    "Yassa\\Rollbar": "src/"
+                },
+                "files": [
+                    "Module.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Oleg Lobach",
+                    "email": "oleg@lobach.info",
+                    "homepage": "http://lobach.info",
+                    "role": "developer"
+                }
+            ],
+            "description": "Zend Framework 2 module for connect to Rollbar",
+            "time": "2013-04-25 13:16:54"
         },
         {
             "name": "zendframework/zend-developer-tools",
