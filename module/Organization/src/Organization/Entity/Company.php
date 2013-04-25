@@ -5,13 +5,22 @@ namespace Organization\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Organization\Entity\CompanyInterface;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 /**
 * @ODM\Document(collection="company")
 */
 class Company implements CompanyInterface
 {
+    public function __construct($ownerOrgId)
+    {
+        $uuid_gen = new UuidGenerator();
+        $this->setUUID($uuid_gen->generateV4());
+        $this->setOwnerOrgId(new \MongoId($ownerOrgId));
+    }
     /**
-     * @ODM\Id(strategy="Id")
+     * @ODM\Id
+     * @var int
      */
     protected $id;
     /**
@@ -19,6 +28,12 @@ class Company implements CompanyInterface
      * @ODM\Field(type="string")
      */
     protected $uuid;
+
+    /**
+     * @ODM\ObjectId
+     * @var int
+     */
+    protected $ownerOrgId;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -36,6 +51,16 @@ class Company implements CompanyInterface
      * @ODM\Field(type="string")
      */
     protected $activated;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $name;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $type;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -223,6 +248,47 @@ class Company implements CompanyInterface
     public function setEmail($email)
     {
         $this->email=$email ;
+        return $this;
+    }
+    public function getOwnerOrgId()
+    {
+        return $this->ownerOrgId;
+    }
+
+    public function setOwnerOrgId($ownerOrgId)
+    {
+        $this->ownerOrgId = $ownerOrgId;
+        return $this;
+    }
+    public function getType()
+    {
+        return $this->type;
+    }
+    /**
+     * Set type.
+     *
+     * @param string $type
+     * @return OrganizationInterface
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * Set name.
+     *
+     * @param string $name
+     * @return OrganizationInterface
+     */
+
+    public function setName($name)
+    {
+        $this->name = $name;
         return $this;
     }
 }

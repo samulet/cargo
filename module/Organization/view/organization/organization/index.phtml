@@ -7,15 +7,16 @@ $this->headTitle($title);
     <a href="<?php echo $this->url('organization', array('action'=>'add'));?>">Добавить организацию</a>
 </p>
 
-<table class="table">
-    <tr>
-        <th>Название организации</th>
-        <th>Тип организации</th>
-        <th>Описание организации</th>
-        <th>Добавить компанию</th>
-        <th>&nbsp;</th>
-    </tr>
-    <?php foreach($this->org as $o) { ?>
+    <?php foreach($this->org as $oc) { $o=$oc['org']?>
+        <table class="table">
+            <tr>
+                <th>Название организации</th>
+                <th>Тип организации</th>
+                <th>Описание организации</th>
+                <th>Добавить компанию</th>
+                <th>Добавить юзера в компанию</th>
+                <th>&nbsp;</th>
+            </tr>
         <tr>
             <td><a href="<?php echo $this->url('organization',
                     array('action'=>'list', 'id' => $o['uuid']));?>"><?php echo $o['name']; ?></a></td>
@@ -23,15 +24,29 @@ $this->headTitle($title);
             <td><?php echo $o['description']; ?></td>
             <td><a href="<?php echo $this->url('company',
                     array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
+            <td>Добавить</td>
             <td>
                 <a href="<?php echo $this->url('organization',
                     array('action'=>'edit', 'id' => $o['uuid']));?>">Edit</a>
                 <a href="<?php echo $this->url('organization',
                     array('action'=>'delete', 'id' => $o['uuid']));?>">Delete</a>
-
-
             </td>
         </tr>
-    <?php } ?>
+
 </table>
+        <table style="background:#999999;" class="table">
+            <tr>
+                <th>Название компании</th>
+            </tr>
+            <?php foreach($oc['com'] as $c) { ?>
+                <tr>
+                    <td><a href="<?php echo $this->url('company',
+                            array('action'=>'list', 'org_id'=>$o['uuid'],'id' => $c['uuid']));?>"><?php echo $c['name']; ?></a></td>
+                </tr>
+            <?php } ?>
+
+        </table>
+        </br></br>
+    <?php } ?>
+
 

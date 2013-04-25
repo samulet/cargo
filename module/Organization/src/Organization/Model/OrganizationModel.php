@@ -21,6 +21,7 @@ use User\Entity\User;
 
 class OrganizationModel implements ServiceLocatorAwareInterface
 {
+    protected $companyModel;
     public function __construct()
     {
 
@@ -28,18 +29,28 @@ class OrganizationModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
+    public function getOrgIdByUUID($org_uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $qb = $objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $org_uuid));
+        return $qb->getId();
+    }
+
+
     public function returnOrganizations($number='30', $page='1') {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $qb = $objectManager->createQueryBuilder('Organization\Entity\Organization')->eagerCursor(true);
         $query = $qb->getQuery();
         $cursor = $query->execute();
-        $org=array();
+        $orgs=array();
         foreach ($cursor as $cur) {
-            $arr=array('uuid'=>$cur->getUUID(),'description'=>$cur->getDescription(), 'type'=>$cur->getType(), 'name'=>$cur->getName());
-            array_push($org,$arr);
+            $org=array('uuid'=>$cur->getUUID(),'description'=>$cur->getDescription(), 'type'=>$cur->getType(),
+                'name'=>$cur->getName());
+            $comModel=$this->getCompanyModel();
+            $com=$comModel->returnCompanies($cur->getId());
+            array_push($orgs,array('org'=>$org,'com'=>$com));
         }
-        //die(var_dump($org));
-        return $org;
+       // die(var_dump($orgs));
+        return $orgs;
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
@@ -74,5 +85,15 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         //die(var_dump($user->getDisplayName()));
         if(empty($user)) return false;
         return array('uuid'=>$org->getUUID(),'description'=>$org->getDescription(), 'type'=>$org->getType(), 'name'=>$org->getName(), 'orgOwner'=>$user->getDisplayName());
+    }
+    public function getCompanyModel()
+    {
+        error_reporting(E_ALL | E_STRICT) ;
+        ini_set('display_errors', 'On');
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
     }
 }

@@ -19,9 +19,12 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
+use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 class CompanyModel implements ServiceLocatorAwareInterface
 {
+
+
     public function __construct()
     {
 
@@ -30,14 +33,27 @@ class CompanyModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
 
     public function returnCompanies($org_id,$number='30', $page='1') {
+       // die(var_dump($org_id));
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->find($org_id);
+      //  die(var_dump($this->getServiceLocator()->get('doctrine.documentmanager.odm_default')));
+       // $qb = $objectManager->getRepository('Organization\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+
+        $qb = $objectManager->createQueryBuilder('Organization\Entity\Company')->field('ownerOrgId')->equals(new \MongoId($org_id))->eagerCursor(true);
+        $query = $qb->getQuery();
+        $cursor = $query->execute();
+
         $com=array();
-        foreach ($qb as $cur) {
-            $arr=array('uuid'=>$cur->getUUID(),'description'=>$cur->getDescription(), 'type'=>$cur->getType(), 'name'=>$cur->getName());
-            array_push($org,$arr);
+        foreach ($cursor as $cur) {
+            $arr=array('uuid'=>$cur->getUUID(),'description'=>$cur->getDescription(), 'type'=>$cur->getType(),
+                'name'=>$cur->getName(),
+                'requisites'=>$cur->getRequisites(),
+                'addressFact'=> $cur->getAddressFact(),
+                'generalManager'=>$cur->getGeneralManager(),
+                'telephone'=> $cur->getTelephone(),
+                'email'=>$cur->getEmail()
+            );
+            array_push($com,$arr);
         }
-        //die(var_dump($org));
         return $com;
     }
 
@@ -50,8 +66,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
     }
 
     public function createCompany($post,$org_id) {
-        $uuid_gen=new UuidGenerator();
-        if(!$uuid_gen->isValid($org_id)) return false;
+
         if(!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $com_item=$post->company;
@@ -74,11 +89,12 @@ class CompanyModel implements ServiceLocatorAwareInterface
             return true;
         } else return false;
     }
-    public function getOrganization($id) {
+    public function getCompany($id) {
         $uuid_gen=new UuidGenerator();
         if(!$uuid_gen->isValid($id)) return false;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $org=$objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
+        $org=$objectManager->
+            getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
         if(empty($org)) return false;
         $user=$objectManager->find('User\Entity\User', $org->getOwnerId());
         //die(var_dump($user->getDisplayName()));

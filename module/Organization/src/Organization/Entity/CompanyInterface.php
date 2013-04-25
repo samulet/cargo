@@ -71,4 +71,11 @@ interface CompanyInterface
             public function getEmail();
 
             public function setEmail($email);
+            public function getOwnerOrgId();
+
+            public function setOwnerOrgId($ownerOrgId);
+            public function getType();
+            public function setType($type);
+            public function getName();
+            public function setName($name);
 }

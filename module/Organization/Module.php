@@ -3,6 +3,7 @@ namespace Organization;
 
 use Organization\Entity\Organization;
 use Organization\Model\OrganizationModel;
+use Organization\Model\CompanyModel;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
