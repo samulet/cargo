@@ -37,17 +37,22 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     }
 
 
-    public function returnOrganizations($number='30', $page='1') {
+    public function returnOrganizations($user_id,$number='30', $page='1') {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Organization\Entity\Organization')->eagerCursor(true);
-        $query = $qb->getQuery();
-        $cursor = $query->execute();
+        $user_id=new \MongoId($user_id);
+        $orgOfUser=$objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('userId' => $user_id));
+
+     //  $qb = $objectManager->createQueryBuilder('Organization\Entity\Organization')->eagerCursor(true);
+     //   $query = $qb->getQuery();
+      //  $cursor = $query->execute();
         $orgs=array();
-        foreach ($cursor as $cur) {
-            $org=array('uuid'=>$cur->getUUID(),'description'=>$cur->getDescription(), 'type'=>$cur->getType(),
-                'name'=>$cur->getName());
+        foreach ($orgOfUser as $cur) {
+            $org_id=$cur->getOrgId();
+            $org_obj=$objectManager->getRepository('Organization\Entity\Organization')->find($org_id);
+            $org=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
+                'name'=>$org_obj->getName());
             $comModel=$this->getCompanyModel();
-            $com=$comModel->returnCompanies($cur->getId());
+            $com=$comModel->returnCompanies($org_id);
             array_push($orgs,array('org'=>$org,'com'=>$com));
         }
        // die(var_dump($orgs));
@@ -79,14 +84,10 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             $org_id=$this->getOrgIdByUUID($org_uuid);
 
             $comUserModel=$this->getCompanyUserModel();
-            $comUserModel->addUserToOrg($org_uuid, $org_id);
+            $comUserModel->addUserToOrg($user_id, $org_id);
 
             return true;
         } else return false;
-    }
-
-    public function addUserInOrg($org_id, $user_id) {
-
     }
 
     public function getOrganization($id) {

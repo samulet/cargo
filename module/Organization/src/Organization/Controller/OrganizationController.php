@@ -26,7 +26,7 @@ namespace Organization\Controller {
             ini_set('display_errors', 'On');
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $orgModel=$this->getOrganizationModel();
-            $org=$orgModel->returnOrganizations();
+            $org=$orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getId());
 
 
 
