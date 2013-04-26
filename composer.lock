@@ -978,12 +978,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladeofsteel/yassa-rollbar.git",
-                "reference": "3eaca00552fe06fbe43e76b49664881bbe56b303"
+                "reference": "d878f8424efd93380dda01b2328fda64d6542597"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladeofsteel/yassa-rollbar/zipball/3eaca00552fe06fbe43e76b49664881bbe56b303",
-                "reference": "3eaca00552fe06fbe43e76b49664881bbe56b303",
+                "url": "https://api.github.com/repos/bladeofsteel/yassa-rollbar/zipball/d878f8424efd93380dda01b2328fda64d6542597",
+                "reference": "d878f8424efd93380dda01b2328fda64d6542597",
                 "shasum": ""
             },
             "require": {
@@ -1014,7 +1014,7 @@
                 }
             ],
             "description": "Zend Framework 2 module for connect to Rollbar",
-            "time": "2013-04-26 08:56:59"
+            "time": "2013-04-26 11:00:50"
         },
         {
             "name": "zendframework/zend-developer-tools",
