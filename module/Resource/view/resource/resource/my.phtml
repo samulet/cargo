@@ -1,0 +1,47 @@
+<?php
+$resources=$this->res;
+
+$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+?>
+<a href="<?php echo $this->url('resource',
+    array('action'=>'add'));?>">Добавить ресурс</a>
+<a href="<?php echo $this->url('resource',
+    array('action'=>'my'));?>">Все ресурсы</a>
+
+<table class="table">
+    <tr>
+        <th>
+            Типы перевозок
+        </th>
+        <th>
+            Дата отрпавления / Прибытия
+        </th>
+        <th>
+            Стоимость
+        </th>
+        <th>
+            Подробнее
+        </th>
+    </tr>
+    <?php foreach ($resources as $resource) { ?>
+        <tr>
+            <td>
+                <?php foreach ($types_r as $key => $value) {
+                    echo $key.' '.$resource[$value].' ';
+                }
+                ?>
+            </td>
+            <td>
+                <?php echo $resource['dateStart'].' / '.$resource['dateEnd']; ?>
+            </td>
+            <td>
+                <?php echo $resource['money'].' '.$resource['currency']; ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url('resource',
+                    array('action'=>'list', 'id' => $resource['uuid']));?>">Подробнее</a>
+            </td>
+        </tr>
+    <?php } ?>
+
+</table>
