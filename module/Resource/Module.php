@@ -4,6 +4,7 @@ namespace Resource;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
+use Resource\Model\ResourceModel;
 
 error_reporting(E_ALL | E_STRICT) ;
 ini_set('display_errors', 'On');
@@ -29,6 +30,17 @@ class Module
     {
         return include __DIR__ . '/config/module.config.php';
     }
+    public function getServiceConfig()
+    {
 
+        return array(
+            'factories' => array(
+                'Resource\Model\ResourceModel' =>  function($sm) {
+                    $res = new ResourceModel();
+                    return $res;
+                },
+            ),
+        );
+    }
 
 }
