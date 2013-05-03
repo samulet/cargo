@@ -36,8 +36,8 @@ class Module
         return array(
             'factories' => array(
                 'Ticket\Model\TicketModel' =>  function($sm) {
-                    $tick = new TicketModel();
-                    return $tick;
+                    $res = new TicketModel();
+                    return $res;
                 },
             ),
         );

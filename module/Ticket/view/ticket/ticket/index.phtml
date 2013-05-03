@@ -1,0 +1,47 @@
+<?php
+$tickets=$this->res;
+
+$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+?>
+<a href="<?php echo $this->url('ticket',
+    array('action'=>'add'));?>">Добавить заявку</a>
+<a href="<?php echo $this->url('ticket',
+    array('action'=>'my'));?>">Мои заявки</a>
+
+<table class="table">
+    <tr>
+    <th>
+        Типы перевозок
+    </th>
+    <th>
+        Промежуток когда свободен ресурс
+    </th>
+    <th>
+        Стоимость
+    </th>
+    <th>
+        Подробнее
+     </th>
+    </tr>
+    <?php foreach ($tickets as $ticket) { ?>
+<tr>
+    <td>
+        <?php foreach ($types_r as $key => $value) {
+            echo $key.' '.$ticket[$value].' ';
+        }
+        ?>
+    </td>
+    <td>
+        <?php echo $ticket['dateStart'].' / '.$ticket['dateEnd']; ?>
+    </td>
+    <td>
+        <?php echo $ticket['money'].' '.$ticket['currency']; ?>
+    </td>
+    <td>
+        <a href="<?php echo $this->url('ticket',
+            array('action'=>'list', 'id' => $ticket['uuid']));?>">Подробнее</a>
+    </td>
+</tr>
+    <?php } ?>
+
+</table>

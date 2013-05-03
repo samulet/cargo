@@ -1,0 +1,12 @@
+<?php
+$tickets=$this->res;
+
+unset($tickets['created']);
+unset($tickets['updated']);
+
+    foreach ($tickets as $key => $value) {
+    if($value!='') echo $key.' : '.$value.'</br> ';
+}
+
+?>
+

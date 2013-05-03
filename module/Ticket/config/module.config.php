@@ -12,7 +12,7 @@ return array(
             'ticket' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/ticket[/:action][/:id]',
+                    'route'    => '/tickets[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[a-z0-9]*',

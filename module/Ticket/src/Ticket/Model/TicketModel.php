@@ -25,7 +25,52 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
+    public function addTicket($post,$owner_id) {
+        $prop_array=get_object_vars($post);
+        $prop_array['ownerId']=$owner_id;
 
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = new Ticket();
+        foreach ($prop_array as $key => $value) {
+            $res->$key=$value;
+        }
+        //$res->setName($post['name']);
+        $objectManager->persist($res);
+        $objectManager->flush();
+        //die(var_dump($prop_array));
+    }
+
+    public function listTicket($id) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res=$objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
+        return get_object_vars($res);
+    }
+
+    public function returnAllTicket() {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $qb = $objectManager->createQueryBuilder('Ticket\Entity\Ticket')->eagerCursor(true);
+        $query = $qb->getQuery();
+        $rezObj = $query->execute();
+        $rezs=array();
+        foreach ($rezObj as $cur) {
+            //$rez=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
+          // die(var_dump($cur->id));
+            array_push($rezs,get_object_vars($cur));
+        }
+        return $rezs;
+    }
+
+    public function returnMyTicket($owner_id) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $qb = $objectManager->createQueryBuilder('Ticket\Entity\Ticket')->field('ownerId')->equals(new \MongoId($owner_id))->eagerCursor(true);
+        $query = $qb->getQuery();
+        $rezObj = $query->execute();
+        $rezs=array();
+        foreach ($rezObj as $cur) {
+            array_push($rezs,get_object_vars($cur));
+        }
+        return $rezs;
+    }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
         $this->serviceLocator = $serviceLocator;
