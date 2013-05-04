@@ -30,11 +30,18 @@ $ready=$form->get('ready');
 $dateStart=$form->get('dateStart');
 $dateEnd=$form->get('dateEnd');
 $cycle=$form->get('cycle');
+$mayBeUpShip=$form->get('mayBeUpShip');
+$partCargo=$form->get('partCargo');
+$numberOfCars=$form->get('numberOfCars');
 
 $upShip=$form->get('upShip');
 $tir=$form->get('tir');
 $ekmt=$form->get('ekmt');
 $hydroLift=$form->get('hydroLift');
+$cargo=$form->get('cargo');
+$package=$form->get('package');
+$palet=$form->get('palet');
+$belt=$form->get('belt');
 
 $transportType=$form->get('transportType');
 ?>
@@ -42,10 +49,85 @@ $transportType=$form->get('transportType');
 <table class="table" style="width:100%;">
     <tr>
         <th style="width:70%;">
-            Транспорт
+            Груз
         </th>
         <th style="width:30%;">
             Маршрут
+        </th>
+    </tr>
+    <tr>
+        <td>
+    <table style="width:100%%;">
+
+            <tr>
+<td>
+    <?php
+    echo $this->formRow($cargo);
+    ?>
+</td>
+                <td>
+                    <?php
+                    echo $this->formRow($package);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    echo $this->formRow($palet);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    echo $this->formRow($belt);
+                    ?>
+                </td>
+            </tr>
+            <tr>
+<td>
+    <?php
+    echo $this->formRow($upSize);
+    echo $this->formRow($upValue);
+
+
+    ?>
+</td>
+                <td>
+                    <?php
+                    echo $this->formRow($gabarities);
+
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    echo $this->formRow($adr);
+
+                    ?>
+
+                </td>
+            </tr>
+    </table>
+
+            <?php
+            echo $this->formRow($upShip);
+            echo $this->formRow($mayBeUpShip);
+            echo $this->formRow($partCargo);
+
+
+            ?>
+        </td>
+        <td>
+            <?php
+            echo $this->formRow($areaLoad);
+            echo $this->formRow($areaUnload);
+            echo $this->formRow($cycle);
+            ?>
+        </td>
+    </tr>
+    </table>
+
+<table class="table" style="width:100%;">
+    <tr>
+        <th style="width:70%;">
+            Параметры машины
         </th>
     </tr>
     <tr>
@@ -81,40 +163,16 @@ $transportType=$form->get('transportType');
                         echo $this->formRow($transportType);
                         ?>
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <?php
-                        echo $this->formRow($upSize);
-                        echo $this->formRow($upValue);
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->formRow($gabarities);
-
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->formRow($adr);
+                        echo $this->formRow($numberOfCars);
 
                         ?>
                     </td>
                 </tr>
             </table>
             <?php
-            echo $this->formRow($upShip);
             echo $this->formRow($tir);
-            echo $this->formRow($ekmt);
-            echo $this->formRow($hydroLift);
-            ?>
-        </td>
-        <td>
-            <?php
-            echo $this->formRow($areaLoad);
-            echo $this->formRow($areaUnload);
-            echo $this->formRow($cycle);
             ?>
         </td>
     </tr>
