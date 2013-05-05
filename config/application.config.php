@@ -1,7 +1,6 @@
 <?php
 return array(
     'modules' => array(
-        'Zf2Whoops',
         'Yassa\Rollbar',
         'ZendDeveloperTools',
         'Application',

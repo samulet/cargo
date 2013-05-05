@@ -1,5 +1,6 @@
 {
     "hash": "8fbec71f2878ca38129c9372e1c2e990",
+    "hash": "a1588697c3d7f2df2d0cb4cac7353a6c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -695,57 +696,6 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2013-04-16 16:35:08"
-        },
-        {
-            "name": "filp/whoops",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/filp/whoops.git",
-                "reference": "1.0.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/1.0.3",
-                "reference": "1.0.3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "dev-master",
-                "silex/silex": "1.0.*@dev"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Whoops": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Filipe Dobreira",
-                    "homepage": "https://github.com/filp",
-                    "role": "Developer"
-                }
-            ],
-            "description": "php error handling for cool kids",
-            "homepage": "https://github.com/filp/whoops",
-            "keywords": [
-                "error",
-                "exception",
-                "handling",
-                "library",
-                "silex-provider",
-                "whoops",
-                "zf2"
-            ],
             "time": "2013-04-23 07:20:17"
         },
         {
@@ -825,59 +775,6 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2013-04-22 12:44:19"
-        },
-        {
-            "name": "ghislainf/zf2-whoops",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ghislainf/zf2-whoops.git",
-                "reference": "4d22ce16b9c0b67df86829d059826b9c55c1e214"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ghislainf/zf2-whoops/zipball/4d22ce16b9c0b67df86829d059826b9c55c1e214",
-                "reference": "4d22ce16b9c0b67df86829d059826b9c55c1e214",
-                "shasum": ""
-            },
-            "require": {
-                "filp/whoops": "1.*",
-                "php": ">=5.3.3",
-                "zendframework/zendframework": "2.*"
-            },
-            "type": "module",
-            "autoload": {
-                "psr-0": {
-                    "zf2-whoops": "src/"
-                },
-                "classmap": [
-                    "./Module.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Filipe Dobreira",
-                    "homepage": "https://github.com/filp",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Ghislain de Fontenay",
-                    "email": "ghislain.de.fontenay@gmail.com",
-                    "homepage": "http://www.ghislainf.me/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Balázs Németh",
-                    "email": "zsilbi@zsilbi.hu"
-                }
-            ],
-            "description": "PHP whoops error on ZF2 framework",
-            "homepage": "https://github.com/ghislainf/zf2-whoops",
             "time": "2013-04-24 12:25:34"
         },
         {
@@ -978,19 +875,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladeofsteel/yassa-rollbar.git",
-                "reference": "d878f8424efd93380dda01b2328fda64d6542597"
+                "reference": "v0.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladeofsteel/yassa-rollbar/zipball/d878f8424efd93380dda01b2328fda64d6542597",
-                "reference": "d878f8424efd93380dda01b2328fda64d6542597",
+                "url": "https://api.github.com/repos/bladeofsteel/yassa-rollbar/zipball/v0.2.0",
+                "reference": "v0.2.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "rollbar/rollbar": "dev-master",
                 "zendframework/zend-eventmanager": "2.*",
-                "zendframework/zend-loader": "2.*"
+                "zendframework/zend-loader": "2.*",
+                "zendframework/zend-log": "2.*",
+                "zendframework/zend-servicemanager": "2.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "zendframework/zend-mvc": "2.*"
             },
             "type": "project",
             "autoload": {
@@ -1014,7 +917,7 @@
                 }
             ],
             "description": "Zend Framework 2 module for connect to Rollbar",
-            "time": "2013-04-26 11:00:50"
+            "time": "2013-05-04 11:53:08"
         },
         {
             "name": "zendframework/zend-developer-tools",
