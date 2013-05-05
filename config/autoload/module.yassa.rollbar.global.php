@@ -7,6 +7,11 @@
  */
 $settings = array(
     /**
+     * Enabled module or not
+     */
+    'enabled' => true,
+
+    /**
      * your project access token
      */
     'access_token' => '0faa035473dc4c68a3b56a67b531cfef',
