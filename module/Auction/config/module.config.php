@@ -9,7 +9,7 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'resource' => array(
+            'auction' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'    => '/auctions[/:action][/:id]',
