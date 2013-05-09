@@ -12,5 +12,18 @@
  */
 
 return array(
-    // ...
+    'service_manager' => array(
+        'factories' => array(
+            'Application\Logger' => 'Application\Factory\LoggerServiceFactory',
+        ),
+        'aliases' => array(
+            'Rollbar' => 'Yassa\Rollbar\Log\Writer\Rollbar',
+        ),
+    ),
+    'log' => array(
+        'writers' => array(
+        ),
+        'exceptionhandler' => true,
+        'errorhandler' => true,
+    ),
 );
