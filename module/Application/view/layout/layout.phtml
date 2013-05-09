@@ -32,6 +32,24 @@
                         <ul class="nav">
                             <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
                         </ul>
+                        <ul class="nav pull-right">
+                            <?php if(!$this->zfcUserIdentity()): ?>
+                            <li>
+                                <!-- display the login form -->
+                                <a href="<?php echo $this->url('zfcuser/login') ?>"><?php echo $this->translate('Login') ?>&nbsp;<i class="icon-off icon-white"></i></a>
+                                <?php //echo $this->zfcUserLoginWidget(array('redirect'=>'application')); ?>
+                            </li>
+                            <?php else: ?>
+                                <li class="divider-vertical">
+                                    <!-- display the 'display name' of the user -->
+                                    <a href="<?php echo $this->url('zfcuser') ?>"><i class="icon-user icon-white"></i>&nbsp;<?php echo $this->zfcUserIdentity()->getDisplayname(); ?></a>
+                                </li>
+                                <li class="divider-vertical">
+                                    <a href="<?php echo $this->url('zfcuser/logout') ?>"><?php echo $this->translate('Logout') ?>&nbsp;<i class="icon-off icon-white"></i></a>
+                                    <?php //echo $this->zfcUserLoginWidget(array('redirect'=>'application')); ?>
+                                </li>
+                            <?php endif?>
+                        </ul>
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
