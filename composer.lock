@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a1588697c3d7f2df2d0cb4cac7353a6c",
+    "hash": "53807f1569e850cfc49aa7656699a3e5",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -215,12 +215,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "3506be7467dbd4f923691a00555cf80065d32e59"
+                "reference": "7eea788cb5869d9954b0d8091969f54b875d1003"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/3506be7467dbd4f923691a00555cf80065d32e59",
-                "reference": "3506be7467dbd4f923691a00555cf80065d32e59",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/7eea788cb5869d9954b0d8091969f54b875d1003",
+                "reference": "7eea788cb5869d9954b0d8091969f54b875d1003",
                 "shasum": ""
             },
             "require": {
@@ -266,7 +266,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -281,7 +281,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2013-04-16 21:50:30"
+            "time": "2013-05-09 08:02:38"
         },
         {
             "name": "doctrine/doctrine-module",
@@ -634,12 +634,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "7d4c1eee5155c47830bacb728424cfbfe1adf454"
+                "reference": "439992daa8d1687a3021abc03a6cf74fabe1b926"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/7d4c1eee5155c47830bacb728424cfbfe1adf454",
-                "reference": "7d4c1eee5155c47830bacb728424cfbfe1adf454",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/439992daa8d1687a3021abc03a6cf74fabe1b926",
+                "reference": "439992daa8d1687a3021abc03a6cf74fabe1b926",
                 "shasum": ""
             },
             "require": {
@@ -699,7 +699,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2013-05-02 15:53:51"
+            "time": "2013-05-08 19:17:36"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -829,12 +829,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "v2.3.0-BETA1"
+                "reference": "21510de48f8941f41a2a886ddf4299241e78634e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.3.0-BETA1",
-                "reference": "v2.3.0-BETA1",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/21510de48f8941f41a2a886ddf4299241e78634e",
+                "reference": "21510de48f8941f41a2a886ddf4299241e78634e",
                 "shasum": ""
             },
             "require": {
@@ -870,7 +870,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-04-30 07:16:44"
+            "time": "2013-05-09 09:00:31"
         },
         {
             "name": "yassa/rollbar",
@@ -878,12 +878,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladeofsteel/yassa-rollbar.git",
-                "reference": "v0.2.0"
+                "reference": "444c092b0782ec5d1af41c894a0ad989c03eb0bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladeofsteel/yassa-rollbar/zipball/v0.2.0",
-                "reference": "v0.2.0",
+                "url": "https://api.github.com/repos/bladeofsteel/yassa-rollbar/zipball/444c092b0782ec5d1af41c894a0ad989c03eb0bb",
+                "reference": "444c092b0782ec5d1af41c894a0ad989c03eb0bb",
                 "shasum": ""
             },
             "require": {
@@ -920,7 +920,7 @@
                 }
             ],
             "description": "Zend Framework 2 module for connect to Rollbar",
-            "time": "2013-05-04 11:53:08"
+            "time": "2013-05-05 20:03:54"
         },
         {
             "name": "zendframework/zend-developer-tools",
@@ -1621,17 +1621,60 @@
             "time": "2013-04-13 12:54:30"
         },
         {
-            "name": "codeception/codeception",
-            "version": "1.6.0.4",
+            "name": "ccampbell/chromephp",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "1.6.0.4"
+                "url": "https://github.com/ccampbell/chromephp.git",
+                "reference": "2d32195d142340d246957f95a4e9cb529eaef49d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1.6.0.4",
-                "reference": "1.6.0.4",
+                "url": "https://api.github.com/repos/ccampbell/chromephp/zipball/2d32195d142340d246957f95a4e9cb529eaef49d",
+                "reference": "2d32195d142340d246957f95a4e9cb529eaef49d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ChromePhp": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Craig Campbell",
+                    "email": "iamcraigcampbell@gmail.com",
+                    "homepage": "http://craig.is",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Log variables to the Chrome console (via Chrome Logger Google Chrome extension).",
+            "homepage": "http://github.com/ccampbell/chromephp",
+            "keywords": [
+                "log",
+                "logging"
+            ],
+            "time": "2013-04-23 01:17:44"
+        },
+        {
+            "name": "codeception/codeception",
+            "version": "1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Codeception/Codeception.git",
+                "reference": "1.6.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1.6.1",
+                "reference": "1.6.1",
                 "shasum": ""
             },
             "require": {
@@ -1679,7 +1722,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2013-04-22 21:26:01"
+            "time": "2013-05-09 00:53:34"
         },
         {
             "name": "fabpot/goutte",
@@ -1832,15 +1875,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/instaclick/php-webdriver.git",
-                "reference": "6f2196bc09dbf4f8eaa2bbcc94d4fc979544706a"
+                "reference": "4e720813de0e871d28ba41e7e97f01855cb2bf31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/instaclick/php-webdriver/zipball/6f2196bc09dbf4f8eaa2bbcc94d4fc979544706a",
-                "reference": "6f2196bc09dbf4f8eaa2bbcc94d4fc979544706a",
+                "url": "https://api.github.com/repos/instaclick/php-webdriver/zipball/4e720813de0e871d28ba41e7e97f01855cb2bf31",
+                "reference": "4e720813de0e871d28ba41e7e97f01855cb2bf31",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
                 "php": ">=5.3.2"
             },
             "type": "library",
@@ -1878,7 +1922,7 @@
                 "webdriver",
                 "webtest"
             ],
-            "time": "2013-02-21 16:05:33"
+            "time": "2013-05-07 15:25:21"
         },
         {
             "name": "monolog/monolog",
@@ -1948,12 +1992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "1.2.9"
+                "reference": "b0ec2d014fe497315aad876c6289a38fd4c075ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/1.2.9",
-                "reference": "1.2.9",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/b0ec2d014fe497315aad876c6289a38fd4c075ff",
+                "reference": "b0ec2d014fe497315aad876c6289a38fd4c075ff",
                 "shasum": ""
             },
             "require": {
@@ -1993,7 +2037,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-02-26 18:55:56"
+            "time": "2013-05-07 13:59:06"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2179,12 +2223,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9cd4ff7461e18d8176d7515f803b7721054287ea"
+                "reference": "19f1d742e0c36150001062f592c93f80aef3a9fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9cd4ff7461e18d8176d7515f803b7721054287ea",
-                "reference": "9cd4ff7461e18d8176d7515f803b7721054287ea",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/19f1d742e0c36150001062f592c93f80aef3a9fd",
+                "reference": "19f1d742e0c36150001062f592c93f80aef3a9fd",
                 "shasum": ""
             },
             "require": {
@@ -2245,7 +2289,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-05-04 11:24:19"
+            "time": "2013-05-07 14:00:05"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2253,12 +2297,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "d49b5683200b5db9b1c64cb06f52f50d147891c4"
+                "reference": "8e9d897b39ca6310ccc2d81b8f29cabd5ce12786"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/d49b5683200b5db9b1c64cb06f52f50d147891c4",
-                "reference": "d49b5683200b5db9b1c64cb06f52f50d147891c4",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/8e9d897b39ca6310ccc2d81b8f29cabd5ce12786",
+                "reference": "8e9d897b39ca6310ccc2d81b8f29cabd5ce12786",
                 "shasum": ""
             },
             "require": {
@@ -2294,7 +2338,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2013-02-05 07:46:41"
+            "time": "2013-05-07 12:11:45"
         },
         {
             "name": "psr/log",
@@ -2447,12 +2491,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DomCrawler.git",
-                "reference": "59b171317b17b60a5df830e09e02961563323e8d"
+                "reference": "f78e94a8a4230a50c7556b4794924e8e35c19108"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/59b171317b17b60a5df830e09e02961563323e8d",
-                "reference": "59b171317b17b60a5df830e09e02961563323e8d",
+                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/f78e94a8a4230a50c7556b4794924e8e35c19108",
+                "reference": "f78e94a8a4230a50c7556b4794924e8e35c19108",
                 "shasum": ""
             },
             "require": {
@@ -2491,7 +2535,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "http://symfony.com",
-            "time": "2013-04-22 05:03:23"
+            "time": "2013-05-06 06:26:30"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2601,12 +2645,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "v2.3.0-BETA1"
+                "reference": "bb721b29e033594512f8b08386e13593b0faaf0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/v2.3.0-BETA1",
-                "reference": "v2.3.0-BETA1",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/bb721b29e033594512f8b08386e13593b0faaf0f",
+                "reference": "bb721b29e033594512f8b08386e13593b0faaf0f",
                 "shasum": ""
             },
             "require": {
@@ -2639,7 +2683,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2013-04-30 07:21:49"
+            "time": "2013-05-06 20:03:44"
         },
         {
             "name": "symfony/yaml",

@@ -25,7 +25,8 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "codeception/codeception": "@stable"
+        "codeception/codeception": "@stable",
+        "ccampbell/chromephp": "*"
     },
     "repositories": [
         {
