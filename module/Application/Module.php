@@ -1,6 +1,8 @@
 <?php
 namespace Application;
 
+use Application\Service\ErrorHandling as ErrorHandlingService;
+use Zend\Mvc\ApplicationInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -26,6 +28,15 @@ class Module
                 'username' => $identity->getDisplayName()
             );
         }
+
+        $eventManager->attach('dispatch.error', function($event){
+            $exception = $event->getResult()->exception;
+            if ($exception) {
+                $sm = $event->getApplication()->getServiceManager();
+                $service = $sm->get('Application\Service\ErrorHandling');
+                $service->logException($exception);
+            }
+        });
     }
 
     public function getConfig()
@@ -43,6 +54,20 @@ class Module
             ),
         );
     }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Application\Service\ErrorHandling' =>  function($sm) {
+                    $logger = $sm->get('Application\Logger');
+                    $service = new ErrorHandlingService($logger);
+                    return $service;
+                },
+            ),
+        );
+    }
+
     private function registerShutdownFunction(ApplicationInterface $application)
     {
         register_shutdown_function(function() use ($application) {
