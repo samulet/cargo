@@ -16,6 +16,7 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
+        $this->registerShutdownFunction($e->getApplication());
         $e->getApplication()->getServiceManager()->get('translator');
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
@@ -49,5 +50,16 @@ class Module
                 ),
             ),
         );
+    }
+    private function registerShutdownFunction(ApplicationInterface $application)
+    {
+        register_shutdown_function(function() use ($application) {
+            /** @var \Zend\Log\Logger $logger */
+            $logger = $application->getServiceManager()->get('Application\Logger');
+            $error = error_get_last();
+            if ($error) {
+                $logger->emerg($error['message'], $error);
+            }
+        });
     }
 }
