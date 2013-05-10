@@ -51,6 +51,11 @@ class Module
             $error = error_get_last();
             if ($error) {
                 $logger->emerg($error['message'], $error);
+
+                $errorPage = __DIR__ . '/../../public/500.html';
+                if (file_exists($errorPage)) {
+                    readfile($errorPage);
+                }
             }
         });
     }
