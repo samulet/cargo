@@ -3,13 +3,13 @@ return array(
     'modules' => array(
         'Yassa\Rollbar',
         'ZendDeveloperTools',
-        'Application',
         'DoctrineModule',
         'DoctrineMongoODMModule',
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineMongoODM',
         'User',
+        'Application',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
