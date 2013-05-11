@@ -283,6 +283,16 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"Муковоз2:"})
+     */
+
+
+    public $mukovoz2;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Options({"label":"Кран:"})
      */
 

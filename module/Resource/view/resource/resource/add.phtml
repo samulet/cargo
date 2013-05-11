@@ -11,6 +11,7 @@ $tent = $form->get('tent');
 $furgon= $form->get('furgon');
 $pickup= $form->get('pickup');
 $mukovoz= $form->get('mukovoz');
+$mukovoz2= $form->get('mukovoz2');
 
 $kran= $form->get('kran');
 
@@ -67,6 +68,7 @@ $transportType=$form->get('transportType');
                         <?php
                         echo $this->formRow($tent);
                         echo $this->formRow($mukovoz);
+                        echo $this->formRow($mukovoz2);
                         echo $this->formRow($pickup);
                         echo $this->formRow($furgon);
                             ?>
