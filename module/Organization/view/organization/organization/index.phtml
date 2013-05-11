@@ -47,6 +47,12 @@ $this->headTitle($title);
                 <tr>
                     <td><a href="<?php echo $this->url('company',
                             array('action'=>'list', 'org_id'=>$o['uuid'],'id' => $c['uuid']));?>"><?php echo $c['name']; ?></a></td>
+                <td>
+                                <a href="<?php echo $this->url('company',
+                                    array('action'=>'edit', 'id' => $c['uuid'], 'org_id' => $o['uuid']));?>">Редактировать</a>
+                                <a href="<?php echo $this->url('company',
+                                    array('action'=>'delete', 'id' => $c['uuid'],'org_id' => $o['uuid']));?>">Удалить</a>
+                </td>
                 </tr>
             <?php } ?>
 

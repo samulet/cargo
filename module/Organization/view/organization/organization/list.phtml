@@ -12,8 +12,8 @@ $this->headTitle($title);
 <p>Владелец организации: <?php echo $o['orgOwner'];?></p>
 </br>
                 <a href="<?php echo $this->url('organization',
-                    array('action'=>'edit', 'id' => $o['uuid']));?>">Edit</a>
+                    array('action'=>'edit', 'id' => $o['uuid']));?>">Редактировать</a>
                 <a href="<?php echo $this->url('organization',
-                    array('action'=>'delete', 'id' => $o['uuid']));?>">Delete</a>
+                    array('action'=>'delete', 'id' => $o['uuid']));?>">Удалить</a>
 
     <?php } ?>

@@ -47,7 +47,8 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         if(empty($orgOfUser)) return null;
         $org_id=$orgOfUser->getOrgId();
             $org_obj=$objectManager->getRepository('Organization\Entity\Organization')->find($org_id);
-       // die(var_dump($org_obj));
+        //die(var_dump($org_obj));
+        if(empty($org_obj)) return null;
             $org=get_object_vars($org_obj);
            // $org=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
                // 'name'=>$org_obj->getName());
@@ -70,11 +71,12 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function createOrganization($post,$user_id) {
+    public function createOrganization($post,$user_id,$org_id) {
         if(!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $org_item=$post->organization;
-            $org = new Organization($user_id);
+            if(!empty($org_id)) $org=$objectManager->getRepository('Organization\Entity\Organization')->find($org_id);
+            else $org = new Organization($user_id);
             $org->setDescription($org_item['description']);
             $org->setName($org_item['name']);
             $org->setType($org_item['type']);
@@ -123,4 +125,18 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         return $this->companyUserModel;
     }
 
+    public function deleteOrganization($org_id) {
+      //  die(var_dump($org_id));
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+       // $objectManager->getRepository('Organization\Entity\Organization')->find($org_id)->remove();
+        $qb = $objectManager->createQueryBuilder('Organization\Entity\Organization');
+        $qb->remove()->field('id')->equals(new \MongoId($org_id)) ->getQuery()
+            ->execute();
+        $qb2 = $objectManager->createQueryBuilder('Organization\Entity\CompanyUser');
+        $qb2->remove()->field('orgId')->equals(new \MongoId($org_id)) ->getQuery()
+            ->execute();
+        $qb3 = $objectManager->createQueryBuilder('Organization\Entity\Company');
+        $qb3->remove()->field('ownerOrgId')->equals(new \MongoId($org_id)) ->getQuery()
+            ->execute();
+    }
 }

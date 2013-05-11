@@ -99,4 +99,21 @@ class CompanyModel implements ServiceLocatorAwareInterface
         return array('uuid'=>$org->getUUID(),'description'=>$org->getDescription(), 'type'=>$org->getType(), 'name'=>$org->getName(), 'orgOwner'=>$user->getDisplayName());
     }
 
+    public function getCompanyIdByUUID($com_uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $com_id=$objectManager->getRepository('Organization\Entity\Company')->findOneBy(array('uuid' => $com_uuid));
+        return $com_id;
+    }
+
+    public function returnCompany($com_id) {
+        ini_set('display_errors', 'Off');
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $com_obj=$objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+
+        $com=get_object_vars($com_obj);
+        unset($com['created']);
+        unset($com['updated']);
+        return $com;
+    }
+
 }

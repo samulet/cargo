@@ -100,4 +100,13 @@ class CompanyController extends AbstractActionController
         }
         return $this->organizationModel;
     }
+    public function listAction() {
+        $com_uuid=$this->getEvent()->getRouteMatch()->getParam('id');
+        $comModel=$this->getCompanyModel();
+        $com=$comModel->returnCompany($comModel->getCompanyIdByUUID($com_uuid));
+
+        return new ViewModel(array(
+            'com' =>$com
+        ));
+    }
 }

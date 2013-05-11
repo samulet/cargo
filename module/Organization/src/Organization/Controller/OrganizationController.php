@@ -56,7 +56,16 @@ namespace Organization\Controller {
         public function editAction()
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
-            $org_id = $this->getEvent()->getRouteMatch()->getParam('id');
+            $form = new OrganizationCreate();
+            $orgModel = $this->getOrganizationModel();
+
+            $org = $orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getId());
+            $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            return new ViewModel(array(
+                'form' => $form,
+                'org' =>$org[0]['org'],
+                'uuid' =>$org_uuid
+            ));
         }
 
         public function listAction()
@@ -76,6 +85,11 @@ namespace Organization\Controller {
         public function deleteAction()
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
+            $orgModel = $this->getOrganizationModel();
+            $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            $org_id=$orgModel->getOrgIdByUUID($org_uuid);
+            $orgModel->deleteOrganization($org_id);
+            return $this->redirect()->toUrl('/organization');
         }
 
         public function createOrganizationAction()
@@ -83,9 +97,12 @@ namespace Organization\Controller {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $post = $this->getRequest()->getPost();
             $orgModel = $this->getOrganizationModel();
+            $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            if(!empty($org_uuid)) $org_id=$orgModel->getOrgIdByUUID($org_uuid);
+            else $org_id=null;
             if ($orgModel->createOrganization(
                 $post,
-                $this->zfcUserAuthentication()->getIdentity()->getId()
+                $this->zfcUserAuthentication()->getIdentity()->getId(),$org_id
             )
             ) {
                 $result = "Успешо";
