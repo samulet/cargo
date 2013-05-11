@@ -20,8 +20,10 @@ namespace Ticket\Controller;
     {
         protected $ticketModel;
         protected $companyUserModel;
+
         public function indexAction()
         {
+
             $res=$this->getTicketModel();
             return new ViewModel(array(
                 'res' =>  $res->returnAllTicket()

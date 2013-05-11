@@ -7,4 +7,4 @@ foreach ($comp as $key => $value) {
 if($value!='') echo $key.' : '.$value.'</br> ';
 }
 
-?>
+?><a href="<?php echo $this->url('organization', array('action'=>'index'));?>">Вернуться в организации</a>

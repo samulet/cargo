@@ -61,3 +61,116 @@ $this->headTitle($title);
     <?php } } ?>
 
 
+<?php
+$tickets=$this->tick;
+
+$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+?>
+<a href="<?php echo $this->url('ticket',
+    array('action'=>'add'));?>">Добавить заявку</a>
+<a href="<?php echo $this->url('ticket',
+    array('action'=>'my'));?>">Мои заявки</a>
+
+<table class="table">
+    <tr>
+    <th>
+        Типы перевозок
+    </th>
+    <th>
+        Промежуток когда свободен ресурс
+    </th>
+    <th>
+        Стоимость
+    </th>
+    <th>
+        Подробнее
+     </th>
+         <th>
+             Добавить аукцион
+          </th>
+    </tr>
+    <?php foreach ($tickets as $ticket) { ?>
+<tr>
+    <td>
+        <?php foreach ($types_r as $key => $value) {
+            echo $key.' '.$ticket[$value].' ';
+        }
+        ?>
+    </td>
+    <td>
+        <?php echo $ticket['dateStart'].' / '.$ticket['dateEnd']; ?>
+    </td>
+    <td>
+        <?php echo $ticket['money'].' '.$ticket['currency']; ?>
+    </td>
+    <td>
+        <a href="<?php echo $this->url('ticket',
+            array('action'=>'list', 'id' => $ticket['uuid']));?>">Подробнее</a>
+    </td>
+        <td>
+            <a href="<?php echo $this->url('auction',
+                array('action'=>'add', 'id' => $ticket['uuid']));?>">Добавить аукцион</a>
+        </td>
+</tr>
+    <?php } ?>
+
+</table>
+
+<?php
+$resources=$this->res;
+
+$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+?>
+
+
+<a href="<?php echo $this->url('resource',
+    array('action'=>'add'));?>">Добавить ресурс</a>
+    <a href="<?php echo $this->url('ticket',
+        array('action'=>'add'));?>">Добавить заявку</a>
+<a href="<?php echo $this->url('resource',
+    array('action'=>'my'));?>">Мои ресурсы</a>
+
+<table class="table">
+    <tr>
+    <th>
+        Типы перевозок
+    </th>
+    <th>
+        Промежуток когда свободен ресурс
+    </th>
+    <th>
+        Стоимость
+    </th>
+    <th>
+        Подробнее
+     </th>
+         <th>
+             Добавить аукцион
+          </th>
+    </tr>
+    <?php foreach ($resources as $resource) { ?>
+<tr>
+    <td>
+        <?php foreach ($types_r as $key => $value) {
+            echo $key.' '.$resource[$value].' ';
+        }
+        ?>
+    </td>
+    <td>
+        <?php echo $resource['dateStart'].' / '.$resource['dateEnd']; ?>
+    </td>
+    <td>
+        <?php echo $resource['money'].' '.$resource['currency']; ?>
+    </td>
+    <td>
+        <a href="<?php echo $this->url('resource',
+            array('action'=>'list', 'id' => $resource['uuid']));?>">Подробнее</a>
+    </td>
+        <td>
+            <a href="<?php echo $this->url('auction',
+                array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить аукцион</a>
+        </td>
+</tr>
+    <?php } ?>
+
+</table>

@@ -9,6 +9,8 @@ namespace Organization\Controller {
     class OrganizationController extends AbstractActionController
     {
         protected $organizationModel;
+        protected $ticketModel;
+        protected $resourceModel;
 
         public function indexAction()
         {
@@ -16,9 +18,15 @@ namespace Organization\Controller {
             $orgModel = $this->getOrganizationModel();
             $org = $orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getId());
 
+            $tickModel=$this->getTicketModel();
+            $resModel=$this->getResourceModel();
+            $res=$resModel->returnAllResource();
+            $tick= $tickModel->returnAllTicket();
 
             return new ViewModel(array(
-                'org' => $org
+                'org' => $org,
+                'tick'=>$tick,
+                'res'=>$res
             ));
 
         }
@@ -115,6 +123,22 @@ namespace Organization\Controller {
                 'result' => $result
             ));
 
+        }
+        public function getResourceModel()
+        {
+            if (!$this->resourceModel) {
+                $sm = $this->getServiceLocator();
+                $this->resourceModel = $sm->get('Resource\Model\ResourceModel');
+            }
+            return $this->resourceModel;
+        }
+        public function getTicketModel()
+        {
+            if (!$this->ticketModel) {
+                $sm = $this->getServiceLocator();
+                $this->ticketModel = $sm->get('Ticket\Model\TicketModel');
+            }
+            return $this->ticketModel;
         }
 
     }

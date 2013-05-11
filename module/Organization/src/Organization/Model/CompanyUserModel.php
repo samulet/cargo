@@ -57,6 +57,10 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-
+    public function getOrgIdByUserId($userId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $userObject=$objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('userId' => new \MongoId($userId)));
+        return $userObject->userId;
+    }
 
 }
