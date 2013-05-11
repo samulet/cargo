@@ -10,7 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 /**
 * @ODM\Document(collection="company")
 */
-class Company implements CompanyInterface
+class Company
 {
     public function __construct($ownerOrgId)
     {
@@ -22,80 +22,80 @@ class Company implements CompanyInterface
      * @ODM\Id
      * @var int
      */
-    protected $id;
+    public $id;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $uuid;
+    public $uuid;
 
     /**
      * @ODM\ObjectId
      * @var int
      */
-    protected $ownerOrgId;
+    public $ownerOrgId;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
-    protected $created;
+    public $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      */
-    protected $updated;
+    public $updated;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $activated;
+    public $activated;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $name;
+    public $name;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $type;
+    public $type;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $description;
+    public $description;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $requisites;
+    public $requisites;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $addressFact;
+    public $addressFact;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $addressReg;
+    public $addressReg;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $generalManager;
+    public $generalManager;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $telephone;
+    public $telephone;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $email;
+    public $email;
     /**
      * Get id.
      *

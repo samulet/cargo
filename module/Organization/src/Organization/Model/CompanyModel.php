@@ -44,14 +44,11 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
         $com=array();
         foreach ($cursor as $cur) {
-            $arr=array('uuid'=>$cur->getUUID(),'description'=>$cur->getDescription(), 'type'=>$cur->getType(),
-                'name'=>$cur->getName(),
-                'requisites'=>$cur->getRequisites(),
-                'addressFact'=> $cur->getAddressFact(),
-                'generalManager'=>$cur->getGeneralManager(),
-                'telephone'=> $cur->getTelephone(),
-                'email'=>$cur->getEmail()
-            );
+            $arr=get_object_vars($cur);
+            // $org=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
+            // 'name'=>$org_obj->getName());
+            unset($arr['created']);
+            unset($arr['updated']);
             array_push($com,$arr);
         }
         return $com;

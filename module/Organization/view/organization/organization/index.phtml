@@ -4,17 +4,18 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
-    <a href="<?php echo $this->url('organization', array('action'=>'add'));?>">Добавить организацию</a>
+ <?php if(empty($this->org)) { ?>   <a href="<?php echo $this->url('organization', array('action'=>'add'));?>">Добавить организацию</a>
+ <?php } ?>
 </p>
 
-    <?php foreach($this->org as $oc) { $o=$oc['org']?>
+    <?php if(!empty($this->org)) { foreach($this->org as $oc) { $o=$oc['org']?>
         <table class="table">
             <tr>
                 <th>Название организации</th>
                 <th>Тип организации</th>
                 <th>Описание организации</th>
                 <th>Добавить компанию</th>
-                <th>Добавить юзера в компанию</th>
+                <th>Добавить юзера в организацию</th>
                 <th>&nbsp;</th>
             </tr>
         <tr>
@@ -51,6 +52,6 @@ $this->headTitle($title);
 
         </table>
         </br></br>
-    <?php } ?>
+    <?php } } ?>
 
 

@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
  *
  * @ODM\Document(collection="organization")
  */
-class Organization implements OrganizationInterface
+class Organization
 {
     public function __construct($ownerId)
     {
@@ -23,49 +23,49 @@ class Organization implements OrganizationInterface
      * @ODM\Id
      * @var int
      */
-    protected $id;
+    public $id;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $uuid;
+    public $uuid;
 
     /**
      * @ODM\ObjectId
      * @var int
      */
-    protected $ownerId;
+    public $ownerId;
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
-    protected $created;
+    public $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      */
-    protected $updated;
+    public $updated;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $activated;
+    public $activated;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $description;
+    public $description;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $name;
+    public $name;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $type;
+    public $type;
     /**
      * Get id.
      *

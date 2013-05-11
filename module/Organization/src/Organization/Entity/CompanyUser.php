@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 /**
 * @ODM\Document(collection="companyUser")
 */
-class CompanyUser implements CompanyUserInterface
+class CompanyUser
 {
     public function __construct($org_id,$user_id)
     {
@@ -21,28 +21,28 @@ class CompanyUser implements CompanyUserInterface
      * @ODM\Id
      * @var int
      */
-    protected $id;
+    public $id;
     /**
      * @ODM\ObjectId
      * @var int
      */
-    protected $userId;
+    public $userId;
     /**
      * @ODM\ObjectId
      * @var int
      */
-    protected $companyId;
+    public $companyId;
 
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $userRights;
+    public $userRights;
     /**
      * @ODM\ObjectId
      * @var int
      */
-    protected $orgId;
+    public $orgId;
 
     public function getId()
     {

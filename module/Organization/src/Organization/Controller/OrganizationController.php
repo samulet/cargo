@@ -12,9 +12,6 @@ namespace Organization\Controller {
 
         public function indexAction()
         {
-            // $this->getS
-            error_reporting(E_ALL | E_STRICT);
-            ini_set('display_errors', 'On');
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $orgModel = $this->getOrganizationModel();
             $org = $orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getId());

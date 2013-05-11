@@ -1,6 +1,7 @@
 <?php
 namespace Organization;
-
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 'On');
 use Organization\Entity\Organization;
 use Organization\Model\OrganizationModel;
 use Organization\Model\CompanyModel;

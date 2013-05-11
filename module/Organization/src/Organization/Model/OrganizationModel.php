@@ -40,22 +40,25 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     public function returnOrganizations($user_id,$number='30', $page='1') {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $user_id=new \MongoId($user_id);
-        $orgOfUser=$objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('userId' => $user_id));
-
-     //  $qb = $objectManager->createQueryBuilder('Organization\Entity\Organization')->eagerCursor(true);
-     //   $query = $qb->getQuery();
-      //  $cursor = $query->execute();
+        $orgOfUser=$objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('userId' => $user_id));
         $orgs=array();
-        foreach ($orgOfUser as $cur) {
-            $org_id=$cur->getOrgId();
+       // foreach ($orgOfUser as $cur) {
+
+        if(empty($orgOfUser)) return null;
+        $org_id=$orgOfUser->getOrgId();
             $org_obj=$objectManager->getRepository('Organization\Entity\Organization')->find($org_id);
-            $org=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
-                'name'=>$org_obj->getName());
+       // die(var_dump($org_obj));
+            $org=get_object_vars($org_obj);
+           // $org=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
+               // 'name'=>$org_obj->getName());
+            unset($org['created']);
+            unset($org['updated']);
             $comModel=$this->getCompanyModel();
             $com=$comModel->returnCompanies($org_id);
+
             array_push($orgs,array('org'=>$org,'com'=>$com));
-        }
-       // die(var_dump($orgs));
+      //  }
+        //die(var_dump($orgs));
         return $orgs;
     }
 
