@@ -3,11 +3,12 @@ $resources=$this->res;
 
 $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
 ?>
-<a href="<?php echo $this->url('ticket',
-    array('action'=>'add'));?>">Добавить ресурс</a>
+
 
 <a href="<?php echo $this->url('resource',
     array('action'=>'add'));?>">Добавить ресурс</a>
+    <a href="<?php echo $this->url('ticket',
+        array('action'=>'add'));?>">Добавить заявку</a>
 <a href="<?php echo $this->url('resource',
     array('action'=>'my'));?>">Мои ресурсы</a>
 

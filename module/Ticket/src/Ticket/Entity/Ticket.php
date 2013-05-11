@@ -48,6 +48,12 @@ class Ticket
      */
     public $ownerId;
     /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Exclude()
+     */
+    public $ownerOrgId;
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      * @Annotation\Exclude()

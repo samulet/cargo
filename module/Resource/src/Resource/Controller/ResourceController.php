@@ -18,8 +18,9 @@ namespace Resource\Controller;
 
     class ResourceController extends AbstractActionController
     {
-        protected $resourceModel;
 
+        protected $companyUserModel;
+        protected $resourceModel;
         public function indexAction()
         {
             $res=$this->getResourceModel();
@@ -67,8 +68,11 @@ namespace Resource\Controller;
          }
 
         public function addResourceAction() {
+            $comUserModel=$this->getCompanyUserModel();
+            $user_id=$this->zfcUserAuthentication()->getIdentity()->getId();
+            $org_id=$comUserModel->getOrgIdByUserId($user_id);
             $res=$this->getResourceModel();
-            $res->addResource($this->getRequest()->getPost(),$this->zfcUserAuthentication()->getIdentity()->getId());
+            $res->addResource($this->getRequest()->getPost(),$user_id,$org_id);
             return $this->redirect()->toUrl('/resources/my');
         }
 
@@ -80,4 +84,14 @@ namespace Resource\Controller;
             }
             return $this->resourceModel;
         }
-}
+
+        public function getCompanyUserModel()
+        {
+            if (!$this->companyUserModel) {
+                $sm = $this->getServiceLocator();
+                $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            }
+            return $this->companyUserModel;
+        }
+
+    }

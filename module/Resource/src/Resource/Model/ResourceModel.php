@@ -22,13 +22,12 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 class ResourceModel implements ServiceLocatorAwareInterface
 {
-
     protected $serviceLocator;
 
-    public function addResource($post,$owner_id) {
+    public function addResource($post,$owner_id,$owner_org_id) {
         $prop_array=get_object_vars($post);
         $prop_array['ownerId']=$owner_id;
-
+        $prop_array['ownerOrgId']=$owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = new Resource();
         foreach ($prop_array as $key => $value) {
@@ -79,4 +78,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
     public function getServiceLocator() {
         return $this->serviceLocator;
     }
+
+
+
 }

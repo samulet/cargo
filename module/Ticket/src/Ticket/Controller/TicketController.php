@@ -19,7 +19,7 @@ namespace Ticket\Controller;
     class TicketController extends AbstractActionController
     {
         protected $ticketModel;
-
+        protected $companyUserModel;
         public function indexAction()
         {
             $res=$this->getTicketModel();
@@ -67,8 +67,11 @@ namespace Ticket\Controller;
          }
 
         public function addTicketAction() {
+            $comUserModel=$this->getCompanyUserModel();
+            $user_id=$this->zfcUserAuthentication()->getIdentity()->getId();
+            $org_id=$comUserModel->getOrgIdByUserId($user_id);
             $res=$this->getTicketModel();
-            $res->addTicket($this->getRequest()->getPost(),$this->zfcUserAuthentication()->getIdentity()->getId());
+            $res->addTicket($this->getRequest()->getPost(),$user_id,$org_id);
             return $this->redirect()->toUrl('/tickets/my');
         }
 
@@ -79,5 +82,13 @@ namespace Ticket\Controller;
                 $this->ticketModel = $sm->get('Ticket\Model\TicketModel');
             }
             return $this->ticketModel;
+        }
+        public function getCompanyUserModel()
+        {
+            if (!$this->companyUserModel) {
+                $sm = $this->getServiceLocator();
+                $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            }
+            return $this->companyUserModel;
         }
 }
