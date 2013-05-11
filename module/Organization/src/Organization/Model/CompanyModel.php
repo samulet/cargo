@@ -62,12 +62,14 @@ class CompanyModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function createCompany($post,$org_id) {
-
+    public function createCompany($post,$org_id,$com_id) {
+      //  die(var_dump($com_id));
         if(!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $com_item=$post->company;
-            $com = new Company($org_id);
+            if(!empty($com_id)) $com=$objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+            else $com = new Company($org_id);
+
 
             $com->setDescription($com_item['description']);
             $com->setName($com_item['name']);
@@ -102,7 +104,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
     public function getCompanyIdByUUID($com_uuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $com_id=$objectManager->getRepository('Organization\Entity\Company')->findOneBy(array('uuid' => $com_uuid));
-        return $com_id;
+        return $com_id->id;
     }
 
     public function returnCompany($com_id) {
@@ -115,5 +117,13 @@ class CompanyModel implements ServiceLocatorAwareInterface
         unset($com['updated']);
         return $com;
     }
+    public function deleteCompany($com_id) {
 
+        // die(var_dump($com_id));
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        // $objectManager->getRepository('Organization\Entity\Organization')->find($org_id)->remove();
+        $qb = $objectManager->createQueryBuilder('Organization\Entity\Company');
+        $qb->remove()->field('id')->equals(new \MongoId($com_id)) ->getQuery()
+            ->execute();
+    }
 }

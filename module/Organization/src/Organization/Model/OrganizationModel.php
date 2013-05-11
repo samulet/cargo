@@ -139,4 +139,6 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         $qb3->remove()->field('ownerOrgId')->equals(new \MongoId($org_id)) ->getQuery()
             ->execute();
     }
+
+
 }

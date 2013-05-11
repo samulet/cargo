@@ -57,9 +57,12 @@ class CompanyController extends AbstractActionController
         $uuid_gen=new UuidGenerator();
         if(!$uuid_gen->isValid($org_uuid)) $result="Ошибка";
         else {
+            $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            if(!empty($com_uuid)) $com_id=$comModel->getCompanyIdByUUID($com_uuid);
+            else $com_id=null;
             $orgModel=$this->getOrganizationModel();
             $org_id=$orgModel->getOrgIdByUUID($org_uuid);
-            if($comModel->createCompany($post, $org_id)) $result="Успешо";
+            if($comModel->createCompany($post, $org_id,$com_id)) $result="Успешо";
             else $result="Ошибка";
         }
         return new ViewModel(array(
@@ -69,12 +72,32 @@ class CompanyController extends AbstractActionController
 
     public function editAction()
     {
+    //    $org_id=$this->getEvent()->getRouteMatch()->getParam('org_id');
+        $this->loginControl();
+        $form = new CompanyCreate();
         $org_id=$this->getEvent()->getRouteMatch()->getParam('org_id');
-        die(var_dump($org_id));
+        $com_uuid=$this->getEvent()->getRouteMatch()->getParam('id');
+
+
+        $comModel=$this->getCompanyModel();
+        $com=$comModel->returnCompany($comModel->getCompanyIdByUUID($com_uuid));
+       // die(var_dump($com));
+        return new ViewModel(array(
+            'com' =>$com,
+            'form' => $form,
+            'org_id' => $org_id,
+            'com_id' => $com_uuid
+        ));
     }
 
     public function deleteAction()
     {
+        $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
+        $comModel = $this->getCompanyModel();
+        $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $com_id=$comModel->getCompanyIdByUUID($com_uuid);
+        $comModel->deleteCompany($com_id);
+        return $this->redirect()->toUrl('/organization');
     }
     private function loginControl() {
         if ($this->zfcUserAuthentication()->hasIdentity()) return true;
