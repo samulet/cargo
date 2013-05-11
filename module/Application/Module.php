@@ -77,9 +77,11 @@ class Module
             if ($error) {
                 $logger->emerg($error['message'], $error);
 
-                $errorPage = __DIR__ . '/../../public/500.html';
-                if (file_exists($errorPage)) {
-                    readfile($errorPage);
+                if ('cli' !== php_sapi_name()) {
+                    $errorPage = __DIR__ . '/../../public/500.html';
+                    if (file_exists($errorPage)) {
+                        readfile($errorPage);
+                    }
                 }
             }
         });
