@@ -40,13 +40,13 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     public function returnOrganizations($user_id,$number='30', $page='1') {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $user_id=new \MongoId($user_id);
-        $orgOfUser=$objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('userId' => $user_id));
+        $orgOfUser=$objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('userId' => new \MongoId($user_id)));
         $orgs=array();
        // foreach ($orgOfUser as $cur) {
 
         if(empty($orgOfUser)) return null;
         $org_id=$orgOfUser->getOrgId();
-            $org_obj=$objectManager->getRepository('Organization\Entity\Organization')->find($org_id);
+            $org_obj=$objectManager->getRepository('Organization\Entity\Organization')->find(new \MongoId($org_id));
         //die(var_dump($org_obj));
         if(empty($org_obj)) return null;
             $org=get_object_vars($org_obj);
