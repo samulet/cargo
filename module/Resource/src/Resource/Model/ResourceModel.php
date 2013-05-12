@@ -23,13 +23,14 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 class ResourceModel implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
-
-    public function addResource($post,$owner_id,$owner_org_id) {
+    protected $organizationModel;
+    public function addResource($post,$owner_id,$owner_org_id,$id) {
         $prop_array=get_object_vars($post);
         $prop_array['ownerId']=$owner_id;
         $prop_array['ownerOrgId']=$owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = new Resource();
+        if(!empty($id)) $res=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('uuid' => $id));
+        else $res = new Resource();
         foreach ($prop_array as $key => $value) {
             $res->$key=$value;
         }
@@ -51,10 +52,13 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $query = $qb->getQuery();
         $rezObj = $query->execute();
         $rezs=array();
+        $orgModel = $this->getOrganizationModel();
         foreach ($rezObj as $cur) {
             //$rez=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
           // die(var_dump($cur->id));
-            array_push($rezs,get_object_vars($cur));
+            $obj_vars=get_object_vars($cur);
+            $org=$orgModel->getOrganization($obj_vars['ownerOrgId']);
+            array_push($rezs,array('res' => $obj_vars, 'org'=>$org));
         }
         return $rezs;
     }
@@ -78,7 +82,16 @@ class ResourceModel implements ServiceLocatorAwareInterface
     public function getServiceLocator() {
         return $this->serviceLocator;
     }
-
+    public function getOrganizationModel()
+    {
+        error_reporting(E_ALL | E_STRICT);
+        ini_set('display_errors', 'On');
+        if (!$this->organizationModel) {
+            $sm = $this->getServiceLocator();
+            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+        }
+        return $this->organizationModel;
+    }
 
 
 }

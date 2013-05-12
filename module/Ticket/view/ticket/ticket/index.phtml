@@ -20,13 +20,16 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         Стоимость
     </th>
     <th>
+        Организация
+    </th>
+    <th>
         Подробнее
      </th>
          <th>
              Добавить аукцион
           </th>
     </tr>
-    <?php foreach ($tickets as $ticket) { ?>
+    <?php foreach ($tickets as $ticket) { $org=$ticket['org'];$ticket=$ticket['tick']; ?>
 <tr>
     <td>
         <?php foreach ($types_r as $key => $value) {
@@ -41,9 +44,14 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <?php echo $ticket['money'].' '.$ticket['currency']; ?>
     </td>
     <td>
+    <a href="<?php echo $this->url('organization',
+                array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
+    </td>
+    <td>
         <a href="<?php echo $this->url('ticket',
             array('action'=>'list', 'id' => $ticket['uuid']));?>">Подробнее</a>
     </td>
+
         <td>
             <a href="<?php echo $this->url('auction',
                 array('action'=>'add', 'id' => $ticket['uuid']));?>">Добавить аукцион</a>

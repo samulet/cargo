@@ -19,8 +19,15 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <th>
             Стоимость
         </th>
+
         <th>
             Подробнее
+        </th>
+        <th>
+            Редактировать
+        </th>
+        <th>
+            Добавить аукцион
         </th>
     </tr>
     <?php foreach ($resources as $resource) { ?>
@@ -40,6 +47,14 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
             <td>
                 <a href="<?php echo $this->url('resource',
                     array('action'=>'list', 'id' => $resource['uuid']));?>">Подробнее</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url('resource',
+                    array('action'=>'edit', 'id' => $resource['uuid']));?>">Редактировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url('auction',
+                    array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить аукцион</a>
             </td>
         </tr>
     <?php } ?>

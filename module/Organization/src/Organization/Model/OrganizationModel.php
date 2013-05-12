@@ -75,7 +75,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         if(!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $org_item=$post->organization;
-            if(!empty($org_id)) $org=$objectManager->getRepository('Organization\Entity\Organization')->find($org_id);
+            if(!empty($org_id)) $org=$objectManager->getRepository('Organization\Entity\Organization')->find(new \MongoId($org_id));
             else $org = new Organization($user_id);
             $org->setDescription($org_item['description']);
             $org->setName($org_item['name']);
@@ -87,7 +87,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
 
 
             $org_id=$this->getOrgIdByUUID($org_uuid);
-
+die(var_dump($org_id));
             $comUserModel=$this->getCompanyUserModel();
             $comUserModel->addUserToOrg($user_id, $org_id);
 
@@ -96,13 +96,12 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     }
 
     public function getOrganization($id) {
-        $uuid_gen=new UuidGenerator();
-        if(!$uuid_gen->isValid($id)) return false;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $org=$objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
-        if(empty($org)) return false;
+        if(empty($org)) $org=$objectManager->getRepository('Organization\Entity\Organization')->find(new \MongoId($id));
+       // die(var_dump($id));
         $user=$objectManager->find('User\Entity\User', $org->getOwnerId());
-        //die(var_dump($user->getDisplayName()));
+
         if(empty($user)) return false;
         return array('uuid'=>$org->getUUID(),'description'=>$org->getDescription(), 'type'=>$org->getType(), 'name'=>$org->getName(), 'orgOwner'=>$user->getDisplayName());
     }
@@ -139,6 +138,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         $qb3->remove()->field('ownerOrgId')->equals(new \MongoId($org_id)) ->getQuery()
             ->execute();
     }
+
 
 
 }

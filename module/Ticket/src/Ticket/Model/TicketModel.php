@@ -24,6 +24,7 @@ class TicketModel implements ServiceLocatorAwareInterface
 {
 
     protected $serviceLocator;
+    protected $organizationModel;
 
     public function addTicket($post,$owner_id,$org_id) {
         $prop_array=get_object_vars($post);
@@ -52,10 +53,13 @@ class TicketModel implements ServiceLocatorAwareInterface
         $query = $qb->getQuery();
         $rezObj = $query->execute();
         $rezs=array();
+        $orgModel = $this->getOrganizationModel();
         foreach ($rezObj as $cur) {
             //$rez=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
           // die(var_dump($cur->id));
-            array_push($rezs,get_object_vars($cur));
+            $obj_vars=get_object_vars($cur);
+            $org=$orgModel->getOrganization($obj_vars['ownerOrgId']);
+            array_push($rezs,array('tick' => $obj_vars, 'org'=>$org));
         }
         return $rezs;
     }
@@ -78,5 +82,31 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function getServiceLocator() {
         return $this->serviceLocator;
+    }
+    public function getResourceModel()
+    {
+        if (!$this->resourceModel) {
+            $sm = $this->getServiceLocator();
+            $this->resourceModel = $sm->get('Resource\Model\ResourceModel');
+        }
+        return $this->resourceModel;
+    }
+    public function getTicketModel()
+    {
+        if (!$this->ticketModel) {
+            $sm = $this->getServiceLocator();
+            $this->ticketModel = $sm->get('Ticket\Model\TicketModel');
+        }
+        return $this->ticketModel;
+    }
+    public function getOrganizationModel()
+    {
+        error_reporting(E_ALL | E_STRICT);
+        ini_set('display_errors', 'On');
+        if (!$this->organizationModel) {
+            $sm = $this->getServiceLocator();
+            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+        }
+        return $this->organizationModel;
     }
 }

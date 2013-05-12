@@ -40,7 +40,6 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
         return true;
     }
-
     public function findUserByEmail($email) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $user_id=$objectManager->
@@ -60,7 +59,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     public function getOrgIdByUserId($userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $userObject=$objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('userId' => new \MongoId($userId)));
-        return $userObject->userId;
+        return $userObject->orgId;
     }
 
 }

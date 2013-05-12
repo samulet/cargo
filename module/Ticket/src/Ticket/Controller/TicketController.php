@@ -24,9 +24,9 @@ namespace Ticket\Controller;
         public function indexAction()
         {
 
-            $res=$this->getTicketModel();
+            $tick=$this->getTicketModel();
             return new ViewModel(array(
-                'res' =>  $res->returnAllTicket()
+                'res' =>  $tick->returnAllTicket()
             ));
         }
 
@@ -72,6 +72,7 @@ namespace Ticket\Controller;
             $comUserModel=$this->getCompanyUserModel();
             $user_id=$this->zfcUserAuthentication()->getIdentity()->getId();
             $org_id=$comUserModel->getOrgIdByUserId($user_id);
+
             $res=$this->getTicketModel();
             $res->addTicket($this->getRequest()->getPost(),$user_id,$org_id);
             return $this->redirect()->toUrl('/tickets/my');

@@ -48,7 +48,17 @@ namespace Resource\Controller;
 
         public function editAction()
         {
+            $resModel=$this->getResourceModel();
+            $id = $this->getEvent()->getRouteMatch()->getParam('id');
+            $res = $resModel->listResource($id);
 
+            $builder = new AnnotationBuilder();
+            $form    = $builder->createForm('Resource\Entity\Resource');
+            return new ViewModel(array(
+                'form' => $form,
+                'res' =>$res,
+                'id'=>$id
+            ));
         }
 
         public function listAction()
@@ -68,11 +78,12 @@ namespace Resource\Controller;
          }
 
         public function addResourceAction() {
+            $id = $this->getEvent()->getRouteMatch()->getParam('id');
             $comUserModel=$this->getCompanyUserModel();
             $user_id=$this->zfcUserAuthentication()->getIdentity()->getId();
             $org_id=$comUserModel->getOrgIdByUserId($user_id);
             $res=$this->getResourceModel();
-            $res->addResource($this->getRequest()->getPost(),$user_id,$org_id);
+            $res->addResource($this->getRequest()->getPost(),$user_id,$org_id,$id);
             return $this->redirect()->toUrl('/resources/my');
         }
 
