@@ -26,12 +26,13 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
     protected $organizationModel;
 
-    public function addTicket($post,$owner_id,$org_id) {
+    public function addTicket($post,$owner_id,$org_id,$id) {
         $prop_array=get_object_vars($post);
         $prop_array['ownerId']=$owner_id;
         $prop_array['ownerOrgId']=$org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = new Ticket();
+        if(!empty($id)) $res=$objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
+        else $res = new Ticket();
         foreach ($prop_array as $key => $value) {
             $res->$key=$value;
         }

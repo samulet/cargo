@@ -33,8 +33,10 @@ namespace Ticket\Controller;
         public function myAction()
         {
             $res=$this->getTicketModel();
+            $tick=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getId());
+           // die(var_dump($tick));
             return new ViewModel(array(
-                'res' => $res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getId())
+                'tick' =>$tick
             ));
         }
 
@@ -49,7 +51,17 @@ namespace Ticket\Controller;
 
         public function editAction()
         {
+            $tickModel=$this->getTicketModel();
+            $id = $this->getEvent()->getRouteMatch()->getParam('id');
+            $tick = $tickModel->listTicket($id);
 
+            $builder = new AnnotationBuilder();
+            $form    = $builder->createForm('Ticket\Entity\Ticket');
+            return new ViewModel(array(
+                'form' => $form,
+                'res' =>$tick,
+                'id'=>$id
+            ));
         }
 
         public function listAction()
@@ -69,12 +81,13 @@ namespace Ticket\Controller;
          }
 
         public function addTicketAction() {
+            $id = $this->getEvent()->getRouteMatch()->getParam('id');
             $comUserModel=$this->getCompanyUserModel();
             $user_id=$this->zfcUserAuthentication()->getIdentity()->getId();
             $org_id=$comUserModel->getOrgIdByUserId($user_id);
 
             $res=$this->getTicketModel();
-            $res->addTicket($this->getRequest()->getPost(),$user_id,$org_id);
+            $res->addTicket($this->getRequest()->getPost(),$user_id,$org_id,$id);
             return $this->redirect()->toUrl('/tickets/my');
         }
 
