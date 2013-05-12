@@ -110,4 +110,10 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         return $this->organizationModel;
     }
+    public function deleteTicket($uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $qb4 = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
+        $qb4->remove()->field('uuid')->equals($uuid) ->getQuery()
+            ->execute();
+    }
 }

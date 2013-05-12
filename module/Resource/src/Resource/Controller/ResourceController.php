@@ -74,7 +74,10 @@ namespace Resource\Controller;
 
         public function deleteAction()
         {
-
+            $uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            $resModel=$this->getResourceModel();
+            $resModel->deleteResource($uuid);
+            return $this->redirect()->toUrl('/resources/my');
          }
 
         public function addResourceAction() {

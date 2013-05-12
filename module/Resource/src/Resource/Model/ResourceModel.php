@@ -92,6 +92,12 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         return $this->organizationModel;
     }
+    public function deleteResource($uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $qb4 = $objectManager->createQueryBuilder('Resource\Entity\Resource');
+        $qb4->remove()->field('uuid')->equals($uuid) ->getQuery()
+            ->execute();
+    }
 
 
 }

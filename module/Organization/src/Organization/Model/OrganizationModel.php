@@ -87,7 +87,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
 
 
             $org_id=$this->getOrgIdByUUID($org_uuid);
-die(var_dump($org_id));
+//die(var_dump($org_id));
             $comUserModel=$this->getCompanyUserModel();
             $comUserModel->addUserToOrg($user_id, $org_id);
 
@@ -99,10 +99,11 @@ die(var_dump($org_id));
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $org=$objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
         if(empty($org)) $org=$objectManager->getRepository('Organization\Entity\Organization')->find(new \MongoId($id));
-       // die(var_dump($id));
+        if(empty($org)) return null;
+            // die(var_dump($id));
         $user=$objectManager->find('User\Entity\User', $org->getOwnerId());
 
-        if(empty($user)) return false;
+        if(empty($user)) return null;
         return array('uuid'=>$org->getUUID(),'description'=>$org->getDescription(), 'type'=>$org->getType(), 'name'=>$org->getName(), 'orgOwner'=>$user->getDisplayName());
     }
     public function getCompanyModel()
@@ -136,6 +137,12 @@ die(var_dump($org_id));
             ->execute();
         $qb3 = $objectManager->createQueryBuilder('Organization\Entity\Company');
         $qb3->remove()->field('ownerOrgId')->equals(new \MongoId($org_id)) ->getQuery()
+            ->execute();
+        $qb4 = $objectManager->createQueryBuilder('Resource\Entity\Resource');
+        $qb4->remove()->field('ownerOrgId')->equals(new \MongoId($org_id)) ->getQuery()
+            ->execute();
+        $qb5 = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
+        $qb5->remove()->field('ownerOrgId')->equals(new \MongoId($org_id)) ->getQuery()
             ->execute();
     }
 

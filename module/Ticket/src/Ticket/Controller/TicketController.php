@@ -77,7 +77,10 @@ namespace Ticket\Controller;
 
         public function deleteAction()
         {
-
+            $uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            $resModel=$this->getTicketModel();
+            $resModel->deleteTicket($uuid);
+            return $this->redirect()->toUrl('/tickets/my');
          }
 
         public function addTicketAction() {
