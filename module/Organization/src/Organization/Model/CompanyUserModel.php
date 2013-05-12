@@ -32,8 +32,12 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     public function addUserToOrg($post, $org_id) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if(empty($post['email'])) $user_id=$post;
-        else $user_id=$this->findUserByEmail($post['email']);
+        if (is_array($post)) {
+            // TODO: проверить на наличие ключа 'email' и наличие в нем содержимого
+            $user_id = $this->findUserByEmail($post['email']);
+        } else {
+            $user_id = $post;
+        }
         if($user_id) $comUser= new CompanyUser($org_id,$user_id);
         else return false;
         $objectManager->persist($comUser);
