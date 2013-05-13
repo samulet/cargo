@@ -80,7 +80,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Name:"})
+     * @Annotation\Options({"label":"Name"})
      */
     public $name;
 
@@ -91,7 +91,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Type:"})
+     * @Annotation\Options({"label":"Type"})
      */
     public $type;
 
@@ -100,7 +100,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Description:"})
+     * @Annotation\Options({"label":"Description"})
      * @var string
      * @ODM\Field(type="string")
      */
@@ -129,7 +129,7 @@ class Resource
 
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Submit"})
+     * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
 
@@ -138,7 +138,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Место загрузки:"})
+     * @Annotation\Options({"label":"Место загрузки"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -150,7 +150,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Место разгрузки:"})
+     * @Annotation\Options({"label":"Место разгрузки"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -162,7 +162,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Type("Zend\Form\Element\Textarea")
-     * @Annotation\Options({"label":"Примечание:"})
+     * @Annotation\Options({"label":"Примечание"})
      * @var string
      * @ODM\Field(type="string")
      */
@@ -174,7 +174,7 @@ class Resource
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Валюта:",
+     * @Annotation\Options({"label":"Валюта",
      *                      "value_options" : {"RUR":"RUR","EUR":"EUR","USD":"USD"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
@@ -184,11 +184,11 @@ class Resource
     public $currency;
 
     /**
-     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Filter({"name":"Int"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Стоимость:"})
+     * @Annotation\Options({"label":"Стоимость"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -201,7 +201,7 @@ class Resource
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Валюта:",
+     * @Annotation\Options({"label":"Валюта",
      *                      "value_options" : {"bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
@@ -223,7 +223,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Готов:"})
+     * @Annotation\Options({"label":"Готов"})
      */
 
     public $ready;
@@ -233,7 +233,7 @@ class Resource
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required({"required":"true" })
-     * @Annotation\Options({"label":"Дата начала:"})
+     * @Annotation\Options({"label":"Дата начала"})
      */
     public $dateStart;
 
@@ -242,7 +242,7 @@ class Resource
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required({"required":"true" })
-     * @Annotation\Options({"label":"Дата конца:"})
+     * @Annotation\Options({"label":"Дата конца"})
      */
     public $dateEnd;
 
@@ -250,7 +250,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Тентованый:"})
+     * @Annotation\Options({"label":"Тентованый"})
      */
 
 
@@ -260,7 +260,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Фургон:"})
+     * @Annotation\Options({"label":"Фургон"})
      */
 
 
@@ -270,7 +270,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Пикап:"})
+     * @Annotation\Options({"label":"Пикап"})
      */
 
 
@@ -280,7 +280,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Муковоз:"})
+     * @Annotation\Options({"label":"Муковоз"})
      */
 
 
@@ -290,7 +290,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Муковоз2:"})
+     * @Annotation\Options({"label":"Муковоз2"})
      */
 
 
@@ -300,7 +300,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Кран:"})
+     * @Annotation\Options({"label":"Кран"})
      */
 
 
@@ -310,7 +310,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Кругорейс:"})
+     * @Annotation\Options({"label":"Кругорейс"})
      */
 
     public $cycle;
@@ -319,7 +319,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Догруз:"})
+     * @Annotation\Options({"label":"Догруз"})
      */
 
     public $upShip;
@@ -328,7 +328,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"TIR:"})
+     * @Annotation\Options({"label":"TIR"})
      */
 
     public $tir;
@@ -337,7 +337,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"EKMT:"})
+     * @Annotation\Options({"label":"EKMT"})
      */
 
     public $ekmt;
@@ -346,7 +346,7 @@ class Resource
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Гидролифт:"})
+     * @Annotation\Options({"label":"Гидролифт"})
      */
 
     public $hydroLift;
@@ -371,7 +371,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":10}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Грузоподъемность:"})
+     * @Annotation\Options({"label":"Грузоподъемность"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -383,7 +383,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":10}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Объем:"})
+     * @Annotation\Options({"label":"Объем"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -395,7 +395,7 @@ class Resource
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":10}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Габариты:"})
+     * @Annotation\Options({"label":"Габариты"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -408,7 +408,7 @@ class Resource
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({
+     * @Annotation\Options({"label":"ADR",
      *                      "value_options" : {"1":"1","2":"2","3":"3"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},

@@ -40,7 +40,7 @@ $hydroLift = $form->get('hydroLift')->setValue($this->res['hydroLift']);
 $transportType = $form->get('transportType')->setValue($this->res['transportType']);
 ?>
 
-    <table class="table" style="width:100%;">
+    <table class="table spec_table" style="">
         <tr>
             <th style="width:70%;">
                 Транспорт
@@ -50,21 +50,21 @@ $transportType = $form->get('transportType')->setValue($this->res['transportType
             </th>
         </tr>
         <tr>
-            <td>
-                <table style="width:100%%;">
+            <td style="border-left:none;">
+                <table class="into_table"  style="width:100%%;">
                     <tr>
-                        <td>
+                        <th>
                             Тип кузова:
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Тип загрузки:
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Вид транспорта:
-                        </td>
+                        </th>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="tr_check">
                             <?php
                             echo $this->formRow($tent);
                             echo $this->formRow($mukovoz);
@@ -73,7 +73,7 @@ $transportType = $form->get('transportType')->setValue($this->res['transportType
                             echo $this->formRow($furgon);
                             ?>
                         </td>
-                        <td>
+                        <td class="tr_check">
                             <?php
                             echo $this->formRow($kran);
                             ?>
@@ -105,23 +105,24 @@ $transportType = $form->get('transportType')->setValue($this->res['transportType
                         </td>
                     </tr>
                 </table>
-                <?php
-                echo $this->formRow($upShip);
-                echo $this->formRow($tir);
-                echo $this->formRow($ekmt);
-                echo $this->formRow($hydroLift);
-                ?>
+                <div class="tr_check inline_check">
+                    <?php
+                    echo $this->formRow($upShip);
+                    echo $this->formRow($tir);
+                    echo $this->formRow($ekmt);
+                    echo $this->formRow($hydroLift);
+                    ?></div>
             </td>
             <td>
                 <?php
                 echo $this->formRow($areaLoad);
-                echo $this->formRow($areaUnload);
-                echo $this->formRow($cycle);
-                ?>
+                echo $this->formRow($areaUnload); ?>
+                <div class="tr_check">   <?php echo $this->formRow($cycle); ?></div>
+
             </td>
         </tr>
     </table>
-    <table class="table" style="width:100%;">
+    <table class="table spec_table" style>
         <tr>
             <th style="width:33%;">
                 Когда
@@ -137,10 +138,11 @@ $transportType = $form->get('transportType')->setValue($this->res['transportType
             <td>
                 <?php
                 echo $this->formRow($dateStart);
-                echo $this->formRow($dateEnd);
-                echo $this->formRow($always);
-                echo $this->formRow($ready);
-                ?>
+                echo $this->formRow($dateEnd);  ?>
+                <div class="tr_check"><?php
+                    echo $this->formRow($always);
+                    echo $this->formRow($ready);
+                    ?> </div>
             </td>
             <td>
                 <?php
@@ -149,13 +151,13 @@ $transportType = $form->get('transportType')->setValue($this->res['transportType
                 echo $this->formRow($formPay);
                 ?>
             </td>
-            <td>
+            <td class="note_textarea">
                 <?php echo $this->formRow($note);
                 ?>
             </td>
         </tr>
     </table>
 
-<?php echo $this->formElement($form->get('submit'));
-echo $this->form()->closeTag();
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')); ?> </div>
+<?php  echo $this->form()->closeTag();
 ?>
