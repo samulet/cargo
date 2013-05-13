@@ -12,7 +12,7 @@ class Module
     {
         $this->registerShutdownFunction($e->getApplication());
         $e->getApplication()->getServiceManager()->get('translator');
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
@@ -29,14 +29,17 @@ class Module
             );
         }
 
-        $eventManager->attach('dispatch.error', function($event){
-            $exception = $event->getResult()->exception;
-            if ($exception) {
-                $sm = $event->getApplication()->getServiceManager();
-                $service = $sm->get('Application\Service\ErrorHandling');
-                $service->logException($exception);
+        $eventManager->attach(
+            'dispatch.error',
+            function ($event) {
+                $exception = $event->getResult()->exception;
+                if ($exception) {
+                    $sm = $event->getApplication()->getServiceManager();
+                    $service = $sm->get('Application\Service\ErrorHandling');
+                    $service->logException($exception);
+                }
             }
-        });
+        );
     }
 
     public function getConfig()
@@ -59,7 +62,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'Application\Service\ErrorHandling' =>  function($sm) {
+                'Application\Service\ErrorHandling' => function ($sm) {
                     $logger = $sm->get('Application\Logger');
                     $service = new ErrorHandlingService($logger);
                     return $service;
@@ -70,18 +73,20 @@ class Module
 
     private function registerShutdownFunction(ApplicationInterface $application)
     {
-        register_shutdown_function(function() use ($application) {
-            /** @var \Zend\Log\Logger $logger */
-            $logger = $application->getServiceManager()->get('Application\Logger');
-            $error = error_get_last();
-            if ($error) {
-                $logger->emerg($error['message'], $error);
+        register_shutdown_function(
+            function () use ($application) {
+                /** @var \Zend\Log\Logger $logger */
+                $logger = $application->getServiceManager()->get('Application\Logger');
+                $error = error_get_last();
+                if ($error) {
+                    $logger->emerg($error['message'], $error);
 
-                $errorPage = __DIR__ . '/../../public/500.html';
-                if (file_exists($errorPage)) {
-                    readfile($errorPage);
+                    $errorPage = __DIR__ . '/../../public/500.html';
+                    if (file_exists($errorPage)) {
+                        readfile($errorPage);
+                    }
                 }
             }
-        });
+        );
     }
 }

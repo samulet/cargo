@@ -24,13 +24,14 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
  */
 class AuctionBid
 {
-    public function __construct($aucId, $userId, $bid,$currency)
+    public function __construct($aucId, $userId, $bid, $currency)
     {
-        $this->aucId= $aucId;
-        $this->bid=$bid;
-        $this->userId=$userId;
-        $this->currency=$currency;
+        $this->aucId = $aucId;
+        $this->bid = $bid;
+        $this->userId = $userId;
+        $this->currency = $currency;
     }
+
     /**
      * @ODM\Id
      * @var int

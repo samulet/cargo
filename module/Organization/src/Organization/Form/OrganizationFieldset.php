@@ -19,67 +19,41 @@ class OrganizationFieldset extends Fieldset implements InputFilterProviderInterf
         parent::__construct('organization');
 
 
-        $this->add(array(
-            'name' => 'name',
-            'options' => array(
-                'label' => 'Имя организации'
-            ),
-            'attributes' => array(
-                'required' => 'required'
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'type',
-            'options' => array(
-                'label' => 'Тип органзиации'
-            ),
-            'attributes' => array(
-                'required' => 'required'
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'description',
-            'options' => array(
-                'label' => 'Описание организации'
-            ),
-            'attributes' => array(
-                'required' => 'required'
-            )
-        ));
-
-     /*   $this->add(array(
-            'name' => 'price',
-            'options' => array(
-                'label' => 'Price of the product'
-            ),
-            'attributes' => array(
-                'required' => 'required'
-            )
-        ));
-
-        $this->add(array(
-            'type' => 'Application\Form\BrandFieldset',
-            'name' => 'brand',
-            'options' => array(
-                'label' => 'Brand of the product'
-            )
-        ));*/
-/*
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Collection',
-            'name' => 'categories',
-            'options' => array(
-                'label' => 'Please choose categories for this product',
-                'count' => 2,
-                'should_create_template' => true,
-                'allow_add' => true,
-                'target_element' => array(
-                    'type' => 'Organization\Form\OrganizationFieldset'
+        $this->add(
+            array(
+                'name' => 'name',
+                'options' => array(
+                    'label' => 'Имя организации'
+                ),
+                'attributes' => array(
+                    'required' => 'required'
                 )
             )
-        ));*/
+        );
+
+        $this->add(
+            array(
+                'name' => 'type',
+                'options' => array(
+                    'label' => 'Тип органзиации'
+                ),
+                'attributes' => array(
+                    'required' => 'required'
+                )
+            )
+        );
+
+        $this->add(
+            array(
+                'name' => 'description',
+                'options' => array(
+                    'label' => 'Описание организации'
+                ),
+                'attributes' => array(
+                    'required' => 'required'
+                )
+            )
+        );
     }
 
     /**

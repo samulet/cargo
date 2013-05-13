@@ -22,9 +22,9 @@ class OrganizationControllerTest extends PHPUnit_Framework_TestCase
     {
         $serviceManager = Bootstrap::getServiceManager();
         $this->controller = new OrganizationController();
-        $this->request    = new Request();
+        $this->request = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
-        $this->event      = new MvcEvent();
+        $this->event = new MvcEvent();
         $config = $serviceManager->get('Config');
         $routerConfig = isset($config['router']) ? $config['router'] : array();
         $router = HttpRouter::factory($routerConfig);
@@ -38,7 +38,7 @@ class OrganizationControllerTest extends PHPUnit_Framework_TestCase
     {
         $this->routeMatch->setParam('action', 'add');
 
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -48,7 +48,7 @@ class OrganizationControllerTest extends PHPUnit_Framework_TestCase
     {
         $this->routeMatch->setParam('action', 'delete');
 
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -58,7 +58,7 @@ class OrganizationControllerTest extends PHPUnit_Framework_TestCase
     {
         $this->routeMatch->setParam('action', 'edit');
 
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -68,7 +68,7 @@ class OrganizationControllerTest extends PHPUnit_Framework_TestCase
     {
         $this->routeMatch->setParam('action', 'index');
 
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());

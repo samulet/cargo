@@ -1,12 +1,16 @@
 <?php
-$resources=$this->res;
+$resources = $this->res;
 
-$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+$types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пикап' => 'pickup', 'Муковоз' => 'mukovoz');
 ?>
-<a href="<?php echo $this->url('resource',
-    array('action'=>'add'));?>">Добавить ресурс</a>
-<a href="<?php echo $this->url('resource',
-    array('action'=>'index'));?>">Все ресурсы</a>
+<a href="<?php echo $this->url(
+    'resource',
+    array('action' => 'add')
+);?>">Добавить ресурс</a>
+<a href="<?php echo $this->url(
+    'resource',
+    array('action' => 'index')
+);?>">Все ресурсы</a>
 
 <table class="table">
     <tr>
@@ -37,31 +41,39 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <tr>
             <td>
                 <?php foreach ($types_r as $key => $value) {
-                    echo $key.' '.$resource[$value].' ';
+                    echo $key . ' ' . $resource[$value] . ' ';
                 }
                 ?>
             </td>
             <td>
-                <?php echo $resource['dateStart'].' / '.$resource['dateEnd']; ?>
+                <?php echo $resource['dateStart'] . ' / ' . $resource['dateEnd']; ?>
             </td>
             <td>
-                <?php echo $resource['money'].' '.$resource['currency']; ?>
+                <?php echo $resource['money'] . ' ' . $resource['currency']; ?>
             </td>
             <td>
-                <a href="<?php echo $this->url('resource',
-                    array('action'=>'list', 'id' => $resource['uuid']));?>">Подробнее</a>
+                <a href="<?php echo $this->url(
+                    'resource',
+                    array('action' => 'list', 'id' => $resource['uuid'])
+                );?>">Подробнее</a>
             </td>
             <td>
-                <a href="<?php echo $this->url('resource',
-                    array('action'=>'edit', 'id' => $resource['uuid']));?>">Редактировать</a>
+                <a href="<?php echo $this->url(
+                    'resource',
+                    array('action' => 'edit', 'id' => $resource['uuid'])
+                );?>">Редактировать</a>
             </td>
             <td>
-                <a href="<?php echo $this->url('auction',
-                    array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить аукцион</a>
+                <a href="<?php echo $this->url(
+                    'auction',
+                    array('action' => 'add', 'id' => $resource['uuid'])
+                );?>">Добавить аукцион</a>
             </td>
             <td>
-                <a href="<?php echo $this->url('resource',
-                    array('action'=>'delete', 'id' => $resource['uuid']));?>">Удалить</a>
+                <a href="<?php echo $this->url(
+                    'resource',
+                    array('action' => 'delete', 'id' => $resource['uuid'])
+                );?>">Удалить</a>
             </td>
         </tr>
     <?php } ?>

@@ -10,5 +10,5 @@ namespace Organization\Model;
 
 interface OrganizationModelInterface
 {
-    public function returnOrganizations($number='30', $page='1');
+    public function returnOrganizations($number = '30', $page = '1');
 }

@@ -1,11 +1,13 @@
 <?php
-$resources=$this->res;
+$resources = $this->res;
 
 unset($resources['created']);
 unset($resources['updated']);
 
-    foreach ($resources as $key => $value) {
-    if($value!='') echo $key.' : '.$value.'</br> ';
+foreach ($resources as $key => $value) {
+    if ($value != '') {
+        echo $key . ' : ' . $value . '</br> ';
+    }
 }
 
 ?>

@@ -20,15 +20,17 @@ class CompanyUserFieldset extends Fieldset implements InputFilterProviderInterfa
         parent::__construct('company_user');
 
 
-        $this->add(array(
-            'name' => 'email',
-            'options' => array(
-                'label' => 'Почта пользователя'
-            ),
-            'attributes' => array(
-                'required' => 'required'
+        $this->add(
+            array(
+                'name' => 'email',
+                'options' => array(
+                    'label' => 'Почта пользователя'
+                ),
+                'attributes' => array(
+                    'required' => 'required'
+                )
             )
-        ));
+        );
 
     }
 

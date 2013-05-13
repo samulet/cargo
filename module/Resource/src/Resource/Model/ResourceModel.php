@@ -24,78 +24,90 @@ class ResourceModel implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
     protected $organizationModel;
-    public function addResource($post,$owner_id,$owner_org_id,$id) {
-        $prop_array=get_object_vars($post);
-        $prop_array['ownerId']=$owner_id;
-        $prop_array['ownerOrgId']=$owner_org_id;
+
+    public function addResource($post, $owner_id, $owner_org_id, $id)
+    {
+        $prop_array = get_object_vars($post);
+        $prop_array['ownerId'] = $owner_id;
+        $prop_array['ownerOrgId'] = $owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if(!empty($id)) $res=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('uuid' => $id));
-        else $res = new Resource();
-        foreach ($prop_array as $key => $value) {
-            $res->$key=$value;
+        if (!empty($id)) {
+            $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
+                array('uuid' => $id)
+            );
         }
-        //$res->setName($post['name']);
+        else {
+            $res = new Resource();
+        }
+        foreach ($prop_array as $key => $value) {
+            $res->$key = $value;
+        }
         $objectManager->persist($res);
         $objectManager->flush();
-        //die(var_dump($prop_array));
     }
 
-    public function listResource($id) {
+    public function listResource($id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('uuid' => $id));
+        $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('uuid' => $id));
         return get_object_vars($res);
     }
 
-    public function returnAllResource() {
+    public function returnAllResource()
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $qb = $objectManager->createQueryBuilder('Resource\Entity\Resource')->eagerCursor(true);
         $query = $qb->getQuery();
         $rezObj = $query->execute();
-        $rezs=array();
+        $rezs = array();
         $orgModel = $this->getOrganizationModel();
         foreach ($rezObj as $cur) {
-            //$rez=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
-          // die(var_dump($cur->id));
-            $obj_vars=get_object_vars($cur);
-            $org=$orgModel->getOrganization($obj_vars['ownerOrgId']);
-            array_push($rezs,array('res' => $obj_vars, 'org'=>$org));
+            $obj_vars = get_object_vars($cur);
+            $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
+            array_push($rezs, array('res' => $obj_vars, 'org' => $org));
         }
         return $rezs;
     }
 
-    public function returnMyResource($owner_id) {
+    public function returnMyResource($owner_id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Resource\Entity\Resource')->field('ownerId')->equals(new \MongoId($owner_id))->eagerCursor(true);
+        $qb = $objectManager->createQueryBuilder('Resource\Entity\Resource')->field('ownerId')->equals(
+            new \MongoId($owner_id)
+        )->eagerCursor(true);
         $query = $qb->getQuery();
         $rezObj = $query->execute();
-        $rezs=array();
+        $rezs = array();
         foreach ($rezObj as $cur) {
-            array_push($rezs,get_object_vars($cur));
+            array_push($rezs, get_object_vars($cur));
         }
         return $rezs;
     }
 
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
         $this->serviceLocator = $serviceLocator;
     }
 
-    public function getServiceLocator() {
+    public function getServiceLocator()
+    {
         return $this->serviceLocator;
     }
+
     public function getOrganizationModel()
     {
-        error_reporting(E_ALL | E_STRICT);
-        ini_set('display_errors', 'On');
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
             $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
         }
         return $this->organizationModel;
     }
-    public function deleteResource($uuid) {
+
+    public function deleteResource($uuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $qb4 = $objectManager->createQueryBuilder('Resource\Entity\Resource');
-        $qb4->remove()->field('uuid')->equals($uuid) ->getQuery()
+        $qb4->remove()->field('uuid')->equals($uuid)->getQuery()
             ->execute();
     }
 

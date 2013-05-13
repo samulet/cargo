@@ -32,43 +32,44 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
-    public function returnCompanies($org_id,$number='30', $page='1') {
-       // die(var_dump($org_id));
+    public function returnCompanies($org_id, $number = '30', $page = '1')
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-      //  die(var_dump($this->getServiceLocator()->get('doctrine.documentmanager.odm_default')));
-       // $qb = $objectManager->getRepository('Organization\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
-
-        $qb = $objectManager->createQueryBuilder('Organization\Entity\Company')->field('ownerOrgId')->equals(new \MongoId($org_id))->eagerCursor(true);
+        $qb = $objectManager->createQueryBuilder('Organization\Entity\Company')->field('ownerOrgId')->equals(
+            new \MongoId($org_id)
+        )->eagerCursor(true);
         $query = $qb->getQuery();
         $cursor = $query->execute();
 
-        $com=array();
+        $com = array();
         foreach ($cursor as $cur) {
-            $arr=get_object_vars($cur);
-            // $org=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
-            // 'name'=>$org_obj->getName());
+            $arr = get_object_vars($cur);
             unset($arr['created']);
             unset($arr['updated']);
-            array_push($com,$arr);
+            array_push($com, $arr);
         }
         return $com;
     }
 
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
         $this->serviceLocator = $serviceLocator;
     }
 
-    public function getServiceLocator() {
+    public function getServiceLocator()
+    {
         return $this->serviceLocator;
     }
 
-    public function createCompany($post,$org_id,$com_id) {
-      //  die(var_dump($com_id));
-        if(!empty($post->csrf)) {
+    public function createCompany($post, $org_id, $com_id)
+    {
+        if (!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-            $com_item=$post->company;
-            if(!empty($com_id)) $com=$objectManager->getRepository('Organization\Entity\Company')->find($com_id);
-            else $com = new Company($org_id);
+            $com_item = $post->company;
+            if (!empty($com_id)) $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+            else {
+                $com = new Company($org_id);
+            }
 
 
             $com->setDescription($com_item['description']);
@@ -88,42 +89,52 @@ class CompanyModel implements ServiceLocatorAwareInterface
             return true;
         } else return false;
     }
-    public function getCompany($id) {
-        $uuid_gen=new UuidGenerator();
-        if(!$uuid_gen->isValid($id)) return false;
+
+    public function getCompany($id)
+    {
+        $uuid_gen = new UuidGenerator();
+        if (!$uuid_gen->isValid($id)) return false;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $org=$objectManager->
+        $org = $objectManager->
             getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
-        if(empty($org)) return false;
-        $user=$objectManager->find('User\Entity\User', $org->getOwnerId());
-        //die(var_dump($user->getDisplayName()));
-        if(empty($user)) return false;
-        return array('uuid'=>$org->getUUID(),'description'=>$org->getDescription(), 'type'=>$org->getType(), 'name'=>$org->getName(), 'orgOwner'=>$user->getDisplayName());
+        if (empty($org)) return false;
+        $user = $objectManager->find('User\Entity\User', $org->getOwnerId());
+        if (empty($user)) return false;
+        return array(
+            'uuid' => $org->getUUID(),
+            'description' => $org->getDescription(),
+            'type' => $org->getType(),
+            'name' => $org->getName(),
+            'orgOwner' => $user->getDisplayName()
+        );
     }
 
-    public function getCompanyIdByUUID($com_uuid) {
+    public function getCompanyIdByUUID($com_uuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $com_id=$objectManager->getRepository('Organization\Entity\Company')->findOneBy(array('uuid' => $com_uuid));
+        $com_id = $objectManager->getRepository('Organization\Entity\Company')->findOneBy(array('uuid' => $com_uuid));
         return $com_id->id;
     }
 
-    public function returnCompany($com_id) {
+    public function returnCompany($com_id)
+    {
         ini_set('display_errors', 'Off');
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $com_obj=$objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+        $com_obj = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
 
-        $com=get_object_vars($com_obj);
+        $com = get_object_vars($com_obj);
         unset($com['created']);
         unset($com['updated']);
         return $com;
     }
-    public function deleteCompany($com_id) {
 
-        // die(var_dump($com_id));
+    public function deleteCompany($com_id)
+    {
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        // $objectManager->getRepository('Organization\Entity\Organization')->find($org_id)->remove();
+
         $qb = $objectManager->createQueryBuilder('Organization\Entity\Company');
-        $qb->remove()->field('id')->equals(new \MongoId($com_id)) ->getQuery()
+        $qb->remove()->field('id')->equals(new \MongoId($com_id))->getQuery()
             ->execute();
     }
 }

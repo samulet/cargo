@@ -23,24 +23,30 @@ class CompanyCreate extends Form
             ->setHydrator(new ClassMethodsHydrator(false))
             ->setInputFilter(new InputFilter());
 
-        $this->add(array(
-            'type' => 'Organization\Form\CompanyFieldset',
-            'options' => array(
-                'use_as_base_fieldset' => true
+        $this->add(
+            array(
+                'type' => 'Organization\Form\CompanyFieldset',
+                'options' => array(
+                    'use_as_base_fieldset' => true
+                )
             )
-        ));
-        $this->add(array(
-            'name' => 'submit',
-            'attributes' => array(
-                'type' => 'submit',
-                'value' => 'Send'
+        );
+        $this->add(
+            array(
+                'name' => 'submit',
+                'attributes' => array(
+                    'type' => 'submit',
+                    'value' => 'Send'
+                )
             )
-        ));
+        );
 
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Csrf',
-            'name' => 'csrf'
-        ));
+        $this->add(
+            array(
+                'type' => 'Zend\Form\Element\Csrf',
+                'name' => 'csrf'
+            )
+        );
 
 
     }

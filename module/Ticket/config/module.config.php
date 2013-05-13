@@ -10,16 +10,16 @@ return array(
     'router' => array(
         'routes' => array(
             'ticket' => array(
-                'type'    => 'segment',
+                'type' => 'segment',
                 'options' => array(
-                    'route'    => '/tickets[/:action][/:id]',
+                    'route' => '/tickets[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[a-z0-9]*',
+                        'id' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Ticket\Controller\Ticket',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),

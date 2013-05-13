@@ -8,209 +8,209 @@ $name = $form->get('name');
 ///echo $this->formRow($name);
 
 $tent = $form->get('tent');
-$furgon= $form->get('furgon');
-$pickup= $form->get('pickup');
-$mukovoz= $form->get('mukovoz');
+$furgon = $form->get('furgon');
+$pickup = $form->get('pickup');
+$mukovoz = $form->get('mukovoz');
 
-$kran= $form->get('kran');
+$kran = $form->get('kran');
 
-$upSize= $form->get('upSize');
-$upValue= $form->get('upValue');
-$gabarities= $form->get('gabarities');
-$adr= $form->get('adr');
+$upSize = $form->get('upSize');
+$upValue = $form->get('upValue');
+$gabarities = $form->get('gabarities');
+$adr = $form->get('adr');
 
 $areaUnload = $form->get('areaUnload');
 $areaLoad = $form->get('areaLoad');
 $note = $form->get('note');
-$currency=$form->get('currency');
+$currency = $form->get('currency');
 $money = $form->get('money');
-$formPay=$form->get('formPay');
+$formPay = $form->get('formPay');
 $always = $form->get('always');
-$ready=$form->get('ready');
-$dateStart=$form->get('dateStart');
-$dateEnd=$form->get('dateEnd');
-$cycle=$form->get('cycle');
-$mayBeUpShip=$form->get('mayBeUpShip');
-$partCargo=$form->get('partCargo');
-$numberOfCars=$form->get('numberOfCars');
+$ready = $form->get('ready');
+$dateStart = $form->get('dateStart');
+$dateEnd = $form->get('dateEnd');
+$cycle = $form->get('cycle');
+$mayBeUpShip = $form->get('mayBeUpShip');
+$partCargo = $form->get('partCargo');
+$numberOfCars = $form->get('numberOfCars');
 
-$upShip=$form->get('upShip');
-$tir=$form->get('tir');
-$ekmt=$form->get('ekmt');
-$hydroLift=$form->get('hydroLift');
-$cargo=$form->get('cargo');
-$package=$form->get('package');
-$palet=$form->get('palet');
-$belt=$form->get('belt');
+$upShip = $form->get('upShip');
+$tir = $form->get('tir');
+$ekmt = $form->get('ekmt');
+$hydroLift = $form->get('hydroLift');
+$cargo = $form->get('cargo');
+$package = $form->get('package');
+$palet = $form->get('palet');
+$belt = $form->get('belt');
 
-$transportType=$form->get('transportType');
+$transportType = $form->get('transportType');
 ?>
 
-<table class="table" style="width:100%;">
-    <tr>
-        <th style="width:70%;">
-            Груз
-        </th>
-        <th style="width:30%;">
-            Маршрут
-        </th>
-    </tr>
-    <tr>
-        <td>
-    <table style="width:100%%;">
+    <table class="table" style="width:100%;">
+        <tr>
+            <th style="width:70%;">
+                Груз
+            </th>
+            <th style="width:30%;">
+                Маршрут
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <table style="width:100%%;">
 
-            <tr>
-<td>
-    <?php
-    echo $this->formRow($cargo);
-    ?>
-</td>
-                <td>
-                    <?php
-                    echo $this->formRow($package);
-                    ?>
-                </td>
-                <td>
-                    <?php
-                    echo $this->formRow($palet);
-                    ?>
-                </td>
-                <td>
-                    <?php
-                    echo $this->formRow($belt);
-                    ?>
-                </td>
-            </tr>
-            <tr>
-<td>
-    <?php
-    echo $this->formRow($upSize);
-    echo $this->formRow($upValue);
-
-
-    ?>
-</td>
-                <td>
-                    <?php
-                    echo $this->formRow($gabarities);
-
-                    ?>
-                </td>
-                <td>
-                    <?php
-                    echo $this->formRow($adr);
-
-                    ?>
-
-                </td>
-            </tr>
-    </table>
-
-            <?php
-            echo $this->formRow($upShip);
-            echo $this->formRow($mayBeUpShip);
-            echo $this->formRow($partCargo);
-
-
-            ?>
-        </td>
-        <td>
-            <?php
-            echo $this->formRow($areaLoad);
-            echo $this->formRow($areaUnload);
-            echo $this->formRow($cycle);
-            ?>
-        </td>
-    </tr>
-    </table>
-
-<table class="table" style="width:100%;">
-    <tr>
-        <th style="width:70%;">
-            Параметры машины
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <table style="width:100%%;">
-                <tr>
-                    <td>
-                        Тип кузова:
-                    </td>
-                    <td>
-                        Тип загрузки:
-                    </td>
-                    <td>
-                        Вид транспорта:
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <?php
-                        echo $this->formRow($tent);
-                        echo $this->formRow($mukovoz);
-                        echo $this->formRow($pickup);
-                        echo $this->formRow($furgon);
+                    <tr>
+                        <td>
+                            <?php
+                            echo $this->formRow($cargo);
                             ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->formRow($kran);
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->formRow($transportType);
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->formRow($numberOfCars);
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->formRow($package);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->formRow($palet);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->formRow($belt);
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php
+                            echo $this->formRow($upSize);
+                            echo $this->formRow($upValue);
 
-                        ?>
-                    </td>
-                </tr>
-            </table>
-            <?php
-            echo $this->formRow($tir);
-            ?>
-        </td>
-    </tr>
-</table>
-<table class="table" style="width:100%;">
-    <tr>
-        <th style="width:33%;">
-            Когда
-        </th>
-        <th style="width:33%;">
-            Оплата
-        </th>
-        <th style="width:33%;">
-            Примечание
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <?php
-            echo $this->formRow($dateStart);
-            echo $this->formRow($dateEnd);
-            echo $this->formRow($always);
-            echo $this->formRow($ready);
-            ?>
-        </td>
-        <td>
-            <?php
-            echo $this->formRow($currency);
-            echo $this->formRow($money);
-            echo $this->formRow($formPay);
-            ?>
-        </td>
-        <td>
-            <?php echo $this->formRow($note);
-            ?>
-        </td>
-    </tr>
-</table>
+
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->formRow($gabarities);
+
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->formRow($adr);
+
+                            ?>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <?php
+                echo $this->formRow($upShip);
+                echo $this->formRow($mayBeUpShip);
+                echo $this->formRow($partCargo);
+
+
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow($areaLoad);
+                echo $this->formRow($areaUnload);
+                echo $this->formRow($cycle);
+                ?>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table" style="width:100%;">
+        <tr>
+            <th style="width:70%;">
+                Параметры машины
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <table style="width:100%%;">
+                    <tr>
+                        <td>
+                            Тип кузова:
+                        </td>
+                        <td>
+                            Тип загрузки:
+                        </td>
+                        <td>
+                            Вид транспорта:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php
+                            echo $this->formRow($tent);
+                            echo $this->formRow($mukovoz);
+                            echo $this->formRow($pickup);
+                            echo $this->formRow($furgon);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->formRow($kran);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->formRow($transportType);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->formRow($numberOfCars);
+
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+                <?php
+                echo $this->formRow($tir);
+                ?>
+            </td>
+        </tr>
+    </table>
+    <table class="table" style="width:100%;">
+        <tr>
+            <th style="width:33%;">
+                Когда
+            </th>
+            <th style="width:33%;">
+                Оплата
+            </th>
+            <th style="width:33%;">
+                Примечание
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <?php
+                echo $this->formRow($dateStart);
+                echo $this->formRow($dateEnd);
+                echo $this->formRow($always);
+                echo $this->formRow($ready);
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow($currency);
+                echo $this->formRow($money);
+                echo $this->formRow($formPay);
+                ?>
+            </td>
+            <td>
+                <?php echo $this->formRow($note);
+                ?>
+            </td>
+        </tr>
+    </table>
 
 <?php echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();

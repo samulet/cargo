@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Organization\Entity\OrganizationInterface;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 /**
  *
  * @ODM\Document(collection="organization")
@@ -19,6 +20,7 @@ class Organization
         $this->setUUID($uuid_gen->generateV4());
         $this->setOwnerId(new \MongoId($ownerId));
     }
+
     /**
      * @ODM\Id
      * @var int
@@ -66,6 +68,7 @@ class Organization
      * @ODM\Field(type="string")
      */
     public $type;
+
     /**
      * Get id.
      *
@@ -75,6 +78,7 @@ class Organization
     {
         return $this->id;
     }
+
     /**
      * Set id.
      *
@@ -84,7 +88,7 @@ class Organization
     public function setId($id)
     {
         $this->id = $id;
-       // die($this->id);
+        // die($this->id);
         return $this;
     }
 
@@ -161,6 +165,7 @@ class Organization
     {
         return $this->name;
     }
+
     /**
      * Set name.
      *
@@ -173,6 +178,7 @@ class Organization
         $this->name = $name;
         return $this;
     }
+
     /**
      * Get type.
      *
@@ -182,6 +188,7 @@ class Organization
     {
         return $this->type;
     }
+
     /**
      * Set type.
      *
@@ -193,6 +200,7 @@ class Organization
         $this->type = $type;
         return $this;
     }
+
     public function getOwnerId()
     {
         return $this->ownerId;
@@ -203,6 +211,7 @@ class Organization
         $this->ownerId = $ownerId;
         return $this;
     }
+
     public function getUUID()
     {
         return $this->uuid;

@@ -6,7 +6,7 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Auction\Model\AuctionModel;
 
-error_reporting(E_ALL | E_STRICT) ;
+error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 'On');
 
 class Module
@@ -30,12 +30,13 @@ class Module
     {
         return include __DIR__ . '/config/module.config.php';
     }
+
     public function getServiceConfig()
     {
 
         return array(
             'factories' => array(
-                'Auction\Model\AuctionModel' =>  function($sm) {
+                'Auction\Model\AuctionModel' => function ($sm) {
                     $auc = new AuctionModel();
                     return $auc;
                 },

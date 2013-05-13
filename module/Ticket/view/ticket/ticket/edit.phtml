@@ -1,6 +1,6 @@
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('ticket', array('action' => 'addTicket','id'=>$this->id)))
+$form->setAttribute('action', $this->url('ticket', array('action' => 'addTicket', 'id' => $this->id)))
     ->prepare();
 echo $this->form()->openTag($form);
 
@@ -8,42 +8,42 @@ $name = $form->get('name')->setValue($this->res['name']);
 ///echo $this->formRow($name);
 
 $tent = $form->get('tent')->setValue($this->res['tent']);
-$furgon= $form->get('furgon')->setValue($this->res['furgon']);
-$pickup= $form->get('pickup')->setValue($this->res['pickup']);
-$mukovoz= $form->get('mukovoz')->setValue($this->res['mukovoz']);
+$furgon = $form->get('furgon')->setValue($this->res['furgon']);
+$pickup = $form->get('pickup')->setValue($this->res['pickup']);
+$mukovoz = $form->get('mukovoz')->setValue($this->res['mukovoz']);
 
-$kran= $form->get('kran')->setValue($this->res['kran']);
+$kran = $form->get('kran')->setValue($this->res['kran']);
 
-$upSize= $form->get('upSize')->setValue($this->res['upSize']);
-$upValue= $form->get('upValue')->setValue($this->res['upValue']);
-$gabarities= $form->get('gabarities')->setValue($this->res['gabarities']);
-$adr= $form->get('adr')->setValue($this->res['adr']);
+$upSize = $form->get('upSize')->setValue($this->res['upSize']);
+$upValue = $form->get('upValue')->setValue($this->res['upValue']);
+$gabarities = $form->get('gabarities')->setValue($this->res['gabarities']);
+$adr = $form->get('adr')->setValue($this->res['adr']);
 
 $areaUnload = $form->get('areaUnload')->setValue($this->res['areaUnload']);
 $areaLoad = $form->get('areaLoad')->setValue($this->res['areaLoad']);
 $note = $form->get('note')->setValue($this->res['note']);
-$currency=$form->get('currency')->setValue($this->res['currency']);
+$currency = $form->get('currency')->setValue($this->res['currency']);
 $money = $form->get('money')->setValue($this->res['money']);
-$formPay=$form->get('formPay')->setValue($this->res['formPay']);
+$formPay = $form->get('formPay')->setValue($this->res['formPay']);
 $always = $form->get('always')->setValue($this->res['always']);
-$ready=$form->get('ready')->setValue($this->res['ready']);
-$dateStart=$form->get('dateStart')->setValue($this->res['dateStart']);
-$dateEnd=$form->get('dateEnd')->setValue($this->res['dateEnd']);
-$cycle=$form->get('cycle')->setValue($this->res['cycle']);
-$mayBeUpShip=$form->get('mayBeUpShip')->setValue($this->res['mayBeUpShip']);
-$partCargo=$form->get('partCargo')->setValue($this->res['partCargo']);
-$numberOfCars=$form->get('numberOfCars')->setValue($this->res['numberOfCars']);
+$ready = $form->get('ready')->setValue($this->res['ready']);
+$dateStart = $form->get('dateStart')->setValue($this->res['dateStart']);
+$dateEnd = $form->get('dateEnd')->setValue($this->res['dateEnd']);
+$cycle = $form->get('cycle')->setValue($this->res['cycle']);
+$mayBeUpShip = $form->get('mayBeUpShip')->setValue($this->res['mayBeUpShip']);
+$partCargo = $form->get('partCargo')->setValue($this->res['partCargo']);
+$numberOfCars = $form->get('numberOfCars')->setValue($this->res['numberOfCars']);
 
-$upShip=$form->get('upShip')->setValue($this->res['upShip']);
-$tir=$form->get('tir')->setValue($this->res['tir']);
-$ekmt=$form->get('ekmt')->setValue($this->res['ekmt']);
-$hydroLift=$form->get('hydroLift')->setValue($this->res['hydroLift']);
-$cargo=$form->get('cargo')->setValue($this->res['cargo']);
-$package=$form->get('package')->setValue($this->res['package']);
-$palet=$form->get('palet')->setValue($this->res['palet']);
-$belt=$form->get('belt')->setValue($this->res['belt']);
+$upShip = $form->get('upShip')->setValue($this->res['upShip']);
+$tir = $form->get('tir')->setValue($this->res['tir']);
+$ekmt = $form->get('ekmt')->setValue($this->res['ekmt']);
+$hydroLift = $form->get('hydroLift')->setValue($this->res['hydroLift']);
+$cargo = $form->get('cargo')->setValue($this->res['cargo']);
+$package = $form->get('package')->setValue($this->res['package']);
+$palet = $form->get('palet')->setValue($this->res['palet']);
+$belt = $form->get('belt')->setValue($this->res['belt']);
 
-$transportType=$form->get('transportType')->setValue($this->res['transportType']);
+$transportType = $form->get('transportType')->setValue($this->res['transportType']);
 ?>
 
     <table class="table" style="width:100%;">

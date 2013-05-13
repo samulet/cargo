@@ -18,6 +18,7 @@ interface OrganizationInterface
      * @return UserInterface
      */
     public function setId($id);
+
     /**
      * Get Description.
      *
@@ -32,6 +33,7 @@ interface OrganizationInterface
      * @return UserInterface
      */
     public function setDescription($description);
+
     /**
      * Get password.
      *
@@ -84,8 +86,12 @@ interface OrganizationInterface
      * @return UserInterface
      */
     public function setType($type);
+
     public function getOwnerId();
+
     public function setOwnerId($ownerId);
+
     public function getUUID();
+
     public function setUUID($uuid);
 }

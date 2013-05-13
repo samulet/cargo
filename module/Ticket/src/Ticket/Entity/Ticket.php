@@ -29,6 +29,7 @@ class Ticket
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
     }
+
     /**
      * @ODM\Id
      * @var int
@@ -207,7 +208,7 @@ class Ticket
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
-    public  $formPay;
+    public $formPay;
 
     /**
      * @var string
@@ -234,7 +235,7 @@ class Ticket
      * @Annotation\Required({"required":"true" })
      * @Annotation\Options({"label":"Дата начала:"})
      */
-    public  $dateStart;
+    public $dateStart;
 
     /**
      * @var string
@@ -243,7 +244,7 @@ class Ticket
      * @Annotation\Required({"required":"true" })
      * @Annotation\Options({"label":"Дата конца:"})
      */
-    public  $dateEnd;
+    public $dateEnd;
 
     /**
      * @var string
@@ -383,7 +384,7 @@ class Ticket
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
-    public  $transportType;
+    public $transportType;
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
@@ -434,7 +435,7 @@ class Ticket
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
-    public  $adr;
+    public $adr;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -558,6 +559,7 @@ class Ticket
     {
         return $this->updated;
     }
+
     public function getUUID()
     {
         return $this->uuid;
@@ -568,6 +570,7 @@ class Ticket
         $this->uuid = $uuid;
         return $this;
     }
+
     public function getSizes()
     {
         return $this->sizes;
@@ -578,6 +581,7 @@ class Ticket
         $this->capacity = $capacity;
         return $this;
     }
+
     public function getCapacity()
     {
         return $this->capacity;
@@ -585,9 +589,10 @@ class Ticket
 
     public function setAddressFact($addressFact)
     {
-        $this->addressFact= $addressFact;
+        $this->addressFact = $addressFact;
         return $this;
     }
+
     public function getAddressReg()
     {
         return $this->addressReg;
@@ -595,9 +600,10 @@ class Ticket
 
     public function setAddressReg($addressReg)
     {
-        $this->addressReg= $addressReg;
+        $this->addressReg = $addressReg;
         return $this;
     }
+
     public function getGeneralManager()
     {
         return $this->generalManager;
@@ -608,6 +614,7 @@ class Ticket
         $this->generalManager = $generalManager;
         return $this;
     }
+
     public function getTelephone()
     {
         return $this->telephone;
@@ -615,9 +622,10 @@ class Ticket
 
     public function setTelephone($telephone)
     {
-        $this->telephone=$telephone ;
+        $this->telephone = $telephone;
         return $this;
     }
+
     public function getEmail()
     {
         return $this->email;
@@ -625,9 +633,10 @@ class Ticket
 
     public function setEmail($email)
     {
-        $this->email=$email ;
+        $this->email = $email;
         return $this;
     }
+
     public function getOwnerOrgId()
     {
         return $this->ownerOrgId;
@@ -638,10 +647,12 @@ class Ticket
         $this->ownerOrgId = $ownerOrgId;
         return $this;
     }
+
     public function getType()
     {
         return $this->type;
     }
+
     /**
      * Set type.
      *
@@ -653,19 +664,23 @@ class Ticket
         $this->type = $type;
         return $this;
     }
+
     public function getName()
     {
         return $this->name;
     }
+
     public function setName($name)
     {
         $this->name = $name;
         return $this;
     }
+
     public function getTent()
     {
         return $this->name;
     }
+
     public function setTent($tent)
     {
         $this->tent = $tent;

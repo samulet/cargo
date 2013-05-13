@@ -1,5 +1,6 @@
 <?php
 namespace Organization;
+
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 'On');
 use Organization\Entity\Organization;
@@ -30,22 +31,23 @@ class Module
     {
         return include __DIR__ . '/config/module.config.php';
     }
+
     public function getServiceConfig()
     {
-        error_reporting(E_ALL | E_STRICT) ;
+        error_reporting(E_ALL | E_STRICT);
         ini_set('display_errors', 'On');
 
         return array(
             'factories' => array(
-                'Organization\Model\OrganizationModel' =>  function($sm) {
+                'Organization\Model\OrganizationModel' => function ($sm) {
                     $org = new OrganizationModel();
                     return $org;
                 },
-                'Organization\Model\CompanyModel' =>  function($sm) {
+                'Organization\Model\CompanyModel' => function ($sm) {
                     $com = new CompanyModel();
                     return $com;
                 },
-                'Organization\Model\CompanyUserModel' =>  function($sm) {
+                'Organization\Model\CompanyUserModel' => function ($sm) {
                     $comus = new CompanyUserModel();
                     return $comus;
                 },

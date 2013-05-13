@@ -26,64 +26,73 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
     protected $organizationModel;
 
-    public function addTicket($post,$owner_id,$org_id,$id) {
-        $prop_array=get_object_vars($post);
-        $prop_array['ownerId']=$owner_id;
-        $prop_array['ownerOrgId']=$org_id;
+    public function addTicket($post, $owner_id, $org_id, $id)
+    {
+        $prop_array = get_object_vars($post);
+        $prop_array['ownerId'] = $owner_id;
+        $prop_array['ownerOrgId'] = $org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if(!empty($id)) $res=$objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
-        else $res = new Ticket();
-        foreach ($prop_array as $key => $value) {
-            $res->$key=$value;
+        if (!empty($id)) {
+            $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
         }
-        //$res->setName($post['name']);
+        else {
+            $res = new Ticket();
+        }
+        foreach ($prop_array as $key => $value) {
+            $res->$key = $value;
+        }
         $objectManager->persist($res);
         $objectManager->flush();
-        //die(var_dump($prop_array));
     }
 
-    public function listTicket($id) {
+    public function listTicket($id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res=$objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
+        $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
         return get_object_vars($res);
     }
 
-    public function returnAllTicket() {
+    public function returnAllTicket()
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $qb = $objectManager->createQueryBuilder('Ticket\Entity\Ticket')->eagerCursor(true);
         $query = $qb->getQuery();
         $rezObj = $query->execute();
-        $rezs=array();
+        $rezs = array();
         $orgModel = $this->getOrganizationModel();
         foreach ($rezObj as $cur) {
-            //$rez=array('uuid'=>$org_obj->getUUID(),'description'=>$org_obj->getDescription(), 'type'=>$org_obj->getType(),
-          // die(var_dump($cur->id));
-            $obj_vars=get_object_vars($cur);
-            $org=$orgModel->getOrganization($obj_vars['ownerOrgId']);
-            array_push($rezs,array('tick' => $obj_vars, 'org'=>$org));
+            $obj_vars = get_object_vars($cur);
+            $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
+            array_push($rezs, array('tick' => $obj_vars, 'org' => $org));
         }
         return $rezs;
     }
 
-    public function returnMyTicket($owner_id) {
+    public function returnMyTicket($owner_id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Ticket\Entity\Ticket')->field('ownerId')->equals(new \MongoId($owner_id))->eagerCursor(true);
+        $qb = $objectManager->createQueryBuilder('Ticket\Entity\Ticket')->field('ownerId')->equals(
+            new \MongoId($owner_id)
+        )->eagerCursor(true);
         $query = $qb->getQuery();
         $rezObj = $query->execute();
-        $rezs=array();
+        $rezs = array();
         foreach ($rezObj as $cur) {
-            array_push($rezs,get_object_vars($cur));
+            array_push($rezs, get_object_vars($cur));
         }
         return $rezs;
     }
 
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
         $this->serviceLocator = $serviceLocator;
     }
 
-    public function getServiceLocator() {
+    public function getServiceLocator()
+    {
         return $this->serviceLocator;
     }
+
     public function getResourceModel()
     {
         if (!$this->resourceModel) {
@@ -92,6 +101,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         return $this->resourceModel;
     }
+
     public function getTicketModel()
     {
         if (!$this->ticketModel) {
@@ -100,20 +110,21 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         return $this->ticketModel;
     }
+
     public function getOrganizationModel()
     {
-        error_reporting(E_ALL | E_STRICT);
-        ini_set('display_errors', 'On');
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
             $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
         }
         return $this->organizationModel;
     }
-    public function deleteTicket($uuid) {
+
+    public function deleteTicket($uuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $qb4 = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
-        $qb4->remove()->field('uuid')->equals($uuid) ->getQuery()
+        $qb4->remove()->field('uuid')->equals($uuid)->getQuery()
             ->execute();
     }
 }

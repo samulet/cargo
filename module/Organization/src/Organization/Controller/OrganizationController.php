@@ -18,15 +18,15 @@ namespace Organization\Controller {
             $orgModel = $this->getOrganizationModel();
             $org = $orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getId());
 
-            $tickModel=$this->getTicketModel();
-            $resModel=$this->getResourceModel();
-            $res=$resModel->returnAllResource();
-            $tick= $tickModel->returnAllTicket();
+            $tickModel = $this->getTicketModel();
+            $resModel = $this->getResourceModel();
+            $res = $resModel->returnAllResource();
+            $tick = $tickModel->returnAllTicket();
 
             return new ViewModel(array(
                 'org' => $org,
-                'tick'=>$tick,
-                'res'=>$res
+                'tick' => $tick,
+                'res' => $res
             ));
 
         }
@@ -35,16 +35,13 @@ namespace Organization\Controller {
         {
             if ($this->zfcUserAuthentication()->hasIdentity()) {
                 return true;
-            }
-            else {
+            } else {
                 return $this->redirect()->toUrl('/user/login');
             }
         }
 
         public function getOrganizationModel()
         {
-            error_reporting(E_ALL | E_STRICT);
-            ini_set('display_errors', 'On');
             if (!$this->organizationModel) {
                 $sm = $this->getServiceLocator();
                 $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
@@ -71,8 +68,8 @@ namespace Organization\Controller {
             $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
             return new ViewModel(array(
                 'form' => $form,
-                'org' =>$org[0]['org'],
-                'uuid' =>$org_uuid
+                'org' => $org[0]['org'],
+                'uuid' => $org_uuid
             ));
         }
 
@@ -95,7 +92,7 @@ namespace Organization\Controller {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $orgModel = $this->getOrganizationModel();
             $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-            $org_id=$orgModel->getOrgIdByUUID($org_uuid);
+            $org_id = $orgModel->getOrgIdByUUID($org_uuid);
             $orgModel->deleteOrganization($org_id);
             return $this->redirect()->toUrl('/organization');
         }
@@ -106,16 +103,20 @@ namespace Organization\Controller {
             $post = $this->getRequest()->getPost();
             $orgModel = $this->getOrganizationModel();
             $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-            if(!empty($org_uuid)) $org_id=$orgModel->getOrgIdByUUID($org_uuid);
-            else $org_id=null;
+            if (!empty($org_uuid)) {
+                $org_id = $orgModel->getOrgIdByUUID($org_uuid);
+            }
+            else {
+                $org_id = null;
+            }
             if ($orgModel->createOrganization(
                 $post,
-                $this->zfcUserAuthentication()->getIdentity()->getId(),$org_id
+                $this->zfcUserAuthentication()->getIdentity()->getId(),
+                $org_id
             )
             ) {
                 $result = "Успешо";
-            }
-            else {
+            } else {
                 $result = "Ошибка";
             }
 
@@ -124,6 +125,7 @@ namespace Organization\Controller {
             ));
 
         }
+
         public function getResourceModel()
         {
             if (!$this->resourceModel) {
@@ -132,6 +134,7 @@ namespace Organization\Controller {
             }
             return $this->resourceModel;
         }
+
         public function getTicketModel()
         {
             if (!$this->ticketModel) {

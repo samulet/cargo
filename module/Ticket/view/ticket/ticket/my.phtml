@@ -1,12 +1,16 @@
 <?php
-$tickets=$this->tick;
+$tickets = $this->tick;
 
-$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+$types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пикап' => 'pickup', 'Муковоз' => 'mukovoz');
 ?>
-<a href="<?php echo $this->url('ticket',
-    array('action'=>'add'));?>">Добавить заявку</a>
-<a href="<?php echo $this->url('ticket',
-    array('action'=>'index'));?>">Все заявки</a>
+<a href="<?php echo $this->url(
+    'ticket',
+    array('action' => 'add')
+);?>">Добавить заявку</a>
+<a href="<?php echo $this->url(
+    'ticket',
+    array('action' => 'index')
+);?>">Все заявки</a>
 
 <table class="table">
     <tr>
@@ -36,31 +40,39 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <tr>
             <td>
                 <?php foreach ($types_r as $key => $value) {
-                    echo $key.' '.$ticket[$value].' ';
+                    echo $key . ' ' . $ticket[$value] . ' ';
                 }
                 ?>
             </td>
             <td>
-                <?php echo $ticket['dateStart'].' / '.$ticket['dateEnd']; ?>
+                <?php echo $ticket['dateStart'] . ' / ' . $ticket['dateEnd']; ?>
             </td>
             <td>
-                <?php echo $ticket['money'].' '.$ticket['currency']; ?>
+                <?php echo $ticket['money'] . ' ' . $ticket['currency']; ?>
             </td>
             <td>
-                <a href="<?php echo $this->url('ticket',
-                    array('action'=>'list', 'id' => $ticket['uuid']));?>">Подробнее</a>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'list', 'id' => $ticket['uuid'])
+                );?>">Подробнее</a>
             </td>
             <td>
-                <a href="<?php echo $this->url('ticket',
-                    array('action'=>'edit', 'id' => $ticket['uuid']));?>">Редактировать</a>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'edit', 'id' => $ticket['uuid'])
+                );?>">Редактировать</a>
             </td>
             <td>
-                <a href="<?php echo $this->url('auction',
-                    array('action'=>'add', 'id' => $ticket['uuid']));?>">Добавить аукцион</a>
+                <a href="<?php echo $this->url(
+                    'auction',
+                    array('action' => 'add', 'id' => $ticket['uuid'])
+                );?>">Добавить аукцион</a>
             </td>
             <td>
-                <a href="<?php echo $this->url('ticket',
-                    array('action'=>'delete', 'id' => $ticket['uuid']));?>">Удалить</a>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'delete', 'id' => $ticket['uuid'])
+                );?>">Удалить</a>
             </td>
         </tr>
     <?php } ?>

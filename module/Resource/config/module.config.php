@@ -10,16 +10,16 @@ return array(
     'router' => array(
         'routes' => array(
             'resource' => array(
-                'type'    => 'segment',
+                'type' => 'segment',
                 'options' => array(
-                    'route'    => '/resources[/:action][/:id]',
+                    'route' => '/resources[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[a-z0-9]*',
+                        'id' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Resource\Controller\Resource',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),

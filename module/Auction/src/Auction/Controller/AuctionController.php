@@ -5,7 +5,6 @@ namespace Auction\Controller;
 
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -15,77 +14,80 @@ class AuctionController extends AbstractActionController
     protected $ticketModel;
     protected $resourceModel;
 
-    public function indexAction() {
-        $auc=$this->getAuctionModel();
-      //  $auc->getAuctions();
-    return new ViewModel(array(
-       'auc' =>  $auc->getAuctions()
-    ));
+    public function indexAction()
+    {
+        $auc = $this->getAuctionModel();
+        return new ViewModel(array(
+            'auc' => $auc->getAuctions()
+        ));
 
     }
 
-
-    public function addAction() {
+    public function addAction()
+    {
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $auc=$this->getAuctionModel();
-        $price=$auc->getPrice($id);
+        $auc = $this->getAuctionModel();
+        $price = $auc->getPrice($id);
         $builder = new AnnotationBuilder();
-        $form    = $builder->createForm('Auction\Entity\Auction');
+        $form = $builder->createForm('Auction\Entity\Auction');
         return new ViewModel(array(
             'form' => $form,
-            'price'=>$price,
-            'uuid'=>$id
+            'price' => $price,
+            'uuid' => $id
         ));
-/*
-        die(var_dump());
-        return new ViewModel(array(
-        //    'auc' => $auc
-        ));
-*/
     }
-    public function addAuctionAction() {
-        $auc=$this->getAuctionModel();
-        $auc->addAuction($this->getRequest()->getPost(),$auc->getItemId($this->getEvent()->getRouteMatch()->getParam('id')));
+
+    public function addAuctionAction()
+    {
+        $auc = $this->getAuctionModel();
+        $auc->addAuction(
+            $this->getRequest()->getPost(),
+            $auc->getItemId($this->getEvent()->getRouteMatch()->getParam('id'))
+        );
         return $this->redirect()->toUrl('/auctions');
     }
-    public function addBidAction() {
+
+    public function addBidAction()
+    {
         $builder = new AnnotationBuilder();
-        $form    = $builder->createForm('Auction\Entity\AuctionBid');
-        $uuid=$this->getEvent()->getRouteMatch()->getParam('id');
+        $form = $builder->createForm('Auction\Entity\AuctionBid');
+        $uuid = $this->getEvent()->getRouteMatch()->getParam('id');
         return new ViewModel(array(
             'form' => $form,
-            'uuid'=>$uuid
+            'uuid' => $uuid
         ));
     }
 
-    public function listAction() {
-        $auc=$this->getAuctionModel();
+    public function listAction()
+    {
+        $auc = $this->getAuctionModel();
         $uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-        $uuid_item= $auc->getItemUUID($uuid);
-        if($uuid_item['item']=='tick') {
-            $tick=$this->getTicketModel();
-            $list=$tick->listTicket($uuid_item['uuid']);
+        $uuid_item = $auc->getItemUUID($uuid);
+        if ($uuid_item['item'] == 'tick') {
+            $tick = $this->getTicketModel();
+            $list = $tick->listTicket($uuid_item['uuid']);
         } else {
-            $res=$this->getResourceModel();
-            $list=$res->listResource($uuid_item['uuid']);
+            $res = $this->getResourceModel();
+            $list = $res->listResource($uuid_item['uuid']);
         }
 
-        $bids=$auc->getBids($uuid);
+        $bids = $auc->getBids($uuid);
 
         return new ViewModel(array(
-            'list'=>$list,
-            'bids'=>$bids
+            'list' => $list,
+            'bids' => $bids
         ));
     }
 
-    public function addBidEngineAction() {
-        $auc=$this->getAuctionModel();
-        $id=$auc->getItemId($this->getEvent()->getRouteMatch()->getParam('id'));
-        // die(var_dump($id));
-        $auc->addBidEngine($id,$this->zfcUserAuthentication()->getIdentity()->getId(),$this->getRequest()->getPost());
+    public function addBidEngineAction()
+    {
+        $auc = $this->getAuctionModel();
+        $id = $auc->getItemId($this->getEvent()->getRouteMatch()->getParam('id'));
+        $auc->addBidEngine($id, $this->zfcUserAuthentication()->getIdentity()->getId(), $this->getRequest()->getPost());
         return $this->redirect()->toUrl('/auctions');
 
     }
+
     public function getAuctionModel()
     {
         if (!$this->auctionModel) {
@@ -95,9 +97,10 @@ class AuctionController extends AbstractActionController
         return $this->auctionModel;
     }
 
-    public function addResourceAction() {
-        $res=$this->getResourceModel();
-        $res->addResource($this->getRequest()->getPost(),$this->zfcUserAuthentication()->getIdentity()->getId());
+    public function addResourceAction()
+    {
+        $res = $this->getResourceModel();
+        $res->addResource($this->getRequest()->getPost(), $this->zfcUserAuthentication()->getIdentity()->getId());
         return $this->redirect()->toUrl('/resources/my');
     }
 
@@ -109,9 +112,11 @@ class AuctionController extends AbstractActionController
         }
         return $this->resourceModel;
     }
-    public function addTicketAction() {
-        $res=$this->getTicketModel();
-        $res->addTicket($this->getRequest()->getPost(),$this->zfcUserAuthentication()->getIdentity()->getId());
+
+    public function addTicketAction()
+    {
+        $res = $this->getTicketModel();
+        $res->addTicket($this->getRequest()->getPost(), $this->zfcUserAuthentication()->getIdentity()->getId());
         return $this->redirect()->toUrl('/tickets/my');
     }
 

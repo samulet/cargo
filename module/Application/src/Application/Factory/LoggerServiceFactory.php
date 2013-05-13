@@ -25,7 +25,7 @@ class LoggerServiceFactory implements FactoryInterface
                         throw new InvalidArgumentException('Options must contain a name for the writer');
                     }
 
-                    $priority      = (isset($writer['priority'])) ? $writer['priority'] : null;
+                    $priority = (isset($writer['priority'])) ? $writer['priority'] : null;
                     $writerOptions = (isset($writer['options'])) ? $writer['options'] : null;
 
                     if ($serviceLocator->has($writer['name'])) {

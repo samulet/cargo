@@ -29,6 +29,7 @@ class Auction
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
     }
+
     /**
      * @ODM\Id
      * @var int
@@ -81,7 +82,7 @@ class Auction
      * @Annotation\Required({"required":"true" })
      * @Annotation\Options({"label":"Дата конца:"})
      */
-    public  $dateEnd;
+    public $dateEnd;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -89,19 +90,20 @@ class Auction
      * @Annotation\Required({"required":"true" })
      * @Annotation\Options({"label":"Дата начала:"})
      */
-    public  $dateStart;
+    public $dateStart;
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Attributes({"type":"hidden"})
      * @Annotation\Required({"required":"true" })
      */
-    public  $str;
+    public $str;
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Submit"})
      */
     public $submit;
+
     public function getUUID()
     {
         return $this->uuid;

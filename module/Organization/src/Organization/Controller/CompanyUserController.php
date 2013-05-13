@@ -23,40 +23,57 @@ class CompanyUserController extends AbstractActionController
     protected $companyUserModel;
     protected $organizationModel;
 
-    public function indexAction() {
+    public function indexAction()
+    {
 
     }
-    public function addAction() {
+
+    public function addAction()
+    {
         $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $form = new CompanyUserCreate();
-        $org_uuid=$this->getEvent()->getRouteMatch()->getParam('org_id');
+        $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         return new ViewModel(array(
             'form' => $form,
             'org_id' => $org_uuid
         ));
     }
-    public function addUserAction() {
-        $post=$this->getRequest()->getPost();
+
+    public function addUserAction()
+    {
+        $post = $this->getRequest()->getPost();
         $this->loginControl();
-        $org_uuid=$this->getEvent()->getRouteMatch()->getParam('org_id');
-        $uuid_gen=new UuidGenerator();
-        if(!$uuid_gen->isValid($org_uuid)) $result="Ошибка";
+        $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $uuid_gen = new UuidGenerator();
+        if (!$uuid_gen->isValid($org_uuid)) {
+            $result = "Ошибка";
+        }
         else {
-            $orgModel=$this->getOrganizationModel();
-            $org_id=$orgModel->getOrgIdByUUID($org_uuid);
-            $comUserModel=$this->getCompanyUserModel();
-            if($comUserModel->addUserToOrg($post, $org_id)) $result="Успешо";
-            else $result="Ошибка";
+            $orgModel = $this->getOrganizationModel();
+            $org_id = $orgModel->getOrgIdByUUID($org_uuid);
+            $comUserModel = $this->getCompanyUserModel();
+            if ($comUserModel->addUserToOrg($post, $org_id)) {
+                $result = "Успешо";
+            }
+            else {
+                $result = "Ошибка";
+            }
         }
         return new ViewModel(array(
-            'result' =>$result
+            'result' => $result
         ));
     }
 
-    private function loginControl() {
-        if ($this->zfcUserAuthentication()->hasIdentity()) return true;
-        else return $this->redirect()->toUrl('/user/login');
+    private function loginControl()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return true;
+        }
+        else {
+            return $this->redirect()->toUrl('/user/login');
+        }
     }
+
     public function getOrganizationModel()
     {
         if (!$this->organizationModel) {
@@ -65,6 +82,7 @@ class CompanyUserController extends AbstractActionController
         }
         return $this->organizationModel;
     }
+
     public function getCompanyUserModel()
     {
         if (!$this->companyUserModel) {

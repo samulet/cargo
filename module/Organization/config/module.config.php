@@ -12,45 +12,45 @@ return array(
     'router' => array(
         'routes' => array(
             'organization' => array(
-                'type'    => 'segment',
+                'type' => 'segment',
                 'options' => array(
-                    'route'    => '/organization[/:action][/:id]',
+                    'route' => '/organization[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[a-z0-9]*',
+                        'id' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\Organization',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),
             'company' => array(
-                'type'    => 'segment',
+                'type' => 'segment',
                 'options' => array(
-                    'route'    => '/organization[/:org_id]/company[/:action][/:id]',
+                    'route' => '/organization[/:org_id]/company[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[a-z0-9]*',
-                        'org_id'     => '[a-z0-9]*',
+                        'id' => '[a-z0-9]*',
+                        'org_id' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\Company',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),
             'company_user' => array(
-                'type'    => 'segment',
+                'type' => 'segment',
                 'options' => array(
-                    'route'    => '/organization/user[/:org_id][/:action]',
+                    'route' => '/organization/user[/:org_id][/:action]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'org_id'     => '[a-z0-9]*',
+                        'org_id' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\CompanyUser',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),

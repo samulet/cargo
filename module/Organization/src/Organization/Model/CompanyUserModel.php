@@ -30,7 +30,8 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
-    public function addUserToOrg($post, $org_id) {
+    public function addUserToOrg($post, $org_id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (is_array($post)) {
             // TODO: проверить на наличие ключа 'email' и наличие в нем содержимого
@@ -38,31 +39,46 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         } else {
             $user_id = $post;
         }
-        if($user_id) $comUser= new CompanyUser($org_id,$user_id);
-        else return false;
+        if ($user_id) {
+            $comUser = new CompanyUser($org_id, $user_id);
+        }
+        else {
+            return false;
+        }
         $objectManager->persist($comUser);
         $objectManager->flush();
         return true;
     }
-    public function findUserByEmail($email) {
+
+    public function findUserByEmail($email)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $user_id=$objectManager->
+        $user_id = $objectManager->
             getRepository('Organization\Entity\Organization')->findOneBy(array('email' => $email));
-        if(empty($user_id)) return false;
-        else return $user_id->getId();
+        if (empty($user_id)) {
+            return false;
+        }
+        else {
+            return $user_id->getId();
+        }
     }
 
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
         $this->serviceLocator = $serviceLocator;
     }
 
-    public function getServiceLocator() {
+    public function getServiceLocator()
+    {
         return $this->serviceLocator;
     }
 
-    public function getOrgIdByUserId($userId) {
+    public function getOrgIdByUserId($userId)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $userObject=$objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('userId' => new \MongoId($userId)));
+        $userObject = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(
+            array('userId' => new \MongoId($userId))
+        );
         return $userObject->orgId;
     }
 

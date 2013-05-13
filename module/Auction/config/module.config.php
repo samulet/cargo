@@ -10,16 +10,16 @@ return array(
     'router' => array(
         'routes' => array(
             'auction' => array(
-                'type'    => 'segment',
+                'type' => 'segment',
                 'options' => array(
-                    'route'    => '/auctions[/:action][/:id]',
+                    'route' => '/auctions[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[a-z0-9]*',
+                        'id' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Auction\Controller\Auction',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),

@@ -7,9 +7,10 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Organization\Entity\CompanyInterface;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 /**
-* @ODM\Document(collection="company")
-*/
+ * @ODM\Document(collection="company")
+ */
 class Company
 {
     public function __construct($ownerOrgId)
@@ -18,6 +19,7 @@ class Company
         $this->setUUID($uuid_gen->generateV4());
         $this->setOwnerOrgId(new \MongoId($ownerOrgId));
     }
+
     /**
      * @ODM\Id
      * @var int
@@ -96,6 +98,7 @@ class Company
      * @ODM\Field(type="string")
      */
     public $email;
+
     /**
      * Get id.
      *
@@ -105,6 +108,7 @@ class Company
     {
         return $this->id;
     }
+
     /**
      * Set id.
      *
@@ -180,6 +184,7 @@ class Company
     {
         return $this->updated;
     }
+
     public function getUUID()
     {
         return $this->uuid;
@@ -190,6 +195,7 @@ class Company
         $this->uuid = $uuid;
         return $this;
     }
+
     public function getRequisites()
     {
         return $this->requisites;
@@ -200,6 +206,7 @@ class Company
         $this->requisites = $requisites;
         return $this;
     }
+
     public function getAddressFact()
     {
         return $this->addressFact;
@@ -207,9 +214,10 @@ class Company
 
     public function setAddressFact($addressFact)
     {
-        $this->addressFact= $addressFact;
+        $this->addressFact = $addressFact;
         return $this;
     }
+
     public function getAddressReg()
     {
         return $this->addressReg;
@@ -217,9 +225,10 @@ class Company
 
     public function setAddressReg($addressReg)
     {
-        $this->addressReg= $addressReg;
+        $this->addressReg = $addressReg;
         return $this;
     }
+
     public function getGeneralManager()
     {
         return $this->generalManager;
@@ -230,6 +239,7 @@ class Company
         $this->generalManager = $generalManager;
         return $this;
     }
+
     public function getTelephone()
     {
         return $this->telephone;
@@ -237,9 +247,10 @@ class Company
 
     public function setTelephone($telephone)
     {
-        $this->telephone=$telephone ;
+        $this->telephone = $telephone;
         return $this;
     }
+
     public function getEmail()
     {
         return $this->email;
@@ -247,9 +258,10 @@ class Company
 
     public function setEmail($email)
     {
-        $this->email=$email ;
+        $this->email = $email;
         return $this;
     }
+
     public function getOwnerOrgId()
     {
         return $this->ownerOrgId;
@@ -260,10 +272,12 @@ class Company
         $this->ownerOrgId = $ownerOrgId;
         return $this;
     }
+
     public function getType()
     {
         return $this->type;
     }
+
     /**
      * Set type.
      *
@@ -275,10 +289,12 @@ class Company
         $this->type = $type;
         return $this;
     }
+
     public function getName()
     {
         return $this->name;
     }
+
     /**
      * Set name.
      *
