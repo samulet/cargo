@@ -5,29 +5,23 @@ use Application\Service\ErrorHandling as ErrorHandlingService;
 use Zend\Mvc\ApplicationInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use ZfcUser\Entity\UserInterface;
 
 class Module
 {
+    /**
+     * @var \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    public static $serviceManager;
+
     public function onBootstrap(MvcEvent $e)
     {
+        self::$serviceManager = $e->getApplication()->getServiceManager();
         $this->registerShutdownFunction($e->getApplication());
         $e->getApplication()->getServiceManager()->get('translator');
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-
-        /** @var \Zend\Authentication\AuthenticationService $auth */
-        $auth = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
-        if ($auth->hasIdentity()) {
-            /** @var \RollbarNotifier $rollbar */
-            $rollbar = $e->getApplication()->getServiceManager()->get('RollbarNotifier');
-            $identity = $auth->getIdentity();
-            $rollbar->person = array(
-                'id' => $identity->getId(),
-                'email' => $identity->getEmail(),
-                'username' => $identity->getDisplayName()
-            );
-        }
 
         $eventManager->attach(
             'dispatch.error',
@@ -68,6 +62,30 @@ class Module
                     return $service;
                 },
             ),
+        );
+    }
+
+    public static function identityInfo()
+    {
+        if (!self::$serviceManager->has('zfcuser_auth_service')) {
+            return null;
+        }
+
+        /** @var \Zend\Authentication\AuthenticationService $auth */
+        $auth = self::$serviceManager->get('zfcuser_auth_service');
+        if (!$auth->hasIdentity()) {
+            return null;
+        }
+
+        $identity = $auth->getIdentity();
+        if (!$identity instanceof UserInterface) {
+            return null;
+        }
+
+        return array(
+            'id' => $identity->getId(),
+            'email' => $identity->getEmail(),
+            'username' => $identity->getDisplayName()
         );
     }
 
