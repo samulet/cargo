@@ -37,8 +37,6 @@ class Module
                     $res = new ResourceModel();
                     return $res;
                 },
-            ),
-            'factories' => array(
                 'Resource\Model\VehicleModel' => function ($sm) {
                     $veh = new VehicleModel();
                     return $veh;
