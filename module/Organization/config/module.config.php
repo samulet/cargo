@@ -56,6 +56,15 @@ return array(
             ),
         ),
     ),
+    'bjyauthorize' => array(
+        'guards' => array(
+            'BjyAuthorize\Guard\Route' => array(
+                array('route' => 'organization', 'roles' => array('user')),
+                array('route' => 'company', 'roles' => array('user')),
+                array('route' => 'company_user', 'roles' => array('user')),
+            ),
+        ),
+    ),
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(
