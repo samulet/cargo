@@ -21,7 +21,8 @@
         "zf-commons/zfc-user-doctrine-mongo-odm": "dev-master",
         "zendframework/zend-developer-tools": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
-        "yassa/rollbar": "*"
+        "yassa/rollbar": "*",
+        "zf-commons/zfc-admin": "*"
     },
     "minimum-stability": "dev",
     "require-dev": {
