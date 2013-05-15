@@ -32,9 +32,6 @@ class Module
 
     public function getServiceConfig()
     {
-        error_reporting(E_ALL | E_STRICT);
-        ini_set('display_errors', 'On');
-
         return array(
             'factories' => array(
                 'Organization\Model\OrganizationModel' => function ($sm) {

@@ -17,8 +17,6 @@ class CompanyController extends AbstractActionController
 
     public function indexAction()
     {
-        error_reporting(E_ALL | E_STRICT);
-        ini_set('display_errors', 'On');
         $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $uuid_gen = new UuidGenerator();

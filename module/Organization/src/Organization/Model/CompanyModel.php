@@ -125,7 +125,6 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     public function returnCompany($com_id)
     {
-        ini_set('display_errors', 'Off');
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $com_obj = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
 
