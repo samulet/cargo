@@ -25,6 +25,13 @@ return array(
             ),
         ),
     ),
+    'bjyauthorize' => array(
+        'guards' => array(
+            'BjyAuthorize\Guard\Route' => array(
+                array('route' => 'ticket', 'roles' => array('user')),
+            ),
+        ),
+    ),
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(

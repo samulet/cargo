@@ -9,6 +9,7 @@ return array(
         'ZfcUser',
         'ZfcUserDoctrineMongoODM',
         'User',
+        'BjyAuthorize',
         'ZfcAdmin',
         'Application',
         'Organization',

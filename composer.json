@@ -22,7 +22,8 @@
         "zendframework/zend-developer-tools": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
         "yassa/rollbar": "*",
-        "zf-commons/zfc-admin": "*"
+        "zf-commons/zfc-admin": "*",
+        "bjyoungblood/bjy-authorize": "1.2.*"
     },
     "minimum-stability": "dev",
     "require-dev": {
