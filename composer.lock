@@ -1,5 +1,5 @@
 {
-    "hash": "53807f1569e850cfc49aa7656699a3e5",
+    "hash": "ac3e2241d5977a985531bb39e2060cc9",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -930,12 +930,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendDeveloperTools.git",
-                "reference": "a54ec8a6864e7472a49e030a0c470c7ae4ce8eb6"
+                "reference": "e9a1f301b1b2fca8993f72eee711861efb96a4be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/a54ec8a6864e7472a49e030a0c470c7ae4ce8eb6",
-                "reference": "a54ec8a6864e7472a49e030a0c470c7ae4ce8eb6",
+                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/e9a1f301b1b2fca8993f72eee711861efb96a4be",
+                "reference": "e9a1f301b1b2fca8993f72eee711861efb96a4be",
                 "shasum": ""
             },
             "require": {
@@ -981,7 +981,7 @@
                 "module",
                 "zf2"
             ],
-            "time": "2013-05-15 18:31:40"
+            "time": "2013-05-15 20:29:33"
         },
         {
             "name": "zendframework/zendframework",
@@ -1093,6 +1093,59 @@
                 "zf2"
             ],
             "time": "2013-04-17 15:15:58"
+        },
+        {
+            "name": "zf-commons/zfc-admin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ZF-Commons/ZfcAdmin.git",
+                "reference": "v0.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcAdmin/zipball/v0.1.1",
+                "reference": "v0.1.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "2.*"
+            },
+            "suggest": {
+                "bjyoungblood/bjy-authorize": "Access control to protect ZfcAdmin against unauthorized users"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ZfcAdmin": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Jurian Sluiman ",
+                    "email": "jurian@juriansluiman.nl",
+                    "homepage": "http://juriansluiman.nl/en/"
+                },
+                {
+                    "name": "Martin Shwalbe",
+                    "email": "martin.shwalbe@gmail.com",
+                    "homepage": "http://hounddog.github.com"
+                }
+            ],
+            "description": "A generic Admin module for ZF2.",
+            "homepage": "https://github.com/juriansluiman/ZfcAdmin",
+            "keywords": [
+                "zf2"
+            ],
+            "time": "2013-04-23 09:31:59"
         },
         {
             "name": "zf-commons/zfc-base",
@@ -1667,16 +1720,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "1.6.1",
+            "version": "1.6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "1.6.1"
+                "reference": "1.6.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1.6.1",
-                "reference": "1.6.1",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1.6.1.1",
+                "reference": "1.6.1.1",
                 "shasum": ""
             },
             "require": {
@@ -1724,7 +1777,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2013-05-09 00:53:34"
+            "time": "2013-05-15 18:57:09"
         },
         {
             "name": "fabpot/goutte",
@@ -1780,16 +1833,16 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "dev-master",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "v3.5.0"
+                "reference": "v3.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.5.0",
-                "reference": "v3.5.0",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.3.1",
+                "reference": "v3.3.1",
                 "shasum": ""
             },
             "require": {
@@ -1825,15 +1878,16 @@
                 "doctrine/cache": "*",
                 "monolog/monolog": "1.*",
                 "phpunit/phpunit": "3.7.*",
-                "psr/log": "1.0.*",
                 "symfony/class-loader": "*",
+                "zend/zend-cache1": "1.12",
+                "zend/zend-log1": "1.12",
                 "zendframework/zend-cache": "2.0.*",
                 "zendframework/zend-log": "2.0.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.5-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -1868,7 +1922,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-05-13 20:17:47"
+            "time": "2013-03-10 23:05:38"
         },
         {
             "name": "instaclick/php-webdriver",
@@ -2224,12 +2278,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f3dc675fbc6670ed6335f898efd07a4b25f04697"
+                "reference": "3afa4c23d51d285088e481b818feecdd91aa5d9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f3dc675fbc6670ed6335f898efd07a4b25f04697",
-                "reference": "f3dc675fbc6670ed6335f898efd07a4b25f04697",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3afa4c23d51d285088e481b818feecdd91aa5d9f",
+                "reference": "3afa4c23d51d285088e481b818feecdd91aa5d9f",
                 "shasum": ""
             },
             "require": {
@@ -2290,7 +2344,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-05-15 18:20:03"
+            "time": "2013-05-15 20:43:02"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
