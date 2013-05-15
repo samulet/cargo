@@ -34,8 +34,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
             $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
-        }
-        else {
+        } else {
             $res = new Ticket();
         }
         foreach ($prop_array as $key => $value) {

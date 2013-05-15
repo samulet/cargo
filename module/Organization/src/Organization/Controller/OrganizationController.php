@@ -105,8 +105,7 @@ namespace Organization\Controller {
             $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
             if (!empty($org_uuid)) {
                 $org_id = $orgModel->getOrgIdByUUID($org_uuid);
-            }
-            else {
+            } else {
                 $org_id = null;
             }
             if ($orgModel->createOrganization(

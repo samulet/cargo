@@ -35,8 +35,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
             $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
                 array('uuid' => $id)
             );
-        }
-        else {
+        } else {
             $res = new Resource();
         }
         foreach ($prop_array as $key => $value) {

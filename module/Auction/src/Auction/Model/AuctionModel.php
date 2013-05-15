@@ -94,9 +94,11 @@ class AuctionModel implements ServiceLocatorAwareInterface
                 array('uuid' => $uuid)
             );
         }
-        if ($auc == null) $auc = $objectManager->getRepository('Auction\Entity\Auction')->findOneBy(
-            array('uuid' => $uuid)
-        );
+        if ($auc == null) {
+            $auc = $objectManager->getRepository('Auction\Entity\Auction')->findOneBy(
+                array('uuid' => $uuid)
+            );
+        }
         return $auc->id;
     }
 

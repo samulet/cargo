@@ -47,15 +47,13 @@ class CompanyUserController extends AbstractActionController
         $uuid_gen = new UuidGenerator();
         if (!$uuid_gen->isValid($org_uuid)) {
             $result = "Ошибка";
-        }
-        else {
+        } else {
             $orgModel = $this->getOrganizationModel();
             $org_id = $orgModel->getOrgIdByUUID($org_uuid);
             $comUserModel = $this->getCompanyUserModel();
             if ($comUserModel->addUserToOrg($post, $org_id)) {
                 $result = "Успешо";
-            }
-            else {
+            } else {
                 $result = "Ошибка";
             }
         }

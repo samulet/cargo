@@ -88,7 +88,6 @@ class Organization
     public function setId($id)
     {
         $this->id = $id;
-        // die($this->id);
         return $this;
     }
 

@@ -52,7 +52,9 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         }
         $org_id = $orgOfUser->getOrgId();
         $org_obj = $objectManager->getRepository('Organization\Entity\Organization')->find(new \MongoId($org_id));
-        if (empty($org_obj)) return null;
+        if (empty($org_obj)) {
+            return null;
+        }
         $org = get_object_vars($org_obj);
         unset($org['created']);
         unset($org['updated']);
@@ -81,7 +83,9 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             if (!empty($org_id)) $org = $objectManager->getRepository('Organization\Entity\Organization')->find(
                 new \MongoId($org_id)
             );
-            else $org = new Organization($user_id);
+            else {
+                $org = new Organization($user_id);
+            }
             $org->setDescription($org_item['description']);
             $org->setName($org_item['name']);
             $org->setType($org_item['type']);
@@ -104,14 +108,20 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $org = $objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
-        if (empty($org)) $org = $objectManager->getRepository('Organization\Entity\Organization')->find(
-            new \MongoId($id)
-        );
-        if (empty($org)) return null;
+        if (empty($org)) {
+            $org = $objectManager->getRepository('Organization\Entity\Organization')->find(
+                new \MongoId($id)
+            );
+        }
+        if (empty($org)) {
+            return null;
+        }
 
         $user = $objectManager->find('User\Entity\User', $org->getOwnerId());
 
-        if (empty($user)) return null;
+        if (empty($user)) {
+            return null;
+        }
         return array(
             'uuid' => $org->getUUID(),
             'description' => $org->getDescription(),

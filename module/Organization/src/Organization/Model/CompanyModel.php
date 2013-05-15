@@ -66,8 +66,9 @@ class CompanyModel implements ServiceLocatorAwareInterface
         if (!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $com_item = $post->company;
-            if (!empty($com_id)) $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
-            else {
+            if (!empty($com_id)) {
+                $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+            } else {
                 $com = new Company($org_id);
             }
 
@@ -93,13 +94,19 @@ class CompanyModel implements ServiceLocatorAwareInterface
     public function getCompany($id)
     {
         $uuid_gen = new UuidGenerator();
-        if (!$uuid_gen->isValid($id)) return false;
+        if (!$uuid_gen->isValid($id)) {
+            return false;
+        }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $org = $objectManager->
             getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
-        if (empty($org)) return false;
+        if (empty($org)) {
+            return false;
+        }
         $user = $objectManager->find('User\Entity\User', $org->getOwnerId());
-        if (empty($user)) return false;
+        if (empty($user)) {
+            return false;
+        }
         return array(
             'uuid' => $org->getUUID(),
             'description' => $org->getDescription(),

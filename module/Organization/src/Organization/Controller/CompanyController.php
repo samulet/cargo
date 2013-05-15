@@ -24,8 +24,7 @@ class CompanyController extends AbstractActionController
         $uuid_gen = new UuidGenerator();
         if (!$uuid_gen->isValid($org_uuid)) {
             $com = "Ошибка";
-        }
-        else {
+        } else {
             $comModel = $this->getCompanyModel();
             $orgModel = $this->getOrganizationModel();
             $org_id = $orgModel->getOrgIdByUUID($org_uuid);
@@ -58,15 +57,22 @@ class CompanyController extends AbstractActionController
         $comModel = $this->getCompanyModel();
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $uuid_gen = new UuidGenerator();
-        if (!$uuid_gen->isValid($org_uuid)) $result = "Ошибка";
-        else {
+        if (!$uuid_gen->isValid($org_uuid)) {
+            $result = "Ошибка";
+        } else {
             $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-            if (!empty($com_uuid)) $com_id = $comModel->getCompanyIdByUUID($com_uuid);
-            else $com_id = null;
+            if (!empty($com_uuid)) {
+                $com_id = $comModel->getCompanyIdByUUID($com_uuid);
+            } else {
+                $com_id = null;
+            }
             $orgModel = $this->getOrganizationModel();
             $org_id = $orgModel->getOrgIdByUUID($org_uuid);
-            if ($comModel->createCompany($post, $org_id, $com_id)) $result = "Успешо";
-            else $result = "Ошибка";
+            if ($comModel->createCompany($post, $org_id, $com_id)) {
+                $result = "Успешо";
+            } else {
+                $result = "Ошибка";
+            }
         }
         return new ViewModel(array(
             'result' => $result
@@ -103,8 +109,11 @@ class CompanyController extends AbstractActionController
 
     private function loginControl()
     {
-        if ($this->zfcUserAuthentication()->hasIdentity()) return true;
-        else return $this->redirect()->toUrl('/user/login');
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return true;
+        } else {
+            return $this->redirect()->toUrl('/user/login');
+        }
     }
 
     public function getCompanyModel()

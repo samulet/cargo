@@ -41,8 +41,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
         if ($user_id) {
             $comUser = new CompanyUser($org_id, $user_id);
-        }
-        else {
+        } else {
             return false;
         }
         $objectManager->persist($comUser);
@@ -57,8 +56,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             getRepository('Organization\Entity\Organization')->findOneBy(array('email' => $email));
         if (empty($user_id)) {
             return false;
-        }
-        else {
+        } else {
             return $user_id->getId();
         }
     }
