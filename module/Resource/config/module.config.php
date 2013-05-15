@@ -5,6 +5,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Resource\Controller\Resource' => 'Resource\Controller\ResourceController',
+            'Resource\Controller\Vehicle' => 'Resource\Controller\VehicleController',
         ),
     ),
     'router' => array(
@@ -19,6 +20,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Resource\Controller\Resource',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'vehicle' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/vehicles[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Resource\Controller\Vehicle',
                         'action' => 'index',
                     ),
                 ),

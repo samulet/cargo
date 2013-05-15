@@ -5,7 +5,7 @@ namespace Resource;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Resource\Model\ResourceModel;
-
+use Resource\Model\VehicleModel;
 class Module
 {
     public function getAutoloaderConfig()
@@ -36,6 +36,12 @@ class Module
                 'Resource\Model\ResourceModel' => function ($sm) {
                     $res = new ResourceModel();
                     return $res;
+                },
+            ),
+            'factories' => array(
+                'Resource\Model\VehicleModel' => function ($sm) {
+                    $veh = new VehicleModel();
+                    return $veh;
                 },
             ),
         );

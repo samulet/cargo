@@ -1,0 +1,14 @@
+<?php
+$vehicle = $this->res;
+
+unset($vehicle['created']);
+unset($vehicle['updated']);
+
+foreach ($vehicle as $key => $value) {
+    if ($value != '') {
+        echo $key . ' : ' . $value . '</br> ';
+    }
+}
+
+?>
+
