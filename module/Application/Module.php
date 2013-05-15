@@ -5,38 +5,35 @@ use Application\Service\ErrorHandling as ErrorHandlingService;
 use Zend\Mvc\ApplicationInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use ZfcUser\Entity\UserInterface;
 
 class Module
 {
+    /**
+     * @var \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    public static $serviceManager;
+
     public function onBootstrap(MvcEvent $e)
     {
+        self::$serviceManager = $e->getApplication()->getServiceManager();
         $this->registerShutdownFunction($e->getApplication());
         $e->getApplication()->getServiceManager()->get('translator');
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
-        /** @var \Zend\Authentication\AuthenticationService $auth */
-        $auth = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
-        if ($auth->hasIdentity()) {
-            /** @var \RollbarNotifier $rollbar */
-            $rollbar = $e->getApplication()->getServiceManager()->get('RollbarNotifier');
-            $identity = $auth->getIdentity();
-            $rollbar->person = array(
-                'id' => $identity->getId(),
-                'email' => $identity->getEmail(),
-                'username' => $identity->getDisplayName()
-            );
-        }
-
-        $eventManager->attach('dispatch.error', function($event){
-            $exception = $event->getResult()->exception;
-            if ($exception) {
-                $sm = $event->getApplication()->getServiceManager();
-                $service = $sm->get('Application\Service\ErrorHandling');
-                $service->logException($exception);
+        $eventManager->attach(
+            'dispatch.error',
+            function ($event) {
+                $exception = $event->getResult()->exception;
+                if ($exception) {
+                    $sm = $event->getApplication()->getServiceManager();
+                    $service = $sm->get('Application\Service\ErrorHandling');
+                    $service->logException($exception);
+                }
             }
-        });
+        );
     }
 
     public function getConfig()
@@ -59,7 +56,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'Application\Service\ErrorHandling' =>  function($sm) {
+                'Application\Service\ErrorHandling' => function ($sm) {
                     $logger = $sm->get('Application\Logger');
                     $service = new ErrorHandlingService($logger);
                     return $service;
@@ -68,22 +65,48 @@ class Module
         );
     }
 
+    public static function identityInfo()
+    {
+        if (!self::$serviceManager->has('zfcuser_auth_service')) {
+            return null;
+        }
+
+        /** @var \Zend\Authentication\AuthenticationService $auth */
+        $auth = self::$serviceManager->get('zfcuser_auth_service');
+        if (!$auth->hasIdentity()) {
+            return null;
+        }
+
+        $identity = $auth->getIdentity();
+        if (!$identity instanceof UserInterface) {
+            return null;
+        }
+
+        return array(
+            'id' => $identity->getId(),
+            'email' => $identity->getEmail(),
+            'username' => $identity->getDisplayName()
+        );
+    }
+
     private function registerShutdownFunction(ApplicationInterface $application)
     {
-        register_shutdown_function(function() use ($application) {
-            /** @var \Zend\Log\Logger $logger */
-            $logger = $application->getServiceManager()->get('Application\Logger');
-            $error = error_get_last();
-            if ($error) {
-                $logger->emerg($error['message'], $error);
+        register_shutdown_function(
+            function () use ($application) {
+                /** @var \Zend\Log\Logger $logger */
+                $logger = $application->getServiceManager()->get('Application\Logger');
+                $error = error_get_last();
+                if ($error) {
+                    $logger->emerg($error['message'], $error);
 
-                if ('cli' !== php_sapi_name()) {
-                    $errorPage = __DIR__ . '/../../public/500.html';
-                    if (file_exists($errorPage)) {
-                        readfile($errorPage);
+                    if ('cli' !== php_sapi_name()) {
+                        $errorPage = __DIR__ . '/../../public/500.html';
+                        if (file_exists($errorPage)) {
+                            readfile($errorPage);
+                        }
                     }
                 }
             }
-        });
+        );
     }
 }

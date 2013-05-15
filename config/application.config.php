@@ -10,6 +10,10 @@ return array(
         'ZfcUserDoctrineMongoODM',
         'User',
         'Application',
+        'Organization',
+        'Resource',
+        'Ticket',
+        'Auction'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

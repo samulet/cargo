@@ -112,7 +112,7 @@ $settings = array(
      * that [call_user_func()](http://php.net/call_user_func) can handle) returning
      * an array like the one for 'person'.
      */
-    //'person_fn',
+    'person_fn' => '\Application\Module::identityInfo',
 
     /**
      * path to your project's root dir

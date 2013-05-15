@@ -8,28 +8,30 @@ $form->get('submit')->setAttribute('class', 'btn btn-primary');
 
 <?php echo $this->form()->openTag($form) ?>
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="LoginFormLabel">Sign In</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="LoginFormLabel">Sign In</h3>
 </div>
 <div class="modal-body">
 
-        <dl class="zend_form">
-            <?php echo $this->formElementErrors($form->get('identity')) ?>
+    <dl class="zend_form">
+        <?php echo $this->formElementErrors($form->get('identity')) ?>
 
-            <dt><?php echo $this->formLabel($form->get('identity')) ?></dt>
-            <dd><?php echo $this->formInput($form->get('identity')) ?></dd>
+        <dt><?php echo $this->formLabel($form->get('identity')) ?></dt>
+        <dd><?php echo $this->formInput($form->get('identity')) ?></dd>
 
-            <dt><?php echo $this->formLabel($form->get('credential')) ?></dt>
-            <dd><?php echo $this->formInput($form->get('credential')) ?></dd>
+        <dt><?php echo $this->formLabel($form->get('credential')) ?></dt>
+        <dd><?php echo $this->formInput($form->get('credential')) ?></dd>
 
-            <?php if ($this->redirect): ?>
-                <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
-            <?php endif ?>
+        <?php if ($this->redirect): ?>
+            <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>"/>
+        <?php endif ?>
 
-        </dl>
+    </dl>
 
     <?php if ($this->enableRegistration) : ?>
-    Not registered? <a href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect='.$this->redirect : '') ?>">Sign up!</a>
+        Not registered? <a href="<?php echo $this->url(
+            'zfcuser/register'
+        ) . ($this->redirect ? '?redirect=' . $this->redirect : '') ?>">Sign up!</a>
     <?php endif; ?>
 
 </div>

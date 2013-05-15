@@ -1,0 +1,72 @@
+<?php
+$resources=$this->res;
+
+$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+?>
+
+
+<a href="<?php echo $this->url('resource',
+    array('action'=>'add'));?>">Добавить ресурс</a>
+<a href="<?php echo $this->url('resource',
+    array('action'=>'my'));?>">Мои ресурсы</a>
+
+<table class="table">
+    <tr>
+    <th>
+        Типы перевозок
+    </th>
+    <th>
+        Промежуток когда свободен ресурс
+    </th>
+    <th>
+        Стоимость
+    </th>
+        <th>
+            Организация
+        </th>
+    <th>
+        Подробнее
+     </th>
+         <th>
+             Редактировать
+          </th>
+         <th>
+             Добавить аукцион
+          </th>
+
+    </tr>
+    <?php foreach ($resources as $resource) { $org=$resource['org'];$resource=$resource['res']; ?>
+<tr>
+    <td>
+        <?php foreach ($types_r as $key => $value) {
+            echo $key.' '.$resource[$value].' ';
+        }
+        ?>
+    </td>
+    <td>
+        <?php echo $resource['dateStart'].' / '.$resource['dateEnd']; ?>
+    </td>
+    <td>
+        <?php echo $resource['money'].' '.$resource['currency']; ?>
+    </td>
+        <td>
+        <a href="<?php echo $this->url('organization',
+                    array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
+        </td>
+    <td>
+        <a href="<?php echo $this->url('resource',
+            array('action'=>'list', 'id' => $resource['uuid']));?>">Подробнее</a>
+    </td>
+        <td>
+            <a href="<?php echo $this->url('resource',
+                array('action'=>'edit', 'id' => $resource['uuid']));?>">Редактировать</a>
+        </td>
+        <td>
+            <a href="<?php echo $this->url('auction',
+                array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить аукцион</a>
+        </td>
+
+</tr>
+    <?php } ?>
+
+</table>

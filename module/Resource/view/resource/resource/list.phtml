@@ -1,0 +1,14 @@
+<?php
+$resources = $this->res;
+
+unset($resources['created']);
+unset($resources['updated']);
+
+foreach ($resources as $key => $value) {
+    if ($value != '') {
+        echo $key . ' : ' . $value . '</br> ';
+    }
+}
+
+?>
+

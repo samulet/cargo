@@ -1,0 +1,75 @@
+<?php
+$vehicles = $this->res;
+
+
+?>
+<a href="<?php echo $this->url(
+    'vehicle',
+    array('action' => 'add')
+);?>">Добавить ТС</a>
+<a href="<?php echo $this->url(
+    'vehicle',
+    array('action' => 'index')
+);?>">Все ТС</a>
+
+<table class="table">
+    <tr>
+        <th>
+            Серийный номер
+        </th>
+        <th>
+            Марка / Модель
+        </th>
+        <th>
+            Автомобильынй номер
+        </th>
+        <th>
+            Организация
+        </th>
+        <th>
+            Подробнее
+        </th>
+        <th>
+            Редактировать
+        </th>
+        <th>
+            Удалить
+        </th>
+    </tr>
+    <?php foreach ($vehicles as $vehicle) { $org=$vehicle['org'];$vehicle=$vehicle['res'];?>
+        <tr>
+            <td>
+                <?php echo $vehicle['serialNumber']; ?>
+            </td>
+            <td>
+                <?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?>
+            </td>
+            <td>
+                <?php echo $vehicle['carNumber']; ?>
+            </td>
+                    <td>
+                    <a href="<?php echo $this->url('organization',
+                                array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
+                    </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'list', 'id' => $vehicle['uuid'])
+                );?>">Подробнее</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'edit', 'id' => $vehicle['uuid'])
+                );?>">Редактировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'delete', 'id' => $vehicle['uuid'])
+                );?>">Удалить</a>
+            </td>
+        </tr>
+    <?php } ?>
+
+</table>

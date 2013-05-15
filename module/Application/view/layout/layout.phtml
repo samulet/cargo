@@ -1,83 +1,106 @@
 <?php echo $this->doctype(); ?>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('ZF2 ' . $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(
+        false
+    ) ?>
 
-        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
-        <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => '/image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+    <!-- Le styles -->
+    <?php echo $this->headLink(
+        array(
+            'rel' => 'shortcut icon',
+            'type' => '/image/vnd.microsoft.icon',
+            'href' => $this->basePath() . '/images/favicon.ico'
+        )
+    )
+        ->prependStylesheet($this->basePath() . '/css/style.css')
+        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
-        <!-- Scripts -->
-        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/common.js')
-                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+    <!-- Scripts -->
+    <?php echo $this->headScript()->prependFile(
+        $this->basePath() . '/js/html5.js',
+        'text/javascript',
+        array('conditional' => 'lt IE 9',)
+    )
+        ->prependFile($this->basePath() . '/js/common.js')
+        ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+        ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
 
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Skeleton Application') ?></a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                        </ul>
-                        <ul class="nav pull-right">
-                            <?php if(!$this->zfcUserIdentity()): ?>
-                            <li>
-                                <!-- display the login form -->
-                                <a href="<?php echo $this->url('zfcuser/login') ?>" class="js"
-                                   data-event="click"
-                                   data-handler="App.Login.dialog"
-                                   data-content="#login-form"
-                                    >
-                                <?php echo $this->translate('Login') ?>&nbsp;<i class="icon-off icon-white"></i>
-                                </a>
-                            </li>
-                            <?php else: ?>
-                                <li class="divider-vertical">
-                                    <!-- display the 'display name' of the user -->
-                                    <a href="<?php echo $this->url('zfcuser') ?>"><i class="icon-user icon-white"></i>&nbsp;<?php echo $this->zfcUserIdentity()->getDisplayname(); ?></a>
-                                </li>
-                                <li class="divider-vertical">
-                                    <a href="<?php echo $this->url('zfcuser/logout') ?>"><?php echo $this->translate('Logout') ?>&nbsp;<i class="icon-off icon-white"></i></a>
-                                    <?php //echo $this->zfcUserLoginWidget(array('redirect'=>'application')); ?>
-                                </li>
-                            <?php endif?>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
-        </div>
-        <div id="login-form"
-             class="modal hide fade"
-             tabindex="-1"
-             role="dialog"
-             aria-labelledby="LoginFormLabel"
-             aria-hidden="true">
-            <?php echo $this->zfcUserLoginWidget(array('redirect'=>'')); ?>
-        </div>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
         <div class="container">
-            <?php echo $this->content; ?>
-        </div> <!-- /container -->
-        <footer class="navbar navbar-fixed-bottom">
-            <div class="navbar-inner">
-                <div class="container">
-                    <span class="brand" href="#">&copy;&nbsp;2013&nbsp;СП Онлайн</span>
-                </div>
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate(
+                    'Skeleton Application'
+                ) ?></a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate(
+                                'Home'
+                            ) ?></a></li>
+                </ul>
+                <ul class="nav pull-right">
+                    <?php if (!$this->zfcUserIdentity()): ?>
+                        <li>
+                            <!-- display the login form -->
+                            <a href="<?php echo $this->url('zfcuser/login') ?>" class="js"
+                               data-event="click"
+                               data-handler="App.Login.dialog"
+                               data-content="#login-form"
+                                >
+                                <?php echo $this->translate('Login') ?>&nbsp;<i class="icon-off icon-white"></i>
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li class="divider-vertical">
+                            <!-- display the 'display name' of the user -->
+                            <a href="<?php echo $this->url('zfcuser') ?>"><i
+                                    class="icon-user icon-white"></i>&nbsp;<?php echo $this->zfcUserIdentity(
+                                )->getDisplayname(); ?></a>
+                        </li>
+                        <li class="divider-vertical">
+                            <a href="<?php echo $this->url('zfcuser/logout') ?>"><?php echo $this->translate(
+                                    'Logout'
+                                ) ?>&nbsp;<i class="icon-off icon-white"></i></a>
+                            <?php //echo $this->zfcUserLoginWidget(array('redirect'=>'application')); ?>
+                        </li>
+                    <?php endif ?>
+                </ul>
             </div>
-        </footer>
-        <?php echo $this->inlineScript() ?>
-    </body>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+<div id="login-form"
+     class="modal hide fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="LoginFormLabel"
+     aria-hidden="true">
+    <?php echo $this->zfcUserLoginWidget(array('redirect' => '')); ?>
+</div>
+<div class="container">
+    <?php echo $this->content; ?>
+</div>
+<!-- /container -->
+<footer class="navbar navbar-fixed-bottom">
+    <div class="navbar-inner">
+        <div class="container">
+            <span class="brand" href="#">&copy;&nbsp;2013&nbsp;СП Онлайн</span>
+        </div>
+    </div>
+</footer>
+<?php echo $this->inlineScript() ?>
+</body>
 </html>

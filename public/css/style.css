@@ -35,3 +35,67 @@ div.container a.brand {
     margin-left: 0;
     padding: 8px 20px 12px 40px;
 }
+
+#ticket select,#resource select {
+    width:120px;
+}
+
+#ticket input,#resource input {
+    width:160px;
+}
+
+#ticket span,#resource span {
+    display: block;
+    #font-weight: bold;
+}
+#ticket .tr_check span,#resource .tr_check span {
+    display: inline-block;
+}
+
+#ticket .tr_check input,#resource .tr_check input {
+    float:left;
+    width:20px;
+}
+
+#ticket .inline_check label,#resource .inline_check label {
+    display: inline-block;
+}
+
+#ticket .note_textarea textarea,#resource .note_textarea textarea {
+    height: 130px;
+    width: 100%;
+}
+
+#ticket table td, #resourse table td {
+    border-left: 1px dashed #dddddd;
+}
+#resourse .spec_table {
+    width:740px;margin: 0 auto;
+}
+
+#ticket .spec_table {
+    width:980px;margin: 0 auto;
+}
+
+.spec_table td {
+    border-left: 1px dashed #dddddd;
+}
+
+.spec_table th {
+    font-size:16px;
+}
+.spec_table .into_table th {
+    font-size:14px;
+}
+.submit_cl {
+    padding-top: 30px;
+    width:100%;
+}
+.submit_cl input {
+    display: block;
+    margin:0 auto;
+    width:250px;
+    height:40px;
+    font-weight: bold;
+    font-size:16px;
+}
