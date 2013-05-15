@@ -9,27 +9,32 @@ $settings = array(
     /**
      * Enabled module or not
      */
-    'enabled' => true,
+    'enabled' => false,
 
     /**
-     * your project access token
+     * your project server-side access token
      */
     'access_token' => '0faa035473dc4c68a3b56a67b531cfef',
 
     /**
+     * your project client-side access token
+     */
+    //'client_access_token' => '',
+
+    /**
      * Register Rollbar as an exception handler to log PHP exceptions
      */
-    'exceptionhandler' => true,
+    'exceptionhandler' => false,
 
     /**
      * Register Rollbar as an error handler to log PHP errors
      */
-    'errorhandler' => true,
+    'errorhandler' => false,
 
     /**
      * Register Rollbar as an shutdown function
      */
-    'shutdownfunction' => true,
+    'shutdownfunction' => false,
 
     /**
      * the base api url to post to (default 'https://api.rollbar.com/api/1/')
