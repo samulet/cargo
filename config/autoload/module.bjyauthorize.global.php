@@ -38,7 +38,16 @@ return array(
         'rule_providers'        => array(),
 
         // Guard listeners to be attached to the application event manager
-        'guards'                => array(),
+        'guards'                => array(
+            'BjyAuthorize\Guard\Route' => array(
+                array('route' => 'zfcuser', 'roles' => array('user')),
+                array('route' => 'zfcuser/logout', 'roles' => array('user')),
+                array('route' => 'zfcuser/login', 'roles' => array('guest')),
+                array('route' => 'zfcuser/register', 'roles' => array('guest')),
+                // Below is the default index action used by the ZendSkeletonApplication
+                array('route' => 'home', 'roles' => array('guest', 'user')),
+            ),
+        ),
 
         // strategy service name for the strategy listener to be used when permission-related errors are detected
         'unauthorized_strategy' => 'BjyAuthorize\View\UnauthorizedStrategy',
