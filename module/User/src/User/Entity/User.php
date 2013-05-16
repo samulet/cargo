@@ -2,14 +2,15 @@
 
 namespace User\Entity;
 
+use BjyAuthorize\Provider\Role\ProviderInterface;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use ZfcUser\Entity\UserInterface;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(collection="user")
  */
-class User implements UserInterface
+class User implements UserInterface, ProviderInterface
 {
     /**
      * @ODM\Id
@@ -60,6 +61,20 @@ class User implements UserInterface
     protected $updated;
 
     /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $roles;
+
+    /**
+     * Initialies the roles variable.
+     */
+    public function __construct()
+    {
+        $this->roles = array();
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -73,6 +88,7 @@ class User implements UserInterface
      * Set id.
      *
      * @param int $id
+     *
      * @return UserInterface
      */
     public function setId($id)
@@ -95,6 +111,7 @@ class User implements UserInterface
      * Set username.
      *
      * @param string $username
+     *
      * @return UserInterface
      */
     public function setUsername($username)
@@ -117,6 +134,7 @@ class User implements UserInterface
      * Set email.
      *
      * @param string $email
+     *
      * @return UserInterface
      */
     public function setEmail($email)
@@ -139,6 +157,7 @@ class User implements UserInterface
      * Set displayName.
      *
      * @param string $displayName
+     *
      * @return UserInterface
      */
     public function setDisplayName($displayName)
@@ -161,6 +180,7 @@ class User implements UserInterface
      * Set password.
      *
      * @param string $password
+     *
      * @return UserInterface
      */
     public function setPassword($password)
@@ -183,6 +203,7 @@ class User implements UserInterface
      * Set state.
      *
      * @param int $state
+     *
      * @return UserInterface
      */
     public function setState($state)
@@ -209,5 +230,32 @@ class User implements UserInterface
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Get role.
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    /**
+     * Add a role to the user.
+     *
+     * @param Role $role
+     *
+     * @return void
+     */
+    public function addRole($role)
+    {
+        $this->roles[] = $role;
     }
 }

@@ -20,12 +20,24 @@ return array(
 
         // Role providers to be used to load all available roles into Zend\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
-        'role_providers'        => array(
+        'role_providers' => array(
             'BjyAuthorize\Provider\Role\Config' => array(
                 'guest' => array(),
-                'user'  => array('children' => array(
-                    'admin' => array(),
-                )),
+                'user' => array(
+                    'children' => array(
+                        'stuff' => array(
+                            'children' => array(
+                                'logist',
+                                'driver',
+                                'owner' => array(
+                                    'children' => array(
+                                        'admin' => array(),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
             ),
         ),
 
@@ -50,7 +62,7 @@ return array(
         ),
 
         // strategy service name for the strategy listener to be used when permission-related errors are detected
-        'unauthorized_strategy' => 'BjyAuthorize\View\UnauthorizedStrategy',
+        'unauthorized_strategy' => 'BjyAuthorize\View\RedirectionStrategy',
 
         // Template name for the unauthorized strategy
         'template'              => 'error/403',
