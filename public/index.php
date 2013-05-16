@@ -1,5 +1,7 @@
 <?php
 
+define('REQUEST_MICROTIME', microtime(true)); // for ZendDeveloperTools
+
 chdir(dirname(__DIR__));
 
 // Setup autoloading
