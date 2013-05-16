@@ -20,12 +20,24 @@ return array(
 
         // Role providers to be used to load all available roles into Zend\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
-        'role_providers'        => array(
+        'role_providers' => array(
             'BjyAuthorize\Provider\Role\Config' => array(
                 'guest' => array(),
-                'user'  => array('children' => array(
-                    'admin' => array(),
-                )),
+                'user' => array(
+                    'children' => array(
+                        'stuff' => array(
+                            'children' => array(
+                                'logist',
+                                'driver',
+                                'owner' => array(
+                                    'children' => array(
+                                        'admin' => array(),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
             ),
         ),
 
