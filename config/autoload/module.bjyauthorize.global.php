@@ -62,7 +62,7 @@ return array(
         ),
 
         // strategy service name for the strategy listener to be used when permission-related errors are detected
-        'unauthorized_strategy' => 'BjyAuthorize\View\UnauthorizedStrategy',
+        'unauthorized_strategy' => 'BjyAuthorize\View\RedirectionStrategy',
 
         // Template name for the unauthorized strategy
         'template'              => 'error/403',
