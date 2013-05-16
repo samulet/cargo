@@ -42,8 +42,8 @@ class RedirectionStrategy extends BaseRedirectionStrategy
             return;
         }
 
-        if (('zfcuser/login' === $routeMatch->getMatchedRouteName())
-            || ('zfcuser/register' === $routeMatch->getMatchedRouteName())
+        if (null !== $routeMatch && (('zfcuser/login' === $routeMatch->getMatchedRouteName())
+                || ('zfcuser/register' === $routeMatch->getMatchedRouteName()))
         ) {
             $url = $router->assemble(array(), array('name' => 'zfcuser'));
         }
