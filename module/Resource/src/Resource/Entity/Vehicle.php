@@ -1,12 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: solov
- * Date: 4/15/13
- * Time: 6:25 PM
- * To change this template use File | Settings | File Templates.
- */
-
 namespace Resource\Entity;
 
 use Zend\Form\Annotation;
