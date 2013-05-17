@@ -27,7 +27,9 @@ class VehicleModel implements ServiceLocatorAwareInterface
 
     public function addVehicle($post, $owner_id, $owner_org_id, $id)
     {
-        $prop_array = get_object_vars($post);
+        if(!empty($post)) {
+            $prop_array = get_object_vars($post);
+        }
         $prop_array['ownerId'] = $owner_id;
         $prop_array['ownerOrgId'] = $owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -49,7 +51,10 @@ class VehicleModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $id));
-        return get_object_vars($res);
+        if(!empty($res)) {
+            return get_object_vars($res);
+        }
+        return null;
     }
 
     public function returnAllVehicle()

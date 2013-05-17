@@ -28,7 +28,9 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function addTicket($post, $owner_id, $org_id, $id)
     {
-        $prop_array = get_object_vars($post);
+        if(!empty($post)) {
+            $prop_array = get_object_vars($post);
+        }
         $prop_array['ownerId'] = $owner_id;
         $prop_array['ownerOrgId'] = $org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -48,7 +50,10 @@ class TicketModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
-        return get_object_vars($res);
+        if(!empty($res)) {
+            get_object_vars($res);;
+        }
+        return null;
     }
 
     public function returnAllTicket()
@@ -59,8 +64,13 @@ class TicketModel implements ServiceLocatorAwareInterface
         $rezObj = $query->execute();
         $rezs = array();
         $orgModel = $this->getOrganizationModel();
+        if(empty($rezObj)) {
+            return null;
+        }
         foreach ($rezObj as $cur) {
-            $obj_vars = get_object_vars($cur);
+            if(!empty($cur)) {
+                $obj_vars = get_object_vars($cur);
+            }
             $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
             array_push($rezs, array('tick' => $obj_vars, 'org' => $org));
         }
