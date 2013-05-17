@@ -108,5 +108,10 @@ class VehicleController extends AbstractActionController
         }
         return $this->companyUserModel;
     }
-
+    public function copyAction() {
+        $uuid=$this->getEvent()->getRouteMatch()->getParam('id');
+        $resModel = $this->getVehicleModel();
+        $resModel->copyVehicle($uuid);
+        return $this->redirect()->toUrl('/vehicles/my');
+    }
 }

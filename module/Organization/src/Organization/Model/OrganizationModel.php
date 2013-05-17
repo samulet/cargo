@@ -106,6 +106,9 @@ class OrganizationModel implements ServiceLocatorAwareInterface
 
     public function getOrganization($id)
     {
+        if(empty($id)) {
+          return null;
+        }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $org = $objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $id));
         if (empty($org)) {
