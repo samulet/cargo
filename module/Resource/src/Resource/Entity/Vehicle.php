@@ -19,6 +19,7 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
  * @ODM\Document(collection="vehicle")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("vehicle")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
@@ -274,6 +275,27 @@ class Vehicle
      * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
+    /**
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+    public $deletedAt;
+
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
 
     public function setId($id)
     {

@@ -8,6 +8,7 @@
  */
 namespace Resource\Model;
 
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Resource\Entity\Vehicle;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -115,10 +116,15 @@ class VehicleModel implements ServiceLocatorAwareInterface
     public function deleteVehicle($uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb4 = $objectManager->createQueryBuilder('Resource\Entity\Vehicle');
-        $qb4->remove()->field('uuid')->equals($uuid)->getQuery()
-            ->execute();
+
+        $vehicle = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $uuid));
+        if (!$vehicle) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $uuid);
+        }
+        $objectManager->remove($vehicle);
+        $objectManager->flush();
     }
+
     public function copyVehicle($uuid) {
         $res=$this->listVehicle($uuid);
         unset($res['created']);
