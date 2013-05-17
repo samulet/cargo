@@ -60,6 +60,9 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $rezObj = $query->execute();
         $rezs = array();
         $orgModel = $this->getOrganizationModel();
+        if(empty($rezObj)) {
+            return null;
+        }
         foreach ($rezObj as $cur) {
             $obj_vars = get_object_vars($cur);
             $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
