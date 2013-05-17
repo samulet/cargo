@@ -27,7 +27,14 @@ class ResourceModel implements ServiceLocatorAwareInterface
 
     public function addResource($post, $owner_id, $owner_org_id, $id)
     {
-        $prop_array = get_object_vars($post);
+        if(!empty($post)) {
+            if(is_array($post)) {
+                $prop_array=$post;
+            } else {
+                $prop_array = get_object_vars($post);
+            }
+
+        }
         $prop_array['ownerId'] = $owner_id;
         $prop_array['ownerOrgId'] = $owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -112,6 +119,13 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $qb4->remove()->field('uuid')->equals($uuid)->getQuery()
             ->execute();
     }
-
+    public function copyResource($uuid) {
+        $res=$this->listResource($uuid);
+        unset($res['created']);
+        unset($res['updated']);
+        unset($res['id']);
+        unset($res['uuid']);
+        $this->addResource($res,$res['ownerId'],$res['ownerOrgId'],null);
+    }
 
 }

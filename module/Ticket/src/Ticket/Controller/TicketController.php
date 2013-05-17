@@ -110,4 +110,11 @@ class TicketController extends AbstractActionController
         }
         return $this->companyUserModel;
     }
+
+    public function copyAction() {
+        $uuid=$this->getEvent()->getRouteMatch()->getParam('id');
+        $resModel = $this->getTicketModel();
+        $resModel->copyTicket($uuid);
+        return $this->redirect()->toUrl('/tickets/my');
+    }
 }

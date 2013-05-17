@@ -29,7 +29,12 @@ class TicketModel implements ServiceLocatorAwareInterface
     public function addTicket($post, $owner_id, $org_id, $id)
     {
         if(!empty($post)) {
-            $prop_array = get_object_vars($post);
+            if(is_array($post)) {
+                $prop_array=$post;
+            } else {
+                $prop_array = get_object_vars($post);
+            }
+
         }
         $prop_array['ownerId'] = $owner_id;
         $prop_array['ownerOrgId'] = $org_id;
@@ -51,7 +56,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
         if(!empty($res)) {
-            get_object_vars($res);;
+            return get_object_vars($res);;
         }
         return null;
     }
@@ -70,9 +75,9 @@ class TicketModel implements ServiceLocatorAwareInterface
         foreach ($rezObj as $cur) {
             if(!empty($cur)) {
                 $obj_vars = get_object_vars($cur);
+                $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
+                array_push($rezs, array('tick' => $obj_vars, 'org' => $org));
             }
-            $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
-            array_push($rezs, array('tick' => $obj_vars, 'org' => $org));
         }
         return $rezs;
     }
@@ -135,5 +140,13 @@ class TicketModel implements ServiceLocatorAwareInterface
         $qb4 = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
         $qb4->remove()->field('uuid')->equals($uuid)->getQuery()
             ->execute();
+    }
+    public function copyTicket($uuid) {
+        $res=$this->listTicket($uuid);
+        unset($res['created']);
+        unset($res['updated']);
+        unset($res['id']);
+        unset($res['uuid']);
+        $this->addTicket($res,$res['ownerId'],$res['ownerOrgId'],null);
     }
 }

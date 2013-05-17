@@ -33,6 +33,9 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             Добавить аукцион
         </th>
         <th>
+            Копировать
+        </th>
+        <th>
             Удалить
         </th>
     </tr>
@@ -67,6 +70,12 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
                     'auction',
                     array('action' => 'add', 'id' => $ticket['uuid'])
                 );?>">Добавить аукцион</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'copy', 'id' => $ticket['uuid'])
+                );?>">Копировать</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(
