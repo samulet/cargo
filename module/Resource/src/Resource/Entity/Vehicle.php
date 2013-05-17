@@ -18,7 +18,7 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
- * @ODM\Document(collection="vehicle")
+ * @ODM\Document(collection="vehicle", repositoryClass="Resource\Repository\VehicleRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("vehicle")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
