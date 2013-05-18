@@ -8,16 +8,11 @@
  */
 namespace Resource\Model;
 
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Resource\Entity\Vehicle;
-
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use User\Entity\User;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 class VehicleModel implements ServiceLocatorAwareInterface
@@ -65,17 +60,16 @@ class VehicleModel implements ServiceLocatorAwareInterface
     public function returnAllVehicle()
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Resource\Entity\Vehicle')->eagerCursor(true);
-        $query = $qb->getQuery();
-        $rezObj = $query->execute();
-        $rezs = array();
-        $orgModel = $this->getOrganizationModel();
-        foreach ($rezObj as $cur) {
-            $obj_vars = get_object_vars($cur);
-            $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
-            array_push($rezs, array('res' => $obj_vars, 'org' => $org));
+        $vehiclesCollection = $objectManager->getRepository('Resource\Entity\Vehicle')->getAllAvailableVehicle();
+
+        $result = array();
+        $organizationModel = $this->getOrganizationModel();
+        foreach ($vehiclesCollection as $vehicle) {
+            /** @var \Resource\Entity\Vehicle $vehicle */
+            $organization = $organizationModel->getOrganization($vehicle->getOwnerOrgId());
+            array_push($result, array('res' => get_object_vars($vehicle), 'org' => $organization));
         }
-        return $rezs;
+        return $result;
     }
 
     public function returnMyVehicle($owner_id)
@@ -115,10 +109,15 @@ class VehicleModel implements ServiceLocatorAwareInterface
     public function deleteVehicle($uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb4 = $objectManager->createQueryBuilder('Resource\Entity\Vehicle');
-        $qb4->remove()->field('uuid')->equals($uuid)->getQuery()
-            ->execute();
+
+        $vehicle = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $uuid));
+        if (!$vehicle) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $uuid);
+        }
+        $objectManager->remove($vehicle);
+        $objectManager->flush();
     }
+
     public function copyVehicle($uuid) {
         $res=$this->listVehicle($uuid);
         unset($res['created']);
@@ -127,5 +126,4 @@ class VehicleModel implements ServiceLocatorAwareInterface
         unset($res['uuid']);
         $this->addVehicle($res,$res['ownerId'],$res['ownerOrgId'],null);
     }
-
 }
