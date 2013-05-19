@@ -19,6 +19,7 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
  * @ODM\Document(collection="resource")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("resource")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
@@ -66,6 +67,13 @@ class Resource
      * @Annotation\Exclude()
      */
     public $updated;
+    /**
+
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+
+    public $deletedAt;
     /**
      * @var string
      * @ODM\Field(type="string")
