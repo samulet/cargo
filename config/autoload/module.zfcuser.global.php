@@ -155,7 +155,7 @@ $settings = array(
      * Accepted values: A valid route name within your application
      *
      */
-    //'login_redirect_route' => 'zfcuser',
+    'login_redirect_route' => 'dashboard',
 
     /**
      * Logout Redirect Route
@@ -165,7 +165,7 @@ $settings = array(
      * Default value: 'zfcuser/login'
      * Accepted values: A valid route name within your application
      */
-    //'logout_redirect_route' => 'zfcuser/login',
+    'logout_redirect_route' => 'home',
 
     /**
      * Password Security

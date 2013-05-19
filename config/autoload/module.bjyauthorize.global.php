@@ -58,6 +58,7 @@ return array(
                 array('route' => 'zfcuser/register', 'roles' => array('guest')),
                 // Below is the default index action used by the ZendSkeletonApplication
                 array('route' => 'home', 'roles' => array('guest', 'user')),
+                array('route' => 'dashboard', 'roles' => array('user')),
             ),
         ),
 
