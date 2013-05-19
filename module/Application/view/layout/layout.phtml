@@ -87,7 +87,7 @@ echo $this->doctype(); ?>
      role="dialog"
      aria-labelledby="LoginFormLabel"
      aria-hidden="true">
-    <?php echo $this->zfcUserLoginWidget(array('redirect' => '')); ?>
+    <?php echo $this->zfcUserLoginWidget(); ?>
 </div>
 <div class="container">
     <?php if ($this->zfcUserIdentity()) { ?>
