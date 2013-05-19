@@ -10,6 +10,7 @@ namespace Resource\Model;
 
 use Resource\Entity\Resource;
 
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\MongoDB\Connection;
@@ -62,9 +63,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
     public function returnAllResource()
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Resource\Entity\Resource')->eagerCursor(true);
-        $query = $qb->getQuery();
-        $rezObj = $query->execute();
+        $rezObj = $objectManager->getRepository('Resource\Entity\Resource')->getAllAvailableResource();
         $rezs = array();
         $orgModel = $this->getOrganizationModel();
         if(empty($rezObj)) {
@@ -81,11 +80,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
     public function returnMyResource($owner_id)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Resource\Entity\Resource')->field('ownerId')->equals(
-            new \MongoId($owner_id)
-        )->eagerCursor(true);
-        $query = $qb->getQuery();
-        $rezObj = $query->execute();
+        $rezObj = $objectManager->getRepository('Resource\Entity\Resource')->getMyAvailableResource($owner_id);
         $rezs = array();
         foreach ($rezObj as $cur) {
             array_push($rezs, get_object_vars($cur));
@@ -115,9 +110,13 @@ class ResourceModel implements ServiceLocatorAwareInterface
     public function deleteResource($uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb4 = $objectManager->createQueryBuilder('Resource\Entity\Resource');
-        $qb4->remove()->field('uuid')->equals($uuid)->getQuery()
-            ->execute();
+
+        $recourse = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('uuid' => $uuid));
+        if (!$recourse) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Resource', $uuid);
+        }
+        $objectManager->remove($recourse);
+        $objectManager->flush();
     }
     public function copyResource($uuid) {
         $res=$this->listResource($uuid);

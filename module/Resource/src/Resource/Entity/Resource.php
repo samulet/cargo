@@ -18,7 +18,7 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
- * @ODM\Document(collection="resource")
+ * @ODM\Document(collection="resource", repositoryClass="Resource\Repository\ResourceRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("resource")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
@@ -67,13 +67,6 @@ class Resource
      * @Annotation\Exclude()
      */
     public $updated;
-    /**
-
-     * @ODM\Date
-     * @Annotation\Exclude()
-     */
-
-    public $deletedAt;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -425,7 +418,26 @@ class Resource
      */
     public $adr;
 
+    /**
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+    public $deletedAt;
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
     public function setId($id)
     {
         $this->id = $id;
