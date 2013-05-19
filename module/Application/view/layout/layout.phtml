@@ -90,7 +90,26 @@ echo $this->doctype(); ?>
     <?php echo $this->zfcUserLoginWidget(array('redirect' => '')); ?>
 </div>
 <div class="container">
-    <?php echo $this->content; ?>
+    <?php if ($this->zfcUserIdentity()) { ?>
+    <div class="row">
+        <div class="span2">
+            <ul class="nav nav-list">
+                <li><a href="<?php echo $this->url('organization', array('action'=>'index'));?>">Аккаунт</a></li>
+                <li class="nav-header">Транспорт</li>
+                <li><a href="<?php echo $this->url('vehicle', array('action' => 'index'));?>">Свободный</a></li>
+                <li><a href="<?php echo $this->url('vehicle', array('action' => 'my'));?>">Справочник</a></li>
+                <li class="nav-header">Заявки</li>
+                <li><a href="<?php echo $this->url('ticket', array('action' => 'index'));?>">Все заявки</a></li>
+                <li><a href="<?php echo $this->url('ticket', array('action' => 'my'));?>">Свои заявки</a></li>
+            </ul>
+        </div>
+        <div class="span10">
+            <?php echo $this->content; ?>
+        </div>
+    </div>
+    <?php } else { ?>
+        <?php echo $this->content; ?>
+    <?php } ?>
 </div>
 <!-- /container -->
 <footer class="navbar navbar-fixed-bottom">
