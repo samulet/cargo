@@ -10,6 +10,7 @@ namespace Ticket\Model;
 
 use Ticket\Entity\Ticket;
 
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\MongoDB\Connection;
@@ -64,9 +65,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     public function returnAllTicket()
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Ticket\Entity\Ticket')->eagerCursor(true);
-        $query = $qb->getQuery();
-        $rezObj = $query->execute();
+        $rezObj = $objectManager->getRepository('Ticket\Entity\Ticket')->getAllAvailableTicket();
         $rezs = array();
         $orgModel = $this->getOrganizationModel();
         if(empty($rezObj)) {
@@ -85,11 +84,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     public function returnMyTicket($owner_id)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Ticket\Entity\Ticket')->field('ownerId')->equals(
-            new \MongoId($owner_id)
-        )->eagerCursor(true);
-        $query = $qb->getQuery();
-        $rezObj = $query->execute();
+        $rezObj = $objectManager->getRepository('Ticket\Entity\Ticket')->getMyAvailableTicket($owner_id);
         $rezs = array();
         foreach ($rezObj as $cur) {
             array_push($rezs, get_object_vars($cur));
@@ -137,9 +132,13 @@ class TicketModel implements ServiceLocatorAwareInterface
     public function deleteTicket($uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb4 = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
-        $qb4->remove()->field('uuid')->equals($uuid)->getQuery()
-            ->execute();
+
+        $tick = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $uuid));
+        if (!$tick) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Resource', $uuid);
+        }
+        $objectManager->remove($tick);
+        $objectManager->flush();
     }
     public function copyTicket($uuid) {
         $res=$this->listTicket($uuid);
