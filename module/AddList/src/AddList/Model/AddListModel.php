@@ -35,13 +35,14 @@ class AddListModel implements ServiceLocatorAwareInterface
             $res = $objectManager->getRepository('AddList\Entity\AddList')->findBy(
                 array('listName' => $elName)
             );
-            if(empty($res))
+            if(!empty($res))
             {
-                return null;
-            }
-            foreach($res as $re) {
-                $obj_vars = get_object_vars($re);
-                array_push($result, array($arrField => array('key'=>$obj_vars['key'],'value'=>$obj_vars['value'])));
+                $results_list=array();
+                foreach($res as $re) {
+                    $obj_vars = get_object_vars($re);
+                    array_push($results_list, array('key'=>$obj_vars['key'],'value'=>$obj_vars['value']));
+                }
+                $result=$result+array($arrField=>$results_list);
             }
         }
         return $result;
