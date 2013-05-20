@@ -44,7 +44,7 @@ class VehicleController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type');
+        $form_array=array('mark','model','type','status');
         $formData=$addListModel->returnDataArray($form_array,'vehicle');
         $fillFrom=new VehicleForm();
         $form=$fillFrom->fillFrom($form,$formData,$form_array);
@@ -61,6 +61,11 @@ class VehicleController extends AbstractActionController
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
+        $addListModel = $this->getAddListModel();
+        $form_array=array('mark','model','type','status');
+        $formData=$addListModel->returnDataArray($form_array,'vehicle');
+        $fillFrom=new VehicleForm();
+        $form=$fillFrom->fillFrom($form,$formData,$form_array);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res,
