@@ -25,6 +25,14 @@ class AddListController extends AbstractActionController
     {
 
     }
+    public function addAction()
+    {
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddList');
+        return new ViewModel(array(
+            'form' => $form
+        ));
+    }
     public function getAddListModel()
     {
         if (!$this->addListModel) {
@@ -34,5 +42,10 @@ class AddListController extends AbstractActionController
         return $this->addListModel;
     }
 
+    public function addListAction() {
+        $addListModel = $this->getAddListModel();
+        $addListModel->addList($this->getRequest()->getPost());
+        return $this->redirect()->toUrl('/addList');
+    }
 
 }

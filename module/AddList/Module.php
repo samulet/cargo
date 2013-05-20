@@ -4,7 +4,7 @@ namespace AddList;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
-use Ticket\Model\TicketModel;
+use AddList\Model\AddListModel;
 
 class Module
 {
