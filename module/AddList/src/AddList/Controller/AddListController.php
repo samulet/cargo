@@ -45,7 +45,7 @@ class AddListController extends AbstractActionController
     public function addListAction() {
         $addListModel = $this->getAddListModel();
         $addListModel->addList($this->getRequest()->getPost());
-        return $this->redirect()->toUrl('/addList');
+        return $this->redirect()->toUrl('/addList/add');
     }
 
 }

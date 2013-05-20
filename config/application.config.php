@@ -15,7 +15,8 @@ return array(
         'Organization',
         'Resource',
         'Ticket',
-        'Auction'
+        'Auction',
+        'AddList'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
