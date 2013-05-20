@@ -15,12 +15,13 @@ use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-
+use Resource\Form\VehicleForm;
 class VehicleController extends AbstractActionController
 {
 
     protected $companyUserModel;
     protected $vehicleModel;
+    protected $addListModel;
 
     public function indexAction()
     {
@@ -42,6 +43,11 @@ class VehicleController extends AbstractActionController
     {
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
+        $addListModel = $this->getAddListModel();
+        $form_array=array('mark','model','type','status');
+        $formData=$addListModel->returnDataArray($form_array,'vehicle');
+        $fillFrom=new VehicleForm();
+        $form=$fillFrom->fillFrom($form,$formData,$form_array);
         return new ViewModel(array(
             'form' => $form
         ));
@@ -55,6 +61,11 @@ class VehicleController extends AbstractActionController
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
+        $addListModel = $this->getAddListModel();
+        $form_array=array('mark','model','type','status');
+        $formData=$addListModel->returnDataArray($form_array,'vehicle');
+        $fillFrom=new VehicleForm();
+        $form=$fillFrom->fillFrom($form,$formData,$form_array);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res,
@@ -113,5 +124,13 @@ class VehicleController extends AbstractActionController
         $resModel = $this->getVehicleModel();
         $resModel->copyVehicle($uuid);
         return $this->redirect()->toUrl('/vehicles/my');
+    }
+    public function getAddListModel()
+    {
+        if (!$this->addListModel) {
+            $sm = $this->getServiceLocator();
+            $this->addListModel = $sm->get('AddList\Model\AddListModel');
+        }
+        return $this->addListModel;
     }
 }

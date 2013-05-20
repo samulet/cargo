@@ -39,11 +39,16 @@ $tir = $form->get('tir');
 $ekmt = $form->get('ekmt');
 $hydroLift = $form->get('hydroLift');
 $cargo = $form->get('cargo');
+
+//$cargo->setAttribute('das'=>'das');
+
 $package = $form->get('package');
 $palet = $form->get('palet');
 $belt = $form->get('belt');
 
 $transportType = $form->get('transportType');
+
+$cargo->setOptions(array("value_options"=>array("key" => "val","key2" => "val2")));
 ?>
 
     <table class="table spec_table" >

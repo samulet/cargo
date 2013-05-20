@@ -11,7 +11,7 @@ $model= $form->get('model')->setValue($this->res['model']);
 $type= $form->get('type')->setValue($this->res['type']);
 $dateMade= $form->get('dateMade')->setValue($this->res['dateMade']);
 $owner= $form->get('owner')->setValue($this->res['owner']);
-
+$status= $form->get('status');
 $serialNumberDoc= $form->get('serialNumberDoc')->setValue($this->res['serialNumberDoc']);
 $carNumber= $form->get('carNumber')->setValue($this->res['carNumber']);
 $ecologicalClass= $form->get('ecologicalClass')->setValue($this->res['ecologicalClass']);
@@ -24,10 +24,10 @@ $whoGave= $form->get('whoGave')->setValue($this->res['whoGave']);
 echo $this->form()->openTag($form);
 
 
-echo $this->formRow($tent);
+
 
 ?>
-    <table class="table spec_table">
+    <table class="table spec_table vehicle">
         <tr >
             <th style="width:50%; text-align: center;">
                 ПТС
@@ -61,7 +61,13 @@ echo $this->formRow($tent);
                 ?>
             </td>
         </tr>
+        <tr>
+            <td>
+                <?php  echo $this->formRow($status); ?>
+            </td>
+        </tr>
     </table>
+
     <div class="submit_cl"><?php echo $this->formElement($form->get('submit')); ?> </div>
 <?php  echo $this->form()->closeTag();
 ?>

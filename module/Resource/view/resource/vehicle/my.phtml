@@ -15,14 +15,15 @@ $vehicles = $this->res;
 <table class="table">
     <tr>
         <th>
-            Серийный номер
+            Номер транспортного средства
+        </th>
+        <th>
+            Статус
         </th>
         <th>
             Марка / Модель
         </th>
-        <th>
-            Автомобильынй номер
-        </th>
+
 
         <th>
             Подробнее
@@ -40,13 +41,13 @@ $vehicles = $this->res;
     <?php foreach ($vehicles as $vehicle) { ?>
         <tr>
             <td>
-                <?php echo $vehicle['serialNumber']; ?>
+                <?php echo $vehicle['carNumber']; ?>
+            </td>
+            <td>
+                <?php echo $vehicle['status']; ?>
             </td>
             <td>
                 <?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?>
-            </td>
-            <td>
-                <?php echo $vehicle['carNumber']; ?>
             </td>
             <td>
                 <a href="<?php echo $this->url(

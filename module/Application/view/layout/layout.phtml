@@ -46,6 +46,9 @@ echo $this->doctype(); ?>
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li class="active"><a href="<?php echo $this->url('home') ?>">Главная</a></li>
+                    <li class="active"><a href="/user"><?php echo $this->translate(
+                                'Личный кабинет'
+                            ) ?></a></li>
                 </ul>
                 <ul class="nav pull-right">
                     <?php if (!$this->zfcUserIdentity()): ?>

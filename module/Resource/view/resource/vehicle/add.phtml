@@ -1,5 +1,6 @@
 <?php
 $form = $this->form;
+$formData= $this->formData;
 $form->setAttribute('action', $this->url('vehicle', array('action' => 'addVehicle')))
     ->prepare();
 $name = $form->get('name');
@@ -8,7 +9,10 @@ $serialNumber= $form->get('serialNumber');
 $vin= $form->get('vin');
 $mark= $form->get('mark');
 $model= $form->get('model');
+
 $type= $form->get('type');
+
+$status= $form->get('status');
 $dateMade= $form->get('dateMade');
 $owner= $form->get('owner');
 
@@ -27,7 +31,7 @@ echo $this->form()->openTag($form);
 
 
 ?>
-<table class="table spec_table">
+<table class="table spec_table vehicle">
     <tr >
         <th style="width:50%; text-align: center;">
             ПТС
@@ -61,7 +65,13 @@ echo $this->form()->openTag($form);
             ?>
         </td>
     </tr>
+    <tr>
+        <td>
+            <?php  echo $this->formRow($status); ?>
+        </td>
+    </tr>
     </table>
+
     <div class="submit_cl"><?php echo $this->formElement($form->get('submit')); ?> </div>
 <?php  echo $this->form()->closeTag();
 ?>

@@ -99,3 +99,7 @@ div.container a.brand {
     font-weight: bold;
     font-size:16px;
 }
+
+.vehicle input,.vehicle select  {
+    display: block !important;
+}

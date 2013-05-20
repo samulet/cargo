@@ -75,11 +75,8 @@ class VehicleModel implements ServiceLocatorAwareInterface
     public function returnMyVehicle($owner_id)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Resource\Entity\Vehicle')->field('ownerId')->equals(
-            new \MongoId($owner_id)
-        )->eagerCursor(true);
-        $query = $qb->getQuery();
-        $rezObj = $query->execute();
+        $rezObj = $objectManager->getRepository('Resource\Entity\Vehicle')
+           -> getMyAvailableVehicle($owner_id);
         $rezs = array();
         foreach ($rezObj as $cur) {
             array_push($rezs, get_object_vars($cur));
