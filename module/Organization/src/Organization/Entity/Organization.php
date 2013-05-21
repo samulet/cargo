@@ -10,7 +10,8 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
  *
- * @ODM\Document(collection="organization")
+ * @ODM\Document(collection="organization", repositoryClass="Organization\Repository\OrganizationRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Organization
 {
@@ -69,6 +70,26 @@ class Organization
      */
     public $type;
 
+    /**
+     * @ODM\Date
+     */
+    public $deletedAt;
+
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
     /**
      * Get id.
      *

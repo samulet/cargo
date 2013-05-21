@@ -51,11 +51,18 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             return null;
         }
         $org_id = $orgOfUser->getOrgId();
-        $org_obj = $objectManager->getRepository('Organization\Entity\Organization')->find(new \MongoId($org_id));
+        $org_obj = $objectManager->getRepository('Organization\Entity\Organization')->getMyAvailableOrganization($org_id);
+
+          //  find(new \MongoId($org_id));
         if (empty($org_obj)) {
             return null;
         }
-        $org = get_object_vars($org_obj);
+        foreach($org_obj as $org_ob) {
+            $org = get_object_vars($org_ob);
+            break;
+        }
+
+
         unset($org['created']);
         unset($org['updated']);
         $comModel = $this->getCompanyModel();
@@ -156,21 +163,38 @@ class OrganizationModel implements ServiceLocatorAwareInterface
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
-        $qb = $objectManager->createQueryBuilder('Organization\Entity\Organization');
-        $qb->remove()->field('id')->equals(new \MongoId($org_id))->getQuery()
-            ->execute();
+        $qb = $objectManager->getRepository('Organization\Entity\Organization')->find(new \MongoId($org_id));
+        if (!$qb) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+        }
+        $objectManager->remove($qb);
+        $objectManager->flush();
+
         $qb2 = $objectManager->createQueryBuilder('Organization\Entity\CompanyUser');
         $qb2->remove()->field('orgId')->equals(new \MongoId($org_id))->getQuery()
             ->execute();
-        $qb3 = $objectManager->createQueryBuilder('Organization\Entity\Company');
-        $qb3->remove()->field('ownerOrgId')->equals(new \MongoId($org_id))->getQuery()
-            ->execute();
-        $qb4 = $objectManager->createQueryBuilder('Resource\Entity\Resource');
-        $qb4->remove()->field('ownerOrgId')->equals(new \MongoId($org_id))->getQuery()
-            ->execute();
-        $qb5 = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
-        $qb5->remove()->field('ownerOrgId')->equals(new \MongoId($org_id))->getQuery()
-            ->execute();
+
+        $qb3 = $objectManager->getRepository('Organization\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        if (!$qb3) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+        }
+        $objectManager->remove($qb3);
+        $objectManager->flush();
+
+        $qb4 = $objectManager->getRepository('Resource\Entity\Resource')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        if (!$qb4) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+        }
+        $objectManager->remove($qb4);
+        $objectManager->flush();
+
+        $qb5 = $objectManager->getRepository('Ticket\Entity\Ticket')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        if (!$qb5) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+        }
+        $objectManager->remove($qb5);
+        $objectManager->flush();
+
     }
 
 

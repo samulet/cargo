@@ -9,7 +9,8 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
- * @ODM\Document(collection="company")
+ * @ODM\Document(collection="company", repositoryClass="Organization\Repository\CompanyRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Company
 {
@@ -98,7 +99,26 @@ class Company
      * @ODM\Field(type="string")
      */
     public $email;
+    /**
+     * @ODM\Date
+     */
+    public $deletedAt;
 
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
     /**
      * Get id.
      *
