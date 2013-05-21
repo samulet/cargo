@@ -30,7 +30,7 @@ if(!empty($list))
             Удалить
         </th>
         <th>
-            Изменить
+            Новое имя поля
         </th>
     </tr>
     <?php
@@ -49,10 +49,15 @@ if(!empty($list))
             );?>">Удалить</a>
         </td>
         <td>
-            <a href="<?php echo $this->url(
-                'addList',
-                array('action' => 'edit', 'id' => $li['uuid'])
-            );?>">Редактировать</a>
+            <?php
+            $form->setAttribute('action', $this->url('addList', array('action' => 'addList', 'id' => $li['uuid'])))
+                ->prepare();
+            echo $this->form()->openTag($form);
+            echo $this->formRow($value);
+
+            echo $this->formElement($form->get('submit'));
+            echo $this->form()->closeTag();
+            ?>
         </td>
     </tr>
 
