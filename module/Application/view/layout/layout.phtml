@@ -100,18 +100,23 @@ echo $this->doctype(); ?>
                 <li><a href="<?php echo $this->url('organization', array('action'=>'index'));?>">Аккаунт</a></li>
                 <li class="nav-header">Органищация</li>
                 <li><a href="<?php echo $this->url('organization', array('action' => 'index'));?>">Моя организация</a></li>
-                <li class="nav-header">Транспорт</li>
-                <li><a href="<?php echo $this->url('resource', array('action' => 'index'));?>">Все весурсы</a></li>
-                <li><a href="<?php echo $this->url('vehicle', array('action' => 'index'));?>">Все ТС</a></li>
+                <li class="nav-header">Рерусы</li>
+                <li><a href="<?php echo $this->url('resource', array('action' => 'index'));?>">Все ресурсы</a></li>
                 <li><a href="<?php echo $this->url('resource', array('action' => 'my'));?>">Мои ресурсы</a></li>
+                <li><a href="<?php echo $this->url('resource', array('action' => 'add'));?>">Добавить ресурс</a></li>
+                <li class="nav-header">ТС</li>
+                <li><a href="<?php echo $this->url('vehicle', array('action' => 'index'));?>">Все ТС</a></li>
                 <li><a href="<?php echo $this->url('vehicle', array('action' => 'my'));?>">Мои ТС</a></li>
+                <li><a href="<?php echo $this->url('vehicle', array('action' => 'add'));?>">Добавить ТС</a></li>
                 <li class="nav-header">Заявки</li>
                 <li><a href="<?php echo $this->url('ticket', array('action' => 'index'));?>">Все заявки</a></li>
                 <li><a href="<?php echo $this->url('ticket', array('action' => 'my'));?>">Мои заявки</a></li>
+                <li><a href="<?php echo $this->url('ticket', array('action' => 'add'));?>">Добавить заявку</a></li>
                 <li class="nav-header">Аукцион</li>
                 <li><a href="<?php echo $this->url('auction', array('action' => 'my'));?>">Аукционы</a></li>
                 <li class="nav-header">Список</li>
                 <li><a href="<?php echo $this->url('addList', array('action' => 'my'));?>">Мои списки</a></li>
+                <li><a href="<?php echo $this->url('addList', array('action' => 'add'));?>">Добавить список</a></li>
             </ul>
         </div>
         <div class="span10">
