@@ -493,18 +493,11 @@ class Ticket
      * @Annotation\Attributes({"value":"0"})
      */
     public $cargo;
-
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
      * @Annotation\Options({"label":"Упаковка"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
      */
     public $package;
 
