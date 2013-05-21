@@ -173,15 +173,27 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         $qb2 = $objectManager->createQueryBuilder('Organization\Entity\CompanyUser');
         $qb2->remove()->field('orgId')->equals(new \MongoId($org_id))->getQuery()
             ->execute();
-        $qb3 = $objectManager->createQueryBuilder('Organization\Entity\Company');
-        $qb3->remove()->field('ownerOrgId')->equals(new \MongoId($org_id))->getQuery()
-            ->execute();
-        $qb4 = $objectManager->createQueryBuilder('Resource\Entity\Resource');
-        $qb4->remove()->field('ownerOrgId')->equals(new \MongoId($org_id))->getQuery()
-            ->execute();
-        $qb5 = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
-        $qb5->remove()->field('ownerOrgId')->equals(new \MongoId($org_id))->getQuery()
-            ->execute();
+
+        $qb3 = $objectManager->getRepository('Organization\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        if (!$qb3) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+        }
+        $objectManager->remove($qb3);
+        $objectManager->flush();
+
+        $qb4 = $objectManager->getRepository('Resource\Entity\Resource')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        if (!$qb4) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+        }
+        $objectManager->remove($qb4);
+        $objectManager->flush();
+
+        $qb5 = $objectManager->getRepository('Ticket\Entity\Ticket')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        if (!$qb5) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+        }
+        $objectManager->remove($qb5);
+        $objectManager->flush();
 
     }
 

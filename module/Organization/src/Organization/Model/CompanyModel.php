@@ -35,11 +35,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
     public function returnCompanies($org_id, $number = '30', $page = '1')
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Organization\Entity\Company')->field('ownerOrgId')->equals(
-            new \MongoId($org_id)
-        )->eagerCursor(true);
-        $query = $qb->getQuery();
-        $cursor = $query->execute();
+        $cursor = $objectManager->getRepository('Organization\Entity\Company')->getMyAvailableCompany(new \MongoId($org_id));
 
         $com = array();
         foreach ($cursor as $cur) {
@@ -139,8 +135,11 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
-        $qb = $objectManager->createQueryBuilder('Organization\Entity\Company');
-        $qb->remove()->field('id')->equals(new \MongoId($com_id))->getQuery()
-            ->execute();
+        $qb = $objectManager->getRepository('Organization\Entity\Company')->find(new \MongoId($com_id));
+        if (!$qb) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $com_id);
+        }
+        $objectManager->remove($qb);
+        $objectManager->flush();
     }
 }
