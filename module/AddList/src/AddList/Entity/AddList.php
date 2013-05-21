@@ -52,7 +52,7 @@ class AddList
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Лист:",
-     *                      "value_options" : {"ticket-cargo":"Заявка - тип грузка","vehicle-mark":"ТС - марка","vehicle-model":"ТС - модель","vehicle-type":"ТС - тип","vehicle-status":"ТС - статус"}})
+     *                      "value_options" : {"ticket-cargo":"Заявка - тип груза","vehicle-mark":"ТС - марка","vehicle-model":"ТС - модель","vehicle-type":"ТС - тип","vehicle-status":"ТС - статус"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})

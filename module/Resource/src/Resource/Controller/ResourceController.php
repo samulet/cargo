@@ -109,10 +109,17 @@ class ResourceController extends AbstractActionController
         return $this->companyUserModel;
     }
     public function copyAction() {
-        $uuid=$this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $this->getResourceModel();
-        $res->copyResource($uuid);
-        return $this->redirect()->toUrl('/resources/my');
+        $resModel = $this->getResourceModel();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $res = $resModel->listResource($id);
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Resource\Entity\Resource');
+        return new ViewModel(array(
+            'form' => $form,
+            'res' => $res,
+
+        ));
     }
 
 }

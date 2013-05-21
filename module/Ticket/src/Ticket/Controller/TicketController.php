@@ -116,9 +116,16 @@ class TicketController extends AbstractActionController
     }
 
     public function copyAction() {
-        $uuid=$this->getEvent()->getRouteMatch()->getParam('id');
-        $resModel = $this->getTicketModel();
-        $resModel->copyTicket($uuid);
-        return $this->redirect()->toUrl('/tickets/my');
+        $tickModel = $this->getTicketModel();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $tick = $tickModel->listTicket($id);
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Ticket\Entity\Ticket');
+        return new ViewModel(array(
+            'form' => $form,
+            'res' => $tick,
+
+        ));
     }
 }

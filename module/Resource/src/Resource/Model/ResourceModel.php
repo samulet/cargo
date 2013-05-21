@@ -51,6 +51,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         $objectManager->persist($res);
         $objectManager->flush();
+        return $res->uuid;
     }
 
     public function listResource($id)
@@ -124,7 +125,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         unset($res['updated']);
         unset($res['id']);
         unset($res['uuid']);
-        $this->addResource($res,$res['ownerId'],$res['ownerOrgId'],null);
+        return $this->addResource($res,$res['ownerId'],$res['ownerOrgId'],null);
     }
 
 }
