@@ -136,11 +136,6 @@ class VehicleController extends AbstractActionController
             'form' => $form,
             'res' => $res
         ));
-
-        $uuid=$this->getEvent()->getRouteMatch()->getParam('id');
-        $resModel = $this->getVehicleModel();
-        $uuid=$resModel->copyVehicle($uuid);
-        return $this->redirect()->toUrl('/vehicles/edit/'.$uuid);
     }
     public function getAddListModel()
     {
