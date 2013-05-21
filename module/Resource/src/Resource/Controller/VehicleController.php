@@ -120,6 +120,23 @@ class VehicleController extends AbstractActionController
         return $this->companyUserModel;
     }
     public function copyAction() {
+
+        $resModel = $this->getVehicleModel();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $res = $resModel->listVehicle($id);
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Resource\Entity\Vehicle');
+        $addListModel = $this->getAddListModel();
+        $form_array=array('mark','model','type','status');
+        $formData=$addListModel->returnDataArray($form_array,'vehicle');
+        $fillFrom=new VehicleForm();
+        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        return new ViewModel(array(
+            'form' => $form,
+            'res' => $res
+        ));
+
         $uuid=$this->getEvent()->getRouteMatch()->getParam('id');
         $resModel = $this->getVehicleModel();
         $uuid=$resModel->copyVehicle($uuid);
