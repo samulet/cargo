@@ -81,5 +81,24 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
+    public function getList($post) {
+        $post=get_object_vars($post);
+        if(empty($post))
+        {
+            return null;
+        }
+        $listName=$post['listName'];
+
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('AddList\Entity\AddList')->findBy(
+            array('listName' => $listName)
+        );
+        $result=array();
+        foreach($res as $re)
+        {
+            array_push($result,get_object_vars($re));
+        }
+        return $result;
+    }
 
 }

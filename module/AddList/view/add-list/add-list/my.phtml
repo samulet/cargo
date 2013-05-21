@@ -1,0 +1,68 @@
+<?php
+$form = $this->form;
+$list = $this->list;
+$form->setAttribute('action', $this->url('addList', array('action' => 'my')))
+    ->prepare();
+
+$listName = $form->get('listName');
+$key = $form->get('key');
+$value = $form->get('value');
+
+
+echo $this->form()->openTag($form);
+
+echo $this->formRow($listName);
+
+
+echo $this->formElement($form->get('submit')); ?>
+<?php  echo $this->form()->closeTag();
+
+if(!empty($list))
+{
+
+    ?>
+<table class="table">
+    <tr>
+        <th>
+            Имя поля
+        </th>
+        <th>
+            Удалить
+        </th>
+        <th>
+            Изменить
+        </th>
+    </tr>
+    <?php
+    foreach($list as $li)
+    {
+
+    ?>
+    <tr>
+        <td>
+<?php echo $li['value'];?>
+        </td>
+        <td>
+            <a href="<?php echo $this->url(
+                'addList',
+                array('action' => 'delete', 'id' => $li['uuid'])
+            );?>">Удалить</a>
+        </td>
+        <td>
+            <a href="<?php echo $this->url(
+                'addList',
+                array('action' => 'edit', 'id' => $li['uuid'])
+            );?>">Редактировать</a>
+        </td>
+    </tr>
+
+    <?php
+    }
+    ?>
+
+</table>
+
+<?php
+
+}
+?>

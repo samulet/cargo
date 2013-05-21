@@ -25,19 +25,29 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
  */
 class AddList
 {
-
+    public function __construct()
+    {
+        $uuid_gen = new UuidGenerator();
+        $this->setUUID($uuid_gen->generateV4());
+    }
     /**
      * @ODM\Id
      * @var int
      * @Annotation\Exclude()
      */
     public $id;
-
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Exclude()
+     */
+    public $uuid;
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      * @Annotation\Exclude()
      */
+
     public $created;
     /**
      * @Gedmo\Timestampable(on="update")
@@ -91,6 +101,16 @@ class AddList
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+    public function getUUID()
+    {
+        return $this->uuid;
+    }
+
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
         return $this;
     }
 }
