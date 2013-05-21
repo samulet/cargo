@@ -50,6 +50,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         $objectManager->persist($res);
         $objectManager->flush();
+        return $res->uuid;
     }
 
     public function listTicket($id)
@@ -146,6 +147,6 @@ class TicketModel implements ServiceLocatorAwareInterface
         unset($res['updated']);
         unset($res['id']);
         unset($res['uuid']);
-        $this->addTicket($res,$res['ownerId'],$res['ownerOrgId'],null);
+        return $this->addTicket($res,$res['ownerId'],$res['ownerOrgId'],null);
     }
 }

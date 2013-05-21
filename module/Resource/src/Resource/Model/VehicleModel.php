@@ -45,6 +45,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
         }
         $objectManager->persist($res);
         $objectManager->flush();
+        return $res->uuid;
     }
 
     public function listVehicle($id)
@@ -121,6 +122,6 @@ class VehicleModel implements ServiceLocatorAwareInterface
         unset($res['updated']);
         unset($res['id']);
         unset($res['uuid']);
-        $this->addVehicle($res,$res['ownerId'],$res['ownerOrgId'],null);
+        return $this->addVehicle($res,$res['ownerId'],$res['ownerOrgId'],null);
     }
 }
