@@ -1,20 +1,14 @@
 <?php
-namespace Resource\Repository;
+namespace Organization\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
-class VehicleRepository extends DocumentRepository
+class CompanyRepository extends DocumentRepository
 {
-    public function getAllAvailableVehicle()
+    public function getMyAvailableCompany($owner_id)
     {
         return $this->createQueryBuilder()
-            ->field('deletedAt')->equals(null)
-            ->getQuery()->execute();
-    }
-    public function getMyAvailableVehicle($owner_id)
-    {
-        return $this->createQueryBuilder()
-            ->field('deletedAt')->equals(null)->field('ownerId')->equals(
+            ->field('deletedAt')->equals(null)->field('id')->equals(
                 new \MongoId($owner_id)
             )
             ->getQuery()->execute();

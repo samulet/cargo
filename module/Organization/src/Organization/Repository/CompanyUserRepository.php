@@ -1,9 +1,9 @@
 <?php
-namespace Resource\Repository;
+namespace Organization\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
-class VehicleRepository extends DocumentRepository
+class CompanyUserRepository extends DocumentRepository
 {
     public function getAllAvailableVehicle()
     {
