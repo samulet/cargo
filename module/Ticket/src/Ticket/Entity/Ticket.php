@@ -175,7 +175,7 @@ class Ticket
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Валюта",
+     * @Annotation\Options({"label":"Оплата",
      *                      "value_options" : {"RUR":"RUR","EUR":"EUR","USD":"USD"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
@@ -195,6 +195,18 @@ class Ticket
      * @ODM\Field(type="string")
      */
     public $money;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Условия перевозки"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $conditions;
 
     /**
      * @var string
@@ -234,7 +246,7 @@ class Ticket
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required({"required":"true" })
-     * @Annotation\Options({"label":"Дата начала"})
+     * @Annotation\Options({"label":"Дата загрузки"})
      */
     public $dateStart;
 
@@ -243,7 +255,7 @@ class Ticket
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required({"required":"true" })
-     * @Annotation\Options({"label":"Дата конца"})
+     * @Annotation\Options({"label":"Дата разгрузки"})
      */
     public $dateEnd;
 
@@ -378,14 +390,44 @@ class Ticket
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({
-     *                      "value_options" : {"halfTrailer":"Полуприцеп","trailer":"Грузовик","coupTrailer":"Сцепка"}})
+
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $batch;
+
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $body;
+
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
     public $transportType;
+
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
@@ -458,8 +500,7 @@ class Ticket
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Упаковка",
-     *                      "value_options" : {"bag":"Мешки","box":"Ящики","pack":"Пачки"}})
+     * @Annotation\Options({"label":"Упаковка"})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
