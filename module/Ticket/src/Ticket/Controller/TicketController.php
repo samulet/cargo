@@ -12,7 +12,7 @@ namespace Ticket\Controller;
 use Entity\Recources;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-
+use Ticket\Form\TicketForm;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Form\View\Helper\FormSelect;
@@ -24,6 +24,7 @@ class TicketController extends AbstractActionController
 {
     protected $ticketModel;
     protected $companyUserModel;
+    protected $addListModel;
 
     public function indexAction()
     {
@@ -47,6 +48,13 @@ class TicketController extends AbstractActionController
     {
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
+
+        $addListModel = $this->getAddListModel();
+        $form_array=array('cargo','batch','body','transportType','package');
+        $formData=$addListModel->returnDataArray($form_array,'ticket');
+        $fillFrom=new TicketForm();
+        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+
         return new ViewModel(array(
             'form' => $form
         ));
@@ -127,5 +135,14 @@ class TicketController extends AbstractActionController
             'res' => $tick,
 
         ));
+    }
+
+    public function getAddListModel()
+    {
+        if (!$this->addListModel) {
+            $sm = $this->getServiceLocator();
+            $this->addListModel = $sm->get('AddList\Model\AddListModel');
+        }
+        return $this->addListModel;
     }
 }

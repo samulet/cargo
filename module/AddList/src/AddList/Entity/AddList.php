@@ -19,25 +19,36 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 
 /**
- * @ODM\Document(collection="addList")
+ * @ODM\Document(collection="addList", repositoryClass="AddList\Repository\AddListRepository")
  * @Annotation\Name("addList")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class AddList
 {
-
+    public function __construct()
+    {
+        $uuid_gen = new UuidGenerator();
+        $this->setUUID($uuid_gen->generateV4());
+    }
     /**
      * @ODM\Id
      * @var int
      * @Annotation\Exclude()
      */
     public $id;
-
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Exclude()
+     */
+    public $uuid;
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      * @Annotation\Exclude()
      */
+
     public $created;
     /**
      * @Gedmo\Timestampable(on="update")
@@ -52,7 +63,9 @@ class AddList
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Лист:",
-     *                      "value_options" : {"ticket-cargo":"Заявка - тип груза","vehicle-mark":"ТС - марка","vehicle-model":"ТС - модель","vehicle-type":"ТС - тип","vehicle-status":"ТС - статус"}})
+     *                      "value_options" : {"ticket-cargo":"Заявка - тип груза","vehicle-mark":"ТС - марка","vehicle-model":"ТС - модель","vehicle-type":"ТС - тип",
+     * "vehicle-status":"ТС - статус","ticket-body":"Заявка - Тип кузова","ticket-batch":"Заявка - Тип загрузки","ticket-transportType":"Заявка - Вид транспорта",
+     * "ticket-package":"Заявка - Упаковка"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
@@ -88,9 +101,40 @@ class AddList
      * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
+
+    /**
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+    public $deletedAt;
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+    public function getUUID()
+    {
+        return $this->uuid;
+    }
+
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
         return $this;
     }
 }

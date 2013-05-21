@@ -43,9 +43,28 @@ class AddListController extends AbstractActionController
     }
 
     public function addListAction() {
+        $list_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $addListModel->addList($this->getRequest()->getPost());
-        return $this->redirect()->toUrl('/addList/add');
+        $addListModel->addList($this->getRequest()->getPost(),$list_uuid);
+        return $this->redirect()->toUrl('/addList/my');
+    }
+
+    public function myAction() {
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddList');
+        $addListModel = $this->getAddListModel();
+        $list=$addListModel->getList($this->getRequest()->getPost());
+        return new ViewModel(array(
+            'form' => $form,
+            'list' => $list
+        ));
+    }
+
+    public function deleteAction() {
+        $list_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $addListModel->deleteList($list_uuid);
+        return $this->redirect()->toUrl('/addList/my');
     }
 
 }
