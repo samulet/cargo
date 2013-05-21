@@ -32,9 +32,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         foreach($arrFields as $arrField)
         {
             $elName=$prefix.'-'.$arrField;
-            $res = $objectManager->getRepository('AddList\Entity\AddList')->findBy(
-                array('listName' => $elName)
-            );
+            $res = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($elName);
             if(!empty($res))
             {
                 $results_list=array();
@@ -59,9 +57,15 @@ class AddListModel implements ServiceLocatorAwareInterface
         return str_replace($cyr, $lat, $str);
     }
 
-    public function addList($post) {
+    public function addList($post,$list_uuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = new AddList();
+        if(empty($list_uuid)) {
+            $res = new AddList();
+        } else {
+            $res=  $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+                array('uuid' => $list_uuid)
+            );
+        }
         $prop_array = get_object_vars($post);
         $prop_array['key']=$this->russianToTranslit( $prop_array['value']);
         foreach ($prop_array as $key => $value) {
@@ -90,9 +94,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         $listName=$post['listName'];
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = $objectManager->getRepository('AddList\Entity\AddList')->findBy(
-            array('listName' => $listName)
-        );
+        $res = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($listName);
         $result=array();
         foreach($res as $re)
         {
@@ -100,5 +102,15 @@ class AddListModel implements ServiceLocatorAwareInterface
         }
         return $result;
     }
+    public function deleteList($uuid)
+    {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
+        $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('uuid' => $uuid));
+        if (!$list) {
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Resource', $uuid);
+        }
+        $objectManager->remove($list);
+        $objectManager->flush();
+    }
 }

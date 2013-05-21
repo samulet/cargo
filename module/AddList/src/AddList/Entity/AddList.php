@@ -19,8 +19,9 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 
 /**
- * @ODM\Document(collection="addList")
+ * @ODM\Document(collection="addList", repositoryClass="AddList\Repository\AddListRepository")
  * @Annotation\Name("addList")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class AddList
@@ -98,6 +99,27 @@ class AddList
      * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
+
+    /**
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+    public $deletedAt;
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
     public function setId($id)
     {
         $this->id = $id;
