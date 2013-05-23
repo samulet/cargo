@@ -3,15 +3,15 @@ namespace AddList\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
-class AddListRepository extends DocumentRepository
+class AddListNameRepository extends DocumentRepository
 {
-    public function getAllAvailableListName()
+    public function getAllAvailableList()
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
-    public function getMyAvailableListName($listName)
+    public function getMyAvailableList($listName)
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null)->field('listName')->equals(

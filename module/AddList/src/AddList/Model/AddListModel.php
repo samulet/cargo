@@ -9,6 +9,7 @@
 
 namespace AddList\Model;
 
+use AddList\Entity\AddListName;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -75,6 +76,32 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
+    public function addListName($post,$list_uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        if(empty($list_uuid)) {
+            $res = new AddListName();
+        } else {
+            $res=  $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(
+                array('uuid' => $list_uuid)
+            );
+            unset($res->parentId);
+        }
+
+        $prop_array = get_object_vars($post);
+        if($prop_array['parentId']=='empty') {
+            unset($prop_array['parentId']);
+        }
+        foreach ($prop_array as $key => $value) {
+            if($res->$key!='parentId') {
+                $res->$key = $value;
+            } else {
+                $res->$key = new \MongoId($value);
+            }
+        }
+        $objectManager->persist($res);
+        $objectManager->flush();
+    }
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
@@ -113,4 +140,16 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager->remove($list);
         $objectManager->flush();
     }
+
+    public function getAllListName() {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $list = $objectManager->getRepository('AddList\Entity\AddListName')->getAllAvailableList();
+        $result=array();
+        foreach($list as $re)
+        {
+            array_push($result,get_object_vars($re));
+        }
+        return $result;
+    }
+
 }

@@ -1,0 +1,22 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('addList', array('action' => 'addListName')))
+    ->prepare();
+
+$listParent = $form->get('parentId');
+
+$listName = $form->get('listName');
+$field = $form->get('field');
+$fieldRusName= $form->get('fieldRusName');
+
+
+echo $this->form()->openTag($form);
+
+echo $this->formRow($listParent);
+echo $this->formRow($listName);
+echo $this->formRow($field);
+echo $this->formRow($fieldRusName);
+
+echo $this->formElement($form->get('submit')); ?>
+<?php  echo $this->form()->closeTag();
+?>

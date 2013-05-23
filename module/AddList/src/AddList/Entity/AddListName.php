@@ -47,7 +47,14 @@ class AddListName
     /**
      * @ODM\ObjectId
      * @var int
-     * @Annotation\Exclude()
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Лист:"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
      */
     public $parentId;
 
@@ -92,6 +99,20 @@ class AddListName
      */
 
     public $field;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Имя поля на русском"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+
+    public $fieldRusName;
+
 
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")

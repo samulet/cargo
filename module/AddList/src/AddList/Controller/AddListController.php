@@ -15,7 +15,7 @@ use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-
+use AddList\Form\AddListNameForm;
 
 class AddListController extends AbstractActionController
 {
@@ -67,4 +67,22 @@ class AddListController extends AbstractActionController
         return $this->redirect()->toUrl('/addList/my');
     }
 
+    public function addNameAction() {
+        $addListNameForm= new AddListNameForm();
+        $addListModel = $this->getAddListModel();
+        $formData=$addListModel->getAllListName();
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddListName');
+        $form=$addListNameForm->fillParentFrom($form,$formData);
+        return new ViewModel(array(
+            'form' => $form
+        ));
+    }
+
+    public function addListNameAction() {
+        $list_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $addListModel->addListName($this->getRequest()->getPost(),$list_uuid);
+        return $this->redirect()->toUrl('/addList/addName');
+    }
 }
