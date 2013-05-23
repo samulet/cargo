@@ -19,12 +19,12 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 
 /**
- * @ODM\Document(collection="addList", repositoryClass="AddList\Repository\AddListRepository")
- * @Annotation\Name("addList")
+ * @ODM\Document(collection="addListName", repositoryClass="AddList\Repository\AddListNameRepository")
+ * @Annotation\Name("addListName")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class AddList
+class AddListName
 {
     public function __construct()
     {
@@ -43,11 +43,20 @@ class AddList
      * @Annotation\Exclude()
      */
     public $uuid;
+
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Exclude()
+     */
+    public $parentId;
+
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      * @Annotation\Exclude()
      */
+
 
     public $created;
     /**
@@ -63,12 +72,13 @@ class AddList
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Занчение в БД"})
+     * @Annotation\Options({"label":"Имя списка"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
      */
-    public $key;
+
+    public $listName;
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
@@ -80,7 +90,9 @@ class AddList
      * @var string
      * @ODM\Field(type="string")
      */
-    public $value;
+
+    public $field;
+
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
