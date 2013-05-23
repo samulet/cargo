@@ -49,13 +49,13 @@ class AddListController extends AbstractActionController
         return $this->redirect()->toUrl('/addList/my');
     }
 
-    public function myAction() {
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('AddList\Entity\AddList');
+    public function myAction() {;
+
         $addListModel = $this->getAddListModel();
-        $list=$addListModel->getList($this->getRequest()->getPost());
+        $list=$addListModel->getListName($this->getRequest()->getPost());
+
         return new ViewModel(array(
-            'form' => $form,
+
             'list' => $list
         ));
     }

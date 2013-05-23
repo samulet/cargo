@@ -5,17 +5,23 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 
 class AddListNameRepository extends DocumentRepository
 {
-    public function getAllAvailableList()
+    public function getAllAvailableListName()
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
-    public function getMyAvailableList($listName)
+    public function getMyAvailableListName($id)
     {
+        if(!empty($id)) {
+            $id=new \MongoId($id);
+        } else {
+            $id=null;
+        }
+
         return $this->createQueryBuilder()
-            ->field('deletedAt')->equals(null)->field('listName')->equals(
-                $listName
+            ->field('deletedAt')->equals(null)->field('parentId')->equals(
+                $id
             )
             ->getQuery()->execute();
     }

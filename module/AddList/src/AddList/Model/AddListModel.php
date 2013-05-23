@@ -102,6 +102,8 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
+
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
@@ -129,6 +131,20 @@ class AddListModel implements ServiceLocatorAwareInterface
         }
         return $result;
     }
+
+    public function getListName($id) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName(get_object_vars($id));
+        $result=array();
+
+        foreach($res as $re)
+        {
+
+            array_push($result,get_object_vars($re));
+        }
+        return $result;
+    }
+
     public function deleteList($uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
