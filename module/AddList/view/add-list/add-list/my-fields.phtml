@@ -3,6 +3,7 @@
 $field = $this->field;
 $list = $this->list;
 
+
 ?>
 
 
@@ -27,6 +28,12 @@ $list = $this->list;
         <th>
             Добавить поля
         </th>
+        <th>
+            Редактировать
+        </th>
+        <th>
+            Удалить
+        </th>
     </tr>
     <?php
     foreach($field as $fi) {
@@ -35,19 +42,31 @@ $list = $this->list;
         <tr>
             <td>
                 <?php
-                echo $fi['fieldRusName'];
+                echo $fi['value'];
                 ?>
             </td>
             <td>
                 <a href="<?php echo $this->url(
                     'addList',
-                    array('action' => 'my-fields', 'id' => $fi['uuid'])
+                    array('action' => 'my-fields', 'id' => $fi['uuid'],'parent'=>'parent')
+                );?>">Посмотреть поля</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'add', 'id' => $fi['uuid'],'parent'=>'parent')
+                );?>">Добавить</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'edit', 'id' => $fi['uuid'])
                 );?>">Редактировать</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(
                     'addList',
-                    array('action' => 'add', 'id' => $fi['uuid'])
+                    array('action' => 'delete', 'id' => $fi['uuid'])
                 );?>">Удалить</a>
             </td>
         </tr>

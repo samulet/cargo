@@ -15,12 +15,14 @@ class AddListNameRepository extends DocumentRepository
     {
         if(!empty($id)) {
             $id=new \MongoId($id);
+            $field='id';
         } else {
             $id=null;
+            $field='parentId';
         }
 
         return $this->createQueryBuilder()
-            ->field('deletedAt')->equals(null)->field('parentId')->equals(
+            ->field('deletedAt')->equals(null)->field($field)->equals(
                 $id
             )
             ->getQuery()->execute();

@@ -1,6 +1,6 @@
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'fieldId'=>$this->fieldId)))
+$form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'parent'=>$this->parent)))
     ->prepare();
 
 $value = $form->get('value');

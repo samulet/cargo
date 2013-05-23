@@ -28,13 +28,13 @@ class AddListController extends AbstractActionController
     public function addAction()
     {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
-        $fieldId = $this->getEvent()->getRouteMatch()->getParam('fieldId');
+        $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
         return new ViewModel(array(
             'form' => $form,
             'uuid' =>$listNameUuid,
-            'fieldId' => $fieldId
+            'parent'=>$parent
         ));
     }
     public function getAddListModel()
@@ -49,12 +49,20 @@ class AddListController extends AbstractActionController
     public function addListAction() {
 
         $listUUID= $this->getEvent()->getRouteMatch()->getParam('id');
-        $parentField=$this->getEvent()->getRouteMatch()->getParam('fieldId');
+        $target=$listUUID;
+        $parent=$this->getEvent()->getRouteMatch()->getParam('parent');
+        if($parent=='parent') {
+            $parentField=$listUUID;
+            $listUUID=null;
+            $target=$parentField;
+        } else {
+            $parentField=null;
+        }
         $addListModel = $this->getAddListModel();
 
-        $listToReturn=$addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField);
+       $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField);
 
-        return $this->redirect()->toUrl('/addList/my-fields/'.$listToReturn);
+        return $this->redirect()->toUrl('/addList/my');
     }
 
     public function myAction() {;

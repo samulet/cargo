@@ -14,7 +14,7 @@ class AddListRepository extends DocumentRepository
     public function getMyAvailableList($id)
     {
         return $this->createQueryBuilder()
-            ->field('deletedAt')->equals(null)->field('id')->equals(
+            ->field('deletedAt')->equals(null)->field('listId')->equals(
                 new \MongoId($id)
             )
             ->getQuery()->execute();
