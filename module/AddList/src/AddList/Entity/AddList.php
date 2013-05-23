@@ -69,7 +69,7 @@ class AddList
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
-    public $parentFieldsId;
+    public $parentFieldId;
 
     /**
      * @Gedmo\Timestampable(on="create")

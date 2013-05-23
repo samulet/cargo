@@ -58,17 +58,30 @@ class AddListModel implements ServiceLocatorAwareInterface
         return str_replace($cyr, $lat, $str);
     }
 
-    public function addList($post,$list_uuid) {
+    public function addList($post,$listUUID,$parentField) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if(empty($list_uuid)) {
-            $res = new AddList();
-        } else {
-            $res=  $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
-                array('uuid' => $list_uuid)
-            );
-        }
+
+
         $prop_array = get_object_vars($post);
+
+        if(is_string($parentField)) {
+            $listId=$this->getIdByUUID($parentField);
+            $prop_array['parentFieldId']=new \MongoId($this->getIdByUUID($parentField));
+            $listName=  $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(
+                array('parentId' =>  new \MongoId($listId))
+            );
+            $prop_array['listId']=new \MongoId($listName->id);
+        }
+        if(is_string($listUUID)) {
+            $prop_array['listId']=new \MongoId($this->getIdByUUID($listUUID));
+
+        }
+
+        $res = new AddList();
+
+
         $prop_array['key']=$this->russianToTranslit( $prop_array['value']);
+
         foreach ($prop_array as $key => $value) {
             $res->$key = $value;
         }
@@ -114,33 +127,34 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getList($post) {
-        $post=get_object_vars($post);
-        if(empty($post))
-        {
-            return null;
-        }
-        $listName=$post['listName'];
-
+    public function getList($uuid) {
+        $id=$this->getIdByUUID($uuid);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($listName);
+        $res = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($id);
+        $list=$this->getListName($id);
         $result=array();
         foreach($res as $re)
         {
             array_push($result,get_object_vars($re));
         }
-        return $result;
+        return array('field'=>$result,'list'=>$list);
     }
 
     public function getListName($id) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName(get_object_vars($id));
+        if(!is_string($id)) {
+            $propArray=get_object_vars($id);
+        } else {
+            $propArray=$id;
+        }
+        $res = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName($propArray);
         $result=array();
-
         foreach($res as $re)
         {
-
             array_push($result,get_object_vars($re));
+        }
+        if(!empty($propArray)) {
+            $result=$result[0];
         }
         return $result;
     }
@@ -167,5 +181,16 @@ class AddListModel implements ServiceLocatorAwareInterface
         }
         return $result;
     }
+
+    public function getIdByUUID($uuid) {
+
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $list = $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(array('uuid' => $uuid));
+        if(empty($list)) {
+            $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('uuid' => $uuid));
+        }
+        return $list->id;
+    }
+
 
 }

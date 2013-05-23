@@ -1,0 +1,57 @@
+<?php
+
+$field = $this->field;
+$list = $this->list;
+
+?>
+
+
+
+<h1> <?php
+    echo $list['fieldRusName'];
+    ?></h1>
+
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'add', 'id' => $list['uuid'])
+);?>">Добавить поле в список</a>
+
+<table class="table">
+    <tr>
+        <th>
+            Имя поля
+        </th>
+        <th>
+            Просмотр полей
+        </th>
+        <th>
+            Добавить поля
+        </th>
+    </tr>
+    <?php
+    foreach($field as $fi) {
+        ?>
+
+        <tr>
+            <td>
+                <?php
+                echo $fi['fieldRusName'];
+                ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'my-fields', 'id' => $fi['uuid'])
+                );?>">Редактировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'add', 'id' => $fi['uuid'])
+                );?>">Удалить</a>
+            </td>
+        </tr>
+    <?php
+    }
+    ?>
+</table>

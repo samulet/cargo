@@ -1,18 +1,17 @@
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('addList', array('action' => 'addList')))
+$form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'fieldId'=>$this->fieldId)))
     ->prepare();
 
-$listName = $form->get('listName');
-$key = $form->get('key');
 $value = $form->get('value');
 
 
 echo $this->form()->openTag($form);
 
-echo $this->formRow($listName);
+
 echo $this->formRow($value);
 
 echo $this->formElement($form->get('submit')); ?>
 <?php  echo $this->form()->closeTag();
 ?>
+
