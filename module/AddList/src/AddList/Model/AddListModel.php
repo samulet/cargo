@@ -140,8 +140,23 @@ class AddListModel implements ServiceLocatorAwareInterface
         $result=array();
         foreach($res as $re)
         {
-            array_push($result,get_object_vars($re));
+            $vars=get_object_vars($re);
+            if(!empty($vars['parentFieldId'])) {
+                $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($vars['parentFieldId']);
+                foreach($parent as $par)
+                {
+                    $parent=$par;
+                }
+                $parent=get_object_vars($parent);
+             } else {
+                $parent=null;
+            }
+            array_push($result,array('it'=>$vars,'parent'=>$parent));
         }
+
+
+
+
         return array('field'=>$result,'list'=>$list);
     }
 
@@ -245,5 +260,15 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $list->id;
     }
 
+    public function getChildName($id) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $list = $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(array('parentId' => new \MongoId($id)));
+        if(empty($list)) {
+            $result=null;
+        } else {
+            $result=get_object_vars($list);
+        }
+        return $result;
+    }
 
 }

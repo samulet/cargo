@@ -106,9 +106,20 @@ class AddListController extends AbstractActionController
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
         $list=$addListModel->getList($listNameUuid);
+
+        if(!empty($list['list']['parentId'])) {
+            $parentList=$addListModel->getListName($list['list']['parentId']);
+        } else {
+            $parentList=null;
+        }
+        $listChild=$addListModel->getChildName($list['list']['id']);
+
+
         return new ViewModel(array(
             'field' => $list['field'],
-            'list' => $list['list']
+            'list' => $list['list'],
+            'parentList' =>$parentList,
+            'listChild'=>$listChild
         ));
     }
 }

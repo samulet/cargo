@@ -2,7 +2,8 @@
 
 $field = $this->field;
 $list = $this->list;
-
+$parentList=$this->parentList;
+$listChild=$this->listChild;
 
 ?>
 
@@ -11,12 +12,16 @@ $list = $this->list;
 <h1> <?php
     echo $list['fieldRusName'];
     ?></h1>
-
+<?php
+if(empty($parentList)) {
+?>
 <a href="<?php echo $this->url(
     'addList',
     array('action' => 'add', 'id' => $list['uuid'])
 );?>">Добавить поле в список</a>
-
+<?php
+}
+?>
 <table class="table">
     <tr>
         <th>
@@ -26,7 +31,7 @@ $list = $this->list;
             Просмотр полей
         </th>
         <th>
-            Добавить поля
+            Добавить поля, зависимые от этого поля
         </th>
         <th>
             Редактировать
@@ -37,19 +42,35 @@ $list = $this->list;
     </tr>
     <?php
     foreach($field as $fi) {
+        $parent=$fi['parent'];
+        $fi=$fi['it'];
         ?>
 
         <tr>
             <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'my-fields', 'id' => $parentList['uuid'])
+                );?>"><?php if(!empty($parent['value'])) {
+                        echo $parent['value'].' => ';
+                    }
+
+                    ?></a>
                 <?php
                 echo $fi['value'];
                 ?>
             </td>
             <td>
+                <?php
+                if(!empty($listChild)) {
+                ?>
                 <a href="<?php echo $this->url(
                     'addList',
-                    array('action' => 'my-fields', 'id' => $fi['uuid'],'parent'=>'parent')
+                    array('action' => 'my-fields', 'id' => $listChild['uuid'])
                 );?>">Посмотреть поля</a>
+                <?php
+                }
+                ?>
             </td>
             <td>
                 <a href="<?php echo $this->url(
