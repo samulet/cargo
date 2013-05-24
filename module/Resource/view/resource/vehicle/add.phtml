@@ -8,7 +8,10 @@ $name = $form->get('name');
 $serialNumber= $form->get('serialNumber');
 $vin= $form->get('vin');
 $mark= $form->get('mark');
+$mark->setAttributes(array('id' => 'parent-model-mark'));
 $model= $form->get('model');
+
+$model->setAttributes(array('id' => 'child-mark-model'));
 
 $type= $form->get('type');
 

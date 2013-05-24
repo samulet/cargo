@@ -29,7 +29,11 @@ echo $this->doctype(); ?>
     )
         ->prependFile($this->basePath() . '/js/common.js')
         ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-        ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+        ->prependFile($this->basePath() . '/js/jquery.min.js')
+        ->prependFile($this->basePath() . '/js/ready.js')
+        ->prependFile('http://code.jquery.com/jquery-2.0.0.min.js')
+
+    ?>
 
 </head>
 <body>

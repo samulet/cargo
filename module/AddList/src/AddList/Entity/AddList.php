@@ -44,6 +44,34 @@ class AddList
      */
     public $uuid;
     /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Лист:"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $listId;
+
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Лист:"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $parentFieldId;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      * @Annotation\Exclude()
@@ -56,22 +84,7 @@ class AddList
      * @Annotation\Exclude()
      */
     public $updated;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Лист:",
-     *                      "value_options" : {"ticket-cargo":"Заявка - тип груза","vehicle-mark":"ТС - марка","vehicle-model":"ТС - модель","vehicle-type":"ТС - тип",
-     * "vehicle-status":"ТС - статус","ticket-body":"Заявка - Тип кузова","ticket-batch":"Заявка - Тип загрузки","ticket-transportType":"Заявка - Вид транспорта",
-     * "ticket-package":"Заявка - Упаковка"}})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
-     */
-    public $listName;
+
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})

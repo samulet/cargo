@@ -12,10 +12,11 @@ return array(
             'addList' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/addList[/:action][/:id]',
+                    'route' => '/addList[/:action][/:id][/:parent]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-z0-9]*',
+                        'parent' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-z0-9]*'
                     ),
                     'defaults' => array(
                         'controller' => 'AddList\Controller\AddList',

@@ -1,0 +1,115 @@
+<?php
+
+$field = $this->field;
+$list = $this->list;
+$parentList=$this->parentList;
+$listChild=$this->listChild;
+
+?>
+
+
+
+<h1> <?php
+    echo $list['fieldRusName'];
+    ?></h1>
+<?php
+if(empty($parentList)) {
+?>
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'add', 'id' => $list['uuid'])
+);?>">Добавить поле в список</a>
+<?php
+} else {
+    ?>
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'my-fields', 'id' => $parentList['uuid'])
+);?>">Назад к родителю</a>
+<?php
+}
+?>
+<table class="table">
+    <tr>
+        <th>
+            Имя поля
+        </th>
+        <th>
+            Просмотр полей
+        </th>
+        <th>
+            Добавить поля, зависимые от этого поля
+            <?php
+            if(!empty($listChild)) {
+                echo 'в '.$listChild['fieldRusName'];
+            }
+            ?>
+        </th>
+        <th>
+            Редактировать
+        </th>
+        <th>
+            Удалить
+        </th>
+    </tr>
+    <?php
+    foreach($field as $fi) {
+        $parent=$fi['parent'];
+        $fi=$fi['it'];
+        ?>
+
+        <tr>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'my-fields', 'id' => $parentList['uuid'])
+                );?>"><?php if(!empty($parent['value'])) {
+                        echo $parent['value'].' => ';
+                    }
+
+                    ?></a>
+                <?php
+                echo $fi['value'];
+                ?>
+            </td>
+            <td>
+                <?php
+                if(!empty($listChild)) {
+                ?>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'my-fields', 'id' => $listChild['uuid'])
+                );?>">Посмотреть полей <?php
+                    if(!empty($listChild)) {
+                        echo $listChild['fieldRusName'];
+                    } ?></a></a>
+                <?php
+                }
+                ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'add', 'id' => $fi['uuid'],'parent'=>'parent')
+                );?>">Добавить зависимое поле <?php
+                    if(!empty($listChild)) {
+                        echo 'в '.$listChild['fieldRusName'];
+                    } ?></a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'edit', 'id' => $fi['uuid'])
+                );?>">Редактировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'delete', 'id' => $fi['uuid'])
+                );?>">Удалить</a>
+            </td>
+        </tr>
+    <?php
+    }
+    ?>
+</table>
