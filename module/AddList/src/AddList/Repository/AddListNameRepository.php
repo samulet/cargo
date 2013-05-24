@@ -11,7 +11,7 @@ class AddListNameRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
-    public function getMyAvailableListName($id)
+    public function getMyAvailableListName($id,$child=null)
     {
         if(!empty($id)) {
             $id=new \MongoId($id);
@@ -20,7 +20,10 @@ class AddListNameRepository extends DocumentRepository
             $id=null;
             $field='parentId';
         }
-
+        if(!empty($child)) {
+            $id=new \MongoId($id);
+            $field='parentId';
+        }
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null)->field($field)->equals(
                 $id

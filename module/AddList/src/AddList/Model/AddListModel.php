@@ -145,6 +145,8 @@ class AddListModel implements ServiceLocatorAwareInterface
         return array('field'=>$result,'list'=>$list);
     }
 
+
+
     public function getListName($id) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if(!is_string($id)) {
@@ -154,13 +156,55 @@ class AddListModel implements ServiceLocatorAwareInterface
         }
         $res = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName($propArray);
         $result=array();
+
         foreach($res as $re)
         {
-            array_push($result,get_object_vars($re));
+            $child=$objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName($re->id,'child');
+            foreach($child as $ch) {
+                $child=$ch;
+            }
+
+            $childArray=array();
+            while(!empty($child)) {
+
+                    if(empty($childArray)) {
+                        $childArray= array('list'=>get_object_vars($child), 'child'=>null);
+
+                    } else {
+                        $arrTmp=$childArray['child'];
+                        $targetChild=&$childArray['child'];
+                        while(!empty($arrTmp)) {
+                            $arrTmp=$arrTmp['child'];
+                            $targetChild=&$targetChild['child'];
+                        }
+                        $targetChild= array('list'=>get_object_vars($child), 'child'=>null);
+
+                    }
+
+
+
+                $child=$objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName($child->id,'child');
+                $counter=0;
+                foreach($child as $ch) {
+                    $counter++;
+                    $child=$ch;
+                }
+                if($counter==0) {
+                    $child=null;
+                }
+
+            }
+
+            array_push($result,array('list'=>get_object_vars($re), 'child'=>$childArray));
         }
+
         if(!empty($propArray)) {
-            $result=$result[0];
+            $result=$result[0]['list'];
         }
+        if(empty($result)) {
+            $result=null;
+        }
+
         return $result;
     }
 
