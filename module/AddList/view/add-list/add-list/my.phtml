@@ -19,6 +19,8 @@ $list = $this->list;
     </tr>
     <?php
     foreach($list as $li) {
+        $child=$li['child'];
+        $li=$li['list'];
     ?>
 
     <tr>
@@ -40,6 +42,42 @@ $list = $this->list;
             );?>">Добавить</a>
         </td>
     </tr>
+
+
+    <?php
+        $padding=1;
+
+        while(!empty($child)) {
+            $li=$child['list'];
+
+        ?>
+
+            <tr>
+                <td  style="<?php $pad=$padding*30;echo "padding-left:".$pad."px";?>">Вложенный список:
+                    <?php
+                    echo $li['fieldRusName'];
+                    ?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url(
+                        'addList',
+                        array('action' => 'my-fields', 'id' => $li['uuid'])
+                    );?>">Поля списка</a>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url(
+                        'addList',
+                        array('action' => 'add', 'id' => $li['uuid'])
+                    );?>">Добавить</a>
+                </td>
+            </tr>
+
+        <?php
+            $child=$child['child'];
+            $padding++;
+        }
+        ?>
+
     <?php
     }
     ?>

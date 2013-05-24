@@ -160,10 +160,14 @@ class AddListModel implements ServiceLocatorAwareInterface
         foreach($res as $re)
         {
             $child=$objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName($re->id,'child');
+            $counter=0;
             foreach($child as $ch) {
                 $child=$ch;
+                $counter++;
             }
-
+            if($counter==0) {
+                $child=null;
+            }
             $childArray=array();
             while(!empty($child)) {
 
