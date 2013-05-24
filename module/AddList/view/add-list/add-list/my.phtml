@@ -39,7 +39,10 @@ $list = $this->list;
             <a href="<?php echo $this->url(
                 'addList',
                 array('action' => 'add', 'id' => $li['uuid'])
-            );?>">Добавить</a>
+            );?>">Добавить <?php
+
+                    echo 'в '.$li['fieldRusName'];
+                 ?></a>
         </td>
     </tr>
 
@@ -65,7 +68,7 @@ $list = $this->list;
                     );?>">Поля списка</a>
                 </td>
                 <td>
-                   
+
                 </td>
             </tr>
 

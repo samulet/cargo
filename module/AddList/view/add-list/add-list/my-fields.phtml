@@ -20,6 +20,13 @@ if(empty($parentList)) {
     array('action' => 'add', 'id' => $list['uuid'])
 );?>">Добавить поле в список</a>
 <?php
+} else {
+    ?>
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'my-fields', 'id' => $parentList['uuid'])
+);?>">Назад к родителю</a>
+<?php
 }
 ?>
 <table class="table">
@@ -32,6 +39,11 @@ if(empty($parentList)) {
         </th>
         <th>
             Добавить поля, зависимые от этого поля
+            <?php
+            if(!empty($listChild)) {
+                echo 'в '.$listChild['fieldRusName'];
+            }
+            ?>
         </th>
         <th>
             Редактировать
@@ -67,7 +79,10 @@ if(empty($parentList)) {
                 <a href="<?php echo $this->url(
                     'addList',
                     array('action' => 'my-fields', 'id' => $listChild['uuid'])
-                );?>">Посмотреть поля</a>
+                );?>">Посмотреть полей <?php
+                    if(!empty($listChild)) {
+                        echo $listChild['fieldRusName'];
+                    } ?></a></a>
                 <?php
                 }
                 ?>
@@ -76,7 +91,10 @@ if(empty($parentList)) {
                 <a href="<?php echo $this->url(
                     'addList',
                     array('action' => 'add', 'id' => $fi['uuid'],'parent'=>'parent')
-                );?>">Добавить</a>
+                );?>">Добавить зависимое поле <?php
+                    if(!empty($listChild)) {
+                        echo 'в '.$listChild['fieldRusName'];
+                    } ?></a>
             </td>
             <td>
                 <a href="<?php echo $this->url(

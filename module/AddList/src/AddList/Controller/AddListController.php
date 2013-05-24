@@ -60,9 +60,10 @@ class AddListController extends AbstractActionController
         }
         $addListModel = $this->getAddListModel();
 
-       $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField);
+       $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField);
 
-        return $this->redirect()->toUrl('/addList/my');
+        $listName=$addListModel->getListName((string)$listId['listId']);
+        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
     }
 
     public function myAction() {;
@@ -121,5 +122,27 @@ class AddListController extends AbstractActionController
             'parentList' =>$parentList,
             'listChild'=>$listChild
         ));
+    }
+
+    public function editAction() {
+        $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $listData=$addListModel->getOneList($listUuid);
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddList');
+
+        return new ViewModel(array(
+            'fieldUuid' => $listUuid,
+            'listData' => $listData,
+            'form'=>$form
+        ));
+    }
+
+    public function editFieldAction() {
+        $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $listId=$addListModel->editField($listUuid,$this->getRequest()->getPost());
+        $listName=$addListModel->getListName((string)$listId['listId']);
+        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
     }
 }
