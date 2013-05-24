@@ -30,19 +30,30 @@ class AddListModel implements ServiceLocatorAwareInterface
     public function returnDataArray($arrFields,$prefix) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $result=array();
-        foreach($arrFields as $arrField)
-        {
-            $elName=$prefix.'-'.$arrField;
-            $res = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($elName);
-            if(!empty($res))
-            {
-                $results_list=array();
-                foreach($res as $re) {
-                    $obj_vars = get_object_vars($re);
-                    array_push($results_list, array('key'=>$obj_vars['key'],'value'=>$obj_vars['value']));
+        $listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
+        foreach($listName as $liName) {
+            $id=(string)$liName->id;
+            $list = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($id);
+            $res=array();
+            foreach($list as $li) {
+                $obj_vars = get_object_vars($li);
+                if(!empty($obj_vars['parentFieldId'])) {
+
+                    $parentList= $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+                        array('id' =>  new \MongoId($obj_vars['parentFieldId']))
+                    );
+                    $parentListArr=get_object_vars($parentList);
+                    if(!empty($parentListArr)) {
+                        $pr='parent-'.$parentListArr['key'].'-';
+                    } else {
+                        $pr=null;
+                    }
+                } else {
+                    $pr=null;
                 }
-                $result=$result+array($arrField=>$results_list);
+                array_push($res, array('key'=>$pr.$obj_vars['key'],'value'=>$obj_vars['value']));
             }
+            $result=$result+array((string)$liName->field => $res);
         }
         return $result;
     }
@@ -112,6 +123,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         if($prop_array['parentId']=='empty') {
             unset($prop_array['parentId']);
         }
+
         foreach ($prop_array as $key => $value) {
             if($res->$key!='parentId') {
                 $res->$key = $value;

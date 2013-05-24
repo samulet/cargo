@@ -30,4 +30,10 @@ class AddListNameRepository extends DocumentRepository
             )
             ->getQuery()->execute();
     }
+
+    public function getMyAvailableListsByName($name) {
+        return $this->createQueryBuilder()
+            ->field('deletedAt')->equals(null)->field('listName')->equals($name)
+            ->getQuery()->execute();
+    }
 }
