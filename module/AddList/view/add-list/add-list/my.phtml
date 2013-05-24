@@ -1,73 +1,85 @@
 <?php
-$form = $this->form;
+
 $list = $this->list;
-$form->setAttribute('action', $this->url('addList', array('action' => 'my')))
-    ->prepare();
 
-$listName = $form->get('listName');
-$key = $form->get('key');
-$value = $form->get('value');
+?>
 
 
-echo $this->form()->openTag($form);
-
-echo $this->formRow($listName);
-
-
-echo $this->formElement($form->get('submit')); ?>
-<?php  echo $this->form()->closeTag();
-
-if(!empty($list))
-{
-
-    ?>
 <table class="table">
     <tr>
         <th>
-            Имя поля
+            Имя списка
         </th>
         <th>
-            Удалить
+            Просмотр полей
         </th>
         <th>
-            Новое имя поля
+            Добавить поля
         </th>
     </tr>
     <?php
-    foreach($list as $li)
-    {
-
+    foreach($list as $li) {
+        $child=$li['child'];
+        $li=$li['list'];
     ?>
+
     <tr>
         <td>
-<?php echo $li['value'];?>
+            <?php
+            echo $li['fieldRusName'];
+            ?>
         </td>
         <td>
             <a href="<?php echo $this->url(
                 'addList',
-                array('action' => 'delete', 'id' => $li['uuid'])
-            );?>">Удалить</a>
+                array('action' => 'my-fields', 'id' => $li['uuid'])
+            );?>">Поля списка</a>
         </td>
         <td>
-            <?php
-            $form->setAttribute('action', $this->url('addList', array('action' => 'addList', 'id' => $li['uuid'])))
-                ->prepare();
-            echo $this->form()->openTag($form);
-            echo $this->formRow($value);
+            <a href="<?php echo $this->url(
+                'addList',
+                array('action' => 'add', 'id' => $li['uuid'])
+            );?>">Добавить <?php
 
-            echo $this->formElement($form->get('submit'));
-            echo $this->form()->closeTag();
-            ?>
+                    echo 'в '.$li['fieldRusName'];
+                 ?></a>
         </td>
     </tr>
+
+
+    <?php
+        $padding=1;
+
+        while(!empty($child)) {
+            $li=$child['list'];
+
+        ?>
+
+            <tr>
+                <td  style="<?php $pad=$padding*30;echo "padding-left:".$pad."px";?>">Вложенный список:
+                    <?php
+                    echo $li['fieldRusName'];
+                    ?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url(
+                        'addList',
+                        array('action' => 'my-fields', 'id' => $li['uuid'])
+                    );?>">Поля списка</a>
+                </td>
+                <td>
+
+                </td>
+            </tr>
+
+        <?php
+            $child=$child['child'];
+            $padding++;
+        }
+        ?>
 
     <?php
     }
     ?>
-
 </table>
 
-<?php
-
-}
-?>

@@ -1,10 +1,9 @@
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'parent'=>$this->parent)))
+$form->setAttribute('action', $this->url('addList', array('action' => 'editField','id'=>$this->fieldUuid)))
     ->prepare();
 
-$value = $form->get('value');
-
+$value = $form->get('value')->setValue($this->listData['value']);
 
 echo $this->form()->openTag($form);
 
