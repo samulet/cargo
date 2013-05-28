@@ -20,6 +20,12 @@ $tractor= $form->get('tractor');
 $coupling= $form->get('coupling');
 $lorry= $form->get('lorry');
 
+$hydroLift = $form->get('hydroLift');
+$EKMT = $form->get('EKMT');
+$TIR = $form->get('TIR');
+$adr= $form->get('adr');
+$note= $form->get('note');
+
 
 $status= $form->get('status');
 $dateMade= $form->get('dateMade');
@@ -86,7 +92,16 @@ echo $this->form()->openTag($form);
     </tr>
     <tr>
         <td>
-            <?php  echo $this->formRow($status); ?>
+            <?php  echo $this->formRow($status);
+            echo $this->formRow($hydroLift);
+            echo $this->formRow($EKMT);
+            echo $this->formRow($TIR);
+            echo $this->formRow($adr);
+            ?>
+        </td>
+        <td>
+            <?php  echo $this->formRow($note);
+            ?>
         </td>
     </tr>
     </table>

@@ -300,6 +300,60 @@ class Vehicle
 
     public $lorry;
 
+
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"Гидролифт"})
+     */
+
+    public $hydroLift;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"EKMT"})
+     */
+
+    public $EKMT;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"TIR"})
+     */
+
+    public $TIR;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"ADR",
+     *                      "value_options" : {"1":"1","2":"2","3":"3"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $adr;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Type("Zend\Form\Element\Textarea")
+     * @Annotation\Options({"label":"Примечание"})
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $note;
+
+
+
     /**
      * @return \Resource\Entity\Vehicle
      */
