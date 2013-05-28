@@ -23,6 +23,9 @@ $vehicles = $this->res;
         <th>
             Марка / Модель
         </th>
+        <th>
+           Грузоподъемность
+        </th>
 
 
         <th>
@@ -50,6 +53,9 @@ $vehicles = $this->res;
                 <?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?>
             </td>
             <td>
+            <td>
+                <?php echo $vehicle['capacity']; ?>
+            </td>
                 <a href="<?php echo $this->url(
                     'vehicle',
                     array('action' => 'list', 'id' => $vehicle['uuid'])
