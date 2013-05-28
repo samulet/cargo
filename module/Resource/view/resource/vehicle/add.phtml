@@ -15,6 +15,12 @@ $model->setAttributes(array('id' => 'child-mark-model'));
 
 $type= $form->get('type');
 
+$semitrailer= $form->get('semitrailer');
+$tractor= $form->get('tractor');
+$coupling= $form->get('coupling');
+$lorry= $form->get('lorry');
+
+
 $status= $form->get('status');
 $dateMade= $form->get('dateMade');
 $owner= $form->get('owner');
@@ -51,6 +57,16 @@ echo $this->form()->openTag($form);
             echo $this->formRow($mark);
             echo $this->formRow($model);
             echo $this->formRow($type);
+            ?>
+
+            <?php
+            echo $this->formRow($semitrailer);
+            echo $this->formRow($tractor);
+            echo $this->formRow($coupling);
+            echo $this->formRow($lorry);
+            ?>
+
+            <?php
             echo $this->formRow($dateMade);
             echo $this->formRow($owner);
             ?>
