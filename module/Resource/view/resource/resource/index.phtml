@@ -24,6 +24,9 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <th>
             Организация
         </th>
+           <th>
+                    ТС
+                </th>
     <th>
         Подробнее
      </th>
@@ -35,7 +38,12 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
           </th>
 
     </tr>
-    <?php foreach ($resources as $resource) { $org=$resource['org'];$resource=$resource['res']; ?>
+    <?php foreach ($resources as $resource) {
+    $vehicle=$resource['veh'];
+    $org=$resource['org'];
+    $resource=$resource['res'];
+
+    ?>
 <tr>
     <td>
         <?php foreach ($types_r as $key => $value) {
@@ -53,6 +61,12 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <a href="<?php echo $this->url('organization',
                     array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
         </td>
+            <td>
+                        <a href="<?php echo $this->url(
+                            'vehicle',
+                            array('action' => 'list', 'id' => $vehicle['uuid'])
+                        );?>"><?php echo $vehicle['carNumber'].' '.$vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
+                    </td>
     <td>
         <a href="<?php echo $this->url('resource',
             array('action'=>'list', 'id' => $resource['uuid']));?>">Подробнее</a>

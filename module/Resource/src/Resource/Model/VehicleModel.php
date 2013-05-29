@@ -14,6 +14,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 class VehicleModel implements ServiceLocatorAwareInterface
 {
@@ -51,7 +52,13 @@ class VehicleModel implements ServiceLocatorAwareInterface
     public function listVehicle($id)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $id));
+        $uuid_gen = new UuidGenerator();
+        if ($uuid_gen->isValid($id)) {
+            $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $id));
+        } else {
+            $res = $objectManager->getRepository('Resource\Entity\Vehicle')->find(new \MongoId($id));
+        }
+
         if(!empty($res)) {
             return get_object_vars($res);
         }

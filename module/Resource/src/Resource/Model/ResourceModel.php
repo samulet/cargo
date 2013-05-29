@@ -25,6 +25,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
     protected $organizationModel;
+    protected $vehicleModel;
 
     public function addResource($post, $owner_id, $owner_org_id, $id)
     {
@@ -74,10 +75,12 @@ class ResourceModel implements ServiceLocatorAwareInterface
         if(empty($rezObj)) {
             return null;
         }
+        $vehicle = $this->getVehicleModel();
         foreach ($rezObj as $cur) {
             $obj_vars = get_object_vars($cur);
+            $veh=$vehicle->listVehicle($cur->tsId);
             $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
-            array_push($rezs, array('res' => $obj_vars, 'org' => $org));
+            array_push($rezs, array('res' => $obj_vars, 'org' => $org,'veh'=>$veh));
         }
         return $rezs;
     }
@@ -87,8 +90,10 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $rezObj = $objectManager->getRepository('Resource\Entity\Resource')->getMyAvailableResource($owner_id);
         $rezs = array();
+        $vehicle = $this->getVehicleModel();
         foreach ($rezObj as $cur) {
-            array_push($rezs, get_object_vars($cur));
+            $veh=$vehicle->listVehicle($cur->tsId);
+            array_push($rezs, array('res'=>get_object_vars($cur),'veh'=>$veh));
         }
         return $rezs;
     }
@@ -132,6 +137,14 @@ class ResourceModel implements ServiceLocatorAwareInterface
         return $this->addResource($res,$res['ownerId'],$res['ownerOrgId'],null);
     }
 
+    public function getVehicleModel()
+    {
+        if (!$this->vehicleModel) {
+            $sm = $this->getServiceLocator();
+            $this->vehicleModel = $sm->get('Resource\Model\VehicleModel');
+        }
+        return $this->vehicleModel;
+    }
 
 
 }

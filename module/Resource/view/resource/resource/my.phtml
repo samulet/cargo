@@ -23,7 +23,9 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         <th>
             Стоимость
         </th>
-
+        <th>
+            ТС
+        </th>
         <th>
             Подробнее
         </th>
@@ -40,7 +42,11 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             Удалить
         </th>
     </tr>
-    <?php foreach ($resources as $resource) { ?>
+    <?php foreach ($resources as $resource) {
+        $vehicle=$resource['veh'];
+        $resource=$resource['res'];
+
+        ?>
         <tr>
             <td>
                 <?php foreach ($types_r as $key => $value) {
@@ -53,6 +59,12 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             </td>
             <td>
                 <?php echo $resource['money'] . ' ' . $resource['currency']; ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'list', 'id' => $vehicle['uuid'])
+                );?>"><?php echo $vehicle['carNumber'].' '.$vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
             </td>
             <td>
                 <a href="<?php echo $this->url(

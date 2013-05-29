@@ -5,6 +5,7 @@ $form = $this->form;
 $form->setAttribute('action', $this->url('resource', array('action' => 'addResource')))
     ->prepare();
 echo $this->form()->openTag($form);
+$tsId= $form->get('tsId');
 
 $name = $form->get('name');
 ///echo $this->formRow($name);
@@ -53,67 +54,9 @@ $transportType = $form->get('transportType');
         </tr>
         <tr>
             <td style="border-left:none;">
-                <table class="into_table"  style="width:100%%;">
-                    <tr >
-                        <th>
-                            Тип кузова:
-                        </th>
-                        <th>
-                            Тип загрузки:
-                        </th>
-                        <th>
-                            Вид транспорта:
-                        </th>
-                    </tr>
-                    <tr>
-                        <td class="tr_check">
-                            <?php
-                            echo $this->formRow($tent);
-                            echo $this->formRow($mukovoz);
-                            echo $this->formRow($mukovoz2);
-                            echo $this->formRow($pickup);
-                            echo $this->formRow($furgon);
-                            ?>
-                        </td>
-                        <td class="tr_check">
-                            <?php
-                            echo $this->formRow($kran);
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($transportType);
-                            ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <?php
-                            echo $this->formRow($upSize);
-                            echo $this->formRow($upValue);
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($gabarities);
-
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($adr);
-
-                            ?>
-                        </td>
-                    </tr>
-                </table>
-                <div class="tr_check inline_check">
                 <?php
-                echo $this->formRow($upShip);
-                echo $this->formRow($tir);
-                echo $this->formRow($ekmt);
-                echo $this->formRow($hydroLift);
-                ?></div>
+                echo $this->formRow($tsId);
+               ?>
             </td>
             <td>
                 <?php
