@@ -23,6 +23,9 @@ $vehicles = $this->res;
         <th>
             Марка / Модель
         </th>
+        <th>
+           Грузоподъемность
+        </th>
 
 
         <th>
@@ -49,7 +52,10 @@ $vehicles = $this->res;
             <td>
                 <?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?>
             </td>
+
             <td>
+                <?php echo $vehicle['capacity']; ?>
+            </td>
                 <a href="<?php echo $this->url(
                     'vehicle',
                     array('action' => 'list', 'id' => $vehicle['uuid'])
@@ -65,7 +71,7 @@ $vehicles = $this->res;
                 <a href="<?php echo $this->url(
                     'vehicle',
                     array('action' => 'copy', 'id' => $vehicle['uuid'])
-                );?>">Копировать</a>
+                );?>">Дублировать</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(

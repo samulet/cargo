@@ -409,7 +409,7 @@ class Resource
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"ADR",
+     * @Annotation\Options({"label":"EKMT",
      *                      "value_options" : {"1":"1","2":"2","3":"3"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
