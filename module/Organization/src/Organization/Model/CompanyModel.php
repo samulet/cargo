@@ -59,7 +59,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     public function createCompany($post, $org_id, $com_id)
     {
-        if (!empty($post->csrf)) {
+
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $com_item = $post->company;
             if (!empty($com_id)) {
@@ -84,7 +84,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
             $objectManager->persist($com);
             $objectManager->flush();
             return true;
-        } else return false;
+
     }
 
     public function getCompany($id)

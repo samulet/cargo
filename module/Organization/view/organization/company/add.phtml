@@ -5,18 +5,24 @@ $form->setAttribute('action', $this->url('company', array('action' => 'createCom
     ->prepare();
 
 echo $this->form()->openTag($form);
+//$whoGave= $form->get('whoGave');
+//echo $this->formRow($serialNumber);
 
-$org = $form->get('company');
-echo $this->formRow($org->get('name'));
-echo $this->formRow($org->get('type'));
-echo $this->formRow($org->get('description'));
-echo $this->formRow($org->get('requisites'));
-echo $this->formRow($org->get('addressReg'));
-echo $this->formRow($org->get('addressFact'));
-echo $this->formRow($org->get('generalManager'));
-echo $this->formRow($org->get('telephone'));
-echo $this->formRow($org->get('email'));
-echo $this->formHidden($form->get('csrf'));
+
+
+echo $this->formRow($form->get('name'));
+echo $this->formRow($form->get('property'));
+echo $this->formRow($form->get('generalManager'));
+echo $this->formRow($form->get('official'));
+echo $this->formRow($form->get('chiefAccountant'));
+echo $this->formRow($form->get('note'));
+echo $this->formRow($form->get('addressFact'));
+echo $this->formRow($form->get('addressReg'));
+echo $this->formRow($form->get('requisites'));
+echo $this->formRow($form->get('innKpp'));
+echo $this->formRow($form->get('okv'));
+echo $this->formRow($form->get('personal'));
+
 echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();
 ?> <a href="<?php echo $this->url('organization', array('action' => 'index')); ?>">Вернуться в организации</a>
