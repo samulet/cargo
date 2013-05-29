@@ -9,11 +9,15 @@ use Organization\Model\OrganizationModel;
 use Organization\Entity\Organization;
 use Organization\Form\CompanyCreate;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use Zend\Form\Annotation\AnnotationBuilder;
+use Organization\Form\CompanyForm;
 
 class CompanyController extends AbstractActionController
 {
     protected $companyModel;
     protected $organizationModel;
+    protected $addListModel;
 
     public function indexAction()
     {
@@ -37,8 +41,16 @@ class CompanyController extends AbstractActionController
 
     public function addAction()
     {
-        $this->loginControl();
-        $form = new CompanyCreate();
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Organization\Entity\Company');
+        $addListModel = $this->getAddListModel();
+        $form_array=array();
+        $formData=$addListModel->returnDataArray($form_array,'company');
+
+        $fillFrom=new CompanyForm();
+        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+
+
         $org_id = $this->getEvent()->getRouteMatch()->getParam('org_id');
         return new ViewModel(array(
             'form' => $form,
@@ -141,5 +153,13 @@ class CompanyController extends AbstractActionController
         return new ViewModel(array(
             'com' => $com
         ));
+    }
+    public function getAddListModel()
+    {
+        if (!$this->addListModel) {
+            $sm = $this->getServiceLocator();
+            $this->addListModel = $sm->get('AddList\Model\AddListModel');
+        }
+        return $this->addListModel;
     }
 }

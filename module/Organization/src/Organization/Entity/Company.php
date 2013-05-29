@@ -2,15 +2,20 @@
 
 namespace Organization\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Organization\Entity\CompanyInterface;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Zend\Form\Annotation;
+use Zend\Form\Element;
+use Zend\Form\Form;
+
 
 /**
  * @ODM\Document(collection="company", repositoryClass="Organization\Repository\CompanyRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @Annotation\Name("company")
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class Company
 {
@@ -24,89 +29,195 @@ class Company
     /**
      * @ODM\Id
      * @var int
+     * @Annotation\Exclude()
      */
     public $id;
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Exclude()
      */
     public $uuid;
 
     /**
      * @ODM\ObjectId
      * @var int
+     * @Annotation\Exclude()
      */
     public $ownerOrgId;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
+     * @Annotation\Exclude()
      */
     public $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
+     * @Annotation\Exclude()
      */
     public $updated;
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Exclude()
      */
     public $activated;
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Наименование юр. лица"})
      */
     public $name;
+
+
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Вид собственности"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
      */
-    public $type;
+    public $property;
+
     /**
      * @var string
      * @ODM\Field(type="string")
-     */
-    public $description;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $requisites;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $addressFact;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $addressReg;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Генеральный директор"})
      */
     public $generalManager;
+
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Наименование должности должностного лица"})
      */
-    public $telephone;
+    public $official;
+
+        /**
+         * @var string
+         * @ODM\Field(type="string")
+         * @Annotation\Filter({"name":"StringTrim"})
+         * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+         * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+         * @Annotation\Attributes({"type":"text"})
+         * @Annotation\Options({"label":"Главный бухгалтер"})
+         */
+    public $chiefAccountant;
+
     /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Type("Zend\Form\Element\Textarea")
+     * @Annotation\Options({"label":"Основание деятельности должностного лица"})
      * @var string
      * @ODM\Field(type="string")
      */
-    public $email;
+    public $note;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Фактический адрес"})
+     */
+    public $addressFact;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Юридический адрес"})
+     */
+    public $addressReg;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Банковские реквизиты"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $requisites;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"ИНН/КПП"})
+     */
+    public $innKpp;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"ОКВЭД"})
+     */
+    public $okv;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Type("Zend\Form\Element\Textarea")
+     * @Annotation\Options({"label":"Cотрудники юр лица с контактами"})
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $personal;
+
     /**
      * @ODM\Date
      */
     public $deletedAt;
-
+    /**
+     * @Annotation\Type("Zend\Form\Element\Submit")
+     * @Annotation\Attributes({"value":"Отправить"})
+     */
+    public $submit;
     /**
      * @return mixed
      */
+
+
     public function getDeletedAt()
     {
         return $this->deletedAt;
