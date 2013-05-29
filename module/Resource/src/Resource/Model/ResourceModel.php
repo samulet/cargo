@@ -47,7 +47,11 @@ class ResourceModel implements ServiceLocatorAwareInterface
             $res = new Resource();
         }
         foreach ($prop_array as $key => $value) {
-            $res->$key = $value;
+            if($key!="tsId") {
+                $res->$key = $value;
+            } else {
+                $res->$key=new \MongoId($value);
+            }
         }
         $objectManager->persist($res);
         $objectManager->flush();
