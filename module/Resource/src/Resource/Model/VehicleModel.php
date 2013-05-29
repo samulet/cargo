@@ -131,4 +131,10 @@ class VehicleModel implements ServiceLocatorAwareInterface
         unset($res['uuid']);
         return $this->addVehicle($res,$res['ownerId'],$res['ownerOrgId'],null);
     }
+
+    public function getIdByUuid($uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $vehicle = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $uuid));
+        return $vehicle->id;
+    }
 }

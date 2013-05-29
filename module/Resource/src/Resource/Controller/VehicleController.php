@@ -46,7 +46,7 @@ class VehicleController extends AbstractActionController
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
         $formData=$addListModel->returnDataArray($form_array,'vehicle');
-        //die(var_dump($formData));
+
         $fillFrom=new VehicleForm();
         $form=$fillFrom->fillFrom($form,$formData,$form_array);
         return new ViewModel(array(

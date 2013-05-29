@@ -46,11 +46,18 @@ class ResourceController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Resource');
 
-        $res = $this->getVehicleModel();
-        $myV=$res->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $veh = $this->getVehicleModel();
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
         $resForm=new ResourceForm();
 
         $form=$resForm->fillTS($form,$myV);
+
+        $tsUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        if(!empty($tsUuid)) {
+            $tsId=$veh->getIdByUuid($tsUuid);
+            $form->get('tsId')->setValue($tsId);
+        }
+
         return new ViewModel(array(
             'form' => $form
         ));
