@@ -4,16 +4,32 @@ $form->setAttribute('action', $this->url('vehicle', array('action' => 'addVehicl
     ->prepare();
 $name = $form->get('name');
 
-$serialNumber= $form->get('serialNumber')->setValue($this->res['serialNumber']);
-$vin= $form->get('vin')->setValue($this->res['vin']);
+$serialNumber= $form->get('serialNumber');
+$vin= $form->get('vin');
 $mark= $form->get('mark')->setValue($this->res['mark']);
 $model= $form->get('model')->setValue($this->res['model']);
 $type= $form->get('type')->setValue($this->res['type']);
 $dateMade= $form->get('dateMade')->setValue($this->res['dateMade']);
 $owner= $form->get('owner')->setValue($this->res['owner']);
+
+$semitrailer= $form->get('semitrailer')->setValue($this->res['semitrailer']);
+$tractor= $form->get('tractor')->setValue($this->res['tractor']);
+$coupling= $form->get('coupling')->setValue($this->res['coupling']);
+$lorry= $form->get('lorry')->setValue($this->res['lorry']);
+
+$hydroLift = $form->get('hydroLift')->setValue($this->res['hydroLift']);
+$EKMT = $form->get('EKMT')->setValue($this->res['EKMT']);
+$TIR = $form->get('TIR')->setValue($this->res['TIR']);
+$adr= $form->get('adr')->setValue($this->res['adr']);
+$note= $form->get('note')->setValue($this->res['note']);
+
+
 $status= $form->get('status');
-$serialNumberDoc= $form->get('serialNumberDoc')->setValue($this->res['serialNumberDoc']);
-$carNumber= $form->get('carNumber')->setValue($this->res['carNumber']);
+$dateMade= $form->get('dateMade');
+$owner= $form->get('owner');
+
+$serialNumberDoc= $form->get('serialNumberDoc');
+$carNumber= $form->get('carNumber');
 $ecologicalClass= $form->get('ecologicalClass')->setValue($this->res['ecologicalClass']);
 $allowedMaxMass= $form->get('allowedMaxMass')->setValue($this->res['allowedMaxMass']);
 $axles= $form->get('axles')->setValue($this->res['axles']);
@@ -27,6 +43,7 @@ echo $this->form()->openTag($form);
 
 
 ?>
+
     <table class="table spec_table vehicle">
         <tr >
             <th style="width:50%; text-align: center;">
@@ -44,6 +61,16 @@ echo $this->form()->openTag($form);
                 echo $this->formRow($mark);
                 echo $this->formRow($model);
                 echo $this->formRow($type);
+                ?>
+
+                <?php
+                echo $this->formRow($semitrailer);
+                echo $this->formRow($tractor);
+                echo $this->formRow($coupling);
+                echo $this->formRow($lorry);
+                ?>
+
+                <?php
                 echo $this->formRow($dateMade);
                 echo $this->formRow($owner);
                 ?>
@@ -63,7 +90,16 @@ echo $this->form()->openTag($form);
         </tr>
         <tr>
             <td>
-                <?php  echo $this->formRow($status); ?>
+                <?php  echo $this->formRow($status);
+                echo $this->formRow($hydroLift);
+                echo $this->formRow($EKMT);
+                echo $this->formRow($TIR);
+                echo $this->formRow($adr);
+                ?>
+            </td>
+            <td>
+                <?php  echo $this->formRow($note);
+                ?>
             </td>
         </tr>
     </table>

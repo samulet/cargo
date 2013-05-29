@@ -11,7 +11,7 @@ class VehicleForm
 
     public function fillFrom($form,$formData,$elements) {
         foreach($formData as $key => $element) {
-            $result_array=array();
+            $result_array=array(''=>'Выберите значение');
             foreach($element as $el) {
                 $result_array=$result_array+array($el['key']=>$el['value']);
             }
