@@ -54,6 +54,12 @@ class Resource
      * @var int
      * @Annotation\Exclude()
      */
+    public $tsId;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Exclude()
+     */
     public $ownerOrgId;
     /**
      * @Gedmo\Timestampable(on="create")
