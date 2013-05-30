@@ -10,10 +10,21 @@ function addWay(wayTr) {
     $('.'+wayTr+'-'+counterVal+' input').each(function( index ) {
         $(this).attr('name',$(this).attr('name')+'-'+counterVal);
     });
+    $('.'+wayTr+'-'+counterVal+' select').each(function( index ) {
+        $(this).attr('name',$(this).attr('name')+'-'+counterVal);
+    });
+    $('.'+wayTr+'-'+counterVal+' textarea').each(function( index ) {
+        $(this).attr('name',$(this).attr('name')+'-'+counterVal);
+    });
     $('.'+wayTr+'-'+counterVal+' .deleteWay').attr('onclick',"delWay('"+wayTr+'-'+counterVal+"');");
 }
 
 function delWay(wayTr) {
-    $('.'+wayTr).remove();
-
+    var conf = confirm('Вы действительно хотите удалить пункт выдачи?');
+    if ( !conf ) {
+        return false;
+    }
+    else {
+        $('.'+wayTr).remove();
+    }
 }

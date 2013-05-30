@@ -27,8 +27,13 @@ class ResourceModel implements ServiceLocatorAwareInterface
     protected $organizationModel;
     protected $vehicleModel;
 
+    public function addResourceWay($propArraySplit,$resId) {
+        die(var_dump($propArraySplit));
+    }
+
     public function addResource($post, $owner_id, $owner_org_id, $id)
     {
+
         if(!empty($post)) {
             if(is_array($post)) {
                 $prop_array=$post;
@@ -36,7 +41,21 @@ class ResourceModel implements ServiceLocatorAwareInterface
                 $prop_array = get_object_vars($post);
             }
 
+
         }
+        $prop_array_split=$prop_array;
+        unset($prop_array_split['tsId']);
+        unset($prop_array_split['kindOfLoad']);
+
+
+
+        $prop_array_new['tsId']=$prop_array['tsId'];
+        $prop_array_new['kindOfLoad']=$prop_array['kindOfLoad'];
+
+        $prop_array=$prop_array_new;
+
+
+
         $prop_array['ownerId'] = $owner_id;
         $prop_array['ownerOrgId'] = $owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -56,6 +75,9 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         $objectManager->persist($res);
         $objectManager->flush();
+
+        $this->addResourceWay($prop_array_split,$res->id);
+
         return $res->uuid;
     }
 
