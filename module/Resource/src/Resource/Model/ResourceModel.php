@@ -20,6 +20,7 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+use Resource\Entity\ResourceWay;
 
 class ResourceModel implements ServiceLocatorAwareInterface
 {
@@ -27,17 +28,42 @@ class ResourceModel implements ServiceLocatorAwareInterface
     protected $organizationModel;
     protected $vehicleModel;
 
-    public function addResourceWay($propArraySplit,$resId) {
+    public function addResourceWay($propArraySplit,$resId,$ownerResourceId) {
         $result=array();
         foreach($propArraySplit as $key =>$value) {
             $elementSplit=explode('-',$key);
             if(!empty($elementSplit['1'])) {
                 $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
+                if(empty($result['elementSplit'.$elementSplit['1']]['ownerResourceId'])) {
+                    $result['elementSplit'.$elementSplit['1']]['ownerResourceId']=$ownerResourceId;
+                }
             } else {
                 $result['elementSplit0'][$elementSplit['0']]=$value;
+                if(empty($result['elementSplit0']['ownerResourceId'])) {
+                    $result['elementSplit0']['ownerResourceId']=$ownerResourceId;
+                }
             }
         }
-        die(var_dump($result));
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        if (!empty($id)) {
+            $resourceWay = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy(
+                array('ownerResourceId' => new \MongoId($ownerResourceId))
+            );
+        } else {
+            foreach($result as $res) {
+                $resourceWay = new ResourceWay();
+                foreach ($res as $key => $value) {
+                    if($key!="ownerResourceId") {
+                        $resourceWay->$key = $value;
+                    } else {
+                        $resourceWay->$key=new \MongoId($value);
+                    }
+                }
+                $objectManager->persist($resourceWay);
+                $objectManager->flush();
+            }
+
+        }
     }
 
     public function addResource($post, $owner_id, $owner_org_id, $id)
@@ -85,7 +111,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $objectManager->persist($res);
         $objectManager->flush();
 
-        $this->addResourceWay($prop_array_split,$res->id);
+        $this->addResourceWay($prop_array_split,$res->id,$id);
 
         return $res->uuid;
     }
