@@ -41,6 +41,8 @@ class VehicleModel implements ServiceLocatorAwareInterface
         } else {
             $res = new Vehicle();
         }
+        $model=explode('-',$prop_array['model']);
+        $prop_array['model']=$model[2];
         foreach ($prop_array as $key => $value) {
             $res->$key = $value;
         }
