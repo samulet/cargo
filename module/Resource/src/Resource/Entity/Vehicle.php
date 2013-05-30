@@ -135,7 +135,7 @@ class Vehicle
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Required({"required":"true" })
+
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус ТС"})
      * @Annotation\Validator({"name":"InArray",
