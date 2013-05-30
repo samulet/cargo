@@ -28,7 +28,16 @@ class ResourceModel implements ServiceLocatorAwareInterface
     protected $vehicleModel;
 
     public function addResourceWay($propArraySplit,$resId) {
-        die(var_dump($propArraySplit));
+        $result=array();
+        foreach($propArraySplit as $key =>$value) {
+            $elementSplit=explode('-',$key);
+            if(!empty($elementSplit['1'])) {
+                $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
+            } else {
+                $result['elementSplit0'][$elementSplit['0']]=$value;
+            }
+        }
+        die(var_dump($result));
     }
 
     public function addResource($post, $owner_id, $owner_org_id, $id)
@@ -46,7 +55,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $prop_array_split=$prop_array;
         unset($prop_array_split['tsId']);
         unset($prop_array_split['kindOfLoad']);
-
+        unset($prop_array_split['submit']);
 
 
         $prop_array_new['tsId']=$prop_array['tsId'];
