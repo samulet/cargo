@@ -2,10 +2,11 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: solov
- * Date: 5/1/13
- * Time: 12:15 PM
+ * Date: 5/30/13
+ * Time: 2:01 PM
  * To change this template use File | Settings | File Templates.
  */
+
 
 namespace Resource\Entity;
 
@@ -18,12 +19,12 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
- * @ODM\Document(collection="resource", repositoryClass="Resource\Repository\ResourceRepository")
+ * @ODM\Document(collection="resourceWay")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("resource")
+ * @Annotation\Name("resourceWay")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class Resource
+class ResourceWay
 {
     public function __construct()
     {
@@ -48,26 +49,8 @@ class Resource
      * @var int
      * @Annotation\Exclude()
      */
-    public $ownerId;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
+    public $ownerResourceId;
 
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Прикрепите ТС к ресурсу"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
-     */
-    public $tsId;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Exclude()
-     */
-    public $ownerOrgId;
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
@@ -121,6 +104,16 @@ class Resource
     public $description;
 
     /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Capacity:"})
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $capacity;
+    /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
@@ -137,6 +130,29 @@ class Resource
      */
     public $submit;
 
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Место загрузки ТС"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $areaLoad;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Место разгрузки ТС"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $areaUnload;
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
@@ -150,16 +166,70 @@ class Resource
     public $note;
 
     /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":10}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Валюта",
+     *                      "value_options" : {"RUR":"RUR","EUR":"EUR","USD":"USD"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $currency;
+
+    /**
+     * @Annotation\Filter({"name":"Int"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Вид загрузки"})
+     * @Annotation\Options({"label":"Стоимость"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
      */
-    public $kindOfLoad;
+    public $money;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Валюта",
+     *                      "value_options" : {"bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $formPay;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Date")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Options({"label":"Дата готовности ТС к загрузке"})
+     */
+
+    public $dateStart;
+
+    /**
+     * @Annotation\Filter({"name":"Int"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $timeStart;
+
+
 
     /**
      * @ODM\Date
