@@ -15,12 +15,14 @@ use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Resource\Form\ResourceForm;
 
 class ResourceController extends AbstractActionController
 {
 
     protected $companyUserModel;
     protected $resourceModel;
+    protected $vehicleModel;
 
     public function indexAction()
     {
@@ -33,8 +35,9 @@ class ResourceController extends AbstractActionController
     public function myAction()
     {
         $res = $this->getResourceModel();
+        $resource=$res->returnMyResource($this->zfcUserAuthentication()->getIdentity()->getId());
         return new ViewModel(array(
-            'res' => $res->returnMyResource($this->zfcUserAuthentication()->getIdentity()->getId())
+            'res' => $resource
         ));
     }
 
@@ -42,8 +45,25 @@ class ResourceController extends AbstractActionController
     {
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Resource');
+
+        $formWay= $builder->createForm('Resource\Entity\ResourceWay');
+
+        $veh = $this->getVehicleModel();
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $resForm=new ResourceForm();
+
+        $form=$resForm->fillTS($form,$myV);
+
+        $tsUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        if(!empty($tsUuid)) {
+            $tsId=$veh->getIdByUuid($tsUuid);
+            $form->get('tsId')->setValue($tsId);
+        }
+
         return new ViewModel(array(
-            'form' => $form
+            'form' => $form,
+            'formWay' =>$formWay
+
         ));
     }
 
@@ -120,6 +140,14 @@ class ResourceController extends AbstractActionController
             'res' => $res,
 
         ));
+    }
+    public function getVehicleModel()
+    {
+        if (!$this->vehicleModel) {
+            $sm = $this->getServiceLocator();
+            $this->vehicleModel = $sm->get('Resource\Model\VehicleModel');
+        }
+        return $this->vehicleModel;
     }
 
 }
