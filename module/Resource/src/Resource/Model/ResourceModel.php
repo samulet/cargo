@@ -136,8 +136,9 @@ class ResourceModel implements ServiceLocatorAwareInterface
         foreach ($rezObj as $cur) {
             $obj_vars = get_object_vars($cur);
             $veh=$vehicle->listVehicle($cur->tsId);
+            $ways=$this->returnAllWays($cur->id);
             $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
-            array_push($rezs, array('res' => $obj_vars, 'org' => $org,'veh'=>$veh));
+            array_push($rezs, array('res' => $obj_vars, 'org' => $org,'veh'=>$veh,'ways'=>$ways));
         }
         return $rezs;
     }
