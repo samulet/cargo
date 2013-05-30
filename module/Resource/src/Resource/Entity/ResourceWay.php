@@ -49,7 +49,7 @@ class ResourceWay
      * @var int
      * @Annotation\Exclude()
      */
-    public $ownerId;
+    public $ownerResourceId;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -135,7 +135,7 @@ class ResourceWay
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Место загрузки"})
+     * @Annotation\Options({"label":"Место загрузки ТС"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -147,7 +147,7 @@ class ResourceWay
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Место разгрузки"})
+     * @Annotation\Options({"label":"Место разгрузки ТС"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -230,27 +230,6 @@ class ResourceWay
     public $timeStart;
 
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Options({"label":"Место загрузки ТС"})
-     */
-
-    public $placeStart;
-
-    /**
-     * @Annotation\Filter({"name":"Int"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Место разгрузки ТС"})
-     * @Annotation\Required({"required":"true" })
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $placeEnd;
 
     /**
      * @ODM\Date
