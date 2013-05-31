@@ -1,207 +1,97 @@
 <?php
 $form = $this->form;
+$formWay = $this->formWay;
+$ways= $this->way;
+$ticket= $this->res;
+
 $form->setAttribute('action', $this->url('ticket', array('action' => 'addTicket', 'id' => $this->id)))
     ->prepare();
+
 echo $this->form()->openTag($form);
 
-$name = $form->get('name')->setValue($this->res['name']);
-///echo $this->formRow($name);
+$tsId= $form->get('tsId');
+$kindOfLoad=$form->get('kindOfLoad')->setValue($ticket['kindOfLoad']);
 
-$tent = $form->get('tent')->setValue($this->res['tent']);
-$furgon = $form->get('furgon')->setValue($this->res['furgon']);
-$pickup = $form->get('pickup')->setValue($this->res['pickup']);
-$mukovoz = $form->get('mukovoz')->setValue($this->res['mukovoz']);
 
-$kran = $form->get('kran')->setValue($this->res['kran']);
-
-$upSize = $form->get('upSize')->setValue($this->res['upSize']);
-$upValue = $form->get('upValue')->setValue($this->res['upValue']);
-$gabarities = $form->get('gabarities')->setValue($this->res['gabarities']);
-$adr = $form->get('adr')->setValue($this->res['adr']);
-
-$areaUnload = $form->get('areaUnload')->setValue($this->res['areaUnload']);
-$areaLoad = $form->get('areaLoad')->setValue($this->res['areaLoad']);
-$note = $form->get('note')->setValue($this->res['note']);
-$currency = $form->get('currency')->setValue($this->res['currency']);
-$money = $form->get('money')->setValue($this->res['money']);
-$formPay = $form->get('formPay')->setValue($this->res['formPay']);
-$always = $form->get('always')->setValue($this->res['always']);
-$ready = $form->get('ready')->setValue($this->res['ready']);
-$dateStart = $form->get('dateStart')->setValue($this->res['dateStart']);
-$dateEnd = $form->get('dateEnd')->setValue($this->res['dateEnd']);
-$cycle = $form->get('cycle')->setValue($this->res['cycle']);
-$mayBeUpShip = $form->get('mayBeUpShip')->setValue($this->res['mayBeUpShip']);
-$partCargo = $form->get('partCargo')->setValue($this->res['partCargo']);
-$numberOfCars = $form->get('numberOfCars')->setValue($this->res['numberOfCars']);
-
-$upShip = $form->get('upShip')->setValue($this->res['upShip']);
-$tir = $form->get('tir')->setValue($this->res['tir']);
-$ekmt = $form->get('ekmt')->setValue($this->res['ekmt']);
-$hydroLift = $form->get('hydroLift')->setValue($this->res['hydroLift']);
-$cargo = $form->get('cargo')->setValue($this->res['cargo']);
-$package = $form->get('package')->setValue($this->res['package']);
-$palet = $form->get('palet')->setValue($this->res['palet']);
-$belt = $form->get('belt')->setValue($this->res['belt']);
-
-$transportType = $form->get('transportType')->setValue($this->res['transportType']);
 ?>
 
-    <table class="table spec_table" >
+    <table class="table spec_table" style="">
         <tr>
-            <th style="width:70%;">
-                Груз
-            </th>
-            <th style="width:30%;">
-                Маршрут
+            <th>
+                Транспорт
             </th>
         </tr>
         <tr>
             <td style="border-left:none;">
-                <table class="into_table" style="width:100%;">
-
-                    <tr>
-                        <td>
-                            <?php
-                            echo $this->formRow($cargo);
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($package);
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($palet);
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($belt);
-                            ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <?php
-                            echo $this->formRow($upSize);
-                            echo $this->formRow($upValue);
-
-
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($gabarities);
-
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($adr);
-
-                            ?>
-
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
-                <div class="tr_check inline_check">
-                    <?php
-                    echo $this->formRow($upShip);
-                    echo $this->formRow($mayBeUpShip);
-                    echo $this->formRow($partCargo);
-
-
-                    ?></div>
+                <?php
+                echo $this->formRow($tsId);
+                echo $this->formRow($kindOfLoad);
+                ?>
             </td>
+        </tr>
+    </table>
+
+    <table class="table spec_table" style="">
+        <tr>
+            <th>
+                Маршрут
+            </th>
+            <th>
+                Дата и время загрузки
+            </th>
+            <th>
+                Оплата
+            </th>
+            <th>
+                Примечание
+            </th>
+            <th>
+                Удалить пункт выдачи
+            </th>
+
+        </tr>
+        <?php
+        $counter=0;
+        foreach($ways as $way) {
+            if($counter==0) {
+                $areaLoad= $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad');
+                $areaUnload= $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload');
+                $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart');
+                $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart');
+                $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency');
+                $money= $formWay->get('money')->setValue($way['money'])->setName('money');
+                $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay');
+                $note= $formWay->get('note')->setValue($way['note'])->setName('note');
+            } else {
+                $areaLoad= $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad-'.$counter);
+                $areaUnload= $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload-'.$counter);
+                $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart-'.$counter);
+                $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart-'.$counter);
+                $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency-'.$counter);
+                $money= $formWay->get('money')->setValue($way['money'])->setName('money-'.$counter);
+                $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay-'.$counter);
+                $note= $formWay->get('note')->setValue($way['note'])->setName('note-'.$counter);
+            }
+
+        ?>
+        <tr class="<?php
+            if($counter==0) {
+                echo 'wayTr';
+            } else {
+                echo 'wayTr-'.$counter;
+            }
+        ?>">
             <td>
                 <?php
                 echo $this->formRow($areaLoad);
-                echo $this->formRow($areaUnload);?>
-                <div class="tr_check">   <?php
-                    echo $this->formRow($cycle);
-                    ?></div>
+                echo $this->formRow($areaUnload);
+                ?>
             </td>
-        </tr>
-    </table>
-
-    <table class="table spec_table" >
-        <tr>
-            <th style="width:70%;">
-                Параметры машины
-            </th>
-        </tr>
-        <tr>
-            <td style="border-left:none;">
-                <table class="into_table" style="width:100%%;">
-                    <tr>
-                        <th>
-                            Тип кузова:
-                        </th>
-                        <th>
-                            Тип загрузки:
-                        </th>
-                        <th>
-                            Вид транспорта:
-                        </th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td class="tr_check">
-                            <?php
-                            echo $this->formRow($tent);
-                            echo $this->formRow($mukovoz);
-                            echo $this->formRow($pickup);
-                            echo $this->formRow($furgon);
-                            ?>
-                        </td>
-                        <td class="tr_check">
-                            <?php
-                            echo $this->formRow($kran);
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($transportType);
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $this->formRow($numberOfCars);
-
-                            ?>
-                        </td>
-                    </tr>
-                </table><div class="tr_check inline_check">
-                    <?php
-                    echo $this->formRow($tir);
-                    ?> </div>
-            </td>
-        </tr>
-    </table>
-    <table class="table spec_table" >
-        <tr>
-            <th style="width:33%;">
-                Когда
-            </th>
-            <th style="width:33%;">
-                Оплата
-            </th>
-            <th style="width:33%;">
-                Примечание
-            </th>
-        </tr>
-        <tr>
             <td>
                 <?php
                 echo $this->formRow($dateStart);
-                echo $this->formRow($dateEnd);
+                echo $this->formRow($timeStart);
                 ?>
-                <div class="tr_check"><?php
-                    echo $this->formRow($always);
-                    echo $this->formRow($ready);
-                    ?>
             </td>
             <td>
                 <?php
@@ -210,13 +100,30 @@ $transportType = $form->get('transportType')->setValue($this->res['transportType
                 echo $this->formRow($formPay);
                 ?>
             </td>
-            <td class="note_textarea">
-                <?php echo $this->formRow($note);
+            <td>
+                <?php
+                echo $this->formRow($note);
                 ?>
+            </td>
+            <td>
+                <input name="deleteWay" class="deleteWay" onclick="<?php
+                if($counter!=0) {
+                    echo "delWay('wayTr-".$counter."');";
+                }
+                ?>" type="button" value="Удалть"/>
+            </td>
+        </tr>
+        <?php
+            $counter++;
+        }
+        ?>
+        <tr class="addTr">
+            <td>
+                <input id="counter" type="hidden" value='<?php echo $counter ?>' />
+                <input type="button" onclick="addWay('wayTr');" value="Добавить пункт назначения "/>
             </td>
         </tr>
     </table>
-
-    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')); ?> </div> <?php
-echo $this->form()->closeTag();
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')); ?> </div>
+<?php  echo $this->form()->closeTag();
 ?>

@@ -5,6 +5,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Ticket\Controller\Ticket' => 'Ticket\Controller\TicketController',
+            'Ticket\Controller\Cargo' => 'Ticket\Controller\CargoController',
         ),
     ),
     'router' => array(
@@ -23,12 +24,27 @@ return array(
                     ),
                 ),
             ),
+            'cargo' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/cargos[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Ticket\Controller\Cargo',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'ticket', 'roles' => array('user')),
+                array('route' => 'cargo', 'roles' => array('user')),
             ),
         ),
     ),

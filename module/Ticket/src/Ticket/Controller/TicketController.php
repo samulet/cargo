@@ -12,35 +12,32 @@ namespace Ticket\Controller;
 use Entity\Recources;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Ticket\Form\TicketForm;
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Form\View\Helper\FormSelect;
-
+use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Ticket\Form\TicketForm;
 
 class TicketController extends AbstractActionController
 {
-    protected $ticketModel;
+
     protected $companyUserModel;
-    protected $addListModel;
+    protected $ticketModel;
+    protected $cargoModel;
 
     public function indexAction()
     {
-
-        $tick = $this->getTicketModel();
+        $res = $this->getTicketModel();
         return new ViewModel(array(
-            'res' => $tick->returnAllTicket()
+            'res' => $res->returnAllTicket()
         ));
     }
 
     public function myAction()
     {
         $res = $this->getTicketModel();
-        $tick = $res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getId());
+        $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getId());
         return new ViewModel(array(
-            'tick' => $tick
+            'res' => $ticket
         ));
     }
 
@@ -49,28 +46,55 @@ class TicketController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
 
-        $addListModel = $this->getAddListModel();
-        $form_array=array('cargo','batch','body','transportType','package');
-        $formData=$addListModel->returnDataArray($form_array,'ticket');
-        $fillFrom=new TicketForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
+
+        $veh = $this->getCargoModel();
+        $myV=$veh->returnMyCargo($this->zfcUserAuthentication()->getIdentity()->getId());
+        $resForm=new TicketForm();
+
+        $form=$resForm->fillTS($form,$myV);
+
+        $tsUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        if(!empty($tsUuid)) {
+            $tsId=$veh->getIdByUuid($tsUuid);
+            $form->get('tsId')->setValue($tsId);
+        }
 
         return new ViewModel(array(
-            'form' => $form
+            'form' => $form,
+            'formWay' =>$formWay
+
         ));
     }
 
     public function editAction()
     {
-        $tickModel = $this->getTicketModel();
+        $resModel = $this->getTicketModel();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $tick = $tickModel->listTicket($id);
+        $res = $resModel->listTicket($id);
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
+
+        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
+
+        $veh = $this->getCargoModel();
+        $myV=$veh->returnMyCargo($this->zfcUserAuthentication()->getIdentity()->getId());
+        $resForm=new TicketForm();
+
+        $form=$resForm->fillTS($form,$myV);
+
+        $way=$resModel->returnAllWays($res['id']);
+
+        $form->get('tsId')->setValue($res['tsId']);
+
+
+
         return new ViewModel(array(
             'form' => $form,
-            'res' => $tick,
+            'res' => $res,
+            'formWay'=>$formWay,
+            'way'=>$way,
             'id' => $id
         ));
     }
@@ -99,7 +123,6 @@ class TicketController extends AbstractActionController
         $comUserModel = $this->getCompanyUserModel();
         $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
         $org_id = $comUserModel->getOrgIdByUserId($user_id);
-
         $res = $this->getTicketModel();
         $res->addTicket($this->getRequest()->getPost(), $user_id, $org_id, $id);
         return $this->redirect()->toUrl('/tickets/my');
@@ -122,27 +145,26 @@ class TicketController extends AbstractActionController
         }
         return $this->companyUserModel;
     }
-
     public function copyAction() {
-        $tickModel = $this->getTicketModel();
+        $resModel = $this->getTicketModel();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $tick = $tickModel->listTicket($id);
+        $res = $resModel->listTicket($id);
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
         return new ViewModel(array(
             'form' => $form,
-            'res' => $tick,
+            'res' => $res,
 
         ));
     }
-
-    public function getAddListModel()
+    public function getCargoModel()
     {
-        if (!$this->addListModel) {
+        if (!$this->cargoModel) {
             $sm = $this->getServiceLocator();
-            $this->addListModel = $sm->get('AddList\Model\AddListModel');
+            $this->cargoModel = $sm->get('Ticket\Model\CargoModel');
         }
-        return $this->addListModel;
+        return $this->cargoModel;
     }
+
 }
