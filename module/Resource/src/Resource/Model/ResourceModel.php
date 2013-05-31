@@ -46,9 +46,11 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($resId)) {
-            $resourceWay = $objectManager->getRepository('Resource\Entity\ResourceWay')->remove()->findBy(
-                array('ownerResourceId' => new \MongoId($ownerResourceId))
-            );
+            $objectManager->createQueryBuilder('Resource\Entity\ResourceWay')
+                ->remove()
+                ->field('ownerResourceId')->equals(new \MongoId($resId))
+                 ->getQuery()
+                ->execute();
         }
             foreach($result as $res) {
                 $resourceWay = new ResourceWay();
@@ -111,7 +113,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $objectManager->persist($res);
         $objectManager->flush();
 
-        $this->addResourceWay($prop_array_split,$res->id,null);
+        $this->addResourceWay($prop_array_split,$res->id,$this->getIdByUuid($id));
 
         return $res->uuid;
     }
@@ -215,6 +217,20 @@ class ResourceModel implements ServiceLocatorAwareInterface
             array_push($result,get_object_vars($re));
         }
         return $result;
+    }
+
+    public function getIdByUuid($uuid) {
+        if(empty($uuid)) {
+            return null;
+        }
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
+            array('uuid' => $uuid)
+        );
+        if(empty($res)) {
+            return null;
+        }
+        return $res->id;
     }
 
 }

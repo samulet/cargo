@@ -9,12 +9,17 @@ function addWay(wayTr) {
 
     $('.'+wayTr+'-'+counterVal+' input').each(function( index ) {
         $(this).attr('name',$(this).attr('name')+'-'+counterVal);
+        if($(this).attr('class')!='deleteWay') {
+            $(this).val('');
+        }
     });
     $('.'+wayTr+'-'+counterVal+' select').each(function( index ) {
         $(this).attr('name',$(this).attr('name')+'-'+counterVal);
+        $(this).val('');
     });
     $('.'+wayTr+'-'+counterVal+' textarea').each(function( index ) {
         $(this).attr('name',$(this).attr('name')+'-'+counterVal);
+        $(this).val('');
     });
     $('.'+wayTr+'-'+counterVal+' .deleteWay').attr('onclick',"delWay('"+wayTr+'-'+counterVal+"');");
 }
