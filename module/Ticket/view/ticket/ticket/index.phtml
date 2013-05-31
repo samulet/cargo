@@ -13,25 +13,25 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
 <table class="table">
     <tr>
         <th>
-            Номер публикации
+
         </th>
         <th>
-            Даты и времени готовности ТС к загрузке
+
         </th>
         <th>
-            Место загрузки/разгрузки
+
         </th>
         <th>
-            Тариф
+
         </th>
         <th>
-            Вид транспортного средства
+
         </th>
         <th>
-            Вид загрузки
+
         </th>
         <th>
-            Грузоподъемность
+
         </th>
         <th>
             Организация
@@ -54,47 +54,27 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
     ?>
 <tr>
             <td>
-                <a href="<?php echo $this->url(
-                    'ticket',
-                    array('action' => 'list', 'id' => $ticket['uuid'])
-                );?>"><?php echo $ticket['uuid']; ?></a>
-            </td>
-            <td>
-                <?php
-                foreach($ticketWay as $way) {
-                    echo $way['dateStart'] . ' / ' . $way['timeStart'].'</br>';
-                }
-                ?>
-            </td>
-            <td>
-                <?php
-                foreach($ticketWay as $way) {
-                    echo $way['areaLoad'] . ' / ' . $way['areaUnload'].'</br>';
-                }
-                ?>
 
             </td>
             <td>
-                <?php
-                foreach($ticketWay as $way) {
 
-                    echo $way['money'] . ' ' . $way['currency'].'</br>';
-                }
-                ?>
+            </td>
+            <td>
+
+
+            </td>
+            <td>
 
             </td>
 
             <td>
-                <a href="<?php echo $this->url(
-                    'cargo',
-                    array('action' => 'list', 'id' => $cargo['uuid'])
-                );?>"><?php echo $cargo['carNumber'].' '.$cargo['mark'] . ' / ' . $cargo['model']; ?></a>
+
             </td>
             <td>
-                <?php echo $ticket['kindOfLoad']; ?>
+
             </td>
             <td>
-                <?php echo $cargo['capacity']; ?>
+
             </td>
         <td>
         <a href="<?php echo $this->url('organization',

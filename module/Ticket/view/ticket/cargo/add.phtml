@@ -4,41 +4,8 @@ $formData= $this->formData;
 $form->setAttribute('action', $this->url('cargo', array('action' => 'addCargo')))
     ->prepare();
 $name = $form->get('name');
+$note = $form->get('note');
 
-$serialNumber= $form->get('serialNumber');
-$vin= $form->get('vin');
-$mark= $form->get('mark');
-$mark->setAttributes(array('id' => 'parent-model-mark'));
-$model= $form->get('model');
-
-$model->setAttributes(array('id' => 'child-mark-model'));
-
-$type= $form->get('type');
-
-$semitrailer= $form->get('semitrailer');
-$tractor= $form->get('tractor');
-$coupling= $form->get('coupling');
-$lorry= $form->get('lorry');
-
-$hydroLift = $form->get('hydroLift');
-$EKMT = $form->get('EKMT');
-$TIR = $form->get('TIR');
-$adr= $form->get('adr');
-$note= $form->get('note');
-
-
-$status= $form->get('status');
-$dateMade= $form->get('dateMade');
-$owner= $form->get('owner');
-
-$serialNumberDoc= $form->get('serialNumberDoc');
-$carNumber= $form->get('carNumber');
-$ecologicalClass= $form->get('ecologicalClass');
-$allowedMaxMass= $form->get('allowedMaxMass');
-$axles= $form->get('axles');
-$capacity= $form->get('capacity');
-$ownerName= $form->get('ownerName');
-$whoGave= $form->get('whoGave');
 
 echo $this->form()->openTag($form);
 
@@ -49,55 +16,28 @@ echo $this->form()->openTag($form);
 <table class="table spec_table cargo">
     <tr >
         <th style="width:50%; text-align: center;">
-            ПТС
+            Какие-то поля
         </th>
         <th style="width:50%; text-align: center;">
-            Свидетельстов о регистрации
+            Какие-то поля
         </th>
     </tr>
     <tr style="border-right: 1px dashed #dddddd;">
         <td style="width:50%;">
             <?php
-            echo $this->formRow($serialNumber);
-            echo $this->formRow($vin);
-            echo $this->formRow($mark);
-            echo $this->formRow($model);
-            echo $this->formRow($type);
+
+            echo $this->formRow($name);
             ?>
 
-            <?php
-            echo $this->formRow($semitrailer);
-            echo $this->formRow($tractor);
-            echo $this->formRow($coupling);
-            echo $this->formRow($lorry);
-            ?>
 
-            <?php
-            echo $this->formRow($dateMade);
-            echo $this->formRow($owner);
-            ?>
         </td>
         <td style="width:50%;">
-            <?php
-            echo $this->formRow($serialNumberDoc);
-            echo $this->formRow($carNumber);
-            echo $this->formRow($ecologicalClass);
-            echo $this->formRow($allowedMaxMass);
-            echo $this->formRow($axles);
-            echo $this->formRow($capacity);
-            echo $this->formRow($ownerName);
-            echo $this->formRow($whoGave);
-            ?>
+
         </td>
     </tr>
     <tr>
         <td>
-            <?php  echo $this->formRow($status);
-            echo $this->formRow($hydroLift);
-            echo $this->formRow($EKMT);
-            echo $this->formRow($TIR);
-            echo $this->formRow($adr);
-            ?>
+
         </td>
         <td>
             <?php  echo $this->formRow($note);

@@ -15,13 +15,13 @@ $cargos = $this->res;
 <table class="table">
     <tr>
         <th>
-           Номер транспортного средства
+
         </th>
                 <th>
-                    Статус
+
                 </th>
         <th>
-            Марка / Модель
+
         </th>
 
         <th>
@@ -40,19 +40,15 @@ $cargos = $this->res;
     <?php foreach ($cargos as $cargo) { $org=$cargo['org'];$cargo=$cargo['res'];?>
         <tr>
             <td>
-                 <?php echo $cargo['carNumber']; ?>
+
             </td>
-                        <td>
-                            <?php echo $cargo['status']; ?>
-                        </td>
+
             <td>
-                <?php echo $cargo['mark'] . ' / ' . $cargo['model']; ?>
+
             </td>
 
                     <td>
-                    <a href="<?php echo $this->url('organization',
-                                array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
-                    </td>
+
             <td>
                 <a href="<?php echo $this->url(
                     'cargo',
