@@ -28,7 +28,7 @@ class TicketForm
         return $form;
     }
 
-    public function fillTS($form,$formData) {
+    public function fillCG($form,$formData) {
 
         $result_array=array(''=>'Выберите ТС');
         foreach($formData as $data) {

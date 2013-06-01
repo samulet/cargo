@@ -162,6 +162,20 @@ class TicketWay
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Наименование груза"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $cargoName;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"ADR",
      *                      "value_options" : {"1":"1","2":"2","3":"3"}})
      * @Annotation\Validator({"name":"InArray",
@@ -260,7 +274,7 @@ class TicketWay
      * @Annotation\Options({"label":"Пневмоход"})
      */
 
-    public $AirSuspension;
+    public $airSuspension;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -369,7 +383,7 @@ class TicketWay
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required({"required":"true" })
-     * @Annotation\Options({"label":"Дата готовности ТС к загрузке"})
+     * @Annotation\Options({"label":"Дата готовности к загрузке"})
      */
 
     public $dateStart;
@@ -379,7 +393,7 @@ class TicketWay
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
+     * @Annotation\Options({"label":"Время готовности к загрузке"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -387,6 +401,28 @@ class TicketWay
     public $timeStart;
 
 
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Date")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Options({"label":"Дата готовности к разгрузке"})
+     */
+
+    public $dateEnd;
+
+    /**
+     * @Annotation\Filter({"name":"Int"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Время готовности к разгрузке"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $timeEnd;
 
     /**
      * @ODM\Date

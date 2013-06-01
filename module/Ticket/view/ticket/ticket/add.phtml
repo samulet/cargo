@@ -6,30 +6,51 @@ $form->setAttribute('action', $this->url('ticket', array('action' => 'addTicket'
     ->prepare();
 echo $this->form()->openTag($form);
 
-$tsId= $form->get('tsId');
-$kindOfLoad=$form->get('kindOfLoad');
 
 $areaLoad= $formWay->get('areaLoad');
 $areaUnload= $formWay->get('areaUnload');
+
+$cargoOwner= $formWay->get('cargoOwner');
+$cargoName= $formWay->get('cargoName');
+
+$adr= $formWay->get('adr');
+$cubs= $formWay->get('cubs');
+$dimensions= $formWay->get('dimensions');
+$weight= $formWay->get('weight');
+$rubles= $formWay->get('rubles');
+$pallet= $formWay->get('pallet');
+$box= $formWay->get('box');
+
+$type= $formWay->get('type');
+$temperature= $formWay->get('temperature');
+$typeLoad= $formWay->get('typeLoad');
+$typeUnload= $formWay->get('typeUnload');
+$airSuspension= $formWay->get('airSuspension');
+$coupling= $formWay->get('coupling');
+
 $dateStart= $formWay->get('dateStart');
 $timeStart= $formWay->get('timeStart');
+$dateEnd= $formWay->get('dateEnd');
+$timeEnd= $formWay->get('timeEnd');
+
 $currency= $formWay->get('currency');
 $money= $formWay->get('money');
 $formPay= $formWay->get('formPay');
+
+
 $note= $formWay->get('note');
 ?>
 
     <table class="table spec_table" style="">
         <tr>
             <th>
-                Транспорт
+               Заявка
             </th>
         </tr>
         <tr>
             <td style="border-left:none;">
                 <?php
-                echo $this->formRow($tsId);
-                echo $this->formRow($kindOfLoad);
+
                ?>
             </td>
         </tr>
@@ -41,10 +62,19 @@ $note= $formWay->get('note');
                 Маршрут
             </th>
             <th>
-                Дата и время загрузки
+                Данные груза
             </th>
             <th>
-                Оплата
+               Количество груза
+            </th>
+            <th>
+                Требования к ТС
+            </th>
+            <th>
+                Время
+            </th>
+            <th>
+                Услования оплаты
             </th>
             <th>
                 Примечание
@@ -63,8 +93,40 @@ $note= $formWay->get('note');
             </td>
             <td>
                 <?php
+                echo $this->formRow($cargoOwner);
+                echo $this->formRow($cargoName);
+                echo $this->formRow($adr);
+
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow( $adr);
+                echo $this->formRow( $cubs);
+                echo $this->formRow(  $dimensions);
+                echo $this->formRow(  $weight);
+                echo $this->formRow(  $rubles);
+                echo $this->formRow(  $pallet);
+                echo $this->formRow( $box);
+
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow( $type);
+                echo $this->formRow($temperature);
+                echo $this->formRow( $typeLoad);
+                echo $this->formRow( $typeUnload);
+                echo $this->formRow( $airSuspension);
+                echo $this->formRow( $coupling);
+                ?>
+            </td>
+            <td>
+                <?php
                 echo $this->formRow($dateStart);
                 echo $this->formRow($timeStart);
+                echo $this->formRow($dateEnd);
+                echo $this->formRow($timeEnd);
                 ?>
             </td>
             <td>
@@ -79,6 +141,7 @@ $note= $formWay->get('note');
                 echo $this->formRow($note);
                 ?>
             </td>
+
             <td>
                 <input name="deleteWay" class="deleteWay" type="button" value="Удалть"/>
             </td>

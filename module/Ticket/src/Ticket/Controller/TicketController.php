@@ -23,6 +23,7 @@ class TicketController extends AbstractActionController
     protected $companyUserModel;
     protected $ticketModel;
     protected $cargoModel;
+    protected $addListModel;
 
     public function indexAction()
     {
@@ -48,17 +49,15 @@ class TicketController extends AbstractActionController
 
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
 
-        $veh = $this->getCargoModel();
-        $myV=$veh->returnMyCargo($this->zfcUserAuthentication()->getIdentity()->getId());
-        $resForm=new TicketForm();
+        $form_array=array();
 
-        $form=$resForm->fillTS($form,$myV);
+        $addListModel = $this->getAddListModel();
 
-        $tsUuid = $this->getEvent()->getRouteMatch()->getParam('id');
-        if(!empty($tsUuid)) {
-            $tsId=$veh->getIdByUuid($tsUuid);
-            $form->get('tsId')->setValue($tsId);
-        }
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay');
+
+        $fillFrom=new TicketForm();
+        $form=$fillFrom->fillFrom($formWay,$formData,$form_array);
+
 
         return new ViewModel(array(
             'form' => $form,
@@ -82,7 +81,7 @@ class TicketController extends AbstractActionController
         $myV=$veh->returnMyCargo($this->zfcUserAuthentication()->getIdentity()->getId());
         $resForm=new TicketForm();
 
-        $form=$resForm->fillTS($form,$myV);
+        $form=$resForm->fillCG($form,$myV);
 
         $way=$resModel->returnAllWays($res['id']);
 
@@ -165,6 +164,14 @@ class TicketController extends AbstractActionController
             $this->cargoModel = $sm->get('Ticket\Model\CargoModel');
         }
         return $this->cargoModel;
+    }
+    public function getAddListModel()
+    {
+        if (!$this->addListModel) {
+            $sm = $this->getServiceLocator();
+            $this->addListModel = $sm->get('AddList\Model\AddListModel');
+        }
+        return $this->addListModel;
     }
 
 }
