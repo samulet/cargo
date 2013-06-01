@@ -9,8 +9,7 @@ $form->setAttribute('action', $this->url('ticket', array('action' => 'addTicket'
 
 echo $this->form()->openTag($form);
 
-$tsId= $form->get('tsId');
-$kindOfLoad=$form->get('kindOfLoad')->setValue($ticket['kindOfLoad']);
+
 
 
 ?>
@@ -18,14 +17,13 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($ticket['kindOfLoad']);
     <table class="table spec_table" style="">
         <tr>
             <th>
-                Транспорт
+                Заявка
             </th>
         </tr>
         <tr>
             <td style="border-left:none;">
                 <?php
-                echo $this->formRow($tsId);
-                echo $this->formRow($kindOfLoad);
+
                 ?>
             </td>
         </tr>
@@ -37,10 +35,19 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($ticket['kindOfLoad']);
                 Маршрут
             </th>
             <th>
-                Дата и время загрузки
+                Данные груза
             </th>
             <th>
-                Оплата
+                Количество груза
+            </th>
+            <th>
+                Требования к ТС
+            </th>
+            <th>
+                Время
+            </th>
+            <th>
+                Услования оплаты
             </th>
             <th>
                 Примечание
@@ -48,7 +55,6 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($ticket['kindOfLoad']);
             <th>
                 Удалить пункт выдачи
             </th>
-
         </tr>
         <?php
         $counter=0;
@@ -56,6 +62,30 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($ticket['kindOfLoad']);
             if($counter==0) {
                 $areaLoad= $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad');
                 $areaUnload= $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload');
+
+                $cargoOwner= $formWay->get('cargoOwner')->setValue($way['cargoOwner'])->setName('cargoOwner');
+                $cargoName= $formWay->get('cargoName')->setValue($way['cargoName'])->setName('cargoName');
+
+                $adr= $formWay->get('adr')->setValue($way['adr'])->setName('adr');
+                $cubs= $formWay->get('cubs')->setValue($way['cubs'])->setName('cubs');
+                $dimensions= $formWay->get('dimensions')->setValue($way['dimensions'])->setName('dimensions');
+                $weight= $formWay->get('weight')->setValue($way['weight'])->setName('weight');
+                $rubles= $formWay->get('rubles')->setValue($way['rubles'])->setName('rubles');
+                $pallet= $formWay->get('pallet')->setValue($way['pallet'])->setName('pallet');
+                $box= $formWay->get('box')->setValue($way['box'])->setName('box');
+
+                $type= $formWay->get('type')->setValue($way['type'])->setName('type');
+                $temperature= $formWay->get('temperature')->setValue($way['temperature'])->setName('temperature');
+                $typeLoad= $formWay->get('typeLoad')->setValue($way['typeLoad'])->setName('typeLoad');
+                $typeUnload= $formWay->get('typeUnload')->setValue($way['typeUnload'])->setName('typeUnload');
+                $airSuspension= $formWay->get('airSuspension')->setValue($way['airSuspension'])->setName('airSuspension');
+                $coupling= $formWay->get('coupling')->setValue($way['coupling'])->setName('coupling');
+
+
+                $dateEnd= $formWay->get('dateEnd')->setValue($way['dateEnd'])->setName('dateEnd');
+                $timeEnd= $formWay->get('timeEnd')->setValue($way['timeEnd'])->setName('timeEnd');
+
+
                 $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart');
                 $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart');
                 $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency');
@@ -63,8 +93,35 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($ticket['kindOfLoad']);
                 $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay');
                 $note= $formWay->get('note')->setValue($way['note'])->setName('note');
             } else {
+
                 $areaLoad= $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad-'.$counter);
                 $areaUnload= $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload-'.$counter);
+
+                $cargoOwner= $formWay->get('cargoOwner')->setValue($way['cargoOwner'])->setName('cargoOwner-'.$counter);
+                $cargoName= $formWay->get('cargoName')->setValue($way['cargoName'])->setName('cargoName-'.$counter);
+
+                $adr= $formWay->get('adr')->setValue($way['adr'])->setName('adr-'.$counter);
+                $cubs= $formWay->get('cubs')->setValue($way['cubs'])->setName('cubs-'.$counter);
+                $dimensions= $formWay->get('dimensions')->setValue($way['dimensions'])->setName('dimensions-'.$counter);
+                $weight= $formWay->get('weight')->setValue($way['weight'])->setName('weight-'.$counter);
+                $rubles= $formWay->get('rubles')->setValue($way['rubles'])->setName('rubles-'.$counter);
+                $pallet= $formWay->get('pallet')->setValue($way['pallet'])->setName('pallet-'.$counter);
+                $box= $formWay->get('box')->setValue($way['box'])->setName('box-'.$counter);
+
+                $type= $formWay->get('type')->setValue($way['type'])->setName('type-'.$counter);
+                $temperature= $formWay->get('temperature')->setValue($way['temperature'])->setName('temperature-'.$counter);
+                $typeLoad= $formWay->get('typeLoad')->setValue($way['typeLoad'])->setName('typeLoad-'.$counter);
+                $typeUnload= $formWay->get('typeUnload')->setValue($way['typeUnload'])->setName('typeUnload-'.$counter);
+                $airSuspension= $formWay->get('airSuspension')->setValue($way['airSuspension'])->setName('airSuspension-'.$counter);
+                $coupling= $formWay->get('coupling')->setValue($way['coupling'])->setName('coupling-'.$counter);
+
+
+                $dateEnd= $formWay->get('dateEnd')->setValue($way['dateEnd'])->setName('dateEnd-'.$counter);
+                $timeEnd= $formWay->get('timeEnd')->setValue($way['timeEnd'])->setName('timeEnd-'.$counter);
+
+
+
+
                 $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart-'.$counter);
                 $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart-'.$counter);
                 $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency-'.$counter);
@@ -89,8 +146,40 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($ticket['kindOfLoad']);
             </td>
             <td>
                 <?php
+                echo $this->formRow($cargoOwner);
+                echo $this->formRow($cargoName);
+                echo $this->formRow($adr);
+
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow( $adr);
+                echo $this->formRow( $cubs);
+                echo $this->formRow(  $dimensions);
+                echo $this->formRow(  $weight);
+                echo $this->formRow(  $rubles);
+                echo $this->formRow(  $pallet);
+                echo $this->formRow( $box);
+
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow( $type);
+                echo $this->formRow($temperature);
+                echo $this->formRow( $typeLoad);
+                echo $this->formRow( $typeUnload);
+                echo $this->formRow( $airSuspension);
+                echo $this->formRow( $coupling);
+                ?>
+            </td>
+            <td>
+                <?php
                 echo $this->formRow($dateStart);
                 echo $this->formRow($timeStart);
+                echo $this->formRow($dateEnd);
+                echo $this->formRow($timeEnd);
                 ?>
             </td>
             <td>

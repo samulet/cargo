@@ -56,7 +56,7 @@ class TicketController extends AbstractActionController
         $formData=$addListModel->returnDataArray($form_array,'ticketWay');
 
         $fillFrom=new TicketForm();
-        $form=$fillFrom->fillFrom($formWay,$formData,$form_array);
+        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
 
 
         return new ViewModel(array(
@@ -77,15 +77,20 @@ class TicketController extends AbstractActionController
 
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
 
-        $veh = $this->getCargoModel();
-        $myV=$veh->returnMyCargo($this->zfcUserAuthentication()->getIdentity()->getId());
-        $resForm=new TicketForm();
 
-        $form=$resForm->fillCG($form,$myV);
+        $form_array=array();
+
+        $addListModel = $this->getAddListModel();
+
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay');
+
+        $fillFrom=new TicketForm();
+        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+
 
         $way=$resModel->returnAllWays($res['id']);
 
-        $form->get('tsId')->setValue($res['tsId']);
+
 
 
 
