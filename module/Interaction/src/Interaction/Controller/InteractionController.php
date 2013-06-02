@@ -24,6 +24,10 @@ class InteractionController extends AbstractActionController
 
     }
 
+    public function addAction() {
+
+    }
+
 
 
     public function getInteractionModel()

@@ -15,28 +15,43 @@ $interactions=$this->$interaction;
         </th>
         <th>
             Статус
-         </th>
+        </th>
 
     </tr>
 <?php foreach($interactions as $interaction) { ?>
     <tr>
         <td>
-        <?php if($au['str']=='up') echo 'Ресурс';
-              else echo 'Заявка';?>
+         <a href="<?php echo $this->url('interaction',
+                            array('action'=>'proposal', 'id' => $interaction['uuid']));?>">
+                            <?php echo $interaction['uuid'];?>
+                            </a>
         </td>
         <td>
+                 <a href="<?php
+                 if($interaction['sendItem']['status']=='Заявка') {
+                 $rout='ticket';
+                 } else {
+                 $rout='resource';
+                 }
+                 echo $this->url($rout,
+                                    array('action'=>'list', 'id' => $interaction['uuid']['sendItem']));?>">
+                                    <?php echo $interaction['sendItem']['uuid'].'('.$interaction['sendItem']['status'].')';?>
+                                    </a>
         </td>
         <td>
-        <?php if($au['str']=='up') echo 'Минимальная: '. $au['money'].' '. $au['currency'] ;
-                      else echo 'Максимальная: '. $au['money'].' '. $au['currency'] ; ?>
+                 <a href="<?php
+                 if($interaction['sendItem']['status']=='Заявка') {
+                 $rout='ticket';
+                 } else {
+                 $rout='resource';
+                 }
+                 echo $this->url($rout,
+                                    array('action'=>'list', 'id' => $interaction['uuid']['sendItem']));?>">
+                                    <?php echo $interaction['sendItem']['uuid'].' ('.$interaction['sendItem']['status'].')';?>
+                                    </a>
         </td>
         <td>
-                <a href="<?php echo $this->url('interaction',
-                    array('action'=>'addBid', 'id' => $au['uuid']));?>">Сделать ставку</a>
-        </td>
-        <td>
-                <a href="<?php echo $this->url('interaction',
-                    array('action'=>'list', 'id' => $au['uuid']));?>">Подробнее</a>
+            <?php echo $interaction['status']; ?>
         </td>
     </tr>
 <?php } ?>
