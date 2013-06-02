@@ -121,6 +121,9 @@ echo $this->doctype(); ?>
                 <li><a href="<?php echo $this->url('cargo', array('action' => 'index'));?>">Все грузы</a></li>
                 <li><a href="<?php echo $this->url('cargo', array('action' => 'my'));?>">Мои грузы</a></li>
                 <li><a href="<?php echo $this->url('cargo', array('action' => 'add'));?>">Добавить груз</a></li>
+                <li class="nav-header">Предложения</li>
+                <li><a href="<?php echo $this->url('interaction', array('action' => 'index'));?>">Отправленные предложения</a></li>
+                <li><a href="<?php echo $this->url('interaction', array('action' => 'my'));?>">Полученные предложения</a></li>
                 <li class="nav-header">Аукцион</li>
                 <li><a href="<?php echo $this->url('auction', array('action' => 'my'));?>">Аукционы</a></li>
                 <li class="nav-header">Список</li>
