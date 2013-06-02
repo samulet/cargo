@@ -121,6 +121,17 @@ class TicketModel implements ServiceLocatorAwareInterface
         return get_object_vars($res);
     }
 
+    public function listTicketById($id)
+    {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('Ticket\Entity\Ticket')->find(new \MongoId($id));
+        if(!empty($res)) {
+            return get_object_vars($res);
+        } else {
+            return null;
+        }
+    }
+
     public function returnAllTicket()
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
