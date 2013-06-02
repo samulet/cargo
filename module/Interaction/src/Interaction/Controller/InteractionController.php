@@ -8,12 +8,14 @@ use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Interaction\Form\InteractionForm;
+use AddList\Form\AddListForm;
 
 class InteractionController extends AbstractActionController
 {
     protected $interactionModel;
     protected $ticketModel;
     protected $resourceModel;
+    protected $addListModel;
 
     public function indexAction()
     {
@@ -49,8 +51,40 @@ class InteractionController extends AbstractActionController
 
         return new ViewModel(array(
             'form' => $form,
-'uuid'=>$sendUuid
+            'uuid'=>$sendUuid
         ));
+
+    }
+
+    public function addProposalAction() {
+        $proposalUuid= $this->getEvent()->getRouteMatch()->getParam('id');
+        $post=$this->getRequest()->getPost();
+        $interactionModel = $this->getInteractionModel();
+        $interactionModel->addProposal($proposalUuid,$post);
+        return $this->redirect()->toUrl('/interactions/proposal/'.$proposalUuid);
+    }
+
+    public function proposalAction() {
+        $proposalUuid= $this->getEvent()->getRouteMatch()->getParam('id');
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Interaction\Entity\InteractionNote');
+
+        $addListModel = $this->getAddListModel();
+
+        $formData=$addListModel->returnDataArray(array(),'interactionNote');
+
+        $fillFrom=new AddListForm();
+        $form=$fillFrom->fillFrom($form,$formData);
+
+        $interactionModel = $this->getInteractionModel();
+        $proposal=$interactionModel->getProposal($proposalUuid);
+
+        return new ViewModel(array(
+            'form' => $form,
+            'uuid'=>$proposalUuid,
+            'proposal'=>$proposal
+        ));
+
 
     }
 
@@ -91,5 +125,13 @@ class InteractionController extends AbstractActionController
             $this->ticketModel = $sm->get('Ticket\Model\TicketModel');
         }
         return $this->ticketModel;
+    }
+    public function getAddListModel()
+    {
+        if (!$this->addListModel) {
+            $sm = $this->getServiceLocator();
+            $this->addListModel = $sm->get('AddList\Model\AddListModel');
+        }
+        return $this->addListModel;
     }
 }

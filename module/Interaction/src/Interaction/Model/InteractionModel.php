@@ -108,7 +108,48 @@ class InteractionModel implements ServiceLocatorAwareInterface
         }
     }
 
+    public function getProposal($uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $id=$this->getInteractionIdByUuid($uuid);
+        $proposalObject=$objectManager->getRepository('Interaction\Entity\InteractionNote')->getMyAvailableInteractionNote($id);
+        $result=array();
+        foreach($proposalObject as $proposal) {
+            if(empty($proposal)) {
+                return null;
+            }
+            array_push($result, get_object_vars($proposal));
+        }
+        return $result;
+    }
 
+    public function addProposal($uuid,$post) {
+
+        $prop_array=get_object_vars($post);
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $id=$this->getInteractionIdByUuid($uuid);
+
+        $interaction = new InteractionNote();
+
+        $prop_array['ownerInteractionId']=new \MongoId($id);
+
+        foreach ($prop_array as $key => $value) {
+            $interaction->$key = $value;
+
+        }
+
+        $objectManager->persist($interaction);
+        $objectManager->flush();
+    }
+
+    public function getInteractionIdByUuid($uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $int = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(array('uuid' => $uuid));
+        if(!empty($int)) {
+            return $int->id;
+        } else {
+            return null;
+        }
+    }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
