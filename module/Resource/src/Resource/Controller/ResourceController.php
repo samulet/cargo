@@ -23,6 +23,7 @@ class ResourceController extends AbstractActionController
     protected $companyUserModel;
     protected $resourceModel;
     protected $vehicleModel;
+    protected $interactionModel;
 
     public function indexAction()
     {
@@ -165,6 +166,15 @@ class ResourceController extends AbstractActionController
             $this->vehicleModel = $sm->get('Resource\Model\VehicleModel');
         }
         return $this->vehicleModel;
+    }
+
+    public function getInteractionModel()
+    {
+        if (!$this->interactionModel) {
+            $sm = $this->getServiceLocator();
+            $this->interactionModel = $sm->get('Interaction\Model\InteractionModel');
+        }
+        return $this->interactionModel;
     }
 
 }

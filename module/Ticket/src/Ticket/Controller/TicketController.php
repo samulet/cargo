@@ -24,6 +24,7 @@ class TicketController extends AbstractActionController
     protected $ticketModel;
     protected $cargoModel;
     protected $addListModel;
+    protected $interactionModel;
 
     public function indexAction()
     {
@@ -178,5 +179,15 @@ class TicketController extends AbstractActionController
         }
         return $this->addListModel;
     }
+
+    public function getInteractionModel()
+    {
+        if (!$this->interactionModel) {
+            $sm = $this->getServiceLocator();
+            $this->interactionModel = $sm->get('Interaction\Model\InteractionModel');
+        }
+        return $this->interactionModel;
+    }
+
 
 }
