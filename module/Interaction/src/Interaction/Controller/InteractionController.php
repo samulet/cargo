@@ -38,13 +38,20 @@ class InteractionController extends AbstractActionController
         $form=$intForm->fillInteraction($form,$listProposalData);
 
         return new ViewModel(array(
-            'form' => $form
-
+            'form' => $form,
+'uuid'=>$sendUuid
         ));
 
     }
 
+    public function addInteractionAction() {
+        $receiveUuid= $this->getEvent()->getRouteMatch()->getParam('id');
+        $post=get_object_vars($this->getRequest()->getPost());
 
+        $interactionModel = $this->getInteractionModel();
+        $interactionModel->addInteraction($post['sendItemId'],$receiveUuid,$this->zfcUserAuthentication()->getIdentity()->getId());
+        return $this->redirect()->toUrl('/interactions');
+    }
 
     public function getInteractionModel()
     {

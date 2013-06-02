@@ -1,5 +1,5 @@
 <?php
-$interactions=$this->$interaction;
+$interactions=$this->interaction;
 
 ?>
 <table class="table" width="100%">
@@ -27,27 +27,31 @@ $interactions=$this->$interaction;
                             </a>
         </td>
         <td>
+
                  <a href="<?php
+
                  if($interaction['sendItem']['status']=='Заявка') {
                  $rout='ticket';
                  } else {
                  $rout='resource';
                  }
                  echo $this->url($rout,
-                                    array('action'=>'list', 'id' => $interaction['uuid']['sendItem']));?>">
+                                    array('action'=>'list', 'id' => $interaction['sendItem']['uuid']));?>">
                                     <?php echo $interaction['sendItem']['uuid'].'('.$interaction['sendItem']['status'].')';?>
                                     </a>
         </td>
         <td>
+
                  <a href="<?php
-                 if($interaction['sendItem']['status']=='Заявка') {
+
+                 if($interaction['receiveItem']['status']=='Заявка') {
                  $rout='ticket';
                  } else {
                  $rout='resource';
                  }
                  echo $this->url($rout,
-                                    array('action'=>'list', 'id' => $interaction['uuid']['sendItem']));?>">
-                                    <?php echo $interaction['sendItem']['uuid'].' ('.$interaction['sendItem']['status'].')';?>
+                                    array('action'=>'list', 'id' => $interaction['receiveItem']['uuid']));?>">
+                                    <?php echo $interaction['receiveItem']['uuid'].'('.$interaction['receiveItem']['status'].')';?>
                                     </a>
         </td>
         <td>

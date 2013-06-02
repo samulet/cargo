@@ -21,11 +21,12 @@ class InteractionNoteRepository extends DocumentRepository
     }
     public function getLastStatusInteractionNote($ownerInteractionId) {
         return $this->createQueryBuilder()
+
             ->field('deletedAt')->equals(null)->field('ownerInteractionId')->equals(
                 new \MongoId($ownerInteractionId)
             )->sort('createdAt', 'desc')
+            ->limit(1)
             ->getQuery()
-            ->getSingleResult()
             ->execute();
     }
 }

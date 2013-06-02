@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
- * @ODM\Document(collection="interactionNote", repositoryClass="Ticket\Repository\InteractionNoteRepository")
+ * @ODM\Document(collection="interactionNote", repositoryClass="Interaction\Repository\InteractionNoteRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("interactionNote")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
