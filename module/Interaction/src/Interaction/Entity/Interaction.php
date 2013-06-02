@@ -49,6 +49,12 @@ class Interaction
      * @var int
      * @Annotation\Exclude()
      */
+    public $receiveUserId;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Exclude()
+     */
     public $ownerUserId;
 
     /**

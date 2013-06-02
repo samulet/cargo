@@ -18,7 +18,17 @@ class InteractionController extends AbstractActionController
     public function indexAction()
     {
         $interactionModel = $this->getInteractionModel();
-        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getId());
+        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getId(),'sent');
+        return new ViewModel(array(
+            'interaction' =>$interaction
+        ));
+
+    }
+
+    public function myAction()
+    {
+        $interactionModel = $this->getInteractionModel();
+        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getId(),'receive');
         return new ViewModel(array(
             'interaction' =>$interaction
         ));

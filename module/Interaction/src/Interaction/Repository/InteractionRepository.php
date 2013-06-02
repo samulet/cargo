@@ -11,10 +11,18 @@ class InteractionRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
-    public function getMyAvailableInteraction($userId)
+    public function getSentAvailableInteraction($userId)
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null)->field('ownerUserId')->equals(
+                new \MongoId($userId)
+            )
+            ->getQuery()->execute();
+    }
+    public function getReceiveAvailableInteraction($userId)
+    {
+        return $this->createQueryBuilder()
+            ->field('deletedAt')->equals(null)->field('receiveUserId')->equals(
                 new \MongoId($userId)
             )
             ->getQuery()->execute();

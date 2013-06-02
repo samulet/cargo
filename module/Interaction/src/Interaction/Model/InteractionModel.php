@@ -30,23 +30,32 @@ class InteractionModel implements ServiceLocatorAwareInterface
     public function addInteraction($sendItemId,$receiveItemUuid,$ownerUserId ) {
         $resourceModel=$this->getResourceModel();
         $ticketModel = $this->getTicketModel();
+
         $receiveItemId=$resourceModel->getIdByUuid($receiveItemUuid);
         if(empty($receiveItemId)) {
             $receiveItemId=$ticketModel->getIdByUuid($receiveItemUuid);
-        }
+            $element=$ticketModel->listTicketById($receiveItemId);
 
+        } else {
+            $element=$resourceModel->listResourceById($receiveItemId);
+        }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $interaction = new Interaction();
         $interaction->sendItemId=new \MongoId($sendItemId);
         $interaction->receiveItemId=new \MongoId($receiveItemId);
         $interaction->ownerUserId=new \MongoId($ownerUserId);
+        $interaction->receiveUserId=new \MongoId($element['ownerId']);
         $objectManager->persist($interaction);
         $objectManager->flush();
     }
 
-    public function getInteractions($userId) {
+    public function getInteractions($userId,$type) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $intObj = $objectManager->getRepository('Interaction\Entity\Interaction')->getMyAvailableInteraction($userId);
+        if($type=='sent') {
+            $intObj = $objectManager->getRepository('Interaction\Entity\Interaction')->getSentAvailableInteraction($userId);
+        } else {
+            $intObj = $objectManager->getRepository('Interaction\Entity\Interaction')->getReceiveAvailableInteraction($userId);
+        }
         $result = array();
         $resourceModel=$this->getResourceModel();
         $ticketModel = $this->getTicketModel();
@@ -79,9 +88,11 @@ class InteractionModel implements ServiceLocatorAwareInterface
             if(empty($intNote)) {
                 return 'Нет статуса';
             } else {
-                return $intNoteObj->status;
+
+                return $intNote->status;
             }
         }
+        return 'Нет статуса';
     }
 
     public function getListProposalData($sendUuid,$userId) {
