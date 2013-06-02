@@ -74,6 +74,19 @@ class InteractionModel implements ServiceLocatorAwareInterface
         }
     }
 
+    public function getListProposalData($sendUuid,$userId) {
+        $resourceModel=$this->getResourceModel();
+        $ticketModel = $this->getTicketModel();
+        $resourceId=$resourceModel->getIdByUuid($sendUuid);
+        if(!empty($resourceId)) {
+            $ticket=$ticketModel->returnMyTicket($userId);
+            return $ticket;
+        } else {
+            $resource=$resourceModel->returnMyResource($userId);
+            return $resource;
+        }
+    }
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;

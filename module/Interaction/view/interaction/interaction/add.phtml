@@ -2,26 +2,13 @@
 $form = $this->form;
 $form->setAttribute('action', $this->url('interaction', array('action' => 'addInteraction', 'id' => $this->uuid)))
     ->prepare();
+
+$sendItemId = $form->get('sendItemId');
+
 echo $this->form()->openTag($form);
 
-$currency = $form->get('currency')->setValue($this->price['currency']);
-$money = $form->get('money')->setValue($this->price['money']);
+echo $this->formRow($sendItemId);
 
-$dateEnd = $form->get('dateEnd')->setValue($this->price['dateEnd']);
-$dateStart = $form->get('dateStart')->setValue($this->price['dateStart']);
-
-$str = $form->get('str')->setValue($this->price['str']);
-
-echo $this->formRow($currency);
-if ($this->price['str'] == 'up') {
-    echo 'Минимальная:';
-} else {
-    echo 'Максимальная';
-}
-echo $this->formRow($money);
-echo $this->formRow($dateStart);
-echo $this->formRow($dateEnd);
-echo $this->formRow($str);
 echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();
 ?>

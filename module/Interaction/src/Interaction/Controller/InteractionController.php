@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Interaction\Form\InteractionForm;
 
 class InteractionController extends AbstractActionController
 {
@@ -25,6 +26,21 @@ class InteractionController extends AbstractActionController
     }
 
     public function addAction() {
+        $sendUuid= $this->getEvent()->getRouteMatch()->getParam('id');
+        $interactionModel = $this->getInteractionModel();
+        $listProposalData=$interactionModel->getListProposalData($sendUuid,$this->zfcUserAuthentication()->getIdentity()->getId());
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Interaction\Entity\Interaction');
+
+        $intForm=new InteractionForm();
+
+        $form=$intForm->fillInteraction($form,$listProposalData);
+
+        return new ViewModel(array(
+            'form' => $form
+
+        ));
 
     }
 

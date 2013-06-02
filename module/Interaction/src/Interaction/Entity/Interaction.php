@@ -72,6 +72,11 @@ class Interaction
      */
     public $receiveItemId;
     /**
+     * @Annotation\Type("Zend\Form\Element\Submit")
+     * @Annotation\Attributes({"value":"Отправить"})
+     */
+    public $submit;
+    /**
      * @ODM\Date
      * @Annotation\Exclude()
      */
