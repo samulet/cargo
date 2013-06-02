@@ -86,9 +86,9 @@ class TicketModel implements ServiceLocatorAwareInterface
         unset($prop_array_split['submit']);
 
 
-        $prop_array_new['tsId']=$prop_array['tsId'];
-        $prop_array_new['kindOfLoad']=$prop_array['kindOfLoad'];
-
+  //      $prop_array_new['tsId']=$prop_array['tsId'];
+   //     $prop_array_new['kindOfLoad']=$prop_array['kindOfLoad'];
+        $prop_array_new=array();
         $prop_array=$prop_array_new;
 
 

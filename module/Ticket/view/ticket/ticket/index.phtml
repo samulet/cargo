@@ -13,7 +13,7 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
 <table class="table">
     <tr>
         <th>
-
+Номер заявки
         </th>
         <th>
 
@@ -54,7 +54,10 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
     ?>
 <tr>
             <td>
-
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'list', 'id' => $ticket['uuid'])
+                );?>"><?php echo $ticket['uuid']; ?></a>
             </td>
             <td>
 

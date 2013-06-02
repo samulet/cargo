@@ -6,16 +6,16 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
 <a href="<?php echo $this->url(
     'ticket',
     array('action' => 'add')
-);?>">Добавить ресурс</a>
+);?>">Добавить заявку</a>
 <a href="<?php echo $this->url(
     'ticket',
     array('action' => 'index')
-);?>">Все ресурсы</a>
+);?>">Все заявки</a>
 
 <table class="table">
     <tr>
         <th>
-
+            Номер заявки
         <th>
 
         </th>
@@ -55,7 +55,10 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         ?>
         <tr>
             <td>
-
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'list', 'id' => $ticket['uuid'])
+                );?>"><?php echo $ticket['uuid']; ?></a>
             </td>
             <td>
 
