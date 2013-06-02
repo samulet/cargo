@@ -104,11 +104,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             $res = new Ticket();
         }
         foreach ($prop_array as $key => $value) {
-            if($key!="tsId") {
-                $res->$key = $value;
-            } else {
-                $res->$key=new \MongoId($value);
-            }
+             $res->$key=new \MongoId($value);
         }
         $objectManager->persist($res);
         $objectManager->flush();
