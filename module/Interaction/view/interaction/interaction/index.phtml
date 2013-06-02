@@ -1,26 +1,24 @@
 <?php
-$auc=$this->auc;
+$interactions=$this->$interaction;
 
 ?>
 <table class="table" width="100%">
     <tr>
         <th>
-            Тип аукциона
+            Номер предложения
         </th>
         <th>
-            Текущая ставка
+            Для чего предложили
         </th>
         <th>
-            Ставка
+            Что предложили
         </th>
         <th>
-            Сделать ставка
+            Статус
          </th>
-        <th>
-            Подробнее
-        </th>
+
     </tr>
-<?php foreach($auc as $au) { ?>
+<?php foreach($interactions as $interaction) { ?>
     <tr>
         <td>
         <?php if($au['str']=='up') echo 'Ресурс';

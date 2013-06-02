@@ -18,7 +18,8 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
- * @ODM\Document(collection="interaction")
+ * @ODM\Document(collection="interaction", repositoryClass="Ticket\Repository\InteractionRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("interaction")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
@@ -63,7 +64,26 @@ class Interaction
      * @Annotation\Exclude()
      */
     public $receiveItemId;
+    /**
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+    public $deletedAt;
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
     public function getUUID()
     {
         return $this->uuid;

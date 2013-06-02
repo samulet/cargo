@@ -36,6 +36,10 @@ class InteractionModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
+    public function getInteractions($userId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+    }
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
