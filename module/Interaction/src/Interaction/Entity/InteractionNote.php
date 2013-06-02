@@ -62,8 +62,8 @@ class InteractionNote
      */
     public $note;
     /**
-     * @ODM\ObjectId
-     * @var int
+     * @var string
+     * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
