@@ -128,7 +128,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
     public function listResourceById($id)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = $objectManager->getRepository('Resource\Entity\Resource')->find(new \MongoId($id));
+        $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($id)));
         if(!empty($res)) {
             return get_object_vars($res);
         } else {

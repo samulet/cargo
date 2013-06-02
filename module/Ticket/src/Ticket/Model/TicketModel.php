@@ -124,7 +124,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     public function listTicketById($id)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = $objectManager->getRepository('Ticket\Entity\Ticket')->find(new \MongoId($id));
+        $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('id' => new \MongoId($id)));
         if(!empty($res)) {
             return get_object_vars($res);
         } else {
