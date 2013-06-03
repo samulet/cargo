@@ -1,0 +1,63 @@
+<?php
+$interactions=$this->interaction;
+
+?>
+<h1>Отправленныйе предложения</h1>
+<table class="table" width="100%">
+    <tr>
+        <th>
+            Номер предложения (просмотр истории предложения)
+        </th>
+        <th>
+            Для чего предложили
+        </th>
+        <th>
+            Что предложили
+        </th>
+        <th>
+            Статус
+        </th>
+
+    </tr>
+<?php foreach($interactions as $interaction) { ?>
+    <tr>
+        <td>
+         <a href="<?php echo $this->url('interaction',
+                            array('action'=>'proposal', 'id' => $interaction['uuid']));?>">
+                            <?php echo $interaction['uuid'];?>
+                            </a>
+        </td>
+        <td>
+
+                 <a href="<?php
+
+                 if($interaction['sendItem']['status']=='Заявка') {
+                 $rout='ticket';
+                 } else {
+                 $rout='resource';
+                 }
+                 echo $this->url($rout,
+                                    array('action'=>'list', 'id' => $interaction['sendItem']['uuid']));?>">
+                                    <?php echo $interaction['sendItem']['uuid'].'('.$interaction['sendItem']['status'].')';?>
+                                    </a>
+        </td>
+        <td>
+
+                 <a href="<?php
+
+                 if($interaction['receiveItem']['status']=='Заявка') {
+                 $rout='ticket';
+                 } else {
+                 $rout='resource';
+                 }
+                 echo $this->url($rout,
+                                    array('action'=>'list', 'id' => $interaction['receiveItem']['uuid']));?>">
+                                    <?php echo $interaction['receiveItem']['uuid'].'('.$interaction['receiveItem']['status'].')';?>
+                                    </a>
+        </td>
+        <td>
+            <?php echo $interaction['status']; ?>
+        </td>
+    </tr>
+<?php } ?>
+</table>

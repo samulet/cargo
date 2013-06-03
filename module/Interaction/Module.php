@@ -1,11 +1,12 @@
 <?php
-namespace Ticket;
+namespace Interaction;
 
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
-use Ticket\Model\TicketModel;
-use Ticket\Model\CargoModel;
+use Interaction\Model\InteractionModel;
+
+
 class Module
 {
     public function getAutoloaderConfig()
@@ -33,13 +34,9 @@ class Module
 
         return array(
             'factories' => array(
-                'Ticket\Model\TicketModel' => function ($sm) {
-                    $res = new TicketModel();
-                    return $res;
-                },
-                'Ticket\Model\CargoModel' => function ($sm) {
-                    $veh = new CargoModel();
-                    return $veh;
+                'Interaction\Model\InteractionModel' => function ($sm) {
+                    $auc = new InteractionModel();
+                    return $auc;
                 },
             ),
         );

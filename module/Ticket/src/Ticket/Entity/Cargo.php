@@ -1,36 +1,22 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: solov
- * Date: 5/1/13
- * Time: 12:15 PM
- * To change this template use File | Settings | File Templates.
- */
-
 namespace Ticket\Entity;
 
-use Zend\Form\Annotation;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Zend\Form\Annotation;
 use Zend\Form\Element;
 use Zend\Form\Form;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
- * @ODM\Document(collection="ticket", repositoryClass="Ticket\Repository\TicketRepository")
+ * @ODM\Document(collection="cargo", repositoryClass="Ticket\Repository\CargoRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("ticket")
+ * @Annotation\Name("cargo")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class Ticket
+class Cargo
 {
-    public function __construct()
-    {
-        $uuid_gen = new UuidGenerator();
-        $this->setUUID($uuid_gen->generateV4());
-    }
-
     /**
      * @ODM\Id
      * @var int
@@ -49,19 +35,6 @@ class Ticket
      * @Annotation\Exclude()
      */
     public $ownerId;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
-
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Прикрепите ТС к ресурсу"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
-     */
-    public $tsId;
     /**
      * @ODM\ObjectId
      * @var int
@@ -86,7 +59,6 @@ class Ticket
      * @Annotation\Exclude()
      */
     public $activated;
-
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -94,48 +66,21 @@ class Ticket
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Name"})
+     * @Annotation\Options({"label":"Имя груза"})
      */
     public $name;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Type"})
-     */
-    public $type;
-
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Description"})
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $description;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Sizes:"})
-     */
-    public $sizes;
 
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
+    /**
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+    public $deletedAt;
+
 
 
     /**
@@ -149,23 +94,37 @@ class Ticket
      */
     public $note;
 
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":10}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Вид загрузки"})
-     * @Annotation\Required({"required":"true" })
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $kindOfLoad;
+
 
     /**
-     * @ODM\Date
-     * @Annotation\Exclude()
+     * @return \Ticket\Entity\Cargo
      */
-    public $deletedAt;
+    public function __construct()
+    {
+        $uuid_gen = new UuidGenerator();
+        $this->setUUID($uuid_gen->generateV4());
+    }
+
+    /**
+     * @param string $uuid
+     *
+     * @return $this
+     */
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUUID()
+    {
+        return $this->uuid;
+    }
+
     /**
      * @return mixed
      */
@@ -181,9 +140,11 @@ class Ticket
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -201,11 +162,13 @@ class Ticket
      * Set Description.
      *
      * @param string $description
+     *
      * @return UserInterface
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -223,11 +186,13 @@ class Ticket
      * Set activated.
      *
      * @param string $activated
-     * @return UserInterface
+     *
+     * @return Cargo
      */
     public function setActivated($activated)
     {
         $this->activated = $activated;
+
         return $this;
     }
 
@@ -241,25 +206,14 @@ class Ticket
         $this->created = $created;
     }
 
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-
     public function getUpdated()
     {
         return $this->updated;
     }
 
-    public function getUUID()
+    public function setUpdated($updated)
     {
-        return $this->uuid;
-    }
-
-    public function setUUID($uuid)
-    {
-        $this->uuid = $uuid;
-        return $this;
+        $this->updated = $updated;
     }
 
     public function getSizes()
@@ -267,20 +221,22 @@ class Ticket
         return $this->sizes;
     }
 
-    public function setCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-        return $this;
-    }
-
     public function getCapacity()
     {
         return $this->capacity;
     }
 
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+
+        return $this;
+    }
+
     public function setAddressFact($addressFact)
     {
         $this->addressFact = $addressFact;
+
         return $this;
     }
 
@@ -292,6 +248,7 @@ class Ticket
     public function setAddressReg($addressReg)
     {
         $this->addressReg = $addressReg;
+
         return $this;
     }
 
@@ -303,6 +260,7 @@ class Ticket
     public function setGeneralManager($generalManager)
     {
         $this->generalManager = $generalManager;
+
         return $this;
     }
 
@@ -314,6 +272,7 @@ class Ticket
     public function setTelephone($telephone)
     {
         $this->telephone = $telephone;
+
         return $this;
     }
 
@@ -325,6 +284,7 @@ class Ticket
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -336,6 +296,7 @@ class Ticket
     public function setOwnerOrgId($ownerOrgId)
     {
         $this->ownerOrgId = $ownerOrgId;
+
         return $this;
     }
 
@@ -348,11 +309,13 @@ class Ticket
      * Set type.
      *
      * @param string $type
-     * @return OrganizationInterface
+     *
+     * @return $this
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -364,6 +327,7 @@ class Ticket
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -375,6 +339,7 @@ class Ticket
     public function setTent($tent)
     {
         $this->tent = $tent;
+
         return $this;
     }
 }

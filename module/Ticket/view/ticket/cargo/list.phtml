@@ -1,0 +1,14 @@
+<?php
+$cargo = $this->res;
+
+unset($cargo['created']);
+unset($cargo['updated']);
+
+foreach ($cargo as $key => $value) {
+    if ($value != '') {
+        echo $key . ' : ' . $value . '</br> ';
+    }
+}
+
+?>
+

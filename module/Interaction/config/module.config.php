@@ -1,39 +1,24 @@
 <?php
-namespace Ticket;
+namespace Interaction;
 
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Ticket\Controller\Ticket' => 'Ticket\Controller\TicketController',
-            'Ticket\Controller\Cargo' => 'Ticket\Controller\CargoController',
+            'Interaction\Controller\Interaction' => 'Interaction\Controller\InteractionController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'ticket' => array(
+            'interaction' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/tickets[/:action][/:id]',
+                    'route' => '/interactions[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Ticket\Controller\Ticket',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            'cargo' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/cargos[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-z0-9]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Ticket\Controller\Cargo',
+                        'controller' => 'Interaction\Controller\Interaction',
                         'action' => 'index',
                     ),
                 ),
@@ -43,8 +28,7 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'ticket', 'roles' => array('user')),
-                array('route' => 'cargo', 'roles' => array('user')),
+                array('route' => 'interaction', 'roles' => array('user')),
             ),
         ),
     ),
@@ -63,7 +47,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'ticket' => __DIR__ . '/../view',
+            'interaction' => __DIR__ . '/../view',
         ),
     ),
 );
