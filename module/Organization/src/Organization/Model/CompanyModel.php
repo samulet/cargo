@@ -59,9 +59,15 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     public function createCompany($post, $org_id, $com_id)
     {
-
+        if(!empty($post)) {
+            if(is_array($post)) {
+                $prop_array=$post;
+            } else {
+                $prop_array = get_object_vars($post);
+            }
+        }
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-            $com_item = $post->company;
+
             if (!empty($com_id)) {
                 $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
             } else {
@@ -69,17 +75,11 @@ class CompanyModel implements ServiceLocatorAwareInterface
             }
 
 
-            $com->setDescription($com_item['description']);
-            $com->setName($com_item['name']);
-            $com->setType($com_item['type']);
-            $com->setRequisites($com_item['requisites']);
-
-            $com->setAddressFact($com_item['addressFact']);
-            $com->setGeneralManager($com_item['generalManager']);
-            $com->setTelephone($com_item['telephone']);
-            $com->setEmail($com_item['email']);
-
-            $com->setActivated(1);
+            foreach ($prop_array as $key => $value) {
+                $com->$key=$value;
+            }
+            $objectManager->persist($com);
+            $objectManager->flush();
 
             $objectManager->persist($com);
             $objectManager->flush();
