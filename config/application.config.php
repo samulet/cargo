@@ -16,7 +16,8 @@ return array(
         'Resource',
         'Ticket',
         'Auction',
-        'AddList'
+        'AddList',
+        'Interaction'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
