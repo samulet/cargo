@@ -14,7 +14,7 @@ $this->headTitle($title);
                 <th>Название организации</th>
                 <th>Тип организации</th>
                 <th>Описание организации</th>
-                <th>Добавить компанию</th>
+                <th>Добавить юр. лицо</th>
                 <th>Добавить юзера в организацию</th>
                 <th>&nbsp;</th>
             </tr>
@@ -37,13 +37,13 @@ $this->headTitle($title);
 
 </table>
         <p>
-            <a href="<?php echo $this->url('company', array('action'=>'index','org_id'=>$o['uuid']));?>">Список компаний</a>
+            <a href="<?php echo $this->url('company', array('action'=>'index','org_id'=>$o['uuid']));?>">Список юр. лиц</a>
         </p>
         <table style="background:#ccc;" class="table">
             <tr>
-                <th>Название компании</th>
+                <th>Название юр. лица</th>
             </tr>
-            <?php foreach($oc['com'] as $c) { ?>
+            <?php foreach($oc['com'] as $c) {  ?>
                 <tr>
                     <td><a href="<?php echo $this->url('company',
                             array('action'=>'list', 'org_id'=>$o['uuid'],'id' => $c['uuid']));?>"><?php echo $c['name']; ?></a></td>
