@@ -1,0 +1,14 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('interaction', array('action' => 'addInteraction', 'id' => $this->uuid)))
+    ->prepare();
+
+$sendItemId = $form->get('sendItemId');
+
+echo $this->form()->openTag($form);
+
+echo $this->formRow($sendItemId);
+
+echo $this->formElement($form->get('submit'));
+echo $this->form()->closeTag();
+?>

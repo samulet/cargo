@@ -1,0 +1,95 @@
+<?php
+$cargos = $this->res;
+
+
+?>
+<a href="<?php echo $this->url(
+    'cargo',
+    array('action' => 'add')
+);?>">Добавить ТС</a>
+<a href="<?php echo $this->url(
+    'cargo',
+    array('action' => 'index')
+);?>">Все ТС</a>
+
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+            Опубликовать
+        </th>
+
+        <th>
+            Подробнее
+        </th>
+        <th>
+            Редактировать
+        </th>
+        <th>
+            Копировать
+        </th>
+        <th>
+            Удалить
+        </th>
+    </tr>
+    <?php foreach ($cargos as $cargo) { ?>
+        <tr>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+
+            <td>
+
+            </td>
+<td>
+    <a href="<?php echo $this->url(
+        'ticket',
+        array('action' => 'add', 'id' => $cargo['uuid'])
+    );?>">Опубликовать</a>
+
+</td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'cargo',
+                    array('action' => 'list', 'id' => $cargo['uuid'])
+                );?>">Подробнее</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'cargo',
+                    array('action' => 'edit', 'id' => $cargo['uuid'])
+                );?>">Редактировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'cargo',
+                    array('action' => 'copy', 'id' => $cargo['uuid'])
+                );?>">Дублировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'cargo',
+                    array('action' => 'delete', 'id' => $cargo['uuid'])
+                );?>">Удалить</a>
+            </td>
+        </tr>
+    <?php } ?>
+
+</table>

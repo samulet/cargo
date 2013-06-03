@@ -1,5 +1,5 @@
 <?php
-$tickets = $this->tick;
+$tickets = $this->res;
 
 $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пикап' => 'pickup', 'Муковоз' => 'mukovoz');
 ?>
@@ -15,16 +15,24 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
 <table class="table">
     <tr>
         <th>
-            Типы перевозок
+            Номер заявки
+        <th>
+
         </th>
         <th>
-            Дата отрпавления / Прибытия
+
         </th>
         <th>
-            Стоимость
+
         </th>
         <th>
-            Подробнее
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+
         </th>
         <th>
             Редактировать
@@ -39,25 +47,38 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             Удалить
         </th>
     </tr>
-    <?php foreach ($tickets as $ticket) { //$ticket=$ticket['tick']; ?>
+    <?php foreach ($tickets as $ticket) {
+        $ticketWay=$ticket['ways'];
+        $cargo=$ticket['veh'];
+        $ticket=$ticket['res'];
+
+        ?>
         <tr>
-            <td>
-                <?php foreach ($types_r as $key => $value) {
-                    echo $key . ' ' . $ticket[$value] . ' ';
-                }
-                ?>
-            </td>
-            <td>
-                <?php echo $ticket['dateStart'] . ' / ' . $ticket['dateEnd']; ?>
-            </td>
-            <td>
-                <?php echo $ticket['money'] . ' ' . $ticket['currency']; ?>
-            </td>
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
                     array('action' => 'list', 'id' => $ticket['uuid'])
-                );?>">Подробнее</a>
+                );?>"><?php echo $ticket['uuid']; ?></a>
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+
+            </td>
+            <td>
+
+            </td>
+
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
             </td>
             <td>
                 <a href="<?php echo $this->url(

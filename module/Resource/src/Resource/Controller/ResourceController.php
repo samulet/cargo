@@ -23,6 +23,7 @@ class ResourceController extends AbstractActionController
     protected $companyUserModel;
     protected $resourceModel;
     protected $vehicleModel;
+    protected $interactionModel;
 
     public function indexAction()
     {
@@ -75,9 +76,26 @@ class ResourceController extends AbstractActionController
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Resource');
+
+        $formWay= $builder->createForm('Resource\Entity\ResourceWay');
+
+        $veh = $this->getVehicleModel();
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $resForm=new ResourceForm();
+
+        $form=$resForm->fillTS($form,$myV);
+
+        $way=$resModel->returnAllWays($res['id']);
+
+        $form->get('tsId')->setValue($res['tsId']);
+
+
+
         return new ViewModel(array(
             'form' => $form,
             'res' => $res,
+            'formWay'=>$formWay,
+            'way'=>$way,
             'id' => $id
         ));
     }
@@ -148,6 +166,15 @@ class ResourceController extends AbstractActionController
             $this->vehicleModel = $sm->get('Resource\Model\VehicleModel');
         }
         return $this->vehicleModel;
+    }
+
+    public function getInteractionModel()
+    {
+        if (!$this->interactionModel) {
+            $sm = $this->getServiceLocator();
+            $this->interactionModel = $sm->get('Interaction\Model\InteractionModel');
+        }
+        return $this->interactionModel;
     }
 
 }

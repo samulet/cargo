@@ -43,6 +43,9 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
          <th>
              Добавить аукцион
           </th>
+                   <th>
+                       Предложить заявку
+                    </th>
 
     </tr>
     <?php foreach ($resources as $resource) {
@@ -108,6 +111,10 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
             <a href="<?php echo $this->url('auction',
                 array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить аукцион</a>
         </td>
+                <td>
+                    <a href="<?php echo $this->url('interaction',
+                        array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить предложение</a>
+                </td>
 
 </tr>
     <?php } ?>
