@@ -24,7 +24,7 @@ class CompanyFieldset extends Fieldset implements InputFilterProviderInterface
             array(
                 'name' => 'name',
                 'options' => array(
-                    'label' => 'Имя компании'
+                    'label' => 'Имя юр. лица'
                 ),
                 'attributes' => array(
                     'required' => 'required'
@@ -48,7 +48,7 @@ class CompanyFieldset extends Fieldset implements InputFilterProviderInterface
             array(
                 'name' => 'description',
                 'options' => array(
-                    'label' => 'Описание компании'
+                    'label' => 'Описание юр. лица'
                 ),
                 'attributes' => array(
                     'required' => 'required'

@@ -62,7 +62,7 @@ if(empty($parentList)) {
             <td>
                 <a href="<?php echo $this->url(
                     'addList',
-                    array('action' => 'my-fields', 'id' => $parentList['uuid'])
+                    array('action' => 'list-parent', 'id' => $parent['uuid'])
                 );?>"><?php if(!empty($parent['value'])) {
                         echo $parent['value'].' => ';
                     }

@@ -91,14 +91,27 @@ class CompanyController extends AbstractActionController
 
     public function editAction()
     {
+
+
         $this->loginControl();
-        $form = new CompanyCreate();
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Organization\Entity\Company');
+
         $org_id = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
 
 
         $comModel = $this->getCompanyModel();
         $com = $comModel->returnCompany($comModel->getCompanyIdByUUID($com_uuid));
+
+        $addListModel = $this->getAddListModel();
+        $form_array=array();
+        $formData=$addListModel->returnDataArray($form_array,'company');
+
+        $fillFrom=new CompanyForm();
+        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+
         return new ViewModel(array(
             'com' => $com,
             'form' => $form,

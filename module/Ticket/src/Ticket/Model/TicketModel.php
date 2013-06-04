@@ -77,8 +77,6 @@ class TicketModel implements ServiceLocatorAwareInterface
             } else {
                 $prop_array = get_object_vars($post);
             }
-
-
         }
         $prop_array_split=$prop_array;
         unset($prop_array_split['tsId']);

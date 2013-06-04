@@ -1,0 +1,57 @@
+<?php
+
+
+$listParent=$this->listParent;
+$listChild=$this->listChild;
+
+
+?>
+
+
+
+<h1> <?php
+    echo $listParent['value'];
+    ?></h1>
+
+<table class="table">
+    <tr>
+        <th>
+            Имя поля
+        </th>
+
+        <th>
+            Редактировать
+        </th>
+        <th>
+            Удалить
+        </th>
+    </tr>
+    <?php
+    foreach($listChild as $list) {
+
+        ?>
+
+        <tr>
+            <td>
+
+                <?php
+                echo $list['value'];
+                ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'edit', 'id' => $list['uuid'])
+                );?>">Редактировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'delete', 'id' => $list['uuid'])
+                );?>">Удалить</a>
+            </td>
+        </tr>
+    <?php
+    }
+    ?>
+</table>
