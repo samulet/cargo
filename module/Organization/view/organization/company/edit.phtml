@@ -1,26 +1,29 @@
 <?php
 
+
 $form = $this->form;
-$form->setAttribute(
-    'action',
-    $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id, 'id' => $this->com_id))
-)
+$form->setAttribute('action', $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id, 'id' => $this->com_id)))
     ->prepare();
 
 echo $this->form()->openTag($form);
+//$whoGave= $form->get('whoGave');
+//echo $this->formRow($serialNumber);
 
-$org = $form->get('company');
-echo $this->formRow($org->get('name')->setValue($this->com['name']));
-echo $this->formRow($org->get('type')->setValue($this->com['type']));
-echo $this->formRow($org->get('description')->setValue($this->com['description']));
-echo $this->formRow($org->get('requisites')->setValue($this->com['requisites']));
-echo $this->formRow($org->get('addressReg')->setValue($this->com['addressReg']));
-echo $this->formRow($org->get('addressFact')->setValue($this->com['addressFact']));
-echo $this->formRow($org->get('generalManager')->setValue($this->com['generalManager']));
-echo $this->formRow($org->get('telephone')->setValue($this->com['telephone']));
-echo $this->formRow($org->get('email')->setValue($this->com['email']));
-echo $this->formHidden($form->get('csrf'));
+
+
+echo $this->formRow($form->get('name')->setValue($this->com['name']));
+echo $this->formRow($form->get('property')->setValue($this->com['property']));
+echo $this->formRow($form->get('generalManager')->setValue($this->com['generalManager']));
+echo $this->formRow($form->get('official')->setValue($this->com['official']));
+echo $this->formRow($form->get('chiefAccountant')->setValue($this->com['chiefAccountant']));
+echo $this->formRow($form->get('note')->setValue($this->com['note']));
+echo $this->formRow($form->get('addressFact')->setValue($this->com['addressFact']));
+echo $this->formRow($form->get('addressReg')->setValue($this->com['addressReg']));
+echo $this->formRow($form->get('requisites')->setValue($this->com['requisites']));
+echo $this->formRow($form->get('innKpp')->setValue($this->com['innKpp']));
+echo $this->formRow($form->get('okv')->setValue($this->com['okv']));
+echo $this->formRow($form->get('personal')->setValue($this->com['personal']));
+
 echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();
 ?> <a href="<?php echo $this->url('organization', array('action' => 'index')); ?>">Вернуться в организации</a>
-

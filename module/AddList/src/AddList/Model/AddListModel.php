@@ -322,4 +322,19 @@ class AddListModel implements ServiceLocatorAwareInterface
         return get_object_vars($list);
     }
 
+    public function listParentAction($uuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $listParent=  $this->getOneList($uuid);
+        $listChild=  $objectManager->getRepository('AddList\Entity\AddList')->findBy(
+            array('parentFieldId' =>  new \MongoId($listParent['id']))
+        );
+        $result=array();
+        foreach($listChild as $re)
+        {
+            array_push($result,get_object_vars($re));
+        }
+        return $result;
+    }
+
+
 }
