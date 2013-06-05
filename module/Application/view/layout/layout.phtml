@@ -49,41 +49,9 @@ echo $this->doctype(); ?>
             <a class="brand" href="<?php echo $this->url('home') ?>">Грузоперевозки</a>
 
             <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li class="active"><a href="<?php echo $this->url('home') ?>">Главная</a></li>
-                    <li class="active"><a href="/user"><?php echo $this->translate(
-                                'Личный кабинет'
-                            ) ?></a></li>
-                </ul>
-                <ul class="nav pull-right">
-                    <?php if (!$this->zfcUserIdentity()): ?>
-                        <li>
-                            <a href="<?php echo $this->url('zfcuser/register') ?>">
-                                Регистрация
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('zfcuser/login') ?>"
-                               class="js"
-                               data-event="click"
-                               data-handler="App.Login.dialog"
-                               data-content="#login-form">
-                                Войти&nbsp;<i class="icon-off icon-white"></i>
-                            </a>
-                        </li>
-                    <?php else: ?>
-                        <li>
-                            <a href="<?php echo $this->url('zfcuser') ?>">
-                                <i class="icon-user icon-white"></i>&nbsp;<?php echo $displayName; ?>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('zfcuser/logout') ?>">
-                                Выйти&nbsp;<i class="icon-off icon-white"></i>
-                            </a>
-                        </li>
-                    <?php endif ?>
-                </ul>
+                <?php
+                echo $this->navigation('topmenu_navigation')->menu()->setPartial('application/layout/top-menu');
+                ?>
             </div>
             <!--/.nav-collapse -->
         </div>
@@ -101,35 +69,9 @@ echo $this->doctype(); ?>
     <?php if ($this->zfcUserIdentity()) { ?>
     <div class="row">
         <div class="span2">
-            <ul class="nav nav-list">
-                <li><a href="<?php echo $this->url('organization', array('action'=>'index'));?>">Аккаунт</a></li>
-                <li class="nav-header">Органищация</li>
-                <li><a href="<?php echo $this->url('organization', array('action' => 'index'));?>">Моя организация</a></li>
-                <li class="nav-header">Рерусы</li>
-                <li><a href="<?php echo $this->url('resource', array('action' => 'index'));?>">Все ресурсы</a></li>
-                <li><a href="<?php echo $this->url('resource', array('action' => 'my'));?>">Мои ресурсы</a></li>
-                <li><a href="<?php echo $this->url('resource', array('action' => 'add'));?>">Добавить ресурс</a></li>
-                <li class="nav-header">ТС</li>
-                <li><a href="<?php echo $this->url('vehicle', array('action' => 'index'));?>">Все ТС</a></li>
-                <li><a href="<?php echo $this->url('vehicle', array('action' => 'my'));?>">Мои ТС</a></li>
-                <li><a href="<?php echo $this->url('vehicle', array('action' => 'add'));?>">Добавить ТС</a></li>
-                <li class="nav-header">Заявки</li>
-                <li><a href="<?php echo $this->url('ticket', array('action' => 'index'));?>">Все заявки</a></li>
-                <li><a href="<?php echo $this->url('ticket', array('action' => 'my'));?>">Мои заявки</a></li>
-                <li><a href="<?php echo $this->url('ticket', array('action' => 'add'));?>">Добавить заявку</a></li>
-                <li class="nav-header">Груз</li>
-                <li><a href="<?php echo $this->url('cargo', array('action' => 'index'));?>">Все грузы</a></li>
-                <li><a href="<?php echo $this->url('cargo', array('action' => 'my'));?>">Мои грузы</a></li>
-                <li><a href="<?php echo $this->url('cargo', array('action' => 'add'));?>">Добавить груз</a></li>
-                <li class="nav-header">Предложения</li>
-                <li><a href="<?php echo $this->url('interaction', array('action' => 'index'));?>">Отправленные предложения</a></li>
-                <li><a href="<?php echo $this->url('interaction', array('action' => 'my'));?>">Полученные предложения</a></li>
-                <li class="nav-header">Аукцион</li>
-                <li><a href="<?php echo $this->url('auction', array('action' => 'my'));?>">Аукционы</a></li>
-                <li class="nav-header">Список</li>
-                <li><a href="<?php echo $this->url('addList', array('action' => 'my'));?>">Мои списки</a></li>
-
-            </ul>
+            <?php
+            echo $this->navigation('sidebar_navigation')->menu()->setPartial(null)->setUlClass('nav nav-list');
+            ?>
         </div>
         <div class="span10">
             <?php echo $this->content; ?>

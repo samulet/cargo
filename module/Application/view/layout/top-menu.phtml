@@ -1,0 +1,108 @@
+<?php
+
+use Zend\Escaper\Escaper;
+use Zend\Navigation\Page\AbstractPage;
+
+/** @var \Zend\View\Helper\Navigation\Menu $menu */
+$menu = $this->navigation()->menu();
+
+$left = $right = array();
+
+$escaper = new Escaper('utf-8');
+
+if (!function_exists('prepareAttribs')) {
+    function prepareAttribs(AbstractPage $page, $properties, Escaper $escaper)
+    {
+        $title = $page->getTitle();
+        $attribs = array(
+            'id' => $page->getId(),
+            'title' => $title,
+            'class' => $page->getClass()
+        );
+        $href = $page->getHref();
+        if ($href) {
+            $element = 'a';
+            $attribs['href'] = $href;
+            $attribs['target'] = $page->getTarget();
+            if ($page->hasChildren()) {
+                $attribs['data-toggle'] = 'dropdown';
+                $attribs['class'] .= 'dropdown-toggle';
+            }
+        } else {
+            $element = 'span';
+        }
+        $htmlAttribs = array();
+        foreach (array_merge($attribs, $properties) as $key => $value) {
+            if (null === $value) {
+                continue;
+            }
+            $htmlAttribs[] = sprintf(' %s="%s"', $escaper->escapeHtmlAttr($key), $escaper->escapeHtmlAttr($value));
+        }
+        return array($element, $htmlAttribs);
+    }
+}
+
+foreach ($this->container as $page) {
+    /** @var AbstractPage $page */
+    if (!$menu->accept($page)) {
+        continue;
+    }
+
+    $class = array();
+
+    $properties = $page->getCustomProperties();
+    $group = isset($properties['group']) ? $properties['group'] : 'left';
+    $icon = isset($properties['icon']) ? $properties['icon'] : null;
+    $properties['group'] = $properties['icon'] = null;
+
+    $label = $page->getLabel();
+    if ('##USERNAME##' === $label) {
+        $label = $this->zfcUserIdentity() ? $this->zfcUserIdentity()->getDisplayname() : 'ПОЛЬЗОВАТЕЛЬ';
+        if ($this->zfcUserIdentity()) {
+            $label = $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 20))
+                   . '&nbsp;&nbsp;' . $this->escapeHtml($label);
+        }
+    } else {
+        $label = $this->escapeHtml($label);
+    }
+
+    list($element, $htmlAttribs) = prepareAttribs($page, $properties, $escaper);
+
+    $html = '<' . $element . implode('', $htmlAttribs) . '>' . $label;
+    if (!empty($icon)) {
+        $html .= sprintf('&nbsp;<i class="%s icon-white"></i>', $escaper->escapeHtmlAttr($icon));
+    }
+    if ($page->hasChildren()) {
+        $html .= '&nbsp;<b class="caret"></b>';
+    }
+    $html .= '</' . $element . '>';
+    if ($page->hasChildren()) {
+        $class[] = 'dropdown';
+        $html .= '<ul class="dropdown-menu" role="menu">';
+        foreach ($page->getPages() as $child) {
+            $html .= '<li role="presentation">' . $menu->htmlify($child) . '</li>';
+        }
+        $html .= '</ul>';
+    }
+    if ($page->isActive()) {
+        $class[] = 'active';
+    }
+
+    ${$group}[] = sprintf('<li class="%s">%s</li>', implode(' ', $class), $html);
+}
+
+?>
+<ul class="nav">
+<?php
+foreach ($left as $link) {
+    echo $link;
+}
+?>
+</ul>
+<ul class="nav pull-right">
+<?php
+foreach ($right as $link) {
+    echo $link;
+}
+?>
+</ul>

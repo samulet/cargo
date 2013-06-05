@@ -105,6 +105,7 @@ return array(
         'exception_template' => 'error/index',
         'template_map' => array(
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'application/layout/top-menu' => __DIR__ . '/../view/layout/top-menu.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'application/dashboard/index' => __DIR__ . '/../view/application/dashboard/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
