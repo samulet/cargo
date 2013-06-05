@@ -44,38 +44,9 @@ echo $this->doctype(); ?>
             <a class="brand" href="<?php echo $this->url('home') ?>">Грузоперевозки</a>
 
             <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li class="active"><a href="<?php echo $this->url('home') ?>">Главная</a></li>
-                </ul>
-                <ul class="nav pull-right">
-                    <?php if (!$this->zfcUserIdentity()): ?>
-                        <li>
-                            <a href="<?php echo $this->url('zfcuser/register') ?>">
-                                Регистрация
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('zfcuser/login') ?>"
-                               class="js"
-                               data-event="click"
-                               data-handler="App.Login.dialog"
-                               data-content="#login-form">
-                                Войти&nbsp;<i class="icon-off icon-white"></i>
-                            </a>
-                        </li>
-                    <?php else: ?>
-                        <li>
-                            <a href="<?php echo $this->url('zfcuser') ?>">
-                                <i class="icon-user icon-white"></i>&nbsp;<?php echo $displayName; ?>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('zfcuser/logout') ?>">
-                                Выйти&nbsp;<i class="icon-off icon-white"></i>
-                            </a>
-                        </li>
-                    <?php endif ?>
-                </ul>
+                <?php
+                echo $this->navigation('topmenu_navigation')->menu()->setPartial('application/layout/top-menu');
+                ?>
             </div>
             <!--/.nav-collapse -->
         </div>

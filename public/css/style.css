@@ -100,6 +100,12 @@ div.container a.brand {
     font-size:16px;
 }
 
+ul.dropdown-menu span.divider {
+    display: inline-block;
+    width: 100%;
+    margin: 0 1px;
+}
+
 .vehicle input,.vehicle select  {
     display: block !important;
 }

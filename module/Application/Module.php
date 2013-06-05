@@ -6,6 +6,7 @@ use Zend\Mvc\ApplicationInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use ZfcUser\Entity\UserInterface;
+use Zend\View\HelperPluginManager;
 
 class Module
 {
@@ -61,7 +62,33 @@ class Module
                     $service = new ErrorHandlingService($logger);
                     return $service;
                 },
+                'topmenu_navigation' => 'Application\Navigation\Service\TopMenuNavigationFactory',
+                'sidebar_navigation' => 'Application\Navigation\Service\SidebarNavigationFactory',
             ),
+        );
+    }
+
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                // This will overwrite the native navigation helper
+                'navigation' => function (HelperPluginManager $pluginManager) {
+                    /** @var \Zend\View\Helper\Navigation $navigation */
+                    $navigation = $pluginManager->get('Zend\View\Helper\Navigation');
+
+                    $serviceLocator = $pluginManager->getServiceLocator();
+                    /* @var $authorize \BjyAuthorize\Service\Authorize */
+                    $authorize = $serviceLocator->get('BjyAuthorize\Service\Authorize');
+
+                    // Store ACL and role in the proxy helper:
+                    $navigation->setAcl($authorize->getAcl())
+                               ->setRole($authorize->getIdentity());
+
+                    // Return the new navigation helper instance
+                    return $navigation;
+                }
+            )
         );
     }
 
