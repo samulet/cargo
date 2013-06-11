@@ -25,6 +25,8 @@ class NotificationModel implements ServiceLocatorAwareInterface
 {
 
     protected $serviceLocator;
+    protected $resourceModel;
+    protected $ticketModel;
 
     public function addNotification($itemId,$ownerUserId,$ownerOrgId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -34,6 +36,35 @@ class NotificationModel implements ServiceLocatorAwareInterface
         $not->ownerOrgId=new \MongoId($ownerOrgId);
         $objectManager->persist($not);
         $objectManager->flush();
+    }
+
+    public function getAdminNotifications() {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $notes =$objectManager->getRepository('Notification\Entity\Notification')->createQueryBuilder()
+            ->getQuery()->execute();
+
+        $result=array();
+        foreach($notes as $note) {
+            $res=$this->getItem($note->itemId);
+            $note=get_object_vars($note);
+            $note['itemId']=$res['uuid'];
+            $note['type']=$res['type'];
+            array_push($result,$note);
+
+        }
+        return $result;
+    }
+
+    public function getItem($id) {
+        $resourceModel=$this->getResourceModel();
+        $resUuid=$resourceModel->getUuidById($id);
+        $type='Ресурс';
+        if(empty($resUuid)) {
+            $ticketModel=$this->getTicketModel();
+            $resUuid=$ticketModel->getUuidById($id);
+            $type='Заявка';
+        }
+        return array('uuid'=>$resUuid,'type'=>$type);
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
@@ -53,6 +84,15 @@ class NotificationModel implements ServiceLocatorAwareInterface
             $this->resourceModel = $sm->get('Resource\Model\ResourceModel');
         }
         return $this->resourceModel;
+    }
+
+    public function getTicketModel()
+    {
+        if (!$this->ticketModel) {
+            $sm = $this->getServiceLocator();
+            $this->ticketModel = $sm->get('Ticket\Model\TicketModel');
+        }
+        return $this->ticketModel;
     }
 
 }

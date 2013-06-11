@@ -1,63 +1,43 @@
 <?php
-$notifications=$this->notification;
-
+$notes=$this->notification;
+//die(var_dump($notes));
 ?>
-<h1>Отправленныйе предложения</h1>
-<table class="table" width="100%">
-    <tr>
-        <th>
-            Номер предложения (просмотр истории предложения)
-        </th>
-        <th>
-            Для чего предложили
-        </th>
-        <th>
-            Что предложили
-        </th>
-        <th>
-            Статус
-        </th>
+<table class="table">
+<tr>
+<th>Номер Item</th>
+<th>Владелец</th>
+<th>Организация</th>
+<th>Статус</th>
+<th>Рассмотреть заявку</th>
+</tr>
+<?php
+foreach($notes as $note) {
+?>
+<tr>
+<td> <a href="<?php
+if($note['type']=='Ресурс') {
+$type='resource';
+} else {
+$type='ticket';
+}
 
-    </tr>
-<?php foreach($notifications as $notification) { ?>
-    <tr>
-        <td>
-         <a href="<?php echo $this->url('notification',
-                            array('action'=>'proposal', 'id' => $notification['uuid']));?>">
-                            <?php echo $notification['uuid'];?>
-                            </a>
-        </td>
-        <td>
+echo $this->url($type,
+                    array('action'=>'edit', 'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
+<td><?php echo $note['ownerUserId']; ?></td>
+<td><?php echo $note['ownerOrgId']; ?></td>
+<td><?php
+if(!empty($note['status'])) {
+    echo $note['statusRus'];
+} else {
+    echo "Вы еще не рассмотрели данную заявку";
+}
 
-                 <a href="<?php
 
-                 if($notification['sendItem']['status']=='Заявка') {
-                 $rout='ticket';
-                 } else {
-                 $rout='resource';
-                 }
-                 echo $this->url($rout,
-                                    array('action'=>'list', 'id' => $notification['sendItem']['uuid']));?>">
-                                    <?php echo $notification['sendItem']['uuid'].'('.$notification['sendItem']['status'].')';?>
-                                    </a>
-        </td>
-        <td>
-
-                 <a href="<?php
-
-                 if($notification['receiveItem']['status']=='Заявка') {
-                 $rout='ticket';
-                 } else {
-                 $rout='resource';
-                 }
-                 echo $this->url($rout,
-                                    array('action'=>'list', 'id' => $notification['receiveItem']['uuid']));?>">
-                                    <?php echo $notification['receiveItem']['uuid'].'('.$notification['receiveItem']['status'].')';?>
-                                    </a>
-        </td>
-        <td>
-            <?php echo $notification['status']; ?>
-        </td>
-    </tr>
-<?php } ?>
+?></td>
+<td><a href="<?php echo $this->url('notification',
+                        array('action'=>'add', 'id' => $note['uuid']));?>">Рассмотерть</a></td>
+</tr>
+<?php
+}
+?>
 </table>
