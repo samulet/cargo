@@ -56,7 +56,31 @@ class Notification
      * @Annotation\Exclude()
      */
     public $ownerUserId;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Exclude()
+     */
+    public $ownerOrgId;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
 
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Статус"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $status;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Exclude()
+     */
+    public $statusRus;
     /**
      * @ODM\Date
      * @Annotation\Exclude()
