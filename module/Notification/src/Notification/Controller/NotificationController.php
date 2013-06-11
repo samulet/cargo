@@ -43,6 +43,13 @@ class NotificationController extends AbstractActionController
         ));
     }
 
+    public function addNotificationNoteAction() {
+        $sendUuid= $this->getEvent()->getRouteMatch()->getParam('id');
+        $post=$this->getRequest()->getPost();
+        $notificationModel = $this->getNotificationModel();
+        $notificationModel->addNotificationNote($sendUuid,$post);
+        return $this->redirect()->toUrl('/notifications');
+    }
 
     public function getNotificationModel()
     {

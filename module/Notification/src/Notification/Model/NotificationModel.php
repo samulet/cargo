@@ -67,6 +67,37 @@ class NotificationModel implements ServiceLocatorAwareInterface
         return array('uuid'=>$resUuid,'type'=>$type);
     }
 
+    public function addNotificationNote($uuid,$post) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $id=$this->getIdByUuid($uuid);
+        $prop_array = get_object_vars($post);
+        $prop_array['ownerNotificationId']=$id;
+        $res=new NotificationNote();
+        foreach ($prop_array as $key => $value) {
+            if($key!='ownerNotificationId') {
+                $res->$key=$value;
+            } else {
+                $res->$key=new \MongoId($value);
+            }
+        }
+        $objectManager->persist($res);
+        $objectManager->flush();
+    }
+
+    public function getIdByUuid($uuid) {
+        if(empty($uuid)) {
+            return null;
+        }
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('Notification\Entity\Notification')->findOneBy(
+            array('uuid' => $uuid)
+        );
+        if(empty($res)) {
+            return null;
+        }
+        return $res->id;
+    }
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
