@@ -26,6 +26,15 @@ class NotificationModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
+    public function addNotification($itemId,$ownerUserId,$ownerOrgId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $not=new Notification();
+        $not->itemId=new \MongoId($itemId);
+        $not->ownerUserId=new \MongoId($ownerUserId);
+        $not->ownerOrgId=new \MongoId($ownerOrgId);
+        $objectManager->persist($not);
+        $objectManager->flush();
+    }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
