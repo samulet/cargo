@@ -27,6 +27,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
     protected $organizationModel;
     protected $vehicleModel;
+    protected $notificationModel;
 
     public function addResourceWay($propArraySplit,$ownerResourceId,$resId) {
         $result=array();
@@ -113,7 +114,12 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $objectManager->persist($res);
         $objectManager->flush();
 
+
         $this->addResourceWay($prop_array_split,$res->id,$this->getIdByUuid($id));
+
+        $noteModel=$this->getNotificationModel();
+
+        $noteModel->addNotification($res->id,$owner_id,$owner_org_id);
 
         return $res->uuid;
     }
@@ -242,6 +248,15 @@ class ResourceModel implements ServiceLocatorAwareInterface
             return null;
         }
         return $res->id;
+    }
+
+    public function getNotificationModel()
+    {
+        if (!$this->notificationModel) {
+            $sm = $this->getServiceLocator();
+            $this->notificationModel = $sm->get('Notification\Model\NotificationModel');
+        }
+        return $this->notificationModel;
     }
 
 }
