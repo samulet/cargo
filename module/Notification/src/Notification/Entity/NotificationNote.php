@@ -67,7 +67,8 @@ class NotificationNote
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Статус"})
+     * @Annotation\Options({"label":"Статус",
+     *                      "value_options" : {"consideration":"На рассмотрении","published":"Опубликована"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})

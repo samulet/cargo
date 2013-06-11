@@ -31,9 +31,17 @@ class NotificationController extends AbstractActionController
     }
 
     public function addAction() {
+        $sendUuid= $this->getEvent()->getRouteMatch()->getParam('id');
 
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Notification\Entity\NotificationNote');
+
+
+        return new ViewModel(array(
+            'form' => $form,
+            'uuid'=>$sendUuid
+        ));
     }
-
 
 
     public function getNotificationModel()
