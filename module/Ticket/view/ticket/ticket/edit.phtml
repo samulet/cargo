@@ -10,8 +10,11 @@ $form->setAttribute('action', $this->url('ticket', array('action' => 'addTicket'
 echo $this->form()->openTag($form);
 
 
+$typeTicket= $form->get('typeTicket')->setValue($ticket['typeTicket']);
 
-
+$currency= $form->get('currency')->setValue($ticket['currency']);
+$money= $form->get('money')->setValue($ticket['money']);
+$formPay= $form->get('formPay')->setValue($ticket['formPay']);
 ?>
 
     <table class="table spec_table" style="">
@@ -23,6 +26,11 @@ echo $this->form()->openTag($form);
         <tr>
             <td style="border-left:none;">
                 <?php
+
+                echo $this->formRow($currency);
+                echo $this->formRow($money);
+                echo $this->formRow($formPay);
+                echo $this->formRow($typeTicket);
 
                 ?>
             </td>
@@ -46,9 +54,7 @@ echo $this->form()->openTag($form);
             <th>
                 Время
             </th>
-            <th>
-                Услования оплаты
-            </th>
+
             <th>
                 Примечание
             </th>
@@ -88,9 +94,7 @@ echo $this->form()->openTag($form);
 
                 $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart');
                 $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart');
-                $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency');
-                $money= $formWay->get('money')->setValue($way['money'])->setName('money');
-                $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay');
+
                 $note= $formWay->get('note')->setValue($way['note'])->setName('note');
             } else {
 
@@ -124,9 +128,7 @@ echo $this->form()->openTag($form);
 
                 $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart-'.$counter);
                 $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart-'.$counter);
-                $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency-'.$counter);
-                $money= $formWay->get('money')->setValue($way['money'])->setName('money-'.$counter);
-                $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay-'.$counter);
+
                 $note= $formWay->get('note')->setValue($way['note'])->setName('note-'.$counter);
             }
 
@@ -182,13 +184,7 @@ echo $this->form()->openTag($form);
                 echo $this->formRow($timeEnd);
                 ?>
             </td>
-            <td>
-                <?php
-                echo $this->formRow($currency);
-                echo $this->formRow($money);
-                echo $this->formRow($formPay);
-                ?>
-            </td>
+
             <td>
                 <?php
                 echo $this->formRow($note);

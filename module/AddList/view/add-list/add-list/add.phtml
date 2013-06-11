@@ -2,9 +2,19 @@
 $form = $this->form;
 $form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'parent'=>$this->parent)))
     ->prepare();
+ if(empty($this->parent)) {
 
+     $name=$this->listName['list']['fieldRusName'];
+} else {
+     $name=$this->listName['value'];
+ }
 $value = $form->get('value');
 
+?>
+<p>Добавление новго поля в <b><?php echo $name; ?></b></p>
+
+
+<?php
 
 echo $this->form()->openTag($form);
 

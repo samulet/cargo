@@ -29,12 +29,23 @@ class AddListController extends AbstractActionController
     {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
+        $addListModel = $this->getAddListModel();
+
+
+        if(!empty($parent)) {
+            $listName=$addListModel->getOneList($listNameUuid);
+        } else {
+            $listName=$addListModel->getList($listNameUuid);
+        }
+
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
         return new ViewModel(array(
             'form' => $form,
             'uuid' =>$listNameUuid,
-            'parent'=>$parent
+            'parent'=>$parent,
+            'listName'=>$listName,
+
         ));
     }
     public function getAddListModel()
