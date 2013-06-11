@@ -238,4 +238,18 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $res->id;
     }
 
+    public function getUuidById($id) {
+        if(empty($id)) {
+            return null;
+        }
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(
+            array('id' => new \MongoId($id))
+        );
+        if(empty($res)) {
+            return null;
+        }
+        return $res->uuid;
+    }
+
 }

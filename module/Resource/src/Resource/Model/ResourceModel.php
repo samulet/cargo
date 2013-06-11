@@ -250,6 +250,20 @@ class ResourceModel implements ServiceLocatorAwareInterface
         return $res->id;
     }
 
+    public function getUuidById($id) {
+        if(empty($id)) {
+            return null;
+        }
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
+            array('id' => new \MongoId($id))
+        );
+        if(empty($res)) {
+            return null;
+        }
+        return $res->uuid;
+    }
+
     public function getNotificationModel()
     {
         if (!$this->notificationModel) {
