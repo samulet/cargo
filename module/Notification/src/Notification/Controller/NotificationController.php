@@ -26,7 +26,11 @@ class NotificationController extends AbstractActionController
 
     public function myAction()
     {
-
+        $notificationModel = $this->getNotificationModel();
+        $notification=$notificationModel->getMyNotifications($this->zfcUserAuthentication()->getIdentity()->getId());
+        return new ViewModel(array(
+            'notification' =>$notification
+        ));
 
     }
 
