@@ -67,9 +67,16 @@ return array(
         'sidebar' => array(
 
             array(
-                'label' => 'Доска новостей',
+                'label' => 'Доска оповещений',
                 'route' => 'notification',
                 'action' => 'my',
+                'resource'   => 'route/notification',
+
+            ),
+            array(
+                'label' => 'Новые оповещения',
+                'route' => 'notification',
+                'action' => 'new',
                 'resource'   => 'route/notification',
 
             ),
