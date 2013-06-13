@@ -80,6 +80,12 @@ class NotificationNote
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
+    public $read;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Exclude()
+     */
     public $statusRus;
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")

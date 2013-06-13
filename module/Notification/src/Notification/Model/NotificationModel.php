@@ -55,6 +55,31 @@ class NotificationModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
+    public function getNewNotifications($userId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('Notification\Entity\Notification')->findBy(
+            array('ownerUserId' => new \MongoId($userId),'read' => 0)
+        );
+        $fullResult=array();
+        foreach($res as $re) {
+            $notes = $objectManager->getRepository('Notification\Entity\NotificationNote')->findBy(
+                array('ownerNotificationId' => new \MongoId($re->id))
+            );
+            $result=array();
+            $item=$this->getItem($re->itemId);
+
+            foreach($notes as $note) {
+                $nt=get_object_vars($note);
+                $nt['type']=$item['type'];
+                $nt['itemId']=$item['uuid'];
+                array_push($result,$nt);
+            }
+            $fullResult=$fullResult+$result;
+        }
+
+        return $fullResult;
+    }
+
     public function getMyNotifications($userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Notification\Entity\Notification')->findBy(
