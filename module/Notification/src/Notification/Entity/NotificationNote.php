@@ -78,7 +78,11 @@ class NotificationNote
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Exclude()
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"hidden"})
+
      */
     public $read;
     /**

@@ -1,3 +1,48 @@
 <?php
 $notes=$this->notification;
-die(var_dump($notes));
+$form = $this->form;
+$form->setAttribute('action', $this->url('notification', array('action' => 'read')))
+    ->prepare();
+
+$read = $form->get('read');
+
+
+?>
+<table class="table">
+    <tr>
+        <th>Номер Item</th>
+        <th>Примечание администратора</th>
+        <th>Статус</th>
+        <th>Прочитать</th>
+    </tr>
+    <?php
+    foreach($notes as $note) {
+
+        ?>
+        <tr>
+            <td> <a href="<?php
+                if($note['type']=='Ресурс') {
+                    $type='resource';
+                } else {
+                    $type='ticket';
+                }
+
+                echo $this->url($type,
+                    array('action'=>'edit', 'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
+            <td><?php if(!empty($note)) { echo $note['note']; } ?></td>
+            <td><?php echo $note['status']; ?></td>
+            <td>
+                <?php
+                $read->setValue($note['uuid']);
+                echo $this->form()->openTag($form);
+                echo $this->formRow($read);
+                echo $this->formElement($form->get('submit')->setValue('Прочитать'));
+                echo $this->form()->closeTag();
+                ?>
+
+            </td>
+        </tr>
+    <?php
+    }
+    ?>
+</table>

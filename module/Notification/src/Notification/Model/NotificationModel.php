@@ -58,12 +58,12 @@ class NotificationModel implements ServiceLocatorAwareInterface
     public function getNewNotifications($userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Notification\Entity\Notification')->findBy(
-            array('ownerUserId' => new \MongoId($userId),'read' => 0)
+            array('ownerUserId' => new \MongoId($userId))
         );
         $fullResult=array();
         foreach($res as $re) {
             $notes = $objectManager->getRepository('Notification\Entity\NotificationNote')->findBy(
-                array('ownerNotificationId' => new \MongoId($re->id))
+                array('ownerNotificationId' => new \MongoId($re->id),'read' => '0')
             );
             $result=array();
             $item=$this->getItem($re->itemId);
@@ -78,6 +78,16 @@ class NotificationModel implements ServiceLocatorAwareInterface
         }
 
         return $fullResult;
+    }
+
+    public function addRead($post) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $note = $objectManager->getRepository('Notification\Entity\NotificationNote')->findOneBy(
+            array('uuid' => $post->read)
+        );
+        $note->read=1;
+        $objectManager->persist($note);
+        $objectManager->flush();
     }
 
     public function getMyNotifications($userId) {
@@ -122,7 +132,7 @@ class NotificationModel implements ServiceLocatorAwareInterface
         $id=$this->getIdByUuid($uuid);
         $prop_array = get_object_vars($post);
         $prop_array['ownerNotificationId']=$id;
-
+        $prop_array['read']=0;
         $res=new NotificationNote();
         foreach ($prop_array as $key => $value) {
             if($key!='ownerNotificationId') {
