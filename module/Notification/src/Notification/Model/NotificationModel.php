@@ -27,6 +27,7 @@ class NotificationModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
     protected $resourceModel;
     protected $ticketModel;
+    protected $vehicleModel;
 
     public function addNotification($itemId,$ownerUserId,$ownerOrgId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -124,6 +125,11 @@ class NotificationModel implements ServiceLocatorAwareInterface
             $resUuid=$ticketModel->getUuidById($id);
             $type='Заявка';
         }
+        if(empty($resUuid)) {
+            $vehicleModel=$this->getVehicleModel();
+            $resUuid=$vehicleModel->getUuidById($id);
+            $type='ТС';
+        }
         return array('uuid'=>$resUuid,'type'=>$type);
     }
 
@@ -192,6 +198,14 @@ class NotificationModel implements ServiceLocatorAwareInterface
             $this->ticketModel = $sm->get('Ticket\Model\TicketModel');
         }
         return $this->ticketModel;
+    }
+    public function getVehicleModel()
+    {
+        if (!$this->vehicleModel) {
+            $sm = $this->getServiceLocator();
+            $this->vehicleModel = $sm->get('Resource\Model\VehicleModel');
+        }
+        return $this->vehicleModel;
     }
 
 }

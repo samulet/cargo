@@ -16,8 +16,10 @@ $notes=$this->notification;
         <td> <a href="<?php
             if($note['type']=='Ресурс') {
                 $type='resource';
-            } else {
+            } elseif($note['type']=='Заявка') {
                 $type='ticket';
+            } else {
+                $type='vehicle';
             }
 
             echo $this->url($type,
