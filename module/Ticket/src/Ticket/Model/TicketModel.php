@@ -27,6 +27,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
     protected $organizationModel;
     protected $cargoModel;
+    protected $notificationModel;
 
     public function addTicketWay($propArraySplit,$ownerTicketId,$resId) {
         $result=array();
@@ -109,6 +110,9 @@ class TicketModel implements ServiceLocatorAwareInterface
 
         $this->addTicketWay($prop_array_split,$res->id,$this->getIdByUuid($id));
 
+        $noteModel=$this->getNotificationModel();
+
+        $noteModel->addNotification($res->id,$owner_id,$owner_org_id);
         return $res->uuid;
     }
 
@@ -251,5 +255,12 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         return $res->uuid;
     }
-
+    public function getNotificationModel()
+    {
+        if (!$this->notificationModel) {
+            $sm = $this->getServiceLocator();
+            $this->notificationModel = $sm->get('Notification\Model\NotificationModel');
+        }
+        return $this->notificationModel;
+    }
 }
