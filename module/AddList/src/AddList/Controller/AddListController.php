@@ -29,6 +29,31 @@ class AddListController extends AbstractActionController
     {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
+        if(empty($parent)) {
+            $parent='none';
+        }
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddList');
+
+        $viewmodel = new ViewModel();
+        $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+        $roles = $authorize->getIdentityRoles();
+
+
+        return new ViewModel(array(
+            'form' => $form,
+            'uuid' =>$listNameUuid,
+            'parent'=>$parent,
+            'roles'=>$roles
+        ));
+    }
+
+    public function addGlobalAction() {
+        $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
+        if(empty($parent)) {
+            $parent='none';
+        }
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
         return new ViewModel(array(
@@ -37,6 +62,7 @@ class AddListController extends AbstractActionController
             'parent'=>$parent
         ));
     }
+
     public function getAddListModel()
     {
         if (!$this->addListModel) {
