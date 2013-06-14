@@ -136,6 +136,12 @@ class AddList
      */
     public $value;
     /**
+     * @Annotation\Exclude()
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $global;
+    /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */

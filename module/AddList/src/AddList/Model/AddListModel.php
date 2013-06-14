@@ -69,11 +69,14 @@ class AddListModel implements ServiceLocatorAwareInterface
         return str_replace($cyr, $lat, $str);
     }
 
-    public function addList($post,$listUUID,$parentField) {
+    public function addList($post,$listUUID,$parentField,$userId,$orgId) {
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
 
         $prop_array = get_object_vars($post);
+
+
 
         if(is_string($parentField)) {
 
@@ -105,6 +108,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         }
         $objectManager->persist($res);
         $objectManager->flush();
+
         return get_object_vars($res);
     }
 
