@@ -1,372 +1,159 @@
 <?php
 /**
- * @package User Time Zone
- * @version 2.0
+ * Created by JetBrains PhpStorm.
+ * User: solov
+ * Date: 5/20/13
+ * Time: 2:31 AM
+ * To change this template use File | Settings | File Templates.
  */
-/*
-/*
-Plugin Name: User Time Zone
-Plugin URI:
-Description: Set personal time zones.
-Version: 2.0
-Author: Salerat, saleratwork@gmail.com
 
+namespace AddList\Controller;
 
+use Entity\Recources;
+use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use Zend\Form\Annotation\AnnotationBuilder;
+use Zend\Form\Element\Checkbox;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use AddList\Form\AddListNameForm;
 
-
-*/
-ini_set('display_errors', 'Off');
-
-
-class UseClientsTimezone
+class AddListController extends AbstractActionController
 {
+    protected $addListModel;
 
-
-    protected $fallback_timezone;
-    protected $plugin_path = '';
-
-    public function __construct()
+    public function indexAction()
     {
-        require(ABSPATH . WPINC . '/pluggable.php');
-        global $current_user;
 
-        get_currentuserinfo();
-
-        $this->fallback_timezone = get_usermeta($current_user->ID, 't-zone');
-
-        if (empty($this->fallback_timezone)) {
-            $this->fallback_timezone = 0;
-            update_usermeta($current_user->ID, 't-zone', $this->fallback_timezone);
-
+    }
+    public function addAction()
+    {
+        $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddList');
+        return new ViewModel(array(
+            'form' => $form,
+            'uuid' =>$listNameUuid,
+            'parent'=>$parent
+        ));
+    }
+    public function getAddListModel()
+    {
+        if (!$this->addListModel) {
+            $sm = $this->getServiceLocator();
+            $this->addListModel = $sm->get('AddList\Model\AddListModel');
         }
+        return $this->addListModel;
+    }
 
-        if (isset($_POST['tz'])) {
+    public function addListAction() {
 
-            $this->fallback_timezone = $_POST['tz'];
-            update_usermeta($current_user->ID, 't-zone', $this->fallback_timezone);
+        $listUUID= $this->getEvent()->getRouteMatch()->getParam('id');
+        $target=$listUUID;
+        $parent=$this->getEvent()->getRouteMatch()->getParam('parent');
+        if($parent=='parent') {
+            $parentField=$listUUID;
+            $listUUID=null;
+            $target=$parentField;
+        } else {
+            $parentField=null;
         }
+        $addListModel = $this->getAddListModel();
 
-        add_action('show_user_profile', array(&$this, 'draw_options_page'));
-        add_action('edit_user_profile', array(&$this, 'draw_options_page'));
-        add_action('profile_update', array(&$this, 'update_time_zone'));
+        $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField);
 
-        add_action('admin_menu', array(&$this, 'admin_add_page'));
-
+        $listName=$addListModel->getListName((string)$listId['listId']);
+        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
     }
 
-    public function update_time_zone()
-    {
+    public function myAction() {;
 
+        $addListModel = $this->getAddListModel();
+        $list=$addListModel->getListName($this->getRequest()->getPost());
+
+        return new ViewModel(array(
+
+            'list' => $list
+        ));
     }
 
-    public function initialize_admin()
-    {
-        if (function_exists('register_setting')) {
-            $page_for_settings = 'use_clients_timezone_plugin';
-            $section_for_settings = 'use_clients_timezone_section';
-            add_settings_section(
-                $section_for_settings,
-                'Use Client&#039;s Time Zone Settings',
-                array(&$this, 'use_clients_timezone_section_heading'),
-                $page_for_settings
-            );
-            add_settings_field(
-                'use_clients_timezone_fallback_timezone_id',
-                'Fallback time zone',
-                array(&$this, 'use_clients_timezone_setting_values'),
-                $page_for_settings,
-                $section_for_settings
-            );
-            register_setting(
-                'use_clients_timezone_settings',
-                'use_clients_timezone_fallback_timezone',
-                'wp_filter_nohtml_kses'
-            );
+    public function deleteAction() {
+        $list_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $addListModel->deleteList($list_uuid);
+        return $this->redirect()->toUrl('/addList/my');
+    }
+
+    public function addNameAction() {
+        $addListNameForm= new AddListNameForm();
+        $addListModel = $this->getAddListModel();
+        $formData=$addListModel->getAllListName();
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddListName');
+        $form=$addListNameForm->fillParentFrom($form,$formData);
+        return new ViewModel(array(
+            'form' => $form
+        ));
+    }
+
+    public function addListNameAction() {
+        $list_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $addListModel->addListName($this->getRequest()->getPost(),$list_uuid);
+        return $this->redirect()->toUrl('/addList/addName');
+    }
+
+    public function myFieldsAction() {
+        $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $list=$addListModel->getList($listNameUuid);
+
+        if(!empty($list['list']['parentId'])) {
+            $parentList=$addListModel->getListName($list['list']['parentId']);
+        } else {
+            $parentList=null;
         }
+        $listChild=$addListModel->getChildName($list['list']['id']);
+
+
+        return new ViewModel(array(
+            'field' => $list['field'],
+            'list' => $list['list'],
+            'parentList' =>$parentList,
+            'listChild'=>$listChild
+        ));
     }
 
+    public function editAction() {
+        $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $listData=$addListModel->getOneList($listUuid);
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddList');
 
-    public function use_clients_timezone_setting_values()
-    {
-        global $current_user;
-        $use_clients_timezone_fallback_timezone = get_usermeta($current_user->ID, 't-zone');
-
-        echo '<input id="use_clients_timezone_fallback_timezone_input" name="use_clients_timezone_fallback_timezone" size="35" type="text" value="' . $use_clients_timezone_fallback_timezone . '" />';
+        return new ViewModel(array(
+            'fieldUuid' => $listUuid,
+            'listData' => $listData,
+            'form'=>$form
+        ));
     }
 
-    public function admin_add_page()
-    {
-        add_options_page(
-            'Use Client&#039;s Time Zone Settings',
-            'Use Client&#039;s Time Zone',
-            'read',
-            'use_clients_timezone_plugin',
-            array(&$this, 'draw_options_page')
-        );
-//add_options_page('Use Client&#039;s Time Zone', 'Use Client&#039;s Time Zone', 'read', __FILE__, 'use_clients_timezone_plugin');
-
+    public function editFieldAction() {
+        $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $listId=$addListModel->editField($listUuid,$this->getRequest()->getPost());
+        $listName=$addListModel->getListName((string)$listId['listId']);
+        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
     }
 
-    public function draw_options_page()
-    {
-        echo '<div><h2>Time Zone Options</h2>';
-        echo '<input type="hidden" id="utc_offset" value="' . $this->fallback_timezone . '">';
-
-        echo '<select name="tz" value="">';
-        echo '<option selected value="">Select UTC</option>';
-        for ($i = -11; $i <= 12; $i = $i + 0.5) {
-            echo '<option value="' . $i . '" >UTC ' . $i . '</option>';
-        }
-        echo '</select>';
-
-        echo '
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js" ></script>
-	
-	<script>
-	    utc=$("#utc_offset").val();
-	    var str = new String(utc);
-
-	    $("select[name=tz] option").each(function() {
-	    if($(this).val()==str) {
-	    $(this).attr("selected","selected");
-	    }
-	    });
-	</script>
-	';
-
-        echo '</div>';
-        echo '
-
-</div></div>';
-    }
-
-
-    /**
-     * В этой функции ставим время для локальных фукнций ВП и date_default_timezone_set пхп (потомучто мы не знаем, какие функции будет юзать юзер для вывода времени
-     */
-    public function setTimezone()
-    {
-        update_option('gmt_offset', $this->fallback_timezone, '', 'yes');
-
-
-    }
-
-
-}
-
-if (class_exists('UseClientsTimezone')) {
-    $use_clients_timezone = new UseClientsTimezone();
-    if (isset($use_clients_timezone)) {
-        add_action('plugins_loaded', array(&$use_clients_timezone, 'setTimezone'), 1);
+    public function listParentAction() {
+        $parentListUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $listChild=$addListModel->listParentAction($parentListUuid);
+        $listParent=$addListModel->getOneList($parentListUuid);
+        return new ViewModel(array(
+            'listChild'=>$listChild,
+            'listParent'=>$listParent
+        ));
     }
 }
-
-/**
- * Накладываем фильтр на the_time, но по хорошему, нужно накладывать на все функции времени.
- */
-function user_time_zone_filter($time_string, $time_format)
-{
-
-    global $post;
-
-    global $current_user;
-
-    get_currentuserinfo();
-
-
-    $tz = get_usermeta($current_user->ID, 't-zone');
-
-    if (!is_numeric($tz)) {
-        return $time_string;
-    }
-    $tz = (float)$tz;
-    if ($tz < -12 || $tz > 12) {
-        return $time_string;
-    }
-
-
-    $time = strtotime($post->post_date_gmt) + ($tz * 3600);
-
-
-    return date($time_format, $time);
-}
-
-function user_time_zone_get_the_time($time_string, $time_format)
-{
-
-    global $post;
-
-    global $current_user;
-
-    get_currentuserinfo();
-
-
-    $tz = get_usermeta($current_user->ID, 't-zone');
-
-    if (!is_numeric($tz)) {
-        return $time_string;
-    }
-    $tz = (float)$tz;
-    if ($tz < -12 || $tz > 12) {
-        return $time_string;
-    }
-
-
-    $time = strtotime($post->post_date_gmt) + ($tz * 3600);
-
-
-    return date(" g:i a", $time);
-
-}
-
-function user_time_zone_get_the_date($time_string, $time_format)
-{
-
-    global $post;
-
-    global $current_user;
-
-    get_currentuserinfo();
-
-
-    $tz = get_usermeta($current_user->ID, 't-zone');
-
-    if (!is_numeric($tz)) {
-        return $time_string;
-    }
-    $tz = (float)$tz;
-    if ($tz < -12 || $tz > 12) {
-        return $time_string;
-    }
-
-
-    $time = strtotime($post->post_date_gmt) + ($tz * 3600);
-
-
-    return date("F j, Y", $time);
-
-}
-
-function get_the_modified_time_new($time_string, $time_format)
-{
-
-    global $post;
-
-    global $current_user;
-
-    get_currentuserinfo();
-
-
-    $tz = get_usermeta($current_user->ID, 't-zone');
-
-    if (!is_numeric($tz)) {
-        return $time_string;
-    }
-    $tz = (float)$tz;
-    if ($tz < -12 || $tz > 12) {
-        return $time_string;
-    }
-
-
-    $time = strtotime($post->post_modified_gmt) + ($tz * 3600);
-
-
-    return date(" g:i a", $time);
-
-}
-
-function the_modified_time_new($time_string, $time_format)
-{
-
-    global $post;
-
-    global $current_user;
-
-    get_currentuserinfo();
-
-
-    $tz = get_usermeta($current_user->ID, 't-zone');
-
-    if (!is_numeric($tz)) {
-        return $time_string;
-    }
-    $tz = (float)$tz;
-    if ($tz < -12 || $tz > 12) {
-        return $time_string;
-    }
-
-
-    $time = strtotime($post->post_modified_gmt) + ($tz * 3600);
-
-
-    return date($time_string, $time);
-
-}
-
-function get_the_modified_date_new($time_string, $time_format)
-{
-
-    global $post;
-
-    global $current_user;
-
-    get_currentuserinfo();
-
-
-    $tz = get_usermeta($current_user->ID, 't-zone');
-
-    if (!is_numeric($tz)) {
-        return $time_string;
-    }
-    $tz = (float)$tz;
-    if ($tz < -12 || $tz > 12) {
-        return $time_string;
-    }
-
-
-    $time = strtotime($post->post_modified_gmt) + ($tz * 3600);
-
-
-    return date("F j, Y", $time);
-
-}
-
-function the_date_new($time_string, $time_format)
-{
-
-    global $post;
-
-    global $current_user;
-
-    get_currentuserinfo();
-
-
-    $tz = get_usermeta($current_user->ID, 't-zone');
-
-    if (!is_numeric($tz)) {
-        return $time_string;
-    }
-    $tz = (float)$tz;
-    if ($tz < -12 || $tz > 12) {
-        return $time_string;
-    }
-
-
-    $time = strtotime($post->post_date_gmt) + ($tz * 3600);
-
-
-    return date("F j, Y", $time);
-
-}
-
-add_filter('the_date', 'the_date_new', 1, 2);
-add_filter('get_the_modified_date', 'get_the_modified_date_new', 1, 2);
-add_filter('the_modified_time', 'the_modified_time_new', 1, 2);
-add_filter('get_the_modified_time', 'get_the_modified_time_new', 1, 2);
-
-add_filter('get_the_time', 'user_time_zone_get_the_time', 1, 2);
-add_filter('get_the_date', 'user_time_zone_get_the_date', 1, 2);
-add_filter('the_time', 'user_time_zone_filter', 1, 2);
-
-
-?>
