@@ -19,6 +19,21 @@ if(empty($parentList)) {
     'addList',
     array('action' => 'add', 'id' => $list['uuid'])
 );?>">Добавить поле в список</a>
+    <?php
+
+    if(!empty($listChild)) {
+        ?>
+        <a href="<?php echo $this->url(
+            'addList',
+            array('action' => 'my-fields', 'id' => $listChild['uuid'])
+        );?>">Просмотреть поля зависимого спика <?php
+            if(!empty($listChild)) {
+                echo $listChild['fieldRusName'];
+            } ?></a></a>
+    <?php
+    }
+    ?>
+
 <?php
 } else {
     ?>
@@ -26,6 +41,9 @@ if(empty($parentList)) {
     'addList',
     array('action' => 'my-fields', 'id' => $parentList['uuid'])
 );?>">Назад к родителю</a>
+
+
+
 <?php
 }
 ?>

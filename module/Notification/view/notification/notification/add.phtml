@@ -1,0 +1,16 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('notification', array('action' => 'addNotificationNote', 'id' => $this->uuid)))
+    ->prepare();
+
+$status = $form->get('status');
+$note= $form->get('note');
+
+echo $this->form()->openTag($form);
+
+echo $this->formRow($status);
+echo $this->formRow($note);
+
+echo $this->formElement($form->get('submit'));
+echo $this->form()->closeTag();
+?>

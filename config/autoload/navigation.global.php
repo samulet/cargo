@@ -65,6 +65,21 @@ return array(
             ),
         ),
         'sidebar' => array(
+
+            array(
+                'label' => 'Доска оповещений',
+                'route' => 'notification',
+                'action' => 'my',
+                'resource'   => 'route/notification',
+
+            ),
+            array(
+                'label' => 'Новые оповещения',
+                'route' => 'notification',
+                'action' => 'new',
+                'resource'   => 'route/notification',
+
+            ),
             array(
                 'label' => 'Рерусы',
                 'type' => 'uri',
@@ -77,6 +92,7 @@ return array(
                 'route' => 'resource',
                 'action' => 'index',
                 'resource'   => 'route/resource',
+
             ),
             array(
                 'label' => 'Собственные',
@@ -115,6 +131,7 @@ return array(
                 'route' => 'ticket',
                 'action' => 'index',
                 'resource'   => 'route/ticket',
+
             ),
             array(
                 'label' => 'Собственные',

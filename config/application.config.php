@@ -19,6 +19,7 @@ return array(
         'AddList',
         'Interaction',
         'Account',
+        'Notification'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

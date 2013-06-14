@@ -20,6 +20,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
     protected $organizationModel;
+    protected $notificationModel;
 
     public function addVehicle($post, $owner_id, $owner_org_id, $id)
     {
@@ -48,6 +49,11 @@ class VehicleModel implements ServiceLocatorAwareInterface
         }
         $objectManager->persist($res);
         $objectManager->flush();
+
+        $noteModel=$this->getNotificationModel();
+
+        $noteModel->addNotification($res->id,$owner_id,$owner_org_id);
+
         return $res->uuid;
     }
 
@@ -138,5 +144,27 @@ class VehicleModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $vehicle = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $uuid));
         return $vehicle->id;
+    }
+    public function getUuidById($id) {
+        if(empty($id)) {
+            return null;
+        }
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(
+            array('id' => new \MongoId($id))
+        );
+        if(empty($res)) {
+            return null;
+        }
+        return $res->uuid;
+    }
+
+    public function getNotificationModel()
+    {
+        if (!$this->notificationModel) {
+            $sm = $this->getServiceLocator();
+            $this->notificationModel = $sm->get('Notification\Model\NotificationModel');
+        }
+        return $this->notificationModel;
     }
 }
