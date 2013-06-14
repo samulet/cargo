@@ -78,15 +78,10 @@ if(empty($parentList)) {
 
         <tr>
             <td>
-                <a href="<?php echo $this->url(
-                    'addList',
-                    array('action' => 'list-parent', 'id' => $parent['uuid'])
-                );?>"><?php if(!empty($parent['value'])) {
-                        echo $parent['value'].' => ';
-                    }
-
-                    ?></a>
                 <?php
+                if(!empty($parent['value'])) {
+                    echo $parent['value'].' => ';
+                }
                 echo $fi['value'];
                 ?>
             </td>
@@ -100,12 +95,26 @@ if(empty($parentList)) {
                 );?>">Посмотреть полей <?php
                     if(!empty($listChild)) {
                         echo $listChild['fieldRusName'];
-                    } ?></a></a>
+                    } ?></a>
+                <?php
+                }
+                if(!empty($fi['value'])) {
+
+                ?>
+                    <a href="<?php echo $this->url(
+                        'addList',
+                        array('action' => 'list-parent', 'id' => $parent['uuid'])
+                    );?>"><?php if(!empty($parent['value'])) {
+                            echo "Посмотреть поля ". $fi['value'];
+                        }
+
+                        ?></a>
                 <?php
                 }
                 ?>
             </td>
             <td>
+                <?php if(empty($parent['value'])) { ?>
                 <a href="<?php echo $this->url(
                     'addList',
                     array('action' => 'add', 'id' => $fi['uuid'],'parent'=>'parent')
@@ -113,6 +122,7 @@ if(empty($parentList)) {
                     if(!empty($listChild)) {
                         echo 'в '.$listChild['fieldRusName'];
                     } ?></a>
+                <?php } ?>
             </td>
             <td>
                 <a href="<?php echo $this->url(

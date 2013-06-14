@@ -88,7 +88,15 @@ class AddListController extends AbstractActionController
         $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField,$userId,$orgId);
 
         $listName=$addListModel->getListName((string)$listId['listId']);
-        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
+
+        if(empty($listName['parentId'])) {
+            return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
+        } else {
+            $parentUuid=$addListModel->getListUuidById($listId['parentFieldId']);
+
+            return $this->redirect()->toUrl('/addList/list-parent/'.$parentUuid);
+        }
+
     }
 
     public function myAction() {;
