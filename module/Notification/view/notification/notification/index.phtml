@@ -1,0 +1,45 @@
+<?php
+$notes=$this->notification;
+//die(var_dump($notes));
+?>
+<table class="table">
+<tr>
+<th>Номер Item</th>
+<th>Владелец</th>
+<th>Организация</th>
+<th>Статус</th>
+<th>Рассмотреть заявку</th>
+</tr>
+<?php
+foreach($notes as $note) {
+?>
+<tr>
+<td> <a href="<?php
+if($note['type']=='Ресурс') {
+$type='resource';
+} elseif($note['type']=='Заявка') {
+$type='ticket';
+} else {
+$type='vehicle';
+}
+
+echo $this->url($type,
+                    array('action'=>'edit', 'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
+<td><?php echo $note['ownerUserId']; ?></td>
+<td><?php echo $note['ownerOrgId']; ?></td>
+<td><?php
+if(!empty($note['status'])) {
+    echo $note['status'];
+} else {
+    echo "Вы еще не рассмотрели данную заявку";
+}
+
+
+?></td>
+<td><a href="<?php echo $this->url('notification',
+                        array('action'=>'add', 'id' => $note['uuid']));?>">Рассмотерть</a></td>
+</tr>
+<?php
+}
+?>
+</table>
