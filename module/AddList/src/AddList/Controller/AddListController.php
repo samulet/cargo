@@ -20,6 +20,8 @@ use AddList\Form\AddListNameForm;
 class AddListController extends AbstractActionController
 {
     protected $addListModel;
+    protected $organizationModel;
+    protected $companyUserModel;
 
     public function indexAction()
     {
@@ -29,39 +31,32 @@ class AddListController extends AbstractActionController
     {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
-        if(empty($parent)) {
-            $parent='none';
+        $addListModel = $this->getAddListModel();
+
+
+        if(!empty($parent)) {
+            $listName=$addListModel->getOneList($listNameUuid);
+        } else {
+            $listName=$addListModel->getList($listNameUuid);
         }
+
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
 
         $viewmodel = new ViewModel();
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
-
-
         return new ViewModel(array(
             'form' => $form,
             'uuid' =>$listNameUuid,
             'parent'=>$parent,
+            'listName'=>$listName,
             'roles'=>$roles
+
         ));
     }
 
-    public function addGlobalAction() {
-        $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
-        $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
-        if(empty($parent)) {
-            $parent='none';
-        }
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('AddList\Entity\AddList');
-        return new ViewModel(array(
-            'form' => $form,
-            'uuid' =>$listNameUuid,
-            'parent'=>$parent
-        ));
-    }
+
 
     public function getAddListModel()
     {
@@ -86,7 +81,11 @@ class AddListController extends AbstractActionController
         }
         $addListModel = $this->getAddListModel();
 
-        $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField);
+        $orgUserModel=$this->getCompanyUserModel();
+        $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgId=$orgUserModel->getOrgIdByUserId($userId);
+
+        $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField,$userId,$orgId);
 
         $listName=$addListModel->getListName((string)$listId['listId']);
         return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
@@ -181,5 +180,22 @@ class AddListController extends AbstractActionController
             'listChild'=>$listChild,
             'listParent'=>$listParent
         ));
+    }
+    public function getOrganizationModel()
+    {
+        if (!$this->organizationModel) {
+            $sm = $this->getServiceLocator();
+            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+        }
+        return $this->organizationModel;
+    }
+
+    public function getCompanyUserModel()
+    {
+        if (!$this->companyUserModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+        }
+        return $this->companyUserModel;
     }
 }
