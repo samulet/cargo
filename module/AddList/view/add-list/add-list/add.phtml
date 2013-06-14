@@ -23,6 +23,10 @@ echo $this->form()->openTag($form);
 
 echo $this->formRow($value);
 
+if(array_search("administrator",$this->roles,true)) {
+    echo '<input type="checkbox" name="global" value="global">Глобальное значние </br>';
+}
+
 echo $this->formElement($form->get('submit')); ?>
 <?php  echo $this->form()->closeTag();
 ?>
