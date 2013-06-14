@@ -27,6 +27,7 @@ class AddListModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
+
     public function returnDataArray($arrFields,$prefix) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $result=array();
@@ -106,6 +107,8 @@ class AddListModel implements ServiceLocatorAwareInterface
         foreach ($prop_array as $key => $value) {
             $res->$key = $value;
         }
+        $res->ownerOrgId= new \MongoId($orgId);
+        $res->ownerUserId=new \MongoId($userId);
         $objectManager->persist($res);
         $objectManager->flush();
 
