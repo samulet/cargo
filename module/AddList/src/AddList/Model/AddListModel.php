@@ -28,20 +28,51 @@ class AddListModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
 
 
-    public function getGlobalArray($prefix,$orgListId) {
+    public function getGlobalArray($prefix) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $result=array();
         $listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
         foreach($listName as $liName) {
             $id=(string)$liName->id;
-            $list = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($id);
+            $list = $objectManager->getRepository('AddList\Entity\AddList')->getGlobalAvailableList($id);
             $res=array();
             foreach($list as $li) {
                 $obj_vars = get_object_vars($li);
                 if(!empty($obj_vars['parentFieldId'])) {
 
                     $parentList= $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
-                        array('id' =>  new \MongoId($obj_vars['parentFieldId']))
+                        array('id' =>  new \MongoId($obj_vars['parentFieldId']),'global'=>'global')
+                    );
+                    $parentListArr=get_object_vars($parentList);
+                    if(!empty($parentListArr)) {
+                        $pr='parent-'.$parentListArr['key'].'-';
+                    } else {
+                        $pr=null;
+                    }
+                } else {
+                    $pr=null;
+                }
+                array_push($res, array('key'=>$pr.$obj_vars['key'],'value'=>$obj_vars['value']));
+            }
+            $result=$result+array((string)$liName->field => $res);
+        }
+        return $result;
+    }
+
+    public function getLocalArray($prefix,$orgListId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $result=array();
+        $listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
+        foreach($listName as $liName) {
+            $id=(string)$liName->id;
+            $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableList($id,$orgListId);
+            $res=array();
+            foreach($list as $li) {
+                $obj_vars = get_object_vars($li);
+                if(!empty($obj_vars['parentFieldId'])) {
+
+                    $parentList= $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+                        array('id' =>  new \MongoId($obj_vars['parentFieldId']),'ownerOrgId'=>new \MongoId($orgListId))
                     );
                     $parentListArr=get_object_vars($parentList);
                     if(!empty($parentListArr)) {
@@ -60,7 +91,9 @@ class AddListModel implements ServiceLocatorAwareInterface
     }
 
     public function returnDataArray($arrFields,$prefix,$orgListId) {
-        return $this->getGlobalArray($prefix,$orgListId);
+        $localArray=$this->getLocalArray($prefix,$orgListId);
+        $globalArray=$this->getGlobalArray($prefix);
+
     }
 
     public function russianToTranslit($str) {
