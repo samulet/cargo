@@ -20,4 +20,26 @@ class AddListForm
 
         return $form;
     }
+
+    public function fillCG($form,$formData) {
+
+        $result_array=array(''=>'Выберите ТС');
+        foreach($formData as $data) {
+            $result_array=$result_array+array($data['id']=>$data['carNumber'].' '.$data['mark'] . ' / ' . $data['model']);
+        }
+
+        $form->get('tsId')->setOptions(array("value_options"=>$result_array));
+        return $form;
+    }
+
+    public function fillTS($form,$formData) {
+
+        $result_array=array(''=>'Выберите ТС');
+        foreach($formData as $data) {
+            $result_array=$result_array+array($data['id']=>$data['carNumber'].' '.$data['mark'] . ' / ' . $data['model']);
+        }
+
+        $form->get('tsId')->setOptions(array("value_options"=>$result_array));
+        return $form;
+    }
 }

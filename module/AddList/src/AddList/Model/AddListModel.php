@@ -28,7 +28,7 @@ class AddListModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
 
 
-    public function returnDataArray($arrFields,$prefix) {
+    public function getGlobalArray($prefix,$orgListId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $result=array();
         $listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
@@ -57,6 +57,10 @@ class AddListModel implements ServiceLocatorAwareInterface
             $result=$result+array((string)$liName->field => $res);
         }
         return $result;
+    }
+
+    public function returnDataArray($arrFields,$prefix,$orgListId) {
+        return $this->getGlobalArray($prefix,$orgListId);
     }
 
     public function russianToTranslit($str) {

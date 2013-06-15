@@ -11,6 +11,14 @@ class AddListRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
+    public function getGlobalAvailableList($id)
+    {
+        return $this->createQueryBuilder()
+            ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('listId')->equals(
+                new \MongoId($id)
+            )
+            ->getQuery()->execute();
+    }
     public function getMyAvailableList($id)
     {
         return $this->createQueryBuilder()
@@ -19,7 +27,6 @@ class AddListRepository extends DocumentRepository
             )
             ->getQuery()->execute();
     }
-
     public function getOneMyAvailableList($id)
     {
         return $this->createQueryBuilder()
