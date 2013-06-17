@@ -168,6 +168,7 @@ class AddListController extends AbstractActionController
         $listChild=$addListModel->getChildName($list['list']['id']);
 
 
+
         return new ViewModel(array(
             'field' => $list['field'],
             'list' => $list['list'],

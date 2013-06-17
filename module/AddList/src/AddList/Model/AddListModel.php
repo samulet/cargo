@@ -26,7 +26,7 @@ class AddListModel implements ServiceLocatorAwareInterface
 {
 
     protected $serviceLocator;
-
+    protected $organizationModel;
 
     public function getGlobalArray($prefix) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -204,6 +204,13 @@ class AddListModel implements ServiceLocatorAwareInterface
         {
 
             $vars=get_object_vars($re);
+
+            $organizationModel=$this->getOrganizationModel();
+
+            $org=$organizationModel->getOrganization($vars['ownerOrgId']);
+            if(!empty($org)) {
+                $vars['ownerOrgId']=$org;
+            }
             if(!empty($vars['parentFieldId'])) {
                 $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($vars['parentFieldId']);
                 foreach($parent as $par)
@@ -235,6 +242,13 @@ class AddListModel implements ServiceLocatorAwareInterface
         {
 
             $vars=get_object_vars($re);
+            $organizationModel=$this->getOrganizationModel();
+
+            $org=$organizationModel->getOrganization($vars['ownerOrgId']);
+
+            if(!empty($org)) {
+                $vars['ownerOrgId']= $org;
+            }
             if(!empty($vars['parentFieldId'])) {
                 $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($vars['parentFieldId']);
                 foreach($parent as $par)
@@ -418,6 +432,14 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('id' => new \MongoId($id)));
         return $list->uuid;
+    }
+    public function getOrganizationModel()
+    {
+        if (!$this->organizationModel) {
+            $sm = $this->getServiceLocator();
+            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+        }
+        return $this->organizationModel;
     }
 
 }

@@ -64,6 +64,9 @@ if(empty($parentList)) {
             ?>
         </th>
         <th>
+            Организация
+        </th>
+        <th>
             Редактировать
         </th>
         <th>
@@ -72,6 +75,7 @@ if(empty($parentList)) {
     </tr>
     <?php
     foreach($field as $fi) {
+
         $parent=$fi['parent'];
         $fi=$fi['it'];
         ?>
@@ -123,6 +127,22 @@ if(empty($parentList)) {
                         echo 'в '.$listChild['fieldRusName'];
                     } ?></a>
                 <?php } ?>
+            </td>
+            <td>
+                <?php
+                if(empty($fi['global'])) {
+                ?>
+                    <a href="<?php echo $this->url(
+                        'organization',
+                        array('action' => 'list', 'id' => $fi['ownerOrgId']['uuid'])
+                    );?>"><?php echo $fi['ownerOrgId']['name'] ?></a>
+                <?php } else {
+                    ?>
+                    Глобальный
+                <?php
+                }
+                ?>
+
             </td>
             <td>
                 <a href="<?php echo $this->url(

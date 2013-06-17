@@ -3,12 +3,12 @@ $form = $this->form;
 $form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'parent'=>$this->parent)))
     ->prepare();
 
- if(empty($this->parent)) {
+if(empty($this->parent)) {
 
-     $name=$this->listName['list']['fieldRusName'];
+    $name=$this->listName['list']['fieldRusName'];
 } else {
-     $name=$this->listName['value'];
- }
+    $name=$this->listName['value'];
+}
 $value = $form->get('value');
 
 
@@ -31,4 +31,3 @@ if(array_search("admin",$this->roles,true)) {
 echo $this->formElement($form->get('submit')); ?>
 <?php  echo $this->form()->closeTag();
 ?>
-
