@@ -20,6 +20,8 @@ use AddList\Form\AddListNameForm;
 class AddListController extends AbstractActionController
 {
     protected $addListModel;
+    protected $organizationModel;
+    protected $companyUserModel;
 
     public function indexAction()
     {
@@ -29,14 +31,36 @@ class AddListController extends AbstractActionController
     {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
+        $addListModel = $this->getAddListModel();
+
+
+        if(!empty($parent)) {
+            $listName=$addListModel->getOneList($listNameUuid);
+        } else {
+            $orgUserModel=$this->getCompanyUserModel();
+            $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+            $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+            $listName=$addListModel->getList($listNameUuid,$orgListId);
+        }
+
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
+
+        $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+        $roles = $authorize->getIdentityRoles();
         return new ViewModel(array(
             'form' => $form,
             'uuid' =>$listNameUuid,
-            'parent'=>$parent
+            'parent'=>$parent,
+            'listName'=>$listName,
+            'roles'=>$roles
+
         ));
     }
+
+
+
     public function getAddListModel()
     {
         if (!$this->addListModel) {
@@ -60,10 +84,22 @@ class AddListController extends AbstractActionController
         }
         $addListModel = $this->getAddListModel();
 
-        $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField);
+        $orgUserModel=$this->getCompanyUserModel();
+        $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgId=$orgUserModel->getOrgIdByUserId($userId);
+
+        $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField,$userId,$orgId);
 
         $listName=$addListModel->getListName((string)$listId['listId']);
-        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
+
+        if(empty($listName['parentId'])) {
+            return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
+        } else {
+            $parentUuid=$addListModel->getListUuidById($listId['parentFieldId']);
+
+            return $this->redirect()->toUrl('/addList/list-parent/'.$parentUuid);
+        }
+
     }
 
     public function myAction() {;
@@ -106,7 +142,23 @@ class AddListController extends AbstractActionController
     public function myFieldsAction() {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $list=$addListModel->getList($listNameUuid);
+
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+        $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+        $roles = $authorize->getIdentityRoles();
+
+        if(array_search("admin",$roles,true)) {
+            $list=$addListModel->getListAdmin($listNameUuid);
+        } else {
+            $list=$addListModel->getList($listNameUuid,$orgListId);
+        }
+
+
+
+
 
         if(!empty($list['list']['parentId'])) {
             $parentList=$addListModel->getListName($list['list']['parentId']);
@@ -155,5 +207,22 @@ class AddListController extends AbstractActionController
             'listChild'=>$listChild,
             'listParent'=>$listParent
         ));
+    }
+    public function getOrganizationModel()
+    {
+        if (!$this->organizationModel) {
+            $sm = $this->getServiceLocator();
+            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+        }
+        return $this->organizationModel;
+    }
+
+    public function getCompanyUserModel()
+    {
+        if (!$this->companyUserModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+        }
+        return $this->companyUserModel;
     }
 }
