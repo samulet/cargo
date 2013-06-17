@@ -2,6 +2,7 @@
 $form = $this->form;
 $form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'parent'=>$this->parent)))
     ->prepare();
+
  if(empty($this->parent)) {
 
      $name=$this->listName['list']['fieldRusName'];
@@ -23,7 +24,7 @@ echo $this->form()->openTag($form);
 
 echo $this->formRow($value);
 
-if(array_search("administrator",$this->roles,true)) {
+if(array_search("admin",$this->roles,true)) {
     echo '<input type="checkbox" name="global" value="global">Глобальное значние </br>';
 }
 
