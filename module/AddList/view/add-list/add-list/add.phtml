@@ -2,6 +2,7 @@
 $form = $this->form;
 $form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'parent'=>$this->parent)))
     ->prepare();
+
  if(empty($this->parent)) {
 
      $name=$this->listName['list']['fieldRusName'];
@@ -9,6 +10,8 @@ $form->setAttribute('action', $this->url('addList', array('action' => 'addList',
      $name=$this->listName['value'];
  }
 $value = $form->get('value');
+
+
 
 ?>
 <p>Добавление новго поля в <b><?php echo $name; ?></b></p>
@@ -20,6 +23,10 @@ echo $this->form()->openTag($form);
 
 
 echo $this->formRow($value);
+
+if(array_search("admin",$this->roles,true)) {
+    echo '<input type="checkbox" name="global" value="global">Глобальное значние </br>';
+}
 
 echo $this->formElement($form->get('submit')); ?>
 <?php  echo $this->form()->closeTag();

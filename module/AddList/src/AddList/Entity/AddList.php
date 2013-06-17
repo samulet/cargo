@@ -55,6 +55,32 @@ class AddList
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
+    public $ownerOrgId;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Лист:"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $ownerUserId;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Лист:"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
     public $listId;
 
     /**
@@ -109,6 +135,12 @@ class AddList
      * @ODM\Field(type="string")
      */
     public $value;
+    /**
+     * @Annotation\Exclude()
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $global;
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})

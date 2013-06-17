@@ -197,5 +197,9 @@ class OrganizationModel implements ServiceLocatorAwareInterface
 
     }
 
+    public function getOrgByUserId($userId) {
+
+    }
+
 
 }
