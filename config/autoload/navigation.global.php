@@ -65,7 +65,13 @@ return array(
             ),
         ),
         'sidebar' => array(
+            array(
+                'label' => 'Организаиця',
+                'route' => 'organization',
+                'action' => 'my',
+                'resource'   => 'route/organization',
 
+            ),
             array(
                 'label' => 'Доска оповещений',
                 'route' => 'notification',
