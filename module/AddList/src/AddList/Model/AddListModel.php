@@ -93,7 +93,7 @@ class AddListModel implements ServiceLocatorAwareInterface
     public function returnDataArray($arrFields,$prefix,$orgListId) {
         $localArray=$this->getLocalArray($prefix,$orgListId);
         $globalArray=$this->getGlobalArray($prefix);
-
+        return array_merge_recursive($globalArray,$localArray);
     }
 
     public function russianToTranslit($str) {
