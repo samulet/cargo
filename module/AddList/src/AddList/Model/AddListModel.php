@@ -192,7 +192,36 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
+    public function getListAdmin($uuid) {
+        $id=$this->getIdByUUID($uuid);
 
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $res = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($id);
+        $list=$this->getListName($id);
+
+        $result=array();
+        foreach($res as $re)
+        {
+
+            $vars=get_object_vars($re);
+            if(!empty($vars['parentFieldId'])) {
+                $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($vars['parentFieldId']);
+                foreach($parent as $par)
+                {
+                    $parent=$par;
+                }
+                $parent=get_object_vars($parent);
+            } else {
+                $parent=null;
+            }
+            array_push($result,array('it'=>$vars,'parent'=>$parent));
+        }
+
+
+
+
+        return array('field'=>$result,'list'=>$list);
+    }
 
     public function getList($uuid,$orgListId) {
         $id=$this->getIdByUUID($uuid);

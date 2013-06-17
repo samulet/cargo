@@ -37,13 +37,16 @@ class AddListController extends AbstractActionController
         if(!empty($parent)) {
             $listName=$addListModel->getOneList($listNameUuid);
         } else {
-            $listName=$addListModel->getList($listNameUuid);
+            $orgUserModel=$this->getCompanyUserModel();
+            $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+            $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+            $listName=$addListModel->getList($listNameUuid,$orgListId);
         }
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
 
-        $viewmodel = new ViewModel();
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
         return new ViewModel(array(
@@ -139,7 +142,23 @@ class AddListController extends AbstractActionController
     public function myFieldsAction() {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $list=$addListModel->getList($listNameUuid);
+
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+        $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+        $roles = $authorize->getIdentityRoles();
+
+        if(array_search("admin",$roles,true)) {
+            $list=$addListModel->getListAdmin($listNameUuid);
+        } else {
+            $list=$addListModel->getList($listNameUuid,$orgListId);
+        }
+
+
+
+
 
         if(!empty($list['list']['parentId'])) {
             $parentList=$addListModel->getListName($list['list']['parentId']);
