@@ -16,6 +16,7 @@ class InteractionController extends AbstractActionController
     protected $ticketModel;
     protected $resourceModel;
     protected $addListModel;
+    protected $companyUserModel;
 
     public function indexAction()
     {
@@ -71,7 +72,11 @@ class InteractionController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
 
-        $formData=$addListModel->returnDataArray(array(),'interactionNote');
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+        $formData=$addListModel->returnDataArray(array(),'interactionNote',$orgListId);
 
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
@@ -133,5 +138,13 @@ class InteractionController extends AbstractActionController
             $this->addListModel = $sm->get('AddList\Model\AddListModel');
         }
         return $this->addListModel;
+    }
+    public function getCompanyUserModel()
+    {
+        if (!$this->companyUserModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+        }
+        return $this->companyUserModel;
     }
 }

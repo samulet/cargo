@@ -45,7 +45,10 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'vehicle');
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
 
         $fillFrom=new VehicleForm();
         $form=$fillFrom->fillFrom($form,$formData,$form_array);
@@ -64,7 +67,10 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'vehicle');
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
         $fillFrom=new VehicleForm();
         $form=$fillFrom->fillFrom($form,$formData,$form_array);
         return new ViewModel(array(
@@ -130,7 +136,10 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'vehicle');
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
         $fillFrom=new VehicleForm();
         $form=$fillFrom->fillFrom($form,$formData,$form_array);
         return new ViewModel(array(
