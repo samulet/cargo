@@ -82,10 +82,24 @@ class VehicleController extends AbstractActionController
 
     public function listAction()
     {
+        $resModel = $this->getVehicleModel();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $this->getVehicleModel();
+        $res = $resModel->listVehicle($id);
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Resource\Entity\Vehicle');
+        $addListModel = $this->getAddListModel();
+        $form_array=array('mark','model','type','status');
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
+        $fillFrom=new VehicleForm();
+        $form=$fillFrom->fillFrom($form,$formData,$form_array);
         return new ViewModel(array(
-            'res' => $res->listVehicle($id)
+            'form' => $form,
+            'res' => $res,
+            'id' => $id
         ));
 
     }

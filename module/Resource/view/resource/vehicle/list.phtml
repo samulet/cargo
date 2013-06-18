@@ -1,14 +1,109 @@
 <?php
-$vehicle = $this->res;
+$form = $this->form;
+$form->setAttribute('action', $this->url('vehicle', array('action' => 'addVehicle', 'id' => $this->id)))
+    ->prepare();
+$name = $form->get('name');
 
-unset($vehicle['created']);
-unset($vehicle['updated']);
+$serialNumber= $form->get('serialNumber')->setValue($this->res['serialNumber'])->setAttributes(array( 'disabled' => 'disabled' ));
+$vin= $form->get('vin')->setValue($this->res['vin'])->setAttributes(array( 'disabled' => 'disabled' ));
+$mark= $form->get('mark')->setValue($this->res['mark'])->setAttributes(array( 'disabled' => 'disabled' ));
+$model= $form->get('model')->setValue($this->res['model'])->setAttributes(array( 'disabled' => 'disabled' ));
+$type= $form->get('type')->setValue($this->res['type'])->setAttributes(array( 'disabled' => 'disabled' ));
+$dateMade= $form->get('dateMade')->setValue($this->res['dateMade'])->setAttributes(array( 'disabled' => 'disabled' ));
+$owner= $form->get('owner')->setValue($this->res['owner'])->setAttributes(array( 'disabled' => 'disabled' ));
 
-foreach ($vehicle as $key => $value) {
-    if ($value != '') {
-        echo $key . ' : ' . $value . '</br> ';
-    }
-}
+$semitrailer= $form->get('semitrailer')->setValue($this->res['semitrailer'])->setAttributes(array( 'disabled' => 'disabled' ));
+$tractor= $form->get('tractor')->setValue($this->res['tractor'])->setAttributes(array( 'disabled' => 'disabled' ));
+$coupling= $form->get('coupling')->setValue($this->res['coupling'])->setAttributes(array( 'disabled' => 'disabled' ));
+$lorry= $form->get('lorry')->setValue($this->res['lorry'])->setAttributes(array( 'disabled' => 'disabled' ));
+
+$hydroLift = $form->get('hydroLift')->setValue($this->res['hydroLift'])->setAttributes(array( 'disabled' => 'disabled' ));
+$EKMT = $form->get('EKMT')->setValue($this->res['EKMT'])->setAttributes(array( 'disabled' => 'disabled' ));
+$TIR = $form->get('TIR')->setValue($this->res['TIR'])->setAttributes(array( 'disabled' => 'disabled' ));
+$adr= $form->get('adr')->setValue($this->res['adr'])->setAttributes(array( 'disabled' => 'disabled' ));
+$note= $form->get('note')->setValue($this->res['note'])->setAttributes(array( 'disabled' => 'disabled' ));
+
+
+$status= $form->get('status')->setAttributes(array( 'disabled' => 'disabled' ));
+$dateMade= $form->get('dateMade')->setAttributes(array( 'disabled' => 'disabled' ));
+$owner= $form->get('owner')->setAttributes(array( 'disabled' => 'disabled' ));
+
+$serialNumberDoc= $form->get('serialNumberDoc')->setValue($this->res['serialNumberDoc'])->setAttributes(array( 'disabled' => 'disabled' ));
+$carNumber= $form->get('carNumber')->setValue($this->res['carNumber'])->setAttributes(array( 'disabled' => 'disabled' ));
+$ecologicalClass= $form->get('ecologicalClass')->setValue($this->res['ecologicalClass'])->setAttributes(array( 'disabled' => 'disabled' ));
+$allowedMaxMass= $form->get('allowedMaxMass')->setValue($this->res['allowedMaxMass'])->setAttributes(array( 'disabled' => 'disabled' ));
+$axles= $form->get('axles')->setValue($this->res['axles'])->setAttributes(array( 'disabled' => 'disabled' ));
+$capacity= $form->get('capacity')->setValue($this->res['capacity'])->setAttributes(array( 'disabled' => 'disabled' ));
+$ownerName= $form->get('ownerName')->setValue($this->res['ownerName'])->setAttributes(array( 'disabled' => 'disabled' ));
+$whoGave= $form->get('whoGave')->setValue($this->res['whoGave'])->setAttributes(array( 'disabled' => 'disabled' ));
+
+echo $this->form()->openTag($form);
+
+
+
 
 ?>
 
+    <table class="table spec_table vehicle">
+        <tr >
+            <th style="width:50%; text-align: center;">
+                ПТС
+            </th>
+            <th style="width:50%; text-align: center;">
+                Свидетельстов о регистрации
+            </th>
+        </tr>
+        <tr style="border-right: 1px dashed #dddddd;">
+            <td style="width:50%;">
+                <?php
+                echo $this->formRow($serialNumber);
+                echo $this->formRow($vin);
+                echo $this->formRow($mark);
+                echo $this->formRow($model);
+                echo $this->formRow($type);
+                ?>
+
+                <?php
+                echo $this->formRow($semitrailer);
+                echo $this->formRow($tractor);
+                echo $this->formRow($coupling);
+                echo $this->formRow($lorry);
+                ?>
+
+                <?php
+                echo $this->formRow($dateMade);
+
+                ?>
+            </td>
+            <td style="width:50%;">
+                <?php
+                echo $this->formRow($serialNumberDoc);
+                echo $this->formRow($carNumber);
+                echo $this->formRow($ecologicalClass);
+                echo $this->formRow($allowedMaxMass);
+                echo $this->formRow($axles);
+                echo $this->formRow($capacity);
+                echo $this->formRow($ownerName);
+                echo $this->formRow($whoGave);
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php  echo $this->formRow($status);
+                echo $this->formRow($hydroLift);
+                echo $this->formRow($EKMT);
+                echo $this->formRow($TIR);
+                echo $this->formRow($adr);
+                ?>
+            </td>
+            <td>
+                <?php  echo $this->formRow($note);
+                ?>
+            </td>
+        </tr>
+    </table>
+
+
+<?php  echo $this->form()->closeTag();
+?>

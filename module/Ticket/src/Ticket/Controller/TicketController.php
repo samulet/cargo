@@ -111,10 +111,38 @@ class TicketController extends AbstractActionController
 
     public function listAction()
     {
+        $resModel = $this->getTicketModel();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $this->getTicketModel();
+        $res = $resModel->listTicket($id);
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Ticket\Entity\Ticket');
+
+        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
+
+
+        $form_array=array();
+
+        $addListModel = $this->getAddListModel();
+
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay');
+
+        $fillFrom=new TicketForm();
+        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+
+
+        $way=$resModel->returnAllWays($res['id']);
+
+
+
+
+
         return new ViewModel(array(
-            'res' => $res->listTicket($id)
+            'form' => $form,
+            'res' => $res,
+            'formWay'=>$formWay,
+            'way'=>$way,
+            'id' => $id
         ));
 
     }
