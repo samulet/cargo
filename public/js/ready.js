@@ -39,5 +39,11 @@ $(document).ready(function() {
         onChangeSetValues(this);
     });
 
+    $("#addListMenuSelect").change(function() {
+        var optionVal=$("#addListMenuSelect option:checked").val();
+        if(optionVal!='') {
+            window.location.replace('/addList/'+optionVal);
+        }
+    });
 
 });
