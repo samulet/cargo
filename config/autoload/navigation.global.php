@@ -36,6 +36,7 @@ return array(
                         'label' => 'Аккаунты',
                         'route' => 'organization',
                         'group' => 'right',
+                        'params' => array('id' => null),
                         'resource'   => 'route/organization',
                     ),
                     array(
@@ -69,22 +70,22 @@ return array(
                 'label' => 'Организаиця',
                 'route' => 'organization',
                 'action' => 'my',
+                'params' => array('id' => null),
                 'resource'   => 'route/organization',
-
             ),
             array(
                 'label' => 'Доска оповещений',
                 'route' => 'notification',
                 'action' => 'my',
+                'params' => array('id' => null),
                 'resource'   => 'route/notification',
-
             ),
             array(
                 'label' => 'Новые оповещения',
                 'route' => 'notification',
                 'action' => 'new',
+                'params' => array('id' => null),
                 'resource'   => 'route/notification',
-
             ),
             array(
                 'label' => 'Рерусы',
@@ -97,13 +98,14 @@ return array(
                 'label' => 'Все',
                 'route' => 'resource',
                 'action' => 'index',
+                'params' => array('id' => null),
                 'resource'   => 'route/resource',
-
             ),
             array(
                 'label' => 'Собственные',
                 'route' => 'resource',
                 'action' => 'my',
+                'params' => array('id' => null),
                 'resource'   => 'route/resource',
             ),
             array(
@@ -117,12 +119,14 @@ return array(
                 'label' => 'Все',
                 'route' => 'vehicle',
                 'action' => 'index',
+                'params' => array('id' => null),
                 'resource'   => 'route/vehicle',
             ),
             array(
                 'label' => 'Собственные',
                 'route' => 'vehicle',
                 'action' => 'my',
+                'params' => array('id' => null),
                 'resource'   => 'route/vehicle',
             ),
             array(
@@ -136,13 +140,14 @@ return array(
                 'label' => 'Все',
                 'route' => 'ticket',
                 'action' => 'index',
+                'params' => array('id' => null),
                 'resource'   => 'route/ticket',
-
             ),
             array(
                 'label' => 'Собственные',
                 'route' => 'ticket',
                 'action' => 'my',
+                'params' => array('id' => null),
                 'resource'   => 'route/ticket',
             ),
             array(
@@ -156,12 +161,14 @@ return array(
                 'label' => 'Все',
                 'route' => 'cargo',
                 'action' => 'index',
+                'params' => array('id' => null),
                 'resource'   => 'route/cargo',
             ),
             array(
                 'label' => 'Собственные',
                 'route' => 'cargo',
                 'action' => 'my',
+                'params' => array('id' => null),
                 'resource'   => 'route/cargo',
             ),
             array(
@@ -175,12 +182,14 @@ return array(
                 'label' => 'Отправленные',
                 'route' => 'interaction',
                 'action' => 'index',
+                'params' => array('id' => null),
                 'resource'   => 'route/interaction',
             ),
             array(
                 'label' => 'Полученные',
                 'route' => 'interaction',
                 'action' => 'my',
+                'params' => array('id' => null),
                 'resource'   => 'route/interaction',
             ),
             array(
@@ -194,6 +203,7 @@ return array(
                 'label' => 'Аукционы',
                 'route' => 'auction',
                 'action' => 'index',
+                'params' => array('id' => null),
                 'resource'   => 'route/auction',
             ),
             array(
@@ -207,6 +217,7 @@ return array(
                 'label' => 'Мои списки',
                 'route' => 'addList',
                 'action' => 'my',
+                'params' => array('id' => null),
                 'resource'   => 'route/addList',
             ),
         ),
