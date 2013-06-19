@@ -42,7 +42,7 @@ $(document).ready(function() {
     $("#addListMenuSelect").change(function() {
         var optionVal=$("#addListMenuSelect option:checked").val();
         if(optionVal!='') {
-            window.location.replace('/addList/'+optionVal);
+            window.location.replace('/addList/my-fields/'+optionVal);
         }
     });
 
