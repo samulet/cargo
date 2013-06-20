@@ -22,21 +22,24 @@ class CargoController extends AbstractActionController
     protected $companyUserModel;
     protected $cargoModel;
     protected $addListModel;
+    protected $ticketModel;
 
     public function indexAction()
     {
-        $res = $this->getCargoModel();
+        $res = $this->getTicketModel();
         return new ViewModel(array(
-            'res' => $res->returnAllCargo()
+            'res' => $res->returnAllTicket()
         ));
     }
 
     public function myAction()
     {
-        $res = $this->getCargoModel();
+        $res = $this->getTicketModel();
+        $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getId());
         return new ViewModel(array(
-            'res' => $res->returnMyCargo($this->zfcUserAuthentication()->getIdentity()->getId())
+            'res' => $ticket
         ));
+
     }
 
     public function addAction()
@@ -145,5 +148,13 @@ class CargoController extends AbstractActionController
             $this->addListModel = $sm->get('AddList\Model\AddListModel');
         }
         return $this->addListModel;
+    }
+    public function getTicketModel()
+    {
+        if (!$this->ticketModel) {
+            $sm = $this->getServiceLocator();
+            $this->ticketModel = $sm->get('Ticket\Model\TicketModel');
+        }
+        return $this->ticketModel;
     }
 }

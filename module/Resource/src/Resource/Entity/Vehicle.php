@@ -10,7 +10,8 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 
 /**
- * @ODM\Document(collection="vehicle", repositoryClass="Resource\Repository\VehicleRepository")
+ * @ODM\Document(collection="vehicle",repositoryClass="Resource\Repository\VehicleRepository")
+
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("vehicle")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
@@ -72,6 +73,7 @@ class Vehicle
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @ODM\Index(unique=true)
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})

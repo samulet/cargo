@@ -119,8 +119,17 @@ class VehicleController extends AbstractActionController
         $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
         $org_id = $comUserModel->getOrgIdByUserId($user_id);
         $res = $this->getVehicleModel();
-        $res->addVehicle($this->getRequest()->getPost(), $user_id, $org_id, $id);
-        return $this->redirect()->toUrl('/vehicles/my');
+        $veh=$res->addVehicle($this->getRequest()->getPost(), $user_id, $org_id, $id);
+        if(empty($veh)) {
+            return $this->redirect()->toUrl('/vehicles/error');
+        } else {
+            return $this->redirect()->toUrl('/vehicles/my');
+        }
+
+    }
+
+    public function errorAction() {
+
     }
 
     public function getVehicleModel()
