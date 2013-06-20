@@ -49,21 +49,31 @@ class VehicleModel implements ServiceLocatorAwareInterface
             $res->$key = $value;
         }
 
+        $error=0;
+
         try {
             $objectManager->persist($res);
             $objectManager->flush();
+
         } catch (\Exception $e) {
-
-
+            $error++;
 
         }
 
+        try {
+            $noteModel=$this->getNotificationModel();
+            $noteModel->addNotification($res->id,$owner_id,$owner_org_id);
 
-        $noteModel=$this->getNotificationModel();
+        } catch (\Exception $e) {
 
-        $noteModel->addNotification($res->id,$owner_id,$owner_org_id);
+            $error++;
+        }
 
-        return $res->uuid;
+        if(!empty($error)) {
+            return null;
+        } else {
+            return $res->uuid;
+        }
     }
 
     public function listVehicle($id)
