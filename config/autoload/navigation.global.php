@@ -69,7 +69,7 @@ return array(
             array(
                 'label' => 'Организаиця',
                 'route' => 'organization',
-                'action' => 'my',
+                'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'route/organization',
             ),
