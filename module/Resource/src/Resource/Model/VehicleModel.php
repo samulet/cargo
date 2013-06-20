@@ -16,6 +16,7 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
+
 class VehicleModel implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
@@ -47,14 +48,32 @@ class VehicleModel implements ServiceLocatorAwareInterface
         foreach ($prop_array as $key => $value) {
             $res->$key = $value;
         }
-        $objectManager->persist($res);
-        $objectManager->flush();
 
-        $noteModel=$this->getNotificationModel();
+        $error=0;
 
-        $noteModel->addNotification($res->id,$owner_id,$owner_org_id);
+        try {
+            $objectManager->persist($res);
+            $objectManager->flush();
 
-        return $res->uuid;
+        } catch (\Exception $e) {
+            $error++;
+
+        }
+
+        try {
+            $noteModel=$this->getNotificationModel();
+            $noteModel->addNotification($res->id,$owner_id,$owner_org_id);
+
+        } catch (\Exception $e) {
+
+            $error++;
+        }
+
+        if(!empty($error)) {
+            return null;
+        } else {
+            return $res->uuid;
+        }
     }
 
     public function listVehicle($id)

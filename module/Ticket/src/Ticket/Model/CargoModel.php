@@ -21,6 +21,7 @@ class CargoModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
     protected $organizationModel;
 
+
     public function addCargo($post, $owner_id, $owner_org_id, $id)
     {
         if(!empty($post)) {
@@ -139,4 +140,5 @@ class CargoModel implements ServiceLocatorAwareInterface
         $cargo = $objectManager->getRepository('Ticket\Entity\Cargo')->findOneBy(array('uuid' => $uuid));
         return $cargo->id;
     }
+
 }

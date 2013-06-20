@@ -125,7 +125,7 @@ class TicketController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay');
+        $formData=$addListModel->getAllDataArray('ticketWay');
 
         $fillFrom=new TicketForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
