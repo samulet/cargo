@@ -109,3 +109,8 @@ ul.dropdown-menu span.divider {
 .vehicle input,.vehicle select  {
     display: block !important;
 }
+
+.muliboxTicket input{
+
+    width:auto !important;
+}

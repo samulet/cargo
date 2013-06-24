@@ -18,6 +18,7 @@ class CompanyController extends AbstractActionController
     protected $companyModel;
     protected $organizationModel;
     protected $addListModel;
+    protected $companyUserModel;
 
     public function indexAction()
     {
@@ -182,5 +183,13 @@ class CompanyController extends AbstractActionController
             $this->addListModel = $sm->get('AddList\Model\AddListModel');
         }
         return $this->addListModel;
+    }
+    public function getCompanyUserModel()
+    {
+        if (!$this->companyUserModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+        }
+        return $this->companyUserModel;
     }
 }

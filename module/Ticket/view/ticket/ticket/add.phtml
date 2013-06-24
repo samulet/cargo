@@ -23,8 +23,12 @@ $box= $formWay->get('box');
 
 $type= $formWay->get('type');
 $temperature= $formWay->get('temperature');
+
 $typeLoad= $formWay->get('typeLoad');
-$typeUnload= $formWay->get('typeUnload');
+$typeUnload= $formWay->get('typeLoad')->setName('typeUnload')->setOptions(array("label"=>'Тип выгрузки'));
+
+
+
 $airSuspension= $formWay->get('airSuspension');
 $coupling= $formWay->get('coupling');
 
@@ -40,6 +44,12 @@ $typeTicket= $form->get('typeTicket');
 
 
 $note= $formWay->get('note');
+
+$docNumber = $formWay->get('docNumber');
+$docWay = $formWay->get('docWay');
+$docNote = $formWay->get('docNote');
+$docDate = $formWay->get('docDate');
+$docType= $formWay->get('docType');
 
 
 ?>
@@ -79,7 +89,10 @@ $note= $formWay->get('note');
             <th>
                 Время
             </th>
+            <th>
+                Документы к грузу
 
+            </th>
             <th>
                 Примечание
             </th>
@@ -119,8 +132,14 @@ $note= $formWay->get('note');
                 <?php
                 echo $this->formRow( $type);
                 echo $this->formRow($temperature);
+                ?>
+<div class="muliboxTicket">
+                <?php
                 echo $this->formRow( $typeLoad);
                 echo $this->formRow( $typeUnload);
+                ?>
+</div>
+                <?php
                 echo $this->formRow( $airSuspension);
                 echo $this->formRow( $coupling);
                 ?>
@@ -133,7 +152,15 @@ $note= $formWay->get('note');
                 echo $this->formRow($timeEnd);
                 ?>
             </td>
-
+<td>
+    <?php
+    echo $this->formRow($docNumber);
+    echo $this->formRow($docWay );
+    echo $this->formRow($docNote );
+   echo $this->formRow($docDate );
+   echo $this->formRow($docType);
+    ?>
+</td>
             <td>
                 <?php
                 echo $this->formRow($note);

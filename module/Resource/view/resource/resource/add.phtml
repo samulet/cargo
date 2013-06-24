@@ -7,7 +7,7 @@ $form->setAttribute('action', $this->url('resource', array('action' => 'addResou
 echo $this->form()->openTag($form);
 
 $tsId= $form->get('tsId');
-$kindOfLoad=$form->get('kindOfLoad');
+$typeLoad=$form->get('typeLoad');
 
 $areaLoad= $formWay->get('areaLoad');
 $areaUnload= $formWay->get('areaUnload');
@@ -22,14 +22,14 @@ $note= $formWay->get('note');
     <table class="table spec_table" style="">
         <tr>
             <th>
-                Груз
+                Добавление ресурса
             </th>
         </tr>
         <tr>
             <td style="border-left:none;">
                 <?php
                 echo $this->formRow($tsId);
-                echo $this->formRow($kindOfLoad);
+                echo $this->formRow($typeLoad);
                ?>
             </td>
         </tr>

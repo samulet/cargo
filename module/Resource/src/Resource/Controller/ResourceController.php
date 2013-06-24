@@ -24,6 +24,7 @@ class ResourceController extends AbstractActionController
     protected $resourceModel;
     protected $vehicleModel;
     protected $interactionModel;
+    protected $addListModel;
 
     public function indexAction()
     {
@@ -56,6 +57,22 @@ class ResourceController extends AbstractActionController
         $form=$resForm->fillTS($form,$myV);
 
         $tsUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+
+
+        $form_array=array();
+
+        $addListModel = $this->getAddListModel();
+
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
+
+
+        $form=$resForm->fillFrom($form,$formData,$form_array);
+
+
         if(!empty($tsUuid)) {
             $tsId=$veh->getIdByUuid($tsUuid);
             $form->get('tsId')->setValue($tsId);
@@ -199,5 +216,12 @@ class ResourceController extends AbstractActionController
         }
         return $this->interactionModel;
     }
-
+    public function getAddListModel()
+    {
+        if (!$this->addListModel) {
+            $sm = $this->getServiceLocator();
+            $this->addListModel = $sm->get('AddList\Model\AddListModel');
+        }
+        return $this->addListModel;
+    }
 }
