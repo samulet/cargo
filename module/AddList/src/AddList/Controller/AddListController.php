@@ -226,4 +226,11 @@ class AddListController extends AbstractActionController
         }
         return $this->companyUserModel;
     }
+
+    public function gotToTheChildAction() {
+        $listId = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $uuid=$addListModel->getChildUuid($listId);
+        return $this->redirect()->toUrl('/addList/list-parent/'.$uuid);
+    }
 }
