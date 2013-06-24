@@ -105,9 +105,9 @@ if(empty($parentList)) {
                 <a href="<?php echo $this->url(
                     'addList',
                     array('action' => 'add', 'id' => $fi['uuid'],'parent'=>'parent')
-                );?>">Добавить зависимое поле <?php
+                );?>">Добавить <?php
                     if(!empty($listChild)) {
-                        echo 'в '.$listChild['fieldRusName'];
+                        echo 'в '.$fi['value'];
                     } ?></a>
                 <?php } ?>
             </td>

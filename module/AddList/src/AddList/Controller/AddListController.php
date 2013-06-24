@@ -206,7 +206,8 @@ class AddListController extends AbstractActionController
         $listParent=$addListModel->getOneList($parentListUuid);
         return new ViewModel(array(
             'listChild'=>$listChild,
-            'listParent'=>$listParent
+            'listParent'=>$listParent,
+            'uuid'=>$parentListUuid
         ));
     }
     public function getOrganizationModel()
