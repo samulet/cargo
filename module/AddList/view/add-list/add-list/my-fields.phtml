@@ -53,9 +53,6 @@ if(empty($parentList)) {
             Имя поля
         </th>
         <th>
-            Просмотр полей
-        </th>
-        <th>
             Добавить поля, зависимые от этого поля
             <?php
             if(!empty($listChild)) {
@@ -84,38 +81,20 @@ if(empty($parentList)) {
             <td>
                 <?php
                 if(!empty($parent['value'])) {
-                    echo $parent['value'].' => ';
-                }
-                echo $fi['value'];
-                ?>
-            </td>
-            <td>
-                <?php
-                if(!empty($listChild)) {
-                ?>
-                <a href="<?php echo $this->url(
-                    'addList',
-                    array('action' => 'my-fields', 'id' => $listChild['uuid'])
-                );?>">Посмотреть полей <?php
-                    if(!empty($listChild)) {
-                        echo $listChild['fieldRusName'];
-                    } ?></a>
-                <?php
-                }
-                if(!empty($fi['value'])) {
-
-                ?>
+                    ?>
                     <a href="<?php echo $this->url(
                         'addList',
                         array('action' => 'list-parent', 'id' => $parent['uuid'])
-                    );?>"><?php if(!empty($parent['value'])) {
-                            echo "Посмотреть поля ". $fi['value'];
-                        }
+                    );?>"> <?php echo $parent['value'].' => '; ?></a>
 
-                        ?></a>
+                <?php echo $fi['value']; ?>
                 <?php
+                } else {
+                    echo $fi['value'];
                 }
+
                 ?>
+
             </td>
             <td>
                 <?php if(empty($parent['value'])) { ?>
