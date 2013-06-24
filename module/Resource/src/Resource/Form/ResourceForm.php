@@ -22,7 +22,10 @@ class ResourceForm
             foreach($element as $el) {
                 $result_array=$result_array+array($el['key']=>$el['value']);
             }
-            $form->get($key)->setOptions(array("value_options"=>$result_array));
+            if($form->get($key)) {
+                $form->get($key)->setOptions(array("value_options"=>$result_array));
+            }
+
         }
 
         return $form;
