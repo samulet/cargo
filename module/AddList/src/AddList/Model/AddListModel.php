@@ -474,4 +474,10 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $this->organizationModel;
     }
 
+    public function getChildUuid($id) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('parentFieldId' => new \MongoId($id)));
+        return $list->uuid;
+    }
+
 }

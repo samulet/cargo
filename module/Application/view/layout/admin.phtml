@@ -1,0 +1,96 @@
+<?php
+
+$displayName = $this->zfcUserIdentity() ? $this->zfcUserIdentity()->getDisplayname() : '';
+
+echo $this->doctype(); ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('Карго')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+    <?php echo $this->headLink(
+        array(
+            'rel' => 'shortcut icon',
+            'type' => '/image/vnd.microsoft.icon',
+            'href' => $this->basePath() . '/images/favicon.ico'
+        )
+    )
+        ->prependStylesheet($this->basePath() . '/css/style.css')
+        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()->prependFile(
+        $this->basePath() . '/js/html5.js',
+        'text/javascript',
+        array('conditional' => 'lt IE 9',)
+    )
+        ->prependFile($this->basePath() . '/js/common.js')
+        ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+        ->prependFile($this->basePath() . '/js/jquery.min.js')
+        ->prependFile($this->basePath() . '/js/ready.js')
+        ->prependFile('http://code.jquery.com/jquery-2.0.0.min.js')
+        ->prependFile($this->basePath() . '/js/addWay.js')
+
+    ?>
+
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="<?php echo $this->url('home') ?>">Админ панель</a>
+
+            <div class="nav-collapse collapse">
+                <?php
+                echo $this->navigation('topmenu_navigation')->menu()->setPartial('application/layout/top-menu');
+                ?>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+<div id="login-form"
+     class="modal hide fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="LoginFormLabel"
+     aria-hidden="true">
+    <?php echo $this->zfcUserLoginWidget(); ?>
+</div>
+<div class="container">
+    <?php if ($this->zfcUserIdentity()) { ?>
+        <div class="row">
+            <div class="span2">
+                <?php
+                //die(var_dump($this->navigation));
+              //  echo $this->navigation('navigation')->menu();
+                echo $this->navigation('admin_navigation')->menu()->setPartial(null)->setUlClass('nav nav-list');
+                ?>
+            </div>
+            <div class="span10">
+                <?php echo $this->content; ?>
+            </div>
+        </div>
+    <?php } else { ?>
+        <?php echo $this->content; ?>
+    <?php } ?>
+</div>
+<!-- /container -->
+<footer class="navbar navbar-fixed-bottom">
+    <div class="navbar-inner">
+        <div class="container">
+            <span class="brand" href="#">&copy;&nbsp;2013&nbsp;СП Онлайн</span>
+        </div>
+    </div>
+</footer>
+<?php echo $this->inlineScript() ?>
+</body>
+</html>

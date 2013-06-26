@@ -11,9 +11,6 @@ $list = $this->list;
             Имя списка
         </th>
         <th>
-            Просмотр полей
-        </th>
-        <th>
             Добавить поля
         </th>
     </tr>
@@ -25,15 +22,12 @@ $list = $this->list;
 
     <tr>
         <td>
-            <?php
-            echo $li['fieldRusName'];
-            ?>
-        </td>
-        <td>
             <a href="<?php echo $this->url(
                 'addList',
                 array('action' => 'my-fields', 'id' => $li['uuid'])
-            );?>">Поля списка</a>
+            );?>"><?php
+            echo $li['fieldRusName'];
+            ?></a>
         </td>
         <td>
             <a href="<?php echo $this->url(
@@ -57,15 +51,12 @@ $list = $this->list;
 
             <tr>
                 <td  style="<?php $pad=$padding*30;echo "padding-left:".$pad."px";?>">Вложенный список:
-                    <?php
-                    echo $li['fieldRusName'];
-                    ?>
-                </td>
-                <td>
                     <a href="<?php echo $this->url(
                         'addList',
                         array('action' => 'my-fields', 'id' => $li['uuid'])
-                    );?>">Поля списка</a>
+                    );?>">  <?php
+                    echo $li['fieldRusName'];
+                    ?></a>
                 </td>
                 <td>
 
