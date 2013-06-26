@@ -155,7 +155,7 @@ class Resource
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Тип загрузки"})
+     * @Annotation\Options({"label":"Вид загрузки"})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
