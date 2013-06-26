@@ -8,10 +8,16 @@ $listChild=$this->listChild;
 ?>
 
 
-
 <h1> <?php
     echo $listParent['value'];
     ?></h1>
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'add', 'id' => $this->uuid,'parent'=>'parent')
+);?>">Добавить <?php
+
+    echo 'в '.$listParent['value'];
+    ?></a>
 
 <table class="table">
     <tr>
