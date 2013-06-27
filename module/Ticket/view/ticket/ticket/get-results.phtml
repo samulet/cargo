@@ -35,18 +35,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         <th>
 
         </th>
-        <th>
-            Редактировать
-        </th>
-        <th>
-            Добавить аукцион
-        </th>
-        <th>
-            Копировать
-        </th>
-        <th>
-            Удалить
-        </th>
+
     </tr>
     <?php foreach ($tickets as $ticket) {
         $ticketWay=$ticket['ways'];
@@ -81,30 +70,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
 
             </td>
-            <td>
-                <a href="<?php echo $this->url(
-                    'ticket',
-                    array('action' => 'edit', 'id' => $ticket['uuid'])
-                );?>">Редактировать</a>
-            </td>
-            <td>
-                <a href="<?php echo $this->url(
-                    'auction',
-                    array('action' => 'add', 'id' => $ticket['uuid'])
-                );?>">Добавить аукцион</a>
-            </td>
-            <td>
-                <a href="<?php echo $this->url(
-                    'ticket',
-                    array('action' => 'copy', 'id' => $ticket['uuid'])
-                );?>">Копировать</a>
-            </td>
-            <td>
-                <a href="<?php echo $this->url(
-                    'ticket',
-                    array('action' => 'delete', 'id' => $ticket['uuid'])
-                );?>">Удалить</a>
-            </td>
+
         </tr>
     <?php } ?>
 
