@@ -124,6 +124,36 @@ class ResourceModel implements ServiceLocatorAwareInterface
         return $res->uuid;
     }
 
+    public function returnResultsResource($post) {
+        $propArray = get_object_vars($post);
+        unset($propArray['submit']);
+        $propArrayResult=array();
+        foreach($propArray as $key => $value) {
+            if(!empty($value)) {
+                $propArrayResult[$key]=$value;
+            }
+        }
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default') ;
+        $rezObj = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy($propArrayResult);
+
+        if(!empty($rezObj)) {
+            $result = array();
+            $cargo = $this->getCargoModel();
+            foreach ($rezObj as $cur) {
+
+                $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerResourceId)));
+
+                $veh=$cargo->listCargo($cur->tsId);
+                $ways=$this->returnAllWays($cur->id);
+                array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways));
+            }
+            return $result;
+        } else {
+            return null;
+        }
+
+    }
+
     public function listResource($id)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
