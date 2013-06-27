@@ -109,6 +109,13 @@ return array(
                 'resource'   => 'route/resource',
             ),
             array(
+                'label' => 'Поиск',
+                'route' => 'resource',
+                'action' => 'search',
+                'params' => array('id' => null),
+                'resource'   => 'route/resource',
+            ),
+            array(
                 'label' => 'Транспорт',
                 'type' => 'uri',
                 'uri' => '',
@@ -147,6 +154,13 @@ return array(
                 'label' => 'Собственные',
                 'route' => 'ticket',
                 'action' => 'my',
+                'params' => array('id' => null),
+                'resource'   => 'route/ticket',
+            ),
+            array(
+                'label' => 'Поиск',
+                'route' => 'ticket',
+                'action' => 'search',
                 'params' => array('id' => null),
                 'resource'   => 'route/ticket',
             ),
