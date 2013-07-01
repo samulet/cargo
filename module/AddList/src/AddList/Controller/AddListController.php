@@ -206,7 +206,8 @@ class AddListController extends AbstractActionController
         $listParent=$addListModel->getOneList($parentListUuid);
         return new ViewModel(array(
             'listChild'=>$listChild,
-            'listParent'=>$listParent
+            'listParent'=>$listParent,
+            'uuid'=>$parentListUuid
         ));
     }
     public function getOrganizationModel()
@@ -225,5 +226,12 @@ class AddListController extends AbstractActionController
             $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
         }
         return $this->companyUserModel;
+    }
+
+    public function gotToTheChildAction() {
+        $listId = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $uuid=$addListModel->getChildUuid($listId);
+        return $this->redirect()->toUrl('/addList/list-parent/'.$uuid);
     }
 }
