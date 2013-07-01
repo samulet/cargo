@@ -196,6 +196,39 @@ class TicketController extends AbstractActionController
 
         ));
     }
+    public function searchAction() {
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Ticket\Entity\Ticket');
+
+        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
+
+        $form_array=array();
+
+        $addListModel = $this->getAddListModel();
+
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
+
+        $fillFrom=new TicketForm();
+        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+
+
+        return new ViewModel(array(
+            'form' => $form,
+            'formWay' =>$formWay
+
+        ));
+    }
+    public function getResultsAction() {
+        $res = $this->getTicketModel();
+        $ticket=$res->returnSearchTicket($this->getRequest()->getPost());
+        return new ViewModel(array(
+            'res' => $ticket
+        ));
+    }
     public function getCargoModel()
     {
         if (!$this->cargoModel) {
