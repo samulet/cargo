@@ -1,0 +1,186 @@
+<?php
+$form = $this->form;
+$formWay = $this->formWay;
+
+$form->setAttribute('action', $this->url('ticket', array('action' => 'getResults')))
+    ->prepare();
+echo $this->form()->openTag($form);
+
+
+$areaLoad= $formWay->get('areaLoad')->setAttributes(array('required'  => '' ));
+$areaUnload= $formWay->get('areaUnload')->setAttributes(array('required'  => '' ));
+
+$cargoOwner= $formWay->get('cargoOwner')->setAttributes(array('required'  => '' ));
+$cargoName= $formWay->get('cargoName')->setAttributes(array('required'  => '' ));
+
+$adr= $formWay->get('adr')->setAttributes(array('required'  => '' ));
+$cubs= $formWay->get('cubs')->setAttributes(array('required'  => '' ));
+$dimensions= $formWay->get('dimensions')->setAttributes(array('required'  => '' ));
+$weight= $formWay->get('weight')->setAttributes(array('required'  => '' ));
+$rubles= $formWay->get('rubles')->setAttributes(array('required'  => '' ));
+$pallet= $formWay->get('pallet')->setAttributes(array('required'  => '' ));
+$box= $formWay->get('box')->setAttributes(array('required'  => '' ));
+
+$type= $formWay->get('type')->setAttributes(array('required'  => '' ));
+$temperature= $formWay->get('temperature')->setAttributes(array('required'  => '' ));
+
+$typeLoad= $formWay->get('typeLoad')->setAttributes(array('required'  => '' ));
+$typeUnload= $formWay->get('typeLoad')->setName('typeUnload')->setOptions(array("label"=>'Тип выгрузки'))->setAttributes(array('required'  => '' ));
+
+
+
+$airSuspension= $formWay->get('airSuspension')->setAttributes(array('required'  => '' ));
+$coupling= $formWay->get('coupling')->setAttributes(array('required'  => '' ));
+
+$dateStart= $formWay->get('dateStart')->setAttributes(array('required'  => '' ));
+$timeStart= $formWay->get('timeStart')->setAttributes(array('required'  => '' ));
+$dateEnd= $formWay->get('dateEnd')->setAttributes(array('required'  => '' ));
+$timeEnd= $formWay->get('timeEnd')->setAttributes(array('required'  => '' ));
+
+$currency= $form->get('currency')->setAttributes(array('required'  => '' ));
+$money= $form->get('money')->setAttributes(array('required'  => '' ));
+
+
+$formPay= $form->get('formPay')->setAttributes(array('required'  => '' ));
+$typeTicket= $form->get('typeTicket')->setAttributes(array('required'  => '' ));
+
+
+$note= $formWay->get('note')->setAttributes(array('required'  => '' ));
+
+$docNumber = $formWay->get('docNumber')->setAttributes(array('required'  => '' ));
+$docWay = $formWay->get('docWay')->setAttributes(array('required'  => '' ));
+$docNote = $formWay->get('docNote')->setAttributes(array('required'  => '' ));
+$docDate = $formWay->get('docDate')->setAttributes(array('required'  => '' ));
+$docType= $formWay->get('docType')->setAttributes(array('required'  => '' ));
+
+
+?>
+<h1>Поиск по заявкам</h1>
+<p><b>Впишите поля, по которым будет вестись поиск. Пустые поля будут пропущены.</b></p>
+    <table class="table spec_table" style="">
+        <tr>
+            <th>
+                Заявка
+            </th>
+        </tr>
+        <tr>
+            <td style="border-left:none;">
+                <?php
+                //echo $this->formRow($currency);
+                //echo $this->formRow($money);
+               // echo $this->formRow($formPay);
+                //echo $this->formRow($typeTicket);
+                ?>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table spec_table" style="">
+        <tr>
+            <th>
+                Маршрут
+            </th>
+            <th>
+                Данные груза
+            </th>
+            <th>
+                Количество груза
+            </th>
+            <th>
+                Требования к ТС
+            </th>
+            <th>
+                Время
+            </th>
+            <th>
+                Документы к грузу
+
+            </th>
+            <th>
+                Примечание
+            </th>
+            <th>
+                Удалить пункт выдачи
+            </th>
+
+        </tr>
+        <tr class="wayTr">
+            <td>
+                <?php
+                echo $this->formRow($areaLoad);
+                echo $this->formRow($areaUnload);
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow($cargoOwner);
+                echo $this->formRow($cargoName);
+                echo $this->formRow($adr);
+
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow( $adr);
+                echo $this->formRow( $cubs);
+                echo $this->formRow(  $dimensions);
+                echo $this->formRow(  $weight);
+                echo $this->formRow(  $rubles);
+                echo $this->formRow(  $pallet);
+                echo $this->formRow( $box);
+
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow( $type);
+                echo $this->formRow($temperature);
+                ?>
+                <div class="muliboxTicket">
+                    <?php
+                    echo $this->formRow( $typeLoad);
+                    echo $this->formRow( $typeUnload);
+                    ?>
+                </div>
+                <?php
+                echo $this->formRow( $airSuspension);
+                echo $this->formRow( $coupling);
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow($dateStart);
+                echo $this->formRow($timeStart);
+                echo $this->formRow($dateEnd);
+                echo $this->formRow($timeEnd);
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow($docNumber);
+                echo $this->formRow($docWay );
+                echo $this->formRow($docNote );
+                echo $this->formRow($docDate );
+                echo $this->formRow($docType);
+                ?>
+            </td>
+            <td>
+                <?php
+                echo $this->formRow($note);
+                ?>
+            </td>
+
+            <td>
+                <input name="deleteWay" class="deleteWay" type="button" value="Удалть"/>
+            </td>
+        </tr>
+        <tr class="addTr">
+            <td>
+                <input id="counter" type="hidden" value='0' />
+
+            </td>
+        </tr>
+    </table>
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue('Поиск')); ?> </div>
+<?php  echo $this->form()->closeTag();
+?>

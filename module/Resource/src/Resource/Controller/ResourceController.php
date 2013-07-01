@@ -85,6 +85,55 @@ class ResourceController extends AbstractActionController
         ));
     }
 
+    public function searchAction()
+    {
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Resource\Entity\Resource');
+
+        $formWay= $builder->createForm('Resource\Entity\ResourceWay');
+
+        $veh = $this->getVehicleModel();
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $resForm=new ResourceForm();
+
+        $form=$resForm->fillTS($form,$myV);
+
+        $tsUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+
+
+        $form_array=array();
+
+        $addListModel = $this->getAddListModel();
+
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
+
+
+        $form=$resForm->fillFrom($form,$formData,$form_array);
+
+
+        if(!empty($tsUuid)) {
+            $tsId=$veh->getIdByUuid($tsUuid);
+            $form->get('tsId')->setValue($tsId);
+        }
+
+        return new ViewModel(array(
+            'form' => $form,
+            'formWay' =>$formWay
+
+        ));
+    }
+    public function getResultsAction()
+    {
+        $res = $this->getResourceModel();
+        $resource=$res->returnResultsResource($this->getRequest()->getPost());
+        return new ViewModel(array(
+            'res' => $resource
+        ));
+    }
     public function editAction()
     {
         $resModel = $this->getResourceModel();
