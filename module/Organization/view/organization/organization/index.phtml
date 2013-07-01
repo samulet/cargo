@@ -8,32 +8,40 @@ $this->headTitle($title);
  <?php } ?>
 </p>
 
-    <?php if(!empty($this->org)) { foreach($this->org as $oc) { $o=$oc['org']?>
+    <?php if(!empty($this->org)) {
+    foreach($this->org as $oc) { $o=$oc['org']?>
         <table class="table">
             <tr>
                 <th>Название организации</th>
                 <th>Тип организации</th>
                 <th>Описание организации</th>
-                <th>Добавить юр. лицо</th>
-                <th>Добавить юзера в организацию</th>
-                <th>&nbsp;</th>
             </tr>
         <tr>
             <td><a href="<?php echo $this->url('organization',
                     array('action'=>'list', 'id' => $o['uuid']));?>"><?php echo $o['name']; ?></a></td>
             <td><?php echo $o['type']; ?></td>
             <td><?php echo $o['description']; ?></td>
-            <td><a href="<?php echo $this->url('company',
-                    array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
-            <td><a href="<?php echo $this->url('company_user',
-                    array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
-            <td>
-                <a href="<?php echo $this->url('organization',
-                    array('action'=>'edit', 'id' => $o['uuid']));?>">Редактировать</a>
-                <a href="<?php echo $this->url('organization',
-                    array('action'=>'delete', 'id' => $o['uuid']));?>">Удалить</a>
-            </td>
-        </tr>
+            </tr>
+
+</table>
+<table class="table">
+<tr>
+                <th>Добавить юр. лицо</th>
+                <th>Добавить юзера в организацию</th>
+                <th>&nbsp;</th>
+                </tr>
+                <tr>
+                <td><a href="<?php echo $this->url('company',
+                                    array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
+                            <td><a href="<?php echo $this->url('company_user',
+                                    array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
+                            <td>
+                                <a href="<?php echo $this->url('organization',
+                                    array('action'=>'edit', 'id' => $o['uuid']));?>">Редактировать</a>
+                                <a href="<?php echo $this->url('organization',
+                                    array('action'=>'delete', 'id' => $o['uuid']));?>">Удалить</a>
+                            </td>
+                        </tr>
 
 </table>
         <p>
