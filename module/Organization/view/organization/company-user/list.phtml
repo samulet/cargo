@@ -1,0 +1,28 @@
+<?php
+$users=$this->users;
+?>
+<h1>Список юзеров</h1>
+
+<?php
+foreach($users as $user) {
+?>
+
+<table class="table">
+    <tr>
+        <th>Email</th>
+        <th>Имя юзера</th>
+        <th>Изменить роль юзера</th>
+        <th>Удалить юзера</th>
+    </tr>
+    <tr>
+        <td><?php echo $user['email']; ?></td>
+        <td><?php echo $user['username']; ?></td>
+        <td><a href="<?php echo $this->url('company_user',
+                array('action'=>'role', 'org_id' =>$user['id'])); ?>">Роль</a></td>
+        <td><a href="<?php echo $this->url('company_user',
+                array('action'=>'delete', 'org_id' => $user['id']));?>">Удалить</a></td>
+    </tr>
+</table>
+    <?php
+}
+    ?>

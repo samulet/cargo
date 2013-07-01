@@ -44,9 +44,21 @@ $this->headTitle($title);
                         </tr>
 
 </table>
-        <p>
-            <a href="<?php echo $this->url('company', array('action'=>'index','org_id'=>$o['uuid']));?>">Список юр. лиц</a>
-        </p>
+       <table class="table">
+       <tr>
+                       <th>Список юр. лиц</th>
+                       <th>Список юзеров организации</th>
+
+                       </tr>
+                       <tr>
+                       <td><a href="<?php echo $this->url('company', array('action'=>'index','org_id'=>$o['uuid']));?>">Посмотреть юр. лица</a></td>
+                                   <td><a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$o['uuid']));?>">Посмотреть юзеров</a></td>
+
+                               </tr>
+
+       </table>
+
+
         <table style="background:#ccc;" class="table">
             <tr>
                 <th>Название юр. лица</th>
