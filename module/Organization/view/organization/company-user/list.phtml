@@ -3,9 +3,7 @@ $users=$this->users;
 ?>
 <h1>Список юзеров</h1>
 
-<?php
-foreach($users as $user) {
-?>
+
 
 <table class="table">
     <tr>
@@ -14,6 +12,9 @@ foreach($users as $user) {
         <th>Изменить роль юзера</th>
         <th>Удалить юзера</th>
     </tr>
+<?php
+foreach($users as $user) {
+    ?>
     <tr>
         <td><?php echo $user['email']; ?></td>
         <td><?php echo $user['username']; ?></td>
@@ -22,7 +23,7 @@ foreach($users as $user) {
         <td><a href="<?php echo $this->url('company_user',
                 array('action'=>'delete', 'org_id' => $user['id']));?>">Удалить</a></td>
     </tr>
-</table>
-    <?php
+<?php
 }
-    ?>
+?>
+</table>
