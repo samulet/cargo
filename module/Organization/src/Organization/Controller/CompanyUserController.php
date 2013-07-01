@@ -73,6 +73,13 @@ class CompanyUserController extends AbstractActionController
         ));
     }
 
+    public function deleteAction() {
+        $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comUserModel = $this->getCompanyUserModel();
+        $comUserModel->deleteUserFromOrg($userId);
+        return $this->redirect()->toUrl('/organization');
+    }
+
     private function loginControl()
     {
         if ($this->zfcUserAuthentication()->hasIdentity()) {
