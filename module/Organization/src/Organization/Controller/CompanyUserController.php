@@ -62,6 +62,24 @@ class CompanyUserController extends AbstractActionController
         ));
     }
 
+    public function listAction() {
+        $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $orgModel = $this->getOrganizationModel();
+        $orgId = $orgModel->getOrgIdByUUID($org_uuid);
+        $comUserModel = $this->getCompanyUserModel();
+        $users=$comUserModel->getUsersByOrgId($orgId);
+        return new ViewModel(array(
+            'users' => $users
+        ));
+    }
+
+    public function deleteAction() {
+        $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comUserModel = $this->getCompanyUserModel();
+        $comUserModel->deleteUserFromOrg($userId);
+        return $this->redirect()->toUrl('/organization');
+    }
+
     private function loginControl()
     {
         if ($this->zfcUserAuthentication()->hasIdentity()) {

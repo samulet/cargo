@@ -32,12 +32,16 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     public function addUserToOrg($post, $org_id)
     {
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if (is_array($post)) {
+        if (is_object($post)) {
             // TODO: проверить на наличие ключа 'email' и наличие в нем содержимого
-            $user_id = $this->findUserByEmail($post['email']);
+            $post=get_object_vars($post);
+
+            $user_id = $this->findUserByEmail($post['company_user']['email']);
         } else {
             $user_id = $post;
+
         }
         if ($user_id) {
             $comUser = new CompanyUser($org_id, $user_id);
@@ -51,9 +55,9 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     public function findUserByEmail($email)
     {
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $user_id = $objectManager->
-            getRepository('Organization\Entity\Organization')->findOneBy(array('email' => $email));
+        $user_id = $objectManager->getRepository('User\Entity\User')->findOneBy(array('email' => $email));
         if (empty($user_id)) {
             return false;
         } else {
@@ -69,6 +73,32 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     public function getServiceLocator()
     {
         return $this->serviceLocator;
+    }
+
+    public function getUsersByOrgId($orgId){
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+
+        $usersId = $objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('orgId' => new \MongoId($orgId)));
+        $result=array();
+        foreach($usersId as $userId) {
+            $user=$objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId->userId)));
+            if(!empty($user)) {
+                $us=array('id'=>$user->getId(), 'id'=>$user->getId(), 'username'=> $user->getUsername(), 'displayName'=>$user->getDisplayName(),'email'=>$user->getEmail());
+
+                array_push($result,$us);
+            }
+        }
+        return $result;
+    }
+
+    public function deleteUserFromOrg($userId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $user = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('userId' => new \MongoId($userId)));
+        if (!$user) {
+            throw DocumentNotFoundException::documentNotFound('Organization\Entity\CompanyUser', $userId);
+        }
+        $objectManager->remove($user);
+        $objectManager->flush();
     }
 
     public function getOrgIdByUserId($userId)
