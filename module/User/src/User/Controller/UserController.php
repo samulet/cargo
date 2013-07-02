@@ -9,7 +9,7 @@
 
 namespace User\Controller;
 
-use Entity\Recources;
+
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Element\Checkbox;
@@ -21,6 +21,12 @@ class UserController extends AbstractActionController
 {
 
     protected $userModel;
+
+    public function roleAction() {
+        return new ViewModel(array(
+            'res' => 'asd'
+        ));
+    }
 
     public function getUserModel()
     {
