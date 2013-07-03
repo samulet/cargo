@@ -27,8 +27,11 @@ return array(
     ),
     'bjyauthorize' => array(
         'guards' => array(
+            'BjyAuthorize\Guard\Controller' => array(
+                array('controller' => 'Interaction\Controller\Interaction','roles' => array('user','admin')),
+            ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'interaction', 'roles' => array('user')),
+                array('route' => 'interaction', 'roles' => array('user','admin')),
             ),
         ),
     ),
