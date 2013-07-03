@@ -27,8 +27,9 @@ return array(
                     'children' => array(
                         'stuff' => array(
                             'children' => array(
-                                'logist',
-                                'driver',
+                                'forwarder',
+                                'carrier',
+                                'customer',
                                 'owner' => array(
                                     'children' => array(
                                         'admin' => array(),
