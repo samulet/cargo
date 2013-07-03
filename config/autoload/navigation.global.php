@@ -220,13 +220,6 @@ return array(
                 'params' => array('id' => null),
                 'resource'   => 'route/auction',
             ),
-            array(
-                'label' => 'Справочники',
-                'type' => 'uri',
-                'uri' => '',
-                'class' => 'nav-header',
-                'resource'   => 'route/addList',
-            ),
         ),
         'admin' => array(
 
