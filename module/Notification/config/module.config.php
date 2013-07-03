@@ -27,6 +27,9 @@ return array(
     ),
     'bjyauthorize' => array(
         'guards' => array(
+            'BjyAuthorize\Guard\Controller' => array(
+                array('controller' => 'Notification\Controller\Notification','roles' => array('user','admin')),
+            ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'notification', 'roles' => array('user')),
             ),

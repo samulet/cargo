@@ -58,10 +58,16 @@ return array(
     ),
     'bjyauthorize' => array(
         'guards' => array(
+            'BjyAuthorize\Guard\Controller' => array(
+                array('controller' => 'Organization\Controller\Organization','roles' => array('user','admin')),
+                array('controller' => 'Organization\Controller\Company','roles' => array('user','admin')),
+                array('controller' => 'Organization\Controller\CompanyUser','roles' => array('user','admin')),
+            ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'organization', 'roles' => array('user')),
-                array('route' => 'company', 'roles' => array('user')),
-                array('route' => 'company_user', 'roles' => array('user')),
+               // forwarder, carrier, customer
+                array('route' => 'organization', 'roles' => array('user','forwarder','carrier','customer')),
+                array('route' => 'company', 'roles' => array('forwarder','carrier','customer')),
+                array('route' => 'company_user', 'roles' => array('forwarder','carrier','customer')),
             ),
         ),
     ),
