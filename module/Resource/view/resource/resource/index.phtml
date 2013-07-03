@@ -13,10 +13,7 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
 <table class="table">
     <tr>
         <th>
-            Номер публикации
-        </th>
-        <th>
-            Даты и времени готовности ТС к загрузке
+            Загрузка
         </th>
         <th>
             Место загрузки/разгрузки
@@ -36,10 +33,16 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <th>
             Организация
         </th>
+        <?php
+if(array_search("admin",$this->roles,true)) {
+   ?>
+   <th>
+                Редактировать
+             </th>
+   <?php
+}
+?>
 
-         <th>
-             Редактировать
-          </th>
          <th>
              Добавить аукцион
           </th>
@@ -56,12 +59,7 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
 
     ?>
 <tr>
-            <td>
-                <a href="<?php echo $this->url(
-                    'resource',
-                    array('action' => 'list', 'id' => $resource['uuid'])
-                );?>"><?php echo $resource['uuid']; ?></a>
-            </td>
+
             <td>
                 <?php
                 foreach($resourceWay as $way) {
@@ -91,7 +89,7 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
                 <a href="<?php echo $this->url(
                     'vehicle',
                     array('action' => 'list', 'id' => $vehicle['uuid'])
-                );?>"><?php echo $vehicle['carNumber'].' '.$vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
+                );?>"><?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
             </td>
             <td>
                 <?php echo $resource['typeLoad']; ?>
@@ -103,10 +101,16 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <a href="<?php echo $this->url('organization',
                     array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
         </td>
+         <?php
+        if(array_search("admin",$this->roles,true)) {
+           ?>
         <td>
             <a href="<?php echo $this->url('resource',
                 array('action'=>'edit', 'id' => $resource['uuid']));?>">Редактировать</a>
         </td>
+           <?php
+        }
+        ?>
         <td>
             <a href="<?php echo $this->url('auction',
                 array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить аукцион</a>
