@@ -7,7 +7,8 @@ $name = $form->get('name');
 $serialNumber= $form->get('serialNumber')->setValue($this->res['serialNumber']);
 $vin= $form->get('vin')->setValue($this->res['vin']);
 $mark= $form->get('mark')->setValue($this->res['mark']);
-$model= $form->get('model')->setValue($this->res['model']);
+$model= $form->get('model')->setValue('parent-'.$this->res['mark'].'-'.$this->res['model']);
+
 $type= $form->get('type')->setValue($this->res['type']);
 $dateMade= $form->get('dateMade')->setValue($this->res['dateMade']);
 $owner= $form->get('owner')->setValue($this->res['owner']);
