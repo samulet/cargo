@@ -29,8 +29,11 @@ class ResourceController extends AbstractActionController
     public function indexAction()
     {
         $res = $this->getResourceModel();
+        $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+        $roles = $authorize->getIdentityRoles();
         return new ViewModel(array(
-            'res' => $res->returnAllResource()
+            'res' => $res->returnAllResource(),
+            'roles'=>$roles
         ));
     }
 

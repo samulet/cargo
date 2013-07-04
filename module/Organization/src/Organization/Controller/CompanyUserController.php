@@ -108,4 +108,12 @@ class CompanyUserController extends AbstractActionController
         return $this->companyUserModel;
     }
 
+    public function roleAction() {
+        $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comUserModel = $this->getCompanyUserModel();
+        return new ViewModel(array(
+
+        ));
+    }
+
 }

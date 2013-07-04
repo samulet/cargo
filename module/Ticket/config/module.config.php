@@ -42,10 +42,19 @@ return array(
     ),
     'bjyauthorize' => array(
         'guards' => array(
+            'BjyAuthorize\Guard\Controller' => array(
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','search','list','delete', 'addTicket', 'copy'),'roles' => array('user','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('search'),'roles' => array('carrier','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('my','add','edit'),'roles' => array('customer','admin')),
+
+                array('controller' => 'Ticket\Controller\Cargo', 'action' => array('index'), 'roles' => array('user','admin')),
+                array('controller' => 'Ticket\Controller\Cargo', 'action' => array('my','add', 'edit', 'list', 'delete', 'addCargo', 'copy'), 'roles' => array('customer','admin')),
+            ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'ticket', 'roles' => array('user')),
+                array('route'=> 'ticket','roles' => array('user')),
                 array('route' => 'cargo', 'roles' => array('user')),
             ),
+
         ),
     ),
     'doctrine' => array(
