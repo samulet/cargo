@@ -13,38 +13,20 @@ $resources=$this->res;
             Загрузка
         </th>
         <th>
-            Место загрузки/разгрузки
-        </th>
-        <th>
             Тариф
         </th>
         <th>
-            Вид транспортного средства
-        </th>
-        <th>
-            Вид загрузки
-        </th>
-        <th>
-            Грузоподъемность
+        Транспорт (кузов / гп,т / объем, м3 / загрузка)
         </th>
         <th>
             Организация
         </th>
-        <?php
-if(array_search("admin",$this->roles,true)) {
-   ?>
-   <th>
-                Редактировать
-             </th>
-   <?php
-}
-?>
+        <th>
+        Статус
+        </th>
 
-         <th>
-             Добавить аукцион
-          </th>
                    <th>
-                       Предложить заявку
+                       Действия
                     </th>
 
     </tr>
@@ -56,18 +38,10 @@ if(array_search("admin",$this->roles,true)) {
 
     ?>
 <tr>
-
             <td>
                 <?php
                 foreach($resourceWay as $way) {
-                    echo $way['dateStart'] . ' / ' . $way['timeStart'].'</br>';
-                }
-                ?>
-            </td>
-            <td>
-                <?php
-                foreach($resourceWay as $way) {
-                    echo $way['areaLoad'] . ' / ' . $way['areaUnload'].'</br>';
+                    echo $way['areaLoad'].' '.$way['dateStart'] . ' / ' . $way['areaUnload']. ' '.$way['timeStart'].'</br>';
                 }
                 ?>
 
@@ -82,22 +56,35 @@ if(array_search("admin",$this->roles,true)) {
 
             </td>
 
+
+
             <td>
-                <a href="<?php echo $this->url(
-                    'vehicle',
-                    array('action' => 'list', 'id' => $vehicle['uuid'])
-                );?>"><?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
-            </td>
-            <td>
-                <?php echo $resource['typeLoad']; ?>
-            </td>
-            <td>
-                <?php echo $vehicle['capacity']; ?>
+            <?php
+            $str='';
+            if(!empty($vehicle['semitrailer'])) {
+                $str.='Полуприцеп ';
+            }
+            if(!empty($vehicle['tractor'])) {
+                            $str.='Тягач ';
+                        }
+                        if(!empty($vehicle['coupling'])) {
+                                        $str.='Сцепка ';
+                                    }
+                                    if(!empty($vehicle['lorry'])) {
+                                                    $str.='Грузовик ';
+                                                }
+
+
+            ?>
+                <?php echo $str.' / '.$vehicle['capacity'].' / '.' / '.$resource['typeLoad']; ?>
             </td>
         <td>
         <a href="<?php echo $this->url('organization',
                     array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
         </td>
+        <td>
+                        <?php echo $vehicle['status']; ?>
+                    </td>
          <?php
         if(array_search("admin",$this->roles,true)) {
            ?>
