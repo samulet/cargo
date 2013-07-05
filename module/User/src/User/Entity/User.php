@@ -5,10 +5,13 @@ namespace User\Entity;
 use BjyAuthorize\Provider\Role\ProviderInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Zend\Form\Annotation;
 use ZfcUser\Entity\UserInterface;
 
 /**
  * @ODM\Document(collection="user")
+ * @Annotation\Name("user")
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class User implements UserInterface, ProviderInterface
 {
@@ -63,9 +66,22 @@ class User implements UserInterface, ProviderInterface
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"ADR",
+     *                      "value_options" : {"admin":"Админ","forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
      */
     protected $roles;
-
+    /**
+     * @Annotation\Type("Zend\Form\Element\Submit")
+     * @Annotation\Attributes({"value":"Отправить"})
+     */
+    public $submit;
     /**
      * Initialies the roles variable.
      */

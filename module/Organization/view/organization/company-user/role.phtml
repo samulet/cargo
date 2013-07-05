@@ -1,0 +1,11 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('company_user', array('action' => 'roleEdit', 'org_id' => $this->id)))
+    ->prepare();
+echo $this->form()->openTag($form);
+?>
+
+<?php echo $this->formElement($form->get('roles')->setValue($this->roles)); ?>
+<?php echo $this->formElement($form->get('submit')); ?>
+
+<?php  echo $this->form()->closeTag();?>

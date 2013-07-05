@@ -222,7 +222,20 @@ return array(
             ),
         ),
         'admin' => array(
+            array(
+                'label' => 'Управление юзерами',
+                'type' => 'uri',
+                'uri' => '',
+                'class' => 'nav-header',
+                'resource'   => 'route/company_user',
+            ),
+            array(
+                'label' => 'Все юзеры',
+                'route' => 'company_user',
+                'action' => 'list',
+                'params' => array('org_id' => 'all'),
 
+            ),
             array(
                 'label' => 'Справочники',
                 'type' => 'uri',

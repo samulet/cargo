@@ -17,6 +17,8 @@ use Organization\Model\OrganizationModel;
 use Organization\Entity\CompanyUser;
 use Organization\Form\CompanyUserCreate;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use Zend\Form\Annotation\AnnotationBuilder;
 
 class CompanyUserController extends AbstractActionController
 {
@@ -64,8 +66,13 @@ class CompanyUserController extends AbstractActionController
 
     public function listAction() {
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
-        $orgModel = $this->getOrganizationModel();
-        $orgId = $orgModel->getOrgIdByUUID($org_uuid);
+        if($org_uuid!="all") {
+            $orgModel = $this->getOrganizationModel();
+            $orgId = $orgModel->getOrgIdByUUID($org_uuid);
+
+        } else {
+            $orgId='all';
+        }
         $comUserModel = $this->getCompanyUserModel();
         $users=$comUserModel->getUsersByOrgId($orgId);
         return new ViewModel(array(
@@ -110,10 +117,23 @@ class CompanyUserController extends AbstractActionController
 
     public function roleAction() {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('User\Entity\User');
         $comUserModel = $this->getCompanyUserModel();
+        $roles=$comUserModel->getRoles($userId);
         return new ViewModel(array(
-
+            'id' =>$userId,
+            'form' =>$form,
+            'roles'=>$roles
         ));
+    }
+
+    public function roleEditAction() {
+        $comUserModel = $this->getCompanyUserModel();
+        $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $post=$this->getRequest()->getPost();
+        $comUserModel->addRole($userId,$post);
+        return $this->redirect()->toUrl('/organization');
     }
 
 }
