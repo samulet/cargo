@@ -65,9 +65,9 @@ return array(
             ),
             'BjyAuthorize\Guard\Route' => array(
                // forwarder, carrier, customer
-                array('route' => 'organization', 'roles' => array('user','forwarder','carrier','customer')),
-                array('route' => 'company', 'roles' => array('forwarder','carrier','customer')),
-                array('route' => 'company_user', 'roles' => array('forwarder','carrier','customer')),
+                array('route' => 'organization', 'roles' => array('user','admin','forwarder','carrier','customer')),
+                array('route' => 'company', 'roles' => array('user','admin','forwarder','carrier','customer')),
+                array('route' => 'company_user', 'roles' => array('user','admin','forwarder','carrier','customer')),
             ),
         ),
     ),
