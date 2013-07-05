@@ -76,7 +76,8 @@ $resources=$this->res;
 
 
             ?>
-                <?php echo $str.' / '.$vehicle['capacity'].' / '.' / '.$resource['typeLoad']; ?>
+               <a href="<?php echo $this->url('resource',
+                               array('action'=>'list', 'id' => $resource['uuid']));?>"> <?php echo $str.' / '.$vehicle['capacity'].' / '.' / '.$resource['typeLoad']; ?></a>
             </td>
         <td>
         <a href="<?php echo $this->url('organization',
