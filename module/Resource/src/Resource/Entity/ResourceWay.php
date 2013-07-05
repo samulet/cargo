@@ -220,7 +220,7 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"Int"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
      * @Annotation\Required({"required":"true" })
