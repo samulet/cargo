@@ -193,11 +193,15 @@ class Vehicle
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Экологический класс ТС "})
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Экологический класс ТС",
+     *                      "value_options" : {"0":"0","1":"1","2":"2","3":"3","4":"4","5":"5"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
      */
     public $ecologicalClass;
     /**
