@@ -301,13 +301,6 @@ return array(
                 'resource'   => 'route/addList',
             ),
             array(
-                'label' => 'тип ТС',
-                'route' => 'addList',
-                'action' => 'my-fields',
-                'params' => array('id' => '105863b25e1046c68fa69289f182da7e'),
-                'resource'   => 'route/addList',
-            ),
-            array(
                 'label' => 'Статус предложения',
                 'route' => 'addList',
                 'action' => 'my-fields',

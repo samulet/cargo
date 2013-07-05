@@ -45,6 +45,9 @@ return array(
      */ 
     'bjyauthorize' => array(
         'guards' => array(
+            'BjyAuthorize\Guard\Controller' => array(
+                array('controller' => 'ZfcAdmin\Controller\AdminController','roles' => array('admin')),
+            ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'zfcadmin', 'roles' => array('admin')),
             ),
