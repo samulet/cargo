@@ -83,12 +83,16 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         $prop_array_split=$prop_array;
         unset($prop_array_split['tsId']);
-        unset($prop_array_split['typeLoad']);
+        if(!empty($prop_array_split['typeLoad'])) {
+            unset($prop_array_split['typeLoad']);
+            $prop_array_new['typeLoad']=$prop_array['typeLoad'];
+        }
+
         unset($prop_array_split['submit']);
 
 
         $prop_array_new['tsId']=$prop_array['tsId'];
-        $prop_array_new['typeLoad']=$prop_array['typeLoad'];
+
 
         $prop_array=$prop_array_new;
 
