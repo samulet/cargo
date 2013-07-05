@@ -77,11 +77,21 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     public function getUsersByOrgId($orgId){
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        if($orgId!='all') {
+            $usersId = $objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('orgId' => new \MongoId($orgId)));
 
-        $usersId = $objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('orgId' => new \MongoId($orgId)));
+        } else {
+            $usersId =$objectManager->getRepository('User\Entity\User')->createQueryBuilder()
+                ->getQuery()->execute();
+        }
         $result=array();
         foreach($usersId as $userId) {
-            $user=$objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId->userId)));
+            if($orgId!='all') {
+                $usId=$userId->userId;
+            } else {
+                $usId=$userId->getId();
+            }
+            $user=$objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($usId)));
             if(!empty($user)) {
                 $us=array('id'=>$user->getId(), 'id'=>$user->getId(), 'username'=> $user->getUsername(), 'displayName'=>$user->getDisplayName(),'email'=>$user->getEmail());
 
@@ -110,4 +120,23 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return $userObject->orgId;
     }
 
+    public function addRole($userId,$post) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $userObject = $objectManager->getRepository('User\Entity\User')->findOneBy(
+            array('id' => new \MongoId($userId))
+        );
+        $roles=$post->roles;
+        array_push($roles,'user');
+        $userObject->setRoles($roles);
+        $objectManager->persist($userObject);
+        $objectManager->flush();
+    }
+
+    public function getRoles($userId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $userObject = $objectManager->getRepository('User\Entity\User')->findOneBy(
+            array('id' => new \MongoId($userId))
+        );
+        return $userObject->getRoles();
+    }
 }
