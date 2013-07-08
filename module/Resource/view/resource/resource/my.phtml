@@ -93,7 +93,9 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
                 );?>"><?php echo $vehicle['carNumber'].' '.$vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
             </td>
             <td>
-                <?php echo $resource['typeLoad']; ?>
+                <?php foreach($resource['typeLoad'] as $typeLoad) {
+                    echo $typeLoad.'</br>';
+                } ?>
             </td>
             <td>
                 <?php echo $vehicle['capacity']; ?>
