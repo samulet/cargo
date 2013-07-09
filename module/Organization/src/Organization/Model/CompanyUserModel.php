@@ -126,7 +126,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             array('id' => new \MongoId($userId))
         );
         $roles=$post->roles;
-        array_push($roles,'user');
+        array_unshift($roles,'user');
         $userObject->setRoles($roles);
         $objectManager->persist($userObject);
         $objectManager->flush();
