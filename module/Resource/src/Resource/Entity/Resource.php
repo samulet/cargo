@@ -56,9 +56,7 @@ class Resource
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Прикрепите ТС к ресурсу"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $tsId;
@@ -87,49 +85,6 @@ class Resource
      */
     public $activated;
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Name"})
-     */
-    public $name;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Type"})
-     */
-    public $type;
-
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Description"})
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $description;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Sizes:"})
-     */
-    public $sizes;
 
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
@@ -150,18 +105,23 @@ class Resource
     public $note;
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
 
-     * @Annotation\Filter({"name":"StripTags"})
+
      * @Annotation\Options({"label":"Вид загрузки"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Validator(
+     * {"name" : "NotEmpty",
+     * "options" : {"messages" : {
+     *  \Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка."
+     * } }
+     * }
+     *
+     * )
      * @Annotation\Attributes({"value":"0"})
      */
-    public $typeLoad;
+    public $typeLoad = array();
 
     /**
      * @ODM\Date

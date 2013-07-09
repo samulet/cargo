@@ -70,59 +70,7 @@ class ResourceWay
      */
     public $activated;
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Name"})
-     */
-    public $name;
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Type"})
-     */
-    public $type;
-
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Description"})
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $description;
-
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Capacity:"})
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $capacity;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Sizes:"})
-     */
-    public $sizes;
 
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
@@ -174,16 +122,16 @@ class ResourceWay
      * @Annotation\Options({"label":"Валюта",
      *                      "value_options" : {"RUR":"RUR","EUR":"EUR","USD":"USD"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     *                        "options":{"haystack":{"RUR","EUR","USD"},
+     *                              "messages":{"notInArray":"Выберите элемент из списка"}}})
      * @Annotation\Attributes({"value":"0"})
      */
     public $currency;
 
     /**
-     * @Annotation\Filter({"name":"Int"})
+     * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Стоимость"})
      * @Annotation\Required({"required":"true" })
@@ -201,8 +149,8 @@ class ResourceWay
      * @Annotation\Options({"label":"Валюта",
      *                      "value_options" : {"bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     *                        "options":{"haystack":{"bank","card","currency"},
+     *                              "messages":{"notInArray":"Выберите элемент из списка"}}})
      * @Annotation\Attributes({"value":"0"})
      */
     public $formPay;
@@ -218,7 +166,7 @@ class ResourceWay
     public $dateStart;
 
     /**
-     * @Annotation\Filter({"name":"Int"})
+     * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
      * @Annotation\Attributes({"type":"text"})

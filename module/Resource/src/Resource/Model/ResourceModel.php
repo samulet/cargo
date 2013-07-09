@@ -116,6 +116,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
             }
         }
         $objectManager->persist($res);
+
         $objectManager->flush();
 
 

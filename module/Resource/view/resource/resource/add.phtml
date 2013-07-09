@@ -2,7 +2,7 @@
 $form = $this->form;
 $formWay = $this->formWay;
 
-$form->setAttribute('action', $this->url('resource', array('action' => 'addResource')))
+$form->setAttribute('action', $this->url('resource', array('action' => 'add')))
     ->prepare();
 echo $this->form()->openTag($form);
 
@@ -49,9 +49,7 @@ $note= $formWay->get('note');
             <th>
                 Примечание
             </th>
-            <th>
-                Удалить пункт выдачи
-            </th>
+
 
         </tr>
         <tr class="wayTr">
@@ -79,9 +77,7 @@ $note= $formWay->get('note');
                 echo $this->formRow($note);
                 ?>
             </td>
-            <td>
-                <input name="deleteWay" class="deleteWay" type="button" value="Удалть"/>
-            </td>
+
         </tr>
         <tr class="addTr">
             <td>

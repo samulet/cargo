@@ -7,6 +7,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
+
+
 namespace Resource\Controller;
 
 use Entity\Recources;
@@ -48,9 +50,10 @@ class ResourceController extends AbstractActionController
 
     public function addAction()
     {
+        $post=$this->getRequest()->getPost();
+
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Resource');
-
         $formWay= $builder->createForm('Resource\Entity\ResourceWay');
 
         $veh = $this->getVehicleModel();
@@ -75,10 +78,34 @@ class ResourceController extends AbstractActionController
 
         $form=$resForm->fillFrom($form,$formData,$form_array);
 
-
         if(!empty($tsUuid)) {
             $tsId=$veh->getIdByUuid($tsUuid);
             $form->get('tsId')->setValue($tsId);
+        }
+
+        if(!empty($post->submit)) {
+            $error=0;
+            $formWay->setData($post);
+            if(!$formWay->isValid()) {
+                $error++;
+            }
+            $form->setData($post);
+            if(!$form->isValid()) {
+                $error++;
+            }
+
+            if(empty($error)) {
+                $id = $this->getEvent()->getRouteMatch()->getParam('id');
+                $comUserModel = $this->getCompanyUserModel();
+                $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+
+                $org_id = $comUserModel->getOrgIdByUserId($user_id);
+                $res = $this->getResourceModel();
+
+                $res->addResource($post, $user_id, $org_id, $id);
+
+                return $this->redirect()->toUrl('/resources/my');
+            }
         }
 
         return new ViewModel(array(
@@ -86,6 +113,10 @@ class ResourceController extends AbstractActionController
             'formWay' =>$formWay
 
         ));
+
+
+
+
     }
 
     public function searchAction()
@@ -210,16 +241,7 @@ class ResourceController extends AbstractActionController
         return $this->redirect()->toUrl('/resources/my');
     }
 
-    public function addResourceAction()
-    {
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $comUserModel = $this->getCompanyUserModel();
-        $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-        $org_id = $comUserModel->getOrgIdByUserId($user_id);
-        $res = $this->getResourceModel();
-        $res->addResource($this->getRequest()->getPost(), $user_id, $org_id, $id);
-        return $this->redirect()->toUrl('/resources/my');
-    }
+
 
     public function getResourceModel()
     {
