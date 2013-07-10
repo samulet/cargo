@@ -356,8 +356,8 @@ class TicketWay
     public $docWay;
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
 
      * @Annotation\Filter({"name":"StripTags"})
@@ -367,10 +367,10 @@ class TicketWay
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
-    public $typeLoad;
+    public $typeLoad = array();
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
@@ -380,7 +380,7 @@ class TicketWay
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
-    public $typeUnload;
+    public $typeUnload= array();
 
 
     /**
