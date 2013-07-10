@@ -2,6 +2,7 @@
 $form = $this->form;
 $formWay = $this->formWay;
 
+
 $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
     ->prepare();
 echo $this->form()->openTag($form);

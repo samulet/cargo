@@ -82,8 +82,10 @@ $resources=$this->res;
                                  $strLoad='';
                                  foreach($resource['typeLoad'] as $typeLoad) {
                                                    $strLoad.=$typeLoad.', ';
-                                               } ?>
-                               echo $str.' / '.$vehicle['capacity'].' / '.' / '.$strLoad; ?></a>
+                                               }
+                               echo $str.' / '.$vehicle['capacity'].' / '.' / '.$strLoad;
+                               ?>
+                               </a>
             </td>
         <td>
         <a href="<?php echo $this->url('organization',
