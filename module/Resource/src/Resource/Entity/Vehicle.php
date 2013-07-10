@@ -271,7 +271,7 @@ class Vehicle
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип выгрузки"})
