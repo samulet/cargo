@@ -256,6 +256,55 @@ class Vehicle
      */
     public $whoGave;
     /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Тип загрузки"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $typeLoad;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Тип выгрузки"})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $typeUnload;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Объем кузова"})
+     */
+    public $bodyValue;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Тип кузова"})
+     */
+    public $bodyType;
+
+    /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
