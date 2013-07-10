@@ -1,6 +1,6 @@
 <?php
 $form = $this->form;
-$formWay = $this->formWay;
+
 
 $formData= $this->formData;
 $form->setAttribute('action', $this->url('vehicle', array('action' => 'add')))
@@ -43,8 +43,8 @@ $ownerName= $form->get('ownerName');
 $whoGave= $form->get('whoGave');
 
 
-$typeLoad= $formWay->get('typeLoad');
-$typeUnload=clone $formWay->get('typeLoad');
+$typeLoad= $form->get('typeLoad');
+$typeUnload=clone $form->get('typeLoad');
 
 $typeUnload= $typeUnload->setName('typeUnload')->setOptions(array("label"=>'Тип выгрузки'));
 $bodyValue = $form->get('bodyValue');

@@ -46,7 +46,7 @@ class VehicleController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
+        $form_array=array();
         $orgUserModel=$this->getCompanyUserModel();
         $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
         $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
@@ -56,22 +56,25 @@ class VehicleController extends AbstractActionController
         $form=$fillFrom->fillFrom($form,$formData,$form_array);
 
 
-
-
-        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
-        $addListModel = $this->getAddListModel();
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
-
-        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+        $form=$fillFrom->fillFrom($form,$formData,array('typeLoad'));
 
 
 
         if(!empty($post->submit)) {
-            $form->setData($post);
-            if($form->isValid()) {
+            $error=0;
+
+
+            $form->setData($post);;
+
+            if(!$form->isValid()) {
+                $error++;
+
+            }
+
+            die(var_dump($form->getMessages()));
+            if(empty($error)) {
+
                 $id = $this->getEvent()->getRouteMatch()->getParam('id');
                 $comUserModel = $this->getCompanyUserModel();
                 $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
@@ -87,8 +90,7 @@ class VehicleController extends AbstractActionController
 
         }
         return new ViewModel(array(
-            'form' => $form,
-            'formWay'=>$formWay
+            'form' => $form
         ));
 
     }
