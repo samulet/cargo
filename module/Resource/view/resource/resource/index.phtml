@@ -78,12 +78,14 @@ $resources=$this->res;
             ?>
                <a href="<?php echo $this->url('resource',
                                array('action'=>'list', 'id' => $resource['uuid']));?>"> <?php
-                                <?php
+
                                  $strLoad='';
                                  foreach($resource['typeLoad'] as $typeLoad) {
-                                                   $strLoad=.$typeLoad.', ';
-                                               } ?>
-                               echo $str.' / '.$vehicle['capacity'].' / '.' / '.$strLoad; ?></a>
+                                                   $strLoad.=$typeLoad.', ';
+                                               }
+                               echo $str.' / '.$vehicle['capacity'].' / '.' / '.$strLoad;
+                               ?>
+                               </a>
             </td>
         <td>
         <a href="<?php echo $this->url('organization',
