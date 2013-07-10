@@ -1,7 +1,9 @@
 <?php
 $form = $this->form;
+
+
 $formData= $this->formData;
-$form->setAttribute('action', $this->url('vehicle', array('action' => 'addVehicle')))
+$form->setAttribute('action', $this->url('vehicle', array('action' => 'add')))
     ->prepare();
 $name = $form->get('name');
 
@@ -39,6 +41,15 @@ $axles= $form->get('axles');
 $capacity= $form->get('capacity');
 $ownerName= $form->get('ownerName');
 $whoGave= $form->get('whoGave');
+
+
+$typeLoad= $form->get('typeLoad');
+$typeUnload=clone $form->get('typeLoad');
+
+$typeUnload= $typeUnload->setName('typeUnload')->setOptions(array("label"=>'Тип выгрузки'));
+$bodyValue = $form->get('bodyValue');
+$bodyType= $form->get('bodyType');
+
 
 echo $this->form()->openTag($form);
 
@@ -102,6 +113,10 @@ echo $this->form()->openTag($form);
         </td>
         <td>
             <?php  echo $this->formRow($note);
+            echo $this->formRow($typeLoad);
+            echo $this->formRow($typeUnload);
+            echo $this->formRow($bodyValue);
+            echo $this->formRow($bodyType);
             ?>
         </td>
     </tr>

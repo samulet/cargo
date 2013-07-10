@@ -41,10 +41,12 @@ class VehicleController extends AbstractActionController
 
     public function addAction()
     {
+        $post=$this->getRequest()->getPost();
+
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
+        $form_array=array();
         $orgUserModel=$this->getCompanyUserModel();
         $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
         $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
@@ -52,10 +54,47 @@ class VehicleController extends AbstractActionController
 
         $fillFrom=new VehicleForm();
         $form=$fillFrom->fillFrom($form,$formData,$form_array);
+
+
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
+        $form=$fillFrom->fillFrom($form,$formData,array('typeLoad'));
+
+
+
+        if(!empty($post->submit)) {
+            $error=0;
+
+
+            $form->setData($post);;
+
+            if(!$form->isValid()) {
+                $error++;
+
+            }
+
+
+            if(empty($error)) {
+
+                $id = $this->getEvent()->getRouteMatch()->getParam('id');
+                $comUserModel = $this->getCompanyUserModel();
+                $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+                $org_id = $comUserModel->getOrgIdByUserId($user_id);
+                $res = $this->getVehicleModel();
+                $veh=$res->addVehicle($this->getRequest()->getPost(), $user_id, $org_id, $id);
+                if(empty($veh)) {
+                    return $this->redirect()->toUrl('/vehicles/error');
+                } else {
+                    return $this->redirect()->toUrl('/vehicles/my');
+                }
+            }
+
+        }
         return new ViewModel(array(
             'form' => $form
         ));
+
     }
+
 
     public function editAction()
     {
@@ -112,21 +151,7 @@ class VehicleController extends AbstractActionController
         return $this->redirect()->toUrl('/vehicles/my');
     }
 
-    public function addVehicleAction()
-    {
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $comUserModel = $this->getCompanyUserModel();
-        $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-        $org_id = $comUserModel->getOrgIdByUserId($user_id);
-        $res = $this->getVehicleModel();
-        $veh=$res->addVehicle($this->getRequest()->getPost(), $user_id, $org_id, $id);
-        if(empty($veh)) {
-            return $this->redirect()->toUrl('/vehicles/error');
-        } else {
-            return $this->redirect()->toUrl('/vehicles/my');
-        }
 
-    }
 
     public function errorAction() {
 

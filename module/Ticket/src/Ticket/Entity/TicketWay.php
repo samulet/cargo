@@ -356,31 +356,25 @@ class TicketWay
     public $docWay;
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
-
-     * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип загрузки"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Validator({"name" : "NotEmpty",
+     * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
      * @Annotation\Attributes({"value":"0"})
      */
-    public $typeLoad;
+    public $typeLoad =array();
     /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Select")
-
-     * @Annotation\Filter({"name":"StripTags"})
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
      * @Annotation\Options({"label":"Тип выгрузки"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Validator({"name" : "NotEmpty",
+     * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
      * @Annotation\Attributes({"value":"0"})
      */
-    public $typeUnload;
+    public $typeUnload = array();
 
 
     /**
