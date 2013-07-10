@@ -77,7 +77,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"серия и номер ПТС"})
      */
@@ -88,7 +88,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"VIN транспортного средства"})
      */
@@ -149,11 +149,8 @@ class Vehicle
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Год выпуска"})
      */
     public $dateMade;
@@ -210,7 +207,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Разрешенная максимальная масса"})
      */
@@ -221,7 +218,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Количество осей"})
      */
@@ -231,7 +228,7 @@ class Vehicle
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Грузоподъемность"})
      */
