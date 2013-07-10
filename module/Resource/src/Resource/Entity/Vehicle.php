@@ -63,21 +63,11 @@ class Vehicle
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Name"})
-     */
-    public $name;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
      * @ODM\Index(unique=true)
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"серия и номер ПТС"})
      */
@@ -88,7 +78,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"VIN транспортного средства"})
      */
@@ -101,9 +91,7 @@ class Vehicle
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Марка ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $mark;
@@ -114,9 +102,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Модель ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $model;
@@ -127,9 +113,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $type;
@@ -140,34 +124,18 @@ class Vehicle
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $status;
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Год выпуска"})
      */
     public $dateMade;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Собственник ТС"})
-     */
-    public $owner;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -210,7 +178,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Разрешенная максимальная масса"})
      */
@@ -221,7 +189,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Количество осей"})
      */
@@ -231,7 +199,7 @@ class Vehicle
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Грузоподъемность"})
      */
@@ -257,7 +225,50 @@ class Vehicle
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Город, район, насел пункт, улица, дом, корпус/строение, квартира/офис"})
      */
-    public $whoGave;
+    public $whoGave ;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
+     * @Annotation\Options({"label":"Тип загрузки"})
+     * @Annotation\Validator({"name" : "NotEmpty",
+     * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $typeLoad =array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
+     * @Annotation\Options({"label":"Тип выгрузки"})
+     * @Annotation\Validator({"name" : "NotEmpty",
+     * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $typeUnload = array();
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Объем кузова"})
+     */
+    public $bodyValue;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Тип кузова"})
+     */
+    public $bodyType;
+
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})

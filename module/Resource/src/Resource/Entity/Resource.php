@@ -108,17 +108,9 @@ class Resource
      * @var array
      * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
-
-
-     * @Annotation\Options({"label":"Вид загрузки"})
-     * @Annotation\Validator(
-     * {"name" : "NotEmpty",
-     * "options" : {"messages" : {
-     *  \Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка."
-     * } }
-     * }
-     *
-     * )
+     * @Annotation\Options({"label":"Тип загрузки"})
+     * @Annotation\Validator({"name" : "NotEmpty",
+     * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
      * @Annotation\Attributes({"value":"0"})
      */
     public $typeLoad = array();
