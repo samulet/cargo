@@ -1,6 +1,7 @@
 <?php
 $form = $this->form;
 $formWay = $this->formWay;
+$formVehicle=$this->formVehicle;
 
 $form->setAttribute('action', $this->url('ticket', array('action' => 'addTicket')))
     ->prepare();
@@ -21,11 +22,14 @@ $rubles= $formWay->get('rubles');
 $pallet= $formWay->get('pallet');
 $box= $formWay->get('box');
 
-$type= $formWay->get('type');
+$type= $formVehicle->get('type');
+
 $temperature= $formWay->get('temperature');
 
 $typeLoad= $formWay->get('typeLoad');
-$typeUnload= $formWay->get('typeLoad')->setName('typeUnload')->setOptions(array("label"=>'Тип выгрузки'));
+
+$typeUnload=clone $formWay->get('typeLoad');
+$typeUnload= $typeUnload->setName('typeUnload')->setOptions(array("label"=>'Тип выгрузки'));
 
 
 
@@ -136,6 +140,7 @@ $docType= $formWay->get('docType');
 <div class="muliboxTicket">
                 <?php
                 echo $this->formRow( $typeLoad);
+
                 echo $this->formRow( $typeUnload);
                 ?>
 </div>
