@@ -51,6 +51,8 @@ class TicketController extends AbstractActionController
 
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
 
+        $formVehicle = $builder->createForm('Resource\Entity\Vehicle');
+
         $form_array=array();
 
         $addListModel = $this->getAddListModel();
@@ -60,14 +62,16 @@ class TicketController extends AbstractActionController
         $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
+        $formVehicleData=$addListModel->returnDataArray(array(),'vehicle',$orgListId);
 
         $fillFrom=new TicketForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
-
+        $formVehicle=$fillFrom->fillFrom($formVehicle,$formVehicleData,$form_array);
 
         return new ViewModel(array(
             'form' => $form,
-            'formWay' =>$formWay
+            'formWay' =>$formWay,
+            'formVehicle'=>$formVehicle
 
         ));
     }
