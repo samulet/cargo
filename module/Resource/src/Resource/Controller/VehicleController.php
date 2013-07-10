@@ -72,7 +72,7 @@ class VehicleController extends AbstractActionController
 
             }
 
-            die(var_dump($form->getMessages()));
+
             if(empty($error)) {
 
                 $id = $this->getEvent()->getRouteMatch()->getParam('id');

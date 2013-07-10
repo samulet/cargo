@@ -30,6 +30,10 @@ class VehicleForm
                         $result_array=$result_array+array($el['key']=>$el['value']);
                     }
                     $form->get($key)->setOptions(array("value_options"=>$result_array));
+                    if($key=='typeLoad') {
+                        $form->get('typeUnload')->setOptions(array("value_options"=>$result_array));
+                    }
+
                 }
 
             }
