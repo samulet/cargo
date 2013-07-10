@@ -63,16 +63,6 @@ class Vehicle
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Name"})
-     */
-    public $name;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
      * @ODM\Index(unique=true)
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
@@ -101,9 +91,7 @@ class Vehicle
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Марка ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $mark;
@@ -114,9 +102,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Модель ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $model;
@@ -127,9 +113,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $type;
@@ -140,9 +124,7 @@ class Vehicle
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $status;
@@ -154,17 +136,6 @@ class Vehicle
      * @Annotation\Options({"label":"Год выпуска"})
      */
     public $dateMade;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Собственник ТС"})
-     */
-    public $owner;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -259,12 +230,9 @@ class Vehicle
      * @var array
      * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
-
-     * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип загрузки"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Validator({"name" : "NotEmpty",
+     * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
      * @Annotation\Attributes({"value":"0"})
      */
     public $typeLoad =array();
@@ -272,12 +240,9 @@ class Vehicle
      * @var array
      * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
-
-     * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип выгрузки"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Validator({"name" : "NotEmpty",
+     * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
      * @Annotation\Attributes({"value":"0"})
      */
     public $typeUnload = array();
