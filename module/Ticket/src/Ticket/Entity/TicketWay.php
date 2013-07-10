@@ -374,7 +374,7 @@ class TicketWay
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Тип выгрузки"})
+     * @Annotation\Options({"label":"Тип загрузки"})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
