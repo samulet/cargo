@@ -81,7 +81,7 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Место загрузки ТС"})
      * @Annotation\Required({"required":"true" })
@@ -93,7 +93,7 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Место разгрузки ТС"})
      * @Annotation\Required({"required":"true" })
@@ -105,7 +105,7 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string

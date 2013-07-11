@@ -142,7 +142,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Cерия и номер свидетельства"})
      */
@@ -153,7 +153,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер регистрационного знака ТС "})
      */
@@ -210,7 +210,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Фио собственника"})
      */
@@ -221,7 +221,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Город, район, насел пункт, улица, дом, корпус/строение, квартира/офис"})
      */
@@ -263,7 +263,7 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Тип кузова"})
      */
@@ -361,7 +361,7 @@ class Vehicle
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[a-zA-Z][a-zA-Z0-9_-]{0,24}$/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
