@@ -16,7 +16,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 
 /**
  * @ODM\Document(collection="ticketWay")
@@ -124,7 +124,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт загрузки"})
      * @Annotation\Required({"required":"true" })
@@ -404,11 +404,11 @@ class TicketWay
     public $dateStart;
 
     /**
-     * @Annotation\Filter({"name":"Int"})
+     * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Время готовности к загрузке"})
+     * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
