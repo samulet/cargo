@@ -55,7 +55,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'list', 'id' => $ticket['uuid'])
+                    array('action' => 'add', 'id' => $ticket['uuid'] ,'type'=>'list')
                 );?>"><?php echo $ticket['uuid']; ?></a>
             </td>
             <td>

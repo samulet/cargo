@@ -108,7 +108,7 @@ class TicketController extends AbstractActionController
         } else {
             $ticket = $ticketModel->listTicket($id);
             $ticketWay=$ticketModel->returnAllWays($ticket['id']);
-            if(($type=='copy')||(($type=='edit'))) {
+            if( ($type=='copy')||($type=='edit')||($type=='list') ) {
                 $form->setData($ticket);
 
                 $formsArray=array();
@@ -123,6 +123,18 @@ class TicketController extends AbstractActionController
                 }
                 elseif($type=='copy') {
                     $typeForm['action']='copy';
+                    $typeForm['id']=$id;
+                } elseif($type=='list') {
+                    foreach ($formsArray as $formWay) {
+                        foreach ($formWay as $wayEl) {
+                            $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
+                        }
+                    }
+
+                    foreach ($form as $el) {
+                        $el->setAttributes(array( 'disabled' => 'disabled' ));
+                    }
+                    $typeForm['action']='list';
                     $typeForm['id']=$id;
                 }
             }

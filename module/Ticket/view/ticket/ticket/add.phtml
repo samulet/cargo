@@ -73,10 +73,17 @@ $typeTicket = $form->get('typeTicket');
             <th>
                 Примечание
             </th>
+            <?php
+            if(!empty($typeForm)){
+                if($typeForm['action']!='list') {
+                    ?>
             <th>
                 Удалить пункт выдачи
             </th>
-
+            <?php
+            }
+            }
+            ?>
         </tr>
         <?php
         $counter=0;
@@ -231,7 +238,10 @@ $typeTicket = $form->get('typeTicket');
                     echo $this->formRow($note);
                     ?>
                 </td>
-
+            <?php
+            if(!empty($typeForm)){
+                if($typeForm['action']!='list') {
+                    ?>
                 <td>
                     <input name="deleteWay" class="deleteWay" onclick="<?php
                     if($counter!=0) {
@@ -240,19 +250,38 @@ $typeTicket = $form->get('typeTicket');
                     ?>" type="button" value="Удалть"/>
                 </td>
             </tr>
-
+                <?php
+                }
+            }
+            ?>
         <?php
             $counter++;
         }
         ?>
-
+<?php
+if(!empty($typeForm)){
+    if($typeForm['action']!='list') {
+        ?>
         <tr class="addTr">
             <td>
                 <input id="counter" type="hidden" value='<?php echo $counter ?>' />
                 <input type="button" onclick="addWay('wayTr');" value="Добавить пункт назначения "/>
             </td>
         </tr>
+    <?php
+    }
+}
+?>
     </table>
-    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue('Отправить')); ?> </div>
+<?php
+if(!empty($typeForm)){
+    if($typeForm['action']!='list') {
+      ?>
+        <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue('Отправить')); ?> </div>
+        <?php
+    }
+}
+?>
+
 <?php  echo $this->form()->closeTag();
 ?>
