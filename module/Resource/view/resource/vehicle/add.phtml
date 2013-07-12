@@ -5,7 +5,7 @@ $form = $this->form;
 $formData= $this->formData;
 $form->setAttribute('action', $this->url('vehicle', array('action' => 'add')))
     ->prepare();
-$name = $form->get('name');
+
 
 $serialNumber= $form->get('serialNumber');
 $vin= $form->get('vin');
@@ -31,7 +31,7 @@ $note= $form->get('note');
 
 $status= $form->get('status');
 $dateMade= $form->get('dateMade');
-$owner= $form->get('owner');
+
 
 $serialNumberDoc= $form->get('serialNumberDoc');
 $carNumber= $form->get('carNumber');
