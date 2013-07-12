@@ -13,10 +13,11 @@ return array(
             'ticket' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/tickets[/:action][/:id]',
+                    'route' => '/tickets[/:action][/:id][/:type]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
+                        'type' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Ticket\Controller\Ticket',

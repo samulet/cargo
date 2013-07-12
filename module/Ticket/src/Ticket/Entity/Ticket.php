@@ -15,7 +15,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
  * @ODM\Document(collection="ticket", repositoryClass="Ticket\Repository\TicketRepository")
@@ -42,26 +41,21 @@ class Ticket
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
+
     public $uuid;
     /**
      * @ODM\ObjectId
      * @var int
      * @Annotation\Exclude()
      */
-    public $ownerId;
+    public $tsId;
     /**
      * @ODM\ObjectId
      * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
-
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Прикрепите ТС к ресурсу"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Exclude()
      */
-    public $tsId;
+    public $ownerId;
+
     /**
      * @ODM\ObjectId
      * @var int
@@ -87,49 +81,8 @@ class Ticket
      */
     public $activated;
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Name"})
-     */
-    public $name;
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Type"})
-     */
-    public $type;
 
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Description"})
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $description;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Sizes:"})
-     */
-    public $sizes;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -139,7 +92,7 @@ class Ticket
      * @Annotation\Options({"label":"Валюта",
      *                      "value_options" : {" ": "", "RUR":"RUR","EUR":"EUR","USD":"USD"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
+     *                        "options":{"haystack":{"RUR","EUR","USD"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
@@ -153,15 +106,15 @@ class Ticket
      * @Annotation\Options({"label":"Тип заявки",
      *                      "value_options" : {"in":"Входящая","out":"Исходящая"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
+     *                        "options":{"haystack":{"in","out","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
     public $typeTicket;
     /**
-     * @Annotation\Filter({"name":"Int"})
+     * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Стоимость"})
      * @Annotation\Required({"required":"true" })
@@ -176,10 +129,10 @@ class Ticket
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Валюта",
+     * @Annotation\Options({"label":"Тип перевода",
      *                      "value_options" : {" ": "", "bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
+     *                        "options":{"haystack":{"bank","card","currency"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
@@ -196,7 +149,7 @@ class Ticket
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -204,17 +157,6 @@ class Ticket
      */
     public $note;
 
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":10}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Вид загрузки"})
-     * @Annotation\Required({"required":"true" })
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $kindOfLoad;
 
     /**
      * @ODM\Date

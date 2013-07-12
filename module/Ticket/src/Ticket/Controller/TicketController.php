@@ -16,7 +16,7 @@ use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Ticket\Form\TicketForm;
-
+use AddList\Form\AddListForm;
 class TicketController extends AbstractActionController
 {
 
@@ -46,12 +46,14 @@ class TicketController extends AbstractActionController
 
     public function addAction()
     {
+        $post=$this->getRequest()->getPost();
+        $type = $this->getEvent()->getRouteMatch()->getParam('type');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $ticketModel = $this->getTicketModel();
+        $typeForm=array();
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
-
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
-
-        $formVehicle = $builder->createForm('Resource\Entity\Vehicle');
 
         $form_array=array();
 
@@ -64,15 +66,83 @@ class TicketController extends AbstractActionController
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
         $formVehicleData=$addListModel->returnDataArray(array(),'vehicle',$orgListId);
 
-        $fillFrom=new TicketForm();
+        $fillFrom=new AddListForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
-        $formVehicle=$fillFrom->fillFrom($formVehicle,$formVehicleData,$form_array);
+        //$formVehicle=$fillFrom->fillFrom($formVehicle,$formVehicleData);
+        $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
+        $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formVehicleData,array('type'));
 
+        $formsArray=array($formWay);
+
+        if(empty($type)) {
+            if(!empty($post->submit)) {
+
+                $result=$ticketModel->unSplitArray(get_object_vars($post));
+                $error=0;
+                $formsArray=array();
+
+                foreach($result as $resF) {
+                    $newForm= clone $formWay;
+                    $resF['submit']='submit';
+                    $newForm->setData($resF);
+                    if(!$newForm->isValid()) {
+                        $error++;
+                    }
+                    array_push($formsArray,$newForm);
+                }
+
+                $form->setData($post);
+                if(!$form->isValid()) {
+                    $error++;
+                }
+
+                if(empty($error)) {
+                    $comUserModel = $this->getCompanyUserModel();
+                    $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+                    $org_id = $comUserModel->getOrgIdByUserId($user_id);
+
+                    $ticketModel->addTicket($this->getRequest()->getPost(), $user_id, $org_id, $id);
+                    return $this->redirect()->toUrl('/tickets/my');
+                }
+            }
+        } else {
+            $ticket = $ticketModel->listTicket($id);
+            $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+            if( ($type=='copy')||($type=='edit')||($type=='list') ) {
+                $form->setData($ticket);
+
+                $formsArray=array();
+                foreach($ticketWay as $resF) {
+                    $newForm= clone $formWay;
+                    $newForm->setData($resF);
+                    array_push($formsArray,$newForm);
+                }
+                if($type=='edit') {
+                    $typeForm['action']='edit';
+                    $typeForm['id']=$id;
+                }
+                elseif($type=='copy') {
+                    $typeForm['action']='copy';
+                    $typeForm['id']=$id;
+                } elseif($type=='list') {
+                    foreach ($formsArray as $formWay) {
+                        foreach ($formWay as $wayEl) {
+                            $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
+                        }
+                    }
+
+                    foreach ($form as $el) {
+                        $el->setAttributes(array( 'disabled' => 'disabled' ));
+                    }
+                    $typeForm['action']='list';
+                    $typeForm['id']=$id;
+                }
+            }
+        }
         return new ViewModel(array(
             'form' => $form,
-            'formWay' =>$formWay,
-            'formVehicle'=>$formVehicle
-
+            'formsArray' =>$formsArray,
+            'typeForm' => $typeForm
         ));
     }
 
@@ -94,7 +164,7 @@ class TicketController extends AbstractActionController
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay');
 
-        $fillFrom=new TicketForm();
+        $fillFrom=new AddListForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
 
 
@@ -131,8 +201,8 @@ class TicketController extends AbstractActionController
 
         $formData=$addListModel->getAllDataArray('ticketWay');
 
-        $fillFrom=new TicketForm();
-        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+        $fillFrom=new AddListForm();
+        $formWay=$fillFrom->fillFrom($formWay,$formData);
 
 
         $way=$resModel->returnAllWays($res['id']);
@@ -159,16 +229,7 @@ class TicketController extends AbstractActionController
         return $this->redirect()->toUrl('/tickets/my');
     }
 
-    public function addTicketAction()
-    {
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $comUserModel = $this->getCompanyUserModel();
-        $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-        $org_id = $comUserModel->getOrgIdByUserId($user_id);
-        $res = $this->getTicketModel();
-        $res->addTicket($this->getRequest()->getPost(), $user_id, $org_id, $id);
-        return $this->redirect()->toUrl('/tickets/my');
-    }
+
 
     public function getTicketModel()
     {
@@ -216,8 +277,8 @@ class TicketController extends AbstractActionController
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
 
-        $fillFrom=new TicketForm();
-        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+        $fillFrom=new AddListForm();
+        $formWay=$fillFrom->fillFrom($formWay,$formData);
 
 
         return new ViewModel(array(

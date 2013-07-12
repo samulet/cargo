@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 use Ticket\Entity\TicketWay;
 
 class TicketModel implements ServiceLocatorAwareInterface
@@ -28,6 +28,19 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $organizationModel;
     protected $cargoModel;
     protected $notificationModel;
+
+    public function unSplitArray($propArraySplit) {
+        $result=array();
+        foreach($propArraySplit as $key =>$value) {
+            $elementSplit=explode('-',$key);
+            if(!empty($elementSplit['1'])) {
+                $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
+            } else {
+                $result['elementSplit0'][$elementSplit['0']]=$value;
+            }
+        }
+        return $result;
+    }
 
     public function addTicketWay($propArraySplit,$ownerTicketId,$resId) {
         $result=array();
@@ -80,8 +93,8 @@ class TicketModel implements ServiceLocatorAwareInterface
             }
         }
         $prop_array_split=$prop_array;
-        unset($prop_array_split['tsId']);
-        unset($prop_array_split['kindOfLoad']);
+
+
         unset($prop_array_split['submit']);
 
 
@@ -94,6 +107,11 @@ class TicketModel implements ServiceLocatorAwareInterface
 
         $prop_array['ownerId'] = $owner_id;
         $prop_array['ownerOrgId'] = $owner_org_id;
+        $prop_array['currency']=$prop_array_split['currency'];
+        $prop_array['money']=$prop_array_split['money'];
+        $prop_array['typeTicket']=$prop_array_split['typeTicket'];
+        $prop_array['formPay']=$prop_array_split['formPay'];
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
             $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(
@@ -103,7 +121,12 @@ class TicketModel implements ServiceLocatorAwareInterface
             $res = new Ticket();
         }
         foreach ($prop_array as $key => $value) {
-             $res->$key=new \MongoId($value);
+            if(($key=='ownerId')||($key=='ownerOrgId')) {
+                $res->$key=new \MongoId($value);
+            } else{
+                $res->$key=$value;
+            }
+
         }
         $objectManager->persist($res);
         $objectManager->flush();
