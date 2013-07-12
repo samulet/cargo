@@ -81,7 +81,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'edit', 'id' => $ticket['uuid'])
+                    array('action' => 'add', 'id' => $ticket['uuid'],'type'=>'edit')
                 );?>">Редактировать</a>
             </td>
             <td>
@@ -93,8 +93,8 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'copy', 'id' => $ticket['uuid'])
-                );?>">Копировать</a>
+                    array('action' => 'add', 'id' => $ticket['uuid'],'type'=>'copy')
+                );?>">Дублировать</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(

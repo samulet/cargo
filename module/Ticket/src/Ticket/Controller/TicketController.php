@@ -47,13 +47,13 @@ class TicketController extends AbstractActionController
     public function addAction()
     {
         $post=$this->getRequest()->getPost();
+        $type = $this->getEvent()->getRouteMatch()->getParam('type');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $ticketModel = $this->getTicketModel();
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
-
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
-
-        $formVehicle = $builder->createForm('Resource\Entity\Vehicle');
 
         $form_array=array();
 
@@ -73,43 +73,62 @@ class TicketController extends AbstractActionController
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formVehicleData,array('type'));
 
         $formsArray=array($formWay);
-        if(!empty($post->submit)) {
-            $res = $this->getTicketModel();
-            $result=$res->unSplitArray(get_object_vars($post));
-            $error=0;
-            $formsArray=array();
 
-            foreach($result as $resF) {
-                $newForm= clone $formWay;
-                $newForm->setData($resF);
-                if(!$newForm->isValid()) {
+        if(empty($type)) {
+            if(!empty($post->submit)) {
+
+                $result=$ticketModel->unSplitArray(get_object_vars($post));
+                $error=0;
+                $formsArray=array();
+
+                foreach($result as $resF) {
+                    $newForm= clone $formWay;
+                    $resF['submit']='submit';
+                    $newForm->setData($resF);
+                    if(!$newForm->isValid()) {
+                        $error++;
+                    }
+                    array_push($formsArray,$newForm);
+                }
+
+                $form->setData($post);
+                if(!$form->isValid()) {
                     $error++;
                 }
-                array_push($formsArray,$newForm);
-            }
 
-            $form->setData($post);
-            if(!$form->isValid()) {
-                $error++;
-            }
-           // die(var_dump($formWay->getMessages(),$form->getMessages() ));
-            if(empty($error)) {
-                $id = $this->getEvent()->getRouteMatch()->getParam('id');
-                $comUserModel = $this->getCompanyUserModel();
-                $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-                $org_id = $comUserModel->getOrgIdByUserId($user_id);
+                if(empty($error)) {
+                    $comUserModel = $this->getCompanyUserModel();
+                    $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+                    $org_id = $comUserModel->getOrgIdByUserId($user_id);
 
-                $res->addTicket($this->getRequest()->getPost(), $user_id, $org_id, $id);
-                return $this->redirect()->toUrl('/tickets/my');
+                    $ticketModel->addTicket($this->getRequest()->getPost(), $user_id, $org_id, $id);
+                    return $this->redirect()->toUrl('/tickets/my');
+                }
+            }
+        } else {
+            $ticket = $ticketModel->listTicket($id);
+            if($type=='copy') {
+                die(var_dump($ticket));
+            }
+            elseif($type=='edit'){
+                $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+
+                $form->setData($ticket);
+
+                $formsArray=array();
+                foreach($ticketWay as $resF) {
+                    $newForm= clone $formWay;
+                    $newForm->setData($resF);
+                    array_push($formsArray,$newForm);
+                }
+                $typeForm['action']='edit';
+                $typeForm['id']=$id;
             }
         }
-
-
-
         return new ViewModel(array(
             'form' => $form,
-            'formsArray' =>$formsArray
-
+            'formsArray' =>$formsArray,
+            'typeForm' => $typeForm
         ));
     }
 

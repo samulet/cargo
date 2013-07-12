@@ -2,11 +2,18 @@
 
 $form = $this->form;
 $formsArray = $this->formsArray;
+$typeForm=$this->typeForm;
 
 $formVehicle = $this->formVehicle;
 
-$form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
-    ->prepare();
+if(empty($typeForm)) {
+    $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
+        ->prepare();
+} else {
+    $form->setAttribute('action', $this->url('ticket', array('action' => 'add', 'id' => $typeForm['id'])))
+        ->prepare();
+}
+
 echo $this->form()->openTag($form);
 
 $currency = $form->get('currency');
@@ -238,6 +245,6 @@ $typeTicket = $form->get('typeTicket');
             </td>
         </tr>
     </table>
-    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')); ?> </div>
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue('Отправить')); ?> </div>
 <?php  echo $this->form()->closeTag();
 ?>
