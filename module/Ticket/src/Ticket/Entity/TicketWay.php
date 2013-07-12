@@ -155,9 +155,9 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Габариты - длина"})
+     * @Annotation\Options({"label":"Габариты - длина, м"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -167,9 +167,9 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Габариты - высота"})
+     * @Annotation\Options({"label":"Габариты - высота, м"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -179,9 +179,9 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Габариты - ширина"})
+     * @Annotation\Options({"label":"Габариты - ширина, м"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
@@ -191,7 +191,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Объем груза, м3"})
      * @Annotation\Required({"required":"true" })
@@ -203,7 +203,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Вес"})
      * @Annotation\Required({"required":"true" })
