@@ -82,6 +82,12 @@ $typeTicket = $form->get('typeTicket');
             </th>
             <?php
             }
+            }  else {
+                ?>
+                <th>
+                    Удалить пункт выдачи
+                </th>
+                <?php
             }
             ?>
         </tr>
@@ -249,11 +255,22 @@ $typeTicket = $form->get('typeTicket');
                     }
                     ?>" type="button" value="Удалть"/>
                 </td>
-            </tr>
+
                 <?php
                 }
+            } else {
+               ?>
+                <td>
+                    <input name="deleteWay" class="deleteWay" onclick="<?php
+                    if($counter!=0) {
+                        echo "delWay('wayTr-".$counter."');";
+                    }
+                    ?>" type="button" value="Удалть"/>
+                </td>
+            <?php
             }
             ?>
+            </tr>
         <?php
             $counter++;
         }
@@ -270,6 +287,15 @@ if(!empty($typeForm)){
         </tr>
     <?php
     }
+} else {
+    ?>
+    <tr class="addTr">
+        <td>
+            <input id="counter" type="hidden" value='<?php echo $counter ?>' />
+            <input type="button" onclick="addWay('wayTr');" value="Добавить пункт назначения "/>
+        </td>
+    </tr>
+<?php
 }
 ?>
     </table>
@@ -280,6 +306,9 @@ if(!empty($typeForm)){
         <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue('Отправить')); ?> </div>
         <?php
     }
+} else { ?>
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue('Отправить')); ?> </div>
+<?php
 }
 ?>
 
