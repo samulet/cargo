@@ -156,16 +156,15 @@ class TicketWay
      */
     public $cargoOwner;
 
+
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Required({"required":"true" })
+
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Наименование груза"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $cargoName;
@@ -319,6 +318,7 @@ class TicketWay
      */
 
     public $coupling;
+
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -326,9 +326,7 @@ class TicketWay
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип ТС"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $type;
@@ -343,6 +341,7 @@ class TicketWay
      * @ODM\Field(type="string")
      */
     public $docNumber;
+
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -350,9 +349,7 @@ class TicketWay
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Вид документа"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $docType;
@@ -385,7 +382,7 @@ class TicketWay
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Возвратный документ","value_options":{"":"Выберите значение","yes":"да", "no":"нет"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
+     *                        "options":{"haystack":{"yes","no","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
@@ -464,11 +461,11 @@ class TicketWay
     public $dateEnd;
 
     /**
-     * @Annotation\Filter({"name":"Int"})
+     * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"[0-9]"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Время готовности к разгрузке"})
+     * @Annotation\Options({"label":"Время готовности ТС к разгрузке"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")

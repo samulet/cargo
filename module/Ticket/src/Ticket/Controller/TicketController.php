@@ -80,7 +80,7 @@ class TicketController extends AbstractActionController
             if(!$form->isValid()) {
                 $error++;
             }
-           // die(var_dump($formWay->getMessages(),$form->getMessages() ));
+            die(var_dump($formWay->getMessages(),$form->getMessages() ));
             if(empty($error)) {
                 $id = $this->getEvent()->getRouteMatch()->getParam('id');
                 $comUserModel = $this->getCompanyUserModel();
