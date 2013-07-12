@@ -18,6 +18,7 @@ use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Resource\Form\ResourceForm;
+use AddList\Form\AddListForm;
 
 class ResourceController extends AbstractActionController
 {
@@ -58,7 +59,7 @@ class ResourceController extends AbstractActionController
 
         $veh = $this->getVehicleModel();
         $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
-        $resForm=new ResourceForm();
+        $resForm=new AddListForm();
 
         $form=$resForm->fillTS($form,$myV);
 
@@ -128,7 +129,7 @@ class ResourceController extends AbstractActionController
 
         $veh = $this->getVehicleModel();
         $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
-        $resForm=new ResourceForm();
+        $resForm=new AddListForm();
 
         $form=$resForm->fillTS($form,$myV);
 
@@ -181,7 +182,7 @@ class ResourceController extends AbstractActionController
 
         $veh = $this->getVehicleModel();
         $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
-        $resForm=new ResourceForm();
+        $resForm=new AddListForm();
 
         $form=$resForm->fillTS($form,$myV);
 
@@ -213,7 +214,7 @@ class ResourceController extends AbstractActionController
 
         $veh = $this->getVehicleModel();
         $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
-        $resForm=new ResourceForm();
+        $resForm=new AddListForm();
 
         $form=$resForm->fillTS($form,$myV);
 
