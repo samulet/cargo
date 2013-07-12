@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fe6fd601026783e37c94976e2c648bde",
+    "hash": "6997f35f3f8a3d3c55fb271cda3ec495",
     "packages": [
         {
             "name": "bjyoungblood/bjy-authorize",
@@ -147,12 +147,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "89493d2c6e1362f581f9de1c1871cc52eb29c030"
+                "reference": "dc3438804c6303f1b5892f184a79aa8e3ce5d81d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/89493d2c6e1362f581f9de1c1871cc52eb29c030",
-                "reference": "89493d2c6e1362f581f9de1c1871cc52eb29c030",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/dc3438804c6303f1b5892f184a79aa8e3ce5d81d",
+                "reference": "dc3438804c6303f1b5892f184a79aa8e3ce5d81d",
                 "shasum": ""
             },
             "require": {
@@ -208,7 +208,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2013-06-07 14:54:47"
+            "time": "2013-07-04 15:48:06"
         },
         {
             "name": "doctrine/collections",
@@ -642,12 +642,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb.git",
-                "reference": "f70e2a700283fdf0931f1a70401588f66dd69d2e"
+                "reference": "009ea85b2e6ba067fbce28b2e9ca80aea7fa2a6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb/zipball/f70e2a700283fdf0931f1a70401588f66dd69d2e",
-                "reference": "f70e2a700283fdf0931f1a70401588f66dd69d2e",
+                "url": "https://api.github.com/repos/doctrine/mongodb/zipball/009ea85b2e6ba067fbce28b2e9ca80aea7fa2a6f",
+                "reference": "009ea85b2e6ba067fbce28b2e9ca80aea7fa2a6f",
                 "shasum": ""
             },
             "require": {
@@ -694,7 +694,7 @@
                 "mongodb",
                 "persistence"
             ],
-            "time": "2013-05-29 19:13:05"
+            "time": "2013-07-08 15:15:19"
         },
         {
             "name": "doctrine/mongodb-odm",
@@ -702,12 +702,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "d607bec0560f977274a818bf99d2d7f4d7f3e91b"
+                "reference": "0bf89a83e8c61428b207b4ad71c079c6e5534c3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/d607bec0560f977274a818bf99d2d7f4d7f3e91b",
-                "reference": "d607bec0560f977274a818bf99d2d7f4d7f3e91b",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/0bf89a83e8c61428b207b4ad71c079c6e5534c3e",
+                "reference": "0bf89a83e8c61428b207b4ad71c079c6e5534c3e",
                 "shasum": ""
             },
             "require": {
@@ -744,7 +744,7 @@
                     "homepage": "http://avalanche123.com"
                 },
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -767,7 +767,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2013-07-02 19:15:51"
+            "time": "2013-07-04 19:12:04"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -775,12 +775,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "e5287b603406d6640b722cf15066d7d3b315e6ca"
+                "reference": "ef7119fc9076c3c0b652aa9c8266286472e24dc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/e5287b603406d6640b722cf15066d7d3b315e6ca",
-                "reference": "e5287b603406d6640b722cf15066d7d3b315e6ca",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/ef7119fc9076c3c0b652aa9c8266286472e24dc1",
+                "reference": "ef7119fc9076c3c0b652aa9c8266286472e24dc1",
                 "shasum": ""
             },
             "require": {
@@ -847,7 +847,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2013-07-03 16:37:34"
+            "time": "2013-07-10 19:03:29"
         },
         {
             "name": "rollbar/rollbar",
@@ -898,12 +898,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "b68fd0262ebae63f796d188f48eaa470044861fd"
+                "reference": "c374f12670a4e6b6b72ef2a2d58b75534d94609c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/b68fd0262ebae63f796d188f48eaa470044861fd",
-                "reference": "b68fd0262ebae63f796d188f48eaa470044861fd",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/c374f12670a4e6b6b72ef2a2d58b75534d94609c",
+                "reference": "c374f12670a4e6b6b72ef2a2d58b75534d94609c",
                 "shasum": ""
             },
             "require": {
@@ -942,7 +942,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-06-23 08:16:33"
+            "time": "2013-07-11 19:37:15"
         },
         {
             "name": "yassa/rollbar",
@@ -1000,16 +1000,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendDeveloperTools.git",
-                "reference": "8e04c24099ac4b843d101522fda17457765332ce"
+                "reference": "0.0.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/8e04c24099ac4b843d101522fda17457765332ce",
-                "reference": "8e04c24099ac4b843d101522fda17457765332ce",
+                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/0.0.2",
+                "reference": "0.0.2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
+                "zendframework/zend-debug": "2.*",
                 "zendframework/zend-eventmanager": "2.*",
                 "zendframework/zend-mvc": "2.*",
                 "zendframework/zend-servicemanager": "2.*",
@@ -1017,7 +1018,8 @@
                 "zendframework/zend-version": "2.*"
             },
             "suggest": {
-                "bjyoungblood/bjy-profiler": "Version: dev-master, allows the usage of the (Zend) Db collector."
+                "bjyoungblood/bjy-profiler": "Version: dev-master, allows the usage of the (Zend) Db collector.",
+                "ocramius/ocra-service-manager": "OcraServiceManager can help you track dependencies within your application."
             },
             "type": "zf-module",
             "autoload": {
@@ -1051,20 +1053,20 @@
                 "module",
                 "zf2"
             ],
-            "time": "2013-06-15 07:41:17"
+            "time": "2013-07-08 19:52:34"
         },
         {
             "name": "zendframework/zendframework",
-            "version": "2.1.5",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "release-2.1.5"
+                "reference": "release-2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/release-2.1.5",
-                "reference": "release-2.1.5",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/release-2.2.1",
+                "reference": "release-2.2.1",
                 "shasum": ""
             },
             "require": {
@@ -1123,16 +1125,17 @@
                 "zendframework/zend-xmlrpc": "self.version"
             },
             "require-dev": {
-                "doctrine/common": ">=2.1",
+                "doctrine/annotations": ">=1.0",
                 "ircmaxell/random-lib": "dev-master",
                 "ircmaxell/security-lib": "dev-master",
+                "ocramius/proxy-manager": "0.3.*",
                 "phpunit/phpunit": "3.7.*"
             },
             "suggest": {
-                "doctrine/common": "Doctrine\\Common >=2.1 for annotation features",
-                "ext-intl": "ext/intl for i18n features",
+                "doctrine/annotations": "Doctrine Annotations >=1.0 for annotation features",
+                "ext-intl": "ext/intl for i18n features (included in default builds of PHP)",
                 "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable",
-                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler",
+                "ocramius/proxy-manager": "ProxyManager to handle lazy initialization of services",
                 "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
                 "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
             },
@@ -1142,8 +1145,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev",
-                    "dev-develop": "2.2-dev"
+                    "dev-master": "2.2-dev",
+                    "dev-develop": "2.3-dev"
                 }
             },
             "autoload": {
@@ -1162,7 +1165,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-04-17 15:15:58"
+            "time": "2013-06-12 20:13:34"
         },
         {
             "name": "zf-commons/zfc-admin",
@@ -1276,12 +1279,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "73b973455a7ba991821f0278d88508e145684fda"
+                "reference": "bd37981b86f935acbbd29048d485861c96a7b224"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/73b973455a7ba991821f0278d88508e145684fda",
-                "reference": "73b973455a7ba991821f0278d88508e145684fda",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/bd37981b86f935acbbd29048d485861c96a7b224",
+                "reference": "bd37981b86f935acbbd29048d485861c96a7b224",
                 "shasum": ""
             },
             "require": {
@@ -1329,7 +1332,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-06-25 12:41:14"
+            "time": "2013-07-08 05:56:07"
         },
         {
             "name": "zf-commons/zfc-user-doctrine-mongo-odm",
@@ -1337,12 +1340,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/bladeofsteel/ZfcUserDoctrineMongoODM.git",
-                "reference": "0ed450076a0e92bd64e1ab1961cfbaa4afaa645b"
+                "reference": "4234d08a8141313beedc60f67ea9701931822a2a"
             },
             "require": {
                 "doctrine/doctrine-mongo-odm-module": "0.8.*@dev",
                 "php": ">=5.3.3",
-                "zendframework/zendframework": "2.1.*",
+                "zendframework/zendframework": "2.*",
                 "zf-commons/zfc-user": "dev-master"
             },
             "type": "library",
@@ -1371,7 +1374,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-03-03 18:09:18"
+            "time": "2013-07-12 05:47:00"
         }
     ],
     "packages-dev": [
@@ -2102,17 +2105,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "875ada786bf49b765db8cf4f4dff0607f7d5f5b5"
+                "reference": "c933bb67a8a2e45c42d0626a0cd6569789bf6ed7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/875ada786bf49b765db8cf4f4dff0607f7d5f5b5",
-                "reference": "875ada786bf49b765db8cf4f4dff0607f7d5f5b5",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c933bb67a8a2e45c42d0626a0cd6569789bf6ed7",
+                "reference": "c933bb67a8a2e45c42d0626a0cd6569789bf6ed7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "psr/log": ">=1.0,<2.0"
+                "psr/log": "~1.0"
             },
             "require-dev": {
                 "doctrine/couchdb": "dev-master",
@@ -2156,7 +2159,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-06-20 14:40:07"
+            "time": "2013-07-11 16:36:07"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2164,12 +2167,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "56ad5a88f7503b9ecee4e1799cd7c48e31ada517"
+                "reference": "1.2.12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/56ad5a88f7503b9ecee4e1799cd7c48e31ada517",
-                "reference": "56ad5a88f7503b9ecee4e1799cd7c48e31ada517",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/1.2.12",
+                "reference": "1.2.12",
                 "shasum": ""
             },
             "require": {
@@ -2217,7 +2220,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-06-27 08:20:15"
+            "time": "2013-07-06 06:26:16"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2403,12 +2406,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "50880d1f546fec2b55fe6903ee7d5aef3fa70b76"
+                "reference": "3.7.22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/50880d1f546fec2b55fe6903ee7d5aef3fa70b76",
-                "reference": "50880d1f546fec2b55fe6903ee7d5aef3fa70b76",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3.7.22",
+                "reference": "3.7.22",
                 "shasum": ""
             },
             "require": {
@@ -2469,7 +2472,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-06-29 20:04:39"
+            "time": "2013-07-06 06:29:15"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2477,12 +2480,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "977c5327c5f9e2a0f08728a59389ee604e5b2f47"
+                "reference": "b07614827c82083615b981e6a9813092cec43073"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/977c5327c5f9e2a0f08728a59389ee604e5b2f47",
-                "reference": "977c5327c5f9e2a0f08728a59389ee604e5b2f47",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/b07614827c82083615b981e6a9813092cec43073",
+                "reference": "b07614827c82083615b981e6a9813092cec43073",
                 "shasum": ""
             },
             "require": {
@@ -2527,7 +2530,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2013-06-23 05:41:31"
+            "time": "2013-07-10 05:37:22"
         },
         {
             "name": "psr/log",
@@ -2574,12 +2577,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/BrowserKit.git",
-                "reference": "2d2343dac844a365bd28a7cefd56b47d09e62dda"
+                "reference": "9f49a0541405c39345b8142da406024086a7bc84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/BrowserKit/zipball/2d2343dac844a365bd28a7cefd56b47d09e62dda",
-                "reference": "2d2343dac844a365bd28a7cefd56b47d09e62dda",
+                "url": "https://api.github.com/repos/symfony/BrowserKit/zipball/9f49a0541405c39345b8142da406024086a7bc84",
+                "reference": "9f49a0541405c39345b8142da406024086a7bc84",
                 "shasum": ""
             },
             "require": {
@@ -2587,8 +2590,8 @@
                 "symfony/dom-crawler": "~2.0"
             },
             "require-dev": {
-                "symfony/css-selector": ">=2.0,<3.0",
-                "symfony/process": ">=2.0,<3.0"
+                "symfony/css-selector": "~2.0",
+                "symfony/process": "~2.0"
             },
             "suggest": {
                 "symfony/process": ""
@@ -2620,7 +2623,7 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "http://symfony.com",
-            "time": "2013-05-16 07:54:39"
+            "time": "2013-07-08 13:37:01"
         },
         {
             "name": "symfony/css-selector",
@@ -2680,12 +2683,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DomCrawler.git",
-                "reference": "7689116a186acb47c5fa6f04096ca0cfaa39a7c2"
+                "reference": "bb5c316859d1d8f793c6b5c995e9a3c6671ec005"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/7689116a186acb47c5fa6f04096ca0cfaa39a7c2",
-                "reference": "7689116a186acb47c5fa6f04096ca0cfaa39a7c2",
+                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/bb5c316859d1d8f793c6b5c995e9a3c6671ec005",
+                "reference": "bb5c316859d1d8f793c6b5c995e9a3c6671ec005",
                 "shasum": ""
             },
             "require": {
@@ -2724,7 +2727,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "http://symfony.com",
-            "time": "2013-06-23 08:16:33"
+            "time": "2013-07-08 13:37:01"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2787,12 +2790,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder.git",
-                "reference": "d8da924d4f7d9f325ebd72feefee40c17a3e9104"
+                "reference": "57b67729f863be8b950441a739b82678b91accde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/d8da924d4f7d9f325ebd72feefee40c17a3e9104",
-                "reference": "d8da924d4f7d9f325ebd72feefee40c17a3e9104",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/57b67729f863be8b950441a739b82678b91accde",
+                "reference": "57b67729f863be8b950441a739b82678b91accde",
                 "shasum": ""
             },
             "require": {
@@ -2825,7 +2828,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "http://symfony.com",
-            "time": "2013-06-23 08:16:33"
+            "time": "2013-07-08 13:37:01"
         },
         {
             "name": "symfony/process",
@@ -2834,12 +2837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "f3f84fec23ce3ff7d0510c308c7842729cb0ba8c"
+                "reference": "998d489806011e1d790db5fc0284e6083cc8ea8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/f3f84fec23ce3ff7d0510c308c7842729cb0ba8c",
-                "reference": "f3f84fec23ce3ff7d0510c308c7842729cb0ba8c",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/998d489806011e1d790db5fc0284e6083cc8ea8b",
+                "reference": "998d489806011e1d790db5fc0284e6083cc8ea8b",
                 "shasum": ""
             },
             "require": {
@@ -2872,7 +2875,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2013-06-23 08:16:33"
+            "time": "2013-07-08 13:37:01"
         },
         {
             "name": "symfony/yaml",
@@ -2881,12 +2884,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "82100c7732c95452702d11433aad50988700d36c"
+                "reference": "7a6c10b37cb4335dcca038da760f29915a374b81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/82100c7732c95452702d11433aad50988700d36c",
-                "reference": "82100c7732c95452702d11433aad50988700d36c",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/7a6c10b37cb4335dcca038da760f29915a374b81",
+                "reference": "7a6c10b37cb4335dcca038da760f29915a374b81",
                 "shasum": ""
             },
             "require": {
@@ -2919,7 +2922,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-05-16 07:54:39"
+            "time": "2013-07-11 19:37:15"
         },
         {
             "name": "videlalvaro/php-amqplib",
