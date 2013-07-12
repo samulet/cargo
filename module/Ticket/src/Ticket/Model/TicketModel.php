@@ -93,8 +93,8 @@ class TicketModel implements ServiceLocatorAwareInterface
             }
         }
         $prop_array_split=$prop_array;
-        unset($prop_array_split['tsId']);
-        unset($prop_array_split['kindOfLoad']);
+
+
         unset($prop_array_split['submit']);
 
 
@@ -107,6 +107,11 @@ class TicketModel implements ServiceLocatorAwareInterface
 
         $prop_array['ownerId'] = $owner_id;
         $prop_array['ownerOrgId'] = $owner_org_id;
+        $prop_array['currency']=$prop_array_split['currency'];
+        $prop_array['money']=$prop_array_split['money'];
+        $prop_array['typeTicket']=$prop_array_split['typeTicket'];
+        $prop_array['formPay']=$prop_array_split['formPay'];
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
             $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(
@@ -116,7 +121,12 @@ class TicketModel implements ServiceLocatorAwareInterface
             $res = new Ticket();
         }
         foreach ($prop_array as $key => $value) {
-             $res->$key=new \MongoId($value);
+            if(($key=='ownerId')||($key=='ownerOrgId')) {
+                $res->$key=new \MongoId($value);
+            } else{
+                $res->$key=$value;
+            }
+
         }
         $objectManager->persist($res);
         $objectManager->flush();
