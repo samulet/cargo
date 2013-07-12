@@ -34,9 +34,7 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
             Организация
         </th>
 
-         <th>
-             Редактировать
-          </th>
+
          <th>
              Добавить аукцион
           </th>
@@ -54,10 +52,10 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
     ?>
 <tr>
             <td>
-                <a href="<?php echo $this->url(
-                    'ticket',
-                    array('action' => 'list', 'id' => $ticket['uuid'])
-                );?>"><?php echo $ticket['uuid']; ?></a>
+                 <a href="<?php echo $this->url(
+                                    'ticket',
+                                    array('action' => 'add', 'id' => $ticket['uuid'] ,'type'=>'list')
+                                );?>"><?php echo $ticket['uuid']; ?></a>
             </td>
             <td>
 
@@ -83,10 +81,7 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <a href="<?php echo $this->url('organization',
                     array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
         </td>
-        <td>
-            <a href="<?php echo $this->url('ticket',
-                array('action'=>'edit', 'id' => $ticket['uuid']));?>">Редактировать</a>
-        </td>
+
         <td>
             <a href="<?php echo $this->url('auction',
                 array('action'=>'add', 'id' => $ticket['uuid']));?>">Добавить аукцион</a>
