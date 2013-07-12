@@ -16,6 +16,7 @@ use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Resource\Form\VehicleForm;
+use AddList\Form\AddListForm;
 class VehicleController extends AbstractActionController
 {
 
@@ -52,8 +53,8 @@ class VehicleController extends AbstractActionController
         $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
 
-        $fillFrom=new VehicleForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $fillFrom=new AddListForm();
+        $form=$fillFrom->fillFrom($form,$formData);
 
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
@@ -110,8 +111,8 @@ class VehicleController extends AbstractActionController
         $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
         $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
-        $fillFrom=new VehicleForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $fillFrom=new AddListForm();
+        $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res,
@@ -133,8 +134,8 @@ class VehicleController extends AbstractActionController
         $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
         $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
-        $fillFrom=new VehicleForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $fillFrom=new AddListForm();
+        $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res,
@@ -188,8 +189,8 @@ class VehicleController extends AbstractActionController
         $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
         $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
-        $fillFrom=new VehicleForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $fillFrom=new AddListForm();
+        $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res
