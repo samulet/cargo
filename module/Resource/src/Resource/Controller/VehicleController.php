@@ -58,7 +58,7 @@ class VehicleController extends AbstractActionController
 
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
-        $form=$fillFrom->fillFrom($form,$formData,array('typeLoad'));
+        $form=$fillFrom->fillFromVehicleSpecial($form,$formData,array('typeLoad'));
 
 
 
