@@ -72,11 +72,22 @@ class TicketController extends AbstractActionController
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formVehicleData,array('type'));
         if(!empty($post->submit)) {
+            $res = $this->getTicketModel();
+            $result=$res->unSplitArray(get_object_vars($post));
             $error=0;
-            $formWay->setData($post);
-            if(!$formWay->isValid()) {
-                $error++;
+            $formsArray=array();
+            foreach($result as $resF) {
+                $newForm= clone $formWay;
+                $newForm->setData($resF);
+                if(!$newForm->isValid()) {
+                    $error++;
+                }
+                array_push($formsArray,$newForm);
             }
+
+
+
+            die(var_dump($error));
             $form->setData($post);
             if(!$form->isValid()) {
                 $error++;
@@ -87,7 +98,7 @@ class TicketController extends AbstractActionController
                 $comUserModel = $this->getCompanyUserModel();
                 $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
                 $org_id = $comUserModel->getOrgIdByUserId($user_id);
-                $res = $this->getTicketModel();
+
                 $res->addTicket($this->getRequest()->getPost(), $user_id, $org_id, $id);
                 return $this->redirect()->toUrl('/tickets/my');
             }

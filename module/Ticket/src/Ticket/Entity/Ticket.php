@@ -41,7 +41,14 @@ class Ticket
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
+
     public $uuid;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Exclude()
+     */
+    public $tsId;
     /**
      * @ODM\ObjectId
      * @var int

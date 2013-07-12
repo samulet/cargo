@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 use Ticket\Entity\TicketWay;
 
 class TicketModel implements ServiceLocatorAwareInterface
@@ -28,6 +28,19 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $organizationModel;
     protected $cargoModel;
     protected $notificationModel;
+
+    public function unSplitArray($propArraySplit) {
+        $result=array();
+        foreach($propArraySplit as $key =>$value) {
+            $elementSplit=explode('-',$key);
+            if(!empty($elementSplit['1'])) {
+                $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
+            } else {
+                $result['elementSplit0'][$elementSplit['0']]=$value;
+            }
+        }
+        return $result;
+    }
 
     public function addTicketWay($propArraySplit,$ownerTicketId,$resId) {
         $result=array();
