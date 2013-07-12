@@ -71,11 +71,14 @@ class TicketController extends AbstractActionController
         //$formVehicle=$fillFrom->fillFrom($formVehicle,$formVehicleData);
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formVehicleData,array('type'));
+
+        $formsArray=array($formWay);
         if(!empty($post->submit)) {
             $res = $this->getTicketModel();
             $result=$res->unSplitArray(get_object_vars($post));
             $error=0;
             $formsArray=array();
+
             foreach($result as $resF) {
                 $newForm= clone $formWay;
                 $newForm->setData($resF);
@@ -85,9 +88,6 @@ class TicketController extends AbstractActionController
                 array_push($formsArray,$newForm);
             }
 
-
-
-            die(var_dump($error));
             $form->setData($post);
             if(!$form->isValid()) {
                 $error++;
@@ -108,8 +108,7 @@ class TicketController extends AbstractActionController
 
         return new ViewModel(array(
             'form' => $form,
-            'formWay' =>$formWay,
-            'formVehicle'=>$formVehicle
+            'formsArray' =>$formsArray
 
         ));
     }
