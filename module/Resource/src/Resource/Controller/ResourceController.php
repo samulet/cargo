@@ -77,7 +77,7 @@ class ResourceController extends AbstractActionController
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
 
 
-        $form=$resForm->fillFrom($form,$formData,$form_array);
+        $form=$resForm->fillFrom($form,$formData);
 
         if(!empty($tsUuid)) {
             $tsId=$veh->getIdByUuid($tsUuid);

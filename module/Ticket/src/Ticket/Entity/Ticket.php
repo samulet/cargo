@@ -92,7 +92,7 @@ class Ticket
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Name"})
      */
@@ -103,7 +103,7 @@ class Ticket
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Type"})
      */
@@ -112,7 +112,7 @@ class Ticket
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Description"})
      * @var string
@@ -125,7 +125,7 @@ class Ticket
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Sizes:"})
      */
@@ -196,7 +196,7 @@ class Ticket
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -207,7 +207,7 @@ class Ticket
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":10}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Вид загрузки"})
      * @Annotation\Required({"required":"true" })

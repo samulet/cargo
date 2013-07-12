@@ -15,7 +15,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 
 
 /**
@@ -115,7 +115,7 @@ class AddList
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Занчение в БД"})
      * @Annotation\Required({"required":"true" })
@@ -127,7 +127,7 @@ class AddList
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/[^а-яА-Яa-zA-Z0-9]/"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Имя поля"})
      * @Annotation\Required({"required":"true" })
