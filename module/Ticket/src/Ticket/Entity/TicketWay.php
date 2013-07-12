@@ -202,12 +202,48 @@ class TicketWay
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Габариты"})
+     * @Annotation\Options({"label":"Габариты - длина"})
      * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
      */
-    public $dimensions;
+    public $dimensionsLength;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Габариты - высота"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $dimensionsHeight;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Габариты - ширина"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $dimensionsWidth;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([a-zA-Z0-9_\(\)\s]+)|([А-Яа-я0-9_\(\)\s]+))$/iu"}})
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Объем груза, м3"})
+     * @Annotation\Required({"required":"true" })
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $cargoValue;
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})

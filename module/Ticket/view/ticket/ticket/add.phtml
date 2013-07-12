@@ -1,4 +1,5 @@
 <?php
+
 $form = $this->form;
 $formWay = $this->formWay;
 $formVehicle=$this->formVehicle;
@@ -8,6 +9,11 @@ $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
 echo $this->form()->openTag($form);
 
 
+$dimensionsWidth= $formWay->get('dimensionsWidth');
+$dimensionsHeight= $formWay->get('dimensionsHeight');
+$dimensionsLength= $formWay->get('dimensionsLength');
+$cargoValue= $formWay->get('cargoValue');
+
 $areaLoad= $formWay->get('areaLoad');
 $areaUnload= $formWay->get('areaUnload');
 
@@ -16,7 +22,8 @@ $cargoName= $formWay->get('cargoName');
 
 $adr= $formWay->get('adr');
 $cubs= $formWay->get('cubs');
-$dimensions= $formWay->get('dimensions');
+
+
 $weight= $formWay->get('weight');
 $rubles= $formWay->get('rubles');
 $pallet= $formWay->get('pallet');
@@ -124,7 +131,12 @@ $docType= $formWay->get('docType');
                 <?php
                 echo $this->formRow( $adr);
                 echo $this->formRow( $cubs);
-                echo $this->formRow(  $dimensions);
+
+                echo $this->formRow(  $dimensionsWidth);
+                echo $this->formRow(  $dimensionsHeight);
+                echo $this->formRow(  $dimensionsLength);
+                echo $this->formRow(  $cargoValue);
+
                 echo $this->formRow(  $weight);
                 echo $this->formRow(  $rubles);
                 echo $this->formRow(  $pallet);
