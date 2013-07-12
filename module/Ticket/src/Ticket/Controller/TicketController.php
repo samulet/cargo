@@ -50,7 +50,7 @@ class TicketController extends AbstractActionController
         $type = $this->getEvent()->getRouteMatch()->getParam('type');
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $ticketModel = $this->getTicketModel();
-
+        $typeForm=array();
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
@@ -107,12 +107,8 @@ class TicketController extends AbstractActionController
             }
         } else {
             $ticket = $ticketModel->listTicket($id);
-            if($type=='copy') {
-                die(var_dump($ticket));
-            }
-            elseif($type=='edit'){
-                $ticketWay=$ticketModel->returnAllWays($ticket['id']);
-
+            $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+            if(($type=='copy')||(($type=='edit'))) {
                 $form->setData($ticket);
 
                 $formsArray=array();
@@ -121,8 +117,14 @@ class TicketController extends AbstractActionController
                     $newForm->setData($resF);
                     array_push($formsArray,$newForm);
                 }
-                $typeForm['action']='edit';
-                $typeForm['id']=$id;
+                if($type=='edit') {
+                    $typeForm['action']='edit';
+                    $typeForm['id']=$id;
+                }
+                elseif($type=='copy') {
+                    $typeForm['action']='copy';
+                    $typeForm['id']=$id;
+                }
             }
         }
         return new ViewModel(array(

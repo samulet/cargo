@@ -10,8 +10,16 @@ if(empty($typeForm)) {
     $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
         ->prepare();
 } else {
-    $form->setAttribute('action', $this->url('ticket', array('action' => 'add', 'id' => $typeForm['id'])))
-        ->prepare();
+    $type=$typeForm['action'];
+    if($type=='edit') {
+        $form->setAttribute('action', $this->url('ticket', array('action' => 'add', 'id' => $typeForm['id'])))
+            ->prepare();
+    }
+    elseif($type=='copy') {
+        $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
+            ->prepare();
+    }
+
 }
 
 echo $this->form()->openTag($form);
