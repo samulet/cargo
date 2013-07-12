@@ -68,8 +68,9 @@ class TicketController extends AbstractActionController
 
         $fillFrom=new AddListForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
-        $formVehicle=$fillFrom->fillFrom($formVehicle,$formVehicleData);
-
+        //$formVehicle=$fillFrom->fillFrom($formVehicle,$formVehicleData);
+        $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
+        $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formVehicleData,array('type'));
         if(!empty($post->submit)) {
             $error=0;
             $formWay->setData($post);
@@ -80,7 +81,7 @@ class TicketController extends AbstractActionController
             if(!$form->isValid()) {
                 $error++;
             }
-            die(var_dump($formWay->getMessages(),$form->getMessages() ));
+           // die(var_dump($formWay->getMessages(),$form->getMessages() ));
             if(empty($error)) {
                 $id = $this->getEvent()->getRouteMatch()->getParam('id');
                 $comUserModel = $this->getCompanyUserModel();
