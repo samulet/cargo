@@ -77,7 +77,7 @@ $resources=$this->res;
 
             ?>
                <a href="<?php echo $this->url('resource',
-                               array('action'=>'list', 'id' => $resource['uuid']));?>"> <?php
+                               array('action' => 'add', 'id' => $resource['uuid'],'type'=>'list'));?>"> <?php
 
                                  $strLoad='';
                                  foreach($resource['typeLoad'] as $typeLoad) {
@@ -99,7 +99,7 @@ $resources=$this->res;
            ?>
         <td>
             <a href="<?php echo $this->url('resource',
-                array('action'=>'edit', 'id' => $resource['uuid']));?>">Редактировать</a>
+                array('action' => 'add', 'id' => $resource['uuid'],'type'=>'edit'));?>">Редактировать</a>
         </td>
            <?php
         }
