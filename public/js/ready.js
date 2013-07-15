@@ -112,6 +112,10 @@ function time_control(element) {
 
         lenCounter--;
     }
+    if((error==0)&&(numCount==2)) {
+        numVal=new String(numVal+':');
+        $(element).val( numVal );
+    }
     if(error>0) {
         $(element).val( numVal );
     }
