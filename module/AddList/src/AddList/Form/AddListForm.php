@@ -48,8 +48,21 @@ class AddListForm
         return $form;
     }
 
+    public function fillCargoOwner($form,$formData) {
+
+        $result_array=array(''=>'Выберите Грузовладельца');
+        foreach($formData as $key =>$value) {
+            $result_array=$result_array+array($key=>$value);
+        }
+        if($form->has('cargoOwner')) {
+            $form->get('cargoOwner')->setOptions(array("value_options"=>$result_array));
+        }
+        return $form;
+    }
+
     public function fillFromVehicleSpecial($form,$formData,$elements) {
             foreach($formData as $key => $element) {
+
                 if(is_int(array_search($key,$elements,true)) ) {
 
                     $result_array=array(''=>'Выберите значение');

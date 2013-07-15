@@ -13,10 +13,11 @@ return array(
             'resource' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/resources[/:action][/:id]',
+                    'route' => '/resources[/:action][/:id][/:type]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
+                        'type' =>'[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Resource\Controller\Resource',
@@ -27,10 +28,11 @@ return array(
             'vehicle' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/vehicles[/:action][/:id]',
+                    'route' => '/vehicles[/:action][/:id][/:type]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
+                        'type' =>'[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Resource\Controller\Vehicle',
@@ -45,7 +47,7 @@ return array(
             'BjyAuthorize\Guard\Controller' => array(
                 array('controller' => 'Resource\Controller\Resource','action'=> array('index','list','delete', 'addResource', 'copy'),'roles' => array('user','admin')),
                 array('controller' => 'Resource\Controller\Resource','action'=> array('my','add','edit'),'roles' => array('carrier','admin')),
-                array('controller' => 'Resource\Controller\Resource','action'=> array('search'),'roles' => array('customer','admin')),
+                array('controller' => 'Resource\Controller\Resource','action'=> array('search', 'getResults'),'roles' => array('customer','admin')),
 
                 array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index'), 'roles' => array('admin')),
                 array('controller' => 'Resource\Controller\Vehicle', 'action' => array('my','add', 'edit', 'list', 'delete', 'addVehicle', 'copy'), 'roles' => array('carrier','admin')),

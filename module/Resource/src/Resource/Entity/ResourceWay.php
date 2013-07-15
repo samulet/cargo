@@ -80,7 +80,7 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Место загрузки ТС"})
      * @Annotation\Required({"required":"true" })
@@ -92,7 +92,7 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Место разгрузки ТС"})
      * @Annotation\Required({"required":"true" })
@@ -104,7 +104,7 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -119,7 +119,7 @@ class ResourceWay
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Валюта",
-     *                      "value_options" : {"RUR":"RUR","EUR":"EUR","USD":"USD"}})
+     *                      "value_options" : {"":"", "RUR":"RUR","EUR":"EUR","USD":"USD"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"RUR","EUR","USD"},
      *                              "messages":{"notInArray":"Выберите элемент из списка"}}})
@@ -145,8 +145,8 @@ class ResourceWay
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Валюта",
-     *                      "value_options" : {"bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
+     * @Annotation\Options({"label":"Тип перевода",
+     *                      "value_options" : {"":"","bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"bank","card","currency"},
      *                              "messages":{"notInArray":"Выберите элемент из списка"}}})
@@ -166,9 +166,13 @@ class ResourceWay
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
-     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Attributes({
+     * "type":"text",
+     * "onkeyup" : "time_control(this);",
+     * "placeholder" : "12:00"
+     * })
      * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
      * @Annotation\Required({"required":"true" })
      * @var string

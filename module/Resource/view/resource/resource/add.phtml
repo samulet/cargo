@@ -1,10 +1,33 @@
 <?php
 $form = $this->form;
 $formWay = $this->formWay;
+$typeForm=$this->typeForm;
+$title='';
+if(empty($typeForm)) {
+    $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
+        ->prepare();
+    $title='Добавление';
+} else {
+    $type=$typeForm['action'];
+    if($type=='edit') {
+        $form->setAttribute('action', $this->url('resource', array('action' => 'add', 'id' => $typeForm['id'])))
+            ->prepare();
+        $title='Редактирование';
+    }
+    elseif($type=='copy') {
+        $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
+            ->prepare();
+        $title='Копирование';
+    }
+    elseif($type=='search') {
+        $form->setAttribute('action', $this->url('resource', array('action' => 'getResults')))
+            ->prepare();
+        $title='Поиск';
+    }
+
+}
 
 
-$form->setAttribute('action', $this->url('resource', array('action' => 'add')))
-    ->prepare();
 echo $this->form()->openTag($form);
 
 $tsId= $form->get('tsId');
@@ -13,7 +36,7 @@ $typeLoad=$form->get('typeLoad');
 $areaLoad= $formWay->get('areaLoad');
 $areaUnload= $formWay->get('areaUnload');
 $dateStart= $formWay->get('dateStart');
-$timeStart= $formWay->get('timeStart');
+$timeStart= $formWay->get('timeStart')->setAttributes(array('onkeyup'  => 'time_control(this);' ));
 $currency= $formWay->get('currency');
 $money= $formWay->get('money');
 $formPay= $formWay->get('formPay');
@@ -26,13 +49,13 @@ $note= $formWay->get('note');
     <table class="table spec_table" style="">
         <tr>
             <th>
-                Добавление ресурса
+                Ресурс - <?php echo $title; ?>
             </th>
         </tr>
         <tr>
             <td style="border-left:none;">
+                <div <?php if(!empty($typeForm)) { if($typeForm['action']=='search') { echo "style='display:none;' "; } }?> ><?php echo $this->formRow($tsId); ?></div>
                 <?php
-                echo $this->formRow($tsId);
                 echo $this->formRow($typeLoad);
                ?>
             </td>
@@ -92,6 +115,31 @@ $note= $formWay->get('note');
             </td>
         </tr>
     </table>
-<div class="submit_cl"><?php echo $this->formElement($form->get('submit')); ?> </div>
+<?php
+$subVal='';
+if(!empty($typeForm)) {
+    if($typeForm['action']=='search') {
+        $subVal='Поиск';
+    } elseif($typeForm['action']=='edit') {
+        $subVal='Редактировать';
+    } elseif($typeForm['action']=='copy') {
+        $subVal='Дублировать';
+    }
+} else {
+    $subVal='Отправить';
+}
+if(!empty($typeForm)) {
+    if($typeForm['action']!='list') {
+    ?>
+        <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
+    <?php
+    }
+} else {
+?>
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
+<?php
+}
+?>
+
 <?php  echo $this->form()->closeTag();
 ?>
