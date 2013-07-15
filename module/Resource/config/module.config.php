@@ -17,6 +17,7 @@ return array(
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
+                        'type' =>'[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Resource\Controller\Resource',
@@ -31,6 +32,7 @@ return array(
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
+                        'type' =>'[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Resource\Controller\Vehicle',
