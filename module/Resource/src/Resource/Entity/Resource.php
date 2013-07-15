@@ -93,16 +93,6 @@ class Resource
     public $submit;
 
 
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
-     * @Annotation\Type("Zend\Form\Element\Textarea")
-     * @Annotation\Options({"label":"Примечание"})
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $note;
 
     /**
      * @var array

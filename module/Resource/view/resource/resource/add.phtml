@@ -2,23 +2,27 @@
 $form = $this->form;
 $formWay = $this->formWay;
 $typeForm=$this->typeForm;
-
+$title='';
 if(empty($typeForm)) {
     $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
         ->prepare();
+    $title='Добавление';
 } else {
     $type=$typeForm['action'];
     if($type=='edit') {
         $form->setAttribute('action', $this->url('resource', array('action' => 'add', 'id' => $typeForm['id'])))
             ->prepare();
+        $title='Редактирование';
     }
     elseif($type=='copy') {
         $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
             ->prepare();
+        $title='Копирование';
     }
     elseif($type=='search') {
         $form->setAttribute('action', $this->url('resource', array('action' => 'getResults')))
             ->prepare();
+        $title='Поиск';
     }
 
 }
@@ -45,7 +49,7 @@ $note= $formWay->get('note');
     <table class="table spec_table" style="">
         <tr>
             <th>
-                Ресурса
+                Ресурс - <?php echo $title; ?>
             </th>
         </tr>
         <tr>

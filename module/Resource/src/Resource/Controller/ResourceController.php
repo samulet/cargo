@@ -102,7 +102,6 @@ class ResourceController extends AbstractActionController
                 if(!$form->isValid()) {
                     $error++;
                 }
-
                 if(empty($error)) {
 
                     $comUserModel = $this->getCompanyUserModel();

@@ -67,9 +67,6 @@ $typeTicket = $form->get('typeTicket');
                 Требования к ТС
             </th>
             <th>
-                Время
-            </th>
-            <th>
                 Документы к грузу
 
             </th>
@@ -180,7 +177,11 @@ $typeTicket = $form->get('typeTicket');
             ?>">
                 <td>
                     <?php
+                    echo $this->formRow($dateStart);
+                    echo $this->formRow($timeStart);
                     echo $this->formRow($areaLoad);
+                    echo $this->formRow($dateEnd);
+                    echo $this->formRow($timeEnd);
                     echo $this->formRow($areaUnload);
                     ?>
                 </td>
@@ -225,14 +226,7 @@ $typeTicket = $form->get('typeTicket');
                     echo $this->formRow($coupling);
                     ?>
                 </td>
-                <td>
-                    <?php
-                    echo $this->formRow($dateStart);
-                    echo $this->formRow($timeStart);
-                    echo $this->formRow($dateEnd);
-                    echo $this->formRow($timeEnd);
-                    ?>
-                </td>
+
                 <td>
                     <?php
                     echo $this->formRow($docNumber);
