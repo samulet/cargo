@@ -13,7 +13,7 @@ return array(
             'resource' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/resources[/:action][/:id]',
+                    'route' => '/resources[/:action][/:id][/:type]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
@@ -28,7 +28,7 @@ return array(
             'vehicle' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/vehicles[/:action][/:id]',
+                    'route' => '/vehicles[/:action][/:id][/:type]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',

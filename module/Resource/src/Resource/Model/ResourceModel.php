@@ -19,7 +19,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 use Resource\Entity\ResourceWay;
 
 class ResourceModel implements ServiceLocatorAwareInterface
@@ -189,7 +188,12 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $vehicle = $this->getVehicleModel();
         foreach ($rezObj as $cur) {
             $obj_vars = get_object_vars($cur);
-            $veh=$vehicle->listVehicle($cur->tsId);
+            if(!empty($cur->tsId)) {
+                $veh=$vehicle->listVehicle($cur->tsId);
+            }  else {
+                $veh=null;
+            }
+
             $ways=$this->returnAllWays($cur->id);
             $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
             array_push($rezs, array('res' => $obj_vars, 'org' => $org,'veh'=>$veh,'ways'=>$ways));
@@ -204,7 +208,12 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $rezs = array();
         $vehicle = $this->getVehicleModel();
         foreach ($rezObj as $cur) {
-            $veh=$vehicle->listVehicle($cur->tsId);
+            if(!empty($cur->tsId)) {
+                $veh=$vehicle->listVehicle($cur->tsId);
+            } else {
+                $veh=null;
+            }
+
             $ways=$this->returnAllWays($cur->id);
             array_push($rezs, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways));
         }

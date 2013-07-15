@@ -52,6 +52,10 @@ class ResourceController extends AbstractActionController
     public function addAction()
     {
         $post=$this->getRequest()->getPost();
+        $type = $this->getEvent()->getRouteMatch()->getParam('type');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+
+        $resourceModel = $this->getResourceModel();
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Resource');
@@ -83,42 +87,111 @@ class ResourceController extends AbstractActionController
             $tsId=$veh->getIdByUuid($tsUuid);
             $form->get('tsId')->setValue($tsId);
         }
+        $typeForm=array();
+        if(empty($type)) {
+            if(!empty($post->submit)) {
+                $error=0;
+                $formWay->setData($post);
+                if(!$formWay->isValid()) {
+                    $error++;
+                }
+                $form->setData($post);
+                if(!$form->isValid()) {
+                    $error++;
+                }
 
-        if(!empty($post->submit)) {
-            $error=0;
-            $formWay->setData($post);
-            if(!$formWay->isValid()) {
-                $error++;
+                if(empty($error)) {
+
+                    $comUserModel = $this->getCompanyUserModel();
+                    $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+
+                    $org_id = $comUserModel->getOrgIdByUserId($user_id);
+
+
+                    $resourceModel->addResource($post, $user_id, $org_id, $id);
+
+                    return $this->redirect()->toUrl('/resources/my');
+                }
             }
-            $form->setData($post);
-            if(!$form->isValid()) {
-                $error++;
-            }
+        } else {
+            $resource = $resourceModel->listResource($id);
+            $resourceWay=$resourceModel->returnAllWays($resource['id']);
+            //die(var_dump($resourceWay));
+            if( ($type=='copy')||($type=='edit')||($type=='list') ) {
+                $form->setData($resource);
 
-            if(empty($error)) {
-                $id = $this->getEvent()->getRouteMatch()->getParam('id');
-                $comUserModel = $this->getCompanyUserModel();
-                $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+                $formsArray=array();
+                $formWay->setData($resourceWay[0]);
+                if($type=='edit') {
+                    $typeForm['action']='edit';
+                    $typeForm['id']=$id;
+                }
+                elseif($type=='copy') {
+                    $typeForm['action']='copy';
+                    $typeForm['id']=$id;
+                } elseif($type=='list') {
+                        foreach ($formWay as $wayEl) {
+                            $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
+                        }
 
-                $org_id = $comUserModel->getOrgIdByUserId($user_id);
-                $res = $this->getResourceModel();
+                    foreach ($form as $el) {
+                        $el->setAttributes(array( 'disabled' => 'disabled' ));
+                    }
+                    $typeForm['action']='list';
+                    $typeForm['id']=$id;
+                }
+            } elseif($type=='search') {
 
-                $res->addResource($post, $user_id, $org_id, $id);
+                    foreach ($formWay as $wayEl) {
+                        $wayEl->setAttributes(array('required'  => '' ));
+                    }
 
-                return $this->redirect()->toUrl('/resources/my');
+                foreach ($form as $el) {
+                    $el->setAttributes(array('required'  => '' ));
+                }
+                $typeForm['action']='search';
             }
         }
 
         return new ViewModel(array(
             'form' => $form,
-            'formWay' =>$formWay
-
+            'formWay' =>$formWay,
+            'typeForm'=>$typeForm
         ));
-
-
-
-
     }
+
+    public function editAction()
+    {
+        $resModel = $this->getResourceModel();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $res = $resModel->listResource($id);
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Resource\Entity\Resource');
+
+        $formWay= $builder->createForm('Resource\Entity\ResourceWay');
+
+        $veh = $this->getVehicleModel();
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $resForm=new AddListForm();
+
+        $form=$resForm->fillTS($form,$myV);
+
+        $way=$resModel->returnAllWays($res['id']);
+
+        $form->get('tsId')->setValue($res['tsId']);
+
+
+
+        return new ViewModel(array(
+            'form' => $form,
+            'res' => $res,
+            'formWay'=>$formWay,
+            'way'=>$way,
+            'id' => $id
+        ));
+    }
+
 
     public function searchAction()
     {
@@ -169,37 +242,7 @@ class ResourceController extends AbstractActionController
             'res' => $resource
         ));
     }
-    public function editAction()
-    {
-        $resModel = $this->getResourceModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listResource($id);
 
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Resource');
-
-        $formWay= $builder->createForm('Resource\Entity\ResourceWay');
-
-        $veh = $this->getVehicleModel();
-        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
-        $resForm=new AddListForm();
-
-        $form=$resForm->fillTS($form,$myV);
-
-        $way=$resModel->returnAllWays($res['id']);
-
-        $form->get('tsId')->setValue($res['tsId']);
-
-
-
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'formWay'=>$formWay,
-            'way'=>$way,
-            'id' => $id
-        ));
-    }
 
     public function listAction()
     {

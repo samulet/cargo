@@ -13,7 +13,6 @@ use Resource\Entity\Vehicle;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 
@@ -80,12 +79,16 @@ class VehicleModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $uuid_gen = new UuidGenerator();
-        if ($uuid_gen->isValid($id)) {
-            $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $id));
-        } else {
-            $res = $objectManager->getRepository('Resource\Entity\Vehicle')->find(new \MongoId($id));
-        }
+        if(!empty($id)) {
+            if ($uuid_gen->isValid($id)) {
+                $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $id));
+              } else {
+                $res = $objectManager->getRepository('Resource\Entity\Vehicle')->find(new \MongoId($id));
+            }
 
+        } else {
+            $res=null;
+        }
         if(!empty($res)) {
             return get_object_vars($res);
         }
@@ -162,7 +165,13 @@ class VehicleModel implements ServiceLocatorAwareInterface
     public function getIdByUuid($uuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $vehicle = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $uuid));
-        return $vehicle->id;
+        if(!empty($vehicle)) {
+            return $vehicle->id;
+        } else {
+            return null;
+        }
+
+
     }
     public function getUuidById($id) {
         if(empty($id)) {
