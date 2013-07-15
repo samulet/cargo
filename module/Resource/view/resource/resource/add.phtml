@@ -45,13 +45,13 @@ $note= $formWay->get('note');
     <table class="table spec_table" style="">
         <tr>
             <th>
-                Добавление ресурса
+                Ресурса
             </th>
         </tr>
         <tr>
             <td style="border-left:none;">
+                <div <?php if(!empty($typeForm)) { if($typeForm['action']=='search') { echo "style='display:none;' "; } }?> ><?php echo $this->formRow($tsId); ?></div>
                 <?php
-                echo $this->formRow($tsId);
                 echo $this->formRow($typeLoad);
                ?>
             </td>

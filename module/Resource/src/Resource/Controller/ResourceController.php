@@ -54,6 +54,9 @@ class ResourceController extends AbstractActionController
         $post=$this->getRequest()->getPost();
         $type = $this->getEvent()->getRouteMatch()->getParam('type');
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        if($id=='search') {
+            $type=$id;
+        }
 
         $resourceModel = $this->getResourceModel();
 
