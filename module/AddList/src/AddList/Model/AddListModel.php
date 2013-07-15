@@ -20,7 +20,7 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 use AddList\Entity\AddList;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 
 class AddListModel implements ServiceLocatorAwareInterface
 {

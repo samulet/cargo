@@ -60,6 +60,27 @@ class AddListController extends AbstractActionController
     }
 
 
+    public function editAction() {
+        $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $addListModel = $this->getAddListModel();
+        $listData=$addListModel->getOneList($listUuid);
+
+        $listName=$addListModel->getListName($listData['listId']);
+
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('AddList\Entity\AddList');
+
+
+        $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+        $roles = $authorize->getIdentityRoles();
+        return new ViewModel(array(
+            'fieldUuid' => $listUuid,
+            'listData' => $listData,
+            'form'=>$form,
+            'roles'=>$roles,
+            'listName'=>$listName
+        ));
+    }
 
     public function getAddListModel()
     {
@@ -101,6 +122,7 @@ class AddListController extends AbstractActionController
         }
 
     }
+
 
     public function myAction() {;
 
@@ -177,19 +199,6 @@ class AddListController extends AbstractActionController
         ));
     }
 
-    public function editAction() {
-        $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
-        $addListModel = $this->getAddListModel();
-        $listData=$addListModel->getOneList($listUuid);
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('AddList\Entity\AddList');
-
-        return new ViewModel(array(
-            'fieldUuid' => $listUuid,
-            'listData' => $listData,
-            'form'=>$form
-        ));
-    }
 
     public function editFieldAction() {
         $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
