@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 
 class CompanyUserModel implements ServiceLocatorAwareInterface
 {

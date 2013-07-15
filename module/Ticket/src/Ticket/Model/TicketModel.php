@@ -28,6 +28,8 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $organizationModel;
     protected $cargoModel;
     protected $notificationModel;
+    protected $companyUserModel;
+    protected $companyModel;
 
     public function unSplitArray($propArraySplit) {
         $result=array();
@@ -375,5 +377,37 @@ class TicketModel implements ServiceLocatorAwareInterface
             $this->notificationModel = $sm->get('Notification\Model\NotificationModel');
         }
         return $this->notificationModel;
+    }
+    public function getCargoOwnerData($userId) {
+        $comUserModel=$this->getCompanyUserModel();
+        $orgId=$comUserModel->getOrgIdByUserId($userId);
+
+        $comModel = $this->getCompanyModel();
+        $com = $comModel->returnCompanies($orgId);
+        if(!empty($com)) {
+            $result=array();
+            foreach($com as $c) {
+                $result=$result+array( $c['id'] => $c['name']);
+            }
+            return $result;
+        } else {
+            return null;
+        }
+    }
+    public function getCompanyUserModel()
+    {
+        if (!$this->companyUserModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+        }
+        return $this->companyUserModel;
+    }
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
     }
 }

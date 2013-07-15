@@ -101,14 +101,14 @@ class TicketWay
      */
     public $areaUnload;
     /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Грузовладелец"})
-     * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Грузовладелец"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
      */
     public $cargoOwner;
 
@@ -248,14 +248,14 @@ class TicketWay
     public $box;
 
     /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Температурный режим"})
-     * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Температурный режим"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
      */
     public $temperature;
     /**

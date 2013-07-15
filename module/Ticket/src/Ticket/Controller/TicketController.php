@@ -75,6 +75,12 @@ class TicketController extends AbstractActionController
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formVehicleData,array('type'));
 
+
+        $formCargoOwnerData=$ticketModel->getCargoOwnerData($userListId);
+
+        $formWay=$fillFrom->fillCargoOwner($formWay,$formCargoOwnerData);
+
+
         $formsArray=array($formWay);
 
         if(empty($type)) {
