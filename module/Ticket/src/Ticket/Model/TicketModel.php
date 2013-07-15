@@ -143,7 +143,12 @@ class TicketModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('uuid' => $id));
-        return get_object_vars($res);
+        if(!empty($res)) {
+            return get_object_vars($res);
+        } else {
+            return null;
+        }
+
     }
 
     public function listTicketById($id)
@@ -194,12 +199,32 @@ class TicketModel implements ServiceLocatorAwareInterface
     public function returnSearchTicket($post) {
         $propArray = get_object_vars($post);
         unset($propArray['submit']);
+
         $propArrayResult=array();
         foreach($propArray as $key => $value) {
             if(!empty($value)) {
                 $propArrayResult[$key]=$value;
             }
         }
+        $propArrayResultFullForm=array();
+        if( !empty($propArrayResultFullForm['currency']) ) {
+            $propArrayResultFullForm['currency']=$propArrayResult['currency'];
+            unset($propArrayResultFullForm['currency']);
+        }
+        if( !empty($propArrayResultFullForm['money']) ) {
+            $propArrayResultFullForm['money']=$propArrayResult['money'];
+            unset($propArrayResultFullForm['money']);
+        }
+        if( !empty($propArrayResultFullForm['formPay']) ) {
+            $propArrayResultFullForm['formPay']=$propArrayResult['formPay'];
+            unset($propArrayResultFullForm['formPay']);
+        }
+        if( !empty($propArrayResultFullForm['typeTicket']) ) {
+            $propArrayResultFullForm['typeTicket']=$propArrayResult['typeTicket'];
+            unset($propArrayResultFullForm['typeTicket']);
+        }
+
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default') ;
         $rezObj = $objectManager->getRepository('Ticket\Entity\TicketWay')->findBy($propArrayResult);
 

@@ -49,6 +49,9 @@ class TicketController extends AbstractActionController
         $post=$this->getRequest()->getPost();
         $type = $this->getEvent()->getRouteMatch()->getParam('type');
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        if($id=='search') {
+            $type=$id;
+        }
         $ticketModel = $this->getTicketModel();
         $typeForm=array();
         $builder = new AnnotationBuilder();
@@ -137,6 +140,16 @@ class TicketController extends AbstractActionController
                     $typeForm['action']='list';
                     $typeForm['id']=$id;
                 }
+            } elseif($type=='search') {
+                foreach ($formsArray as $formWay) {
+                    foreach ($formWay as $wayEl) {
+                        $wayEl->setAttributes(array('required'  => '' ));
+                    }
+                }
+                foreach ($form as $el) {
+                    $el->setAttributes(array('required'  => '' ));
+                }
+                $typeForm['action']='search';
             }
         }
         return new ViewModel(array(

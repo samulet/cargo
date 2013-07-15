@@ -5,7 +5,6 @@ $formsArray = $this->formsArray;
 $typeForm=$this->typeForm;
 
 $formVehicle = $this->formVehicle;
-
 if(empty($typeForm)) {
     $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
         ->prepare();
@@ -17,6 +16,10 @@ if(empty($typeForm)) {
     }
     elseif($type=='copy') {
         $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
+            ->prepare();
+    }
+    elseif($type=='search') {
+        $form->setAttribute('action', $this->url('ticket', array('action' => 'getResults')))
             ->prepare();
     }
 
@@ -75,7 +78,7 @@ $typeTicket = $form->get('typeTicket');
             </th>
             <?php
             if(!empty($typeForm)){
-                if($typeForm['action']!='list') {
+                if(($typeForm['action']!='list')&&($typeForm['action']!='search')) {
                     ?>
             <th>
                 Удалить пункт выдачи
@@ -246,7 +249,7 @@ $typeTicket = $form->get('typeTicket');
                 </td>
             <?php
             if(!empty($typeForm)){
-                if($typeForm['action']!='list') {
+                if(($typeForm['action']!='list')&&($typeForm['action']!='search')) {
                     ?>
                 <td>
                     <input name="deleteWay" class="deleteWay" onclick="<?php
@@ -277,7 +280,7 @@ $typeTicket = $form->get('typeTicket');
         ?>
 <?php
 if(!empty($typeForm)){
-    if($typeForm['action']!='list') {
+    if(($typeForm['action']!='list')&&($typeForm['action']!='search')) {
         ?>
         <tr class="addTr">
             <td>
@@ -301,13 +304,23 @@ if(!empty($typeForm)){
     </table>
 <?php
 if(!empty($typeForm)){
+    if($typeForm['action']=='search') {
+        $submitVal='Поиск';
+    } else {
+        $submitVal='Отправить';
+    }
+} else {
+    $submitVal='Отправить';
+}
+
+if(!empty($typeForm)){
     if($typeForm['action']!='list') {
       ?>
-        <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue('Отправить')); ?> </div>
+        <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($submitVal)); ?> </div>
         <?php
     }
 } else { ?>
-    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue('Отправить')); ?> </div>
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($submitVal)); ?> </div>
 <?php
 }
 ?>

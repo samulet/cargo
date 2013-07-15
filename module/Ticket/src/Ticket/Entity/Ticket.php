@@ -90,7 +90,7 @@ class Ticket
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Валюта",
-     *                      "value_options" : {" ": "", "RUR":"RUR","EUR":"EUR","USD":"USD"}})
+     *                      "value_options" : {"": "", "RUR":"RUR","EUR":"EUR","USD":"USD"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"RUR","EUR","USD"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
@@ -104,7 +104,7 @@ class Ticket
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип заявки",
-     *                      "value_options" : {"in":"Входящая","out":"Исходящая"}})
+     *                      "value_options" : {"":"","in":"Входящая","out":"Исходящая"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"in","out","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
@@ -130,7 +130,7 @@ class Ticket
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип перевода",
-     *                      "value_options" : {" ": "", "bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
+     *                      "value_options" : {"": "", "bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"bank","card","currency"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
