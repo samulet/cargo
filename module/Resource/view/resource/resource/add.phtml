@@ -3,8 +3,27 @@ $form = $this->form;
 $formWay = $this->formWay;
 $typeForm=$this->typeForm;
 
-$form->setAttribute('action', $this->url('resource', array('action' => 'add')))
-    ->prepare();
+if(empty($typeForm)) {
+    $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
+        ->prepare();
+} else {
+    $type=$typeForm['action'];
+    if($type=='edit') {
+        $form->setAttribute('action', $this->url('resource', array('action' => 'add', 'id' => $typeForm['id'])))
+            ->prepare();
+    }
+    elseif($type=='copy') {
+        $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
+            ->prepare();
+    }
+    elseif($type=='search') {
+        $form->setAttribute('action', $this->url('resource', array('action' => 'getResults')))
+            ->prepare();
+    }
+
+}
+
+
 echo $this->form()->openTag($form);
 
 $tsId= $form->get('tsId');
@@ -13,7 +32,7 @@ $typeLoad=$form->get('typeLoad');
 $areaLoad= $formWay->get('areaLoad');
 $areaUnload= $formWay->get('areaUnload');
 $dateStart= $formWay->get('dateStart');
-$timeStart= $formWay->get('timeStart');
+$timeStart= $formWay->get('timeStart')->setAttributes(array('onkeyup'  => 'time_control(this);' ));
 $currency= $formWay->get('currency');
 $money= $formWay->get('money');
 $formPay= $formWay->get('formPay');

@@ -394,9 +394,13 @@ class TicketWay
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
-     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Attributes({
+     * "type":"text",
+     * "onkeyup" : "time_control(this);",
+     * "placeholder" : "12:00"
+     * })
      * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
      * @Annotation\Required({"required":"true" })
      * @var string
@@ -418,9 +422,13 @@ class TicketWay
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
-     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Attributes({
+     * "type":"text",
+     * "onkeyup" : "time_control(this);",
+     * "placeholder" : "12:00"
+     * })
      * @Annotation\Options({"label":"Время готовности ТС к разгрузке"})
      * @Annotation\Required({"required":"true" })
      * @var string
