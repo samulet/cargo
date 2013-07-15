@@ -5,10 +5,20 @@ $form->setAttribute('action', $this->url('addList', array('action' => 'editField
 
 $value = $form->get('value')->setValue($this->listData['value']);
 
+?>
+<p>Редактирование поля <b><?php echo $this->listData['value']; ?></b> в <b><?php echo $this->listName['fieldRusName']; ?></b></p>
+<?php
 echo $this->form()->openTag($form);
 
 
 echo $this->formRow($value);
+if(array_search("admin",$this->roles,true)) {
+    $global='';
+    if(!empty($this->listData['global'])) {
+        $global='checked';
+    }
+    echo '<input type="checkbox" name="global" '.$global.' value="global" >Глобальное значние </br>';
+}
 
 echo $this->formElement($form->get('submit')); ?>
 <?php  echo $this->form()->closeTag();

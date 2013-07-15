@@ -80,7 +80,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт загрузки"})
      * @Annotation\Required({"required":"true" })
@@ -92,7 +92,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт выгрузки"})
      * @Annotation\Required({"required":"true" })
@@ -101,14 +101,14 @@ class TicketWay
      */
     public $areaUnload;
     /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Грузовладелец"})
-     * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Грузовладелец"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
      */
     public $cargoOwner;
 
@@ -143,7 +143,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Кубы"})
      * @Annotation\Required({"required":"true" })
@@ -248,14 +248,14 @@ class TicketWay
     public $box;
 
     /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Температурный режим"})
-     * @Annotation\Required({"required":"true" })
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Температурный режим"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
      */
     public $temperature;
     /**
@@ -289,7 +289,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер документа"})
      * @Annotation\Required({"required":"true" })
@@ -323,7 +323,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Комментарий документ"})
      * @var string
@@ -369,7 +369,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9_-]*$/iu"}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -394,9 +394,13 @@ class TicketWay
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
-     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Attributes({
+     * "type":"text",
+     * "onkeyup" : "time_control(this);",
+     * "placeholder" : "12:00"
+     * })
      * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
      * @Annotation\Required({"required":"true" })
      * @var string
@@ -418,9 +422,13 @@ class TicketWay
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
-     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Attributes({
+     * "type":"text",
+     * "onkeyup" : "time_control(this);",
+     * "placeholder" : "12:00"
+     * })
      * @Annotation\Options({"label":"Время готовности ТС к разгрузке"})
      * @Annotation\Required({"required":"true" })
      * @var string

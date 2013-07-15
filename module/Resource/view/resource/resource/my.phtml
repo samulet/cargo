@@ -58,7 +58,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'resource',
-                    array('action' => 'list', 'id' => $resource['uuid'])
+                    array('action' => 'add', 'id' => $resource['uuid'], 'type'=>'list')
                 );?>"><?php echo $resource['uuid']; ?></a>
             </td>
             <td>
@@ -103,7 +103,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'resource',
-                    array('action' => 'edit', 'id' => $resource['uuid'])
+                    array('action' => 'add', 'id' => $resource['uuid'],'type'=>'edit')
                 );?>">Редактировать</a>
             </td>
             <td>
@@ -115,7 +115,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'resource',
-                    array('action' => 'copy', 'id' => $resource['uuid'])
+                    array('action' => 'add', 'id' => $resource['uuid'],'type'=>'copy')
                 );?>">Копировать</a>
             </td>
             <td>
