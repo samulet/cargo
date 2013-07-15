@@ -131,29 +131,76 @@ class ResourceModel implements ServiceLocatorAwareInterface
     public function returnResultsResource($post) {
         $propArray = get_object_vars($post);
         unset($propArray['submit']);
+
         $propArrayResult=array();
         foreach($propArray as $key => $value) {
             if(!empty($value)) {
                 $propArrayResult[$key]=$value;
             }
         }
+        $propArrayResultFullForm=array();
+        if( !empty($propArrayResult['typeLoad']) ) {
+            $propArrayResultFullForm['typeLoad']=$propArrayResult['typeLoad'];
+            unset($propArrayResult['typeLoad']);
+        }
+        $orgModel = $this->getOrganizationModel();
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default') ;
-        $rezObj = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy($propArrayResult);
+        if(empty($propArrayResultFullForm)) {
+            $rezObj = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy($propArrayResult);
 
-        if(!empty($rezObj)) {
-            $result = array();
-            $cargo = $this->getCargoModel();
-            foreach ($rezObj as $cur) {
+            if(!empty($rezObj)) {
+                $result = array();
+                $cargo = $this->getVehicleModel();
+                foreach ($rezObj as $cur) {
 
-                $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerResourceId)));
+                    $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerTicketId)));
 
-                $veh=$cargo->listCargo($cur->tsId);
-                $ways=$this->returnAllWays($cur->id);
-                array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways));
+                    $veh=$cargo->listVehicle($cur->tsId);
+                    $ways=$this->returnAllWays($cur->id);
+                    $org = $orgModel->getOrganization($cur->ownerOrgId);
+                    array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways,"org"=>$org));
+                }
+                return $result;
+            } else {
+                return null;
             }
-            return $result;
         } else {
-            return null;
+
+            $ticketFindObjects = $objectManager->getRepository('Resource\Entity\Resource')->findBy($propArrayResultFullForm);
+
+            if(!empty($ticketFindObjects)) {
+
+                $result = array();
+
+                foreach($ticketFindObjects as $ticketFindObject) {
+
+                    if(!empty($propArrayResult)) {
+                        $propArrayResult['ownerResourceId']= new \MongoId($ticketFindObject->id);
+                        // die(var_dump($propArrayResult));
+                        $rezObj = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy($propArrayResult);
+                        if(!empty($rezObj)) {
+                            $cargo = $this->getVehicleModel();
+                            foreach ($rezObj as $cur) {
+                                $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerResourceId)));
+                                $veh=$cargo->listVehicle($cur->tsId);
+                                $ways=$this->returnAllWays($cur->id);
+                                $org = $orgModel->getOrganization($cur->ownerOrgId);
+                                array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways,"org"=>$org));
+                            }
+
+                        }
+                    } else {
+                        $cargo = $this->getVehicleModel();
+                        $veh=$cargo->listVehicle($ticketFindObject->tsId);
+                        $ways=$this->returnAllWays($ticketFindObject->id);
+                        $org = $orgModel->getOrganization($ticketFindObject->ownerOrgId);
+                        array_push($result, array('res'=>get_object_vars($ticketFindObject),'veh'=>$veh,'ways'=>$ways,"org"=>$org));
+                    }
+
+                }
+                return $result;
+            }
         }
 
     }

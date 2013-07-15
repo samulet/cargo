@@ -119,7 +119,7 @@ class ResourceWay
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Валюта",
-     *                      "value_options" : {"RUR":"RUR","EUR":"EUR","USD":"USD"}})
+     *                      "value_options" : {"":"", "RUR":"RUR","EUR":"EUR","USD":"USD"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"RUR","EUR","USD"},
      *                              "messages":{"notInArray":"Выберите элемент из списка"}}})
@@ -145,8 +145,8 @@ class ResourceWay
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Валюта",
-     *                      "value_options" : {"bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
+     * @Annotation\Options({"label":"Тип перевода",
+     *                      "value_options" : {"":"","bank":"Безналичный перевод","card":"Банковской картой","currency":"Наличными"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"bank","card","currency"},
      *                              "messages":{"notInArray":"Выберите элемент из списка"}}})
