@@ -5,22 +5,27 @@ $formsArray = $this->formsArray;
 $typeForm=$this->typeForm;
 
 $formVehicle = $this->formVehicle;
+$title='';
 if(empty($typeForm)) {
     $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
         ->prepare();
+        $title='Добавление';
 } else {
     $type=$typeForm['action'];
     if($type=='edit') {
         $form->setAttribute('action', $this->url('ticket', array('action' => 'add', 'id' => $typeForm['id'])))
             ->prepare();
+        $title='Редактирование';
     }
     elseif($type=='copy') {
         $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
             ->prepare();
+        $title='Копирование';
     }
     elseif($type=='search') {
         $form->setAttribute('action', $this->url('ticket', array('action' => 'getResults')))
             ->prepare();
+        $title='Поиск';
     }
 
 }
@@ -37,7 +42,7 @@ $typeTicket = $form->get('typeTicket');
     <table class="table spec_table" style="">
         <tr>
             <th>
-                Заявка
+                Заявка - <?php echo $title; ?>
             </th>
         </tr>
         <tr>
