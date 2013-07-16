@@ -27,7 +27,11 @@ if(empty($typeForm)) {
             ->prepare();
         $title='Поиск';
     }
-
+    elseif($type=='list') {
+        $form->setAttribute('action', $this->url('ticket'))
+            ->prepare();
+        $title='Просмотр';
+    }
 }
 
 echo $this->form()->openTag($form);
@@ -302,24 +306,27 @@ if(!empty($typeForm)){
 ?>
     </table>
 <?php
-if(!empty($typeForm)){
+$subVal='';
+if(!empty($typeForm)) {
     if($typeForm['action']=='search') {
-        $submitVal='Поиск';
-    } else {
-        $submitVal='Отправить';
+        $subVal='Поиск';
+    } elseif($typeForm['action']=='edit') {
+        $subVal='Редактировать';
+    } elseif($typeForm['action']=='copy') {
+        $subVal='Дублировать';
     }
 } else {
-    $submitVal='Отправить';
+    $subVal='Отправить';
 }
-
-if(!empty($typeForm)){
+if(!empty($typeForm)) {
     if($typeForm['action']!='list') {
-      ?>
-        <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($submitVal)); ?> </div>
-        <?php
+        ?>
+        <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
+    <?php
     }
-} else { ?>
-    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($submitVal)); ?> </div>
+} else {
+    ?>
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
 <?php
 }
 ?>
