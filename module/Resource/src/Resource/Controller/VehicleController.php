@@ -43,6 +43,10 @@ class VehicleController extends AbstractActionController
     public function addAction()
     {
         $post=$this->getRequest()->getPost();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $type = $this->getEvent()->getRouteMatch()->getParam('type');
+
+        $vehicleModel = $this->getVehicleModel();
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
@@ -60,42 +64,91 @@ class VehicleController extends AbstractActionController
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
         $form=$fillFrom->fillFromVehicleSpecial($form,$formData,array('typeLoad'));
 
+        $typeForm='';
+        if(empty($type)) {
+            if(!empty($post->submit)) {
+                $error=0;
 
 
-        if(!empty($post->submit)) {
-            $error=0;
+                $form->setData($post);;
+
+                if(!$form->isValid()) {
+                    $error++;
+
+                }
 
 
-            $form->setData($post);;
+                if(empty($error)) {
 
-            if(!$form->isValid()) {
-                $error++;
+
+                    $comUserModel = $this->getCompanyUserModel();
+                    $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+                    $org_id = $comUserModel->getOrgIdByUserId($user_id);
+
+                    $veh=$vehicleModel->addVehicle($this->getRequest()->getPost(), $user_id, $org_id, $id);
+                    if(empty($veh)) {
+                        return $this->redirect()->toUrl('/vehicles/error');
+                    } else {
+                        return $this->redirect()->toUrl('/vehicles/my');
+                    }
+                }
 
             }
+        } else {
+            $vehicle = $vehicleModel->listVehicle($id);
 
+            if( ($type=='copy')||($type=='edit')||($type=='list') ) {
+                $form->setData($vehicle);
+                if($type=='edit') {
+                    $typeForm['action']='edit';
+                    $typeForm['id']=$id;
+                }
+                elseif($type=='copy') {
+                    $form->get('serialNumber')->setValue('');
+                    $form->get('vin')->setValue('');
+                    $form->get('serialNumberDoc')->setValue('');
+                    $form->get('carNumber')->setValue('');
 
-            if(empty($error)) {
-
-                $id = $this->getEvent()->getRouteMatch()->getParam('id');
-                $comUserModel = $this->getCompanyUserModel();
-                $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-                $org_id = $comUserModel->getOrgIdByUserId($user_id);
-                $res = $this->getVehicleModel();
-                $veh=$res->addVehicle($this->getRequest()->getPost(), $user_id, $org_id, $id);
-                if(empty($veh)) {
-                    return $this->redirect()->toUrl('/vehicles/error');
-                } else {
-                    return $this->redirect()->toUrl('/vehicles/my');
+                    $typeForm['action']='copy';
+                    $typeForm['id']=$id;
+                } elseif($type=='list') {
+                    foreach ($form as $el) {
+                        $el->setAttributes(array( 'disabled' => 'disabled' ));
+                    }
+                    $typeForm['action']='list';
+                    $typeForm['id']=$id;
                 }
             }
-
         }
         return new ViewModel(array(
-            'form' => $form
+            'form' => $form,
+           'typeForm'=>$typeForm
         ));
 
     }
+    public function listAction()
+    {
+        $resModel = $this->getVehicleModel();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $res = $resModel->listVehicle($id);
 
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Resource\Entity\Vehicle');
+        $addListModel = $this->getAddListModel();
+        $form_array=array('mark','model','type','status');
+        $orgUserModel=$this->getCompanyUserModel();
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
+        $fillFrom=new AddListForm();
+        $form=$fillFrom->fillFrom($form,$formData);
+        return new ViewModel(array(
+            'form' => $form,
+            'res' => $res,
+            'id' => $id
+        ));
+
+    }
 
     public function editAction()
     {
@@ -120,29 +173,7 @@ class VehicleController extends AbstractActionController
         ));
     }
 
-    public function listAction()
-    {
-        $resModel = $this->getVehicleModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listVehicle($id);
 
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Vehicle');
-        $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
-        $fillFrom=new AddListForm();
-        $form=$fillFrom->fillFrom($form,$formData);
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'id' => $id
-        ));
-
-    }
 
     public function deleteAction()
     {

@@ -22,9 +22,6 @@ $vehicles = $this->res;
             Организация
         </th>
         <th>
-            Подробнее
-        </th>
-        <th>
             Редактировать
         </th>
         <th>
@@ -34,7 +31,10 @@ $vehicles = $this->res;
     <?php foreach ($vehicles as $vehicle) { $org=$vehicle['org'];$vehicle=$vehicle['res'];?>
         <tr>
             <td>
-                 <?php echo $vehicle['carNumber']; ?>
+              <a href="<?php echo $this->url('vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'list'));?>">
+                            <?php echo $vehicle['carNumber']; ?>
+                            </a>
+
             </td>
                         <td>
                             <?php echo $vehicle['status']; ?>
@@ -47,17 +47,9 @@ $vehicles = $this->res;
                     <a href="<?php echo $this->url('organization',
                                 array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
                     </td>
+
             <td>
-                <a href="<?php echo $this->url(
-                    'vehicle',
-                    array('action' => 'list', 'id' => $vehicle['uuid'])
-                );?>">Подробнее</a>
-            </td>
-            <td>
-                <a href="<?php echo $this->url(
-                    'vehicle',
-                    array('action' => 'edit', 'id' => $vehicle['uuid'])
-                );?>">Редактировать</a>
+                <a href="<?php echo $this->url( 'vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'edit'));?>">Редактировать</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(

@@ -24,7 +24,11 @@ if(empty($typeForm)) {
             ->prepare();
         $title='Поиск';
     }
-
+    elseif($type=='list') {
+        $form->setAttribute('action', $this->url('resource'))
+            ->prepare();
+        $title='Просмотр';
+    }
 }
 
 
