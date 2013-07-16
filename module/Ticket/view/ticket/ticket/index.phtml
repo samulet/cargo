@@ -9,32 +9,16 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
 
 <table class="table">
     <tr>
+
         <th>
-Номер заявки
+Маршрут и сроки
         </th>
         <th>
-
+Груз (вес / объем / наименование)
         </th>
         <th>
-
+Транспорт (тип ТС / Температурный режим / загрузка - выгрузка)
         </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-        <th>
-            Организация
-        </th>
-
-
          <th>
              Добавить аукцион
           </th>
@@ -44,6 +28,7 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
 
     </tr>
     <?php foreach ($tickets as $ticket) {
+
     $ticketWay=$ticket['ways'];
     $cargo=$ticket['veh'];
     $org=$ticket['org'];
@@ -52,35 +37,41 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
     ?>
 <tr>
             <td>
-                 <a href="<?php echo $this->url(
-                                    'ticket',
-                                    array('action' => 'add', 'id' => $ticket['uuid'] ,'type'=>'list')
-                                );?>"><?php echo $ticket['uuid']; ?></a>
+                 <a href="<?php echo $this->url( 'ticket', array('action' => 'add', 'id' => $ticket['uuid'] ,'type'=>'list'));?>">
+                 <?php
+                 foreach($ticketWay as $way) {
+                     echo $way['dateStart'].' '.$way['timeStart'].' '.$way['areaLoad'].' / '.$way['dateEnd'].' '.$way['timeEnd'].' '.$way['areaUnload'].'</br>';
+
+                 }
+                 ?>
+                  </a>
             </td>
             <td>
+            <?php
+                             foreach($ticketWay as $way) {
+                                 echo $way['weight'].' / '.$way['cargoValue'].' / '.$way['cargoName'].'</br>';
 
+                             }
+?>
             </td>
             <td>
+            <?php
+foreach($ticketWay as $way) {
+$typeLoad=$way['typeLoad'];
+$typeUnload=$way['typeUnload'];
+if(is_array($typeLoad)) {
+$typeLoad =implode(' ',$typeLoad);
+}
+if(is_array($typeUnload)) {
+$typeUnload=implode(' ',$typeUnload);
+}
 
+                                 echo $way['type'].' / '.$way['temperature'].' / '.$typeLoad.' - '.$typeUnload.'</br>';
 
+                             }
+                             ?>
             </td>
-            <td>
 
-            </td>
-
-            <td>
-
-            </td>
-            <td>
-
-            </td>
-            <td>
-
-            </td>
-        <td>
-        <a href="<?php echo $this->url('organization',
-                    array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
-        </td>
 
         <td>
             <a href="<?php echo $this->url('auction',
