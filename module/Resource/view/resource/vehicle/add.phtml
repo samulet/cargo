@@ -1,11 +1,32 @@
 <?php
 $form = $this->form;
-
+$typeForm=$this->typeForm;
 
 $formData= $this->formData;
-$form->setAttribute('action', $this->url('vehicle', array('action' => 'add')))
-    ->prepare();
+$title='';
+if(empty($typeForm)) {
+    $form->setAttribute('action', $this->url('vehicle', array('action' => 'add')))
+        ->prepare();
+    $title='Добавление';
+} else {
+    $type=$typeForm['action'];
+    if($type=='edit') {
+        $form->setAttribute('action', $this->url('vehicle', array('action' => 'add', 'id' => $typeForm['id'])))
+            ->prepare();
+        $title='Редактирование';
+    }
+    elseif($type=='copy') {
+        $form->setAttribute('action', $this->url('vehicle', array('action' => 'add')))
+            ->prepare();
+        $title='Копирование';
+    }
+    elseif($type=='list') {
+        $form->setAttribute('action', $this->url('vehicle'))
+            ->prepare();
+        $title='Просмотр';
+    }
 
+}
 
 $serialNumber= $form->get('serialNumber');
 $vin= $form->get('vin');
@@ -57,7 +78,7 @@ echo $this->form()->openTag($form);
 
 
 ?>
-    <h1>Добавление ТС</h1>
+    <h1>ТС - <?php echo $title; ?></h1>
 <table class="table spec_table vehicle">
     <tr >
         <th style="width:50%; text-align: center;">
@@ -121,7 +142,30 @@ echo $this->form()->openTag($form);
         </td>
     </tr>
     </table>
-
-    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')); ?> </div>
+<?php
+$subVal='';
+if(!empty($typeForm)) {
+    if($typeForm['action']=='search') {
+        $subVal='Поиск';
+    } elseif($typeForm['action']=='edit') {
+        $subVal='Редактировать';
+    } elseif($typeForm['action']=='copy') {
+        $subVal='Дублировать';
+    }
+} else {
+    $subVal='Отправить';
+}
+if(!empty($typeForm)) {
+    if($typeForm['action']!='list') {
+        ?>
+        <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
+    <?php
+    }
+} else {
+    ?>
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
+<?php
+}
+?>
 <?php  echo $this->form()->closeTag();
 ?>
