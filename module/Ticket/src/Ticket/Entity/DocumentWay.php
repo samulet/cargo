@@ -110,7 +110,19 @@ class DocumentWay
 
     public $docDate;
 
-
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Возвратный документ","value_options":{"":"Выберите значение","yes":"да", "no":"нет"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $docWay;
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
@@ -121,19 +133,7 @@ class DocumentWay
      * @ODM\Field(type="string")
      */
     public $docNote;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Select")
 
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Возвратный документ","value_options":{"":"Выберите значение","yes":"да", "no":"нет"}})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"yes","no","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
-     */
-    public $docWay;
 
     /**
      * @ODM\Date
