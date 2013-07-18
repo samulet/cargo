@@ -57,6 +57,7 @@ class TicketController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
+        $docWay= $builder->createForm('Ticket\Entity\DocumentWay');
 
         $form_array=array();
 
@@ -79,10 +80,16 @@ class TicketController extends AbstractActionController
         $formCargoOwnerData=$ticketModel->getCargoOwnerData($userListId);
 
         $formWay=$fillFrom->fillCargoOwner($formWay,$formCargoOwnerData);
+        $docWay=$fillFrom->fillFromVehicleSpecial($docWay,$formData,array('docType'));
 
+        $formsDocArray=array($docWay);
+        $formsArray=array(
+            array(
+                'formWay' =>$formWay,
+                'formsDocArray'=>$formsDocArray
 
-        $formsArray=array($formWay);
-
+            )
+        );
         if(empty($type)) {
             if(!empty($post->submit)) {
 
