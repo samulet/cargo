@@ -56,7 +56,7 @@ function delWay(wayTr) {
 }
 
 function addDocWay(wayTr, docBox) {
-    var wayDoc = $('.' + wayTr + ' .' + docBox);
+    var wayDoc = $('.' + 'wayTr' + ' .' + docBox);
     var counter = $('.' + wayTr + ' .docCounter');
     var counterVal = counter.val();
     $('<div class=' + docBox + '_' + counterVal + '>' + wayDoc.html() + '<div>').insertBefore('.' + wayTr +' .addDocBefore')
@@ -89,6 +89,12 @@ function addDocWay(wayTr, docBox) {
     $('.' + wayTr + ' .docCounter').val(counterVal);
 }
 
-function delDocWay(wayTr, docBox) {
-
+function delDocWay(element) {
+    var conf = confirm('Вы действительно хотите удалить документ?');
+    if (!conf) {
+        return false;
+    }
+    else {
+        $(element).parent().remove();
+    }
 }
