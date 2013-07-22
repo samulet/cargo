@@ -57,6 +57,7 @@ class TicketController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
+        $docWay= $builder->createForm('Ticket\Entity\DocumentWay');
 
         $form_array=array();
 
@@ -79,17 +80,23 @@ class TicketController extends AbstractActionController
         $formCargoOwnerData=$ticketModel->getCargoOwnerData($userListId);
 
         $formWay=$fillFrom->fillCargoOwner($formWay,$formCargoOwnerData);
+        $docWay=$fillFrom->fillFromVehicleSpecial($docWay,$formData,array('docType'));
 
+        $formsDocArray=array($docWay);
+        $formsArray=array(
+            array(
+                'formWay' =>$formWay,
+                'formsDocArray'=>$formsDocArray
 
-        $formsArray=array($formWay);
-
+            )
+        );
         if(empty($type)) {
             if(!empty($post->submit)) {
 
                 $result=$ticketModel->unSplitArray(get_object_vars($post));
                 $error=0;
                 $formsArray=array();
-
+                //die(var_dump($result));
                 foreach($result as $resF) {
                     $newForm= clone $formWay;
                     $resF['submit']='submit';
@@ -97,7 +104,19 @@ class TicketController extends AbstractActionController
                     if(!$newForm->isValid()) {
                         $error++;
                     }
-                    array_push($formsArray,$newForm);
+                    if(!empty($resF['doc'])) {
+                        $formsDocArray=array();
+                        foreach($resF['doc'] as $doc) {
+                            $newFormDoc= clone $docWay;
+                            $doc['submit']='submit';
+                            $newFormDoc->setData($doc);
+                            if(!$newFormDoc->isValid()) {
+                                $error++;
+                            }
+                            array_push($formsDocArray,$newFormDoc);
+                        }
+                    }
+                    array_push($formsArray,array('formWay' =>$newForm,'formsDocArray'=>$formsDocArray));
                 }
 
                 $form->setData($post);
@@ -121,11 +140,24 @@ class TicketController extends AbstractActionController
                 $form->setData($ticket);
 
                 $formsArray=array();
+
                 foreach($ticketWay as $resF) {
                     $newForm= clone $formWay;
                     $newForm->setData($resF);
-                    array_push($formsArray,$newForm);
+                    $documentWays=$ticketModel->getDocumentWay($resF['id']);
+                    if(!empty($documentWays)) {
+                        $formsDocArray=array();
+                        foreach($documentWays as $doc) {
+                            $newFormDoc= clone $docWay;
+                            $doc['submit']='submit';
+                            $newFormDoc->setData($doc);
+
+                            array_push($formsDocArray,$newFormDoc);
+                        }
+                    }
+                    array_push($formsArray,array('formWay' =>$newForm,'formsDocArray'=>$formsDocArray));
                 }
+
                 if($type=='edit') {
                     $typeForm['action']='edit';
                     $typeForm['id']=$id;
@@ -134,7 +166,13 @@ class TicketController extends AbstractActionController
                     $typeForm['action']='copy';
                     $typeForm['id']=$id;
                 } elseif($type=='list') {
-                    foreach ($formsArray as $formWay) {
+                    foreach ($formsArray as $formElement) {
+                        $formWay=$formElement['formWay'];
+                        foreach($formElement['formsDocArray'] as $docWay) {
+                            foreach ($docWay as $wayEl) {
+                                $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
+                            }
+                        }
                         foreach ($formWay as $wayEl) {
                             $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
                         }
@@ -147,7 +185,13 @@ class TicketController extends AbstractActionController
                     $typeForm['id']=$id;
                 }
             } elseif($type=='search') {
-                foreach ($formsArray as $formWay) {
+                foreach ($formsArray as $formElement) {
+                    $formWay=$formElement['formWay'];
+                    foreach($formElement['formsDocArray'] as $docWay) {
+                        foreach ($docWay as $wayEl) {
+                            $wayEl->setAttributes(array('required'  => '' ));
+                        }
+                    }
                     foreach ($formWay as $wayEl) {
                         $wayEl->setAttributes(array('required'  => '' ));
                     }
