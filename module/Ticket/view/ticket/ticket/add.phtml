@@ -242,6 +242,8 @@ $typeTicket = $form->get('typeTicket');
                         $docDate = $docWay->get('docDate')->setName('docDate_'.$localDocCounter);
                         $docType = $docWay->get('docType')->setName('docType_'.$localDocCounter);
                         $docWay = $docWay->get('docWay')->setName('docWay_'.$localDocCounter);
+                        $docCounter='docCounter_'.$localDocCounter;
+
 
                         $onclickDelete="";
                         $wayTrDoc='wayTr';
@@ -252,11 +254,12 @@ $typeTicket = $form->get('typeTicket');
                         $docDate = $docWay->get('docDate')->setName('docDate_'.$localDocCounter.'-'.$counter);
                         $docType = $docWay->get('docType')->setName('docType_'.$localDocCounter.'-'.$counter);
                         $docWay = $docWay->get('docWay')->setName('docWay_'.$localDocCounter.'-'.$counter);
+                        $docCounter='docCounter_'.$localDocCounter.'-'.$counter;
                         $wayTrDoc='wayTr-'.$counter;
                         $onclickDelete="onclick='delDocWay('".$wayTrDoc."','docBox_".$localDocCounter."');'";
                         echo "<div class='docBox_".$localDocCounter."'>";
                     }
-                    echo '<p><b>Документ '.$localDocCounter.'</b></p>';
+                    echo '<p class="docName"><b>Документ '.$localDocCounter.'</b></p>';
 
                     echo $this->formRow($docNumber);
                     echo $this->formRow($docWay);
@@ -273,7 +276,7 @@ $typeTicket = $form->get('typeTicket');
                 echo "<input type='hidden' class='docCounter' name='docCounter' value='".$localDocCounter."' />";
                 ?>
 
-                <input type="button" onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
+                <input type="button" name='addDocWay_0' class='addDocWay'  onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
                 </td>
                 <td>
                     <?php
