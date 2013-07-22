@@ -9,7 +9,7 @@ function addWay(wayTr) {
 
 
 
-    $('.' + wayTr + '-' + counterVal + ' input').each(function (index) {
+    $('.' + wayTr + '-' + counterVal + ' input'+', '+'.' + wayTr + '-' + counterVal + ' select'+', '+'.' + wayTr + '-' + counterVal + ' textarea').each(function (index) {
         if (typeof $(this).attr('name') === 'undefined') {
         } else {
             var splitEl = $(this).attr('name').split('_');
@@ -35,48 +35,6 @@ function addWay(wayTr) {
 
                 }
 
-            } else {
-                if(splitEl2 % 1 === 0) {
-                    $(this).parent().parent().remove();
-                }
-            }
-        }
-    });
-    $('.' + wayTr + '-' + counterVal + ' select').each(function (index) {
-        if (typeof $(this).attr('name') === 'undefined') {
-        } else {
-            var splitEl = $(this).attr('name').split('_');
-            var splitEl2='none';
-            if (typeof splitEl[1] === 'undefined') {
-            } else {
-
-                splitEl2=splitEl[1];
-
-            }
-            if ( (splitEl2==0) || (typeof splitEl[1] === 'undefined') ){
-                $(this).attr('name', $(this).attr('name') + '-' + counterVal);
-                $(this).val('');
-            } else {
-                if(splitEl2 % 1 === 0) {
-                    $(this).parent().parent().remove();
-                }
-            }
-        }
-    });
-    $('.' + wayTr + '-' + counterVal + ' textarea').each(function (index) {
-        if (typeof $(this).attr('name') === 'undefined') {
-        } else {
-            var splitEl = $(this).attr('name').split('_');
-            var splitEl2='none';
-            if (typeof splitEl[1] === 'undefined') {
-            } else {
-
-                splitEl2=splitEl[1];
-
-            }
-            if ( (splitEl2==0) || (typeof splitEl[1] === 'undefined') ){
-                $(this).attr('name', $(this).attr('name') + '-' + counterVal);
-                $(this).val('');
             } else {
                 if(splitEl2 % 1 === 0) {
                     $(this).parent().parent().remove();
