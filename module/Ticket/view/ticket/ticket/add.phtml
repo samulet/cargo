@@ -106,6 +106,7 @@ $typeTicket = $form->get('typeTicket');
         <?php
         $counter=0;
         foreach ($formsArray as $formWayArray) {
+
             $formWay=$formWayArray['formWay'];
             if($counter==0) {
                 $dimensionsWidth = $formWay->get('dimensionsWidth');
@@ -235,8 +236,11 @@ $typeTicket = $form->get('typeTicket');
                 <?php
                 $formsDocArray=$formWayArray['formsDocArray'];
                 $localDocCounter=0;
+
                 foreach($formsDocArray as $docWay) {
+
                     if($counter==0) {
+
                         $docNumber = $docWay->get('docNumber')->setName('docNumber'.'_'.$localDocCounter);
                         $docNote = $docWay->get('docNote')->setName('docNote_'.$localDocCounter);
                         $docDate = $docWay->get('docDate')->setName('docDate_'.$localDocCounter);
@@ -250,7 +254,7 @@ $typeTicket = $form->get('typeTicket');
                         echo "<div class='docBox'>";
                     } else {
                         $docNumber = $docWay->get('docNumber')->setName('docNumber_'.$localDocCounter.'-'.$counter);
-                        $docNote = $docWay->get('docNote')->setName('docNote_-'.$localDocCounter.'-'.$counter);
+                        $docNote = $docWay->get('docNote')->setName('docNote_'.$localDocCounter.'-'.$counter);
                         $docDate = $docWay->get('docDate')->setName('docDate_'.$localDocCounter.'-'.$counter);
                         $docType = $docWay->get('docType')->setName('docType_'.$localDocCounter.'-'.$counter);
                         $docWay = $docWay->get('docWay')->setName('docWay_'.$localDocCounter.'-'.$counter);
