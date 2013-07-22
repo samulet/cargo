@@ -21,6 +21,7 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 
 use Ticket\Entity\TicketWay;
+use Ticket\Entity\DocumentWay;
 
 class TicketModel implements ServiceLocatorAwareInterface
 {
@@ -35,26 +36,76 @@ class TicketModel implements ServiceLocatorAwareInterface
         $result=array();
         foreach($propArraySplit as $key =>$value) {
             $elementSplit=explode('-',$key);
+            $elementDocSplit=explode('_',$elementSplit[0]);
             if(!empty($elementSplit['1'])) {
-                $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
+                if(isset($elementDocSplit[1])) {
+
+                    $result['elementSplit'.$elementSplit['1']]['doc'][$elementDocSplit['1']][$elementDocSplit['0']]=$value;
+                } else {
+                    $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
+
+                }
+
             } else {
-                $result['elementSplit0'][$elementSplit['0']]=$value;
+
+                if(isset($elementDocSplit[1])) {
+                    $result['elementSplit0']['doc'][$elementDocSplit['1']][$elementDocSplit['0']]=$value;
+                } else {
+
+                    $result['elementSplit0'][$elementSplit['0']]=$value;
+                }
             }
+        }
+        return $result;
+    }
+
+    public function addDocumentWay($docArray,$ownerTicketWayId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        foreach($docArray as $doc) {
+            $documentWay = new DocumentWay();
+            $doc['ownerTicketWayId']=new \MongoId($ownerTicketWayId);;
+            foreach ($doc as $key => $value) {
+                $documentWay->$key = $value;
+            }
+            $objectManager->persist($documentWay);
+            $objectManager->flush();
+
+        }
+    }
+
+    public function getDocumentWay($ownerTicketWayId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $docs = $objectManager->getRepository('Ticket\Entity\DocumentWay')->findBy(
+            array('ownerTicketWayId' => new \MongoId($ownerTicketWayId))
+        );
+        $result=array();
+        foreach($docs as $doc){
+            array_push($result,get_object_vars($doc));
         }
         return $result;
     }
 
     public function addTicketWay($propArraySplit,$ownerTicketId,$resId) {
         $result=array();
+
         foreach($propArraySplit as $key =>$value) {
             $elementSplit=explode('-',$key);
+            $elementDocSplit=explode('_',$elementSplit[0]);
             if(!empty($elementSplit['1'])) {
-                $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
+                if(isset($elementDocSplit[1])) {
+                    $result['elementSplit'.$elementSplit['1']]['doc'][$elementDocSplit['1']][$elementDocSplit['0']]=$value;
+                } else {
+                    $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
+                }
                 if(empty($result['elementSplit'.$elementSplit['1']]['ownerTicketId'])) {
                     $result['elementSplit'.$elementSplit['1']]['ownerTicketId']=$ownerTicketId;
                 }
             } else {
-                $result['elementSplit0'][$elementSplit['0']]=$value;
+                if(isset($elementDocSplit[1])) {
+                    $result['elementSplit0']['doc'][$elementDocSplit['1']][$elementDocSplit['0']]=$value;
+                } else {
+                    $result['elementSplit0'][$elementSplit['0']]=$value;
+                }
                 if(empty($result['elementSplit0']['ownerTicketId'])) {
                     $result['elementSplit0']['ownerTicketId']=$ownerTicketId;
                 }
@@ -62,6 +113,17 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($resId)) {
+            $deleteWays=$objectManager->createQueryBuilder('Ticket\Entity\TicketWay')
+                ->field('ownerTicketId')->equals(new \MongoId($resId))
+                ->getQuery()
+                ->execute();
+            foreach($deleteWays as $deleteWay) {
+                $objectManager->createQueryBuilder('Ticket\Entity\DocumentWay')
+                    ->remove()
+                    ->field('ownerTicketWayId')->equals(new \MongoId($deleteWay->id))
+                    ->getQuery()
+                    ->execute();
+            }
             $objectManager->createQueryBuilder('Ticket\Entity\TicketWay')
                 ->remove()
                 ->field('ownerTicketId')->equals(new \MongoId($resId))
@@ -70,6 +132,8 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         foreach($result as $res) {
             $ticketWay = new TicketWay();
+            $documentWay=$res['doc'];
+            unset($res['doc']);
             foreach ($res as $key => $value) {
                 if($key!="ownerTicketId") {
                     $ticketWay->$key = $value;
@@ -79,6 +143,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             }
             $objectManager->persist($ticketWay);
             $objectManager->flush();
+            $this->addDocumentWay($documentWay,$ticketWay->id);
         }
 
 
