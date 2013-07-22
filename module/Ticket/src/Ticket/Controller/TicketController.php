@@ -96,7 +96,7 @@ class TicketController extends AbstractActionController
                 $result=$ticketModel->unSplitArray(get_object_vars($post));
                 $error=0;
                 $formsArray=array();
-
+                //die(var_dump($result));
                 foreach($result as $resF) {
                     $newForm= clone $formWay;
                     $resF['submit']='submit';
@@ -104,7 +104,19 @@ class TicketController extends AbstractActionController
                     if(!$newForm->isValid()) {
                         $error++;
                     }
-                    array_push($formsArray,$newForm);
+                    if(!empty($resF['doc'])) {
+                        $formsDocArray=array();
+                        foreach($resF['doc'] as $doc) {
+                            $newFormDoc= clone $docWay;
+                            $doc['submit']='submit';
+                            $newFormDoc->setData($doc);
+                            if(!$newFormDoc->isValid()) {
+                                $error++;
+                            }
+                            array_push($formsDocArray,$newFormDoc);
+                        }
+                    }
+                    array_push($formsArray,array('formWay' =>$newForm,'formsDocArray'=>$formsDocArray));
                 }
 
                 $form->setData($post);
@@ -128,11 +140,24 @@ class TicketController extends AbstractActionController
                 $form->setData($ticket);
 
                 $formsArray=array();
+
                 foreach($ticketWay as $resF) {
                     $newForm= clone $formWay;
                     $newForm->setData($resF);
-                    array_push($formsArray,$newForm);
+                    $documentWays=$ticketModel->getDocumentWay($resF['id']);
+                    if(!empty($documentWays)) {
+                        $formsDocArray=array();
+                        foreach($documentWays as $doc) {
+                            $newFormDoc= clone $docWay;
+                            $doc['submit']='submit';
+                            $newFormDoc->setData($doc);
+
+                            array_push($formsDocArray,$newFormDoc);
+                        }
+                    }
+                    array_push($formsArray,array('formWay' =>$newForm,'formsDocArray'=>$formsDocArray));
                 }
+
                 if($type=='edit') {
                     $typeForm['action']='edit';
                     $typeForm['id']=$id;
