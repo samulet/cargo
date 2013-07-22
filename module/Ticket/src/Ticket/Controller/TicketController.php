@@ -166,7 +166,13 @@ class TicketController extends AbstractActionController
                     $typeForm['action']='copy';
                     $typeForm['id']=$id;
                 } elseif($type=='list') {
-                    foreach ($formsArray as $formWay) {
+                    foreach ($formsArray as $formElement) {
+                        $formWay=$formElement['formWay'];
+                        foreach($formElement['formsDocArray'] as $docWay) {
+                            foreach ($docWay as $wayEl) {
+                                $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
+                            }
+                        }
                         foreach ($formWay as $wayEl) {
                             $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
                         }
@@ -179,7 +185,13 @@ class TicketController extends AbstractActionController
                     $typeForm['id']=$id;
                 }
             } elseif($type=='search') {
-                foreach ($formsArray as $formWay) {
+                foreach ($formsArray as $formElement) {
+                    $formWay=$formElement['formWay'];
+                    foreach($formElement['formsDocArray'] as $docWay) {
+                        foreach ($docWay as $wayEl) {
+                            $wayEl->setAttributes(array('required'  => '' ));
+                        }
+                    }
                     foreach ($formWay as $wayEl) {
                         $wayEl->setAttributes(array('required'  => '' ));
                     }
