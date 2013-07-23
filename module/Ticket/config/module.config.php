@@ -44,9 +44,9 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','search','list','delete', 'addTicket', 'getResults','copy'),'roles' => array('user','admin')),
-                array('controller' => 'Ticket\Controller\Ticket','action'=> array('search', 'getResults'),'roles' => array('carrier','admin')),
-                array('controller' => 'Ticket\Controller\Ticket','action'=> array('my','add','edit'),'roles' => array('customer','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','search','list','delete', 'addTicket', 'getResults','copy'),'roles' => array('admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','list','search', 'getResults'),'roles' => array('carrier','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('my','add','edit','delete','copy','list'),'roles' => array('customer','admin')),
 
                 array('controller' => 'Ticket\Controller\Cargo', 'action' => array('index'), 'roles' => array('user','admin')),
                 array('controller' => 'Ticket\Controller\Cargo', 'action' => array('my','add', 'edit', 'list', 'delete', 'addCargo', 'copy'), 'roles' => array('customer','admin')),
