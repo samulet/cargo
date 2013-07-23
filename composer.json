@@ -23,7 +23,8 @@
         "gedmo/doctrine-extensions": "dev-master",
         "yassa/rollbar": "*",
         "zf-commons/zfc-admin": "*",
-        "bjyoungblood/bjy-authorize": "1.2.*"
+        "bjyoungblood/bjy-authorize": "1.2.*",
+        "evandotpro/edp-module-layouts": "1.*"
     },
     "minimum-stability": "dev",
     "require-dev": {
