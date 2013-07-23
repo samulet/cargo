@@ -111,8 +111,8 @@ return array(
             array(
                 'label' => 'Поиск',
                 'route' => 'resource',
-                'action' => 'search',
-                'params' => array('id' => null),
+                'action' => 'add',
+                'params' => array('id' => null,'type'=>'search'),
                 'resource'   => 'controller/Resource\Controller\Resource:search',
             ),
             array(
@@ -160,8 +160,8 @@ return array(
             array(
                 'label' => 'Поиск',
                 'route' => 'ticket',
-                'action' => 'search',
-                'params' => array('id' => null),
+                'action' => 'add',
+                'params' => array('id' => null,'type'=>'search'),
                 'resource'   => 'controller/Ticket\Controller\Ticket:search',
             ),
             array(
