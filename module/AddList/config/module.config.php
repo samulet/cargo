@@ -55,4 +55,7 @@ return array(
             'addList' => __DIR__ . '/../view',
         ),
     ),
+    'module_layouts' => array(
+        'AddList' => 'layout/admin',
+    ),
 );
