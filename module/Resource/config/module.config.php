@@ -45,12 +45,13 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Resource\Controller\Resource','action'=> array('index','list','delete', 'addResource', 'copy'),'roles' => array('user','admin')),
+                array('controller' => 'Resource\Controller\Resource','action'=> array('index','list','delete', 'addResource', 'copy','add'),'roles' => array('user','admin')),
                 array('controller' => 'Resource\Controller\Resource','action'=> array('my','add','edit'),'roles' => array('carrier','admin')),
-                array('controller' => 'Resource\Controller\Resource','action'=> array('search', 'getResults'),'roles' => array('customer','admin')),
+                array('controller' => 'Resource\Controller\Resource','action'=> array('search', 'getResults','add',),'roles' => array('customer','admin')),
 
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index'), 'roles' => array('admin')),
+                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','list','add'), 'roles' => array('admin')),
                 array('controller' => 'Resource\Controller\Vehicle', 'action' => array('my','add', 'edit', 'list', 'delete', 'addVehicle', 'copy'), 'roles' => array('carrier','admin')),
+                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','add'), 'roles' => array('customer','admin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'resource', 'roles' => array('user')),
