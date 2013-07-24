@@ -24,7 +24,8 @@
         "yassa/rollbar": "*",
         "zf-commons/zfc-admin": "*",
         "bjyoungblood/bjy-authorize": "1.2.*",
-        "evandotpro/edp-module-layouts": "1.*"
+        "evandotpro/edp-module-layouts": "1.*",
+        "phpoffice/phpexcel": "*"
     },
     "minimum-stability": "dev",
     "require-dev": {
@@ -35,6 +36,10 @@
         {
             "type": "git",
             "url": "git://github.com/bladeofsteel/ZfcUserDoctrineMongoODM.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/csanquer/PHPExcel.git"
         }
     ]
 }
