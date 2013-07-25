@@ -355,6 +355,7 @@ class TicketController extends AbstractActionController
         ));
     }
     public function getExcelAction() {
+
         error_reporting(E_ALL);
         ini_set('display_errors', TRUE);
         ini_set('display_startup_errors', TRUE);
@@ -370,7 +371,7 @@ class TicketController extends AbstractActionController
 
         echo date('H:i:s') , " Load from Excel5 template" , EOL;
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
-        $objPHPExcel = $objReader->load("/var/www/php3/excel/Examples/templates/30template.xls");
+        $objPHPExcel = $objReader->load("public/xls/30template.xls");
 
 
 
@@ -409,6 +410,8 @@ class TicketController extends AbstractActionController
         echo date('H:i:s') , " Write to Excel5 format" , EOL;
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('/var/www/php3/excel/Examples/templates/30templateNew.xls');
+
+
         echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', '/var/www/php3/excel/Examples/templates/30templateNew.xls') , EOL;
 
 
