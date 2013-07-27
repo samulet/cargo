@@ -356,72 +356,53 @@ class TicketController extends AbstractActionController
     }
     public function getExcelAction() {
 
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $ticketModel = $this->getTicketModel();
+        $ticket = $ticketModel->listTicket($id);
+        $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+
         error_reporting(E_ALL);
         ini_set('display_errors', TRUE);
         ini_set('display_startup_errors', TRUE);
 
-        define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
-        date_default_timezone_set('Europe/London');
-
-        /** PHPExcel_IOFactory */
-       // require_once '../Classes/PHPExcel/IOFactory.php';
-
-
-
-        echo date('H:i:s') , " Load from Excel5 template" , EOL;
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
-        $objPHPExcel = $objReader->load("public/xls/30template.xls");
+        $objPHPExcel = $objReader->load("public/xls/templateTicket.xls");
 
+        $counter=1;
+        $offset=9;
+        $step=11;
+       // ->getCell('A1')->getValue();
+        //->mergeCells('A1:C1');
+         //   $worksheet->duplicateStyle($worksheet->getStyle('A1'), 'A2:L87');
+       // die(var_dump($ticketWay));
+        foreach($ticketWay as $way) {
+            if($counter!=1) {
+                $start=$offset+($counter-1)*$step;
+                $objPHPExcel->getActiveSheet()->mergeCells('A'.$start.':G'.$start);
+                $copyCounter=$offset+1;
+                for($i=$start+1;$i<$start+$step;$i++) {
+                    $objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':C'.$i);
+                    $objPHPExcel->getActiveSheet()->mergeCells('D'.$i.':G'.$i);
+                    $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $objPHPExcel->getActiveSheet()->getCell('A'.$copyCounter)->getValue());
+                    $copyCounter++;
+                }
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.$offset.':G'.$offset), 'A'.$start.':G'.$start);
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($start)), 'A'.($start+1).':G'.($start+$step-1));
+                $objPHPExcel->getActiveSheet()
+                    ->setCellValue('A'.($start), 123);
+            } else {
+                $start=$offset;
+            }
+            $objPHPExcel->getActiveSheet()
 
-
-
-        echo date('H:i:s') , " Add new data to the template" , EOL;
-        $data = array(array('title'		=> 'Excel for dummies',
-            'price'		=> 17.99,
-            'quantity'	=> 2
-        ),
-            array('title'		=> 'PHP for dummies',
-                'price'		=> 15.99,
-                'quantity'	=> 1
-            ),
-            array('title'		=> 'Inside OOP',
-                'price'		=> 12.95,
-                'quantity'	=> 1
-            )
-        );
-
-        $objPHPExcel->getActiveSheet()->setCellValue('D1', PHPExcel_Shared_Date::PHPToExcel(time()));
-
-        $baseRow = 5;
-        foreach($data as $r => $dataRow) {
-            $row = $baseRow + $r;
-            $objPHPExcel->getActiveSheet()->insertNewRowBefore($row,1);
-
-            $objPHPExcel->getActiveSheet()->setCellValue('A'.$row, $r+1)
-                ->setCellValue('B'.$row, $dataRow['title'])
-                ->setCellValue('C'.$row, $dataRow['price'])
-                ->setCellValue('D'.$row, $dataRow['quantity'])
-                ->setCellValue('E'.$row, '=C'.$row.'*D'.$row);
+            ->setCellValue('D'.(++$start), 123);
+            $counter++;
         }
-        $objPHPExcel->getActiveSheet()->removeRow($baseRow-1,1);
 
 
-        echo date('H:i:s') , " Write to Excel5 format" , EOL;
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save('/var/www/php3/excel/Examples/templates/30templateNew.xls');
-
-
-        echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', '/var/www/php3/excel/Examples/templates/30templateNew.xls') , EOL;
-
-
-// Echo memory peak usage
-        echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;
-
-// Echo done
-        echo date('H:i:s') , " Done writing file" , EOL;
-        echo 'File has been created in ' , getcwd() , EOL;
-        die(var_dump('Files have been created in ' , getcwd() , EOL)) ;
+        $objWriter->save('public/xls/ticket.xls');
     }
     public function getResultsAction() {
         $res = $this->getTicketModel();
