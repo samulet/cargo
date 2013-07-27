@@ -31,7 +31,7 @@ class TicketController extends AbstractActionController
     protected $addListModel;
     protected $interactionModel;
 
-
+    protected $organizationModel;
     public function indexAction()
     {
         $res = $this->getTicketModel();
@@ -361,7 +361,8 @@ class TicketController extends AbstractActionController
         $ticketModel = $this->getTicketModel();
         $ticket = $ticketModel->listTicket($id);
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
-
+        $orgModel = $this->getOrganizationModel();
+        $org = $orgModel->getOrganization($ticket['ownerOrgId']);
         error_reporting(E_ALL);
         ini_set('display_errors', TRUE);
         ini_set('display_startup_errors', TRUE);
@@ -373,10 +374,18 @@ class TicketController extends AbstractActionController
         $counter=1;
         $offset=9;
         $step=11;
-       // ->getCell('A1')->getValue();
-        //->mergeCells('A1:C1');
-         //   $worksheet->duplicateStyle($worksheet->getStyle('A1'), 'A2:L87');
-       // die(var_dump($ticketWay));
+//die(var_dump(get_object_vars($ticket['created'])));
+        $mainParams=1;
+        $objPHPExcel->getActiveSheet()
+            ->setCellValue('D'.($mainParams), $ticket['uuid'])
+            ->setCellValue('F'.($mainParams), get_object_vars($ticket['created'])['date']);
+        $mainParams=$mainParams+2;
+        $objPHPExcel->getActiveSheet()
+            ->setCellValue('D'.($mainParams), $org['name'])
+            ->setCellValue('D'.(++$mainParams), '')
+            ->setCellValue('D'.(++$mainParams), '')
+            ->setCellValue('D'.(++$mainParams), '')
+            ->setCellValue('D'.(++$mainParams), $ticket['money'].' '.$ticket['currency']);
         foreach($ticketWay as $way) {
             if($counter!=1) {
                 $start=$offset+($counter-1)*$step;
@@ -418,6 +427,15 @@ class TicketController extends AbstractActionController
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('public/xls/ticket.xls');
     }
+    public function getOrganizationModel()
+    {
+        if (!$this->organizationModel) {
+            $sm = $this->getServiceLocator();
+            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+        }
+        return $this->organizationModel;
+    }
+
     public function getResultsAction() {
         $res = $this->getTicketModel();
         $ticket=$res->returnSearchTicket($this->getRequest()->getPost());
