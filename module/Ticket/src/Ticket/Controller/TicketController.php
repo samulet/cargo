@@ -392,14 +392,22 @@ class TicketController extends AbstractActionController
 
                 //$objBold= $objPHPExcel->getActiveSheet()->getStyle('A'.$start)->getFont()->setBold(true);
                 //$objPHPExcel->getActiveSheet()->setStyle('A'.$start,$objBold);
-               // $objPHPExcel->getActiveSheet()
-                //    ->setCellValue('A'.($start), 123);
+                $objPHPExcel->getActiveSheet()
+                    ->setCellValue('A'.($start), 'Загрузка '.$counter);
             } else {
                 $start=$offset;
             }
             $objPHPExcel->getActiveSheet()
-
-            ->setCellValue('D'.(++$start), 123);
+                ->setCellValue('D'.(++$start), $way['cargoOwner'])
+                ->setCellValue('D'.(++$start), '')
+                ->setCellValue('D'.(++$start), $way['dateStart'].' / '.$way['timeStart'])
+                ->setCellValue('D'.(++$start), '')
+                ->setCellValue('D'.(++$start), '')
+                ->setCellValue('D'.(++$start), $way['weight'])
+                ->setCellValue('D'.(++$start), $way['pallet'])
+                ->setCellValue('D'.(++$start), $way['type'])
+                ->setCellValue('D'.(++$start), $way['temperature'])
+            ->setCellValue('D'.(++$start), $way['note']);
             $counter++;
         }
 
