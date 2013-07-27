@@ -20,7 +20,7 @@ use AddList\Form\AddListForm;
 use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_Shared_Date;
-
+use PHPExcel_RichText;
 class TicketController extends AbstractActionController
 {
 
@@ -387,10 +387,13 @@ class TicketController extends AbstractActionController
                     $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $objPHPExcel->getActiveSheet()->getCell('A'.$copyCounter)->getValue());
                     $copyCounter++;
                 }
-                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.$offset.':G'.$offset), 'A'.$start.':G'.$start);
-                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($start)), 'A'.($start+1).':G'.($start+$step-1));
-                $objPHPExcel->getActiveSheet()
-                    ->setCellValue('A'.($start), 123);
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset).':G'.($offset)), 'A'.$start.':G'.$start);
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($offset+$step)), 'A'.($start+1).':G'.($start+$step-1));
+
+                //$objBold= $objPHPExcel->getActiveSheet()->getStyle('A'.$start)->getFont()->setBold(true);
+                //$objPHPExcel->getActiveSheet()->setStyle('A'.$start,$objBold);
+               // $objPHPExcel->getActiveSheet()
+                //    ->setCellValue('A'.($start), 123);
             } else {
                 $start=$offset;
             }
