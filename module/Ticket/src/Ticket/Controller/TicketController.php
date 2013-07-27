@@ -21,6 +21,7 @@ use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_Shared_Date;
 use PHPExcel_RichText;
+use PHPExcel_Style_Alignment;
 class TicketController extends AbstractActionController
 {
 
@@ -379,16 +380,18 @@ class TicketController extends AbstractActionController
         foreach($ticketWay as $way) {
             if($counter!=1) {
                 $start=$offset+($counter-1)*$step;
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset).':G'.($offset)), 'A'.$start.':G'.$start);
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($offset+$step)), 'A'.($start+1).':G'.($start+$step-1));
+
                 $objPHPExcel->getActiveSheet()->mergeCells('A'.$start.':G'.$start);
                 $copyCounter=$offset+1;
                 for($i=$start+1;$i<$start+$step;$i++) {
                     $objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':C'.$i);
                     $objPHPExcel->getActiveSheet()->mergeCells('D'.$i.':G'.$i);
+                   // $objPHPExcel->getActiveSheet()->getStyle('D'.$i.':G'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                     $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $objPHPExcel->getActiveSheet()->getCell('A'.$copyCounter)->getValue());
                     $copyCounter++;
                 }
-                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset).':G'.($offset)), 'A'.$start.':G'.$start);
-                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($offset+$step)), 'A'.($start+1).':G'.($start+$step-1));
 
                 //$objBold= $objPHPExcel->getActiveSheet()->getStyle('A'.$start)->getFont()->setBold(true);
                 //$objPHPExcel->getActiveSheet()->setStyle('A'.$start,$objBold);
