@@ -422,10 +422,16 @@ class TicketController extends AbstractActionController
             ->setCellValue('D'.(++$start), $way['note']);
             $counter++;
         }
-
+        ob_start();
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="orders.xls"');
+        header('Cache-Control: max-age=0');
 
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save('public/xls/ticket.xls');
+        ob_end_clean() ;
+        $objWriter->save('php://output');
+       // $objWriter->save('public/xls/ticket.xls');
+        ob_end_flush();
     }
     public function getOrganizationModel()
     {
