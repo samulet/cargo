@@ -20,7 +20,7 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 use AddList\Entity\AddList;
-
+use AddList\Entity\AddListNameStatic;
 
 class AddListModel implements ServiceLocatorAwareInterface
 {
@@ -478,6 +478,15 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('parentFieldId' => new \MongoId($id)));
         return $list->uuid;
+    }
+
+    public function addListTranslator() {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $listName = $objectManager->getRepository('AddList\Entity\AddListName')->createQueryBuilder()
+            ->getQuery()->execute();
+        foreach($listName as $name) {
+            die(var_dump($name));
+        }
     }
 
 }
