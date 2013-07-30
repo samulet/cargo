@@ -11,6 +11,7 @@ return array(
         'BjyAuthorize',
         'User',
         'ZfcAdmin',
+        'EdpModuleLayouts',
         'Application',
         'User',
         'Organization',
