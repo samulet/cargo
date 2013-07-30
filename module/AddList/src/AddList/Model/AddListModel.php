@@ -485,7 +485,11 @@ class AddListModel implements ServiceLocatorAwareInterface
         $listName = $objectManager->getRepository('AddList\Entity\AddListName')->createQueryBuilder()
             ->getQuery()->execute();
         foreach($listName as $name) {
-            die(var_dump($name));
+            $id=$name->id;
+            $list = $objectManager->getRepository('AddList\Entity\AddList')->findBy(array('listId' => new \MongoId($id)));
+            foreach($list as $li) {
+
+            }
         }
     }
 
