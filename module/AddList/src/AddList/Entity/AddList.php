@@ -70,8 +70,8 @@ class AddList
      */
     public $ownerUserId;
     /**
-     * @ODM\ObjectId
-     * @var int
+     * @var string
+     * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})

@@ -12,14 +12,14 @@ class AddListNameStatic
     public static $list = array(
         "veh-marks" => array(
             "name" => "Марки транспортных средств",
-            "listName"=> "company",
-            "field" => "requisites",
+            "listName"=> "vehicle",
+            "field" => "mark",
             "fieldRusName" => "Реквизиты" ,
             "child" => array(
                 "veh-models" => array(
                     "name" => "Модели транспортных средств",
-                    "listName"=> "company",
-                    "field" => "requisites",
+                    "listName"=> "vehicle",
+                    "field" => "model",
                     "fieldRusName" => "Реквизиты" ,
                     "child" => null
                 )
