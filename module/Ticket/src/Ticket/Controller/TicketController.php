@@ -17,6 +17,11 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Ticket\Form\TicketForm;
 use AddList\Form\AddListForm;
+use PHPExcel;
+use PHPExcel_IOFactory;
+use PHPExcel_Shared_Date;
+use PHPExcel_RichText;
+use PHPExcel_Style_Alignment;
 class TicketController extends AbstractActionController
 {
 
@@ -26,7 +31,7 @@ class TicketController extends AbstractActionController
     protected $addListModel;
     protected $interactionModel;
 
-
+    protected $organizationModel;
     public function indexAction()
     {
         $res = $this->getTicketModel();
@@ -350,6 +355,93 @@ class TicketController extends AbstractActionController
 
         ));
     }
+    public function getExcelAction() {
+
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $ticketModel = $this->getTicketModel();
+        $ticket = $ticketModel->listTicket($id);
+        $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+        $orgModel = $this->getOrganizationModel();
+        $org = $orgModel->getOrganization($ticket['ownerOrgId']);
+        error_reporting(E_ALL);
+        ini_set('display_errors', TRUE);
+        ini_set('display_startup_errors', TRUE);
+
+
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objPHPExcel = $objReader->load("public/xls/templateTicket.xls");
+
+        $counter=1;
+        $offset=9;
+        $step=11;
+//die(var_dump(get_object_vars($ticket['created'])));
+        $mainParams=1;
+        $objPHPExcel->getActiveSheet()
+            ->setCellValue('D'.($mainParams), $ticket['uuid'])
+            ->setCellValue('F'.($mainParams), get_object_vars($ticket['created'])['date']);
+        $mainParams=$mainParams+2;
+        $objPHPExcel->getActiveSheet()
+            ->setCellValue('D'.($mainParams), $org['name'])
+            ->setCellValue('D'.(++$mainParams), '')
+            ->setCellValue('D'.(++$mainParams), '')
+            ->setCellValue('D'.(++$mainParams), '')
+            ->setCellValue('D'.(++$mainParams), $ticket['money'].' '.$ticket['currency']);
+        foreach($ticketWay as $way) {
+            if($counter!=1) {
+                $start=$offset+($counter-1)*$step;
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset).':G'.($offset)), 'A'.$start.':G'.$start);
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($offset+$step)), 'A'.($start+1).':G'.($start+$step-1));
+
+                $objPHPExcel->getActiveSheet()->mergeCells('A'.$start.':G'.$start);
+                $copyCounter=$offset+1;
+                for($i=$start+1;$i<$start+$step;$i++) {
+                    $objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':C'.$i);
+                    $objPHPExcel->getActiveSheet()->mergeCells('D'.$i.':G'.$i);
+                   // $objPHPExcel->getActiveSheet()->getStyle('D'.$i.':G'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                    $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $objPHPExcel->getActiveSheet()->getCell('A'.$copyCounter)->getValue());
+                    $copyCounter++;
+                }
+
+                //$objBold= $objPHPExcel->getActiveSheet()->getStyle('A'.$start)->getFont()->setBold(true);
+                //$objPHPExcel->getActiveSheet()->setStyle('A'.$start,$objBold);
+                $objPHPExcel->getActiveSheet()
+                    ->setCellValue('A'.($start), 'Загрузка '.$counter);
+            } else {
+                $start=$offset;
+            }
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue('D'.(++$start), $way['cargoOwner'])
+                ->setCellValue('D'.(++$start), '')
+                ->setCellValue('D'.(++$start), $way['dateStart'].' / '.$way['timeStart'])
+                ->setCellValue('D'.(++$start), '')
+                ->setCellValue('D'.(++$start), '')
+                ->setCellValue('D'.(++$start), $way['weight'])
+                ->setCellValue('D'.(++$start), $way['pallet'])
+                ->setCellValue('D'.(++$start), $way['type'])
+                ->setCellValue('D'.(++$start), $way['temperature'])
+            ->setCellValue('D'.(++$start), $way['note']);
+            $counter++;
+        }
+        ob_start();
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="orders.xls"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean() ;
+        $objWriter->save('php://output');
+       // $objWriter->save('public/xls/ticket.xls');
+        ob_end_flush();
+    }
+    public function getOrganizationModel()
+    {
+        if (!$this->organizationModel) {
+            $sm = $this->getServiceLocator();
+            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+        }
+        return $this->organizationModel;
+    }
+
     public function getResultsAction() {
         $res = $this->getTicketModel();
         $ticket=$res->returnSearchTicket($this->getRequest()->getPost());

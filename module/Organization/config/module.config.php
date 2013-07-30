@@ -89,4 +89,7 @@ return array(
             'organization' => __DIR__ . '/../view',
         ),
     ),
+    'module_layouts' => array(
+        //'Organization\Controller\CompanyUser' => 'layout/admin',
+    ),
 );

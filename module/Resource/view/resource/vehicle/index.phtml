@@ -18,15 +18,8 @@ $vehicles = $this->res;
             Марка / Модель
         </th>
 
-        <th>
-            Организация
-        </th>
-        <th>
-            Редактировать
-        </th>
-        <th>
-            Удалить
-        </th>
+
+
     </tr>
     <?php foreach ($vehicles as $vehicle) { $org=$vehicle['org'];$vehicle=$vehicle['res'];?>
         <tr>
@@ -43,7 +36,7 @@ $vehicles = $this->res;
                 <?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?>
             </td>
 
-                    <td>
+              <!--      <td>
                     <a href="<?php echo $this->url('organization',
                                 array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
                     </td>
@@ -56,7 +49,7 @@ $vehicles = $this->res;
                     'vehicle',
                     array('action' => 'delete', 'id' => $vehicle['uuid'])
                 );?>">Удалить</a>
-            </td>
+            </td> -->
         </tr>
     <?php } ?>
 

@@ -19,6 +19,7 @@ use Organization\Form\CompanyUserCreate;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
+use Zend\ModuleManager\ModuleManager;
 
 class CompanyUserController extends AbstractActionController
 {
@@ -72,6 +73,7 @@ class CompanyUserController extends AbstractActionController
 
         } else {
             $orgId='all';
+            $this->layout('layout/admin');
         }
         $comUserModel = $this->getCompanyUserModel();
         $users=$comUserModel->getUsersByOrgId($orgId);
