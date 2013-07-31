@@ -243,4 +243,10 @@ class AddListController extends AbstractActionController
         $uuid=$addListModel->getChildUuid($listId);
         return $this->redirect()->toUrl('/addList/list-parent/'.$uuid);
     }
+
+    public function addListTranslatorAction() {
+        $addListModel = $this->getAddListModel();
+        $addListModel->addListTranslator();
+
+    }
 }
