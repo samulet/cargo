@@ -20,7 +20,8 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 use AddList\Entity\AddList;
-
+use AddList\Entity\AddListNameStatic;
+use Doctrine\ODM\MongoDB\LoggableCursor;
 
 class AddListModel implements ServiceLocatorAwareInterface
 {
@@ -478,6 +479,48 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('parentFieldId' => new \MongoId($id)));
         return $list->uuid;
+    }
+
+    public function addListTranslator() {
+
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $listName = $objectManager->getRepository('AddList\Entity\AddListName')->createQueryBuilder()
+            ->getQuery()->execute();
+        foreach($listName as $name) {
+            $trueResult='';
+            $newList=AddListNameStatic::$list;
+
+            foreach($newList as $newListElementKey => $newListElementValue) {
+
+                if( ($newListElementValue['field']==$name->field) && ($newListElementValue['listName']==$name->listName) ) {
+                    $trueResult=$newListElementKey;
+
+                }
+                echo $newListElementValue['field'].' == '.$name->field.' / '.$newListElementValue['listName'].' == '.$name->listName.' || ';
+            }
+
+            if(empty($trueResult)) {
+                if( (AddListNameStatic::$list["veh-marks"]["child"]["veh-models"]['field']==$name->field) && (AddListNameStatic::$list["veh-marks"]["child"]["veh-models"]['listName']==$name->listName) ) {
+                    $trueResult="veh-models";
+                }
+            }
+
+            if(!empty($trueResult)) {
+                $list = $objectManager->getRepository('AddList\Entity\AddList')->findBy(array('listId'=>new \MongoId($name->id)));
+                foreach($list as $li) {
+
+                    $objectManager->getRepository('AddList\Entity\AddList')->createQueryBuilder()
+
+                        ->findAndUpdate()
+                        ->field('id')->equals(new \MongoId($li->id))
+                        ->field('listId')->set($trueResult)
+                        ->getQuery()
+                        ->execute();
+                }
+              //  $objectManager->persist($list);
+               // $objectManager->flush();
+            }
+        }
     }
 
 }
