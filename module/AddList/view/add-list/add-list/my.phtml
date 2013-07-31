@@ -15,9 +15,9 @@ $list = $this->list;
         </th>
     </tr>
     <?php
-    foreach($list as $li) {
+    foreach($list as $link => $li) {
         $child=$li['child'];
-        $li=$li['list'];
+        $li['uuid']=$link;
     ?>
 
     <tr>
@@ -45,8 +45,9 @@ $list = $this->list;
         $padding=1;
 
         while(!empty($child)) {
-            $li=$child['list'];
-
+            $key=key($child);
+            $child=$child[$key];
+            $child['uuid']=$key;
         ?>
 
             <tr>
