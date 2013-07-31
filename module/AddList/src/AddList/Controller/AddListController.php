@@ -49,6 +49,8 @@ class AddListController extends AbstractActionController
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
+
+
         return new ViewModel(array(
             'form' => $form,
             'uuid' =>$listNameUuid,
@@ -111,10 +113,9 @@ class AddListController extends AbstractActionController
 
         $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField,$userId,$orgId);
 
-        $listName=$addListModel->getListName((string)$listId['listId']);
 
         if(empty($listName['parentId'])) {
-            return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
+            return $this->redirect()->toUrl('/addList/my-fields/'.$listId['listId']);
         } else {
             $parentUuid=$addListModel->getListUuidById($listId['parentFieldId']);
 

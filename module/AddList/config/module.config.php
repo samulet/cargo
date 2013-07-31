@@ -17,7 +17,7 @@ return array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'parent' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'global' =>'[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-z0-9]*'
+                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'AddList\Controller\AddList',

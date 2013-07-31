@@ -166,7 +166,7 @@ class AddListModel implements ServiceLocatorAwareInterface
 
         }
         if(is_string($listUUID)) {
-            $prop_array['listId']=new \MongoId($this->getIdByUUID($listUUID));
+            $prop_array['listId']=$listUUID;
 
         }
 
