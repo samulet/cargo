@@ -16,7 +16,7 @@ class AddListRepository extends DocumentRepository
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('global')->equals('global')
             ->field('listId')->equals(
-                new \MongoId($id)
+                $id
             )
             ->getQuery()->execute();
     }
@@ -26,7 +26,7 @@ class AddListRepository extends DocumentRepository
             ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('global')->equals(null)
             ->field('ownerOrgId')->equals(new \MongoId($orgListId))
             ->field('listId')->equals(
-                new \MongoId($id)
+                $id
             )
             ->getQuery()->execute();
     }
@@ -34,7 +34,7 @@ class AddListRepository extends DocumentRepository
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('listId')->equals(
-                new \MongoId($id)
+                $id
             )
             ->getQuery()->execute();
     }
