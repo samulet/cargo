@@ -506,16 +506,19 @@ class AddListModel implements ServiceLocatorAwareInterface
             }
            // die(var_dump($trueResult));
             if(!empty($trueResult)) {
-                $list = $objectManager->getRepository('AddList\Entity\AddList')->createQueryBuilder()
-                    ->field('listId')->equals(new \MongoId($name->id))
-                    ->getQuery()->execute();
+                $list = $objectManager->getRepository('AddList\Entity\AddList')->findBy(array('listId'=>new \MongoId($name->id)));
+                foreach($list as $li) {
 
-                while ( $li= $list->getNext()) {
-                    $li->listId=$trueResult;
-
+                    $objectManager->getRepository('AddList\Entity\AddList')->createQueryBuilder()
+                        // Find the job
+                        ->findAndUpdate()
+                        ->field('id')->equals(new \MongoId($li->id))
+                        ->field('listId')->set($trueResult)
+                        ->getQuery()
+                        ->execute();
                 }
-                $objectManager->persist($list);
-                $objectManager->flush();
+              //  $objectManager->persist($list);
+               // $objectManager->flush();
             }
         }
     }
