@@ -504,13 +504,13 @@ class AddListModel implements ServiceLocatorAwareInterface
                     $trueResult="veh-models";
                 }
             }
-           // die(var_dump($trueResult));
+
             if(!empty($trueResult)) {
                 $list = $objectManager->getRepository('AddList\Entity\AddList')->findBy(array('listId'=>new \MongoId($name->id)));
                 foreach($list as $li) {
 
                     $objectManager->getRepository('AddList\Entity\AddList')->createQueryBuilder()
-                        // Find the job
+
                         ->findAndUpdate()
                         ->field('id')->equals(new \MongoId($li->id))
                         ->field('listId')->set($trueResult)
