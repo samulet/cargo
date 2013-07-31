@@ -304,6 +304,17 @@ class AddListModel implements ServiceLocatorAwareInterface
 
 
     public function getListName($id) {
+        if(!is_string($id)) {
+            $propArray=get_object_vars($id);
+
+        } else {
+            $propArray=$id;
+        }
+
+        return AddListNameStatic::$list;
+
+
+/*
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if(!is_string($id)) {
             $propArray=get_object_vars($id);
@@ -367,7 +378,9 @@ class AddListModel implements ServiceLocatorAwareInterface
             $result=null;
         }
 
+
         return $result;
+        */
     }
 
     public function deleteList($uuid)

@@ -14,13 +14,13 @@ class AddListNameStatic
             "name" => "Марки транспортных средств",
             "listName"=> "vehicle",
             "field" => "mark",
-            "fieldRusName" => "Реквизиты" ,
+            "fieldRusName" => "Марка ТС" ,
             "child" => array(
                 "veh-models" => array(
                     "name" => "Модели транспортных средств",
                     "listName"=> "vehicle",
                     "field" => "model",
-                    "fieldRusName" => "Реквизиты" ,
+                    "fieldRusName" => "Модель ТС" ,
                     "child" => null
                 )
             )
