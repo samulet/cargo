@@ -45,8 +45,8 @@ return array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','search','add','delete', 'addTicket', 'getResults','copy','getExcel'),'roles' => array('admin')),
-                array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','add','search', 'getResults'),'roles' => array('carrier','admin')),
-                array('controller' => 'Ticket\Controller\Ticket','action'=> array('my','add','edit','delete','copy','list'),'roles' => array('customer','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','add','search', 'getResults'),'roles' => array('carrier','admin','getExcel')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('my','add','edit','delete','copy','list'),'roles' => array('customer','admin','getExcel')),
 
                 array('controller' => 'Ticket\Controller\Cargo', 'action' => array('index'), 'roles' => array('user','admin')),
                 array('controller' => 'Ticket\Controller\Cargo', 'action' => array('my','add', 'edit', 'list', 'delete', 'addCargo', 'copy'), 'roles' => array('customer','admin')),

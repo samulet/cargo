@@ -19,6 +19,9 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         <th>
 Транспорт (тип ТС / Температурный режим / загрузка - выгрузка)
         </th>
+                <th>
+                    Печать
+                </th>
          <th>
              Добавить аукцион
           </th>
@@ -71,7 +74,12 @@ $typeUnload=implode(' ',$typeUnload);
                              }
                              ?>
             </td>
-
+            <td>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'getExcel', 'id' => $ticket['uuid'])
+                );?>">Печать</a>
+            </td>
 
         <td>
             <a href="<?php echo $this->url('auction',
