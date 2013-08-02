@@ -81,6 +81,7 @@ if(empty($parentList)) {
             <td>
                 <?php
                 if(!empty($parent['value'])) {
+
                     ?>
                     <a href="<?php echo $this->url(
                         'addList',
@@ -89,7 +90,8 @@ if(empty($parentList)) {
 
                 <?php echo $fi['value']; ?>
                 <?php
-                } else { ?>
+                } else {
+                    ?>
                     <a href="<?php echo $this->url(
                         'addList',
                         array('action' => 'list-parent', 'id' => $fi['uuid'])

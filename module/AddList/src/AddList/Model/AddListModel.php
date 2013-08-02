@@ -159,19 +159,17 @@ class AddListModel implements ServiceLocatorAwareInterface
                 array('id' =>  $mongoId)
             );
 
-            $listName=  $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(
-                array('parentId' =>  new \MongoId($list->listId))
-            );
-            $prop_array['listId']=new \MongoId($listName->id);
+            $listName=  $this->getListName('veh-models');
+            $prop_array['listId']=$listName['id'];
 
         }
         if(is_string($listUUID)) {
             $prop_array['listId']=$listUUID;
 
         }
-
+//die(var_dump($prop_array));
         $res = new AddList();
-
+       // die(var_dump($prop_array));
 
         $prop_array['key']=$this->russianToTranslit( $prop_array['value']);
 
@@ -312,8 +310,8 @@ class AddListModel implements ServiceLocatorAwareInterface
                $list['uuid']=$id;
            } elseif(!empty($list['veh-marks']['child'][$id])) {
                $list=$list['veh-marks']['child'][$id];
-               $list['id']='veh-marks';
-               $list['uuid']='veh-marks';
+               $list['id']=$id;
+               $list['uuid']=$id;
            }
         }
 
