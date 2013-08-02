@@ -15,12 +15,14 @@ class AddListNameStatic
             "listName"=> "vehicle",
             "field" => "mark",
             "fieldRusName" => "Марка ТС" ,
+            'parentId' => null,
             "child" => array(
                 "veh-models" => array(
                     "name" => "Модели транспортных средств",
                     "listName"=> "vehicle",
                     "field" => "model",
                     "fieldRusName" => "Модель ТС" ,
+                    'parentId' => 'veh-marks',
                     "child" => null
                 )
             )
@@ -31,6 +33,7 @@ class AddListNameStatic
             "listName"=> "vehicle",
             "field" => "status",
             "fieldRusName" => "ТС - статус" ,
+            'parentId' => null,
             "child" => null
         ),
         "veh-type" => array(
@@ -38,6 +41,7 @@ class AddListNameStatic
             "listName"=> "vehicle",
             "field" => "type",
             "fieldRusName" => "ТС - тип" ,
+            'parentId' => null,
             "child" => null
         ),
         "ownerships" => array(
@@ -45,6 +49,7 @@ class AddListNameStatic
             "listName"=> "company",
             "field" => "property",
             "fieldRusName" => "Компания - Форма собственности" ,
+            'parentId' => null,
             "child" => null
         ),
         "requisites" => array(
@@ -52,6 +57,7 @@ class AddListNameStatic
             "listName"=> "company",
             "field" => "requisites",
             "fieldRusName" => "Компания - Реквизиты" ,
+            'parentId' => null,
             "child" => null
         ),
         "prod-group" => array(
@@ -59,6 +65,7 @@ class AddListNameStatic
             "listName"=> "ticketWay",
             "field" => "cargoName",
             "fieldRusName" => "Заявка - груз" ,
+            'parentId' => null,
             "child" => null
         ),
         "doc-type" => array(
@@ -66,6 +73,7 @@ class AddListNameStatic
             "listName"=> "ticketWay",
             "field" => "docType",
             "fieldRusName" => "Вид документа" ,
+            'parentId' => null,
             "child" => null
         ),
         "load-type" => array(
@@ -73,6 +81,7 @@ class AddListNameStatic
             "listName"=> "ticketWay",
             "field" => "typeLoad",
             "fieldRusName" => "Заявка - тип загрузки" ,
+            'parentId' => null,
             "child" => null
         ),
         "offer-status" => array(
@@ -80,6 +89,7 @@ class AddListNameStatic
             "listName"=> "interactionNote",
             "field" => "status",
             "fieldRusName" => "Предложения - статус" ,
+            'parentId' => null,
             "child" => null
         ),
         "temp-cond" => array(
@@ -87,6 +97,7 @@ class AddListNameStatic
             "listName"=> "ticketWay",
             "field" => "temperature",
             "fieldRusName" => "Заявка - температурный режим" ,
+            'parentId' => null,
             "child" => null
         ),
      /*   "country" => "Страны",
