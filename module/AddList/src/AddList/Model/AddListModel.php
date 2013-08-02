@@ -304,8 +304,20 @@ class AddListModel implements ServiceLocatorAwareInterface
 
 
     public function getListName($id) {
+        $list=AddListNameStatic::$list;
+        if(is_string($id)) {
+           if(!empty($list[$id])) {
+               $list=$list[$id];
+               $list['id']=$id;
+               $list['uuid']=$id;
+           } elseif(!empty($list['veh-marks']['child'][$id])) {
+               $list=$list['veh-marks']['child'][$id];
+               $list['id']='veh-marks';
+               $list['uuid']='veh-marks';
+           }
+        }
 
-        return AddListNameStatic::$list;
+        return $list;
 
 
 /*
