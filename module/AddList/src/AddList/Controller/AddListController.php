@@ -188,8 +188,11 @@ class AddListController extends AbstractActionController
         } else {
             $parentList=null;
         }
-      //  die(var_Dump($list));
-        $listChild=$addListModel->getChildName($list['list']['id']);
+        $listChild=null;
+        if(!empty($list['list']['child'])) {
+            $listChild=$addListModel->getListName('veh-models');
+        }
+        //$listChild=$addListModel->getChildName($list['list']['id']);
 
 
 
