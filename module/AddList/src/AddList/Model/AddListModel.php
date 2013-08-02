@@ -65,6 +65,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $result=array();
         $listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
+
         foreach($listName as $liName) {
             $id=(string)$liName->id;
             $list = $objectManager->getRepository('AddList\Entity\AddList')->getGlobalAvailableList($id);
@@ -299,7 +300,22 @@ class AddListModel implements ServiceLocatorAwareInterface
         return array('field'=>$result,'list'=>$list);
     }
 
-
+    public function getListNameFull($list=null) {
+        if(empty($list)) {
+            $list=AddListNameStatic::$list;
+        }
+        $trueListNameArray=array();
+        foreach($list as $liKey=>$liName) {
+            $liName['uuid']=$liKey;
+            $liName['id']=$liKey;
+            if(!empty($liName['child'])) {
+                $trueListNameArray=$trueListNameArray+$this->getListNameFull($liName['child']);
+                unset($liName['child']);
+            }
+            array_push($trueListNameArray, $liName);
+        }
+        return $trueListNameArray;
+    }
 
     public function getListName($id) {
         $list=AddListNameStatic::$list;
