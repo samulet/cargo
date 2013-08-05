@@ -427,7 +427,8 @@ class TicketController extends AbstractActionController
             $counter++;
 
         }
-
+        $objPHPExcel->getActiveSheet()->getStyle('D10')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
         ob_start();
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="orders.xls"');
