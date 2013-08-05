@@ -368,8 +368,8 @@ class TicketController extends AbstractActionController
         ini_set('display_startup_errors', TRUE);
 
 
-        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
-        $objPHPExcel = $objReader->load("public/xls/templateTicket3.xlsx");
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objPHPExcel = $objReader->load("public/xls/templateTicket.xls");
 
         $counter=1;
         $offset=9;
