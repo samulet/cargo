@@ -391,8 +391,9 @@ class TicketController extends AbstractActionController
             if($counter!=1) {
                 $start=$offset+($counter-1)*$step;
 
-                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset).':G'.($offset)), 'A'.$start.':G'.$start);
+
                 $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($offset+$step)), 'A'.($start+1).':G'.($start+$step-1));
+                $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset).':G'.($offset)), 'A'.$start.':G'.$start);
 
                 $objPHPExcel->getActiveSheet()->mergeCells('A'.$start.':G'.$start);
                 $copyCounter=$offset+1;
@@ -427,8 +428,8 @@ class TicketController extends AbstractActionController
             $counter++;
 
         }
-        $objPHPExcel->getActiveSheet()->getStyle('D10')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('D10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+      //  $objPHPExcel->getActiveSheet()->getStyle('D10')->getFont()->setBold(true);
+       // $objPHPExcel->getActiveSheet()->getStyle('D10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
         ob_start();
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="orders.xls"');
