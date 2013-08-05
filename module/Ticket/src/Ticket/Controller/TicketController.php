@@ -372,7 +372,7 @@ class TicketController extends AbstractActionController
         $objPHPExcel = $objReader->load("public/xls/templateTicket.xls");
 
         $counter=1;
-        $offset=9;
+        $offset=10;
         $step=14;
 //die(var_dump(get_object_vars($ticket['created'])));
         $mainParams=1;
@@ -383,6 +383,7 @@ class TicketController extends AbstractActionController
 
         $objPHPExcel->getActiveSheet()
             ->setCellValue('D'.($mainParams), $org['name'])
+            ->setCellValue('D'.(++$mainParams), '')
             ->setCellValue('D'.(++$mainParams), '')
             ->setCellValue('D'.(++$mainParams), '')
             ->setCellValue('D'.(++$mainParams), '')
