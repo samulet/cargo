@@ -157,6 +157,17 @@ class Ticket
      */
     public $note;
 
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Тип ТС"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $type;
 
     /**
      * @ODM\Date

@@ -79,7 +79,7 @@ class TicketController extends AbstractActionController
         $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
         //$formVehicle=$fillFrom->fillFrom($formVehicle,$formVehicleData);
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
-        $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formVehicleData,array('type'));
+        $form=$fillFrom->fillFromVehicleSpecial($form,$formVehicleData,array('type'));
 
 
         $formCargoOwnerData=$ticketModel->getCargoOwnerData($userListId);
@@ -372,8 +372,8 @@ class TicketController extends AbstractActionController
         $objPHPExcel = $objReader->load("public/xls/templateTicket.xls");
 
         $counter=1;
-        $offset=10;
-        $step=14;
+        $offset=11;
+        $step=13;
 //die(var_dump(get_object_vars($ticket['created'])));
         $mainParams=1;
         $objPHPExcel->getActiveSheet()
@@ -385,6 +385,7 @@ class TicketController extends AbstractActionController
             ->setCellValue('D'.($mainParams), $org['name'])
             ->setCellValue('D'.(++$mainParams), '')
             ->setCellValue('D'.(++$mainParams), '')
+            ->setCellValue('D'.(++$mainParams), $ticket['type'])
             ->setCellValue('D'.(++$mainParams), '')
             ->setCellValue('D'.(++$mainParams), '')
             ->setCellValue('D'.(++$mainParams), $ticket['money'].' '.$ticket['currency']);
@@ -397,6 +398,7 @@ class TicketController extends AbstractActionController
 
                 $objPHPExcel->getActiveSheet()->getStyle('D'.($start+1).':G'.($start+$step-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                 $objPHPExcel->getActiveSheet()->getStyle('A'.$start.':G'.$start)->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$start.':G'.$start)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $objPHPExcel->getActiveSheet()->mergeCells('A'.$start.':G'.$start);
                 $copyCounter=$offset+1;
                 for($i=$start+1;$i<$start+$step;$i++) {
@@ -427,7 +429,6 @@ class TicketController extends AbstractActionController
                 ->setCellValue('D'.(++$start), '')
                 ->setCellValue('D'.(++$start), $way['weight'])
                 ->setCellValue('D'.(++$start), $way['pallet'])
-                ->setCellValue('D'.(++$start), $way['type'])
                 ->setCellValue('D'.(++$start), $way['temperature'])
             ->setCellValue('D'.(++$start), $way['note']);
             $counter++;

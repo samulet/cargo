@@ -40,7 +40,7 @@ $currency = $form->get('currency');
 $money = $form->get('money');
 $formPay = $form->get('formPay');
 $typeTicket = $form->get('typeTicket');
-
+$typeTSForm = $form->get('type');
 ?>
 
     <table class="table spec_table" style="">
@@ -56,6 +56,7 @@ $typeTicket = $form->get('typeTicket');
                 echo $this->formRow($money);
                 echo $this->formRow($formPay);
                 echo $this->formRow($typeTicket);
+                echo $this->formRow($typeTSForm);
                 ?>
             </td>
         </tr>
@@ -132,7 +133,7 @@ $typeTicket = $form->get('typeTicket');
             $rubles = $formWay->get('rubles');
             $pallet = $formWay->get('pallet');
             $box = $formWay->get('box');
-            $type = $formWay->get('type');
+
             $temperature = $formWay->get('temperature');
 
             $typeLoad = $formWay->get('typeLoad');
@@ -163,7 +164,7 @@ $typeTicket = $form->get('typeTicket');
             $rubles = $formWay->get('rubles')->setName('rubles-' . $counter);
             $pallet = $formWay->get('pallet')->setName('pallet-' . $counter);
             $box = $formWay->get('box')->setName('box-' . $counter);
-            $type = $formWay->get('type')->setName('type-' . $counter);
+
             $temperature = $formWay->get('temperature')->setName('temperature-' . $counter);
 
             $typeLoad = $formWay->get('typeLoad')->setName('typeLoad-' . $counter);
@@ -224,7 +225,6 @@ $typeTicket = $form->get('typeTicket');
             </td>
             <td>
                 <?php
-                echo $this->formRow($type);
                 echo $this->formRow($temperature);
                 ?>
                 <div class="muliboxTicket">
