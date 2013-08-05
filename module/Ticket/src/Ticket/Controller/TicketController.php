@@ -373,7 +373,7 @@ class TicketController extends AbstractActionController
 
         $counter=1;
         $offset=9;
-        $step=11;
+        $step=14;
 //die(var_dump(get_object_vars($ticket['created'])));
         $mainParams=1;
         $objPHPExcel->getActiveSheet()
@@ -419,6 +419,9 @@ class TicketController extends AbstractActionController
                 ->setCellValue('D'.(++$start), $way['cargoOwner'])
                 ->setCellValue('D'.(++$start), '')
                 ->setCellValue('D'.(++$start), $way['dateStart'].' / '.$way['timeStart'])
+                ->setCellValue('D'.(++$start), $way['areaLoad'])
+                ->setCellValue('D'.(++$start), $way['dateEnd'].' / '.$way['timeEnd'])
+                ->setCellValue('D'.(++$start), $way['areaUnload'])
                 ->setCellValue('D'.(++$start), '')
                 ->setCellValue('D'.(++$start), '')
                 ->setCellValue('D'.(++$start), $way['weight'])
