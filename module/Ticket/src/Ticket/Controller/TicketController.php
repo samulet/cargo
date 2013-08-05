@@ -368,8 +368,8 @@ class TicketController extends AbstractActionController
         ini_set('display_startup_errors', TRUE);
 
 
-        $objReader = PHPExcel_IOFactory::createReader('Excel5');
-        $objPHPExcel = $objReader->load("public/xls/templateTicket.xls");
+        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+        $objPHPExcel = $objReader->load("public/xls/templateTicket3.xlsx");
 
         $counter=1;
         $offset=9;
@@ -380,6 +380,7 @@ class TicketController extends AbstractActionController
             ->setCellValue('D'.($mainParams), $ticket['uuid'])
             ->setCellValue('F'.($mainParams), get_object_vars($ticket['created'])['date']);
         $mainParams=$mainParams+2;
+
         $objPHPExcel->getActiveSheet()
             ->setCellValue('D'.($mainParams), $org['name'])
             ->setCellValue('D'.(++$mainParams), '')
@@ -389,6 +390,7 @@ class TicketController extends AbstractActionController
         foreach($ticketWay as $way) {
             if($counter!=1) {
                 $start=$offset+($counter-1)*$step;
+
                 $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset).':G'.($offset)), 'A'.$start.':G'.$start);
                 $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($offset+$step)), 'A'.($start+1).':G'.($start+$step-1));
 
@@ -399,6 +401,8 @@ class TicketController extends AbstractActionController
                     $objPHPExcel->getActiveSheet()->mergeCells('D'.$i.':G'.$i);
                    // $objPHPExcel->getActiveSheet()->getStyle('D'.$i.':G'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                     $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $objPHPExcel->getActiveSheet()->getCell('A'.$copyCounter)->getValue());
+                    //  $objPHPExcel->getActiveSheet()->getStyle('D10')->getFont()->setBold(true);
+                    //$objPHPExcel->getActiveSheet()->getStyle('D10:D1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                     $copyCounter++;
                 }
 
@@ -421,7 +425,9 @@ class TicketController extends AbstractActionController
                 ->setCellValue('D'.(++$start), $way['temperature'])
             ->setCellValue('D'.(++$start), $way['note']);
             $counter++;
+
         }
+
         ob_start();
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="orders.xls"');
@@ -432,6 +438,73 @@ class TicketController extends AbstractActionController
         $objWriter->save('php://output');
        // $objWriter->save('public/xls/ticket.xls');
         ob_end_flush();
+    }
+
+    public function getExcel2Action() {
+        error_reporting(E_ALL);
+        ini_set('display_errors', TRUE);
+        ini_set('display_startup_errors', TRUE);
+
+        define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+
+        date_default_timezone_set('Europe/London');
+
+        /** PHPExcel_IOFactory */
+     //   require_once '../Classes/PHPExcel/IOFactory.php';
+
+
+
+        echo date('H:i:s') , " Load from Excel5 template" , EOL;
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objPHPExcel = $objReader->load("/var/www/php3/excel/Examples/templates/30template.xls");
+
+
+
+
+        echo date('H:i:s') , " Add new data to the template" , EOL;
+        $data = array(array('title'		=> 'Excel for dummies',
+            'price'		=> 17.99,
+            'quantity'	=> 2
+        ),
+            array('title'		=> 'PHP for dummies',
+                'price'		=> 15.99,
+                'quantity'	=> 1
+            ),
+            array('title'		=> 'Inside OOP',
+                'price'		=> 12.95,
+                'quantity'	=> 1
+            )
+        );
+
+        $objPHPExcel->getActiveSheet()->setCellValue('D1', PHPExcel_Shared_Date::PHPToExcel(time()));
+
+        $baseRow = 5;
+        foreach($data as $r => $dataRow) {
+            $row = $baseRow + $r;
+            $objPHPExcel->getActiveSheet()->insertNewRowBefore($row,1);
+
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$row, $r+1)
+                ->setCellValue('B'.$row, $dataRow['title'])
+                ->setCellValue('C'.$row, $dataRow['price'])
+                ->setCellValue('D'.$row, $dataRow['quantity'])
+                ->setCellValue('E'.$row, '=C'.$row.'*D'.$row);
+
+        }
+        $objPHPExcel->getActiveSheet()->removeRow($baseRow-1,1);
+        $objPHPExcel->getActiveSheet()->getStyle('B6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+        $objPHPExcel->getActiveSheet()->getStyle('B6')->getFont()->setBold(true);
+        echo date('H:i:s') , " Write to Excel5 format" , EOL;
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('/var/www/php3/excel/Examples/30template2.xls');
+        echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
+
+
+// Echo memory peak usage
+        echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;
+
+// Echo done
+        echo date('H:i:s') , " Done writing file" , EOL;
+        echo 'File has been created in ' , getcwd() , EOL;
     }
     public function getOrganizationModel()
     {
