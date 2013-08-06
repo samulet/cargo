@@ -178,6 +178,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $prop_array['money']=$prop_array_split['money'];
         $prop_array['typeTicket']=$prop_array_split['typeTicket'];
         $prop_array['formPay']=$prop_array_split['formPay'];
+        $prop_array['type']=$prop_array_split['type'];
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
