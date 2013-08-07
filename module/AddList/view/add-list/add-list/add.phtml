@@ -5,9 +5,10 @@ $form->setAttribute('action', $this->url('addList', array('action' => 'addList',
     ->prepare();
 
 if(empty($this->parent)) {
-
+$list=$this->listName['list'];
     $name=$this->listName['list']['fieldRusName'];
 } else {
+    $list=$this->listName;
     $name=$this->listName['value'];
 }
 $value = $form->get('value');
@@ -15,6 +16,26 @@ $value = $form->get('value');
 
 
 ?>
+
+<?php if(!empty($this->listName['value'])) { ?>
+    <a href="<?php echo $this->url(
+        'addList',
+        array('action' => 'listParent', 'id' => $list['uuid'])
+    );?>"></br>Вернуться <?php
+
+        echo 'в <b>'.$name.'</b> без сохранения';
+        ?></a>
+    <?php  } else { ?>
+
+    <a href="<?php echo $this->url(
+        'addList',
+        array('action' => 'myFields', 'id' => $list['id'])
+    );?>">Вернуться <?php
+
+        echo 'в <b>'.$name.'</b> без сохранения';
+        ?></a>
+
+<?php } ?>
 <p>Добавление новго поля в <b><?php echo $name; ?></b></p>
 
 

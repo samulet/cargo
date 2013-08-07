@@ -14,7 +14,7 @@ $fieldName='';
     array('action' => 'myFields', 'id' => $listName['id'])
 );?>">Вернуться <?php
 
-    echo 'в '.$listName['fieldRusName'].' без сохранения';
+    echo 'в <b>'.$listName['fieldRusName'].'</b> без сохранения';
     ?></a>
 <?php if(!empty($listParent)) { ?>
 <a href="<?php echo $this->url(
@@ -22,7 +22,7 @@ $fieldName='';
     array('action' => 'listParent', 'id' => $listParent['uuid'])
 );?>"></br>Вернуться <?php
 
-    echo 'в '.$listParent['value'].' без сохранения';
+    echo 'в <b>'.$listParent['value'].'</b> без сохранения';
     ?></a>
 <?php $fieldName='- '.$listParent['value']; } ?>
 <p>Редактирование поля <b><?php echo $listData['value']; ?></b> в <b><?php echo $this->listName['fieldRusName'].' '.$fieldName; ?></b></p>
