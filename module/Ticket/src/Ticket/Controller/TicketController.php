@@ -49,6 +49,8 @@ class TicketController extends AbstractActionController
         ));
     }
 
+
+
     public function addAction()
     {
         $post=$this->getRequest()->getPost();
@@ -95,6 +97,7 @@ class TicketController extends AbstractActionController
 
             )
         );
+        $ticketModel->addBootstrap3Class($form,$formsArray);
         if(empty($type)) {
             if(!empty($post->submit)) {
 

@@ -476,4 +476,38 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         return $this->companyModel;
     }
+
+    public function addBootstrap3Class(&$form,&$formsArray) {
+        foreach ($formsArray as $formElement) {
+            $formWay=$formElement['formWay'];
+            foreach($formElement['formsDocArray'] as $docWay) {
+                foreach ($docWay as $wayEl) {
+                    $attr=$wayEl->getAttributes();
+                    if(!empty($attr['type'])) {
+                        if(($attr['type']!='checkbox')) {
+                        $wayEl->setAttributes(array( 'class' => 'form-control' ));
+                        }
+                    }
+
+                }
+            }
+            foreach ($formWay as $wayEl) {
+                $attr=$wayEl->getAttributes();
+                if(!empty($attr['type'])) {
+                    if(($attr['type']!='checkbox')) {
+                    $wayEl->setAttributes(array( 'class' => 'form-control' ));
+                    }
+                }
+            }
+        }
+
+        foreach ($form as $el) {
+            $attr=$el->getAttributes();
+            if(!empty($attr['type'])) {
+                if(($attr['type']!='checkbox')) {
+                    $el->setAttributes(array( 'class' => 'form-control' ));
+                }
+            }
+        }
+    }
 }
