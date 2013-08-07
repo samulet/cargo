@@ -3,18 +3,28 @@
 
 $listParent=$this->listParent;
 $listChild=$this->listChild;
+$listName=$this->listName;
 
-
+//die(var_dump($listName));
 ?>
 
 
 <h1> <?php
     echo $listParent['value'];
     ?></h1>
+
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'myFields', 'id' => $listName['id'])
+);?>">Вернуться <?php
+
+    echo 'в '.$listName['fieldRusName'];
+    ?></a>
+
 <a href="<?php echo $this->url(
     'addList',
     array('action' => 'add', 'id' => $this->uuid,'parent'=>'parent')
-);?>">Добавить <?php
+);?>"></br>Добавить <?php
 
     echo 'в '.$listParent['value'];
     ?></a>
