@@ -134,3 +134,11 @@ ul.dropdown-menu span.divider {
 .vehicle label {
     display: block;
 }
+.companyAdd label {
+    display: block;
+
+}
+.companyAdd input, .companyAdd select, .companyAdd textarea {
+
+    width: 350px;
+}

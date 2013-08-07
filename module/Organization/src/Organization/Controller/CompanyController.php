@@ -12,6 +12,7 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Organization\Form\CompanyForm;
+use AddList\Form\AddListForm;
 
 class CompanyController extends AbstractActionController
 {
@@ -53,11 +54,13 @@ class CompanyController extends AbstractActionController
 
         $formData=$addListModel->returnDataArray($form_array,'company',$orgListId);
 
-        $fillFrom=new CompanyForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $fillFrom=new AddListForm();
+        $form=$fillFrom->fillFrom($form,$formData);
 
 
         $org_id = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comModel = $this->getCompanyModel();
+        $comModel->addBootstrap3Class($form);
         return new ViewModel(array(
             'form' => $form,
             'org_id' => $org_id
