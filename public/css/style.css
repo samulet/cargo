@@ -122,3 +122,10 @@ ul.dropdown-menu span.divider {
     padding-top: 4px !important;
     padding-bottom: 4px !important;
 }
+.ourTopMenu .navbar-nav a {
+    color:#fff !important;
+}
+
+.ourTopMenu .navbar-nav a:hover {
+    color:#ccc !important;
+}
