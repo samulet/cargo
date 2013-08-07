@@ -4,9 +4,28 @@ $form->setAttribute('action', $this->url('addList', array('action' => 'editField
     ->prepare();
 
 $value = $form->get('value')->setValue($this->listData['value']);
-
+$listName=$this->listName;
+$listData=$this->listData;
+$listParent=$this->listParent;
+$fieldName='';
 ?>
-<p>Редактирование поля <b><?php echo $this->listData['value']; ?></b> в <b><?php echo $this->listName['fieldRusName']; ?></b></p>
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'myFields', 'id' => $listName['id'])
+);?>">Вернуться <?php
+
+    echo 'в '.$listName['fieldRusName'].' без сохранения';
+    ?></a>
+<?php if(!empty($listParent)) { ?>
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'listParent', 'id' => $listParent['uuid'])
+);?>"></br>Вернуться <?php
+
+    echo 'в '.$listParent['value'].' без сохранения';
+    ?></a>
+<?php $fieldName='- '.$listParent['value']; } ?>
+<p>Редактирование поля <b><?php echo $listData['value']; ?></b> в <b><?php echo $this->listName['fieldRusName'].' '.$fieldName; ?></b></p>
 <?php
 echo $this->form()->openTag($form);
 
