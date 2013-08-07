@@ -377,7 +377,6 @@ class ResourceModel implements ServiceLocatorAwareInterface
                 }
             }
         }
-        $result=array();
         foreach ($form as $el) {
             $attr=$el->getAttributes();
             if(!empty($attr['type'])) {
@@ -385,7 +384,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
                     $el->setAttributes(array( 'class' => 'form-control' ));
                 }
             }
-            array_push($result,$attr);
+
         }
     }
 }

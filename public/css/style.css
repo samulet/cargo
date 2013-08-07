@@ -111,6 +111,7 @@ ul.dropdown-menu span.divider {
 
 .vehicle input,.vehicle select  {
     display: block !important;
+
 }
 
 .muliboxTicket input{
@@ -128,4 +129,8 @@ ul.dropdown-menu span.divider {
 
 .ourTopMenu .navbar-nav a:hover {
     color:#ccc !important;
+}
+
+.vehicle label {
+    display: block;
 }

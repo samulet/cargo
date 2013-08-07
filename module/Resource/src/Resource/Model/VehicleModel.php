@@ -195,4 +195,16 @@ class VehicleModel implements ServiceLocatorAwareInterface
         }
         return $this->notificationModel;
     }
+    public function addBootstrap3Class(&$form) {
+
+        foreach ($form as $el) {
+            $attr=$el->getAttributes();
+            if(!empty($attr['type'])) {
+                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
+                    $el->setAttributes(array( 'class' => 'form-control' ));
+                }
+            }
+
+        }
+    }
 }
