@@ -49,10 +49,11 @@ $listName=$this->listName;
 
         <tr>
             <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'edit', 'id' => $list['uuid'], 'parent' =>'list')
+                );?>"> <?php echo $list['value']; ?></a>
 
-                <?php
-                echo $list['value'];
-                ?>
             </td>
             <td>
                 <a href="<?php echo $this->url(

@@ -90,16 +90,20 @@ if(empty($parentList)) {
 
                 <?php echo $fi['value']; ?>
                 <?php
-                } else {
+                } elseif(!empty($listChild)) {
                     ?>
                     <a href="<?php echo $this->url(
                         'addList',
                         array('action' => 'list-parent', 'id' => $fi['uuid'])
                     );?>"> <?php echo $fi['value']; ?></a>
                 <?php
-                }
-
-                ?>
+                } else { ?>
+                    <a href="<?php echo $this->url(
+                        'addList',
+                        array('action' => 'edit', 'id' => $fi['uuid'], 'parent' =>'list')
+                    );?>"> <?php echo $fi['value']; ?></a>
+                <?php
+                } ?>
 
             </td>
             <td>

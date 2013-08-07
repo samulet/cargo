@@ -64,9 +64,9 @@ class AddListController extends AbstractActionController
 
     public function editAction() {
         $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $actionType = $this->getEvent()->getRouteMatch()->getParam('parent');
         $addListModel = $this->getAddListModel();
         $listData=$addListModel->getOneList($listUuid);
-
         $listName=$addListModel->getListName($listData['listId']);
 
         $builder = new AnnotationBuilder();
@@ -79,13 +79,19 @@ class AddListController extends AbstractActionController
         if(!empty($listData['parentFieldId'])) {
             $listParent=$addListModel->getOneList($addListModel->getListUuidById($listData['parentFieldId']));
         }
+        if($actionType=='list') {
+            foreach ($form as $el) {
+                $el->setAttributes(array( 'disabled' => 'disabled' ));
+            }
+        }
         return new ViewModel(array(
             'fieldUuid' => $listUuid,
             'listData' => $listData,
             'form'=>$form,
             'roles'=>$roles,
             'listName'=>$listName,
-            'listParent'=>$listParent
+            'listParent'=>$listParent,
+            'actionType' =>$actionType
         ));
     }
 
@@ -231,6 +237,7 @@ class AddListController extends AbstractActionController
             'listName'=>$listName
         ));
     }
+
     public function getOrganizationModel()
     {
         if (!$this->organizationModel) {
