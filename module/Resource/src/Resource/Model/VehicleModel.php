@@ -83,7 +83,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
             if ($uuid_gen->isValid($id)) {
                 $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $id));
               } else {
-                $res = $objectManager->getRepository('Resource\Entity\Vehicle')->find(new \MongoId($id));
+                $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('id' => new \MongoId($id)));
             }
 
         } else {

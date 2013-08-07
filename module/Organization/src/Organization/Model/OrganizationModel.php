@@ -87,8 +87,8 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         if (!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $org_item = $post->organization;
-            if (!empty($org_id)) $org = $objectManager->getRepository('Organization\Entity\Organization')->find(
-                new \MongoId($org_id)
+            if (!empty($org_id)) $org = $objectManager->getRepository('Organization\Entity\Organization')->findOneBy(
+                array('id' => new \MongoId($org_id))
             );
             else {
                 $org = new Organization($user_id);
