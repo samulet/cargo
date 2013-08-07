@@ -67,14 +67,12 @@ echo $this->doctype(); ?>
 <div class="container">
     <?php if ($this->zfcUserIdentity()) { ?>
         <div class="row">
-            <div class="span2">
-                <?php
-                //die(var_dump($this->navigation));
-              //  echo $this->navigation('navigation')->menu();
-                echo $this->navigation('admin_navigation')->menu()->setPartial(null)->setUlClass('nav nav-list');
-                ?>
+            <div class="col-lg-2">
+                <div class="leftSide">
+                <?php echo $this->navigation('admin_navigation')->menu()->setPartial(null)->setUlClass('nav nav-list'); ?>
+                </div>
             </div>
-            <div class="span10">
+            <div class="col-lg-10">
                 <?php echo $this->content; ?>
             </div>
         </div>
