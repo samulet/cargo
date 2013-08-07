@@ -18,8 +18,8 @@ echo $this->doctype(); ?>
             'href' => $this->basePath() . '/images/favicon.ico'
         )
     )
-        ->prependStylesheet($this->basePath() . '/css/style.css')
-        ->prependStylesheet($this->basePath() . '/bootstrap/css/bootstrap.min.css') ?>
+        ->prependStylesheet($this->basePath() . '/bootstrap/css/bootstrap.min.css')
+        ->prependStylesheet($this->basePath() . '/css/style.css') ?>
 
     <!-- Scripts -->
     <?php echo $this->headScript()->prependFile(
