@@ -87,6 +87,9 @@ div.container a.brand {
 .spec_table .into_table th {
     font-size:14px;
 }
+.spec_table span,.spec_table label {
+    font-weight: normal;
+}
 .submit_cl {
     padding-top: 30px;
     width:100%;
