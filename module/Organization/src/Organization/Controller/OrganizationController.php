@@ -53,6 +53,8 @@ namespace Organization\Controller {
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $form = new OrganizationCreate();
+            $orgModel = $this->getOrganizationModel();
+            $orgModel->addBootstrap3Class($form);
             return new ViewModel(array(
                 'form' => $form
             ));

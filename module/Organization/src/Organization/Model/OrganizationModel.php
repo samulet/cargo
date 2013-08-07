@@ -200,6 +200,17 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     public function getOrgByUserId($userId) {
 
     }
+    public function addBootstrap3Class(&$form) {
 
+        foreach ($form->get('organization') as $el) {
+            $attr=$el->getAttributes();
+            if(!empty($attr['type'])) {
+                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
+                    $el->setAttributes(array( 'class' => 'form-control' ));
+                }
+            }
+
+        }
+    }
 
 }
