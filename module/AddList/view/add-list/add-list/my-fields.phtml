@@ -52,6 +52,11 @@ if(empty($parentList)) {
         <th>
             Имя поля
         </th>
+        <?php if((!empty($listChild)) || (!empty($parent['value'])) ){
+
+            ?>
+
+
         <th>
             Добавить поля, зависимые от этого поля
             <?php
@@ -60,6 +65,8 @@ if(empty($parentList)) {
             }
             ?>
         </th>
+        <?php
+        } ?>
         <th>
             Организация
         </th>
@@ -106,6 +113,9 @@ if(empty($parentList)) {
                 } ?>
 
             </td>
+            <?php if((!empty($listChild)) || (!empty($parent['value'])) ){
+
+            ?>
             <td>
                 <?php if(empty($parent['value'])) { ?>
                 <a href="<?php echo $this->url(
@@ -117,6 +127,7 @@ if(empty($parentList)) {
                     } ?></a>
                 <?php } ?>
             </td>
+            <?php } ?>
             <td>
                 <?php
                 if(empty($fi['global'])) {
