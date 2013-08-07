@@ -368,5 +368,24 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         return $this->notificationModel;
     }
-
+    public function addBootstrap3Class(&$form,&$formWay) {
+        foreach ($formWay as $wayEl) {
+            $attr=$wayEl->getAttributes();
+            if(!empty($attr['type'])) {
+                if(($attr['type']!='checkbox')) {
+                    $wayEl->setAttributes(array( 'class' => 'form-control' ));
+                }
+            }
+        }
+        $result=array();
+        foreach ($form as $el) {
+            $attr=$el->getAttributes();
+            if(!empty($attr['type'])) {
+                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
+                    $el->setAttributes(array( 'class' => 'form-control' ));
+                }
+            }
+            array_push($result,$attr);
+        }
+    }
 }

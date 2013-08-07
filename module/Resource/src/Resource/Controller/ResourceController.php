@@ -91,6 +91,7 @@ class ResourceController extends AbstractActionController
             $form->get('tsId')->setValue($tsId);
         }
         $typeForm=array();
+
         if(empty($type)) {
             if(!empty($post->submit)) {
                 $error=0;
@@ -154,7 +155,7 @@ class ResourceController extends AbstractActionController
                 $typeForm['action']='search';
             }
         }
-
+        $resourceModel->addBootstrap3Class($form,$formWay);
         return new ViewModel(array(
             'form' => $form,
             'formWay' =>$formWay,
