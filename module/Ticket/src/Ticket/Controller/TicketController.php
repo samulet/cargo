@@ -49,6 +49,8 @@ class TicketController extends AbstractActionController
         ));
     }
 
+
+
     public function addAction()
     {
         $post=$this->getRequest()->getPost();
@@ -95,6 +97,7 @@ class TicketController extends AbstractActionController
 
             )
         );
+
         if(empty($type)) {
             if(!empty($post->submit)) {
 
@@ -207,6 +210,7 @@ class TicketController extends AbstractActionController
                 $typeForm['action']='search';
             }
         }
+        $ticketModel->addBootstrap3Class($form,$formsArray);
         return new ViewModel(array(
             'form' => $form,
             'formsArray' =>$formsArray,

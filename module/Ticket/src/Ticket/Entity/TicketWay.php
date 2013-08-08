@@ -80,7 +80,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
+
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт загрузки"})
      * @Annotation\Required({"required":"true" })
@@ -92,7 +92,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
+
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт выгрузки"})
      * @Annotation\Required({"required":"true" })
@@ -143,7 +143,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
+
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Кубы"})
      * @Annotation\Required({"required":"true" })
@@ -306,7 +306,7 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[A-Za-zА-Яа-я0-9 _-]*$/iu"}})
+
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
