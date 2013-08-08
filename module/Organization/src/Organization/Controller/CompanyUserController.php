@@ -78,15 +78,22 @@ class CompanyUserController extends AbstractActionController
         $comUserModel = $this->getCompanyUserModel();
         $users=$comUserModel->getUsersByOrgId($orgId);
         return new ViewModel(array(
-            'users' => $users
+            'users' => $users,
+            'org_uuid'=>$org_uuid
         ));
     }
 
     public function deleteAction() {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $param = $this->getEvent()->getRouteMatch()->getParam('param');
         $comUserModel = $this->getCompanyUserModel();
-        $comUserModel->deleteUserFromOrg($userId);
-        return $this->redirect()->toUrl('/organization');
+        if($param=='full') {
+            $comUserModel->deleteUserFull($userId);
+            return $this->redirect()->toUrl('/organization/user/all/list');
+        } else {
+            $comUserModel->deleteUserFromOrg($userId);
+            return $this->redirect()->toUrl('/organization');
+        }
     }
 
     private function loginControl()

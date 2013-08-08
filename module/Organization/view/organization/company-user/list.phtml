@@ -1,5 +1,12 @@
 <?php
 $users=$this->users;
+$param=null;
+
+if($this->org_uuid=='all') {
+    $param='full';
+
+}
+
 ?>
 <h1>Список юзеров</h1>
 
@@ -21,7 +28,7 @@ foreach($users as $user) {
         <td><a href="<?php echo $this->url('company_user',
                 array('action'=>'role', 'org_id' =>$user['id'])); ?>">Роль</a></td>
         <td><a href="<?php echo $this->url('company_user',
-                array('action'=>'delete', 'org_id' => $user['id']));?>">Удалить</a></td>
+                array('action'=>'delete', 'org_id' => $user['id'], 'param' =>$param));?>">Удалить</a></td>
     </tr>
 <?php
 }

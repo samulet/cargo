@@ -111,6 +111,16 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
+    public function deleteUserFull($userId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $user = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId)));
+        if (!$user) {
+            throw DocumentNotFoundException::documentNotFound('User\Entity\User', $userId);
+        }
+        $objectManager->remove($user);
+        $objectManager->flush();
+    }
+
     public function getOrgIdByUserId($userId)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
