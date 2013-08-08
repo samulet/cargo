@@ -32,7 +32,7 @@ class AddListNameStatic
             "name" => "Статусы транспортных средств",
             "listName"=> "vehicle",
             "field" => "status",
-            "fieldRusName" => "ТС - статус" ,
+            "fieldRusName" => "ТС статус" ,
             'parentId' => null,
             "child" => null
         ),
@@ -40,7 +40,7 @@ class AddListNameStatic
             "name" => "Типы транспортных средств",
             "listName"=> "vehicle",
             "field" => "type",
-            "fieldRusName" => "ТС - тип" ,
+            "fieldRusName" => "ТС тип" ,
             'parentId' => null,
             "child" => null
         ),
@@ -48,7 +48,7 @@ class AddListNameStatic
             "name" => "Формы собственности компаний" ,
             "listName"=> "company",
             "field" => "property",
-            "fieldRusName" => "Компания - Форма собственности" ,
+            "fieldRusName" => "Компания Форма собственности" ,
             'parentId' => null,
             "child" => null
         ),
@@ -96,7 +96,7 @@ class AddListNameStatic
             "name" => "Температурные режимы",
             "listName"=> "ticketWay",
             "field" => "temperature",
-            "fieldRusName" => "Заявка - температурный режим" ,
+            "fieldRusName" => "Заявка температурный режим" ,
             'parentId' => null,
             "child" => null
         ),
