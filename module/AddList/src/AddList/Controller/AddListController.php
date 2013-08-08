@@ -150,8 +150,10 @@ class AddListController extends AbstractActionController
     public function deleteAction() {
         $list_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
+        $list=$addListModel->getOneList($list_uuid);
         $addListModel->deleteList($list_uuid);
-        return $this->redirect()->toUrl('/addList/my');
+        $listName=$addListModel->getListName((string)$list['listId']);
+        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
     }
 
     public function addNameAction() {

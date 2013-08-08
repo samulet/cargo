@@ -116,8 +116,9 @@ if(empty($parentList)) {
             <?php if((!empty($listChild)) || (!empty($parent['value'])) ){
 
             ?>
-            <td>
                 <?php if(empty($parent['value'])) { ?>
+            <td>
+
                 <a href="<?php echo $this->url(
                     'addList',
                     array('action' => 'add', 'id' => $fi['uuid'],'parent'=>'parent')
