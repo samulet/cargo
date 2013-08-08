@@ -64,9 +64,9 @@ class AddListController extends AbstractActionController
 
     public function editAction() {
         $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $actionType = $this->getEvent()->getRouteMatch()->getParam('parent');
         $addListModel = $this->getAddListModel();
         $listData=$addListModel->getOneList($listUuid);
-
         $listName=$addListModel->getListName($listData['listId']);
 
         $builder = new AnnotationBuilder();
@@ -75,12 +75,23 @@ class AddListController extends AbstractActionController
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
+        $listParent=null;
+        if(!empty($listData['parentFieldId'])) {
+            $listParent=$addListModel->getOneList($addListModel->getListUuidById($listData['parentFieldId']));
+        }
+        if($actionType=='list') {
+            foreach ($form as $el) {
+                $el->setAttributes(array( 'disabled' => 'disabled' ));
+            }
+        }
         return new ViewModel(array(
             'fieldUuid' => $listUuid,
             'listData' => $listData,
             'form'=>$form,
             'roles'=>$roles,
-            'listName'=>$listName
+            'listName'=>$listName,
+            'listParent'=>$listParent,
+            'actionType' =>$actionType
         ));
     }
 
@@ -218,12 +229,15 @@ class AddListController extends AbstractActionController
         $addListModel = $this->getAddListModel();
         $listChild=$addListModel->listParentAction($parentListUuid);
         $listParent=$addListModel->getOneList($parentListUuid);
+        $listName=$addListModel->getListName($listParent['listId']);
         return new ViewModel(array(
             'listChild'=>$listChild,
             'listParent'=>$listParent,
-            'uuid'=>$parentListUuid
+            'uuid'=>$parentListUuid,
+            'listName'=>$listName
         ));
     }
+
     public function getOrganizationModel()
     {
         if (!$this->organizationModel) {

@@ -43,10 +43,11 @@ return array(
             'company_user' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/organization/user[/:org_id][/:action]',
+                    'route' => '/organization/user[/:org_id][/:action][/:param]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'org_id' => '[a-z0-9]*',
+                        'param' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\CompanyUser',

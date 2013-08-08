@@ -42,8 +42,7 @@ $formPay = $form->get('formPay');
 $typeTicket = $form->get('typeTicket');
 $typeTSForm = $form->get('type');
 ?>
-
-    <table class="table spec_table" style="">
+    <table class="table spec_table form-group" style="">
         <tr>
             <th>
                 Заявка - <?php echo $title; ?>
@@ -51,6 +50,7 @@ $typeTSForm = $form->get('type');
         </tr>
         <tr>
             <td style="border-left:none;">
+                <div class="form-group">
                 <?php
                 echo $this->formRow($currency);
                 echo $this->formRow($money);
@@ -58,6 +58,7 @@ $typeTSForm = $form->get('type');
                 echo $this->formRow($typeTicket);
                 echo $this->formRow($typeTSForm);
                 ?>
+                </div>
             </td>
         </tr>
     </table>

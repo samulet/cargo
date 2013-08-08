@@ -4,9 +4,33 @@ $form->setAttribute('action', $this->url('addList', array('action' => 'editField
     ->prepare();
 
 $value = $form->get('value')->setValue($this->listData['value']);
-
+$listName=$this->listName;
+$listData=$this->listData;
+$listParent=$this->listParent;
+$fieldName='';
+$actionType=$this->actionType;
+$saveString='';
+if(empty($actionType)) {
+    $saveString='без сохранения';
+}
 ?>
-<p>Редактирование поля <b><?php echo $this->listData['value']; ?></b> в <b><?php echo $this->listName['fieldRusName']; ?></b></p>
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'myFields', 'id' => $listName['id'])
+);?>">Вернуться <?php
+
+    echo 'в <b>'.$listName['fieldRusName'].'</b> '.$saveString;
+    ?></a>
+<?php if(!empty($listParent)) { ?>
+<a href="<?php echo $this->url(
+    'addList',
+    array('action' => 'listParent', 'id' => $listParent['uuid'])
+);?>"></br>Вернуться <?php
+
+    echo 'в <b>'.$listParent['value'].'</b> '.$saveString;
+    ?></a>
+<?php $fieldName='- '.$listParent['value']; } ?>
+<p>Редактирование поля <b><?php echo $listData['value']; ?></b> в <b><?php echo $this->listName['fieldRusName'].' '.$fieldName; ?></b></p>
 <?php
 echo $this->form()->openTag($form);
 
@@ -19,8 +43,10 @@ if(array_search("admin",$this->roles,true)) {
     }
     echo '<input type="checkbox" name="global" '.$global.' value="global" >Глобальное значние </br>';
 }
-
-echo $this->formElement($form->get('submit')); ?>
+?>
+<?php if(empty($actionType)) {
+echo $this->formElement($form->get('submit'));
+}?>
 <?php  echo $this->form()->closeTag();
 ?>
 

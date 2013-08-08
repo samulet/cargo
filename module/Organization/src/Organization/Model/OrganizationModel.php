@@ -87,8 +87,8 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         if (!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $org_item = $post->organization;
-            if (!empty($org_id)) $org = $objectManager->getRepository('Organization\Entity\Organization')->find(
-                new \MongoId($org_id)
+            if (!empty($org_id)) $org = $objectManager->getRepository('Organization\Entity\Organization')->findOneBy(
+                array('id' => new \MongoId($org_id))
             );
             else {
                 $org = new Organization($user_id);
@@ -200,6 +200,17 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     public function getOrgByUserId($userId) {
 
     }
+    public function addBootstrap3Class(&$form) {
 
+        foreach ($form->get('organization') as $el) {
+            $attr=$el->getAttributes();
+            if(!empty($attr['type'])) {
+                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
+                    $el->setAttributes(array( 'class' => 'form-control' ));
+                }
+            }
+
+        }
+    }
 
 }

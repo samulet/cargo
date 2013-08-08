@@ -120,6 +120,7 @@ class VehicleController extends AbstractActionController
                 }
             }
         }
+        $vehicleModel->addBootstrap3Class($form);
         return new ViewModel(array(
             'form' => $form,
            'typeForm'=>$typeForm

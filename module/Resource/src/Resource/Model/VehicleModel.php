@@ -83,7 +83,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
             if ($uuid_gen->isValid($id)) {
                 $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('uuid' => $id));
               } else {
-                $res = $objectManager->getRepository('Resource\Entity\Vehicle')->find(new \MongoId($id));
+                $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(array('id' => new \MongoId($id)));
             }
 
         } else {
@@ -194,5 +194,17 @@ class VehicleModel implements ServiceLocatorAwareInterface
             $this->notificationModel = $sm->get('Notification\Model\NotificationModel');
         }
         return $this->notificationModel;
+    }
+    public function addBootstrap3Class(&$form) {
+
+        foreach ($form as $el) {
+            $attr=$el->getAttributes();
+            if(!empty($attr['type'])) {
+                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
+                    $el->setAttributes(array( 'class' => 'form-control' ));
+                }
+            }
+
+        }
     }
 }

@@ -7,7 +7,9 @@ $form->setAttribute('action', $this->url('company', array('action' => 'createCom
 echo $this->form()->openTag($form);
 //$whoGave= $form->get('whoGave');
 //echo $this->formRow($serialNumber);
-
+?>
+<div class="companyAdd">
+<?php
 
 
 echo $this->formRow($form->get('name'));
@@ -25,4 +27,8 @@ echo $this->formRow($form->get('personal'));
 
 echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();
+?>
+</div>
+<?php
+
 ?> <a href="<?php echo $this->url('organization', array('action' => 'index')); ?>">Вернуться в организации</a>
