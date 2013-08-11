@@ -49,9 +49,9 @@ return array(
                 array('controller' => 'Resource\Controller\Resource','action'=> array('my','add','edit'),'roles' => array('carrier','admin')),
                 array('controller' => 'Resource\Controller\Resource','action'=> array('search', 'getResults','add',),'roles' => array('customer','admin')),
 
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','list','add'), 'roles' => array('admin')),
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('my','add', 'edit', 'list', 'delete', 'addVehicle', 'copy'), 'roles' => array('carrier','admin')),
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','add'), 'roles' => array('customer','admin')),
+                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','my','add', 'edit', 'list', 'delete', 'addVehicle', 'copy','error'), 'roles' => array('admin')),
+                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','add'), 'roles' => array('customer')),
+                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('my','add', 'addVehicle', 'edit', 'list', 'delete', 'copy','error'), 'roles' => array('carrier')),
             ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'resource', 'roles' => array('user')),
