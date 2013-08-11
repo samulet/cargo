@@ -42,6 +42,7 @@ class VehicleController extends AbstractActionController
 
     public function addAction()
     {
+
         $post=$this->getRequest()->getPost();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $type = $this->getEvent()->getRouteMatch()->getParam('type');
@@ -86,6 +87,7 @@ class VehicleController extends AbstractActionController
                     $org_id = $comUserModel->getOrgIdByUserId($user_id);
 
                     $veh=$vehicleModel->addVehicle($this->getRequest()->getPost(), $user_id, $org_id, $id);
+
                     if(empty($veh)) {
                         return $this->redirect()->toUrl('/vehicles/error');
                     } else {
