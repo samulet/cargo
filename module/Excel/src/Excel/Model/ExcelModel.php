@@ -136,7 +136,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
 
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
-        $objPHPExcel = $objReader->load("public/xls/templateTrue.xls");
+        $objPHPExcel = $objReader->load("public/xls/templateTrue2.xls");
 
 
         $coord=$this->getCoordinates($objPHPExcel,$ticket,$ticketWay);
@@ -159,7 +159,8 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $lastColumn++;
         $resultArray=array(
             "ticket" => array(),
-            "ticketWay" => array()
+            "ticketWay" => array(),
+            "special" => array()
         );
         for ($column = 'A'; $column != $lastColumn; $column++) {
             for ($row = 1; $row <= $lastRow; $row++) {
@@ -167,15 +168,23 @@ class ExcelModel implements ServiceLocatorAwareInterface
                 if(!empty($cell)) {
                     $cellArr=explode('_',$cell);
                     if(!empty($cellArr[1])) {
-                        if($cellArr[1]=='main') {
-                            $cell=$cellArr[0];
-                            //die(var_dump($ticket,$cell));
-                            if(isset($ticket[$cell])) {
-                                array_push($resultArray["ticket"], array($cell=> array("column"=>$column,"row"=>$row)));
+                        $cellArrMany=explode('/',$cellArr[0]);
+                        if(($cellArr[1]=='main')||($cellArr[1]=='way')||($cellArr[1]=='special')) {
+                            $trueArray=array();
+                            foreach($cellArrMany as $cellArrOne) {
+                                $cell=$cellArrOne;
+                                $trueArray=$trueArray+array($cell=> array("column"=>$column,"row"=>$row));
                             }
-                        } elseif($cellArr[1]=='way') {
-                            if(isset($ticketWay[$cell])) {
-                                array_push($resultArray["ticketWay"], array($cell=>  array("column"=>$column,"row"=>$row)));
+                            if($cellArr[1]=='main') {
+                                if(isset($ticket[$cell])) {
+                                    array_push($resultArray["ticket"], $trueArray);
+                                }
+                            } elseif($cellArr[1]=='way') {
+                                if(isset($ticketWay[0][$cell])) {
+                                    array_push($resultArray["ticketWay"], $trueArray);
+                                }
+                            } elseif($cellArr[1]=='special') {
+                                array_push($resultArray["special"], $trueArray);
                             }
                         }
                     }
@@ -185,6 +194,16 @@ class ExcelModel implements ServiceLocatorAwareInterface
         }
 
         return $resultArray;
+    }
+
+    public function fillCoordinates($objPHPExcel,$ticket,$ticketWay,$mode) {
+        if($mode=='right') {
+
+        } elseif($mode=='down') {
+
+        } elseif($mode=='worksheet') {
+
+        }
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
