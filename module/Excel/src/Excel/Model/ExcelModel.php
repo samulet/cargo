@@ -141,7 +141,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
         $coord=$this->getCoordinates($objPHPExcel,$ticket,$ticketWay);
 
-        $mode='right';
+        $mode='down';
 
         $objWriter=$this->fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode) ;
 
@@ -262,11 +262,11 @@ class ExcelModel implements ServiceLocatorAwareInterface
     }
 
     public function fillCoordinatesRight($objPHPExcel,$ticketWay, $coord) {
-       // die(var_dump($coord));
+
         $coordWay=$coord['ticketWay'];
         $loadCountName="Загрузка №";
         $loadCount=1;
-        //die(var_dump($ticketWay));
+
         foreach($ticketWay as $tick) {
             foreach($coordWay as $key => &$value) {
                 if(isset($tick[$key])) {
@@ -290,10 +290,47 @@ class ExcelModel implements ServiceLocatorAwareInterface
     }
 
     public function fillCoordinatesDown($objPHPExcel,$ticketWay, $coord) {
-        $offset=$coord['offset']['down']+1;
-        //die(var_dump($offset));
-        $objPHPExcel->getActiveSheet()->getStyle('D'.($start+1).':G'.($start+$step-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+        $offset=$coord['offset']['down']+2;
 
+        $coordWay=$coord['ticketWay'];
+        $loadCountName="Загрузка №";
+        $loadCount=1;
+        foreach($ticketWay as $tick) {
+            foreach($coordWay as $key => &$value) {
+                if(isset($tick[$key])) {
+                    $objPHPExcel->getActiveSheet()
+                        ->setCellValue($value['column'].$value['row'], $objPHPExcel->getActiveSheet()->getCell($value['column'].$value['row']).' '.$tick[$key]);
+                    $objPHPExcel->getActiveSheet()->getStyle($value['column'].$value['row'])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $value['row']=$value['row']+$offset;
+                }
+            }
+
+            foreach($coord['title'] as &$value) {
+                $row=$value['row'];
+                if(isset($value['newRow'])) {
+                    $row=$value['newRow'];
+                } else {
+                    $value['newRow']=$value['row'];
+                }
+                $cell=$objPHPExcel->getActiveSheet()->getCell($value['column'].$value['row'])->getValue();
+
+                    $objPHPExcel->getActiveSheet()
+                      ->setCellValue($value['column'].$row, $cell);
+                    $value['newRow']=$value['newRow']+$offset;
+            }
+
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue($coord['special']['loadNumber']['column'].$coord['special']['loadNumber']['row'], $loadCountName.$loadCount);
+            $loadCount++;
+            $objPHPExcel->getActiveSheet()->getStyle($coord['special']['loadNumber']['column'].$coord['special']['loadNumber']['row'])->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle($coord['special']['loadNumber']['column'].$coord['special']['loadNumber']['row'])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getColumnDimension($coord['special']['loadNumber']['column'])
+                ->setAutoSize(true);
+            $coord['special']['loadNumber']['row']=$coord['special']['loadNumber']['row']+$offset;
+
+        }
+
+        return $objPHPExcel;
     }
 
     public function fillCoordinatesWorksheet($objPHPExcel,$ticketWay, $coord) {
