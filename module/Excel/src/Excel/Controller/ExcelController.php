@@ -15,10 +15,15 @@ class ExcelController extends AbstractActionController
     protected $excelModel;
 
     public function getExcelAction() {
-
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $excelModel=$this->getExcelModel();
         $excelModel->getExcel($id);
+    }
+
+    public function generateTemplateAction() {
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $excelModel=$this->getExcelModel();
+        $excelModel->generateTemplate($id);
     }
 
     public function getExcelModel()
@@ -29,6 +34,5 @@ class ExcelController extends AbstractActionController
         }
         return $this->excelModel;
     }
-
 
 }

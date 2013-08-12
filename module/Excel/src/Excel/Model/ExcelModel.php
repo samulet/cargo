@@ -123,6 +123,51 @@ class ExcelModel implements ServiceLocatorAwareInterface
         ob_end_flush();
     }
 
+    public function generateTemplate($id) {
+        $ticketModel = $this->getTicketModel();
+        $ticket = $ticketModel->listTicket($id);
+        $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+        $orgModel = $this->getOrganizationModel();
+        $org = $orgModel->getOrganization($ticket['ownerOrgId']);
+        error_reporting(E_ALL);
+        ini_set('display_errors', TRUE);
+        ini_set('display_startup_errors', TRUE);
+
+
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objPHPExcel = $objReader->load("public/xls/templateTrue.xls");
+
+
+        $this->getCoordinates($objPHPExcel);
+
+        ob_start();
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="orders.xls"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean() ;
+        $objWriter->save('php://output');
+        // $objWriter->save('public/xls/ticket.xls');
+        ob_end_flush();
+    }
+
+    public function getCoordinates($objPHPExcel) {
+        $lastRow = $objPHPExcel->getActiveSheet()->getHighestRow();
+        $lastColumn = $objPHPExcel->getActiveSheet()->getHighestColumn();
+        $lastColumn++;
+        $cell='';
+        for ($column = 'A'; $column != $lastColumn; $column++) {
+            for ($row = 1; $row <= $lastRow; $row++) {
+                $cell.= $column.$row.' : '.$objPHPExcel->getActiveSheet()->getCell($column.$row).' / </br>';
+                //  Do what you want with the cell
+            }
+            //  Do what you want with the cell
+        }
+
+        die(var_dump($cell));
+    }
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
