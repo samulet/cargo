@@ -160,7 +160,8 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $resultArray=array(
             "ticket" => array(),
             "ticketWay" => array(),
-            "special" => array()
+            "special" => array(),
+            "title" => array(),
         );
         for ($column = 'A'; $column != $lastColumn; $column++) {
             for ($row = 1; $row <= $lastRow; $row++) {
@@ -177,14 +178,19 @@ class ExcelModel implements ServiceLocatorAwareInterface
                             }
                             if($cellArr[1]=='main') {
                                 if(isset($ticket[$cell])) {
-                                    array_push($resultArray["ticket"], $trueArray);
+                                    $resultArray["ticket"]=$resultArray["ticket"]+ $trueArray;
                                 }
                             } elseif($cellArr[1]=='way') {
-                                if(isset($ticketWay[0][$cell])) {
-                                    array_push($resultArray["ticketWay"], $trueArray);
+                                if($cellArr[0]=='title')  {
+                                    //die(var_dump(123));
+                                    array_push($resultArray["title"], $trueArray['title']);
+                                } else {
+                                    if(isset($ticketWay[0][$cell])) {
+                                        $resultArray["ticketWay"]=$resultArray["ticketWay"]+ $trueArray;
+                                    }
                                 }
                             } elseif($cellArr[1]=='special') {
-                                array_push($resultArray["special"], $trueArray);
+                                $resultArray["special"]=$resultArray["special"]+ $trueArray;
                             }
                         }
                     }
@@ -196,14 +202,26 @@ class ExcelModel implements ServiceLocatorAwareInterface
         return $resultArray;
     }
 
-    public function fillCoordinates($objPHPExcel,$ticket,$ticketWay,$mode) {
+    public function fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode) {
         if($mode=='right') {
-
+            $this->fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay,$coord);
         } elseif($mode=='down') {
-
+            $this->fillCoordinatesDown($objPHPExcel,$ticket,$ticketWay, $coord);
         } elseif($mode=='worksheet') {
-
+            $this->fillCoordinatesWorksheet($objPHPExcel,$ticket,$ticketWay,$coord);
         }
+    }
+
+    public function fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay, $coord) {
+
+    }
+
+    public function fillCoordinatesDown($objPHPExcel,$ticket,$ticketWay, $coord) {
+
+    }
+
+    public function fillCoordinatesWorksheet($objPHPExcel,$ticket,$ticketWay, $coord) {
+
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
