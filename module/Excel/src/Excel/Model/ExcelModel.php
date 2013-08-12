@@ -166,8 +166,11 @@ class ExcelModel implements ServiceLocatorAwareInterface
             "ticketWay" => array(),
             "special" => array(),
             "title" => array(),
+            "offset" => ''
         );
         for ($column = 'A'; $column != $lastColumn; $column++) {
+            $offsetMax=0;
+            $offsetMin=100000000000000000000000000000000000000;
             for ($row = 1; $row <= $lastRow; $row++) {
                 $cell= $objPHPExcel->getActiveSheet()->getCell($column.$row);
                 if(!empty($cell)) {
@@ -185,8 +188,14 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                     $resultArray["ticket"]=$resultArray["ticket"]+ $trueArray;
                                 }
                             } elseif($cellArr[1]=='way') {
+                                if($offsetMax<$row) {
+                                    $offsetMax=$row;
+                                }
+                                if($offsetMin>$row) {
+                                    $offsetMin=$row;
+                                }
+                                $resultArray["offset"]=$offsetMax-$offsetMin;
                                 if($cellArr[0]=='title')  {
-
                                     array_push($resultArray["title"], $trueArray['title']);
                                 } else {
                                     if(isset($ticketWay[0][$cell])) {
@@ -194,6 +203,12 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                     }
                                 }
                             } elseif($cellArr[1]=='special') {
+                                if($offsetMax<$row) {
+                                    $offsetMax=$row;
+                                }
+                                if($offsetMin>$row) {
+                                    $offsetMin=$row;
+                                }
                                 $resultArray["special"]=$resultArray["special"]+ $trueArray;
                             }
                         }
@@ -207,6 +222,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
     }
 
     public function fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode) {
+        $objPHPExcel=$this->clearFields($objPHPExcel,$coord);
         if($mode=='right') {
             $objPHPExcel= $this->fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay,$coord);
         } elseif($mode=='down') {
@@ -217,12 +233,37 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
         foreach($coord['ticket'] as $key => $value) {
             $objPHPExcel->getActiveSheet()
-                ->setCellValue($value['column'].$value['row'], $ticket[$key]);
+                ->setCellValue($value['column'].$value['row'], $objPHPExcel->getActiveSheet()->getCell($value['column'].$value['row']).' '.$ticket[$key]);
+        }
+        return $objPHPExcel;
+    }
+
+    public function clearFields($objPHPExcel,$coord) {
+        foreach($coord['ticket'] as $key => $value) {
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue($value['column'].$value['row'], '');
+        }
+        foreach($coord['ticketWay'] as $key => $value) {
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue($value['column'].$value['row'], '');
+        }
+        foreach($coord['special'] as $key => $value) {
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue($value['column'].$value['row'], '');
+        }
+        foreach($coord['title'] as $key => $value) {
+            $cell= $objPHPExcel->getActiveSheet()->getCell($value['column'].$value['row']);
+            $cellArr=explode('_',$cell);
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue($value['column'].$value['row'], $cellArr[2]);
         }
         return $objPHPExcel;
     }
 
     public function fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay, $coord) {
+//die(var_dump($coord));
+        $loadCountName="Загрузка";
+        $loadCount=1;
 
         return $objPHPExcel;
     }
