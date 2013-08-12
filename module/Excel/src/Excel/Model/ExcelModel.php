@@ -166,7 +166,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
             "ticketWay" => array(),
             "special" => array(),
             "title" => array(),
-            "offset" => ''
+            "offset" => array()
         );
         for ($column = 'A'; $column != $lastColumn; $column++) {
             $offsetMax=0;
@@ -194,7 +194,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                 if($offsetMin>$row) {
                                     $offsetMin=$row;
                                 }
-                                $resultArray["offset"]=$offsetMax-$offsetMin;
+                                $resultArray["offset"]["down"]=$offsetMax-$offsetMin;
                                 if($cellArr[0]=='title')  {
                                     array_push($resultArray["title"], $trueArray['title']);
                                 } else {
@@ -209,6 +209,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                 if($offsetMin>$row) {
                                     $offsetMin=$row;
                                 }
+                                $resultArray["offset"]["down"]=$offsetMax-$offsetMin;
                                 $resultArray["special"]=$resultArray["special"]+ $trueArray;
                             }
                         }
@@ -224,11 +225,11 @@ class ExcelModel implements ServiceLocatorAwareInterface
     public function fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode) {
         $objPHPExcel=$this->clearFields($objPHPExcel,$coord);
         if($mode=='right') {
-            $objPHPExcel= $this->fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay,$coord);
+            $objPHPExcel= $this->fillCoordinatesRight($objPHPExcel,$ticketWay,$coord);
         } elseif($mode=='down') {
-            $objPHPExcel= $this->fillCoordinatesDown($objPHPExcel,$ticket,$ticketWay, $coord);
+            $objPHPExcel= $this->fillCoordinatesDown($objPHPExcel,$ticketWay, $coord);
         } elseif($mode=='worksheet') {
-            $objPHPExcel=$this->fillCoordinatesWorksheet($objPHPExcel,$ticket,$ticketWay,$coord);
+            $objPHPExcel=$this->fillCoordinatesWorksheet($objPHPExcel,$ticketWay,$coord);
         }
 
         foreach($coord['ticket'] as $key => $value) {
@@ -260,19 +261,42 @@ class ExcelModel implements ServiceLocatorAwareInterface
         return $objPHPExcel;
     }
 
-    public function fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay, $coord) {
-//die(var_dump($coord));
-        $loadCountName="Загрузка";
+    public function fillCoordinatesRight($objPHPExcel,$ticketWay, $coord) {
+       // die(var_dump($coord));
+        $coordWay=$coord['ticketWay'];
+        $loadCountName="Загрузка №";
         $loadCount=1;
+        //die(var_dump($ticketWay));
+        foreach($ticketWay as $tick) {
+            foreach($coordWay as $key => &$value) {
+                if(isset($tick[$key])) {
+                    $objPHPExcel->getActiveSheet()
+                        ->setCellValue($value['column'].$value['row'], $objPHPExcel->getActiveSheet()->getCell($value['column'].$value['row']).' '.$tick[$key]);
+                    $objPHPExcel->getActiveSheet()->getStyle($value['column'].$value['row'])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $value['column']++;
+                }
+            }
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue($coord['special']['loadNumber']['column'].$coord['special']['loadNumber']['row'], $loadCountName.$loadCount);
+            $loadCount++;
+            $objPHPExcel->getActiveSheet()->getStyle($coord['special']['loadNumber']['column'].$coord['special']['loadNumber']['row'])->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle($coord['special']['loadNumber']['column'].$coord['special']['loadNumber']['row'])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getColumnDimension($coord['special']['loadNumber']['column'])
+                ->setAutoSize(true);
+            $coord['special']['loadNumber']['column']++;
 
+        }
         return $objPHPExcel;
     }
 
-    public function fillCoordinatesDown($objPHPExcel,$ticket,$ticketWay, $coord) {
+    public function fillCoordinatesDown($objPHPExcel,$ticketWay, $coord) {
+        $offset=$coord['offset']['down']+1;
+        //die(var_dump($offset));
+        $objPHPExcel->getActiveSheet()->getStyle('D'.($start+1).':G'.($start+$step-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
     }
 
-    public function fillCoordinatesWorksheet($objPHPExcel,$ticket,$ticketWay, $coord) {
+    public function fillCoordinatesWorksheet($objPHPExcel,$ticketWay, $coord) {
 
     }
 
