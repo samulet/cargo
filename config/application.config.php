@@ -21,7 +21,8 @@ return array(
         'AddList',
         'Interaction',
         'Account',
-        'Notification'
+        'Notification',
+        'Excel'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
