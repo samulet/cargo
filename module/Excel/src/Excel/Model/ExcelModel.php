@@ -129,6 +129,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
+        $ticket['owner']=$org['name'];
         error_reporting(E_ALL);
         ini_set('display_errors', TRUE);
         ini_set('display_startup_errors', TRUE);
@@ -138,8 +139,8 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $objPHPExcel = $objReader->load("public/xls/templateTrue.xls");
 
 
-        $this->getCoordinates($objPHPExcel);
-
+        $coord=$this->getCoordinates($objPHPExcel,$ticket,$ticketWay);
+        die(var_dump($coord));
         ob_start();
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="orders.xls"');
@@ -152,20 +153,38 @@ class ExcelModel implements ServiceLocatorAwareInterface
         ob_end_flush();
     }
 
-    public function getCoordinates($objPHPExcel) {
+    public function getCoordinates($objPHPExcel,$ticket,$ticketWay) {
         $lastRow = $objPHPExcel->getActiveSheet()->getHighestRow();
         $lastColumn = $objPHPExcel->getActiveSheet()->getHighestColumn();
         $lastColumn++;
-        $cell='';
+        $resultArray=array(
+            "ticket" => array(),
+            "ticketWay" => array()
+        );
         for ($column = 'A'; $column != $lastColumn; $column++) {
             for ($row = 1; $row <= $lastRow; $row++) {
-                $cell.= $column.$row.' : '.$objPHPExcel->getActiveSheet()->getCell($column.$row).' / </br>';
-                //  Do what you want with the cell
+                $cell= $objPHPExcel->getActiveSheet()->getCell($column.$row);
+                if(!empty($cell)) {
+                    $cellArr=explode('_',$cell);
+                    if(!empty($cellArr[1])) {
+                        if($cellArr[1]=='main') {
+                            $cell=$cellArr[0];
+                            //die(var_dump($ticket,$cell));
+                            if(isset($ticket[$cell])) {
+                                array_push($resultArray["ticket"], array($cell=> array("column"=>$column,"row"=>$row)));
+                            }
+                        } elseif($cellArr[1]=='way') {
+                            if(isset($ticketWay[$cell])) {
+                                array_push($resultArray["ticketWay"], array($cell=>  array("column"=>$column,"row"=>$row)));
+                            }
+                        }
+                    }
+                }
             }
-            //  Do what you want with the cell
+
         }
 
-        die(var_dump($cell));
+        return $resultArray;
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
