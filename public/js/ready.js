@@ -2,6 +2,7 @@ function startSetValues() {
     $( 'select[id^="parent-"]').each(function( index ) {
         setValuesSelect(this);
     });
+    setValuesSelect($('select[id=child-mark-model]'));
 }
 
 function onChangeSetValues(element) {
