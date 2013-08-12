@@ -140,7 +140,11 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
 
         $coord=$this->getCoordinates($objPHPExcel,$ticket,$ticketWay);
-        die(var_dump($coord));
+
+        $mode='right';
+
+        $objWriter=$this->fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode) ;
+
         ob_start();
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="orders.xls"');
@@ -182,7 +186,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                 }
                             } elseif($cellArr[1]=='way') {
                                 if($cellArr[0]=='title')  {
-                                    //die(var_dump(123));
+
                                     array_push($resultArray["title"], $trueArray['title']);
                                 } else {
                                     if(isset($ticketWay[0][$cell])) {
@@ -204,16 +208,23 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
     public function fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode) {
         if($mode=='right') {
-            $this->fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay,$coord);
+            $objPHPExcel= $this->fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay,$coord);
         } elseif($mode=='down') {
-            $this->fillCoordinatesDown($objPHPExcel,$ticket,$ticketWay, $coord);
+            $objPHPExcel= $this->fillCoordinatesDown($objPHPExcel,$ticket,$ticketWay, $coord);
         } elseif($mode=='worksheet') {
-            $this->fillCoordinatesWorksheet($objPHPExcel,$ticket,$ticketWay,$coord);
+            $objPHPExcel=$this->fillCoordinatesWorksheet($objPHPExcel,$ticket,$ticketWay,$coord);
         }
+
+        foreach($coord['ticket'] as $key => $value) {
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue($value['column'].$value['row'], $ticket[$key]);
+        }
+        return $objPHPExcel;
     }
 
     public function fillCoordinatesRight($objPHPExcel,$ticket,$ticketWay, $coord) {
 
+        return $objPHPExcel;
     }
 
     public function fillCoordinatesDown($objPHPExcel,$ticket,$ticketWay, $coord) {
