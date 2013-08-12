@@ -2,7 +2,6 @@ function startSetValues() {
     $( 'select[id^="parent-"]').each(function( index ) {
         setValuesSelect(this);
     });
-    setValuesSelect($('select[id=child-mark-model]'));
 }
 
 function onChangeSetValues(element) {
@@ -21,10 +20,10 @@ function setValuesSelect(element) {
                 var optionVal=$(this).val();
                 optionVal=optionVal.split("-");
                 if(optionVal[1]!=parentOpt) {
-                    $(this).hide();
+                    $(this).css('display','none');
 
                 } else {
-                    $(this).show();
+                    $(this).css('display','block');
                     thisSelect.val($(this).val());
                 }
 
