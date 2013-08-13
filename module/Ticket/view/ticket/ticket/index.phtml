@@ -79,6 +79,11 @@ $typeUnload=implode(' ',$typeUnload);
                     'excel',
                     array('action' => 'getExcel', 'id' => $ticket['uuid'])
                 );?>">Печать</a>
+                </br>
+                                <a href="<?php echo $this->url(
+                                    'excel',
+                                    array('action' => 'generateTemplate', 'id' => $ticket['uuid'])
+                                );?>">Загрузить свой шаблон</a>
             </td>
 
         <td>
