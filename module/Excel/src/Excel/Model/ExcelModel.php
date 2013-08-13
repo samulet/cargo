@@ -123,7 +123,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         ob_end_flush();
     }
 
-    public function generateTemplate($id) {
+    public function generateTemplate($id,$mode,$path) {
         $ticketModel = $this->getTicketModel();
         $ticket = $ticketModel->listTicket($id);
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
@@ -136,12 +136,10 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
 
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
-        $objPHPExcel = $objReader->load("public/xls/templateTrue2.xls");
+        $objPHPExcel = $objReader->load($path);
 
 
         $coord=$this->getCoordinates($objPHPExcel,$ticket,$ticketWay);
-
-        $mode='down';
 
         $objWriter=$this->fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode) ;
 

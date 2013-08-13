@@ -1,7 +1,15 @@
-Выберите тип формирования экселя
-<form action="POST">
-    <select name="type">
-        <option value="right">Вывод марщрутов по горизонтали вправо</option>
-        <option value="down">Вывод марщрутов по вертикали вниз</option>
-    </select>
-</form>
+<?php
+$id=$this->id;
+$form = $this->form;
+$form->setAttribute('action', $this->url('excel', array('action' => 'generateTemplate', 'id'=>$id)))
+    ->prepare();
+?>
+
+<?php
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('type')->setAttributes(array( 'class' => 'form-control' )));
+echo $this->formRow($form->get('file')->setAttributes(array( 'class' => 'form-control' )));
+echo $this->formElement($form->get('submit')->setAttributes(array( 'class' => 'form-control' )));
+echo $this->form()->closeTag();
+?>
+

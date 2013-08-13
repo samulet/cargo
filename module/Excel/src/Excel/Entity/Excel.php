@@ -2,12 +2,12 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: solov
- * Date: 5/1/13
- * Time: 12:15 PM
+ * Date: 8/13/13
+ * Time: 4:05 PM
  * To change this template use File | Settings | File Templates.
  */
 
-namespace Notification\Entity;
+namespace Excel\Entity;
 
 use Zend\Form\Annotation;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -18,12 +18,12 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 
 /**
- * @ODM\Document(collection="notification", repositoryClass="Notification\Repository\NotificationRepository")
+ * @ODM\Document(collection="excel")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("notification")
+ * @Annotation\Name("excel")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class Notification
+class Excel
 {
     public function __construct()
     {
@@ -45,36 +45,28 @@ class Notification
 
     public $uuid;
     /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Exclude()
-     */
-    public $itemId;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Exclude()
-     */
-    public $ownerUserId;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Exclude()
-     */
-    public $ownerOrgId;
-    /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Статус"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Options({"label":"Вид формирования экселя"})
+     * @Annotation\Attributes({"options":{"right":"Вывод марщрутов по горизонтали вправо","down":"Вывод марщрутов по вертикали вниз"}})
      * @Annotation\Attributes({"value":"0"})
      */
-    public $status;
+    public $type;
+    /**
+     * @Annotation\Type("Zend\Form\Element\File")
+     * @Annotation\Options({"label":"Загрузите шаблон"})
+     */
+    public $file;
+
+    /**
+     * @Annotation\Type("Zend\Form\Element\Submit")
+     * @Annotation\Attributes({"value":"Отправить"})
+     */
+    public $submit;
+
     /**
      * @var string
      * @ODM\Field(type="string")

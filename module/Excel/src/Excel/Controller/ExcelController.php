@@ -21,14 +21,25 @@ class ExcelController extends AbstractActionController
     }
 
     public function generateTemplateAction() {
-        $post=$this->getRequest()->getPost();
-        if(!empty($post)) {
-            $id = $this->getEvent()->getRouteMatch()->getParam('id');
-            $excelModel=$this->getExcelModel();
-            $excelModel->generateTemplate($id);
-        } else {
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+       // $post=get_object_vars($this->getRequest()->getPost());
+        $request = $this->getRequest();
+        if($request->isPost()) {
 
+            $post = $request->getPost()->toArray();
+            $file    = $this->params()->fromFiles('file');
+
+            $excelModel=$this->getExcelModel();
+            $excelModel->generateTemplate($id,$post['type'],$file['tmp_name']);
+        } else {
+            $builder = new AnnotationBuilder();
+            $form = $builder->createForm('Excel\Entity\Excel');
+            return new ViewModel(array(
+                'form' =>$form,
+                'id'=>$id
+            ));
         }
+
     }
 
 
