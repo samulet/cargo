@@ -240,10 +240,6 @@ class ExcelModel implements ServiceLocatorAwareInterface
     }
 
     public function clearFields($objPHPExcel,$coord) {
-        foreach($coord['ticket'] as $key => $value) {
-            $objPHPExcel->getActiveSheet()
-                ->setCellValue($value['column'].$value['row'], '');
-        }
         foreach($coord['ticketWay'] as $key => $value) {
             $objPHPExcel->getActiveSheet()
                 ->setCellValue($value['column'].$value['row'], '');
@@ -257,6 +253,10 @@ class ExcelModel implements ServiceLocatorAwareInterface
             $cellArr=explode('_',$cell);
             $objPHPExcel->getActiveSheet()
                 ->setCellValue($value['column'].$value['row'], $cellArr[2]);
+        }
+        foreach($coord['ticket'] as $key => $value) {
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue($value['column'].$value['row'], '');
         }
         return $objPHPExcel;
     }
@@ -289,14 +289,22 @@ class ExcelModel implements ServiceLocatorAwareInterface
         return $objPHPExcel;
     }
 
-    public function fillCoordinatesDown($objPHPExcel,$ticketWay, $coord,$newStringDown) {
+    public function fillCoordinatesDown($objPHPExcel,$ticketWay, &$coord,$newStringDown) {
         $offset=$coord['offset']['down']+2;
 
         $coordWay=$coord['ticketWay'];
         $loadCountName="Загрузка №";
         $loadCount=1;
         if(!empty($newStringDown)) {
-            $objPHPExcel->getActiveSheet()->insertNewRowBefore($coord['offset']['max'] + 1, (count($ticketWay)-1)*($coord['offset']['down']+2));
+            $offsetNewRows=(count($ticketWay)-1)*($coord['offset']['down']+2);
+            $objPHPExcel->getActiveSheet()->insertNewRowBefore($coord['offset']['max'] + 1, $offsetNewRows);
+            foreach($coord['ticket'] as $key => &$value) {
+                if($value['row']>$coord['offset']['max'] + 1) {
+                    $value['row']=$value['row']+$offsetNewRows;
+
+                }
+            }
+
         }
         foreach($ticketWay as $tick) {
             foreach($coordWay as $key => &$value) {
