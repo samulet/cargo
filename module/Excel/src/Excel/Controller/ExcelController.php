@@ -27,10 +27,15 @@ class ExcelController extends AbstractActionController
         if($request->isPost()) {
 
             $post = $request->getPost()->toArray();
+            if(!empty($post['newStringDown'])) {
+                $newStringDown=$post['newStringDown'];
+            } else {
+                $newStringDown='';
+            }
             $file    = $this->params()->fromFiles('file');
 
             $excelModel=$this->getExcelModel();
-            $excelModel->generateTemplate($id,$post['type'],$file['tmp_name']);
+            $excelModel->generateTemplate($id,$post['type'],$file['tmp_name'],$newStringDown);
         } else {
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('Excel\Entity\Excel');
