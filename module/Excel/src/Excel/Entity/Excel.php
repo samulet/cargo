@@ -79,6 +79,12 @@ class Excel
      */
     public $deletedAt;
     /**
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"Добавлять маршруты новыми строками"})
+     */
+
+    public $newStringDown;
+    /**
      * @return mixed
      */
     public function getDeletedAt()
