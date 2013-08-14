@@ -31,6 +31,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
     protected $ticketModel;
     protected $vehicleModel;
     protected $organizationModel;
+    protected $companyModel;
 
     public function getExcel($id) {
         $ticketModel = $this->getTicketModel();
@@ -38,6 +39,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
+        $ticketWay=$this->addCargoOwner($ticketWay);
         error_reporting(E_ALL);
         ini_set('display_errors', TRUE);
         ini_set('display_startup_errors', TRUE);
@@ -123,10 +125,22 @@ class ExcelModel implements ServiceLocatorAwareInterface
         ob_end_flush();
     }
 
+    public function addCargoOwner($ticketWay) {
+        $comModel = $this->getCompanyModel();
+        foreach($ticketWay as &$way) {
+            $data=$comModel->returnCompany($way['cargoOwner']);
+            $way['cargoOwner']=$data['property'].' '.$data['name'];
+        }
+        return $ticketWay;
+    }
+
     public function generateTemplate($id,$mode,$path,$newStringDown) {
         $ticketModel = $this->getTicketModel();
         $ticket = $ticketModel->listTicket($id);
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+
+        $ticketWay=$this->addCargoOwner($ticketWay);
+
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
         $ticket['owner']=$org['name'];
@@ -168,7 +182,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         );
         for ($column = 'A'; $column != $lastColumn; $column++) {
             $offsetMax=0;
-            $offsetMin=100000000000000000000000000000000000000;
+            $offsetMin=1000000;
             for ($row = 1; $row <= $lastRow; $row++) {
                 $cell= $objPHPExcel->getActiveSheet()->getCell($column.$row);
                 if(!empty($cell)) {
@@ -393,5 +407,12 @@ class ExcelModel implements ServiceLocatorAwareInterface
         }
         return $this->organizationModel;
     }
-
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
+    }
 }
