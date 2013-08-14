@@ -63,6 +63,7 @@ function time_control(element) {
     var regEx1=/[0-2]/;
     var regEx24=/[0-9]/;
     var regEx3=/[0-5]/;
+    var regEx5=/[0-3]/;
     var error=0;
     if(lenCounter>5) {
         numVal=numVal.substring(0,5);
@@ -97,9 +98,18 @@ function time_control(element) {
     }
 
     if(lenCounter==2) {
-        if(regEx3.exec( numVal.substring(1,2) )==null) {
+        if(regEx24.exec( numVal.substring(1,2) )==null) {
             numVal=numVal.substring(0,1);
             error++;
+        } else {
+
+            if(numVal.substring(0,1)==2) {
+
+                if(regEx5.exec( numVal.substring(1,2) )==null) {
+                    numVal=numVal.substring(0,1);
+                    error++;
+                }
+            }
         }
 
         lenCounter--;
