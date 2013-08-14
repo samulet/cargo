@@ -39,7 +39,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
-        $ticketWay=$this->addCargoOwner($ticketWay);
+        $ticketWay=$this->addAdditionalData($ticketWay);
         error_reporting(E_ALL);
         ini_set('display_errors', TRUE);
         ini_set('display_startup_errors', TRUE);
@@ -125,9 +125,17 @@ class ExcelModel implements ServiceLocatorAwareInterface
         ob_end_flush();
     }
 
-    public function addCargoOwner($ticketWay) {
+    public function addAdditionalData($ticketWay) {
         $comModel = $this->getCompanyModel();
+        $ticketModel = $this->getTicketModel();
+
         foreach($ticketWay as &$way) {
+            $doc=$ticketModel->getDocumentWay($way['id']);
+            $document='';
+            foreach($doc as $d) {
+                $document.=$d['docNumber' ].' '.$d['docType' ].' '.$d['docDate' ].' '.$d['docWay' ].' '.$d['docNote' ].' / ';
+            }
+            $way['documents']=$document;
             $data=$comModel->returnCompany($way['cargoOwner']);
             $way['cargoOwner']=$data['property'].' '.$data['name'];
         }
@@ -139,7 +147,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $ticket = $ticketModel->listTicket($id);
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
 
-        $ticketWay=$this->addCargoOwner($ticketWay);
+        $ticketWay=$this->addAdditionalData($ticketWay);
 
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
