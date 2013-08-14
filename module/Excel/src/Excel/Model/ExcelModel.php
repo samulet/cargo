@@ -297,14 +297,16 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $loadCount=1;
         if(!empty($newStringDown)) {
             $offsetNewRows=(count($ticketWay)-1)*($coord['offset']['down']+2);
-            $objPHPExcel->getActiveSheet()->insertNewRowBefore($coord['offset']['max'] + 1, $offsetNewRows);
-            foreach($coord['ticket'] as $key => &$value) {
-                if($value['row']>$coord['offset']['max'] + 1) {
-                    $value['row']=$value['row']+$offsetNewRows;
+            if($offsetNewRows!=0) {
+                $objPHPExcel->getActiveSheet()->insertNewRowBefore($coord['offset']['max'] + 1, $offsetNewRows);
 
+                foreach($coord['ticket'] as $key => &$value) {
+                    if($value['row']>$coord['offset']['max'] + 1) {
+                        $value['row']=$value['row']+$offsetNewRows;
+
+                    }
                 }
             }
-
         }
         foreach($ticketWay as $tick) {
             foreach($coordWay as $key => &$value) {
