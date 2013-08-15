@@ -83,7 +83,7 @@ class DocumentWay
 
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер документа"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -96,7 +96,7 @@ class DocumentWay
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Вид документа"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @Annotation\Attributes({"value":"0"})
      */
     public $docType;
@@ -104,7 +104,7 @@ class DocumentWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @Annotation\Options({"label":"Дата докумениа"})
      */
 
@@ -114,7 +114,7 @@ class DocumentWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Возвратный документ","value_options":{"":"Выберите значение","yes":"да", "no":"нет"}})
      * @Annotation\Validator({"name":"InArray",
@@ -131,6 +131,7 @@ class DocumentWay
      * @Annotation\Options({"label":"Комментарий документ"})
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Required(false)
      */
     public $docNote;
 

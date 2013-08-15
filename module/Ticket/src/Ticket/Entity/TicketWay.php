@@ -146,7 +146,7 @@ class TicketWay
 
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Кубы"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -158,7 +158,7 @@ class TicketWay
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Габариты - длина, м"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -170,7 +170,7 @@ class TicketWay
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Габариты - высота, м"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -182,7 +182,7 @@ class TicketWay
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Габариты - ширина, м"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -194,7 +194,7 @@ class TicketWay
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Объем груза, м3"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -206,7 +206,7 @@ class TicketWay
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Вес"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -217,7 +217,7 @@ class TicketWay
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Рубли"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -229,7 +229,7 @@ class TicketWay
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Паллеты"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -241,7 +241,7 @@ class TicketWay
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^[0-9]+$/"}})
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Коробки"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -254,7 +254,7 @@ class TicketWay
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Температурный режим"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @Annotation\Attributes({"value":"0"})
      */
     public $temperature;
@@ -289,6 +289,7 @@ class TicketWay
      * @Annotation\Validator({"name" : "NotEmpty",
      * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
      * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required(false)
      */
     public $typeLoad =array();
     /**
@@ -299,6 +300,7 @@ class TicketWay
      * @Annotation\Validator({"name" : "NotEmpty",
      * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
      * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required(false)
      */
     public $typeUnload = array();
 
@@ -311,6 +313,7 @@ class TicketWay
      * @Annotation\Options({"label":"Примечание"})
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Required(false)
      */
 
 
@@ -339,7 +342,7 @@ class TicketWay
      * "placeholder" : "12:00"
      * })
      * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
@@ -351,8 +354,8 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required({"required":"true" })
      * @Annotation\Options({"label":"Дата готовности к разгрузке"})
+     * @Annotation\Required(false)
      */
 
     public $dateEnd;
@@ -367,7 +370,7 @@ class TicketWay
      * "placeholder" : "12:00"
      * })
      * @Annotation\Options({"label":"Время готовности ТС к разгрузке"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
