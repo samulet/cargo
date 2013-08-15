@@ -154,6 +154,7 @@ class Ticket
      * @Annotation\Options({"label":"Примечание"})
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Required(false)
      */
     public $note;
 
