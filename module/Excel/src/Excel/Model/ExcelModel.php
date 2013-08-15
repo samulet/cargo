@@ -17,6 +17,7 @@ use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use Excel\Entity\ExcelStatic;
 use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_Shared_Date;
@@ -152,16 +153,13 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
         $ticket['owner']=$org['name'];
-        error_reporting(E_ALL);
-        ini_set('display_errors', TRUE);
-        ini_set('display_startup_errors', TRUE);
 
 
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
         $objPHPExcel = $objReader->load($path);
 
 
-        $coord=$this->getCoordinates($objPHPExcel,$ticket,$ticketWay);
+        $coord=$this->getCoordinates($objPHPExcel);
 
         $objWriter=$this->fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode,$newStringDown) ;
 
@@ -177,9 +175,11 @@ class ExcelModel implements ServiceLocatorAwareInterface
         ob_end_flush();
     }
 
-    public function getCoordinates($objPHPExcel,$ticket,$ticketWay) {
+    public function getCoordinates($objPHPExcel) {
         $lastRow = $objPHPExcel->getActiveSheet()->getHighestRow();
         $lastColumn = $objPHPExcel->getActiveSheet()->getHighestColumn();
+        $ticket=ExcelStatic::$list['main'];
+        $ticketWay=ExcelStatic::$list['way'];
         $lastColumn++;
         $resultArray=array(
             "ticket" => array(),
@@ -219,7 +219,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                 if($cellArr[0]=='title')  {
                                     array_push($resultArray["title"], $trueArray['title']);
                                 } else {
-                                    if(isset($ticketWay[0][$cell])) {
+                                    if(isset($ticketWay[$cell])) {
                                         $resultArray["ticketWay"]=$resultArray["ticketWay"]+ $trueArray;
                                     }
                                 }
@@ -262,6 +262,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
     }
 
     public function clearFields($objPHPExcel,$coord) {
+        die(var_dump($coord));
         foreach($coord['ticketWay'] as $key => $value) {
             $objPHPExcel->getActiveSheet()
                 ->setCellValue($value['column'].$value['row'], '');
