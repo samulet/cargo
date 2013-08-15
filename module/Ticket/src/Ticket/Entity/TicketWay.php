@@ -129,14 +129,15 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Required({"required":"true" })
+
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"ADR",
      *                      "value_options" : {"0":"","1":"1","2":"2","3":"3"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
+     *                        "options":{"haystack":{"0","1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required(false)
      */
     public $adr;
 
