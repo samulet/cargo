@@ -151,7 +151,32 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     }
 
     public function addIntNumber() {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $orgs=$objectManager->getRepository('Organization\Entity\Organization')->createQueryBuilder()
+            ->field('lastItemNumber')->equals(null)
+            ->getQuery()
+            ->execute();
+        $orgs['lastOrg']['id']=null;
+        foreach($orgs as $org) {
 
+            if(!empty($org->id)) {
+                $id=new \MongoId($org->id);
+            } else {
+                $id=$org['id'];
+            }
+            $lastItemNumber=1;
+            $tickets='123';
+            while(!empty($tickets)) {
+                $tickets=$objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                    ->field('ownerOrgId')->equals($id)
+                    ->field('numberInt')->equals(null)
+                    ->field('numberInt')->set($lastItemNumber)
+                    ->getSingleResult()
+                    ->getQuery()
+                    ->execute();
+                $lastItemNumber++;
+            }
+        }
     }
 
     public function getCompanyModel()
