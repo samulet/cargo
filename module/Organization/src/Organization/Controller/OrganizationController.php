@@ -98,6 +98,12 @@ namespace Organization\Controller {
             $orgModel->deleteOrganization($org_id);
             return $this->redirect()->toUrl('/organization');
         }
+        public function addIntNumberAction()
+        {
+            $orgModel = $this->getOrganizationModel();
+            $orgModel->addIntNumber();
+            return $this->redirect()->toUrl('/organization');
+        }
 
         public function createOrganizationAction()
         {

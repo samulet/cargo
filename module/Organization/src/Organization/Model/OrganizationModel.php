@@ -150,6 +150,10 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         );
     }
 
+    public function addIntNumber() {
+
+    }
+
     public function getCompanyModel()
     {
 
