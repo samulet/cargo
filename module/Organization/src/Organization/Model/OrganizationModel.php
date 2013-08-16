@@ -111,7 +111,16 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             return true;
         } else return false;
     }
+    public function increaseLastItemNumber($orgId,$lastItemNumber) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $objectManager->getRepository('Organization\Entity\Organization')->createQueryBuilder()
 
+            ->findAndUpdate()
+            ->field('id')->equals(new \MongoId($orgId))
+            ->field('lastItemNumber')->set($lastItemNumber)
+            ->getQuery()
+            ->execute();
+    }
     public function getOrganization($id)
     {
         if(empty($id)) {
@@ -136,7 +145,8 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             'description' => $org->getDescription(),
             'type' => $org->getType(),
             'name' => $org->getName(),
-            'orgOwner' => $user->getDisplayName()
+            'orgOwner' => $user->getDisplayName(),
+            'lastItemNumber' =>$org->lastItemNumber
         );
     }
 
