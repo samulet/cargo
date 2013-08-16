@@ -155,27 +155,43 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         $orgs=$objectManager->getRepository('Organization\Entity\Organization')->createQueryBuilder()
             ->field('lastItemNumber')->equals(null)
             ->getQuery()
-            ->execute();
+            ->execute()->toArray();
         $orgs['lastOrg']['id']=null;
         foreach($orgs as $org) {
 
             if(!empty($org->id)) {
                 $id=new \MongoId($org->id);
+
             } else {
                 $id=$org['id'];
             }
             $lastItemNumber=1;
-            $tickets='123';
-            while(!empty($tickets)) {
+            if(!empty($id)) {
                 $tickets=$objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
                     ->field('ownerOrgId')->equals($id)
                     ->field('numberInt')->equals(null)
+                    ->getQuery()
+                    ->execute();
+            } else {
+                $tickets=$objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                    ->field('numberInt')->equals(null)
+                    ->getQuery()
+                    ->execute();
+            }
+            foreach($tickets as $ticket) {
+
+                $objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                    ->findAndUpdate()
+                    ->field('id')->equals(new \MongoId($ticket->id))
                     ->field('numberInt')->set($lastItemNumber)
-                    ->getSingleResult()
                     ->getQuery()
                     ->execute();
                 $lastItemNumber++;
             }
+            if(!empty($org->id)) {
+                //$this->increaseLastItemNumber($id,$lastItemNumber);
+            }
+
         }
     }
 
