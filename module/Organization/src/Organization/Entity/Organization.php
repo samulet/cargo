@@ -69,7 +69,11 @@ class Organization
      * @ODM\Field(type="string")
      */
     public $type;
-
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $lastItemNumber;
     /**
      * @ODM\Date
      */
