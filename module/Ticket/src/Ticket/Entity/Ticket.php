@@ -100,6 +100,12 @@ class Ticket
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Exclude()
+     */
+    public $numberInt;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
