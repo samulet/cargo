@@ -96,6 +96,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             $org->setDescription($org_item['description']);
             $org->setName($org_item['name']);
             $org->setType($org_item['type']);
+            $org->lastItemNumber=0;
             $org->setActivated(1);
             $org_uuid = $org->getUUID();
             $objectManager->persist($org);
@@ -110,7 +111,16 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             return true;
         } else return false;
     }
+    public function increaseLastItemNumber($orgId,$lastItemNumber) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $objectManager->getRepository('Organization\Entity\Organization')->createQueryBuilder()
 
+            ->findAndUpdate()
+            ->field('id')->equals(new \MongoId($orgId))
+            ->field('lastItemNumber')->set($lastItemNumber)
+            ->getQuery()
+            ->execute();
+    }
     public function getOrganization($id)
     {
         if(empty($id)) {
@@ -135,8 +145,54 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             'description' => $org->getDescription(),
             'type' => $org->getType(),
             'name' => $org->getName(),
-            'orgOwner' => $user->getDisplayName()
+            'orgOwner' => $user->getDisplayName(),
+            'lastItemNumber' =>$org->lastItemNumber
         );
+    }
+
+    public function addIntNumber() {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $orgs=$objectManager->getRepository('Organization\Entity\Organization')->createQueryBuilder()
+            ->field('lastItemNumber')->equals(null)
+            ->getQuery()
+            ->execute()->toArray();
+        $orgs['lastOrg']['id']=null;
+        foreach($orgs as $org) {
+
+            if(!empty($org->id)) {
+                $id=new \MongoId($org->id);
+
+            } else {
+                $id=$org['id'];
+            }
+            $lastItemNumber=1;
+            if(!empty($id)) {
+                $tickets=$objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                    ->field('ownerOrgId')->equals($id)
+                    ->field('numberInt')->equals(null)
+                    ->getQuery()
+                    ->execute();
+            } else {
+                $tickets=$objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                    ->field('numberInt')->equals(null)
+                    ->getQuery()
+                    ->execute();
+            }
+            foreach($tickets as $ticket) {
+
+                $objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                    ->findAndUpdate()
+                    ->field('id')->equals(new \MongoId($ticket->id))
+                    ->field('numberInt')->set($lastItemNumber)
+                    ->getQuery()
+                    ->execute();
+                $lastItemNumber++;
+            }
+            if(!empty($org->id)) {
+                //$this->increaseLastItemNumber($id,$lastItemNumber);
+            }
+
+        }
     }
 
     public function getCompanyModel()

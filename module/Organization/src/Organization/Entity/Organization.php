@@ -6,7 +6,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Organization\Entity\OrganizationInterface;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 
 /**
  *
@@ -69,7 +69,11 @@ class Organization
      * @ODM\Field(type="string")
      */
     public $type;
-
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $lastItemNumber;
     /**
      * @ODM\Date
      */

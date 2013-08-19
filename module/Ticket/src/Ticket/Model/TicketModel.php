@@ -151,6 +151,7 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function addTicket($post, $owner_id, $owner_org_id, $id)
     {
+        $orgModel = $this->getOrganizationModel();
 
         if(!empty($post)) {
             if(is_array($post)) {
@@ -163,10 +164,6 @@ class TicketModel implements ServiceLocatorAwareInterface
 
 
         unset($prop_array_split['submit']);
-
-
-  //      $prop_array_new['tsId']=$prop_array['tsId'];
-   //     $prop_array_new['kindOfLoad']=$prop_array['kindOfLoad'];
         $prop_array_new=array();
         $prop_array=$prop_array_new;
 
@@ -179,7 +176,10 @@ class TicketModel implements ServiceLocatorAwareInterface
         $prop_array['typeTicket']=$prop_array_split['typeTicket'];
         $prop_array['formPay']=$prop_array_split['formPay'];
         $prop_array['type']=$prop_array_split['type'];
-
+        $lastItemNumber=$orgModel->getOrganization($owner_org_id)['lastItemNumber'];
+        $lastItemNumber++;
+        $prop_array['numberInt']=$lastItemNumber;
+        $orgModel->increaseLastItemNumber($owner_org_id,$lastItemNumber);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
             $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(
