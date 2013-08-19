@@ -79,7 +79,7 @@ class TicketWay
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
 
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт загрузки"})
@@ -91,7 +91,7 @@ class TicketWay
 
     /**
      * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
 
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт выгрузки"})
