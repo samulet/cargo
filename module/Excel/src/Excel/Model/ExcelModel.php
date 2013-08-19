@@ -37,7 +37,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
     public function getExcel($id) {
         $ticketModel = $this->getTicketModel();
         $ticket = $ticketModel->listTicket($id);
-        $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+        $ticketWay=$ticketModel->returnAllWays($ticket['numberInt']);
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
         $ticketWay=$this->addAdditionalData($ticketWay);
