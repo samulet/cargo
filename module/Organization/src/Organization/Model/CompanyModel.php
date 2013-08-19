@@ -19,7 +19,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 class CompanyModel implements ServiceLocatorAwareInterface
 {
@@ -123,10 +122,13 @@ class CompanyModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $com_obj = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
-
-        $com = get_object_vars($com_obj);
-        unset($com['created']);
-        unset($com['updated']);
+        if(!empty($com_obj)) {
+            $com = get_object_vars($com_obj);
+            unset($com['created']);
+            unset($com['updated']);
+        } else {
+            $com=null;
+        }
         return $com;
     }
 
