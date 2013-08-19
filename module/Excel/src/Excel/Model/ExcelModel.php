@@ -50,7 +50,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $step=13;
         $mainParams=1;
         $objPHPExcel->getActiveSheet()
-            ->setCellValue('D'.($mainParams), $ticket['uuid'])
+            ->setCellValue('D'.($mainParams), $ticket['numberInt'])
             ->setCellValue('F'.($mainParams), get_object_vars($ticket['created'])['date']);
         $mainParams=$mainParams+2;
 
