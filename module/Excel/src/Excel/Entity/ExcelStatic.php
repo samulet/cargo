@@ -20,6 +20,7 @@ class ExcelStatic
             "formPay" => "Тип платежа",
             "type" => "Тип ТС",
             "owner" => "Заказчик",
+            "numberInt" => "Номер",
         ),
         "way" => array(
             "cargoOwner" => "Владелец груза",
