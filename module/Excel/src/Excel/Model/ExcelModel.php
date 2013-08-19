@@ -37,7 +37,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
     public function getExcel($id) {
         $ticketModel = $this->getTicketModel();
         $ticket = $ticketModel->listTicket($id);
-        $ticketWay=$ticketModel->returnAllWays($ticket['numberInt']);
+        $ticketWay=$ticketModel->returnAllWays($ticket['id']);
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
         $ticketWay=$this->addAdditionalData($ticketWay);
@@ -50,7 +50,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $step=13;
         $mainParams=1;
         $objPHPExcel->getActiveSheet()
-            ->setCellValue('D'.($mainParams), $ticket['uuid'])
+            ->setCellValue('D'.($mainParams), $ticket['numberInt'])
             ->setCellValue('F'.($mainParams), get_object_vars($ticket['created'])['date']);
         $mainParams=$mainParams+2;
 
