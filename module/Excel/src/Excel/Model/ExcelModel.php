@@ -17,6 +17,7 @@ use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use Excel\Entity\ExcelStatic;
 use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_Shared_Date;
@@ -31,6 +32,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
     protected $ticketModel;
     protected $vehicleModel;
     protected $organizationModel;
+    protected $companyModel;
 
     public function getExcel($id) {
         $ticketModel = $this->getTicketModel();
@@ -38,10 +40,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
-        error_reporting(E_ALL);
-        ini_set('display_errors', TRUE);
-        ini_set('display_startup_errors', TRUE);
-
+        $ticketWay=$this->addAdditionalData($ticketWay);
 
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
         $objPHPExcel = $objReader->load("public/xls/templateTicket.xls");
@@ -49,7 +48,6 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $counter=1;
         $offset=11;
         $step=13;
-//die(var_dump(get_object_vars($ticket['created'])));
         $mainParams=1;
         $objPHPExcel->getActiveSheet()
             ->setCellValue('D'.($mainParams), $ticket['uuid'])
@@ -67,10 +65,6 @@ class ExcelModel implements ServiceLocatorAwareInterface
         foreach($ticketWay as $way) {
             if($counter!=1) {
                 $start=$offset+($counter-1)*$step;
-
-                //  $objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset).':G'.($offset)), 'A'.$start.':G'.$start);
-                //$objPHPExcel->getActiveSheet()->duplicateStyle($objPHPExcel->getActiveSheet()->getStyle('A'.($offset+1).':G'.($offset+$step)), 'A'.($start+1).':G'.($start+$step-1));
-
                 $objPHPExcel->getActiveSheet()->getStyle('D'.($start+1).':G'.($start+$step-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                 $objPHPExcel->getActiveSheet()->getStyle('A'.$start.':G'.$start)->getFont()->setBold(true);
                 $objPHPExcel->getActiveSheet()->getStyle('A'.$start.':G'.$start)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -79,15 +73,9 @@ class ExcelModel implements ServiceLocatorAwareInterface
                 for($i=$start+1;$i<$start+$step;$i++) {
                     $objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':C'.$i);
                     $objPHPExcel->getActiveSheet()->mergeCells('D'.$i.':G'.$i);
-                    // $objPHPExcel->getActiveSheet()->getStyle('D'.$i.':G'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                     $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $objPHPExcel->getActiveSheet()->getCell('A'.$copyCounter)->getValue());
-                    //  $objPHPExcel->getActiveSheet()->getStyle('D10')->getFont()->setBold(true);
-                    //$objPHPExcel->getActiveSheet()->getStyle('D10:D1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                     $copyCounter++;
                 }
-
-                //$objBold= $objPHPExcel->getActiveSheet()->getStyle('A'.$start)->getFont()->setBold(true);
-                //$objPHPExcel->getActiveSheet()->setStyle('A'.$start,$objBold);
                 $objPHPExcel->getActiveSheet()
                     ->setCellValue('A'.($start), 'Загрузка '.$counter);
             } else {
@@ -109,8 +97,6 @@ class ExcelModel implements ServiceLocatorAwareInterface
             $counter++;
 
         }
-        //  $objPHPExcel->getActiveSheet()->getStyle('D10')->getFont()->setBold(true);
-        // $objPHPExcel->getActiveSheet()->getStyle('D10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
         ob_start();
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="orders.xls"');
@@ -119,27 +105,44 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean() ;
         $objWriter->save('php://output');
-        // $objWriter->save('public/xls/ticket.xls');
+
         ob_end_flush();
+    }
+
+    public function addAdditionalData($ticketWay) {
+        $comModel = $this->getCompanyModel();
+        $ticketModel = $this->getTicketModel();
+
+        foreach($ticketWay as &$way) {
+            $doc=$ticketModel->getDocumentWay($way['id']);
+            $document='';
+            foreach($doc as $d) {
+                $document.=$d['docNumber' ].' '.$d['docType' ].' '.$d['docDate' ].' '.$d['docWay' ].' '.$d['docNote' ].' / ';
+            }
+            $way['documents']=$document;
+            $data=$comModel->returnCompany($way['cargoOwner']);
+            $way['cargoOwner']=$data['property'].' '.$data['name'];
+        }
+        return $ticketWay;
     }
 
     public function generateTemplate($id,$mode,$path,$newStringDown) {
         $ticketModel = $this->getTicketModel();
         $ticket = $ticketModel->listTicket($id);
         $ticketWay=$ticketModel->returnAllWays($ticket['id']);
+
+        $ticketWay=$this->addAdditionalData($ticketWay);
+
         $orgModel = $this->getOrganizationModel();
         $org = $orgModel->getOrganization($ticket['ownerOrgId']);
         $ticket['owner']=$org['name'];
-        error_reporting(E_ALL);
-        ini_set('display_errors', TRUE);
-        ini_set('display_startup_errors', TRUE);
 
 
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
         $objPHPExcel = $objReader->load($path);
 
 
-        $coord=$this->getCoordinates($objPHPExcel,$ticket,$ticketWay);
+        $coord=$this->getCoordinates($objPHPExcel);
 
         $objWriter=$this->fillCoordinates($objPHPExcel,$ticket,$ticketWay,$coord, $mode,$newStringDown) ;
 
@@ -151,13 +154,15 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean() ;
         $objWriter->save('php://output');
-        // $objWriter->save('public/xls/ticket.xls');
+
         ob_end_flush();
     }
 
-    public function getCoordinates($objPHPExcel,$ticket,$ticketWay) {
+    public function getCoordinates($objPHPExcel) {
         $lastRow = $objPHPExcel->getActiveSheet()->getHighestRow();
         $lastColumn = $objPHPExcel->getActiveSheet()->getHighestColumn();
+        $ticket=ExcelStatic::$list['main'];
+        $ticketWay=ExcelStatic::$list['way'];
         $lastColumn++;
         $resultArray=array(
             "ticket" => array(),
@@ -168,7 +173,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         );
         for ($column = 'A'; $column != $lastColumn; $column++) {
             $offsetMax=0;
-            $offsetMin=100000000000000000000000000000000000000;
+            $offsetMin=1000000;
             for ($row = 1; $row <= $lastRow; $row++) {
                 $cell= $objPHPExcel->getActiveSheet()->getCell($column.$row);
                 if(!empty($cell)) {
@@ -197,7 +202,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                 if($cellArr[0]=='title')  {
                                     array_push($resultArray["title"], $trueArray['title']);
                                 } else {
-                                    if(isset($ticketWay[0][$cell])) {
+                                    if(isset($ticketWay[$cell])) {
                                         $resultArray["ticketWay"]=$resultArray["ticketWay"]+ $trueArray;
                                     }
                                 }
@@ -297,14 +302,16 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $loadCount=1;
         if(!empty($newStringDown)) {
             $offsetNewRows=(count($ticketWay)-1)*($coord['offset']['down']+2);
-            $objPHPExcel->getActiveSheet()->insertNewRowBefore($coord['offset']['max'] + 1, $offsetNewRows);
-            foreach($coord['ticket'] as $key => &$value) {
-                if($value['row']>$coord['offset']['max'] + 1) {
-                    $value['row']=$value['row']+$offsetNewRows;
+            if($offsetNewRows!=0) {
+                $objPHPExcel->getActiveSheet()->insertNewRowBefore($coord['offset']['max'] + 1, $offsetNewRows);
 
+                foreach($coord['ticket'] as $key => &$value) {
+                    if($value['row']>$coord['offset']['max'] + 1) {
+                        $value['row']=$value['row']+$offsetNewRows;
+
+                    }
                 }
             }
-
         }
         foreach($ticketWay as $tick) {
             foreach($coordWay as $key => &$value) {
@@ -391,5 +398,12 @@ class ExcelModel implements ServiceLocatorAwareInterface
         }
         return $this->organizationModel;
     }
-
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
+    }
 }

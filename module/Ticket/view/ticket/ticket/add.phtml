@@ -130,6 +130,7 @@ $typeTSForm = $form->get('type');
             $cargoName = $formWay->get('cargoName');
             $adr = $formWay->get('adr');
             $cubs = $formWay->get('cubs');
+
             $weight = $formWay->get('weight');
             $rubles = $formWay->get('rubles');
             $pallet = $formWay->get('pallet');
@@ -210,7 +211,7 @@ $typeTSForm = $form->get('type');
             </td>
             <td>
                 <?php
-                echo $this->formRow($cubs);
+
 
                 echo $this->formRow($dimensionsWidth);
                 echo $this->formRow($dimensionsHeight);
@@ -226,6 +227,7 @@ $typeTSForm = $form->get('type');
             </td>
             <td>
                 <?php
+                echo $this->formRow($cubs);
                 echo $this->formRow($temperature);
                 ?>
                 <div class="muliboxTicket">
