@@ -122,6 +122,11 @@ ul.dropdown-menu span.divider {
 .muliboxTicket label {
     display: block;
 }
+.muliboxTicket label input {
+    display: inline;
+    margin: 5px;
+}
+
 .leftSide a {
     padding-top: 4px !important;
     padding-bottom: 4px !important;
