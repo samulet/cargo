@@ -126,7 +126,11 @@ class CompanyUserController extends AbstractActionController
 
     public function roleAction() {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $adminParam = $this->getEvent()->getRouteMatch()->getParam('param');
         $builder = new AnnotationBuilder();
+        if($adminParam=='admin') {
+            $this->layout('layout/admin');
+        }
         $form = $builder->createForm('User\Entity\User');
         $comUserModel = $this->getCompanyUserModel();
         $roles=$comUserModel->getRoles($userId);
