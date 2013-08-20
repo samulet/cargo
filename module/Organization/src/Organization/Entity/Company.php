@@ -4,7 +4,6 @@ namespace Organization\Entity;
 
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Zend\Form\Annotation;
 use Zend\Form\Element;
@@ -178,9 +177,19 @@ class Company
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"ИНН/КПП"})
+     * @Annotation\Options({"label":"ИНН"})
      */
-    public $innKpp;
+    public $inn;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"КПП"})
+     */
+    public $kpp;
 
     /**
      * @var string
