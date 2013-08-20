@@ -166,7 +166,7 @@ class Vehicle
      * @Annotation\Options({"label":"Экологический класс ТС",
      *                      "value_options" : {"0":"0","1":"1","2":"2","3":"3","4":"4","5":"5"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
+     *                        "options":{"haystack":{"0","1","2","3","4","5"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
