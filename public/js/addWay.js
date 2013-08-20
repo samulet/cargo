@@ -80,6 +80,8 @@ function addDocWay(wayTr, docBox) {
             $(this).attr('name', splitName + '_' + counterVal + splitCounterLast);
             if ($(this).attr('class') != 'deleteDocWay') {
                 $(this).val('');
+            } else {
+                $(this).attr('onclick','delDocWay(this);')
             }
         }
     });
