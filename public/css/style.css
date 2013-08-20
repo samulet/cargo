@@ -119,6 +119,9 @@ ul.dropdown-menu span.divider {
     width:auto !important;
 }
 
+.muliboxTicket label {
+    display: block;
+}
 .leftSide a {
     padding-top: 4px !important;
     padding-bottom: 4px !important;
