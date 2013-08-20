@@ -306,10 +306,10 @@ $typeTSForm = $form->get('type');
                         $localDocCounter++;
                         if (!empty($typeForm)) {
                             if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
-                                echo "<input type='button' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
+                                echo "<input type='button' name='deleteDocWay' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
                             }
                         } else {
-                            echo "<input type='button' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
+                            echo "<input type='button' name='deleteDocWay' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
                         }
                         echo "</div>";
 
