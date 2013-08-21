@@ -259,6 +259,7 @@ class TicketWay
      * @Annotation\Attributes({"value":"0"})
      */
     public $temperature;
+
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -360,7 +361,7 @@ class TicketWay
      * @Annotation\Options({"label":"",
      *                      "value_options" : {"prepareToLoad":"","dateStart":"","always":""}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"0","1","2","3","4","5","6","7","8","9","10"},
+     *                        "options":{"haystack":{"prepareToLoad","dateStart","always"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"prepareToLoad"})
      * @Annotation\Required({"required":"true" })

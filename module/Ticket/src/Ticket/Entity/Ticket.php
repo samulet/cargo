@@ -191,7 +191,7 @@ class Ticket
      * @Annotation\Options({"label":"Ставка",
      *                      "value_options" : {"": "", "Не более":"Не более","От":"От","Любая":"Любая","По договоренности":"По договоренности"}})
      * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"bank","card","currency"},
+     *                        "options":{"haystack":{"Не более","От","Любая","По договоренности"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
      */
