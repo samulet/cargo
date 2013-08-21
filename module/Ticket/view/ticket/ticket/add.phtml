@@ -157,6 +157,7 @@ $rate= $form->get('rate');
 
             $note = $formWay->get('note');
 
+            $always= $formWay->get('always');
         } else {
             $dimensionsWidth = $formWay->get('dimensionsWidth')->setName('dimensionsWidth-' . $counter);
             $dimensionsHeight = $formWay->get('dimensionsHeight')->setName('dimensionsHeight-' . $counter);
@@ -187,7 +188,7 @@ $rate= $form->get('rate');
             $timeEnd = $formWay->get('timeEnd')->setName('timeEnd-' . $counter);
 
             $note = $formWay->get('note')->setName('note-' . $counter);
-
+            $always= $formWay->get('always')->setName('always-' . $counter);
         }
         ?>
         <tr class="<?php
@@ -201,6 +202,7 @@ $rate= $form->get('rate');
                 <?php
                 echo $this->formRow($dateStart);
                 echo $this->formRow($timeStart);
+                echo $this->formRow($always);
                 echo $this->formRow($areaLoad);
                 echo $this->formRow($dateEnd);
                 echo $this->formRow($timeEnd);

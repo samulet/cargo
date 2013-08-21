@@ -100,6 +100,14 @@ class AddListNameStatic
             'parentId' => null,
             "child" => null
         ),
+        "tick-always"=> array(
+            "name" => "Постоянно",
+            "listName"=> "ticketWay",
+            "field" => "always",
+            "fieldRusName" => "Заявка Постоянно (загрузка)" ,
+            'parentId' => null,
+            "child" => null
+        ),
      /*   "country" => "Страны",
         "regions" => "Регионы",
         "city" => "Города" 	,

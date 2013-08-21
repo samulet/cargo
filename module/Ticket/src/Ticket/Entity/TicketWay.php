@@ -262,6 +262,17 @@ class TicketWay
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Постоянно (загрузка)"})
+     * @Annotation\Required(false)
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $always;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Options({"label":"Пневмоход"})
      */
