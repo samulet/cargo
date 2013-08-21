@@ -387,8 +387,8 @@ class TicketWay
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"+ количество дней",
-     *                      "value_options" : {"0":"","1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"10"}})
+     * @Annotation\Options({"label":"+ дней",
+     *                      "value_options" : {"0":"0","1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"10"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"0","1","2","3","4","5","6","7","8","9","10"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})

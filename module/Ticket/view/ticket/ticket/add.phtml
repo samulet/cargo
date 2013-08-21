@@ -212,188 +212,185 @@ $rate = $form->get('rate');
             echo 'wayTr-' . $counter;
         }
         ?>">
-            <td>
-                <?php
-
-                echo $this->formRow($setLoadType);
-                echo $this->formRow($prepareToLoad);
-
-                echo $this->formRow($dateStart);
-                echo $this->formRow($dateStartPlus);
-
-
-                echo $this->formRow($always);
-                echo $this->formRow($areaLoad);
-                echo $this->formRow($dateEnd);
-
-
-                echo $this->formRow($areaUnload);
-
-                echo $this->formRow($timeLoadStart);
-                echo $this->formRow($timeLoadEnd);
-
-                echo $this->formRow($timeUnloadStart);
-                echo $this->formRow($timeUnloadEnd);
-                echo $this->formRow($aroundDay);
-                ?>
-            </td>
-            <td>
-                <?php
-                echo $this->formRow($cargoOwner);
-                echo $this->formRow($cargoName);
-                echo $this->formRow($adr);
-
-                ?>
-            </td>
-            <td>
-                <?php
-
-
-                echo $this->formRow($dimensionsWidth);
-                echo $this->formRow($dimensionsHeight);
-                echo $this->formRow($dimensionsLength);
-                echo $this->formRow($cargoValue);
-
-                echo $this->formRow($weight);
-                echo $this->formRow($rubles);
-                echo $this->formRow($pallet);
-                echo $this->formRow($box);
-
-                ?>
-            </td>
-            <td>
-                <?php
-                echo $this->formRow($cubs);
-                echo $this->formRow($temperature);
-                ?>
-                <div class="muliboxTicket">
-                    <?php
-                    echo $this->formRow($typeLoad);
-
-                    echo $this->formRow($typeUnload);
-                    ?>
+        <td>
+            <?php ?>
+            <div class="setLoadTypeMain">
+                <div class="setLoadTypeRadio">
+                    <?php echo $this->formRow($setLoadType); ?>
                 </div>
+                <div class="setLoadTypeParams">
+                    <div><?php echo $this->formRow($prepareToLoad); ?> </div>
+                    <div class="dateStartMain">
+                        <div class="dateStart"><?php echo $this->formRow($dateStart); ?></div>
+                        <div class="datePlus"><?php echo $this->formRow($dateStartPlus); ?></div>
+                    </div>
+                    <div> <?php echo $this->formRow($always); ?></div>
+                </div>
+            </div>
+            <?php
+            echo $this->formRow($areaLoad);
+            echo $this->formRow($dateEnd);
+
+
+            echo $this->formRow($areaUnload);
+            ?>
+            <div class="timeLoadMain">
+                <div class="timeLoadStart"><?php echo $this->formRow($timeLoadStart); ?></div>
+                <div class="timeLoadEnd"><?php echo $this->formRow($timeLoadEnd); ?></div>
+            </div>
+
+            <div class="timeLoadMain">
+                <div class="timeLoadStart"><?php echo $this->formRow($timeUnloadStart); ?></div>
+                <div class="timeLoadEnd"><?php echo $this->formRow($timeUnloadEnd); ?></div>
+            </div>
+            <?php echo $this->formRow($aroundDay); ?>
+
+        </td>
+        <td>
+            <?php
+            echo $this->formRow($cargoOwner);
+            echo $this->formRow($cargoName);
+            echo $this->formRow($adr);
+
+            ?>
+        </td>
+        <td>
+            <?php
+
+
+            echo $this->formRow($dimensionsWidth);
+            echo $this->formRow($dimensionsHeight);
+            echo $this->formRow($dimensionsLength);
+            echo $this->formRow($cargoValue);
+
+            echo $this->formRow($weight);
+            echo $this->formRow($rubles);
+            echo $this->formRow($pallet);
+            echo $this->formRow($box);
+
+            ?>
+        </td>
+        <td>
+            <?php
+            echo $this->formRow($cubs);
+            echo $this->formRow($temperature);
+            ?>
+            <div class="muliboxTicket">
                 <?php
-                echo $this->formRow($airSuspension);
-                echo $this->formRow($coupling);
+                echo $this->formRow($typeLoad);
+
+                echo $this->formRow($typeUnload);
                 ?>
-            </td>
+            </div>
             <?php
-            if (empty($typeForm)) {
-                $typeFormAction = 'add';
-            } else {
-                $typeFormAction = $typeForm['action'];
-            }
+            echo $this->formRow($airSuspension);
+            echo $this->formRow($coupling);
+            ?>
+        </td>
+        <?php
+        if (empty($typeForm)) {
+            $typeFormAction = 'add';
+        } else {
+            $typeFormAction = $typeForm['action'];
+        }
 
-            if ($typeFormAction != 'search') {
-                ?>
-                <td>
-
-                    <?php
-                    $formsDocArray = $formWayArray['formsDocArray'];
-                    $localDocCounter = 0;
-
-                    foreach ($formsDocArray as $docWay) {
-
-                        if ($counter == 0) {
-
-                            $docNumber = $docWay->get('docNumber')->setName('docNumber' . '_' . $localDocCounter);
-                            $docNote = $docWay->get('docNote')->setName('docNote_' . $localDocCounter);
-                            $docDate = $docWay->get('docDate')->setName('docDate_' . $localDocCounter);
-                            $docType = $docWay->get('docType')->setName('docType_' . $localDocCounter);
-                            $docWay = $docWay->get('docWay')->setName('docWay_' . $localDocCounter);
-                            $docCounter = 'docCounter_' . $localDocCounter;
-
-                            if ($localDocCounter == 0) {
-                                $onclickDelete = "";
-                            } else {
-                                $onclickDelete = "onclick='delDocWay(this);'";
-                            }
-                            $wayTrDoc = 'wayTr';
-
-                        } else {
-                            $docNumber = $docWay->get('docNumber')->setName(
-                                'docNumber_' . $localDocCounter . '-' . $counter
-                            );
-                            $docNote = $docWay->get('docNote')->setName('docNote_' . $localDocCounter . '-' . $counter);
-                            $docDate = $docWay->get('docDate')->setName('docDate_' . $localDocCounter . '-' . $counter);
-                            $docType = $docWay->get('docType')->setName('docType_' . $localDocCounter . '-' . $counter);
-                            $docWay = $docWay->get('docWay')->setName('docWay_' . $localDocCounter . '-' . $counter);
-                            $docCounter = 'docCounter_' . $localDocCounter . '-' . $counter;
-                            $wayTrDoc = 'wayTr-' . $counter;
-                            $onclickDelete = "onclick='delDocWay(this);'";
-
-                        }
-                        if ($localDocCounter == 0) {
-                            echo "<div class='docBox'>";
-                        } else {
-                            echo "<div class='docBox_" . $localDocCounter . "'>";
-                        }
-
-                        echo '<p class="docName"><b>Документ ' . $localDocCounter . '</b></p>';
-
-                        echo $this->formRow($docNumber);
-                        echo $this->formRow($docWay);
-
-                        echo $this->formRow($docNote);
-                        echo $this->formRow($docDate);
-                        echo $this->formRow($docType);
-
-                        $localDocCounter++;
-                        if (!empty($typeForm)) {
-                            if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
-                                echo "<input type='button' name='deleteDocWay' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
-                            }
-                        } else {
-                            echo "<input type='button' name='deleteDocWay' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
-                        }
-                        echo "</div>";
-
-                    }
-                    echo "<div style='display:none;' class='addDocBefore'></div>";
-                    echo "<input type='hidden' class='docCounter' name='docCounter' value='" . $localDocCounter . "' />";
-                    ?>
-
-                    <?php
-                    if (!empty($typeForm)) {
-                        if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
-                            ?>
-
-                            <input type="button" name='addDocWay_0' class='addDocWay'
-                                   onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
-                        <?php
-                        }
-                    } else {
-                        ?>
-                        <input type="button" name='addDocWay_0' class='addDocWay'
-                               onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
-                    <?php } ?>
-
-                </td>
-
-            <?php
-            }
+        if ($typeFormAction != 'search') {
             ?>
             <td>
-                <?php
-                echo $this->formRow($note);
-                ?>
-            </td>
-            <?php
-            if (!empty($typeForm)) {
-                if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
-                    ?>
-                    <td>
-                        <input name="deleteWay" class="deleteWay" onclick="<?php
-                        if ($counter != 0) {
-                            echo "delWay('wayTr-" . $counter . "');";
-                        }
-                        ?>" type="button" value="Удалть"/>
-                    </td>
 
                 <?php
+                $formsDocArray = $formWayArray['formsDocArray'];
+                $localDocCounter = 0;
+
+                foreach ($formsDocArray as $docWay) {
+
+                    if ($counter == 0) {
+
+                        $docNumber = $docWay->get('docNumber')->setName('docNumber' . '_' . $localDocCounter);
+                        $docNote = $docWay->get('docNote')->setName('docNote_' . $localDocCounter);
+                        $docDate = $docWay->get('docDate')->setName('docDate_' . $localDocCounter);
+                        $docType = $docWay->get('docType')->setName('docType_' . $localDocCounter);
+                        $docWay = $docWay->get('docWay')->setName('docWay_' . $localDocCounter);
+                        $docCounter = 'docCounter_' . $localDocCounter;
+
+                        if ($localDocCounter == 0) {
+                            $onclickDelete = "";
+                        } else {
+                            $onclickDelete = "onclick='delDocWay(this);'";
+                        }
+                        $wayTrDoc = 'wayTr';
+
+                    } else {
+                        $docNumber = $docWay->get('docNumber')->setName(
+                            'docNumber_' . $localDocCounter . '-' . $counter
+                        );
+                        $docNote = $docWay->get('docNote')->setName('docNote_' . $localDocCounter . '-' . $counter);
+                        $docDate = $docWay->get('docDate')->setName('docDate_' . $localDocCounter . '-' . $counter);
+                        $docType = $docWay->get('docType')->setName('docType_' . $localDocCounter . '-' . $counter);
+                        $docWay = $docWay->get('docWay')->setName('docWay_' . $localDocCounter . '-' . $counter);
+                        $docCounter = 'docCounter_' . $localDocCounter . '-' . $counter;
+                        $wayTrDoc = 'wayTr-' . $counter;
+                        $onclickDelete = "onclick='delDocWay(this);'";
+
+                    }
+                    if ($localDocCounter == 0) {
+                        echo "<div class='docBox'>";
+                    } else {
+                        echo "<div class='docBox_" . $localDocCounter . "'>";
+                    }
+
+                    echo '<p class="docName"><b>Документ ' . $localDocCounter . '</b></p>';
+
+                    echo $this->formRow($docNumber);
+                    echo $this->formRow($docWay);
+
+                    echo $this->formRow($docNote);
+                    echo $this->formRow($docDate);
+                    echo $this->formRow($docType);
+
+                    $localDocCounter++;
+                    if (!empty($typeForm)) {
+                        if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
+                            echo "<input type='button' name='deleteDocWay' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
+                        }
+                    } else {
+                        echo "<input type='button' name='deleteDocWay' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
+                    }
+                    echo "</div>";
+
                 }
-            } else {
+                echo "<div style='display:none;' class='addDocBefore'></div>";
+                echo "<input type='hidden' class='docCounter' name='docCounter' value='" . $localDocCounter . "' />";
+                ?>
+
+                <?php
+                if (!empty($typeForm)) {
+                    if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
+                        ?>
+
+                        <input type="button" name='addDocWay_0' class='addDocWay'
+                               onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
+                    <?php
+                    }
+                } else {
+                    ?>
+                    <input type="button" name='addDocWay_0' class='addDocWay'
+                           onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
+                <?php } ?>
+
+            </td>
+
+        <?php
+        }
+        ?>
+        <td>
+            <?php
+            echo $this->formRow($note);
+            ?>
+        </td>
+        <?php
+        if (!empty($typeForm)) {
+            if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
                 ?>
                 <td>
                     <input name="deleteWay" class="deleteWay" onclick="<?php
@@ -402,9 +399,21 @@ $rate = $form->get('rate');
                     }
                     ?>" type="button" value="Удалть"/>
                 </td>
+
             <?php
             }
+        } else {
             ?>
+            <td>
+                <input name="deleteWay" class="deleteWay" onclick="<?php
+                if ($counter != 0) {
+                    echo "delWay('wayTr-" . $counter . "');";
+                }
+                ?>" type="button" value="Удалть"/>
+            </td>
+        <?php
+        }
+        ?>
         </tr>
         <?php
         $counter++;
