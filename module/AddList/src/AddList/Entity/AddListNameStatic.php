@@ -108,6 +108,15 @@ class AddListNameStatic
             'parentId' => null,
             "child" => null
         ),
+        "tick-prepare"=> array(
+            "name" => "Готов к загрузке",
+            "listName"=> "ticketWay",
+            "field" => "prepareToLoad",
+            "fieldRusName" => "Заявка Постоянно (загрузка)" ,
+            'parentId' => null,
+            "child" => null
+        ),
+
      /*   "country" => "Страны",
         "regions" => "Регионы",
         "city" => "Города" 	,

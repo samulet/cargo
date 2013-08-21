@@ -484,7 +484,7 @@ class TicketModel implements ServiceLocatorAwareInterface
                 foreach ($docWay as $wayEl) {
                     $attr=$wayEl->getAttributes();
                     if(!empty($attr['type'])) {
-                        if(($attr['type']!='checkbox')) {
+                        if((($attr['type']!='checkbox')&&($attr['type']!='radio'))) {
                         $wayEl->setAttributes(array( 'class' => 'form-control' ));
                         }
                     }
@@ -494,7 +494,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             foreach ($formWay as $wayEl) {
                 $attr=$wayEl->getAttributes();
                 if(!empty($attr['type'])) {
-                    if(($attr['type']!='checkbox')) {
+                    if((($attr['type']!='checkbox')&&($attr['type']!='radio'))) {
                     $wayEl->setAttributes(array( 'class' => 'form-control' ));
                     }
                 }
