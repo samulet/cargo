@@ -134,6 +134,19 @@ class TicketModel implements ServiceLocatorAwareInterface
             $ticketWay = new TicketWay();
             $documentWay=$res['doc'];
             unset($res['doc']);
+            if($res['setLoadType']=="prepareToLoad") {
+                unset($res['dateStart']);
+                unset($res['dateStartPlus']);
+                unset($res['always']);
+            } elseif($res['setLoadType']=="dateStart") {
+                unset($res['prepareToLoad']);
+                unset($res['always']);
+            } elseif($res['setLoadType']=="always") {
+                unset($res['dateStart']);
+                unset($res['dateStartPlus']);
+                unset($res['prepareToLoad']);
+            }
+
             foreach ($res as $key => $value) {
                 if($key!="ownerTicketId") {
                     $ticketWay->$key = $value;
@@ -484,7 +497,7 @@ class TicketModel implements ServiceLocatorAwareInterface
                 foreach ($docWay as $wayEl) {
                     $attr=$wayEl->getAttributes();
                     if(!empty($attr['type'])) {
-                        if(($attr['type']!='checkbox')) {
+                        if((($attr['type']!='checkbox')&&($attr['type']!='radio'))) {
                         $wayEl->setAttributes(array( 'class' => 'form-control' ));
                         }
                     }
@@ -494,7 +507,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             foreach ($formWay as $wayEl) {
                 $attr=$wayEl->getAttributes();
                 if(!empty($attr['type'])) {
-                    if(($attr['type']!='checkbox')) {
+                    if((($attr['type']!='checkbox')&&($attr['type']!='radio'))) {
                     $wayEl->setAttributes(array( 'class' => 'form-control' ));
                     }
                 }

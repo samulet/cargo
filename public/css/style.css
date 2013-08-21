@@ -8,14 +8,14 @@ body {
 }
 
 .btn-success {
-  background-color: #57a900;
-  background-image: -moz-linear-gradient(top, #70d900, #57a900);
-  background-image: -ms-linear-gradient(top, #70d900, #57a900);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
-  background-image: -webkit-linear-gradient(top, #70d900, #57a900);
-  background-image: -o-linear-gradient(top, #70d900, #57a900);
-  background-image: linear-gradient(top, #70d900, #57a900);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+    background-color: #57a900;
+    background-image: -moz-linear-gradient(top, #70d900, #57a900);
+    background-image: -ms-linear-gradient(top, #70d900, #57a900);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
+    background-image: -webkit-linear-gradient(top, #70d900, #57a900);
+    background-image: -o-linear-gradient(top, #70d900, #57a900);
+    background-image: linear-gradient(top, #70d900, #57a900);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
 }
 
 .btn-success:hover,
@@ -23,11 +23,11 @@ body {
 .btn-success.active,
 .btn-success.disabled,
 .btn-success[disabled] {
-  background-color: #57a900;
+    background-color: #57a900;
 }
 
 .btn-success:active, .btn-success.active {
-  background-color: #57a900;
+    background-color: #57a900;
 }
 
 div.container a.brand {
@@ -36,32 +36,33 @@ div.container a.brand {
     padding: 8px 20px 12px 40px;
 }
 
-#ticket select,#resource select {
-    width:120px;
+#ticket select, #resource select {
+    width: 120px;
 }
 
-#ticket input,#resource input {
-    width:160px;
+#ticket input, #resource input {
+    width: 160px;
 }
 
-#ticket span,#resource span {
+#ticket span, #resource span {
     display: block;
     #font-weight: bold;
 }
-#ticket .tr_check span,#resource .tr_check span {
+
+#ticket .tr_check span, #resource .tr_check span {
     display: inline-block;
 }
 
-#ticket .tr_check input,#resource .tr_check input {
-    float:left;
-    width:20px;
+#ticket .tr_check input, #resource .tr_check input {
+    float: left;
+    width: 20px;
 }
 
-#ticket .inline_check label,#resource .inline_check label {
+#ticket .inline_check label, #resource .inline_check label {
     display: inline-block;
 }
 
-#ticket .note_textarea textarea,#resource .note_textarea textarea {
+#ticket .note_textarea textarea, #resource .note_textarea textarea {
     height: 130px;
     width: 100%;
 }
@@ -69,12 +70,15 @@ div.container a.brand {
 #ticket table td, #resourse table td {
     border-left: 1px dashed #dddddd;
 }
+
 #resourse .spec_table {
-    width:740px;margin: 0 auto;
+    width: 740px;
+    margin: 0 auto;
 }
 
 #ticket .spec_table {
-    width:980px;margin: 0 auto;
+    width: 980px;
+    margin: 0 auto;
 }
 
 .spec_table td {
@@ -82,25 +86,29 @@ div.container a.brand {
 }
 
 .spec_table th {
-    font-size:16px;
+    font-size: 16px;
 }
+
 .spec_table .into_table th {
-    font-size:14px;
+    font-size: 14px;
 }
-.spec_table span,.spec_table label {
+
+.spec_table span, .spec_table label {
     font-weight: normal;
 }
+
 .submit_cl {
     padding-top: 30px;
-    width:100%;
+    width: 100%;
 }
+
 .submit_cl input {
     display: block;
-    margin:0 auto;
-    width:250px;
-    height:40px;
+    margin: 0 auto;
+    width: 250px;
+    height: 40px;
     font-weight: bold;
-    font-size:16px;
+    font-size: 16px;
 }
 
 ul.dropdown-menu span.divider {
@@ -109,19 +117,20 @@ ul.dropdown-menu span.divider {
     margin: 0 1px;
 }
 
-.vehicle input,.vehicle select  {
+.vehicle input, .vehicle select {
     display: block !important;
 
 }
 
-.muliboxTicket input{
+.muliboxTicket input {
 
-    width:auto !important;
+    width: auto !important;
 }
 
 .muliboxTicket label {
     display: block;
 }
+
 .muliboxTicket label input {
     display: inline;
     margin: 5px;
@@ -131,23 +140,114 @@ ul.dropdown-menu span.divider {
     padding-top: 4px !important;
     padding-bottom: 4px !important;
 }
+
 .ourTopMenu .navbar-nav a {
-    color:#fff !important;
+    color: #fff !important;
 }
 
 .ourTopMenu .navbar-nav a:hover {
-    color:#ccc !important;
+    color: #ccc !important;
 }
 
 .vehicle label {
     display: block;
 }
+
 .companyAdd label, .orgAdd label {
     display: block;
 
 }
-.companyAdd input, .companyAdd select, .companyAdd textarea, .orgAdd select, .orgAdd input, .orgAdd textarea{
+
+.companyAdd input, .companyAdd select, .companyAdd textarea, .orgAdd select, .orgAdd input, .orgAdd textarea {
 
     width: 350px;
 }
 
+.setLoadTypeMain {
+    width: 100%;
+    height: 200px;
+}
+
+.setLoadTypeMain .setLoadTypeRadio {
+    float: left;
+    width: 15%;
+}
+
+.setLoadTypeMain .setLoadTypeRadio label {
+    width: 15px !important;
+    padding-top: 42px;
+}
+
+.setLoadTypeMain .setLoadTypeRadio label input {
+    width: 15px !important;
+}
+
+.setLoadTypeMain .setLoadTypeParams {
+    float: left;
+    width: 85% !important;
+}
+
+.setLoadTypeMain .setLoadTypeParams label {
+    padding-top: 10px;
+}
+
+.setLoadTypeMain .setLoadTypeParams label {
+    width: 140px !important;
+}
+
+.setLoadTypeMain .setLoadTypeParams label input {
+    width: 140px !important;
+}
+
+.setLoadTypeMain .dateStartMain {
+    width: 100%;
+}
+
+.setLoadTypeMain  .dateStartMain  .dateStart {
+    float: left;
+    width: 75%;
+}
+
+.setLoadTypeMain  .dateStartMain  .dateStart label {
+    width: 100% !important;
+}
+
+.setLoadTypeMain  .dateStartMain  .dateStart label input {
+    width: 100% !important;
+}
+
+.setLoadTypeMain  .dateStartMain  .datePlus {
+    float: left;
+    width: 25%;
+    padding-top: 20px;
+}
+
+.setLoadTypeMain  .dateStartMain  .datePlus label {
+    width: 60px !important;
+}
+
+.setLoadTypeMain  .dateStartMain  .datePlus label select {
+    width: 60px !important;
+}
+
+.timeLoadMain {
+    width: 100% ;
+}
+
+.timeLoadMain label{
+    width: 100% !important;
+}
+
+.timeLoadMain label input{
+    width: 100%  !important;
+}
+
+.timeLoadMain .timeLoadStart {
+    float: left;
+    width: 50% ;
+}
+
+.timeLoadMain  .timeLoadEnd {
+    float: left;
+    width: 50% ;
+}
