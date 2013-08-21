@@ -175,7 +175,7 @@ ul.dropdown-menu span.divider {
 
 .setLoadTypeMain .setLoadTypeRadio label {
     width: 15px !important;
-    padding-top: 40px;
+    padding-top: 42px;
 }
 
 .setLoadTypeMain .setLoadTypeRadio label input {
@@ -185,6 +185,10 @@ ul.dropdown-menu span.divider {
 .setLoadTypeMain .setLoadTypeParams {
     float: left;
     width: 85% !important;
+}
+
+.setLoadTypeMain .setLoadTypeParams label {
+    padding-top: 10px;
 }
 
 .setLoadTypeMain .setLoadTypeParams label {
@@ -227,12 +231,23 @@ ul.dropdown-menu span.divider {
 }
 
 .timeLoadMain {
+    width: 100% ;
+}
 
+.timeLoadMain label{
+    width: 100% !important;
+}
+
+.timeLoadMain label input{
+    width: 100%  !important;
 }
 
 .timeLoadMain .timeLoadStart {
-
+    float: left;
+    width: 50% ;
 }
 
 .timeLoadMain  .timeLoadEnd {
+    float: left;
+    width: 50% ;
 }

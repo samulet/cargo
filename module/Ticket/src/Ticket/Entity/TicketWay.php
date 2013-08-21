@@ -362,8 +362,8 @@ class TicketWay
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"0","1","2","3","4","5","6","7","8","9","10"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
-     * @Annotation\Required(false)
+     * @Annotation\Attributes({"value":"prepareToLoad"})
+     * @Annotation\Required({"required":"true" })
      */
 
     public $setLoadType;
