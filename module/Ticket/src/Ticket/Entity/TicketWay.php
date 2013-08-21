@@ -259,6 +259,18 @@ class TicketWay
      * @Annotation\Attributes({"value":"0"})
      */
     public $temperature;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Постоянно (загрузка)"})
+     * @Annotation\Required(false)
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $always;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -334,6 +346,59 @@ class TicketWay
     public $dateStart;
 
     /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"Круглосуточно"})
+     */
+
+    public $aroundDay;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Radio")
+     * @Annotation\Options({"label":"",
+     *                      "value_options" : {"prepareToLoad":"","dateStart":"","always":""}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"prepareToLoad","dateStart","always"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"prepareToLoad"})
+     * @Annotation\Required({"required":"true" })
+     */
+
+    public $setLoadType;
+
+
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Готов к загрузке"})
+     * @Annotation\Required(false)
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $prepareToLoad;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"+ дней",
+     *                      "value_options" : {"0":"0","1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"10"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"0","1","2","3","4","5","6","7","8","9","10"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required(false)
+     */
+    public $dateStartPlus;
+
+    /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
      * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
@@ -342,14 +407,58 @@ class TicketWay
      * "onkeyup" : "time_control(this);",
      * "placeholder" : "12:00"
      * })
-     * @Annotation\Options({"label":"Время готовности ТС к загрузке"})
+     * @Annotation\Options({"label":"C"})
      * @Annotation\Required(false)
      * @var string
      * @ODM\Field(type="string")
      */
-    public $timeStart;
+    public $timeLoadStart;
 
-
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
+     * @Annotation\Attributes({
+     * "type":"text",
+     * "onkeyup" : "time_control(this);",
+     * "placeholder" : "14:00"
+     * })
+     * @Annotation\Options({"label":"По"})
+     * @Annotation\Required(false)
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $timeLoadEnd;
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
+     * @Annotation\Attributes({
+     * "type":"text",
+     * "onkeyup" : "time_control(this);",
+     * "placeholder" : "12:00"
+     * })
+     * @Annotation\Options({"label":"С"})
+     * @Annotation\Required(false)
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $timeUnloadStart;
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
+     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
+     * @Annotation\Attributes({
+     * "type":"text",
+     * "onkeyup" : "time_control(this);",
+     * "placeholder" : "12:00"
+     * })
+     * @Annotation\Options({"label":"По"})
+     * @Annotation\Required(false)
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    public $timeUnloadEnd;
 
     /**
      * @var string
@@ -361,21 +470,7 @@ class TicketWay
 
     public $dateEnd;
 
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
-     * @Annotation\Validator({"name":"Regex", "options":{"pattern":"/^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$/"}})
-     * @Annotation\Attributes({
-     * "type":"text",
-     * "onkeyup" : "time_control(this);",
-     * "placeholder" : "12:00"
-     * })
-     * @Annotation\Options({"label":"Время готовности ТС к разгрузке"})
-     * @Annotation\Required(false)
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $timeEnd;
+
 
     /**
      * @ODM\Date

@@ -314,10 +314,24 @@ return array(
                 'resource'   => 'route/addList',
             ),
             array(
-                'label' => 'Заявка температурный режим"',
+                'label' => 'Заявка температурный режим',
                 'route' => 'addList',
                 'action' => 'my-fields',
                 'params' => array('id' => 'temp-cond'),
+                'resource'   => 'route/addList',
+            ),
+            array(
+                'label' => 'Заявка Постоянно (загрузка)',
+                'route' => 'addList',
+                'action' => 'my-fields',
+                'params' => array('id' => 'tick-always'),
+                'resource'   => 'route/addList',
+            ),
+            array(
+                'label' => 'Заявка Готов к загрузке',
+                'route' => 'addList',
+                'action' => 'my-fields',
+                'params' => array('id' => 'tick-prepare'),
                 'resource'   => 'route/addList',
             ),
             array(

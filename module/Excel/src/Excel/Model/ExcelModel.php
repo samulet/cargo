@@ -81,12 +81,13 @@ class ExcelModel implements ServiceLocatorAwareInterface
             } else {
                 $start=$offset;
             }
+            //'timeLoadStart','timeLoadEnd' 'timeUnloadStart','timeUnloadEnd'
             $objPHPExcel->getActiveSheet()
                 ->setCellValue('D'.(++$start), $way['cargoOwner'])
                 ->setCellValue('D'.(++$start), '')
-                ->setCellValue('D'.(++$start), $way['dateStart'].' / '.$way['timeStart'])
+                ->setCellValue('D'.(++$start), $way['dateStart'].' / с '.$way['timeLoadStart'].' по '.$way['timeLoadEnd'])
                 ->setCellValue('D'.(++$start), $way['areaLoad'])
-                ->setCellValue('D'.(++$start), $way['dateEnd'].' / '.$way['timeEnd'])
+                ->setCellValue('D'.(++$start), $way['dateEnd'].' / '.$way['timeLoadEnd'].' по '.$way['timeUnloadEnd'])
                 ->setCellValue('D'.(++$start), $way['areaUnload'])
                 ->setCellValue('D'.(++$start), '')
                 ->setCellValue('D'.(++$start), '')
