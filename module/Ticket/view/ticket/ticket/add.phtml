@@ -41,8 +41,8 @@ $money = $form->get('money');
 $formPay = $form->get('formPay');
 $typeTicket = $form->get('typeTicket');
 $typeTSForm = $form->get('type');
-$includeNds= $form->get('includeNds');
-$rate= $form->get('rate');
+$includeNds = $form->get('includeNds');
+$rate = $form->get('rate');
 ?>
     <table class="table spec_table form-group" style="">
         <tr>
@@ -53,17 +53,17 @@ $rate= $form->get('rate');
         <tr>
             <td style="border-left:none;">
                 <div class="form-group">
-                <?php
+                    <?php
 
-                echo $this->formRow($rate);
-                echo $this->formRow($currency);
-                echo $this->formRow($money);
-                echo $this->formRow($formPay);
-                echo $this->formRow($includeNds);
+                    echo $this->formRow($rate);
+                    echo $this->formRow($currency);
+                    echo $this->formRow($money);
+                    echo $this->formRow($formPay);
+                    echo $this->formRow($includeNds);
 
-                echo $this->formRow($typeTicket);
-                echo $this->formRow($typeTSForm);
-                ?>
+                    echo $this->formRow($typeTicket);
+                    echo $this->formRow($typeTSForm);
+                    ?>
                 </div>
             </td>
         </tr>
@@ -151,13 +151,20 @@ $rate= $form->get('rate');
             $airSuspension = $formWay->get('airSuspension');
             $coupling = $formWay->get('coupling');
             $dateStart = $formWay->get('dateStart');
-            $timeStart = $formWay->get('timeStart');
             $dateEnd = $formWay->get('dateEnd');
-            $timeEnd = $formWay->get('timeEnd');
 
             $note = $formWay->get('note');
 
-            $always= $formWay->get('always');
+            $always = $formWay->get('always');
+            $timeLoadStart = $formWay->get('timeLoadStart');
+            $timeLoadEnd = $formWay->get('timeLoadEnd');
+            $timeUnloadStart = $formWay->get('timeUnloadStart');
+            $timeUnloadEnd = $formWay->get('timeUnloadEnd');
+            $setLoadType = $formWay->get('setLoadType');
+            $aroundDay = $formWay->get('aroundDay');
+            $prepareToLoad = $formWay->get('prepareToLoad');
+            $dateStartPlus = $formWay->get('dateStartPlus');
+
         } else {
             $dimensionsWidth = $formWay->get('dimensionsWidth')->setName('dimensionsWidth-' . $counter);
             $dimensionsHeight = $formWay->get('dimensionsHeight')->setName('dimensionsHeight-' . $counter);
@@ -183,12 +190,19 @@ $rate= $form->get('rate');
             $airSuspension = $formWay->get('airSuspension')->setName('airSuspension-' . $counter);
             $coupling = $formWay->get('coupling')->setName('coupling-' . $counter);
             $dateStart = $formWay->get('dateStart')->setName('dateStart-' . $counter);
-            $timeStart = $formWay->get('timeStart')->setName('timeStart-' . $counter);
             $dateEnd = $formWay->get('dateEnd')->setName('dateEnd-' . $counter);
-            $timeEnd = $formWay->get('timeEnd')->setName('timeEnd-' . $counter);
+
 
             $note = $formWay->get('note')->setName('note-' . $counter);
-            $always= $formWay->get('always')->setName('always-' . $counter);
+            $always = $formWay->get('always')->setName('always-' . $counter);
+            $timeLoadStart = $formWay->get('timeLoadStart')->setName('timeLoadStart-' . $counter);
+            $timeLoadEnd = $formWay->get('timeLoadEnd')->setName('timeLoadEnd-' . $counter);
+            $timeUnloadStart = $formWay->get('timeUnloadStart')->setName('timeUnloadStart-' . $counter);
+            $timeUnloadEnd = $formWay->get('timeUnloadEnd')->setName('always-' . $counter);
+            $setLoadType = $formWay->get('setLoadType')->setName('timeUnloadEnd-' . $counter);
+            $aroundDay = $formWay->get('aroundDay')->setName('aroundDay-' . $counter);
+            $prepareToLoad = $formWay->get('prepareToLoad')->setName('prepareToLoad-' . $counter);
+            $dateStartPlus = $formWay->get('dateStartPlus')->setName('dateStartPlus-' . $counter);
         }
         ?>
         <tr class="<?php
@@ -200,13 +214,27 @@ $rate= $form->get('rate');
         ?>">
             <td>
                 <?php
+
+                echo $this->formRow($setLoadType);
+                echo $this->formRow($prepareToLoad);
+
                 echo $this->formRow($dateStart);
-                echo $this->formRow($timeStart);
+                echo $this->formRow($dateStartPlus);
+
+
                 echo $this->formRow($always);
                 echo $this->formRow($areaLoad);
                 echo $this->formRow($dateEnd);
-                echo $this->formRow($timeEnd);
+
+
                 echo $this->formRow($areaUnload);
+
+                echo $this->formRow($timeLoadStart);
+                echo $this->formRow($timeLoadEnd);
+
+                echo $this->formRow($timeUnloadStart);
+                echo $this->formRow($timeUnloadEnd);
+                echo $this->formRow($aroundDay);
                 ?>
             </td>
             <td>
@@ -333,8 +361,10 @@ $rate= $form->get('rate');
 
                             <input type="button" name='addDocWay_0' class='addDocWay'
                                    onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
-                        <?php }
-                    } else { ?>
+                        <?php
+                        }
+                    } else {
+                        ?>
                         <input type="button" name='addDocWay_0' class='addDocWay'
                                onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
                     <?php } ?>
