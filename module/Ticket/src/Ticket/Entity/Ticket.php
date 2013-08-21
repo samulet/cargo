@@ -175,7 +175,27 @@ class Ticket
      * @Annotation\Attributes({"value":"0"})
      */
     public $type;
-
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"Включает НДС"})
+     */
+    public $includeNds;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Ставка",
+     *                      "value_options" : {"": "", "Не более":"Не более","От":"От","Любая":"Любая","По договоренности":"По договоренности"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"bank","card","currency"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $rate;
     /**
      * @ODM\Date
      * @Annotation\Exclude()

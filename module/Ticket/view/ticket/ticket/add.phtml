@@ -41,6 +41,8 @@ $money = $form->get('money');
 $formPay = $form->get('formPay');
 $typeTicket = $form->get('typeTicket');
 $typeTSForm = $form->get('type');
+$includeNds= $form->get('includeNds');
+$rate= $form->get('rate');
 ?>
     <table class="table spec_table form-group" style="">
         <tr>
@@ -52,9 +54,13 @@ $typeTSForm = $form->get('type');
             <td style="border-left:none;">
                 <div class="form-group">
                 <?php
+
+                echo $this->formRow($rate);
                 echo $this->formRow($currency);
                 echo $this->formRow($money);
                 echo $this->formRow($formPay);
+                echo $this->formRow($includeNds);
+
                 echo $this->formRow($typeTicket);
                 echo $this->formRow($typeTSForm);
                 ?>
