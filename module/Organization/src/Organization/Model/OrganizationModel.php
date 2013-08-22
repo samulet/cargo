@@ -34,7 +34,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     public function getOrgIdByUUID($org_uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $org_uuid));
+        $qb = $objectManager->getRepository('Organization\Entity\Company')->findOneBy(array('uuid' => $org_uuid));
         return $qb->getId();
     }
 
@@ -106,7 +106,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             $org_id = $this->getOrgIdByUUID($org_uuid);
 
             $comUserModel = $this->getCompanyUserModel();
-            $comUserModel->addUserToOrg($user_id, $org_id);
+            $comUserModel->addUserToCompany($user_id, $org_id);
 
             return true;
         } else return false;

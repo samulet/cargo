@@ -12,6 +12,7 @@ $this->headTitle($title);
         <th>Название юр. лица</th>
         <th>Тип юр. лица</th>
         <th>Описание юр. лица</th>
+        <th>Добавить юзера в компани</th>
         <th>&nbsp;</th>
     </tr>
 <?php foreach($this->org as $c) { ?>
@@ -21,6 +22,8 @@ $this->headTitle($title);
                     array('action'=>'list', 'id' => $c['uuid']));?>"><?php echo $c['name']; ?></a></td>
             <td></td>
             <td></td>
+                         <td><a href="<?php echo $this->url('company_user',
+                                                array('action'=>'add', 'org_id' => $c['uuid']));?>">Добавить</a></td>
             <td>
                 <a href="<?php echo $this->url('company',
                     array('action'=>'edit', 'id' => $c['uuid']));?>">Редактировать</a>

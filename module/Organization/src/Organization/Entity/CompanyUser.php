@@ -14,7 +14,7 @@ class CompanyUser
     public function __construct($org_id,$user_id)
     {
 
-        $this->setOrgId(new \MongoId($org_id));
+        $this->setCompanyId(new \MongoId($org_id));
         $this->setUserId(new \MongoId($user_id));
     }
     /**
@@ -70,9 +70,9 @@ class CompanyUser
      * @param int $id
      * @return UserInterface
      */
-    public function setOrgId($orgId)
+    public function setCompanyId($companyId)
     {
-        $this->orgId = $orgId;
+        $this->companyId = $companyId;
         return $this;
     }
 
@@ -90,11 +90,6 @@ class CompanyUser
     public function getCompanyId()
     {
         return $this->companyId;
-    }
-    function setCompanyId($companyId)
-    {
-        $this->companyId = $companyId;
-        return $this;
     }
 
     public function getUserRights()

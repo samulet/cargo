@@ -34,14 +34,13 @@ $this->headTitle($title);
 <table class="table">
 <tr>
                 <th>Добавить юр. лицо</th>
-                <th>Добавить юзера в организацию</th>
+
 
                 </tr>
                 <tr>
                 <td><a href="<?php echo $this->url('company',
                                     array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
-                            <td><a href="<?php echo $this->url('company_user',
-                                    array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
+
 
                         </tr>
 

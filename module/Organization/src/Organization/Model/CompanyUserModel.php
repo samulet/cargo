@@ -30,7 +30,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
-    public function addUserToOrg($post, $org_id)
+    public function addUserToCompany($post, $org_id)
     {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
