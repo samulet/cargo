@@ -321,20 +321,6 @@ return array(
                 'resource'   => 'route/addList',
             ),
             array(
-                'label' => 'Заявка Постоянно (загрузка)',
-                'route' => 'addList',
-                'action' => 'my-fields',
-                'params' => array('id' => 'tick-always'),
-                'resource'   => 'route/addList',
-            ),
-            array(
-                'label' => 'Заявка Готов к загрузке',
-                'route' => 'addList',
-                'action' => 'my-fields',
-                'params' => array('id' => 'tick-prepare'),
-                'resource'   => 'route/addList',
-            ),
-            array(
                 'label' => 'Статус предложения',
                 'route' => 'addList',
                 'action' => 'my-fields',
