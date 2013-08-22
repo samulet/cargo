@@ -189,16 +189,22 @@ class TicketModel implements ServiceLocatorAwareInterface
         $prop_array['typeTicket']=$prop_array_split['typeTicket'];
         $prop_array['formPay']=$prop_array_split['formPay'];
         $prop_array['type']=$prop_array_split['type'];
-        $lastItemNumber=$orgModel->getOrganization($owner_org_id)['lastItemNumber'];
-        $lastItemNumber++;
-        $prop_array['numberInt']=$lastItemNumber;
-        $orgModel->increaseLastItemNumber($owner_org_id,$lastItemNumber);
+        $prop_array['rate']=$prop_array_split['rate'];
+        if(!empty($prop_array_split['includeNds'])) {
+            $prop_array['includeNds']=$prop_array_split['includeNds'];
+        }
+
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
             $res = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(
                 array('uuid' => $id)
             );
         } else {
+            $lastItemNumber=$orgModel->getOrganization($owner_org_id)['lastItemNumber'];
+            $lastItemNumber++;
+            $prop_array['numberInt']=$lastItemNumber;
+            $orgModel->increaseLastItemNumber($owner_org_id,$lastItemNumber);
             $res = new Ticket();
         }
         foreach ($prop_array as $key => $value) {
