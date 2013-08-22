@@ -34,10 +34,10 @@ return array(
                     ),
                     array(
                         'label' => 'Аккаунты',
-                        'route' => 'organization',
+                        'route' => 'account',
                         'group' => 'right',
                         'params' => array('id' => null),
-                        'resource'   => 'route/organization',
+                        'resource'   => 'route/account',
                     ),
                     array(
                         'label' => '',
@@ -68,10 +68,10 @@ return array(
         'sidebar' => array(
             array(
                 'label' => 'Организация',
-                'route' => 'organization',
+                'route' => 'account',
                 'action' => 'index',
                 'params' => array('id' => null),
-                'resource'   => 'route/organization',
+                'resource'   => 'route/account',
             ),
             array(
                 'label' => 'Доска оповещений',

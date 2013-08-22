@@ -134,7 +134,7 @@ if(empty($parentList)) {
                 if(empty($fi['global'])) {
                 ?>
                     <a href="<?php echo $this->url(
-                        'organization',
+                        'account',
                         array('action' => 'list', 'id' => $fi['ownerOrgId']['uuid'])
                     );?>"><?php echo $fi['ownerOrgId']['name'] ?></a>
                 <?php } else {

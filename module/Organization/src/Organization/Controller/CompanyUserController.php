@@ -89,10 +89,10 @@ class CompanyUserController extends AbstractActionController
         $comUserModel = $this->getCompanyUserModel();
         if($param=='full') {
             $comUserModel->deleteUserFull($userId);
-            return $this->redirect()->toUrl('/organization/user/all/list');
+            return $this->redirect()->toUrl('/account/user/all/list');
         } else {
             $comUserModel->deleteUserFromOrg($userId);
-            return $this->redirect()->toUrl('/organization');
+            return $this->redirect()->toUrl('/account');
         }
     }
 
@@ -146,7 +146,7 @@ class CompanyUserController extends AbstractActionController
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $post=$this->getRequest()->getPost();
         $comUserModel->addRole($userId,$post);
-        return $this->redirect()->toUrl('/organization');
+        return $this->redirect()->toUrl('/account');
     }
 
 }

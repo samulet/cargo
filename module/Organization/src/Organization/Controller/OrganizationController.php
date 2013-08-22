@@ -96,13 +96,13 @@ namespace Organization\Controller {
             $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
             $org_id = $orgModel->getOrgIdByUUID($org_uuid);
             $orgModel->deleteOrganization($org_id);
-            return $this->redirect()->toUrl('/organization');
+            return $this->redirect()->toUrl('/account');
         }
         public function addIntNumberAction()
         {
             $orgModel = $this->getOrganizationModel();
             $orgModel->addIntNumber();
-            return $this->redirect()->toUrl('/organization');
+            return $this->redirect()->toUrl('/account');
         }
 
         public function createOrganizationAction()

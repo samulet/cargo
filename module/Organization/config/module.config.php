@@ -11,10 +11,10 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'organization' => array(
+            'account' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/organization[/:action][/:id]',
+                    'route' => '/account[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
@@ -28,7 +28,7 @@ return array(
             'company' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/organization[/:org_id]/company[/:action][/:id]',
+                    'route' => '/account[/:org_id]/company[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
@@ -43,7 +43,7 @@ return array(
             'company_user' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/organization/user[/:org_id][/:action][/:param]',
+                    'route' => '/account/user[/:org_id][/:action][/:param]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'org_id' => '[a-z0-9]*',
@@ -66,7 +66,7 @@ return array(
             ),
             'BjyAuthorize\Guard\Route' => array(
                // forwarder, carrier, customer
-                array('route' => 'organization', 'roles' => array('user','admin','forwarder','carrier','customer')),
+                array('route' => 'account', 'roles' => array('user','admin','forwarder','carrier','customer')),
                 array('route' => 'company', 'roles' => array('user','admin','forwarder','carrier','customer')),
                 array('route' => 'company_user', 'roles' => array('user','admin','forwarder','carrier','customer')),
             ),
@@ -87,7 +87,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'organization' => __DIR__ . '/../view',
+            'account' => __DIR__ . '/../view',
         ),
     ),
     'module_layouts' => array(

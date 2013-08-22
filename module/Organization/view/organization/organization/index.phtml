@@ -4,7 +4,7 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
- <?php if(empty($this->org)) { ?>   <a href="<?php echo $this->url('organization', array('action'=>'add'));?>">Добавить организацию</a>
+ <?php if(empty($this->org)) { ?>   <a href="<?php echo $this->url('account', array('action'=>'add'));?>">Добавить организацию</a>
  <?php } ?>
 </p>
 
@@ -18,14 +18,14 @@ $this->headTitle($title);
                 <th>&nbsp;</th>
             </tr>
         <tr>
-            <td><a href="<?php echo $this->url('organization',
+            <td><a href="<?php echo $this->url('account',
                     array('action'=>'list', 'id' => $o['uuid']));?>"><?php echo $o['name']; ?></a></td>
             <td><?php echo $o['type']; ?></td>
             <td><?php echo $o['description']; ?></td>
                                         <td>
-                                            <a href="<?php echo $this->url('organization',
+                                            <a href="<?php echo $this->url('account',
                                                 array('action'=>'edit', 'id' => $o['uuid']));?>">Редактировать</a>
-                                            <a href="<?php echo $this->url('organization',
+                                            <a href="<?php echo $this->url('account',
                                                 array('action'=>'delete', 'id' => $o['uuid']));?>">Удалить</a>
                                         </td>
             </tr>
