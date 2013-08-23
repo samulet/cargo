@@ -36,13 +36,14 @@ $this->headTitle($title);
                 <th>Добавить юр. лицо</th>
 
 <th>Добавить админа к аккаунту</th>
+<th>Список админов</th>
                 </tr>
                 <tr>
                 <td><a href="<?php echo $this->url('company',
                                     array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
                          <td><a href="<?php echo $this->url('company_user',
                                                 array('action'=>'add', 'org_id' => $o['uuid'] , 'param' => 'admin'));?>">Добавить</a></td>
-
+  <td><a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$o['uuid'], 'param' => 'admin'));?>">Посмотреть админов</a></td>
                         </tr>
 
 </table>
