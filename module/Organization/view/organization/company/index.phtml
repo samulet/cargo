@@ -23,7 +23,7 @@ $this->headTitle($title);
             <td></td>
             <td></td>
                          <td><a href="<?php echo $this->url('company_user',
-                                                array('action'=>'add', 'org_id' => $c['uuid']));?>">Добавить</a></td>
+                                                array('action'=>'add', 'org_id' => $c['uuid'], 'param' => 'admin'));?>">Добавить</a></td>
             <td>
                 <a href="<?php echo $this->url('company',
                     array('action'=>'edit', 'id' => $c['uuid']));?>">Редактировать</a>

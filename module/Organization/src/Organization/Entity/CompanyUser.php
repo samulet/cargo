@@ -11,10 +11,15 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 */
 class CompanyUser
 {
-    public function __construct($org_id,$user_id)
+    public function __construct($org_id,$user_id, $param)
     {
 
-        $this->setCompanyId(new \MongoId($org_id));
+
+        if($param=='admin') {
+                $this->orgId=new \MongoId($org_id);
+        } else {
+                $this->setCompanyId(new \MongoId($org_id));
+        }
         $this->setUserId(new \MongoId($user_id));
     }
     /**

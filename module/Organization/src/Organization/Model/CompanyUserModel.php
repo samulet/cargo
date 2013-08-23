@@ -30,12 +30,12 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
-    public function addUserToCompany($post, $org_id)
+    public function addUserToCompany($post, $org_id,$param)
     {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (is_object($post)) {
-            // TODO: проверить на наличие ключа 'email' и наличие в нем содержимого
+
             $post=get_object_vars($post);
 
             $user_id = $this->findUserByEmail($post['company_user']['email']);
@@ -44,7 +44,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
         }
         if ($user_id) {
-            $comUser = new CompanyUser($org_id, $user_id);
+            $comUser = new CompanyUser($org_id, $user_id,$param);
         } else {
             return false;
         }

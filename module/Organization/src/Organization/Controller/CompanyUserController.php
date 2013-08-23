@@ -36,9 +36,11 @@ class CompanyUserController extends AbstractActionController
         $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $form = new CompanyUserCreate();
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $param = $this->getEvent()->getRouteMatch()->getParam('param');
         return new ViewModel(array(
             'form' => $form,
-            'org_id' => $org_uuid
+            'org_id' => $org_uuid,
+            'param' =>$param
         ));
     }
 
@@ -47,14 +49,20 @@ class CompanyUserController extends AbstractActionController
         $post = $this->getRequest()->getPost();
         $this->loginControl();
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $param = $this->getEvent()->getRouteMatch()->getParam('param');
         $uuid_gen = new UuidGenerator();
         if (!$uuid_gen->isValid($org_uuid)) {
             $result = "Ошибка";
         } else {
             $orgModel = $this->getOrganizationModel();
-            $org_id = $orgModel->getComIdByUUID($org_uuid);
+            if($param=='admin') {
+                $org_id = $orgModel->getOrgIdByUUID($org_uuid);
+            } else {
+                $org_id = $orgModel->getComIdByUUID($org_uuid);
+            }
+
             $comUserModel = $this->getCompanyUserModel();
-            if ($comUserModel->addUserToCompany($post, $org_id)) {
+            if ($comUserModel->addUserToCompany($post, $org_id,$param)) {
                 $result = "Успешо";
             } else {
                 $result = "Ошибка";

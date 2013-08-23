@@ -1,7 +1,7 @@
 <?php
-
+$param=$this->param;
 $form = $this->form;
-$form->setAttribute('action', $this->url('company_user', array('action' => 'addUser', 'org_id' => $this->org_id)))
+$form->setAttribute('action', $this->url('company_user', array('action' => 'addUser', 'org_id' => $this->org_id, 'param' =>$param)))
     ->prepare();
 
 echo $this->form()->openTag($form);
