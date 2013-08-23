@@ -78,7 +78,12 @@ class CompanyUserController extends AbstractActionController
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
         if($org_uuid!="all") {
             $orgModel = $this->getOrganizationModel();
-            $orgId = $orgModel->getOrgIdByUUID($org_uuid);
+            if($param=='current') {
+                $orgId = $orgModel->getComIdByUUID($org_uuid);
+            } else {
+                $orgId = $orgModel->getOrgIdByUUID($org_uuid);
+            }
+
 
         } else {
             $orgId='all';
@@ -87,14 +92,13 @@ class CompanyUserController extends AbstractActionController
         $comUserModel = $this->getCompanyUserModel();
 
         if(($param=='user')&&($org_uuid!="all")) {
-
-            $users=$comUserModel->getAllUsersByComId($orgId);
+            $users=$comUserModel->getAllUsersByOrgId($orgId);
         } elseif(($param=='admin')&&($org_uuid!="all")) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
         } elseif(empty($param)&&($orgId=='all')) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
         } elseif(($param=='current')&&($org_uuid!="all")) {
-
+            $users=$comUserModel->getUsersByComId($orgId);
         }
         return new ViewModel(array(
             'users' => $users,

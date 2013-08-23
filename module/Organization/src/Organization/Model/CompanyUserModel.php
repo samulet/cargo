@@ -30,6 +30,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
     protected $organizationModel;
+    protected $companyModel;
 
     public function addUserToCompany($post, $org_id,$param)
     {
@@ -76,7 +77,26 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getAllUsersByComId($orgId) {
+    public function getUsersByComId($orgId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $comModel = $this->getCompanyModel();
+        $company=$comModel->getCompany($orgId);
+
+        $orgModel = $this->getOrganizationModel();
+        $orgName=$orgModel->getOrganization($company['ownerOrgId']);
+        $result=array();
+        $users = $objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('companyId' => new \MongoId($orgId)));
+        foreach($users as $userT) {
+            $user=$objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userT->userId)));
+            if(!empty($user)) {
+                $us=array('id'=>$user->getId(), 'username'=> $user->getUsername(), 'displayName'=>$user->getDisplayName(),'email'=>$user->getEmail(),'orgName'=> $orgName['name'], 'comName'=>$company['name']);
+                array_push($result,$us);
+            }
+        }
+
+        return $result;
+    }
+    public function getAllUsersByOrgId($orgId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $com=$objectManager->getRepository('Organization\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($orgId)));
         if(empty($com)) {
@@ -186,4 +206,13 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
         return $this->organizationModel;
     }
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
+    }
+
 }
