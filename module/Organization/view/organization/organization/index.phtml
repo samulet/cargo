@@ -55,7 +55,7 @@ $this->headTitle($title);
                        </tr>
                        <tr>
                        <td><a href="<?php echo $this->url('company', array('action'=>'index','org_id'=>$o['uuid']));?>">Посмотреть юр. лица</a></td>
-                                   <td><a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$o['uuid']));?>">Посмотреть юзеров</a></td>
+                                   <td><a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$o['uuid'], 'param' => 'user'));?>">Посмотреть юзеров</a></td>
 
                                </tr>
 

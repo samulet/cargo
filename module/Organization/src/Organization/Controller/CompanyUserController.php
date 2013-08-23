@@ -85,7 +85,17 @@ class CompanyUserController extends AbstractActionController
             $this->layout('layout/admin');
         }
         $comUserModel = $this->getCompanyUserModel();
-        $users=$comUserModel->getUsersByOrgId($orgId,$param);
+
+        if(($param=='user')&&($org_uuid!="all")) {
+
+            $users=$comUserModel->getAllUsersByComId($orgId);
+        } elseif(($param=='admin')&&($org_uuid!="all")) {
+            $users=$comUserModel->getUsersByOrgId($orgId,$param);
+        } elseif(empty($param)&&($orgId=='all')) {
+            $users=$comUserModel->getUsersByOrgId($orgId,$param);
+        } elseif(($param=='current')&&($org_uuid!="all")) {
+
+        }
         return new ViewModel(array(
             'users' => $users,
             'org_uuid'=>$org_uuid

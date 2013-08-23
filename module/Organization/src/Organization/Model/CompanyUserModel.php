@@ -29,6 +29,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     }
 
     protected $serviceLocator;
+    protected $organizationModel;
 
     public function addUserToCompany($post, $org_id,$param)
     {
@@ -73,6 +74,29 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     public function getServiceLocator()
     {
         return $this->serviceLocator;
+    }
+
+    public function getAllUsersByComId($orgId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $com=$objectManager->getRepository('Organization\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($orgId)));
+        if(empty($com)) {
+            return null;
+        }
+        $orgModel = $this->getOrganizationModel();
+        $orgName=$orgModel->getOrganization($orgId);
+
+        $result=array();
+        foreach($com as $c) {
+            $users = $objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('companyId' => new \MongoId($c->id)));
+            foreach($users as $userT) {
+                $user=$objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userT->userId)));
+                if(!empty($user)) {
+                    $us=array('id'=>$user->getId(), 'username'=> $user->getUsername(), 'displayName'=>$user->getDisplayName(),'email'=>$user->getEmail(),'orgName'=> $orgName['name'], 'comName'=>$c->name);
+                    array_push($result,$us);
+                }
+            }
+        }
+        return $result;
     }
 
     public function getUsersByOrgId($orgId,$param){
@@ -152,5 +176,14 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             array('id' => new \MongoId($userId))
         );
         return $userObject->getRoles();
+    }
+
+    public function getOrganizationModel()
+    {
+        if (!$this->organizationModel) {
+            $sm = $this->getServiceLocator();
+            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+        }
+        return $this->organizationModel;
     }
 }
