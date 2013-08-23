@@ -52,7 +52,7 @@ class CompanyUserController extends AbstractActionController
             $result = "Ошибка";
         } else {
             $orgModel = $this->getOrganizationModel();
-            $org_id = $orgModel->getOrgIdByUUID($org_uuid);
+            $org_id = $orgModel->getComIdByUUID($org_uuid);
             $comUserModel = $this->getCompanyUserModel();
             if ($comUserModel->addUserToCompany($post, $org_id)) {
                 $result = "Успешо";
