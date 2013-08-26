@@ -30,7 +30,12 @@ namespace Organization\Controller {
             ));
 
         }
-
+    public function addAccountAction() {
+        return $this->redirect()->toUrl('/account/add');
+    }
+        public function choiceOrgAndCompanyAction() {
+            return $this->redirect()->toUrl('/account/add');
+        }
         private function loginControl()
         {
             if ($this->zfcUserAuthentication()->hasIdentity()) {

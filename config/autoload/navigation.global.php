@@ -67,9 +67,16 @@ return array(
         ),
         'sidebar' => array(
             array(
-                'label' => 'Организация',
+                'label' => 'Аккаунт',
                 'route' => 'account',
                 'action' => 'index',
+                'params' => array('id' => null),
+                'resource'   => 'route/account',
+            ),
+            array(
+                'label' => 'Создать аккаунт',
+                'route' => 'account',
+                'action' => 'addAccount',
                 'params' => array('id' => null),
                 'resource'   => 'route/account',
             ),

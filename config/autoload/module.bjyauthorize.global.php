@@ -34,6 +34,7 @@ return array(
                                 'owner' => array(
                                     'children' => array(
                                         'admin' => array(),
+                                        'orgAdmin'  => array(),
                                     ),
                                 ),
                             ),

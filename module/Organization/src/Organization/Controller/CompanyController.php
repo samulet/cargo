@@ -41,6 +41,10 @@ class CompanyController extends AbstractActionController
         ));
     }
 
+    public function choiceOrgAndComAction() {
+
+    }
+
     public function addAction()
     {
         $builder = new AnnotationBuilder();
