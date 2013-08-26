@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 */
 class CompanyUser
 {
-    public function __construct($org_id,$user_id, $param)
+    public function __construct($org_id,$user_id, $param, $roles)
     {
 
 
@@ -21,6 +21,7 @@ class CompanyUser
                 $this->setCompanyId(new \MongoId($org_id));
         }
         $this->setUserId(new \MongoId($user_id));
+        $this->roles=$roles;
     }
     /**
      * @ODM\Id
@@ -48,6 +49,11 @@ class CompanyUser
      * @var int
      */
     public $orgId;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    public $roles;
 
     public function getId()
     {

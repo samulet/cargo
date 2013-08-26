@@ -58,7 +58,12 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
 
         if ($user_id) {
-            $comUser = new CompanyUser($org_id, $user_id,$param);
+            if($param='admin') {
+                $roles=array('orgAdmin');
+            } else {
+                $roles=array();
+            }
+            $comUser = new CompanyUser($org_id, $user_id,$param,$roles);
         } else {
             return false;
         }
