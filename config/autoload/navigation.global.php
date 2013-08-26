@@ -81,7 +81,7 @@ return array(
                 'resource'   => 'route/account',
             ),
             array(
-                'label' => 'Выбрать организацию и аккаунт',
+                'label' => 'Выбрать аккаунт и компанию',
                 'route' => 'account',
                 'action' => 'choiceOrgAndCompany',
                 'params' => array('id' => null),

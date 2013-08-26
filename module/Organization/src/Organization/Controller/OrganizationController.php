@@ -12,6 +12,8 @@ namespace Organization\Controller {
         protected $organizationModel;
         protected $ticketModel;
         protected $resourceModel;
+        protected $addListModel;
+        protected $companyUserModel;
 
         public function indexAction()
         {
@@ -38,6 +40,13 @@ namespace Organization\Controller {
             $post = $this->getRequest()->getPost();
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('User\Entity\User');
+            $orgModel = $this->getOrganizationModel();
+            $orgModel->addBootstrap3Class($form);
+            $addListModel = $this->getAddListModel();
+            $comUserModel = $this->getCompanyUserModel();
+            $org=$comUserModel->getOrgWenUserConsist($this->zfcUserAuthentication()->getIdentity()->getId());
+            die(var_dump($org));
+            //$com
             return new ViewModel(array(
                 'form' => $form
             ));
@@ -133,7 +142,7 @@ namespace Organization\Controller {
                 $org_id
             )
             ) {
-                $result = "Успешо";
+                $result = "Успешо, если желаете сменить аккаунт и компанию, перейдите в 'Выбрать аккаунт и компанию'";
             } else {
                 $result = "Ошибка";
             }
@@ -161,6 +170,21 @@ namespace Organization\Controller {
             }
             return $this->ticketModel;
         }
-
+        public function getAddListModel()
+        {
+            if (!$this->addListModel) {
+                $sm = $this->getServiceLocator();
+                $this->addListModel = $sm->get('AddList\Model\AddListModel');
+            }
+            return $this->addListModel;
+        }
+        public function getCompanyUserModel()
+        {
+            if (!$this->companyUserModel) {
+                $sm = $this->getServiceLocator();
+                $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            }
+            return $this->companyUserModel;
+        }
     }
 }

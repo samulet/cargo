@@ -10,6 +10,7 @@ echo $this->form()->openTag($form);
 
 
     echo $this->formRow($form->get('currentOrg'));
+    echo '<p>Сначала выберите организацию, и сохранить результат, после этого будут доступны компании</p>';
     echo $this->formRow($form->get('currentCom'));
 
     echo $this->formElement($form->get('submit'));

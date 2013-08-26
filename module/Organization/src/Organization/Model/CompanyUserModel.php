@@ -84,6 +84,28 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
     }
 
+    public function getOrgWenUserConsist($userId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $orgTmp =$objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('userId' => new \MongoId($userId)));
+        $orgModel = $this->getOrganizationModel();
+        $comModel = $this->getCompanyModel();
+        $resultArray=array();
+
+        foreach($orgTmp as $or) {
+            if(!empty($or->companyId)) {
+                $comTmp=$comModel->getCompany($or->companyId);
+                $orgLocal=$orgModel->getOrganization($comTmp['ownerOrgId']);
+                $resultArray=$resultArray+array($orgLocal['id'] => $orgLocal['name']);
+            } elseif(!empty($or->orgId)) {
+                $orgLocal=$orgModel->getOrganization($or->orgId);
+
+                $resultArray=$resultArray+array($orgLocal['id'] => $orgLocal['name']);
+            }
+        }
+
+        return array_unique($resultArray);
+    }
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;

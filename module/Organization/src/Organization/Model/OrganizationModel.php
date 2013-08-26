@@ -145,14 +145,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         if (empty($user)) {
             return null;
         }
-        return array(
-            'uuid' => $org->getUUID(),
-            'description' => $org->getDescription(),
-            'type' => $org->getType(),
-            'name' => $org->getName(),
-            'orgOwner' => $user->getDisplayName(),
-            'lastItemNumber' =>$org->lastItemNumber
-        );
+        return get_object_vars($org);
     }
 
     public function addIntNumber() {
@@ -263,7 +256,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     }
     public function addBootstrap3Class(&$form) {
 
-        foreach ($form->get('organization') as $el) {
+        foreach ($form as $el) {
             $attr=$el->getAttributes();
             if(!empty($attr['type'])) {
                 if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
