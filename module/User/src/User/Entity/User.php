@@ -74,6 +74,28 @@ class User implements UserInterface, ProviderInterface
      */
     public $submit;
     /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Выберите организацию от которой вы работаете"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $currentOrg;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Выберите компанию от которой вы работаете"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $currentCom;
+    /**
      * Initialies the roles variable.
      */
     public function __construct()

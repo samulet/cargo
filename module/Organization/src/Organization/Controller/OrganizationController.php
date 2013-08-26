@@ -5,6 +5,7 @@ namespace Organization\Controller {
     use Organization\Form\OrganizationCreate;
     use Zend\Mvc\Controller\AbstractActionController;
     use Zend\View\Model\ViewModel;
+    use Zend\Form\Annotation\AnnotationBuilder;
 
     class OrganizationController extends AbstractActionController
     {
@@ -34,7 +35,12 @@ namespace Organization\Controller {
         return $this->redirect()->toUrl('/account/add');
     }
         public function choiceOrgAndCompanyAction() {
-
+            $post = $this->getRequest()->getPost();
+            $builder = new AnnotationBuilder();
+            $form = $builder->createForm('User\Entity\User');
+            return new ViewModel(array(
+                'form' => $form
+            ));
         }
         private function loginControl()
         {
