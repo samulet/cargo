@@ -84,6 +84,31 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
     }
 
+    public function addOrgAndCompanyToUser($post,$userId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $post=get_object_vars($post);
+        unset($post['submit']);
+        if(empty($post)) {
+            return null;
+        }
+        if(!empty($post['currentOrg'])) {
+            $objectManager->getRepository('User\Entity\User')->createQueryBuilder()
+                ->findAndUpdate()
+                ->field('id')->equals(new \MongoId($userId))
+                ->field('currentOrg')->set($post['currentOrg'])
+                ->getQuery()
+                ->execute();
+        }
+        if(!empty($post['currentCom'])) {
+            $objectManager->getRepository('User\Entity\User')->createQueryBuilder()
+                ->findAndUpdate()
+                ->field('id')->equals(new \MongoId($userId))
+                ->field('currentCom')->set($post['currentCom'])
+                ->getQuery()
+                ->execute();
+        }
+    }
+
     public function getOrgWenUserConsist($userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $orgTmp =$objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('userId' => new \MongoId($userId)));
@@ -106,6 +131,10 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return array_unique($resultArray);
     }
 
+    public function getComWenUserConsist($orgId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+
+    }
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;

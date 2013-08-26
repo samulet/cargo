@@ -6,6 +6,7 @@ namespace Organization\Controller {
     use Zend\Mvc\Controller\AbstractActionController;
     use Zend\View\Model\ViewModel;
     use Zend\Form\Annotation\AnnotationBuilder;
+    use AddList\Form\AddListForm;
 
     class OrganizationController extends AbstractActionController
     {
@@ -37,16 +38,29 @@ namespace Organization\Controller {
         return $this->redirect()->toUrl('/account/add');
     }
         public function choiceOrgAndCompanyAction() {
+
             $post = $this->getRequest()->getPost();
+            $comUserModel = $this->getCompanyUserModel();
+            $orgModel = $this->getOrganizationModel();
+
+
+            if(!empty($post)) {
+                $comUserModel->addOrgAndCompanyToUser($post,$this->zfcUserAuthentication()->getIdentity()->getId());
+            }
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('User\Entity\User');
-            $orgModel = $this->getOrganizationModel();
             $orgModel->addBootstrap3Class($form);
-            $addListModel = $this->getAddListModel();
-            $comUserModel = $this->getCompanyUserModel();
+
             $org=$comUserModel->getOrgWenUserConsist($this->zfcUserAuthentication()->getIdentity()->getId());
-            die(var_dump($org));
-            //$com
+            $fillFrom=new AddListForm();
+            $form=$fillFrom->fillOrg($form,$org);
+            $currentOrg=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+            if(!empty($currentOrg)) {
+                $form->get('currentOrg')->setValue($currentOrg);
+                $com=$comUserModel->getComWenUserConsist($currentOrg);
+            }
+            $currentCom=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+
             return new ViewModel(array(
                 'form' => $form
             ));

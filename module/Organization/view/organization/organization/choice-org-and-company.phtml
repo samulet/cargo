@@ -3,13 +3,13 @@ $form->setAttribute('action', $this->url('account', array('action' => 'choiceOrg
     ->prepare();
 
 echo $this->form()->openTag($form);
-
+$currentOrg=$form->get('currentOrg')->setAttributes(array('onclick' =>"$('select[name=currentCom]').html('<option>Сначала выберите организацию и сохраните результат</option>');"));
 ?>
 <div class="companyAdd">
     <?php
 
 
-    echo $this->formRow($form->get('currentOrg'));
+    echo $this->formRow($currentOrg);
     echo '<p>Сначала выберите организацию, и сохранить результат, после этого будут доступны компании</p>';
     echo $this->formRow($form->get('currentCom'));
 

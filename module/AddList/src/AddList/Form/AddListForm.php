@@ -42,6 +42,18 @@ class AddListForm
         return $form;
     }
 
+    public function fillOrg($form,$formData) {
+
+        $result_array=array(''=>'Выберите аккаунт');
+        foreach($formData as $key=>$value) {
+            $result_array=$result_array+array($key=>$value);
+        }
+        if($form->has('currentOrg')) {
+            $form->get('currentOrg')->setOptions(array("value_options"=>$result_array));
+        }
+        return $form;
+    }
+
     public function fillTS($form,$formData) {
 
         $result_array=array(''=>'Выберите ТС');
