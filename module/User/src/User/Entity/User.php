@@ -91,7 +91,6 @@ class User implements UserInterface, ProviderInterface
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Выберите компанию от которой вы работаете"})
-     * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
     public $currentCom;
@@ -113,6 +112,15 @@ class User implements UserInterface, ProviderInterface
         return $this->id;
     }
 
+    public function getCurrentOrg()
+    {
+        return $this->currentOrg;
+    }
+
+    public function getCurrentCom()
+    {
+        return $this->currentCom;
+    }
     /**
      * Set id.
      *
