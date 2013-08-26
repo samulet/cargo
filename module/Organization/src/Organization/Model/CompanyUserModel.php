@@ -45,8 +45,8 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             $user_id = $post;
 
         }
-        $orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('orgId' => new \MongoId($org_id), 'userId' => new \MongoId($user_id)));
-        $comTest =$objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('companyId' => new \MongoId($org_id), 'userId' => new \MongoId($user_id)));
+        $orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($org_id), 'userId' => new \MongoId($user_id)));
+        $comTest =$objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('companyId' => new \MongoId($org_id), 'userId' => new \MongoId($user_id)));
         if(!empty($orgTest)) {
             return false;
         }
