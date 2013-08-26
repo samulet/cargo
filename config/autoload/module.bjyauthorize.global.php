@@ -27,6 +27,7 @@ return array(
                     'children' => array(
                         'stuff' => array(
                             'children' => array(
+                                'inner',
                                 'forwarder',
                                 'carrier',
                                 'customer',

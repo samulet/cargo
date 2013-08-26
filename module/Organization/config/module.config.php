@@ -60,15 +60,15 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Organization\Controller\Organization','roles' => array('user','admin')),
-                array('controller' => 'Organization\Controller\Company','roles' => array('user','admin')),
-                array('controller' => 'Organization\Controller\CompanyUser','roles' => array('user','admin')),
+                array('controller' => 'Organization\Controller\Organization','roles' => array('inner','admin')),
+                array('controller' => 'Organization\Controller\Company','roles' => array('inner','admin')),
+                array('controller' => 'Organization\Controller\CompanyUser','roles' => array('inner','admin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
                // forwarder, carrier, customer
-                array('route' => 'account', 'roles' => array('user','admin','forwarder','carrier','customer')),
-                array('route' => 'company', 'roles' => array('user','admin','forwarder','carrier','customer')),
-                array('route' => 'company_user', 'roles' => array('user','admin','forwarder','carrier','customer')),
+                array('route' => 'account', 'roles' => array('inner','admin','forwarder','carrier','customer')),
+                array('route' => 'company', 'roles' => array('inner','admin','forwarder','carrier','customer')),
+                array('route' => 'company_user', 'roles' => array('inner','admin','forwarder','carrier','customer')),
             ),
         ),
     ),

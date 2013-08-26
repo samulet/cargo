@@ -1,4 +1,7 @@
 <?php
+
+namespace User;
+
 return array(
     'controllers' => array(
         'invokables' => array(

@@ -48,12 +48,12 @@ return array(
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','add','search', 'getResults','getExcel'),'roles' => array('carrier','admin')),
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('my','add','edit','delete','copy','list','getExcel'),'roles' => array('customer')),
 
-                array('controller' => 'Ticket\Controller\Cargo', 'action' => array('index'), 'roles' => array('user','admin')),
+                array('controller' => 'Ticket\Controller\Cargo', 'action' => array('index'), 'roles' => array('inner','admin')),
                 array('controller' => 'Ticket\Controller\Cargo', 'action' => array('my','add', 'edit', 'list', 'delete', 'addCargo', 'copy'), 'roles' => array('customer','admin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route'=> 'ticket','roles' => array('user')),
-                array('route' => 'cargo', 'roles' => array('user')),
+                array('route'=> 'ticket','roles' => array('inner')),
+                array('route' => 'cargo', 'roles' => array('inner')),
             ),
 
         ),
