@@ -81,6 +81,14 @@ return array(
                 'resource'   => 'route/account',
             ),
             array(
+                'label' => 'Выбрать организацию и аккаунт',
+                'route' => 'account',
+                'action' => 'choiceOrgAndCompany',
+                'params' => array('id' => null),
+                'resource'   => 'route/account',
+            ),
+
+            array(
                 'label' => 'Доска оповещений',
                 'route' => 'notification',
                 'action' => 'my',

@@ -61,10 +61,9 @@ return array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
                 array('controller' => 'Organization\Controller\Organization','action'=>array('index','add', 'edit','list','delete','addIntNumber','createOrganization'), 'roles' => array('admin','orgAdmin')),
-                array('controller' => 'Organization\Controller\Organization','action'=>array('addAccount','add','createOrganization'), 'roles' => array('user')),
+                array('controller' => 'Organization\Controller\Organization','action'=>array('addAccount','add','createOrganization','choiceOrgAndCompany'), 'roles' => array('user','inner')),
                 array('controller' => 'Organization\Controller\Company','roles' => array('admin','orgAdmin')),
                 array('controller' => 'Organization\Controller\CompanyUser','roles' => array('admin','orgAdmin')),
-
             ),
             'BjyAuthorize\Guard\Route' => array(
                // forwarder, carrier, customer
