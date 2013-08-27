@@ -1,11 +1,12 @@
 <?php
 $users=$this->users;
 $param=null;
-
+$comId=null;
 
 if($this->org_uuid=='all') {
     $param='full';
-
+} else {
+    $comId=$this->org_uuid;
 }
 
 ?>
@@ -33,11 +34,7 @@ foreach($users as $user) {
         <td><?php echo $user['username']; ?></td>
         <?php if($param!='full') { ?>
         <td><a href="<?php
-            if(empty($param)) {
-                echo $this->url('company_user', array('action'=>'role', 'org_id' =>$user['id']));
-            } elseif($param=='full') {
-                echo $this->url('company_user', array('action'=>'role', 'org_id' =>$user['id'], 'param' => 'admin'));
-            }
+                echo $this->url('company_user', array('action'=>'role', 'org_id' =>$user['id'], 'param' => 'company', 'comId'=>$comId));
 
             ?>
 

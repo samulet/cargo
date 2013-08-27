@@ -84,6 +84,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 }
             }
             if(!empty($roles)) {
+
                 foreach($oldRoles as &$oldRole) {
                     if($oldRole=='user') {
                         unset($oldRole);
@@ -92,9 +93,11 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                         unset($oldRole);
                     }
                 }
-                $oldRoles=$oldRoles+$roles;
+                $oldRoles=array_merge($oldRoles,$roles);
                 array_unshift($oldRoles,'inner');
+
                 $user->setRoles(array_unique($oldRoles));
+
                 $objectManager->persist($user);
                 $objectManager->flush();
             }
@@ -302,24 +305,40 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return $userObject->orgId;
     }
 
-    public function addRole($userId,$post) {
+    public function addRole($userId,$post,$comUuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $userObject = $objectManager->getRepository('User\Entity\User')->findOneBy(
-            array('id' => new \MongoId($userId))
-        );
         $roles=$post->roles;
-        array_unshift($roles,'inner');
-        $userObject->setRoles($roles);
-        $objectManager->persist($userObject);
-        $objectManager->flush();
+        $comModel = $this->getCompanyModel();
+        $comId=$comModel->getCompanyIdByUUID($comUuid);
+
+        $objectManager->getRepository('Organization\Entity\CompanyUser')->createQueryBuilder()
+            ->findAndUpdate()
+            ->field('companyId')->equals(new \MongoId($comId))
+            ->field('userId')->equals(new \MongoId($userId))
+            ->field('roles')->set($roles)
+            ->getQuery()
+            ->execute();
+        $user = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId), 'currentCom' =>new \MongoId($comId)));
+        if(!empty($user)) {
+            $this->updateUserRoles($roles,$userId,array("forwarder", "carrier", "customer" ));
+        }
     }
 
-    public function getRoles($userId) {
+    public function updateCompanyUserRoles($comId,$userId) {
+
+    }
+
+    public function getRoles($userId,$comUuid) {
+        if(empty($comUuid)) {
+            return null;
+        }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $userObject = $objectManager->getRepository('User\Entity\User')->findOneBy(
-            array('id' => new \MongoId($userId))
+        $comModel = $this->getCompanyModel();
+        $comId=$comModel->getCompanyIdByUUID($comUuid);
+        $rolesObject = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(
+            array('userId' => new \MongoId($userId),'companyId' =>new \MongoId($comId))
         );
-        return $userObject->getRoles();
+        return $rolesObject->roles;
     }
 
     public function getOrganizationModel()

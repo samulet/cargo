@@ -157,25 +157,29 @@ class CompanyUserController extends AbstractActionController
     public function roleAction() {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $adminParam = $this->getEvent()->getRouteMatch()->getParam('param');
+        $comId = $this->getEvent()->getRouteMatch()->getParam('comId');
+
         $builder = new AnnotationBuilder();
         if($adminParam=='admin') {
             $this->layout('layout/admin');
         }
         $form = $builder->createForm('User\Entity\User');
         $comUserModel = $this->getCompanyUserModel();
-        $roles=$comUserModel->getRoles($userId);
+        $roles=$comUserModel->getRoles($userId,$comId);
         return new ViewModel(array(
             'id' =>$userId,
             'form' =>$form,
-            'roles'=>$roles
+            'roles'=>$roles,
+            'comId'=>$comId
         ));
     }
 
     public function roleEditAction() {
         $comUserModel = $this->getCompanyUserModel();
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comId = $this->getEvent()->getRouteMatch()->getParam('comId');
         $post=$this->getRequest()->getPost();
-        $comUserModel->addRole($userId,$post);
+        $comUserModel->addRole($userId,$post,$comId);
         return $this->redirect()->toUrl('/account');
     }
 
