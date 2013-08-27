@@ -66,6 +66,15 @@ class User implements UserInterface, ProviderInterface
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"ADR",
+     *                      "value_options" : {"forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"1","2","3"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":"0"})
      */
     protected $roles;
     /**

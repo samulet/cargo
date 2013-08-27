@@ -2,10 +2,11 @@
 namespace Organization\Controller {
 
     use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+    use Zend\Form\Annotation\AnnotationBuilder;
     use Organization\Form\OrganizationCreate;
     use Zend\Mvc\Controller\AbstractActionController;
     use Zend\View\Model\ViewModel;
-    use Zend\Form\Annotation\AnnotationBuilder;
+
     use AddList\Form\AddListForm;
 
     class OrganizationController extends AbstractActionController
@@ -43,9 +44,10 @@ namespace Organization\Controller {
             $comUserModel = $this->getCompanyUserModel();
             $orgModel = $this->getOrganizationModel();
 
-
-            if(!empty($post)) {
+            $result=null;
+            if($this->getRequest()->isPost()) {
                 $comUserModel->addOrgAndCompanyToUser($post,$this->zfcUserAuthentication()->getIdentity()->getId());
+                $result='Успешно, продлжить выбор Аккаунта и Компании';
             }
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('User\Entity\User');
@@ -58,6 +60,7 @@ namespace Organization\Controller {
             if(!empty($currentOrg)) {
                 $form->get('currentOrg')->setValue($currentOrg);
                 $com=$comUserModel->getComWenUserConsist($currentOrg,$this->zfcUserAuthentication()->getIdentity()->getId());
+
                 if(!empty($com)) {
                     $form=$fillFrom->fillCom($form,$com);
                 }
@@ -68,7 +71,8 @@ namespace Organization\Controller {
                 $form->get('currentCom')->setValue($currentCom);
             }
             return new ViewModel(array(
-                'form' => $form
+                'form' => $form,
+                'result'=>$result
             ));
         }
         private function loginControl()

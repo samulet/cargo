@@ -58,7 +58,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
 
         if ($user_id) {
-            if($param='admin') {
+            if($param=='admin') {
                 $roles=array('orgAdmin');
             } else {
                 $roles=array();
@@ -135,7 +135,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $comUserTmp =$objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('userId' => new \MongoId($userId),'orgId' => null));
         $comModel = $this->getCompanyModel();
-        if(empty($comTmp)) {
+        if(empty($comUserTmp)) {
             return null;
         }
         $resultArray=array();
@@ -146,7 +146,8 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 $resultArray=$resultArray+array($comTmp['id'] => $comTmp['name']);
             }
         }
-        return $comTmp;
+
+        return $resultArray;
     }
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {

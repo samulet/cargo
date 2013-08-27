@@ -1,4 +1,7 @@
 <?php $form=$this->form;
+$result=$this->result;
+
+if(empty($result)) {
 $form->setAttribute('action', $this->url('account', array('action' => 'choiceOrgAndCompany')))
     ->prepare();
 
@@ -18,5 +21,10 @@ $currentOrg=$form->get('currentOrg')->setAttributes(array('onclick' =>"$('select
     ?>
 </div>
 <?php
+} else {
+?>
+    <a href="<?php echo $this->url('account', array('action' => 'choiceOrgAndCompany')); ?>"><?php echo $result; ?></a>
 
-?> <a href="<?php echo $this->url('account', array('action' => 'index')); ?>">Вернуться в аккаунт</a>
+<?php } ?>
+</br>
+<a href="<?php echo $this->url('account', array('action' => 'index')); ?>">Вернуться в аккаунт</a>

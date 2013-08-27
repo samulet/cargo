@@ -19,6 +19,7 @@ use Organization\Form\CompanyUserCreate;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
+
 use Zend\ModuleManager\ModuleManager;
 
 class CompanyUserController extends AbstractActionController
@@ -37,10 +38,13 @@ class CompanyUserController extends AbstractActionController
         $form = new CompanyUserCreate();
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
+        $builder = new AnnotationBuilder();
+        $formRoles = $builder->createForm('User\Entity\User');
         return new ViewModel(array(
             'form' => $form,
             'org_id' => $org_uuid,
-            'param' =>$param
+            'param' =>$param,
+            'formRoles' => $formRoles
         ));
     }
 
@@ -50,7 +54,10 @@ class CompanyUserController extends AbstractActionController
         $this->loginControl();
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
+
         $uuid_gen = new UuidGenerator();
+        $form=null;
+
         if (!$uuid_gen->isValid($org_uuid)) {
             $result = "Ошибка";
         } else {
@@ -58,6 +65,7 @@ class CompanyUserController extends AbstractActionController
             if($param=='admin') {
                 $org_id = $orgModel->getOrgIdByUUID($org_uuid);
             } else {
+
                 $org_id = $orgModel->getComIdByUUID($org_uuid);
             }
 
