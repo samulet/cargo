@@ -69,7 +69,7 @@ class User implements UserInterface, ProviderInterface
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"ADR",
+     * @Annotation\Options({"label":"Выберите роль добаляемого пользователя",
      *                      "value_options" : {"forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
@@ -83,8 +83,8 @@ class User implements UserInterface, ProviderInterface
      */
     public $submit;
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @ODM\ObjectId
+     * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
@@ -94,8 +94,8 @@ class User implements UserInterface, ProviderInterface
      */
     public $currentOrg;
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @ODM\ObjectId
+     * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
