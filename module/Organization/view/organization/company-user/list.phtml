@@ -1,6 +1,5 @@
 <?php
 $users=$this->users;
-$param=null;
 $comId=null;
 
 if($this->org_uuid=='all') {
@@ -34,7 +33,7 @@ foreach($users as $user) {
         <td><?php echo $user['username']; ?></td>
         <?php if($param!='full') { ?>
         <td><a href="<?php
-                echo $this->url('company_user', array('action'=>'role', 'org_id' =>$user['id'], 'param' => 'company', 'comId'=>$comId));
+                echo $this->url('company_user', array('action'=>'role', 'org_id' =>$user['id'], 'param' => $param, 'comId'=>$comId));
 
             ?>
 
@@ -45,7 +44,7 @@ foreach($users as $user) {
         <td><?php echo $user['orgName'].' / '.$user['comName']; ?></td>
         <?php }?>
         <td><a href="<?php echo $this->url('company_user',
-                array('action'=>'delete', 'org_id' => $user['id'], 'param' =>$param));?>">Удалить</a></td>
+                array('action'=>'delete', 'org_id' => $user['id'], 'param' =>$param, 'comId'=>$comId));?>">Удалить</a></td>
     </tr>
 <?php
 }

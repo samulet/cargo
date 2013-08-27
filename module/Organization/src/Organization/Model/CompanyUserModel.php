@@ -83,7 +83,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                     unset( $oldRoles[array_search($roleToDelete, $oldRoles )] );
                 }
             }
-            if(!empty($roles)) {
+
 
                 foreach($oldRoles as &$oldRole) {
                     if($oldRole=='user') {
@@ -100,7 +100,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
                 $objectManager->persist($user);
                 $objectManager->flush();
-            }
+
         }
     }
     public function findUserByEmail($email)
@@ -276,10 +276,39 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
-    public function deleteUserFromOrg($userId) {
+    public function deleteUserFromOrg($userId, $itemId,$param) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $user = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('userId' => new \MongoId($userId)));
-        if (!$user) {
+        if($param=='admin') {
+            $orgModel = $this->getOrganizationModel();
+            $orgId=$orgModel->getOrgIdByUUID($itemId);
+            $user = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('orgId'=> new \MongoId($orgId),'userId' => new \MongoId($userId)));
+            $userT = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId), 'currentOrg' =>new \MongoId($orgId)));
+            if(!empty($userT)) {
+                $this->updateUserRoles(array(),$userId,array("orgAdmin" ));
+
+                if(empty($userT->currentCom)) {
+                    $userT->currentOrg=null;
+                }
+
+                $objectManager->persist($userT);
+                $objectManager->flush();
+            }
+        } elseif(($param=='user') || ($param=='current')) {
+            $comModel = $this->getCompanyModel();
+            $comId=$comModel->getCompanyIdByUUID($itemId);
+            $user = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('companyId'=> new \MongoId($comId),'userId' => new \MongoId($userId)));
+            $userT = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId), 'currentCom' =>new \MongoId($comId)));
+            if(!empty($userT)) {
+                $this->updateUserRoles(array(),$userId,array("forwarder", "carrier", "customer" ));
+                $userT->currentCom=null;
+                if(!is_int(array_search('orgAdmin',$userT->getRoles()))) {
+                    $userT->currentOrg=null;
+                }
+                    $objectManager->persist($userT);
+                    $objectManager->flush();
+            }
+        }
+        if(!$user) {
             throw DocumentNotFoundException::documentNotFound('Organization\Entity\CompanyUser', $userId);
         }
         $objectManager->remove($user);

@@ -67,7 +67,6 @@ return array(
                 array('controller' => 'Organization\Controller\CompanyUser','roles' => array('admin','orgAdmin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
-               // forwarder, carrier, customer
                 array('route' => 'account', 'roles' => array('admin','orgAdmin')),
                 array('route' => 'company', 'roles' => array('admin','orgAdmin')),
                 array('route' => 'company_user', 'roles' => array('admin','orgAdmin')),

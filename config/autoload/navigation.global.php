@@ -248,7 +248,7 @@ return array(
                 'label' => 'Все юзеры',
                 'route' => 'company_user',
                 'action' => 'list',
-                'params' => array('org_id' => 'all'),
+                'params' => array('org_id' => 'all', 'param' =>'full'),
 
             ),
             array(

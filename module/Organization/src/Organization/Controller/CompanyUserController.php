@@ -102,26 +102,28 @@ class CompanyUserController extends AbstractActionController
             $users=$comUserModel->getAllUsersByOrgId($orgId);
         } elseif(($param=='admin')&&($org_uuid!="all")) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
-        } elseif(empty($param)&&($orgId=='all')) {
+        } elseif(($param=='full')&&($orgId=='all')) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
         } elseif(($param=='current')&&($org_uuid!="all")) {
             $users=$comUserModel->getUsersByComId($orgId);
         }
         return new ViewModel(array(
             'users' => $users,
-            'org_uuid'=>$org_uuid
+            'org_uuid'=>$org_uuid,
+            'param' =>$param
         ));
     }
 
     public function deleteAction() {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
+        $itemId = $this->getEvent()->getRouteMatch()->getParam('comId');
         $comUserModel = $this->getCompanyUserModel();
         if($param=='full') {
             $comUserModel->deleteUserFull($userId);
             return $this->redirect()->toUrl('/account/user/all/list');
         } else {
-            $comUserModel->deleteUserFromOrg($userId);
+            $comUserModel->deleteUserFromOrg($userId, $itemId,$param);
             return $this->redirect()->toUrl('/account');
         }
     }
