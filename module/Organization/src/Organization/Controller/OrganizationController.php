@@ -57,10 +57,16 @@ namespace Organization\Controller {
             $currentOrg=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
             if(!empty($currentOrg)) {
                 $form->get('currentOrg')->setValue($currentOrg);
-                $com=$comUserModel->getComWenUserConsist($currentOrg);
+                $com=$comUserModel->getComWenUserConsist($currentOrg,$this->zfcUserAuthentication()->getIdentity()->getId());
+                if(!empty($com)) {
+                    $form=$fillFrom->fillCom($form,$com);
+                }
+
             }
             $currentCom=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-
+            if(!empty($currentCom)) {
+                $form->get('currentCom')->setValue($currentCom);
+            }
             return new ViewModel(array(
                 'form' => $form
             ));
