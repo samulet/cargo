@@ -34,7 +34,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
     public function addUserToCompany($post, $org_id,$param)
     {
-
+        $roles=array();
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (is_object($post)) {
 
@@ -61,7 +61,9 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             if($param=='admin') {
                 $roles=array('orgAdmin');
             } else {
-                $roles=array();
+                if(!empty($post['roles'])) {
+                    $roles=$post['roles'];
+                }
             }
             $comUser = new CompanyUser($org_id, $user_id,$param,$roles);
         } else {
@@ -71,7 +73,33 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
         return true;
     }
-
+    public function updateUserRoles($roles,$userId,$rolesToDelete=array()) {
+        if( (!empty($rolesToDelete)) || (!empty($roles)) ) {
+            $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+            $user=$objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId)));
+            $oldRoles=$user->getRoles();
+            if(!empty($rolesToDelete)) {
+                foreach($rolesToDelete as $roleToDelete) {
+                    unset( $oldRoles[array_search($roleToDelete, $oldRoles )] );
+                }
+            }
+            if(!empty($roles)) {
+                foreach($oldRoles as &$oldRole) {
+                    if($oldRole=='user') {
+                        unset($oldRole);
+                    }
+                    if($oldRole=='inner') {
+                        unset($oldRole);
+                    }
+                }
+                $oldRoles=$oldRoles+$roles;
+                array_unshift($oldRoles,'inner');
+                $user->setRoles($oldRoles);
+                $objectManager->persist($user);
+                $objectManager->flush();
+            }
+        }
+    }
     public function findUserByEmail($email)
     {
 
@@ -83,7 +111,18 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             return $user_id->getId();
         }
     }
+    public  function findUserAndSetRole($type, $userId ,$itemId) {
 
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        if($type=='currentOrg') {
+            $org=$orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
+            $this->updateUserRoles($org->roles,$userId,array("orgAdmin" ));
+        } elseif($type=='currentCom') {
+
+            $com=$orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('companyId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
+            $this->updateUserRoles($com->roles,$userId, array("forwarder", "carrier", "customer" ));
+        }
+    }
     public function addOrgAndCompanyToUser($post,$userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $post=get_object_vars($post);
@@ -96,8 +135,10 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 ->findAndUpdate()
                 ->field('id')->equals(new \MongoId($userId))
                 ->field('currentOrg')->set($post['currentOrg'])
+                ->field('currentCom')->set(null)
                 ->getQuery()
                 ->execute();
+            $this->findUserAndSetRole('currentOrg', $userId,$post['currentOrg']);
         }
         if(!empty($post['currentCom'])) {
             $objectManager->getRepository('User\Entity\User')->createQueryBuilder()
@@ -106,6 +147,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 ->field('currentCom')->set($post['currentCom'])
                 ->getQuery()
                 ->execute();
+            $this->findUserAndSetRole('currentCom', $userId,$post['currentCom']);
         }
     }
 

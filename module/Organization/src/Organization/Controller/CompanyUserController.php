@@ -54,7 +54,6 @@ class CompanyUserController extends AbstractActionController
         $this->loginControl();
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
-
         $uuid_gen = new UuidGenerator();
         $form=null;
 
