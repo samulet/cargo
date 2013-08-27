@@ -94,7 +94,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 }
                 $oldRoles=$oldRoles+$roles;
                 array_unshift($oldRoles,'inner');
-                $user->setRoles($oldRoles);
+                $user->setRoles(array_unique($oldRoles));
                 $objectManager->persist($user);
                 $objectManager->flush();
             }
@@ -134,7 +134,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             $objectManager->getRepository('User\Entity\User')->createQueryBuilder()
                 ->findAndUpdate()
                 ->field('id')->equals(new \MongoId($userId))
-                ->field('currentOrg')->set($post['currentOrg'])
+                ->field('currentOrg')->set(new \MongoId($post['currentOrg']))
                 ->field('currentCom')->set(null)
                 ->getQuery()
                 ->execute();
@@ -144,7 +144,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             $objectManager->getRepository('User\Entity\User')->createQueryBuilder()
                 ->findAndUpdate()
                 ->field('id')->equals(new \MongoId($userId))
-                ->field('currentCom')->set($post['currentCom'])
+                ->field('currentCom')->set(new \MongoId($post['currentCom']))
                 ->getQuery()
                 ->execute();
             $this->findUserAndSetRole('currentCom', $userId,$post['currentCom']);
