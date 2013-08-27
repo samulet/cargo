@@ -44,19 +44,10 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         return $qb->getId();
     }
 
-    public function returnOrganizations($user_id, $number = '30', $page = '1')
+    public function returnOrganizations($orgId, $number = '30', $page = '1')
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $user_id = new \MongoId($user_id);
-        $orgOfUser = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(
-            array('userId' => new \MongoId($user_id))
-        );
-        $orgs = array();
-        if (empty($orgOfUser)) {
-            return null;
-        }
-        $org_id = $orgOfUser->getOrgId();
-        $org_obj = $objectManager->getRepository('Organization\Entity\Organization')->getMyAvailableOrganization($org_id);
+        $org_obj = $objectManager->getRepository('Organization\Entity\Organization')->getMyAvailableOrganization($orgId);
 
           //  find(new \MongoId($org_id));
         if (empty($org_obj)) {
@@ -71,8 +62,8 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         unset($org['created']);
         unset($org['updated']);
         $comModel = $this->getCompanyModel();
-        $com = $comModel->returnCompanies($org_id);
-
+        $com = $comModel->returnCompanies($orgId);
+        $orgs=array();
         array_push($orgs, array('org' => $org, 'com' => $com));
         return $orgs;
     }

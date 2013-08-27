@@ -21,7 +21,7 @@ namespace Organization\Controller {
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $orgModel = $this->getOrganizationModel();
-            $org = $orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getId());
+            $org = $orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getcurrentOrg());
 
             $tickModel = $this->getTicketModel();
             $resModel = $this->getResourceModel();
