@@ -266,9 +266,13 @@ class TicketWay
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Постоянно (загрузка)"})
-     * @Annotation\Required(false)
+     * @Annotation\Options({"label":"Постоянно (загрузка)",
+     *                      "value_options" : {"0":"","По рабочим дням":"По рабочим дням","Ежедневно":"Ежедневно"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"0","Ежедневно","По рабочим дням"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required(false)
      */
     public $always;
     /**
@@ -339,7 +343,7 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @Annotation\Options({"label":"Дата готовности к загрузке"})
      */
 
@@ -377,9 +381,13 @@ class TicketWay
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Готов к загрузке"})
-     * @Annotation\Required(false)
+     * @Annotation\Options({"label":"Готов к загрузке",
+     *                      "value_options" : {"0":"","Только сегодня":"Только сегодня","Сегодня и завтра":"Сегодня и завтра"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"haystack":{"0","Только сегодня","Сегодня и завтра"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required(false)
      */
     public $prepareToLoad;
     /**

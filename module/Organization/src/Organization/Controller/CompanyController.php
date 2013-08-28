@@ -41,6 +41,10 @@ class CompanyController extends AbstractActionController
         ));
     }
 
+    public function choiceOrgAndComAction() {
+
+    }
+
     public function addAction()
     {
         $builder = new AnnotationBuilder();
@@ -139,7 +143,7 @@ class CompanyController extends AbstractActionController
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $com_id = $comModel->getCompanyIdByUUID($com_uuid);
         $comModel->deleteCompany($com_id);
-        return $this->redirect()->toUrl('/organization');
+        return $this->redirect()->toUrl('/account');
     }
 
     private function loginControl()

@@ -11,11 +11,17 @@ use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 */
 class CompanyUser
 {
-    public function __construct($org_id,$user_id)
+    public function __construct($org_id,$user_id, $param, $roles)
     {
 
-        $this->setOrgId(new \MongoId($org_id));
+
+        if($param=='admin') {
+                $this->orgId=new \MongoId($org_id);
+        } else {
+                $this->setCompanyId(new \MongoId($org_id));
+        }
         $this->setUserId(new \MongoId($user_id));
+        $this->roles=$roles;
     }
     /**
      * @ODM\Id
@@ -43,6 +49,11 @@ class CompanyUser
      * @var int
      */
     public $orgId;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    public $roles;
 
     public function getId()
     {
@@ -70,9 +81,9 @@ class CompanyUser
      * @param int $id
      * @return UserInterface
      */
-    public function setOrgId($orgId)
+    public function setCompanyId($companyId)
     {
-        $this->orgId = $orgId;
+        $this->companyId = $companyId;
         return $this;
     }
 
@@ -90,11 +101,6 @@ class CompanyUser
     public function getCompanyId()
     {
         return $this->companyId;
-    }
-    function setCompanyId($companyId)
-    {
-        $this->companyId = $companyId;
-        return $this;
     }
 
     public function getUserRights()

@@ -36,7 +36,7 @@ class VehicleController extends AbstractActionController
     {
         $res = $this->getVehicleModel();
         return new ViewModel(array(
-            'res' => $res->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId())
+            'res' => $res->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())
         ));
     }
 
@@ -53,9 +53,7 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array();
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
 
         $fillFrom=new AddListForm();
@@ -81,12 +79,9 @@ class VehicleController extends AbstractActionController
 
                 if(empty($error)) {
 
+                    $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
 
-                    $comUserModel = $this->getCompanyUserModel();
-                    $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-                    $org_id = $comUserModel->getOrgIdByUserId($user_id);
-
-                    $veh=$vehicleModel->addVehicle($this->getRequest()->getPost(), $user_id, $org_id, $id);
+                    $veh=$vehicleModel->addVehicle($this->getRequest()->getPost(), $comListId, $orgListId, $id);
 
                     if(empty($veh)) {
                         return $this->redirect()->toUrl('/vehicles/error');
@@ -139,9 +134,8 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
@@ -163,9 +157,7 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
@@ -219,9 +211,7 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);

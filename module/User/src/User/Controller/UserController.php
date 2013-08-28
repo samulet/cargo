@@ -22,6 +22,7 @@ class UserController extends AbstractActionController
 
     protected $userModel;
 
+
     public function roleAction() {
         return new ViewModel(array(
             'res' => 'asd'
@@ -30,6 +31,7 @@ class UserController extends AbstractActionController
 
     public function getUserModel()
     {
+
         if (!$this->userModel) {
             $sm = $this->getServiceLocator();
             $this->userModel = $sm->get('User\Model\UserModel');

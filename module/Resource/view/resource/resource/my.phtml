@@ -89,7 +89,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'vehicle',
-                    array('action' => 'list', 'id' => $vehicle['uuid'])
+                    array('action' => 'add', 'type' => 'list','id' => $vehicle['uuid'])
                 );?>"><?php echo $vehicle['carNumber'].' '.$vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
             </td>
             <td>

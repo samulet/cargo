@@ -69,8 +69,8 @@ class User implements UserInterface, ProviderInterface
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"ADR",
-     *                      "value_options" : {"admin":"Админ","forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
+     * @Annotation\Options({"label":"Выберите роль добаляемого пользователя",
+     *                      "value_options" : {"forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
@@ -82,6 +82,27 @@ class User implements UserInterface, ProviderInterface
      * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Выберите организацию от которой вы работаете"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $currentOrg;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Выберите компанию от которой вы работаете"})
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $currentCom;
     /**
      * Initialies the roles variable.
      */
@@ -100,6 +121,15 @@ class User implements UserInterface, ProviderInterface
         return $this->id;
     }
 
+    public function getCurrentOrg()
+    {
+        return $this->currentOrg;
+    }
+
+    public function getCurrentCom()
+    {
+        return $this->currentCom;
+    }
     /**
      * Set id.
      *

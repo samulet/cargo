@@ -2,21 +2,26 @@
 namespace Organization\Controller {
 
     use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+    use Zend\Form\Annotation\AnnotationBuilder;
     use Organization\Form\OrganizationCreate;
     use Zend\Mvc\Controller\AbstractActionController;
     use Zend\View\Model\ViewModel;
+
+    use AddList\Form\AddListForm;
 
     class OrganizationController extends AbstractActionController
     {
         protected $organizationModel;
         protected $ticketModel;
         protected $resourceModel;
+        protected $addListModel;
+        protected $companyUserModel;
 
         public function indexAction()
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $orgModel = $this->getOrganizationModel();
-            $org = $orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getId());
+            $org = $orgModel->returnOrganizations($this->zfcUserAuthentication()->getIdentity()->getcurrentOrg());
 
             $tickModel = $this->getTicketModel();
             $resModel = $this->getResourceModel();
@@ -29,6 +34,53 @@ namespace Organization\Controller {
                 'res' => $res
             ));
 
+        }
+
+        public function addAccountAction()
+        {
+            return $this->redirect()->toUrl('/account/add');
+        }
+
+        public function choiceOrgAndCompanyAction()
+        {
+
+            $post = $this->getRequest()->getPost();
+            $comUserModel = $this->getCompanyUserModel();
+            $orgModel = $this->getOrganizationModel();
+
+            $result = null;
+            if ($this->getRequest()->isPost()) {
+                $comUserModel->addOrgAndCompanyToUser($post, $this->zfcUserAuthentication()->getIdentity()->getId());
+                $result = 'Успешно, продлжить выбор Аккаунта и Компании';
+            }
+            $builder = new AnnotationBuilder();
+            $form = $builder->createForm('User\Entity\User');
+            $orgModel->addBootstrap3Class($form);
+
+            $org = $comUserModel->getOrgWenUserConsist($this->zfcUserAuthentication()->getIdentity()->getId());
+            $fillFrom = new AddListForm();
+            $form = $fillFrom->fillOrg($form, $org);
+            $currentOrg = $this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+            if (!empty($currentOrg)) {
+                $form->get('currentOrg')->setValue($currentOrg);
+                $com = $comUserModel->getComWenUserConsist(
+                    $currentOrg,
+                    $this->zfcUserAuthentication()->getIdentity()->getId()
+                );
+
+                if (!empty($com)) {
+                    $form = $fillFrom->fillCom($form, $com);
+                }
+
+            }
+            $currentCom = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+            if (!empty($currentCom)) {
+                $form->get('currentCom')->setValue($currentCom);
+            }
+            return new ViewModel(array(
+                'form' => $form,
+                'result' => $result
+            ));
         }
 
         private function loginControl()
@@ -96,13 +148,14 @@ namespace Organization\Controller {
             $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
             $org_id = $orgModel->getOrgIdByUUID($org_uuid);
             $orgModel->deleteOrganization($org_id);
-            return $this->redirect()->toUrl('/organization');
+            return $this->redirect()->toUrl('/account');
         }
+
         public function addIntNumberAction()
         {
             $orgModel = $this->getOrganizationModel();
             $orgModel->addIntNumber();
-            return $this->redirect()->toUrl('/organization');
+            return $this->redirect()->toUrl('/account');
         }
 
         public function createOrganizationAction()
@@ -122,7 +175,7 @@ namespace Organization\Controller {
                 $org_id
             )
             ) {
-                $result = "Успешо";
+                $result = "Успешо, если желаете сменить аккаунт и компанию, перейдите в 'Выбрать аккаунт и компанию'";
             } else {
                 $result = "Ошибка";
             }
@@ -151,5 +204,22 @@ namespace Organization\Controller {
             return $this->ticketModel;
         }
 
+        public function getAddListModel()
+        {
+            if (!$this->addListModel) {
+                $sm = $this->getServiceLocator();
+                $this->addListModel = $sm->get('AddList\Model\AddListModel');
+            }
+            return $this->addListModel;
+        }
+
+        public function getCompanyUserModel()
+        {
+            if (!$this->companyUserModel) {
+                $sm = $this->getServiceLocator();
+                $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            }
+            return $this->companyUserModel;
+        }
     }
 }

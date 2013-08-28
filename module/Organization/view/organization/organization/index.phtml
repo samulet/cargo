@@ -1,60 +1,44 @@
 <?php
-$title = 'Организации';
+$title = 'Аккаунт';
 $this->headTitle($title);
-?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>
- <?php if(empty($this->org)) { ?>   <a href="<?php echo $this->url('organization', array('action'=>'add'));?>">Добавить организацию</a>
- <?php } ?>
-</p>
+if(!empty($this->org)) {
+    $oc=$this->org[0];
+     $o=$oc['org']?>
+     <h1><?php echo $this->escapeHtml($title).' '.$o['name']; ?></h1>
 
-    <?php if(!empty($this->org)) {
-    foreach($this->org as $oc) { $o=$oc['org']?>
-        <table class="table">
-            <tr>
-                <th>Название организации</th>
-                <th>Тип организации</th>
-                <th>Описание организации</th>
-                <th>&nbsp;</th>
-            </tr>
-        <tr>
-            <td><a href="<?php echo $this->url('organization',
-                    array('action'=>'list', 'id' => $o['uuid']));?>"><?php echo $o['name']; ?></a></td>
-            <td><?php echo $o['type']; ?></td>
-            <td><?php echo $o['description']; ?></td>
-                                        <td>
-                                            <a href="<?php echo $this->url('organization',
-                                                array('action'=>'edit', 'id' => $o['uuid']));?>">Редактировать</a>
-                                            <a href="<?php echo $this->url('organization',
-                                                array('action'=>'delete', 'id' => $o['uuid']));?>">Удалить</a>
-                                        </td>
-            </tr>
+
 
 </table>
 <table class="table">
 <tr>
-                <th>Добавить юр. лицо</th>
-                <th>Добавить юзера в организацию</th>
 
+
+<th>Добавить админа к аккаунту</th>
+<th>Список админов</th>
+<th>Список всех юзеров аккаунта</th>
                 </tr>
                 <tr>
-                <td><a href="<?php echo $this->url('company',
-                                    array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
-                            <td><a href="<?php echo $this->url('company_user',
-                                    array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
 
+                         <td><a href="<?php echo $this->url('company_user',
+                                                array('action'=>'add', 'org_id' => $o['uuid'] , 'param' => 'admin'));?>">Добавить</a></td>
+  <td><a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$o['uuid'], 'param' => 'admin'));?>">Посмотреть админов</a></td>
+
+                       <td><a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$o['uuid'], 'param' => 'user'));?>">Посмотреть юзеров</a></td>
                         </tr>
 
 </table>
        <table class="table">
        <tr>
+           <th>Добавить компанию</th>
                        <th>Список юр. лиц</th>
-                       <th>Список юзеров организации</th>
+
 
                        </tr>
                        <tr>
+                        <td><a href="<?php echo $this->url('company',
+                                                           array('action'=>'add', 'org_id' => $o['uuid']));?>">Добавить</a></td>
                        <td><a href="<?php echo $this->url('company', array('action'=>'index','org_id'=>$o['uuid']));?>">Посмотреть юр. лица</a></td>
-                                   <td><a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$o['uuid']));?>">Посмотреть юзеров</a></td>
+
 
                                </tr>
 
@@ -64,11 +48,19 @@ $this->headTitle($title);
         <table style="background:#ccc;" class="table">
             <tr>
                 <th>Название юр. лица</th>
+                  <th>Юзеры юр. лица</th>
+                   <th>Добавить юзера в компаню</th>
             </tr>
             <?php foreach($oc['com'] as $c) {  ?>
                 <tr>
                     <td><a href="<?php echo $this->url('company',
                             array('action'=>'list', 'org_id'=>$o['uuid'],'id' => $c['uuid']));?>"><?php echo $c['name']; ?></a></td>
+       <td>
+                <a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$c['uuid'], 'param' => 'current'));?>">Посмотреть юзеров</a></td>
+                                              <td><a href="<?php echo $this->url('company_user',
+                                                                            array('action'=>'add', 'org_id' => $c['uuid']));?>">Добавить</a></td>
+
+
                 <td>
                                 <a href="<?php echo $this->url('company',
                                     array('action'=>'edit', 'id' => $c['uuid'], 'org_id' => $o['uuid']));?>">Редактировать</a>
@@ -76,7 +68,7 @@ $this->headTitle($title);
                                     array('action'=>'delete', 'id' => $c['uuid'],'org_id' => $o['uuid']));?>">Удалить</a>
                 </td>
                 </tr>
-            <?php } ?>
+            <?php  ?>
 
         </table>
         </br></br>
