@@ -343,7 +343,7 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Required(false)
      * @Annotation\Options({"label":"Дата готовности к загрузке"})
      */
 

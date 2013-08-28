@@ -120,8 +120,11 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         if($type=='currentOrg') {
             $org=$orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
             if(!empty($org)) {
-                $this->updateUserRoles($org->roles,$userId,array("orgAdmin" ));
+                $roles=$org->roles;
+            } else {
+                $roles=array();
             }
+            $this->updateUserRoles($roles,$userId,array("orgAdmin","forwarder", "carrier", "customer" ));
         } elseif($type=='currentCom') {
 
             $com=$orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('companyId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
