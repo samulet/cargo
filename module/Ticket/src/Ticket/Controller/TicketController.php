@@ -39,7 +39,7 @@ class TicketController extends AbstractActionController
     public function myAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getId());
+        $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         return new ViewModel(array(
             'res' => $ticket
         ));
@@ -67,8 +67,8 @@ class TicketController extends AbstractActionController
         $addListModel = $this->getAddListModel();
 
         $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentorg();
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
         $formVehicleData=$addListModel->returnDataArray(array(),'vehicle',$orgListId);
@@ -80,7 +80,7 @@ class TicketController extends AbstractActionController
         $form=$fillFrom->fillFromVehicleSpecial($form,$formVehicleData,array('type'));
 
 
-        $formCargoOwnerData=$ticketModel->getCargoOwnerData($userListId);
+        $formCargoOwnerData=$ticketModel->getCargoOwnerData($orgListId);
 
         $formWay=$fillFrom->fillCargoOwner($formWay,$formCargoOwnerData);
         $docWay=$fillFrom->fillFromVehicleSpecial($docWay,$formData,array('docType'));
@@ -130,10 +130,8 @@ class TicketController extends AbstractActionController
 
                 if(empty($error)) {
                     $comUserModel = $this->getCompanyUserModel();
-                    $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-                    $org_id = $comUserModel->getOrgIdByUserId($user_id);
 
-                    $ticketModel->addTicket($this->getRequest()->getPost(), $user_id, $org_id, $id);
+                    $ticketModel->addTicket($this->getRequest()->getPost(), $comListId, $orgListId, $id);
                     return $this->redirect()->toUrl('/tickets/my');
                 }
             }
@@ -339,9 +337,7 @@ class TicketController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
 
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentorg();
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
 

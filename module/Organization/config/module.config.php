@@ -6,7 +6,7 @@ return array(
         'invokables' => array(
             'Organization\Controller\Organization' => 'Organization\Controller\OrganizationController',
             'Organization\Controller\Company' => 'Organization\Controller\CompanyController',
-            'Organization\Controller\CompanyUser' => 'Organization\Controller\CompanyUserController',
+            'Organization\Controller\CompanyUser' => 'Organization\Controller\CompanyUserController'
         ),
     ),
     'router' => array(
