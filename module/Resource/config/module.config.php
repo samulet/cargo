@@ -17,7 +17,7 @@ return array(
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
-                        'type' =>'[a-zA-Z][a-zA-Z0-9_-]*',
+                        'type' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Resource\Controller\Resource',
@@ -32,7 +32,7 @@ return array(
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
-                        'type' =>'[a-zA-Z][a-zA-Z0-9_-]*',
+                        'type' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Resource\Controller\Vehicle',
@@ -45,13 +45,41 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Resource\Controller\Resource','action'=> array('index','list','delete', 'addResource', 'copy','add'),'roles' => array('forwarder','admin')),
-                array('controller' => 'Resource\Controller\Resource','action'=> array('my','add','edit'),'roles' => array('forwarder','carrier','admin')),
-                array('controller' => 'Resource\Controller\Resource','action'=> array('search', 'getResults','add',),'roles' => array('forwarder','customer','admin')),
-
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','my','add', 'edit', 'list', 'delete', 'addVehicle', 'copy','error'), 'roles' => array('admin')),
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','add'), 'roles' => array('forwarder','customer')),
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('my','add', 'addVehicle', 'edit', 'list', 'delete', 'copy','error'), 'roles' => array('admin','forwarder','carrier')),
+                array(
+                    'controller' => 'Resource\Controller\Resource',
+                    'action' => array('index'),
+                    'roles' => array('admin')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Resource',
+                    'action' => array('add'),
+                    'roles' => array('forwarder', 'customer', 'carrier', 'admin')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Resource',
+                    'action' => array('search', 'getResults'),
+                    'roles' => array('forwarder', 'customer', 'admin')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Resource',
+                    'action' => array('my', 'delete'),
+                    'roles' => array('forwarder', 'carrier', 'admin')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Vehicle',
+                    'action' => array('add'),
+                    'roles' => array('forwarder', 'customer', 'carrier', 'admin')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Vehicle',
+                    'action' => array('my', 'delete', 'error'),
+                    'roles' => array('forwarder', 'admin', 'carrier')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Vehicle',
+                    'action' => array('index'),
+                    'roles' => array('forwarder', 'customer', 'admin')
+                ),
             ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'resource', 'roles' => array('inner')),
