@@ -66,7 +66,7 @@ class TicketController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
 
-        $orgUserModel=$this->getCompanyUserModel();
+
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
@@ -75,7 +75,7 @@ class TicketController extends AbstractActionController
 
         $fillFrom=new AddListForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
-        //$formVehicle=$fillFrom->fillFrom($formVehicle,$formVehicleData);
+
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
         $form=$fillFrom->fillFromVehicleSpecial($form,$formVehicleData,array('type'));
 
