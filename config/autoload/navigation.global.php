@@ -34,10 +34,10 @@ return array(
                     ),
                     array(
                         'label' => 'Аккаунты',
-                        'route' => 'organization',
+                        'route' => 'account',
                         'group' => 'right',
                         'params' => array('id' => null),
-                        'resource'   => 'route/organization',
+                        'resource'   => 'route/account',
                     ),
                     array(
                         'label' => '',
@@ -67,12 +67,27 @@ return array(
         ),
         'sidebar' => array(
             array(
-                'label' => 'Организация',
-                'route' => 'organization',
+                'label' => 'Аккаунт',
+                'route' => 'account',
                 'action' => 'index',
                 'params' => array('id' => null),
-                'resource'   => 'route/organization',
+                'resource'   => 'route/account',
             ),
+            array(
+                'label' => 'Создать аккаунт',
+                'route' => 'account',
+                'action' => 'addAccount',
+                'params' => array('id' => null),
+                'resource'   => 'route/account',
+            ),
+            array(
+                'label' => 'Выбрать аккаунт и компанию',
+                'route' => 'account',
+                'action' => 'choiceOrgAndCompany',
+                'params' => array('id' => null),
+                'resource'   => 'route/account',
+            ),
+
             array(
                 'label' => 'Доска оповещений',
                 'route' => 'notification',
@@ -233,7 +248,7 @@ return array(
                 'label' => 'Все юзеры',
                 'route' => 'company_user',
                 'action' => 'list',
-                'params' => array('org_id' => 'all'),
+                'params' => array('org_id' => 'all', 'param' =>'full'),
 
             ),
             array(
@@ -318,20 +333,6 @@ return array(
                 'route' => 'addList',
                 'action' => 'my-fields',
                 'params' => array('id' => 'temp-cond'),
-                'resource'   => 'route/addList',
-            ),
-            array(
-                'label' => 'Заявка Постоянно (загрузка)',
-                'route' => 'addList',
-                'action' => 'my-fields',
-                'params' => array('id' => 'tick-always'),
-                'resource'   => 'route/addList',
-            ),
-            array(
-                'label' => 'Заявка Готов к загрузке',
-                'route' => 'addList',
-                'action' => 'my-fields',
-                'params' => array('id' => 'tick-prepare'),
                 'resource'   => 'route/addList',
             ),
             array(

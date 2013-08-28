@@ -43,7 +43,7 @@ class ResourceController extends AbstractActionController
     public function myAction()
     {
         $res = $this->getResourceModel();
-        $resource=$res->returnMyResource($this->zfcUserAuthentication()->getIdentity()->getId());
+        $resource=$res->returnMyResource($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         return new ViewModel(array(
             'res' => $resource
         ));
@@ -65,7 +65,7 @@ class ResourceController extends AbstractActionController
         $formWay= $builder->createForm('Resource\Entity\ResourceWay');
 
         $veh = $this->getVehicleModel();
-        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         $resForm=new AddListForm();
 
         $form=$resForm->fillTS($form,$myV);
@@ -77,9 +77,7 @@ class ResourceController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
 
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
 
@@ -105,13 +103,8 @@ class ResourceController extends AbstractActionController
                 }
                 if(empty($error)) {
 
-                    $comUserModel = $this->getCompanyUserModel();
-                    $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-
-                    $org_id = $comUserModel->getOrgIdByUserId($user_id);
-
-
-                    $resourceModel->addResource($post, $user_id, $org_id, $id);
+                    $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+                    $resourceModel->addResource($post, $comListId, $orgListId, $id);
 
                     return $this->redirect()->toUrl('/resources/my');
                 }
@@ -119,7 +112,7 @@ class ResourceController extends AbstractActionController
         } else {
             $resource = $resourceModel->listResource($id);
             $resourceWay=$resourceModel->returnAllWays($resource['id']);
-            //die(var_dump($resourceWay));
+
             if( ($type=='copy')||($type=='edit')||($type=='list') ) {
                 $form->setData($resource);
 
@@ -175,7 +168,7 @@ class ResourceController extends AbstractActionController
         $formWay= $builder->createForm('Resource\Entity\ResourceWay');
 
         $veh = $this->getVehicleModel();
-        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         $resForm=new AddListForm();
 
         $form=$resForm->fillTS($form,$myV);
@@ -204,7 +197,7 @@ class ResourceController extends AbstractActionController
         $formWay= $builder->createForm('Resource\Entity\ResourceWay');
 
         $veh = $this->getVehicleModel();
-        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         $resForm=new AddListForm();
 
         $form=$resForm->fillTS($form,$myV);
@@ -262,7 +255,7 @@ class ResourceController extends AbstractActionController
         $formWay= $builder->createForm('Resource\Entity\ResourceWay');
 
         $veh = $this->getVehicleModel();
-        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getId());
+        $myV=$veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         $resForm=new AddListForm();
 
         $form=$resForm->fillTS($form,$myV);

@@ -1,4 +1,7 @@
 <?php
+
+namespace User;
+
 return array(
     'controllers' => array(
         'invokables' => array(
@@ -26,6 +29,16 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             'user' => __DIR__ . '/../view',
+        ),
+    ),
+    'bjyauthorize' => array(
+        'guards' => array(
+            'BjyAuthorize\Guard\Controller' => array(
+                array('controller' => 'User\Controller\User', 'roles' => array('guest')),
+            ),
+            'BjyAuthorize\Guard\Route' => array(
+                array('route' => 'user', 'roles' => array('guest')),
+            ),
         ),
     ),
     'service_manager' => array(

@@ -154,7 +154,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
                 $cargo = $this->getVehicleModel();
                 foreach ($rezObj as $cur) {
 
-                    $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerTicketId)));
+                    $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerResourceId)));
 
                     $veh=$cargo->listVehicle($cur->tsId);
                     $ways=$this->returnAllWays($cur->id);

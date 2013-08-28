@@ -21,7 +21,7 @@ class InteractionController extends AbstractActionController
     public function indexAction()
     {
         $interactionModel = $this->getInteractionModel();
-        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getId(),'sent');
+        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getCurrentCom(),'sent');
         return new ViewModel(array(
             'interaction' =>$interaction
         ));
@@ -31,7 +31,7 @@ class InteractionController extends AbstractActionController
     public function myAction()
     {
         $interactionModel = $this->getInteractionModel();
-        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getId(),'receive');
+        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getCurrentCom(),'receive');
         return new ViewModel(array(
             'interaction' =>$interaction
         ));
@@ -41,7 +41,7 @@ class InteractionController extends AbstractActionController
     public function addAction() {
         $sendUuid= $this->getEvent()->getRouteMatch()->getParam('id');
         $interactionModel = $this->getInteractionModel();
-        $listProposalData=$interactionModel->getListProposalData($sendUuid,$this->zfcUserAuthentication()->getIdentity()->getId());
+        $listProposalData=$interactionModel->getListProposalData($sendUuid,$this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Interaction\Entity\Interaction');
@@ -72,9 +72,7 @@ class InteractionController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
 
-        $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
         $formData=$addListModel->returnDataArray(array(),'interactionNote',$orgListId);
 
@@ -98,7 +96,7 @@ class InteractionController extends AbstractActionController
         $post=get_object_vars($this->getRequest()->getPost());
 
         $interactionModel = $this->getInteractionModel();
-        $interactionModel->addInteraction($post['sendItemId'],$receiveUuid,$this->zfcUserAuthentication()->getIdentity()->getId());
+        $interactionModel->addInteraction($post['sendItemId'],$receiveUuid,$this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         return $this->redirect()->toUrl('/interactions');
     }
 

@@ -28,10 +28,10 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Excel\Controller\Excel','roles' => array('user','admin')),
+                array('controller' => 'Excel\Controller\Excel','roles' => array('inner','admin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'excel', 'roles' => array('user')),
+                array('route' => 'excel', 'roles' => array('inner')),
             ),
         ),
     ),

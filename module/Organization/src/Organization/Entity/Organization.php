@@ -58,17 +58,7 @@ class Organization
      * @var string
      * @ODM\Field(type="string")
      */
-    public $description;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
     public $name;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $type;
     /**
      * @var string
      * @ODM\Field(type="string")

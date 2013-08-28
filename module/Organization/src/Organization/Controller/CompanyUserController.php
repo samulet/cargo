@@ -19,6 +19,7 @@ use Organization\Form\CompanyUserCreate;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
+
 use Zend\ModuleManager\ModuleManager;
 
 class CompanyUserController extends AbstractActionController
@@ -36,9 +37,14 @@ class CompanyUserController extends AbstractActionController
         $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $form = new CompanyUserCreate();
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $param = $this->getEvent()->getRouteMatch()->getParam('param');
+        $builder = new AnnotationBuilder();
+        $formRoles = $builder->createForm('User\Entity\User');
         return new ViewModel(array(
             'form' => $form,
-            'org_id' => $org_uuid
+            'org_id' => $org_uuid,
+            'param' =>$param,
+            'formRoles' => $formRoles
         ));
     }
 
@@ -47,17 +53,26 @@ class CompanyUserController extends AbstractActionController
         $post = $this->getRequest()->getPost();
         $this->loginControl();
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $param = $this->getEvent()->getRouteMatch()->getParam('param');
         $uuid_gen = new UuidGenerator();
+        $form=null;
+
         if (!$uuid_gen->isValid($org_uuid)) {
             $result = "Ошибка";
         } else {
             $orgModel = $this->getOrganizationModel();
-            $org_id = $orgModel->getOrgIdByUUID($org_uuid);
+            if($param=='admin') {
+                $org_id = $orgModel->getOrgIdByUUID($org_uuid);
+            } else {
+
+                $org_id = $orgModel->getComIdByUUID($org_uuid);
+            }
+
             $comUserModel = $this->getCompanyUserModel();
-            if ($comUserModel->addUserToOrg($post, $org_id)) {
+            if ($comUserModel->addUserToCompany($post, $org_id,$param)) {
                 $result = "Успешо";
             } else {
-                $result = "Ошибка";
+                $result = "Ошибка, скорее всего юзер уже добавлен";
             }
         }
         return new ViewModel(array(
@@ -67,32 +82,49 @@ class CompanyUserController extends AbstractActionController
 
     public function listAction() {
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $param = $this->getEvent()->getRouteMatch()->getParam('param');
         if($org_uuid!="all") {
             $orgModel = $this->getOrganizationModel();
-            $orgId = $orgModel->getOrgIdByUUID($org_uuid);
+            if($param=='current') {
+                $orgId = $orgModel->getComIdByUUID($org_uuid);
+            } else {
+                $orgId = $orgModel->getOrgIdByUUID($org_uuid);
+            }
+
 
         } else {
             $orgId='all';
             $this->layout('layout/admin');
         }
         $comUserModel = $this->getCompanyUserModel();
-        $users=$comUserModel->getUsersByOrgId($orgId);
+
+        if(($param=='user')&&($org_uuid!="all")) {
+            $users=$comUserModel->getAllUsersByOrgId($orgId);
+        } elseif(($param=='admin')&&($org_uuid!="all")) {
+            $users=$comUserModel->getUsersByOrgId($orgId,$param);
+        } elseif(($param=='full')&&($orgId=='all')) {
+            $users=$comUserModel->getUsersByOrgId($orgId,$param);
+        } elseif(($param=='current')&&($org_uuid!="all")) {
+            $users=$comUserModel->getUsersByComId($orgId);
+        }
         return new ViewModel(array(
             'users' => $users,
-            'org_uuid'=>$org_uuid
+            'org_uuid'=>$org_uuid,
+            'param' =>$param
         ));
     }
 
     public function deleteAction() {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
+        $itemId = $this->getEvent()->getRouteMatch()->getParam('comId');
         $comUserModel = $this->getCompanyUserModel();
         if($param=='full') {
             $comUserModel->deleteUserFull($userId);
-            return $this->redirect()->toUrl('/organization/user/all/list');
+            return $this->redirect()->toUrl('/account/user/all/list');
         } else {
-            $comUserModel->deleteUserFromOrg($userId);
-            return $this->redirect()->toUrl('/organization');
+            $comUserModel->deleteUserFromOrg($userId, $itemId,$param);
+            return $this->redirect()->toUrl('/account');
         }
     }
 
@@ -127,26 +159,30 @@ class CompanyUserController extends AbstractActionController
     public function roleAction() {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $adminParam = $this->getEvent()->getRouteMatch()->getParam('param');
+        $comId = $this->getEvent()->getRouteMatch()->getParam('comId');
+
         $builder = new AnnotationBuilder();
         if($adminParam=='admin') {
             $this->layout('layout/admin');
         }
         $form = $builder->createForm('User\Entity\User');
         $comUserModel = $this->getCompanyUserModel();
-        $roles=$comUserModel->getRoles($userId);
+        $roles=$comUserModel->getRoles($userId,$comId);
         return new ViewModel(array(
             'id' =>$userId,
             'form' =>$form,
-            'roles'=>$roles
+            'roles'=>$roles,
+            'comId'=>$comId
         ));
     }
 
     public function roleEditAction() {
         $comUserModel = $this->getCompanyUserModel();
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comId = $this->getEvent()->getRouteMatch()->getParam('comId');
         $post=$this->getRequest()->getPost();
-        $comUserModel->addRole($userId,$post);
-        return $this->redirect()->toUrl('/organization');
+        $comUserModel->addRole($userId,$post,$comId);
+        return $this->redirect()->toUrl('/account');
     }
 
 }

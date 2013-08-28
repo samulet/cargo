@@ -37,7 +37,7 @@ $interactions=$this->interaction;
                  $rout='resource';
                  }
                  echo $this->url($rout,
-                                    array('action'=>'list', 'id' => $interaction['sendItem']['uuid']));?>">
+                                    array('action'=>'add', 'type'=>'list',  'id' => $interaction['sendItem']['uuid']));?>">
                                     <?php echo $interaction['sendItem']['uuid'].'('.$interaction['sendItem']['status'].')';?>
                                     </a>
         </td>
@@ -51,7 +51,7 @@ $interactions=$this->interaction;
                  $rout='resource';
                  }
                  echo $this->url($rout,
-                                    array('action'=>'list', 'id' => $interaction['receiveItem']['uuid']));?>">
+                                    array('action'=>'add', 'type'=>'list',  'id' => $interaction['receiveItem']['uuid']));?>">
                                     <?php echo $interaction['receiveItem']['uuid'].'('.$interaction['receiveItem']['status'].')';?>
                                     </a>
         </td>

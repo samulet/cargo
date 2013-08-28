@@ -28,10 +28,10 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Notification\Controller\Notification','roles' => array('user','admin')),
+                array('controller' => 'Notification\Controller\Notification','roles' => array('inner','admin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'notification', 'roles' => array('user')),
+                array('route' => 'notification', 'roles' => array('inner')),
             ),
         ),
     ),

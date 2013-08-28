@@ -4,7 +4,7 @@ if (!$o) {
     echo '<p>Такой организации не существует</p>';
 } else {
 
-    $title = 'Организация: ' . $o['name'];
+    $title = 'Аккаунт: ' . $o['name'];
     $this->headTitle($title);
     ?>
     <h1><?php echo $this->escapeHtml($o['name']); ?></h1>
@@ -13,13 +13,13 @@ if (!$o) {
     <p>Владелец организации: <?php echo $o['orgOwner']; ?></p>
     </br>
     <a href="<?php echo $this->url(
-        'organization',
+        'account',
         array('action' => 'edit', 'id' => $o['uuid'])
     );?>">Редактировать</a>
     <a href="<?php echo $this->url(
-        'organization',
+        'account',
         array('action' => 'delete', 'id' => $o['uuid'])
     );?>">Удалить</a>
-    <a href="<?php echo $this->url('organization', array('action' => 'index')); ?>">Вернуться в организации</a>
+    <a href="<?php echo $this->url('account', array('action' => 'index')); ?>">Вернуться в аккаунт</a>
 
 <?php } ?>

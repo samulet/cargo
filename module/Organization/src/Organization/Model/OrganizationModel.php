@@ -37,21 +37,17 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         $qb = $objectManager->getRepository('Organization\Entity\Organization')->findOneBy(array('uuid' => $org_uuid));
         return $qb->getId();
     }
-
-
-    public function returnOrganizations($user_id, $number = '30', $page = '1')
+    public function getComIdByUUID($org_uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $user_id = new \MongoId($user_id);
-        $orgOfUser = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(
-            array('userId' => new \MongoId($user_id))
-        );
-        $orgs = array();
-        if (empty($orgOfUser)) {
-            return null;
-        }
-        $org_id = $orgOfUser->getOrgId();
-        $org_obj = $objectManager->getRepository('Organization\Entity\Organization')->getMyAvailableOrganization($org_id);
+        $qb = $objectManager->getRepository('Organization\Entity\Company')->findOneBy(array('uuid' => $org_uuid));
+        return $qb->getId();
+    }
+
+    public function returnOrganizations($orgId, $number = '30', $page = '1')
+    {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $org_obj = $objectManager->getRepository('Organization\Entity\Organization')->getMyAvailableOrganization($orgId);
 
           //  find(new \MongoId($org_id));
         if (empty($org_obj)) {
@@ -66,8 +62,8 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         unset($org['created']);
         unset($org['updated']);
         $comModel = $this->getCompanyModel();
-        $com = $comModel->returnCompanies($org_id);
-
+        $com = $comModel->returnCompanies($orgId);
+        $orgs=array();
         array_push($orgs, array('org' => $org, 'com' => $com));
         return $orgs;
     }
@@ -93,9 +89,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             else {
                 $org = new Organization($user_id);
             }
-            $org->setDescription($org_item['description']);
             $org->setName($org_item['name']);
-            $org->setType($org_item['type']);
             $org->lastItemNumber=0;
             $org->setActivated(1);
             $org_uuid = $org->getUUID();
@@ -106,7 +100,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             $org_id = $this->getOrgIdByUUID($org_uuid);
 
             $comUserModel = $this->getCompanyUserModel();
-            $comUserModel->addUserToOrg($user_id, $org_id);
+            $comUserModel->addUserToCompany($user_id, $org_id,'admin');
 
             return true;
         } else return false;
@@ -140,14 +134,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
         if (empty($user)) {
             return null;
         }
-        return array(
-            'uuid' => $org->getUUID(),
-            'description' => $org->getDescription(),
-            'type' => $org->getType(),
-            'name' => $org->getName(),
-            'orgOwner' => $user->getDisplayName(),
-            'lastItemNumber' =>$org->lastItemNumber
-        );
+        return get_object_vars($org);
     }
 
     public function addIntNumber() {
@@ -258,7 +245,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
     }
     public function addBootstrap3Class(&$form) {
 
-        foreach ($form->get('organization') as $el) {
+        foreach ($form as $el) {
             $attr=$el->getAttributes();
             if(!empty($attr['type'])) {
                 if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {

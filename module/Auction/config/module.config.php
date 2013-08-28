@@ -28,10 +28,10 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Auction\Controller\Auction','roles' => array('user','admin')),
+                array('controller' => 'Auction\Controller\Auction','roles' => array('inner','admin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'auction', 'roles' => array('user')),
+                array('route' => 'auction', 'roles' => array('inner')),
             ),
         ),
     ),

@@ -33,7 +33,7 @@ return array(
                 array('controller' => 'AddList\Controller\AddList','roles' => array('admin')),
           ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'addList', 'roles' => array('user')),
+                array('route' => 'addList', 'roles' => array('inner')),
             ),
         ),
     ),
