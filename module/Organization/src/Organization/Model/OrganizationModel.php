@@ -89,9 +89,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             else {
                 $org = new Organization($user_id);
             }
-            $org->setDescription($org_item['description']);
             $org->setName($org_item['name']);
-            $org->setType($org_item['type']);
             $org->lastItemNumber=0;
             $org->setActivated(1);
             $org_uuid = $org->getUUID();

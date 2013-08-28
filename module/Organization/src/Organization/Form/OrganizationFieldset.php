@@ -23,7 +23,7 @@ class OrganizationFieldset extends Fieldset implements InputFilterProviderInterf
             array(
                 'name' => 'name',
                 'options' => array(
-                    'label' => 'Имя организации'
+                    'label' => 'Название аккаунта'
                 ),
                 'attributes' => array(
                     'required' => 'required'
@@ -31,29 +31,6 @@ class OrganizationFieldset extends Fieldset implements InputFilterProviderInterf
             )
         );
 
-        $this->add(
-            array(
-                'name' => 'type',
-                'options' => array(
-                    'label' => 'Тип органзиации'
-                ),
-                'attributes' => array(
-                    'required' => 'required'
-                )
-            )
-        );
-
-        $this->add(
-            array(
-                'name' => 'description',
-                'options' => array(
-                    'label' => 'Описание организации'
-                ),
-                'attributes' => array(
-                    'required' => 'required'
-                )
-            )
-        );
     }
 
     /**
