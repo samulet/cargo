@@ -4,7 +4,7 @@ if (!$o) {
     echo '<p>Такой организации не существует</p>';
 } else {
 
-    $title = 'Организация: ' . $o['name'];
+    $title = 'Аккаунт: ' . $o['name'];
     $this->headTitle($title);
     ?>
     <h1><?php echo $this->escapeHtml($o['name']); ?></h1>

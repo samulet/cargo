@@ -45,13 +45,13 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Resource\Controller\Resource','action'=> array('index','list','delete', 'addResource', 'copy','add'),'roles' => array('inner','admin')),
-                array('controller' => 'Resource\Controller\Resource','action'=> array('my','add','edit'),'roles' => array('carrier','admin')),
-                array('controller' => 'Resource\Controller\Resource','action'=> array('search', 'getResults','add',),'roles' => array('customer','admin')),
+                array('controller' => 'Resource\Controller\Resource','action'=> array('index','list','delete', 'addResource', 'copy','add'),'roles' => array('forwarder','admin')),
+                array('controller' => 'Resource\Controller\Resource','action'=> array('my','add','edit'),'roles' => array('forwarder','carrier','admin')),
+                array('controller' => 'Resource\Controller\Resource','action'=> array('search', 'getResults','add',),'roles' => array('forwarder','customer','admin')),
 
                 array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','my','add', 'edit', 'list', 'delete', 'addVehicle', 'copy','error'), 'roles' => array('admin')),
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','add'), 'roles' => array('customer')),
-                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('my','add', 'addVehicle', 'edit', 'list', 'delete', 'copy','error'), 'roles' => array('admin','carrier')),
+                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('index','add'), 'roles' => array('forwarder','customer')),
+                array('controller' => 'Resource\Controller\Vehicle', 'action' => array('my','add', 'addVehicle', 'edit', 'list', 'delete', 'copy','error'), 'roles' => array('admin','forwarder','carrier')),
             ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'resource', 'roles' => array('inner')),
