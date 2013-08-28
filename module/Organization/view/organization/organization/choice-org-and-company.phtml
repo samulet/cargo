@@ -6,7 +6,7 @@ $form->setAttribute('action', $this->url('account', array('action' => 'choiceOrg
     ->prepare();
 
 echo $this->form()->openTag($form);
-$currentOrg=$form->get('currentOrg')->setAttributes(array('onclick' =>"$('select[name=currentCom]').html('<option value>Сначала выберите организацию и сохраните результат</option>');"));
+$currentOrg=$form->get('currentOrg')->setAttributes(array('onclick' =>"$('select[name=currentCom]').html('<option value>Сначала выберите аккаунт и сохраните результат</option>');"));
 ?>
 <div class="companyAdd">
     <?php
@@ -16,7 +16,7 @@ $currentOrg=$form->get('currentOrg')->setAttributes(array('onclick' =>"$('select
     echo '<p>Сначала выберите организацию, и сохранить результат, после этого будут доступны компании</p>';
     echo $this->formRow($form->get('currentCom'));
 
-    echo $this->formElement($form->get('submit'));
+    echo $this->formElement($form->get('submit')->setValue('Сохранить'));
     echo $this->form()->closeTag();
     ?>
 </div>

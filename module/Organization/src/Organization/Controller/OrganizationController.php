@@ -35,46 +35,54 @@ namespace Organization\Controller {
             ));
 
         }
-    public function addAccountAction() {
-        return $this->redirect()->toUrl('/account/add');
-    }
-        public function choiceOrgAndCompanyAction() {
+
+        public function addAccountAction()
+        {
+            return $this->redirect()->toUrl('/account/add');
+        }
+
+        public function choiceOrgAndCompanyAction()
+        {
 
             $post = $this->getRequest()->getPost();
             $comUserModel = $this->getCompanyUserModel();
             $orgModel = $this->getOrganizationModel();
 
-            $result=null;
-            if($this->getRequest()->isPost()) {
-                $comUserModel->addOrgAndCompanyToUser($post,$this->zfcUserAuthentication()->getIdentity()->getId());
-                $result='Успешно, продлжить выбор Аккаунта и Компании';
+            $result = null;
+            if ($this->getRequest()->isPost()) {
+                $comUserModel->addOrgAndCompanyToUser($post, $this->zfcUserAuthentication()->getIdentity()->getId());
+                $result = 'Успешно, продлжить выбор Аккаунта и Компании';
             }
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('User\Entity\User');
             $orgModel->addBootstrap3Class($form);
 
-            $org=$comUserModel->getOrgWenUserConsist($this->zfcUserAuthentication()->getIdentity()->getId());
-            $fillFrom=new AddListForm();
-            $form=$fillFrom->fillOrg($form,$org);
-            $currentOrg=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-            if(!empty($currentOrg)) {
+            $org = $comUserModel->getOrgWenUserConsist($this->zfcUserAuthentication()->getIdentity()->getId());
+            $fillFrom = new AddListForm();
+            $form = $fillFrom->fillOrg($form, $org);
+            $currentOrg = $this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+            if (!empty($currentOrg)) {
                 $form->get('currentOrg')->setValue($currentOrg);
-                $com=$comUserModel->getComWenUserConsist($currentOrg,$this->zfcUserAuthentication()->getIdentity()->getId());
+                $com = $comUserModel->getComWenUserConsist(
+                    $currentOrg,
+                    $this->zfcUserAuthentication()->getIdentity()->getId()
+                );
 
-                if(!empty($com)) {
-                    $form=$fillFrom->fillCom($form,$com);
+                if (!empty($com)) {
+                    $form = $fillFrom->fillCom($form, $com);
                 }
 
             }
-            $currentCom=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-            if(!empty($currentCom)) {
+            $currentCom = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+            if (!empty($currentCom)) {
                 $form->get('currentCom')->setValue($currentCom);
             }
             return new ViewModel(array(
                 'form' => $form,
-                'result'=>$result
+                'result' => $result
             ));
         }
+
         private function loginControl()
         {
             if ($this->zfcUserAuthentication()->hasIdentity()) {
@@ -142,6 +150,7 @@ namespace Organization\Controller {
             $orgModel->deleteOrganization($org_id);
             return $this->redirect()->toUrl('/account');
         }
+
         public function addIntNumberAction()
         {
             $orgModel = $this->getOrganizationModel();
@@ -194,6 +203,7 @@ namespace Organization\Controller {
             }
             return $this->ticketModel;
         }
+
         public function getAddListModel()
         {
             if (!$this->addListModel) {
@@ -202,6 +212,7 @@ namespace Organization\Controller {
             }
             return $this->addListModel;
         }
+
         public function getCompanyUserModel()
         {
             if (!$this->companyUserModel) {

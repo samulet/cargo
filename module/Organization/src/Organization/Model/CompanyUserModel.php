@@ -119,11 +119,15 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if($type=='currentOrg') {
             $org=$orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
-            $this->updateUserRoles($org->roles,$userId,array("orgAdmin" ));
+            if(!empty($org)) {
+                $this->updateUserRoles($org->roles,$userId,array("orgAdmin" ));
+            }
         } elseif($type=='currentCom') {
 
             $com=$orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('companyId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
-            $this->updateUserRoles($com->roles,$userId, array("forwarder", "carrier", "customer" ));
+            if(!empty($com)) {
+             $this->updateUserRoles($com->roles,$userId, array("forwarder", "carrier", "customer" ));
+            }
         }
     }
     public function addOrgAndCompanyToUser($post,$userId) {
