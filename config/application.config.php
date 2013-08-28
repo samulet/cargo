@@ -20,7 +20,6 @@ return array(
         'Auction',
         'AddList',
         'Interaction',
-        'Account',
         'Notification',
         'Excel'
     ),
