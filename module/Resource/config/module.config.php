@@ -95,6 +95,11 @@ return array(
                     'action' => array('index'),
                     'roles' => array('forwarder', 'customer', 'admin')
                 ),
+                array(
+                    'controller' => 'Resource\Controller\Vehicle',
+                    'action' => array('myAcc'),
+                    'roles' => array('forwarder','orgAdmin', 'admin')
+                ),
             ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'resource', 'roles' => array('inner')),

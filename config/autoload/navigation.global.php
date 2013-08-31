@@ -151,11 +151,18 @@ return array(
                 'resource'   => 'route/vehicle',
             ),
             array(
-                'label' => 'Все',
+                'label' => 'Все (в системе)',
                 'route' => 'vehicle',
                 'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'controller/Resource\Controller\Vehicle:index',
+            ),
+            array(
+                'label' => 'Все (в аккаунте)',
+                'route' => 'vehicle',
+                'action' => 'myAcc',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Resource\Controller\Vehicle:myAcc',
             ),
             array(
                 'label' => 'Собственные',
