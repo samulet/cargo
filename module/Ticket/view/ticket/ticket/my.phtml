@@ -1,4 +1,481 @@
 <?php
+
+$form = $this->form;
+$formsArray = $this->formsArray;
+$formsDocArray = $this->formsDocArray;
+
+$typeForm = $this->typeForm;
+
+
+$formVehicle = $this->formVehicle;
+$title = '';
+if (empty($typeForm)) {
+    $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
+        ->prepare();
+    $title = 'Добавление';
+} else {
+    $type = $typeForm['action'];
+    if ($type == 'edit') {
+        $form->setAttribute('action', $this->url('ticket', array('action' => 'add', 'id' => $typeForm['id'])))
+            ->prepare();
+        $title = 'Редактирование';
+    } elseif ($type == 'copy') {
+        $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
+            ->prepare();
+        $title = 'Копирование';
+    } elseif ($type == 'search') {
+        $form->setAttribute('action', $this->url('ticket', array('action' => 'getResults')))
+            ->prepare();
+        $title = 'Поиск';
+    } elseif ($type == 'list') {
+        $form->setAttribute('action', $this->url('ticket'))
+            ->prepare();
+        $title = 'Просмотр';
+    }
+}
+
+echo $this->form()->openTag($form);
+
+$currency = $form->get('currency');
+$money = $form->get('money');
+$formPay = $form->get('formPay');
+$typeTicket = $form->get('typeTicket');
+$typeTSForm = $form->get('type');
+$includeNds = $form->get('includeNds');
+$rate = $form->get('rate');
+?>
+<table class="table spec_table form-group" style="">
+    <tr>
+        <th>
+            Заявка - <?php echo $title; ?>
+        </th>
+    </tr>
+    <tr>
+        <td style="border-left:none;">
+            <div class="form-group">
+                <?php
+
+                echo $this->formRow($rate);
+                echo $this->formRow($currency);
+                echo $this->formRow($money);
+                echo $this->formRow($formPay);
+                echo $this->formRow($includeNds);
+
+                echo $this->formRow($typeTicket);
+                echo $this->formRow($typeTSForm);
+                ?>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<table class="table spec_table" style="">
+<tr>
+    <th>
+        Маршрут
+    </th>
+    <th>
+        Данные груза
+    </th>
+    <th>
+        Количество груза
+    </th>
+    <th>
+        Требования к ТС
+    </th>
+    <?php
+    if (empty($typeForm)) {
+        $typeFormAction = 'add';
+    } else {
+        $typeFormAction = $typeForm['action'];
+    }
+
+    if ($typeFormAction != 'search') {
+        ?>
+        <th>
+            Документы к грузу
+
+        </th>
+    <?php
+    }
+    ?>
+    <th>
+        Примечание
+    </th>
+    <?php
+    if (!empty($typeForm)) {
+        if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
+            ?>
+            <th>
+                Удалить пункт выдачи
+            </th>
+        <?php
+        }
+    } else {
+        ?>
+        <th>
+            Удалить пункт выдачи
+        </th>
+    <?php
+    }
+    ?>
+</tr>
+<?php
+$counter = 0;
+foreach ($formsArray as $formWayArray) {
+
+    $formWay = $formWayArray['formWay'];
+    if ($counter == 0) {
+        $dimensionsWidth = $formWay->get('dimensionsWidth');
+        $dimensionsHeight = $formWay->get('dimensionsHeight');
+        $dimensionsLength = $formWay->get('dimensionsLength');
+        $cargoValue = $formWay->get('cargoValue');
+        $areaLoad = $formWay->get('areaLoad');
+        $areaUnload = $formWay->get('areaUnload');
+        $cargoOwner = $formWay->get('cargoOwner');
+        $cargoName = $formWay->get('cargoName');
+        $adr = $formWay->get('adr');
+        $cubs = $formWay->get('cubs');
+
+        $weight = $formWay->get('weight');
+        $rubles = $formWay->get('rubles');
+        $pallet = $formWay->get('pallet');
+        $box = $formWay->get('box');
+
+        $temperature = $formWay->get('temperature');
+
+        $typeLoad = $formWay->get('typeLoad');
+        $typeUnload = clone $typeLoad;
+        $typeUnload = $typeUnload->setName('typeUnload')->setOptions(array("label" => 'Тип выгрузки'));
+
+        $airSuspension = $formWay->get('airSuspension');
+        $coupling = $formWay->get('coupling');
+        $dateStart = $formWay->get('dateStart');
+        $dateEnd = $formWay->get('dateEnd');
+
+        $note = $formWay->get('note');
+
+        $always = $formWay->get('always');
+        $timeLoadStart = $formWay->get('timeLoadStart');
+        $timeLoadEnd = $formWay->get('timeLoadEnd');
+        $timeUnloadStart = $formWay->get('timeUnloadStart');
+        $timeUnloadEnd = $formWay->get('timeUnloadEnd');
+        $setLoadType = $formWay->get('setLoadType');
+        $aroundDay = $formWay->get('aroundDay');
+        $prepareToLoad = $formWay->get('prepareToLoad');
+        $dateStartPlus = $formWay->get('dateStartPlus');
+
+    } else {
+        $dimensionsWidth = $formWay->get('dimensionsWidth')->setName('dimensionsWidth-' . $counter);
+        $dimensionsHeight = $formWay->get('dimensionsHeight')->setName('dimensionsHeight-' . $counter);
+        $dimensionsLength = $formWay->get('dimensionsLength')->setName('dimensionsLength-' . $counter);
+        $cargoValue = $formWay->get('cargoValue')->setName('cargoValue-' . $counter);
+        $areaLoad = $formWay->get('areaLoad')->setName('areaLoad-' . $counter);
+        $areaUnload = $formWay->get('areaUnload')->setName('areaUnload-' . $counter);
+        $cargoOwner = $formWay->get('cargoOwner')->setName('cargoOwner-' . $counter);
+        $cargoName = $formWay->get('cargoName')->setName('cargoName-' . $counter);
+        $adr = $formWay->get('adr')->setName('adr-' . $counter);
+        $cubs = $formWay->get('cubs')->setName('cubs-' . $counter);
+        $weight = $formWay->get('weight')->setName('weight-' . $counter);
+        $rubles = $formWay->get('rubles')->setName('rubles-' . $counter);
+        $pallet = $formWay->get('pallet')->setName('pallet-' . $counter);
+        $box = $formWay->get('box')->setName('box-' . $counter);
+
+        $temperature = $formWay->get('temperature')->setName('temperature-' . $counter);
+
+        $typeLoad = $formWay->get('typeLoad')->setName('typeLoad-' . $counter);
+        $typeUnload = clone $typeLoad;
+        $typeUnload = $typeUnload->setName('typeUnload-' . $counter)->setOptions(array("label" => 'Тип выгрузки'));
+
+        $airSuspension = $formWay->get('airSuspension')->setName('airSuspension-' . $counter);
+        $coupling = $formWay->get('coupling')->setName('coupling-' . $counter);
+        $dateStart = $formWay->get('dateStart')->setName('dateStart-' . $counter);
+        $dateEnd = $formWay->get('dateEnd')->setName('dateEnd-' . $counter);
+
+
+        $note = $formWay->get('note')->setName('note-' . $counter);
+        $always = $formWay->get('always')->setName('always-' . $counter);
+        $timeLoadStart = $formWay->get('timeLoadStart')->setName('timeLoadStart-' . $counter);
+        $timeLoadEnd = $formWay->get('timeLoadEnd')->setName('timeLoadEnd-' . $counter);
+        $timeUnloadStart = $formWay->get('timeUnloadStart')->setName('timeUnloadStart-' . $counter);
+        $timeUnloadEnd = $formWay->get('timeUnloadEnd')->setName('always-' . $counter);
+        $setLoadType = $formWay->get('setLoadType')->setName('timeUnloadEnd-' . $counter);
+        $aroundDay = $formWay->get('aroundDay')->setName('aroundDay-' . $counter);
+        $prepareToLoad = $formWay->get('prepareToLoad')->setName('prepareToLoad-' . $counter);
+        $dateStartPlus = $formWay->get('dateStartPlus')->setName('dateStartPlus-' . $counter);
+    }
+    ?>
+    <tr class="<?php
+    if ($counter == 0) {
+        echo 'wayTr';
+    } else {
+        echo 'wayTr-' . $counter;
+    }
+    ?>">
+    <td>
+        <?php ?>
+        <div class="setLoadTypeMain">
+            <div class="setLoadTypeRadio">
+                <?php echo $this->formRow($setLoadType); ?>
+            </div>
+            <div class="setLoadTypeParams">
+                <div><?php echo $this->formRow($prepareToLoad); ?> </div>
+                <div class="dateStartMain">
+                    <div class="dateStart"><?php echo $this->formRow($dateStart); ?></div>
+                    <div class="datePlus"><?php echo $this->formRow($dateStartPlus); ?></div>
+                </div>
+                <div> <?php echo $this->formRow($always); ?></div>
+            </div>
+        </div>
+        <?php
+        echo $this->formRow($areaLoad);
+        ?>
+        <div class="timeLoadMain">
+            <p>Время работы загрузки</p>
+            <div class="timeLoadStart"><?php echo $this->formRow($timeLoadStart); ?></div>
+            <div class="timeLoadEnd"><?php echo $this->formRow($timeLoadEnd); ?></div>
+        </div>
+        <?php
+        echo $this->formRow($dateEnd);
+        echo $this->formRow($areaUnload);
+        ?>
+
+
+        <div class="timeLoadMain">
+            <p>Время работы разгрузки</p>
+            <div class="timeLoadStart"><?php echo $this->formRow($timeUnloadStart); ?></div>
+            <div class="timeLoadEnd"><?php echo $this->formRow($timeUnloadEnd); ?></div>
+        </div>
+        <?php echo $this->formRow($aroundDay); ?>
+
+    </td>
+    <td>
+        <?php
+        echo $this->formRow($cargoOwner);
+        echo $this->formRow($cargoName);
+        echo $this->formRow($adr);
+
+        ?>
+    </td>
+    <td>
+        <?php
+
+
+        echo $this->formRow($dimensionsWidth);
+        echo $this->formRow($dimensionsHeight);
+        echo $this->formRow($dimensionsLength);
+        echo $this->formRow($cargoValue);
+
+        echo $this->formRow($weight);
+        echo $this->formRow($rubles);
+        echo $this->formRow($pallet);
+        echo $this->formRow($box);
+
+        ?>
+    </td>
+    <td>
+        <?php
+        echo $this->formRow($cubs);
+        echo $this->formRow($temperature);
+        ?>
+        <div class="muliboxTicket">
+            <?php
+            echo $this->formRow($typeLoad);
+
+            echo $this->formRow($typeUnload);
+            ?>
+        </div>
+        <?php
+        echo $this->formRow($airSuspension);
+        echo $this->formRow($coupling);
+        ?>
+    </td>
+    <?php
+    if (empty($typeForm)) {
+        $typeFormAction = 'add';
+    } else {
+        $typeFormAction = $typeForm['action'];
+    }
+
+    if ($typeFormAction != 'search') {
+        ?>
+        <td>
+
+            <?php
+            $formsDocArray = $formWayArray['formsDocArray'];
+            $localDocCounter = 0;
+
+            foreach ($formsDocArray as $docWay) {
+
+                if ($counter == 0) {
+
+                    $docNumber = $docWay->get('docNumber')->setName('docNumber' . '_' . $localDocCounter);
+                    $docNote = $docWay->get('docNote')->setName('docNote_' . $localDocCounter);
+                    $docDate = $docWay->get('docDate')->setName('docDate_' . $localDocCounter);
+                    $docType = $docWay->get('docType')->setName('docType_' . $localDocCounter);
+                    $docWay = $docWay->get('docWay')->setName('docWay_' . $localDocCounter);
+                    $docCounter = 'docCounter_' . $localDocCounter;
+
+                    if ($localDocCounter == 0) {
+                        $onclickDelete = "";
+                    } else {
+                        $onclickDelete = "onclick='delDocWay(this);'";
+                    }
+                    $wayTrDoc = 'wayTr';
+
+                } else {
+                    $docNumber = $docWay->get('docNumber')->setName(
+                        'docNumber_' . $localDocCounter . '-' . $counter
+                    );
+                    $docNote = $docWay->get('docNote')->setName('docNote_' . $localDocCounter . '-' . $counter);
+                    $docDate = $docWay->get('docDate')->setName('docDate_' . $localDocCounter . '-' . $counter);
+                    $docType = $docWay->get('docType')->setName('docType_' . $localDocCounter . '-' . $counter);
+                    $docWay = $docWay->get('docWay')->setName('docWay_' . $localDocCounter . '-' . $counter);
+                    $docCounter = 'docCounter_' . $localDocCounter . '-' . $counter;
+                    $wayTrDoc = 'wayTr-' . $counter;
+                    $onclickDelete = "onclick='delDocWay(this);'";
+
+                }
+                if ($localDocCounter == 0) {
+                    echo "<div class='docBox'>";
+                } else {
+                    echo "<div class='docBox_" . $localDocCounter . "'>";
+                }
+
+                echo '<p class="docName"><b>Документ ' . $localDocCounter . '</b></p>';
+
+                echo $this->formRow($docNumber);
+                echo $this->formRow($docWay);
+
+                echo $this->formRow($docNote);
+                echo $this->formRow($docDate);
+                echo $this->formRow($docType);
+
+                $localDocCounter++;
+                if (!empty($typeForm)) {
+                    if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
+                        echo "<input type='button' name='deleteDocWay' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
+                    }
+                } else {
+                    echo "<input type='button' name='deleteDocWay' class='deleteDocWay' value='Удалить' " . $onclickDelete . " />";
+                }
+                echo "</div>";
+
+            }
+            echo "<div style='display:none;' class='addDocBefore'></div>";
+            echo "<input type='hidden' class='docCounter' name='docCounter' value='" . $localDocCounter . "' />";
+            ?>
+
+            <?php
+            if (!empty($typeForm)) {
+                if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
+                    ?>
+
+                    <input type="button" name='addDocWay_0' class='addDocWay'
+                           onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
+                <?php
+                }
+            } else {
+                ?>
+                <input type="button" name='addDocWay_0' class='addDocWay'
+                       onclick="addDocWay('<?php echo $wayTrDoc; ?>','docBox');" value="Добавить документ"/>
+            <?php } ?>
+
+        </td>
+
+    <?php
+    }
+    ?>
+    <td>
+        <?php
+        echo $this->formRow($note);
+        ?>
+    </td>
+    <?php
+    if (!empty($typeForm)) {
+        if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
+            ?>
+            <td>
+                <input name="deleteWay" class="deleteWay" onclick="<?php
+                if ($counter != 0) {
+                    echo "delWay('wayTr-" . $counter . "');";
+                }
+                ?>" type="button" value="Удалть"/>
+            </td>
+
+        <?php
+        }
+    } else {
+        ?>
+        <td>
+            <input name="deleteWay" class="deleteWay" onclick="<?php
+            if ($counter != 0) {
+                echo "delWay('wayTr-" . $counter . "');";
+            }
+            ?>" type="button" value="Удалть"/>
+        </td>
+    <?php
+    }
+    ?>
+    </tr>
+    <?php
+    $counter++;
+}
+?>
+<?php
+if (!empty($typeForm)) {
+    if (($typeForm['action'] != 'list') && ($typeForm['action'] != 'search')) {
+        ?>
+        <tr class="addTr">
+            <td>
+                <input id="counter" type="hidden" value='<?php echo $counter ?>'/>
+                <input type="button" onclick="addWay('wayTr');" value="Добавить пункт назначения "/>
+            </td>
+        </tr>
+    <?php
+    }
+} else {
+    ?>
+    <tr class="addTr">
+        <td>
+            <input id="counter" type="hidden" value='<?php echo $counter ?>'/>
+            <input type="button" onclick="addWay('wayTr');" value="Добавить пункт назначения "/>
+        </td>
+    </tr>
+<?php
+}
+?>
+</table>
+<?php
+$subVal = '';
+if (!empty($typeForm)) {
+    if ($typeForm['action'] == 'search') {
+        $subVal = 'Поиск';
+    } elseif ($typeForm['action'] == 'edit') {
+        $subVal = 'Редактировать';
+    } elseif ($typeForm['action'] == 'copy') {
+        $subVal = 'Дублировать';
+    }
+} else {
+    $subVal = 'Отправить';
+}
+if (!empty($typeForm)) {
+    if ($typeForm['action'] != 'list') {
+        ?>
+        <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
+    <?php
+    }
+} else {
+    ?>
+    <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
+<?php
+}
+?>
+
+<?php  echo $this->form()->closeTag();
+?>
+
+<?php
 $tickets = $this->res;
 
 $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пикап' => 'pickup', 'Муковоз' => 'mukovoz');
@@ -9,6 +486,9 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
     array('action' => 'add')
 );?>">Добавить заявку</a>
 
+<div>
+    <p><b>Фильтр заявок</b></p>
+</div>
 
 <table class="table">
     <tr>
