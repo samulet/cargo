@@ -40,9 +40,9 @@ class TicketController extends AbstractActionController
     {
         $res = $this->getTicketModel();
         $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
-        return new ViewModel(array(
-            'res' => $ticket
-        ));
+        $this->addFunction(null,null,'search');
+        return new ViewModel(
+            array('res' => $ticket)+$this->addFunction(null,null,'search'));
     }
 
     public function myAccAction()
