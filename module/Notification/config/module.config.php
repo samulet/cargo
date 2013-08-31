@@ -29,7 +29,7 @@ return array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
                 array('controller' => 'Notification\Controller\Notification','action'=> array('index'),'roles' => array('inner','orgAdmin','admin')),
-                array('controller' => 'Notification\Controller\Notification','action'=> array('my','new','read','add','addNotificationNote'),'roles' => array('inner','admin','forwarder','customer','carrier')),
+                array('controller' => 'Notification\Controller\Notification','action'=> array('my','new','read','add','addNotificationNote'),'roles' => array('inner','admin','forwarder','orgAdmin','customer','carrier')),
             ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'notification', 'roles' => array('inner')),

@@ -53,7 +53,7 @@ return array(
                 array(
                     'controller' => 'Resource\Controller\Resource',
                     'action' => array('add'),
-                    'roles' => array('forwarder', 'customer', 'carrier', 'admin')
+                    'roles' => array('forwarder','orgAdmin', 'customer', 'carrier', 'admin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Resource',
@@ -62,18 +62,28 @@ return array(
                 ),
                 array(
                     'controller' => 'Resource\Controller\Resource',
-                    'action' => array('my', 'delete'),
+                    'action' => array('my'),
                     'roles' => array('forwarder', 'carrier', 'admin')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Resource',
+                    'action' => array('delete'),
+                    'roles' => array('forwarder', 'carrier', 'admin','orgAdmin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
                     'action' => array('add'),
-                    'roles' => array('forwarder', 'customer', 'carrier', 'admin')
+                    'roles' => array('forwarder','orgAdmin', 'customer', 'carrier', 'admin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
-                    'action' => array('my', 'delete', 'error'),
+                    'action' => array('my', 'error'),
                     'roles' => array('forwarder', 'admin', 'carrier')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Vehicle',
+                    'action' => array('delete'),
+                    'roles' => array('forwarder', 'admin', 'carrier','orgAdmin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Vehicle',

@@ -44,14 +44,16 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Ticket\Controller\Ticket','action'=> array('add'),'roles' => array('forwarder','carrier','customer','admin')),
-                array('controller' => 'Ticket\Controller\Ticket','action'=> array('my','delete'),'roles' => array('forwarder','customer','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('add'),'roles' => array('orgAdmin','forwarder','carrier','customer','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('my'),'roles' => array('forwarder','customer','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('delete'),'roles' => array('forwarder','customer','admin','orgAdmin')),
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','search', 'getResults'),'roles' => array('forwarder','carrier','admin')),
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('myAcc'),'roles' => array('forwarder','orgAdmin')),
 
 
                 array('controller' => 'Ticket\Controller\Cargo', 'action' => array('index'), 'roles' => array('admin')),
-                array('controller' => 'Ticket\Controller\Cargo', 'action' => array('my','add', 'edit', 'list', 'delete', 'addCargo', 'copy'), 'roles' => array('forwarder','customer','admin')),
+                array('controller' => 'Ticket\Controller\Cargo', 'action' => array('my', 'copy'), 'roles' => array('forwarder','customer','admin')),
+                array('controller' => 'Ticket\Controller\Cargo', 'action' => array('add', 'edit', 'list', 'delete', 'addCargo'), 'roles' => array('orgAdmin','forwarder','customer','admin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route'=> 'ticket','roles' => array('inner')),
