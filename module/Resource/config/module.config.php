@@ -57,6 +57,11 @@ return array(
                 ),
                 array(
                     'controller' => 'Resource\Controller\Resource',
+                    'action' => array('myAcc'),
+                    'roles' => array('forwarder','orgAdmin', 'admin')
+                ),
+                array(
+                    'controller' => 'Resource\Controller\Resource',
                     'action' => array('search', 'getResults'),
                     'roles' => array('forwarder', 'customer', 'admin')
                 ),

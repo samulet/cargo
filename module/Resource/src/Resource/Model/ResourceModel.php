@@ -27,6 +27,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
     protected $organizationModel;
     protected $vehicleModel;
     protected $notificationModel;
+    protected $companyModel;
 
     public function addResourceWay($propArraySplit,$ownerResourceId,$resId) {
         $result=array();
@@ -271,6 +272,28 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         return $rezs;
     }
+    public function returnMyAccResource($orgId)
+    {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $comModel = $this->getCompanyModel();
+        $com = $comModel->returnCompanies($orgId);
+        $resultArray=array();
+        foreach($com as $c) {
+            $rezObj = $objectManager->getRepository('Resource\Entity\Resource')->getMyAvailableResource($c['id']);
+            $vehicle = $this->getVehicleModel();
+            foreach ($rezObj as $cur) {
+                if(!empty($cur->tsId)) {
+                    $veh=$vehicle->listVehicle($cur->tsId);
+                } else {
+                    $veh=null;
+                }
+                $ways=$this->returnAllWays($cur->id);
+                array_push($resultArray, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways, 'owner'=>$c));
+            }
+        }
+        return $resultArray;
+    }
+
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
@@ -386,5 +409,13 @@ class ResourceModel implements ServiceLocatorAwareInterface
             }
 
         }
+    }
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
     }
 }

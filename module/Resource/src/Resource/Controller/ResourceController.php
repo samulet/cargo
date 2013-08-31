@@ -49,6 +49,15 @@ class ResourceController extends AbstractActionController
         ));
     }
 
+    public function myAccAction()
+    {
+        $res = $this->getResourceModel();
+        $resource=$res->returnMyAccResource($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg());
+        return new ViewModel(array(
+            'res' => $resource
+        ));
+    }
+
     public function addAction()
     {
         $post=$this->getRequest()->getPost();
