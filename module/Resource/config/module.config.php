@@ -48,7 +48,7 @@ return array(
                 array(
                     'controller' => 'Resource\Controller\Resource',
                     'action' => array('index'),
-                    'roles' => array('admin')
+                    'roles' => array('admin','forwarder', 'customer')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Resource',
