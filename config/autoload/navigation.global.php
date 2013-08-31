@@ -116,11 +116,18 @@ return array(
                 'resource'   => 'route/resource',
             ),
             array(
-                'label' => 'Все',
+                'label' => 'Все (в системе)',
                 'route' => 'resource',
                 'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'controller/Resource\Controller\Resource:index',
+            ),
+            array(
+                'label' => 'Все (в аккаунте)',
+                'route' => 'resource',
+                'action' => 'myAcc',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Resource\Controller\Resource:myAcc',
             ),
             array(
                 'label' => 'Собственные',
