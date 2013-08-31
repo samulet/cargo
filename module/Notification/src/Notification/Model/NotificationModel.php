@@ -39,10 +39,11 @@ class NotificationModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
-    public function getAdminNotifications() {
+    public function getAdminNotifications($orgId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $notes =$objectManager->getRepository('Notification\Entity\Notification')->createQueryBuilder()
-            ->getQuery()->execute();
+        $notes =$objectManager->getRepository('Notification\Entity\Notification')->findBy(
+            array('ownerOrgId' => new \MongoId($orgId))
+        );
 
         $result=array();
         foreach($notes as $note) {
@@ -93,9 +94,11 @@ class NotificationModel implements ServiceLocatorAwareInterface
 
     public function getMyNotifications($userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        ;
         $res = $objectManager->getRepository('Notification\Entity\Notification')->findBy(
             array('ownerUserId' => new \MongoId($userId))
         );
+
         $fullResult=array();
         foreach($res as $re) {
             $notes = $objectManager->getRepository('Notification\Entity\NotificationNote')->findBy(
