@@ -54,12 +54,7 @@ class TicketController extends AbstractActionController
         ));
     }
 
-
-    public function addAction()
-    {
-        $post=$this->getRequest()->getPost();
-        $type = $this->getEvent()->getRouteMatch()->getParam('type');
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+    public function addFunction($post,$type,$id) {
         if($id=='search') {
             $type=$id;
         }
@@ -213,11 +208,19 @@ class TicketController extends AbstractActionController
             }
         }
         $ticketModel->addBootstrap3Class($form,$formsArray);
-        return new ViewModel(array(
+        return array(
             'form' => $form,
             'formsArray' =>$formsArray,
             'typeForm' => $typeForm
-        ));
+        );
+    }
+
+    public function addAction()
+    {
+        $post=$this->getRequest()->getPost();
+        $type = $this->getEvent()->getRouteMatch()->getParam('type');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        return new ViewModel($this->addFunction($post,$type,$id));
     }
 
     public function editAction()
