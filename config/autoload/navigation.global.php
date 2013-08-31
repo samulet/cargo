@@ -87,7 +87,13 @@ return array(
                 'params' => array('id' => null),
                 'resource'   => 'route/account',
             ),
-
+            array(
+                'label' => 'Управление айтемами',
+                'route' => 'notification',
+                'action' => 'index',
+                'params' => array('id' => null),
+                'resource'   => 'route/notification',
+            ),
             array(
                 'label' => 'Доска оповещений',
                 'route' => 'notification',
