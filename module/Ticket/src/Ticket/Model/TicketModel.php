@@ -442,8 +442,12 @@ class TicketModel implements ServiceLocatorAwareInterface
             array('ownerTicketId' => new \MongoId($id))
         );
         $result=array();
+        $comModel = $this->getCompanyModel();
         foreach($res as $re){
-            array_push($result,get_object_vars($re));
+            $cargoOwnerTrue=$comModel->getCompany($re->cargoOwner);
+            $resultArray=get_object_vars($re);
+            $resultArray['cargoOwnerTrue']=$cargoOwnerTrue;
+            array_push($result,$resultArray);
         }
         return $result;
     }
