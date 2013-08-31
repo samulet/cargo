@@ -165,11 +165,18 @@ return array(
                 'resource'   => 'route/ticket',
             ),
             array(
-                'label' => 'Все',
+                'label' => 'Все (в системе)',
                 'route' => 'ticket',
                 'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'controller/Ticket\Controller\Ticket:index',
+            ),
+            array(
+                'label' => 'Все (в аккаунте)',
+                'route' => 'ticket',
+                'action' => 'myAcc',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Ticket\Controller\Ticket:myAcc',
             ),
             array(
                 'label' => 'Собственные',
@@ -198,6 +205,13 @@ return array(
                 'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'controller/Ticket\Controller\Cargo:index',
+            ),
+            array(
+                'label' => 'Все (аккаунта)',
+                'route' => 'cargo',
+                'action' => 'myAcc',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Ticket\Controller\Cargo:myAcc',
             ),
             array(
                 'label' => 'Собственные',

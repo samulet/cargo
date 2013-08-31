@@ -42,6 +42,16 @@ class CargoController extends AbstractActionController
 
     }
 
+    public function myAccAction()
+    {
+        $res = $this->getTicketModel();
+        $ticket=$res->returnMyAccTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg());
+        return new ViewModel(array(
+            'res' => $ticket
+        ));
+
+    }
+
     public function addAction()
     {
         $builder = new AnnotationBuilder();
