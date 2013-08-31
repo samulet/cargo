@@ -47,6 +47,7 @@ return array(
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('add'),'roles' => array('forwarder','carrier','customer','admin')),
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('my','delete'),'roles' => array('forwarder','customer','admin')),
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','search', 'getResults'),'roles' => array('forwarder','carrier','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('myAcc'),'roles' => array('forwarder','orgAdmin')),
 
 
                 array('controller' => 'Ticket\Controller\Cargo', 'action' => array('index'), 'roles' => array('admin')),
