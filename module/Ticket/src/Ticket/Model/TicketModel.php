@@ -274,11 +274,12 @@ class TicketModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $rezObj = $objectManager->getRepository('Ticket\Entity\Ticket')->getMyAvailableTicket($owner_id);
         $rezs = array();
+        $comModel = $this->getCompanyModel();
         $cargo = $this->getCargoModel();
         foreach ($rezObj as $cur) {
             $veh=$cargo->listCargo($cur->tsId);
             $ways=$this->returnAllWays($cur->id);
-            array_push($rezs, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways));
+            array_push($rezs, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways, 'owner'=>$comModel->getCompany($owner_id)));
         }
         return $rezs;
     }
