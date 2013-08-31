@@ -40,6 +40,14 @@ class VehicleController extends AbstractActionController
         ));
     }
 
+    public function myAccAction()
+    {
+        $res = $this->getVehicleModel();
+        return new ViewModel(array(
+            'res' => $res->returnMyAccVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())
+        ));
+    }
+
     public function addAction()
     {
 

@@ -1,0 +1,84 @@
+<?php
+$vehicles = $this->res;
+
+
+?>
+<h1>ТС моего аккаунта</h1>
+<table class="table">
+    <tr>
+        <th>
+            Номер транспортного средства
+        </th>
+        <th>
+            Статус
+        </th>
+        <th>
+            Марка / Модель
+        </th>
+        <th>
+            Грузоподъемность
+        </th>
+
+        <th>
+            Компания
+        </th>
+        <th>
+            Опубликовать
+        </th>
+
+        <th>
+            Редактировать
+        </th>
+        <th>
+            Копировать
+        </th>
+        <th>
+            Удалить
+        </th>
+    </tr>
+    <?php foreach ($vehicles as $vehicle) { ?>
+        <tr>
+            <td>
+                <a href="<?php echo $this->url('vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'list'));?>">
+                    <?php echo $vehicle['carNumber']; ?>
+                </a>
+            </td>
+            <td>
+                <?php echo $vehicle['status']; ?>
+            </td>
+            <td>
+                <?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?>
+            </td>
+
+            <td>
+                <?php echo $vehicle['capacity']; ?>
+            </td>
+            <td>
+                <?php echo $vehicle['vehicleOwnerTrue']['property'].' '.$vehicle['vehicleOwnerTrue']['name']; ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'resource',
+                    array('action' => 'add', 'id' => $vehicle['uuid'])
+                );?>">Опубликовать</a>
+
+            </td>
+            <td>
+                <a href="<?php echo $this->url( 'vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'edit'));?>">Редактировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'copy')
+                );?>">Дублировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'delete', 'id' => $vehicle['uuid'])
+                );?>">Удалить</a>
+            </td>
+        </tr>
+    <?php } ?>
+
+</table>
