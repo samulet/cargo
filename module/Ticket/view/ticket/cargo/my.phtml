@@ -18,6 +18,9 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
             Грузовладелец
         </th>
         <th>
+           Компания (создавшая груз)
+        </th>
+        <th>
             Тип ТС
         </th>
 
@@ -26,6 +29,7 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
         $ticketWay=$ticket['ways'];
         $cargo=$ticket['veh'];
        // $org=$ticket['org'];
+        $owner=$ticket['owner'];
         $ticket=$ticket['res'];
         foreach($ticketWay as $way){
             ?>
@@ -37,7 +41,10 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
                     <?php echo $way['areaUnload']; ?>
                 </td>
                 <td>
-                    <?php echo $way['cargoOwner']; ?>
+                    <?php echo $way['cargoOwnerTrue']['property'].' '.$way['cargoOwnerTrue']['name']; ?>
+                </td>
+                <td>
+                    <?php echo $owner['property'].' '.$owner['name']; ?>
                 </td>
                 <td>
                     <?php echo $way['type']; ?>
