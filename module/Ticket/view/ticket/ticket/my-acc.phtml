@@ -1,0 +1,129 @@
+<?php
+$tickets = $this->res;
+
+$types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пикап' => 'pickup', 'Муковоз' => 'mukovoz');
+?>
+<h1>Заявки моего аккаунта</h1>
+<a href="<?php echo $this->url(
+    'ticket',
+    array('action' => 'add')
+);?>">Добавить заявку</a>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Номер заявки
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+            Компания
+        </th>
+        <th>
+            Печать
+        </th>
+        <th>
+            Редактировать
+        </th>
+        <th>
+            Добавить аукцион
+        </th>
+        <th>
+            Копировать
+        </th>
+        <th>
+            Удалить
+        </th>
+    </tr>
+    <?php foreach ($tickets as $ticket) {
+        $ticketWay=$ticket['ways'];
+        $cargo=$ticket['veh'];
+        $owner=$ticket['owner'];
+        $ticket=$ticket['res'];
+
+        ?>
+        <tr>
+            <td>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'add', 'id' => $ticket['uuid'] ,'type'=>'list')
+                );?>"><?php echo $ticket['numberInt']; ?></a>
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+
+            </td>
+            <td>
+
+            </td>
+
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <?php echo $owner['property'].' '.$owner['name']; ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'excel',
+                    array('action' => 'getExcel', 'id' => $ticket['uuid'])
+                );?>">Печать</a>
+                </br>
+                <a href="<?php echo $this->url(
+                    'excel',
+                    array('action' => 'generateTemplate', 'id' => $ticket['uuid'])
+                );?>">Загрузить свой шаблон</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'add', 'id' => $ticket['uuid'],'type'=>'edit')
+                );?>">Редактировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'auction',
+                    array('action' => 'add', 'id' => $ticket['uuid'])
+                );?>">Добавить аукцион</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'add', 'id' => $ticket['uuid'],'type'=>'copy')
+                );?>">Дублировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'delete', 'id' => $ticket['uuid'])
+                );?>">Удалить</a>
+            </td>
+        </tr>
+    <?php } ?>
+
+</table>
