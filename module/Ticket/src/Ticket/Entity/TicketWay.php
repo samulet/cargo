@@ -349,23 +349,19 @@ class TicketWay
 
     public $dateStart;
     /**
-     * @var string
-     * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required(false)
      * @Annotation\Options({"label":"Загрузка с"})
      */
 
-    public $dateStartFilter;
+    public $dateStartFilterFrom;
     /**
-     * @var string
-     * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required(false)
      * @Annotation\Options({"label":"По"})
      */
 
-    public $dateEndFilter;
+    public $dateStartFilterTo;
     /**
      * @var string
      * @ODM\Field(type="string")

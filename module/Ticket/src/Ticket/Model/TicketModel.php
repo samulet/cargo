@@ -383,6 +383,16 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     }
 
+    public function rangeSearch($qb) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $qb = $objectManager->createQueryBuilder('Account')
+            ->field('amount_due')->gte(30);
+        $qb = $objectManager->createQueryBuilder('Account')
+            ->field('amount_due')->lte(30);
+        $qb = $objectManager->createQueryBuilder('Account')
+            ->field('amount_due')->range(10, 20);
+    }
+
     public function returnSearchTicket($post)
     {
         $propArray = get_object_vars($post);
