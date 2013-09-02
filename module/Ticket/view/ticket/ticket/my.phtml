@@ -1,3 +1,4 @@
+<div class='filters'>
 <?php
 
 $form = $this->form;
@@ -44,10 +45,12 @@ $typeTSForm = $form->get('type');
 $includeNds = $form->get('includeNds');
 $rate = $form->get('rate');
 ?>
+<div class="fullFilter">
+<span onclick='showFilters();' class='showFilter'>Показать/скрыть полные фильтры</span>
 <table class="table spec_table form-group" style="">
     <tr>
         <th>
-            Заявка - <?php echo $title; ?>
+            Полные фильтры
         </th>
     </tr>
     <tr>
@@ -232,6 +235,7 @@ foreach ($formsArray as $formWayArray) {
         ?>
         <div class="timeLoadMain">
             <p>Время работы загрузки</p>
+
             <div class="timeLoadStart"><?php echo $this->formRow($timeLoadStart); ?></div>
             <div class="timeLoadEnd"><?php echo $this->formRow($timeLoadEnd); ?></div>
         </div>
@@ -243,6 +247,7 @@ foreach ($formsArray as $formWayArray) {
 
         <div class="timeLoadMain">
             <p>Время работы разгрузки</p>
+
             <div class="timeLoadStart"><?php echo $this->formRow($timeUnloadStart); ?></div>
             <div class="timeLoadEnd"><?php echo $this->formRow($timeUnloadEnd); ?></div>
         </div>
@@ -446,6 +451,8 @@ if (!empty($typeForm)) {
 }
 ?>
 </table>
+</div>
+<span onclick='showFilters();' class='showFilter'>Показать/скрыть полные фильтры</span>
 <?php
 $subVal = '';
 if (!empty($typeForm)) {
@@ -474,7 +481,7 @@ if (!empty($typeForm)) {
 
 <?php  echo $this->form()->closeTag();
 ?>
-
+</div>
 <?php
 $tickets = $this->res;
 
@@ -486,9 +493,6 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
     array('action' => 'add')
 );?>">Добавить заявку</a>
 
-<div>
-    <p><b>Фильтр заявок</b></p>
-</div>
 
 <table class="table">
     <tr>
@@ -529,16 +533,16 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         </th>
     </tr>
     <?php foreach ($tickets as $ticket) {
-        $ticketWay=$ticket['ways'];
-        $cargo=$ticket['veh'];
-        $ticket=$ticket['res'];
+        $ticketWay = $ticket['ways'];
+        $cargo = $ticket['veh'];
+        $ticket = $ticket['res'];
 
         ?>
         <tr>
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'add', 'id' => $ticket['uuid'] ,'type'=>'list')
+                    array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'list')
                 );?>"><?php echo $ticket['numberInt']; ?></a>
             </td>
             <td>
@@ -575,7 +579,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'add', 'id' => $ticket['uuid'],'type'=>'edit')
+                    array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'edit')
                 );?>">Редактировать</a>
             </td>
             <td>
@@ -587,7 +591,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'add', 'id' => $ticket['uuid'],'type'=>'copy')
+                    array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'copy')
                 );?>">Дублировать</a>
             </td>
             <td>
