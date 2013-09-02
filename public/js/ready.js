@@ -130,3 +130,13 @@ function time_control(element) {
         $(element).val( numVal );
     }
 }
+
+function showFilters() {
+    var divFilter=$('.filters .fullFilter');
+    if(divFilter.css('display')=='none') {
+        $('.filters .fullFilter').show(500);
+    } else {
+        $('.filters .fullFilter').hide(500);
+    }
+
+}
