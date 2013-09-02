@@ -44,7 +44,20 @@ $typeTicket = $form->get('typeTicket');
 $typeTSForm = $form->get('type');
 $includeNds = $form->get('includeNds');
 $rate = $form->get('rate');
+
+    $formWay = $formsArray[0]['formWay'];
+$cargoOwner = $formWay->get('cargoOwner');
+$ownerId = clone $cargoOwner;
+$ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'));
 ?>
+
+<div class='shortFilter'>
+    <?php
+    echo $this->formRow($cargoOwner);
+    echo $this->formRow($ownerId);
+    ?>
+</div>
+
 <div class="fullFilter">
 <span onclick='showFilters();' class='showFilter'>Показать/скрыть полные фильтры</span>
 <table class="table spec_table form-group" style="">
@@ -256,7 +269,7 @@ foreach ($formsArray as $formWayArray) {
     </td>
     <td>
         <?php
-        echo $this->formRow($cargoOwner);
+
         echo $this->formRow($cargoName);
         echo $this->formRow($adr);
 

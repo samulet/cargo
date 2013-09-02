@@ -52,7 +52,12 @@ class Ticket
     /**
      * @ODM\ObjectId
      * @var int
-     * @Annotation\Exclude()
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Тип ТС"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
      */
     public $ownerId;
 
