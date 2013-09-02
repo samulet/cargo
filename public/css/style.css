@@ -251,3 +251,19 @@ ul.dropdown-menu span.divider {
     float: left;
     width: 50% ;
 }
+
+.filters .fullFilter {
+    display: none;
+}
+
+.filters .submit_cl {
+
+    padding: 0;
+
+}
+
+.filters  .showFilter {
+    cursor: pointer;
+    border-bottom: #0044cc 1px dashed;
+display: inline !important;
+}
