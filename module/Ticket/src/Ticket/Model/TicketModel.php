@@ -383,14 +383,20 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     }
 
-    public function rangeSearch($qb) {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->createQueryBuilder('Account')
-            ->field('amount_due')->gte(30);
-        $qb = $objectManager->createQueryBuilder('Account')
-            ->field('amount_due')->lte(30);
-        $qb = $objectManager->createQueryBuilder('Account')
-            ->field('amount_due')->range(10, 20);
+    public function rangeSearch($qb,$propFilterResult) {
+        if(!empty($propFilterResult)) {
+            foreach($propFilterResult as $range) {
+                if( (!empty($range['from']))&&(!empty($range['to'])) ) {
+                    $qb->field('amount_due')->range($range['from'], $range['to']);
+                } elseif (!empty($range['from'])) {
+                    $qb->field('amount_due')->gte($range['from']);
+                } elseif (!empty($range['to'])) {
+                    $qb->field('amount_due')->lte($range['to']);
+                }
+            }
+        }
+        return $qb;
+
     }
 
     public function returnSearchTicket($post)
@@ -399,10 +405,28 @@ class TicketModel implements ServiceLocatorAwareInterface
         unset($propArray['submit']);
 
         $propArrayResult = array();
+        $propFilterResult = array();
         foreach ($propArray as $key => $value) {
             if (!empty($value)) {
-                $propArrayResult[$key] = $value;
+                if($key!='created') {
+                    $subStrFrom=substr($key , strlen($key)-10, 10);
+                    $subStrTo=substr($key , strlen($key)-8, 8);
+                    if($subStrFrom=='FilterFrom') {
+                        $propFilterResult[substr($key , 0, strlen($key)-10)]['from']=$value;
+                    } elseif($subStrTo=='FilterTo') {
+                        $propFilterResult[substr($key , 0, strlen($key)-8)]['to']=$value;
+                    } else {
+                        $propArrayResult[$key] = $value;
+                    }
+                } else {
+                    $propFilterResult['created']['from']=$value;
+                }
             }
+        }
+        $propFilterResultTicket=array();
+        if(!empty($propFilterResult['created'])) {
+            $propFilterResultTicket['created']=$propFilterResult['created'];
+            unset($propFilterResult['created']);
         }
         $propArrayResultFullForm = array();
         $unsetTicketArray = array('currency', 'money', 'formPay', 'typeTicket', 'ownerId', 'type', 'rate');
@@ -421,9 +445,10 @@ class TicketModel implements ServiceLocatorAwareInterface
         $qb = $objectManager->createQueryBuilder('Ticket\Entity\TicketWay');
         $result = array();
         if (empty($propArrayResultFullForm)) {
-            $rezObj = $this->searchItemAct($qb, $propArrayResult)->getQuery()->execute();
+            $qbRes=$this->searchItemAct($qb, $propArrayResult);
+            $rezObj = $this->rangeSearch($qbRes,$propFilterResult)->getQuery()->execute();
             $result = $this->searchTicketWay($rezObj);
-        } elseif (!empty($propArrayResult)) {
+        } elseif (!empty($propArrayResultFullForm)) {
             $ticketFindObjects = $this->searchItemAct($qbt, $propArrayResultFullForm)->getQuery()->execute();
             $result = $this->searchTicket($ticketFindObjects, $propArrayResult, $qb);
         }
