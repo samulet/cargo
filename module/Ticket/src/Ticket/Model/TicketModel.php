@@ -303,6 +303,15 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $resultArray;
     }
 
+    public function searchItemAct($qb, $searchArray) {
+        foreach($searchArray as $key => $value) {
+            $qb->field($key)->equals($value);
+        }
+        return $qb;
+    }
+    public function sortTicketWayAct($qb, $sortArray) {
+
+    }
     public function returnSearchTicket($post) {
         $propArray = get_object_vars($post);
         unset($propArray['submit']);
@@ -325,19 +334,16 @@ class TicketModel implements ServiceLocatorAwareInterface
                 unset($propArrayResult[$unsetTicketString]);
             }
         }
-
-
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default') ;
+        $qbt=$objectManager->createQueryBuilder('Ticket\Entity\Ticket');
+        $qb=$objectManager->createQueryBuilder('Ticket\Entity\TicketWay');
         if(empty($propArrayResultFullForm)) {
-            $rezObj = $objectManager->getRepository('Ticket\Entity\TicketWay')->findBy($propArrayResult);
-
+            $rezObj=$this->searchItemAct($qb,$propArrayResult)->getQuery()->execute();
             if(!empty($rezObj)) {
                 $result = array();
                 $cargo = $this->getCargoModel();
                 foreach ($rezObj as $cur) {
-
                     $cur=$objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('id' => new \MongoId($cur->ownerTicketId)));
-
                     $veh=$cargo->listCargo($cur->tsId);
                     $ways=$this->returnAllWays($cur->id);
                     array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways));
@@ -347,16 +353,12 @@ class TicketModel implements ServiceLocatorAwareInterface
                 return null;
             }
         } else {
-
             $ticketFindObjects = $objectManager->getRepository('Ticket\Entity\Ticket')->findBy($propArrayResultFullForm);
-
             if(!empty($ticketFindObjects)) {
                 $result = array();
-
                 foreach($ticketFindObjects as $ticketFindObject) {
                     if(!empty($propArrayResult)) {
                         $propArrayResult['ownerTicketId']= new \MongoId($ticketFindObject->id);
-                       // die(var_dump($propArrayResult));
                         $rezObj = $objectManager->getRepository('Ticket\Entity\TicketWay')->findBy($propArrayResult);
                         if(!empty($rezObj)) {
                             $cargo = $this->getCargoModel();
@@ -379,8 +381,6 @@ class TicketModel implements ServiceLocatorAwareInterface
                 return $result;
             }
         }
-
-
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
