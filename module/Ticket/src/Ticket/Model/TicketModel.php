@@ -314,21 +314,16 @@ class TicketModel implements ServiceLocatorAwareInterface
             }
         }
         $propArrayResultFullForm=array();
-        if( !empty($propArrayResult['currency']) ) {
-            $propArrayResultFullForm['currency']=$propArrayResult['currency'];
-            unset($propArrayResult['currency']);
-        }
-        if( !empty($propArrayResult['money']) ) {
-            $propArrayResultFullForm['money']=$propArrayResult['money'];
-            unset($propArrayResult['money']);
-        }
-        if( !empty($propArrayResult['formPay']) ) {
-            $propArrayResultFullForm['formPay']=$propArrayResult['formPay'];
-            unset($propArrayResult['formPay']);
-        }
-        if( !empty($propArrayResult['typeTicket']) ) {
-            $propArrayResultFullForm['typeTicket']=$propArrayResult['typeTicket'];
-            unset($propArrayResult['typeTicket']);
+        $unsetTicketArray=array('currency','money','formPay','typeTicket','ownerId','type','rate');
+        foreach($unsetTicketArray as $unsetTicketString) {
+            if( !empty($propArrayResult[$unsetTicketString]) ) {
+                if($unsetTicketString!='ownerId') {
+                    $propArrayResultFullForm[$unsetTicketString]=$propArrayResult[$unsetTicketString];
+                } else {
+                    $propArrayResultFullForm[$unsetTicketString]=new \MongoId($propArrayResult[$unsetTicketString]);
+                }
+                unset($propArrayResult[$unsetTicketString]);
+            }
         }
 
 
