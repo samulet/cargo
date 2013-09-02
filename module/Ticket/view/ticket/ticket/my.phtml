@@ -45,16 +45,31 @@ $typeTSForm = $form->get('type');
 $includeNds = $form->get('includeNds');
 $rate = $form->get('rate');
 
-    $formWay = $formsArray[0]['formWay'];
-$cargoOwner = $formWay->get('cargoOwner');
+$created= $form->get('created');
+$createdFilterTo= $form->get('createdFilterTo');
+
+$formFilterWay = $formsArray[0]['formWay'];
+$cargoOwner = $formFilterWay->get('cargoOwner');
+$dateStartFilterFrom  = $formFilterWay->get('dateStartFilterFrom');
+$dateStartFilterTo = $formFilterWay->get('dateStartFilterTo');
 $ownerId = clone $cargoOwner;
 $ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'));
 ?>
 
 <div class='shortFilter'>
     <?php
+    echo $this->formRow($dateStartFilterFrom);
+    echo $this->formRow($dateStartFilterTo);
+    ?>
+    <span>(Поля Грузовладелец и Компания только для поиска внутри Аккаунта)</span>
+    <?php
     echo $this->formRow($cargoOwner);
     echo $this->formRow($ownerId);
+    ?>
+    </br>
+    <?php
+    echo $this->formRow($created);
+    echo $this->formRow($createdFilterTo);
     ?>
 </div>
 
