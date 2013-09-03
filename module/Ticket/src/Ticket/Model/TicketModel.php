@@ -355,24 +355,18 @@ class TicketModel implements ServiceLocatorAwareInterface
             foreach ($rezObj as $cur) {
                 $result=$result+ $this->returnMyTicketById($cur->ownerTicketId);
             }
-            return $result;
+            return array_unique($result);
         } else {
             return array();
         }
     }
 
-    public function searchTicket($ticketFindObjects, $propArrayResult, $qb)
+    public function searchTicket($ticketFindObjects)
     {
         $result = array();
         if (!empty($ticketFindObjects)) {
-            foreach ($ticketFindObjects as $ticketFindObject) {
-                $propArrayResult['ownerTicketId'] = new \MongoId($ticketFindObject->id);
-                $rezObj = $this->searchItemAct($qb, $propArrayResult)->getQuery()->execute();
-                if (!empty($rezObj)) {
-                    foreach ($rezObj as $cur) {
-                        $result=$result+  $this->returnMyTicketById($cur->ownerTicketId);
-                    }
-                }
+            foreach($ticketFindObjects as $cur) {
+                $result=$result+$this->returnMyTicketById($cur->id);
             }
         }
         return $result;
@@ -398,7 +392,17 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $qb;
 
     }
-
+    public function array_intersect_assoc_recursive(&$arr1, &$arr2) {
+        if (!is_array($arr1) || !is_array($arr2)) {
+            return $arr1 == $arr2; // or === for strict type
+        }
+        $commonkeys = array_intersect(array_keys($arr1), array_keys($arr2));
+        $ret = array();
+        foreach ($commonkeys as $key) {
+            $ret[$key] = $this->array_intersect_assoc_recursive($arr1[$key], $arr2[$key]);
+        }
+        return $ret;
+    }
     public function returnSearchTicket($post)
     {
         $propArray = get_object_vars($post);
@@ -441,19 +445,22 @@ class TicketModel implements ServiceLocatorAwareInterface
             }
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qbt = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
-        $qb = $objectManager->createQueryBuilder('Ticket\Entity\TicketWay');
-        $result = array();
-        if (empty($propArrayTicket)) {
-            $qbRes=$this->searchItemAct($qb, $propArrayTicketWay);
-            $rezObj = $this->rangeSearch($qbRes,$propFilterResult)->getQuery()->execute();
-            $result = $this->searchTicketWay($rezObj);
-        } elseif (!empty($propArrayTicket)) {
-            $ticketFindObjects = $this->searchItemAct($qbt, $propArrayTicket)->getQuery()->execute();
-            $result = $this->searchTicket($ticketFindObjects, $propArrayTicketWay, $qb);
-        }
+        $qTicket = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
+        $qTicketWay = $objectManager->createQueryBuilder('Ticket\Entity\TicketWay');
 
-        return $result;
+
+        $qTicketWay=$this->searchItemAct($qTicketWay, $propArrayTicketWay);
+        $qTicketWay = $this->rangeSearch($qTicketWay,$propFilterResult);
+
+        $qTicket=$this->searchItemAct($qTicket, $propArrayTicket);
+        $qTicket= $this->rangeSearch($qTicket,$propFilterResultTicket);
+
+        $resultTicketFromWay = $this->searchTicketWay($qTicketWay->getQuery()->execute());
+        $resultTicketFromTicket=$this->searchTicket($qTicket->getQuery()->execute());
+
+        $result =$this->array_intersect_assoc_recursive($resultTicketFromWay,$resultTicketFromTicket);
+        die(var_dump($result));
+        //return array_intersect();
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
