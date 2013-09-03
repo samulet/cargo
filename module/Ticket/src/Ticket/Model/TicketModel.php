@@ -392,17 +392,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $qb;
 
     }
-    public function array_intersect_assoc_recursive(&$arr1, &$arr2) {
-        if (!is_array($arr1) || !is_array($arr2)) {
-            return $arr1 == $arr2; // or === for strict type
-        }
-        $commonkeys = array_intersect(array_keys($arr1), array_keys($arr2));
-        $ret = array();
-        foreach ($commonkeys as $key) {
-            $ret[$key] = $this->array_intersect_assoc_recursive($arr1[$key], $arr2[$key]);
-        }
-        return $ret;
-    }
+
     public function returnSearchTicket($post)
     {
         $propArray = get_object_vars($post);
@@ -458,9 +448,17 @@ class TicketModel implements ServiceLocatorAwareInterface
         $resultTicketFromWay = $this->searchTicketWay($qTicketWay->getQuery()->execute());
         $resultTicketFromTicket=$this->searchTicket($qTicket->getQuery()->execute());
 
-        $result =$this->array_intersect_assoc_recursive($resultTicketFromWay,$resultTicketFromTicket);
-        die(var_dump($result));
-        //return array_intersect();
+        foreach($resultTicketFromWay as &$el) {
+            $el=serialize($el);
+        }
+        foreach($resultTicketFromTicket as &$el) {
+            $el=serialize($el);
+        }
+        $resultArray=array_intersect($resultTicketFromWay,$resultTicketFromTicket);
+        foreach($resultArray as &$el) {
+            $el=unserialize($el);
+        }
+        return $resultArray;
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
