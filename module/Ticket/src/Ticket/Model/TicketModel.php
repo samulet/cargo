@@ -404,7 +404,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $propArray = get_object_vars($post);
         unset($propArray['submit']);
 
-        $propArrayResult = array();
+        $propArrayTicketWay = array();
         $propFilterResult = array();
         foreach ($propArray as $key => $value) {
             if (!empty($value)) {
@@ -416,7 +416,7 @@ class TicketModel implements ServiceLocatorAwareInterface
                     } elseif($subStrTo=='FilterTo') {
                         $propFilterResult[substr($key , 0, strlen($key)-8)]['to']=$value;
                     } else {
-                        $propArrayResult[$key] = $value;
+                        $propArrayTicketWay[$key] = $value;
                     }
                 } else {
                     $propFilterResult['created']['from']=$value;
@@ -428,29 +428,29 @@ class TicketModel implements ServiceLocatorAwareInterface
             $propFilterResultTicket['created']=$propFilterResult['created'];
             unset($propFilterResult['created']);
         }
-        $propArrayResultFullForm = array();
+        $propArrayTicket = array();
         $unsetTicketArray = array('currency', 'money', 'formPay', 'typeTicket', 'ownerId', 'type', 'rate');
         foreach ($unsetTicketArray as $unsetTicketString) {
-            if (!empty($propArrayResult[$unsetTicketString])) {
+            if (!empty($propArrayTicketWay[$unsetTicketString])) {
                 if ($unsetTicketString != 'ownerId') {
-                    $propArrayResultFullForm[$unsetTicketString] = $propArrayResult[$unsetTicketString];
+                    $propArrayTicket[$unsetTicketString] = $propArrayTicketWay[$unsetTicketString];
                 } else {
-                    $propArrayResultFullForm[$unsetTicketString] = new \MongoId($propArrayResult[$unsetTicketString]);
+                    $propArrayTicket[$unsetTicketString] = new \MongoId($propArrayTicketWay[$unsetTicketString]);
                 }
-                unset($propArrayResult[$unsetTicketString]);
+                unset($propArrayTicketWay[$unsetTicketString]);
             }
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $qbt = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
         $qb = $objectManager->createQueryBuilder('Ticket\Entity\TicketWay');
         $result = array();
-        if (empty($propArrayResultFullForm)) {
-            $qbRes=$this->searchItemAct($qb, $propArrayResult);
+        if (empty($propArrayTicket)) {
+            $qbRes=$this->searchItemAct($qb, $propArrayTicketWay);
             $rezObj = $this->rangeSearch($qbRes,$propFilterResult)->getQuery()->execute();
             $result = $this->searchTicketWay($rezObj);
-        } elseif (!empty($propArrayResultFullForm)) {
-            $ticketFindObjects = $this->searchItemAct($qbt, $propArrayResultFullForm)->getQuery()->execute();
-            $result = $this->searchTicket($ticketFindObjects, $propArrayResult, $qb);
+        } elseif (!empty($propArrayTicket)) {
+            $ticketFindObjects = $this->searchItemAct($qbt, $propArrayTicket)->getQuery()->execute();
+            $result = $this->searchTicket($ticketFindObjects, $propArrayTicketWay, $qb);
         }
 
         return $result;
