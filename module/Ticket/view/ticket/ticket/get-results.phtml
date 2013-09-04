@@ -58,8 +58,14 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
                 <td><?php
                     $counter=1;
                     foreach($ticket['ways'] as $way) {
-                        if(!empty($way[$field])) {
-                            echo '(Груз '.$counter.') '.$way[$field].'</br>';
+                        if($field!='cargoOwner') {
+                            if(!empty($way[$field])) {
+                                echo '(Груз '.$counter.') '.$way[$field].'</br>';
+                            }
+                        } else {
+                            if(!empty($way[$field])) {
+                                echo '(Груз '.$counter.') '.$way['cargoOwnerTrue']['property'].' '.$way['cargoOwnerTrue']['name'].'</br>';
+                            }
                         }
                         $counter++;
                     }
