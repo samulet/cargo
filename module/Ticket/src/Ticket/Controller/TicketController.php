@@ -386,8 +386,11 @@ class TicketController extends AbstractActionController
             $multiField=$post->multiField;
             unset($post->multiField);
         }
+        $multiField=$res->multiFieldProc($multiField);
+        die(var_dump($multiField));
         return new ViewModel(array(
-            'res' => $ticket
+            'res' => $ticket,
+            'multiField'=>$multiField
         ));
     }
     public function getCargoModel()
