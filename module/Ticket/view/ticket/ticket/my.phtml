@@ -60,6 +60,8 @@ $createdFilterTo=$createdFilterTo->setName('createdFilterTo')->setOptions(array(
 
 $ownerId = clone $cargoOwner;
 $ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'));
+
+$multiField=$form->get('multiField');
 ?>
 
 <div class='shortFilter'>
@@ -76,7 +78,11 @@ $ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компа
     <?php
     echo $this->formRow($createdFilterFrom);
     echo $this->formRow($createdFilterTo);
+
     ?>
+    <div class='multiField'>
+        <?php echo $this->formRow($multiField); ?>
+    </div>
 </div>
 
 <div class="fullFilter">
