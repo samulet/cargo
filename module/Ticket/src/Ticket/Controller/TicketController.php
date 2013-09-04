@@ -381,17 +381,23 @@ class TicketController extends AbstractActionController
         $res = $this->getTicketModel();
         $post=$this->getRequest()->getPost();
 
-        $ticket=$res->returnSearchTicket($post);
+
         if(!empty($post->multiField)) {
             $multiField=$post->multiField;
             unset($post->multiField);
         }
+        $ticket=$res->returnSearchTicket($post);
         $multiField=$res->multiFieldProc($multiField);
-        die(var_dump($multiField));
+
+        $filterArray=$this->addFunction(null,null,'search');
+        $fillFrom=new AddListForm();
+
+        $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
+
         return new ViewModel(array(
             'res' => $ticket,
             'multiField'=>$multiField
-        ));
+        )+$filterArray);
     }
     public function getCargoModel()
     {
