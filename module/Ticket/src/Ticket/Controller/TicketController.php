@@ -40,9 +40,12 @@ class TicketController extends AbstractActionController
     {
         $res = $this->getTicketModel();
         $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
-        $this->addFunction(null,null,'search');
+        $filterArray=$this->addFunction(null,null,'search');
+        $fillFrom=new AddListForm();
+
+        $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
         return new ViewModel(
-            array('res' => $ticket)+$this->addFunction(null,null,'search'));
+            array('res' => $ticket)+$filterArray);
     }
 
     public function myAccAction()
@@ -376,7 +379,9 @@ class TicketController extends AbstractActionController
 
     public function getResultsAction() {
         $res = $this->getTicketModel();
-        $ticket=$res->returnSearchTicket($this->getRequest()->getPost());
+        $post=$this->getRequest()->getPost();
+        $ticket=$res->returnSearchTicket($post);
+        die(var_dump($post));
         return new ViewModel(array(
             'res' => $ticket
         ));

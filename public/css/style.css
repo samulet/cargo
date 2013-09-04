@@ -267,3 +267,11 @@ ul.dropdown-menu span.divider {
     border-bottom: #0044cc 1px dashed;
 display: inline !important;
 }
+
+.filters  .multiField label{
+    display: block;
+}
+.filters  .multiField label input{
+    display: inline;
+    margin: 5px;
+}

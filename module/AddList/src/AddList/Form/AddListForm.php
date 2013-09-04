@@ -114,4 +114,50 @@ class AddListForm
             }
         return $form;
     }
+    public function fillMultiFields($form, $formWay,$formWayDoc) {
+        $resultArray=array();
+        foreach ($form as $wayEl) {
+            if( is_object($wayEl)) {
+                $label=$wayEl->getLabel();
+                if(!empty($label)) {
+                    $resultArray=$resultArray+array($wayEl->getName().'_ticket'=>$label.' (Заявка)');
+                }
+            }
+
+        }
+
+        foreach($formWay as $wayEl) {
+
+
+
+
+            if( is_object($wayEl)) {
+                $label=$wayEl->getLabel();
+                if(!empty($label)) {
+                    $name=$wayEl->getName();
+                    if( ($name=='timeLoadStart') || ($name=='timeLoadEnd') ) {
+                        $label='Время загрузки '.$label;
+                    }
+                    if( ($name=='timeUnloadStart') || ($name=='timeUnloadEnd') ) {
+                        $label='Время разгрузки '.$label;
+                    }
+                     $resultArray=$resultArray+array($name.'_ticketWay'=>$label.' (Груз)');
+                }
+            }
+        }
+
+        foreach($formWayDoc as $wayEl) {
+
+            if( is_object($wayEl)) {
+                $label=$wayEl->getLabel();
+                if(!empty($label)) {
+                    $resultArray=$resultArray+array($wayEl->getName().'_ticketWayDoc'=>$label.' (Документ)');
+                }
+            }
+        }
+        if($form->has('multiField')) {
+            $form->get('multiField')->setOptions(array("value_options"=>$resultArray));
+        }
+        return $form;
+    }
 }

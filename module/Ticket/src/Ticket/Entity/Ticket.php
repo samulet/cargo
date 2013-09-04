@@ -44,6 +44,13 @@ class Ticket
 
     public $uuid;
     /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Options({"label":"Номер заявки"})
+     * @Annotation\Required(false)
+     */
+    public $numberInt;
+    /**
      * @ODM\ObjectId
      * @var int
      * @Annotation\Exclude()
@@ -55,8 +62,7 @@ class Ticket
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Тип ТС"})
-     * @Annotation\Required({"required":"true" })
+     * @Annotation\Options({"label":"Компания (создавшая заявку)"})
      * @Annotation\Attributes({"value":"0"})
      * @Annotation\Required(false)
      */
@@ -71,6 +77,7 @@ class Ticket
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
+     * @Annotation\Options({"label":"Дата создания"})
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required(false)
      */
@@ -104,12 +111,7 @@ class Ticket
      * @Annotation\Attributes({"value":"0"})
      */
     public $currency;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Exclude()
-     */
-    public $numberInt;
+
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -210,7 +212,7 @@ class Ticket
     public $deletedAt;
     /**
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
-     * @Annotation\Options({"label":"Тип загрузки"})
+     * @Annotation\Options({"label":"Конструктор полей"})
      * @Annotation\Attributes({"value":"0"})
      * @Annotation\Required(false)
      */
