@@ -17,6 +17,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Ticket\Form\TicketForm;
 use AddList\Form\AddListForm;
+use Ticket\Entity\FiltersArrayStatic;
 
 class TicketController extends AbstractActionController
 {
@@ -195,10 +196,13 @@ class TicketController extends AbstractActionController
                     $typeForm['id']=$id;
                 }
             } elseif($type=='search') {
-                $postData=get_object_vars($post);
-                $formsArray[0]['formWay']->setData($postData);
-                $formsArray[0]['formsDocArray'][0]->setData($postData);
-                $form->setData($postData);
+                if(!empty($post)) {
+                    $postData=get_object_vars($post);
+                    $formsArray[0]['formWay']->setData($postData);
+                    $formsArray[0]['formsDocArray'][0]->setData($postData);
+                    $form->setData($postData);
+                }
+
 
                 foreach ($formsArray as $formElement) {
 
@@ -390,10 +394,19 @@ class TicketController extends AbstractActionController
 
         if(!empty($post->multiField)) {
             $multiField=$post->multiField;
+            $multiFieldData=$multiField;
             unset($post->multiField);
         }
         $ticket=$res->returnSearchTicket($post);
         $multiField=$res->multiFieldProc($multiField);
+
+        $filterData=FiltersArrayStatic::$list;
+        foreach($filterData as $key => &$value) {
+            if(!empty($post->$key)) {
+                $value=$post->$key;
+            }
+        }
+
 
         $filterArray=$this->addFunction($post,null,'search');
         $fillFrom=new AddListForm();
@@ -402,7 +415,9 @@ class TicketController extends AbstractActionController
 
         return new ViewModel(array(
             'res' => $ticket,
-            'multiField'=>$multiField
+            'multiField'=>$multiField,
+            'filterData' =>$filterData,
+            'multiFieldData'=>$multiFieldData
         )+$filterArray);
     }
     public function getCargoModel()
