@@ -520,6 +520,15 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $this->addTicket($res, $res['ownerId'], $res['ownerOrgId'], null);
     }
 
+    public function multiFieldProc($multiField) {
+        $multiFieldArray=array();
+        foreach($multiField as $field) {
+            $explodedField=explode('_',$field);
+            $multiFieldArray[$explodedField[1]][$explodedField[0]]=true;
+        }
+        return $multiFieldArray;
+    }
+
     public function getCargoModel()
     {
         if (!$this->cargoModel) {
