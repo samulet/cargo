@@ -379,7 +379,7 @@ class TicketWay
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"prepareToLoad","dateStart","always"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"prepareToLoad"})
+     * @Annotation\Attributes({"value":""})
      * @Annotation\Required({"required":"true" })
      */
 

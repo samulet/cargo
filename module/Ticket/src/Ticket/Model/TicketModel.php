@@ -353,9 +353,16 @@ class TicketModel implements ServiceLocatorAwareInterface
         if (!empty($rezObj)) {
             $result = array();
             foreach ($rezObj as $cur) {
-                $result=$result+ $this->returnMyTicketById($cur->ownerTicketId);
+               $result=array_merge($result,$this->returnMyTicketById($cur->ownerTicketId));
             }
-            return array_unique($result);
+            foreach($result as &$el) {
+                $el=serialize($el);
+            }
+            $resultArray=array_unique($result);
+            foreach($resultArray as &$el) {
+                $el=unserialize($el);
+            }
+            return $resultArray;
         } else {
             return array();
         }
@@ -366,7 +373,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $result = array();
         if (!empty($ticketFindObjects)) {
             foreach($ticketFindObjects as $cur) {
-                $result=$result+$this->returnMyTicketById($cur->id);
+                $result=array_merge($result,$this->returnMyTicketById($cur->id));
             }
         }
         return $result;
@@ -459,7 +466,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $resultTicketFromWay = $this->searchTicketWay($qTicketWay->getQuery()->execute());
         $resultTicketFromTicket=$this->searchTicket($qTicket->getQuery()->execute());
 
-       // die(var_dump($resultTicketFromWay));
+       // die(var_dump($propArrayTicketWay));
 
         foreach($resultTicketFromWay as &$el) {
             $el=serialize($el);
