@@ -109,6 +109,7 @@ class TicketController extends AbstractActionController
                     $resF['submit']='submit';
                     $newForm->setData($resF);
                     if(!$newForm->isValid()) {
+
                         $error++;
                     }
                     if(!empty($resF['doc'])) {
@@ -129,6 +130,7 @@ class TicketController extends AbstractActionController
                 $form->setData($post);
                 if(!$form->isValid()) {
                     $error++;
+
                 }
 
                 if(empty($error)) {

@@ -379,13 +379,23 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function rangeSearch($qb,$propFilterResult) {
         if(!empty($propFilterResult)) {
-            foreach($propFilterResult as $range) {
+            foreach($propFilterResult as $key =>$range) {
+                if(!empty($range['from'])) {
+                    if( (substr($key , 0, 4)=='date') || ($key=='created') ) {
+                        $range['from']=new \DateTime($range['from']);
+                    }
+                }
+                if(!empty($range['to'])) {
+                    if( (substr($key , 0, 4)=='date') || ($key=='created') ) {
+                        $range['to']=new \DateTime($range['to']);
+                    }
+                }
                 if( (!empty($range['from']))&&(!empty($range['to'])) ) {
-                    $qb->field('amount_due')->range($range['from'], $range['to']);
+                    $qb->field($key)->gte($range['from'])->lte($range['to']);
                 } elseif (!empty($range['from'])) {
-                    $qb->field('amount_due')->gte($range['from']);
+                    $qb->field($key)->gte($range['from']);
                 } elseif (!empty($range['to'])) {
-                    $qb->field('amount_due')->lte($range['to']);
+                    $qb->field($key)->lte($range['to']);
                 }
             }
         }
@@ -439,6 +449,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $qTicketWay = $objectManager->createQueryBuilder('Ticket\Entity\TicketWay');
 
 
+
         $qTicketWay=$this->searchItemAct($qTicketWay, $propArrayTicketWay);
         $qTicketWay = $this->rangeSearch($qTicketWay,$propFilterResult);
 
@@ -447,6 +458,8 @@ class TicketModel implements ServiceLocatorAwareInterface
 
         $resultTicketFromWay = $this->searchTicketWay($qTicketWay->getQuery()->execute());
         $resultTicketFromTicket=$this->searchTicket($qTicket->getQuery()->execute());
+
+       // die(var_dump($resultTicketFromWay));
 
         foreach($resultTicketFromWay as &$el) {
             $el=serialize($el);
