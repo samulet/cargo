@@ -1,5 +1,7 @@
 <div class='filters'>
 <?php
+$filterData=$this->filterData;
+$multiFieldData=$this->multiFieldData;
 
 $form = $this->form;
 $formsArray = $this->formsArray;
@@ -46,22 +48,23 @@ $includeNds = $form->get('includeNds');
 $rate = $form->get('rate');
 
 $formFilterWay = $formsArray[0]['formWay'];
+
 $cargoOwner = $formFilterWay->get('cargoOwner');
 
 $dateStartFilterFrom  = clone $formFilterWay->get('dateStart');
-$dateStartFilterFrom=$dateStartFilterFrom->setName('dateStartFilterFrom')->setOptions(array("label" => 'Загрузка с'));
+$dateStartFilterFrom=$dateStartFilterFrom->setName('dateStartFilterFrom')->setOptions(array("label" => 'Загрузка с'))->setValue($filterData['dateStartFilterFrom']);
 $dateStartFilterTo = clone $formFilterWay->get('dateStart');
-$dateStartFilterTo=$dateStartFilterTo->setName('dateStartFilterTo')->setOptions(array("label" => 'По'));
+$dateStartFilterTo=$dateStartFilterTo->setName('dateStartFilterTo')->setOptions(array("label" => 'По'))->setValue($filterData['dateStartFilterTo']);
 
 $createdFilterFrom= clone $form->get('created');
-$createdFilterFrom=$createdFilterFrom->setName('createdFilterFrom')->setOptions(array("label" => 'Заявка создана с'));
+$createdFilterFrom=$createdFilterFrom->setName('createdFilterFrom')->setOptions(array("label" => 'Заявка создана с'))->setValue($filterData['createdFilterFrom']);
 $createdFilterTo= clone $form->get('created');
-$createdFilterTo=$createdFilterTo->setName('createdFilterTo')->setOptions(array("label" => 'По'));
+$createdFilterTo=$createdFilterTo->setName('createdFilterTo')->setOptions(array("label" => 'По'))->setValue($filterData['createdFilterTo']);
 
 $ownerId = clone $cargoOwner;
-$ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'));
+$ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'))->setValue($filterData['ownerId']);
 
-$multiField=$form->get('multiField');
+$multiField=$form->get('multiField')->setValue($multiFieldData);
 ?>
 
 <div class='shortFilter'>
@@ -177,7 +180,7 @@ foreach ($formsArray as $formWayArray) {
         $cargoValue = $formWay->get('cargoValue');
         $areaLoad = $formWay->get('areaLoad');
         $areaUnload = $formWay->get('areaUnload');
-        $cargoOwner = $formWay->get('cargoOwner');
+
         $cargoName = $formWay->get('cargoName');
         $adr = $formWay->get('adr');
         $cubs = $formWay->get('cubs');
@@ -217,7 +220,7 @@ foreach ($formsArray as $formWayArray) {
         $cargoValue = $formWay->get('cargoValue')->setName('cargoValue-' . $counter);
         $areaLoad = $formWay->get('areaLoad')->setName('areaLoad-' . $counter);
         $areaUnload = $formWay->get('areaUnload')->setName('areaUnload-' . $counter);
-        $cargoOwner = $formWay->get('cargoOwner')->setName('cargoOwner-' . $counter);
+
         $cargoName = $formWay->get('cargoName')->setName('cargoName-' . $counter);
         $adr = $formWay->get('adr')->setName('adr-' . $counter);
         $cubs = $formWay->get('cubs')->setName('cubs-' . $counter);
@@ -296,7 +299,7 @@ foreach ($formsArray as $formWayArray) {
     </td>
     <td>
         <?php
-        echo $this->formRow($cargoOwner);
+
         echo $this->formRow($cargoName);
         echo $this->formRow($adr);
 

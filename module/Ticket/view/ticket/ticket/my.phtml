@@ -177,7 +177,7 @@ foreach ($formsArray as $formWayArray) {
         $cargoValue = $formWay->get('cargoValue');
         $areaLoad = $formWay->get('areaLoad');
         $areaUnload = $formWay->get('areaUnload');
-        $cargoOwner = $formWay->get('cargoOwner');
+
         $cargoName = $formWay->get('cargoName');
         $adr = $formWay->get('adr');
         $cubs = $formWay->get('cubs');
@@ -217,7 +217,7 @@ foreach ($formsArray as $formWayArray) {
         $cargoValue = $formWay->get('cargoValue')->setName('cargoValue-' . $counter);
         $areaLoad = $formWay->get('areaLoad')->setName('areaLoad-' . $counter);
         $areaUnload = $formWay->get('areaUnload')->setName('areaUnload-' . $counter);
-        $cargoOwner = $formWay->get('cargoOwner')->setName('cargoOwner-' . $counter);
+
         $cargoName = $formWay->get('cargoName')->setName('cargoName-' . $counter);
         $adr = $formWay->get('adr')->setName('adr-' . $counter);
         $cubs = $formWay->get('cubs')->setName('cubs-' . $counter);
@@ -296,7 +296,7 @@ foreach ($formsArray as $formWayArray) {
     </td>
     <td>
         <?php
-        echo $this->formRow($cargoOwner);
+
         echo $this->formRow($cargoName);
         echo $this->formRow($adr);
 
