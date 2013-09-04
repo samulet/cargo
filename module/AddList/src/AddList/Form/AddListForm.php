@@ -157,6 +157,10 @@ class AddListForm
         }
         if($form->has('multiField')) {
             $form->get('multiField')->setOptions(array("value_options"=>$resultArray));
+            $defaultArray=array('cargoOwner_ticketWay', 'numberInt_ticket','areaLoad_ticketWay','type_ticket');
+            $form->get('multiField')->setValue($defaultArray);
+
+
         }
         return $form;
     }
