@@ -58,6 +58,7 @@ class Ticket
      * @Annotation\Options({"label":"Тип ТС"})
      * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required(false)
      */
     public $ownerId;
 
