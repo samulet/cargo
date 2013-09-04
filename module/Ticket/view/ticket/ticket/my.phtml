@@ -1,68 +1,68 @@
 <div class='filters'>
 <?php
 
-$form = $this->form;
-$formsArray = $this->formsArray;
-$formsDocArray = $this->formsDocArray;
+    $form = $this->form;
+    $formsArray = $this->formsArray;
+    $formsDocArray = $this->formsDocArray;
 
-$typeForm = $this->typeForm;
+    $typeForm = $this->typeForm;
 
 
-$formVehicle = $this->formVehicle;
-$title = '';
-if (empty($typeForm)) {
+    $formVehicle = $this->formVehicle;
+    $title = '';
+    if (empty($typeForm)) {
     $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
-        ->prepare();
+    ->prepare();
     $title = 'Добавление';
-} else {
+    } else {
     $type = $typeForm['action'];
     if ($type == 'edit') {
-        $form->setAttribute('action', $this->url('ticket', array('action' => 'add', 'id' => $typeForm['id'])))
-            ->prepare();
-        $title = 'Редактирование';
+    $form->setAttribute('action', $this->url('ticket', array('action' => 'add', 'id' => $typeForm['id'])))
+    ->prepare();
+    $title = 'Редактирование';
     } elseif ($type == 'copy') {
-        $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
-            ->prepare();
-        $title = 'Копирование';
+    $form->setAttribute('action', $this->url('ticket', array('action' => 'add')))
+    ->prepare();
+    $title = 'Копирование';
     } elseif ($type == 'search') {
-        $form->setAttribute('action', $this->url('ticket', array('action' => 'getResults')))
-            ->prepare();
-        $title = 'Поиск';
+    $form->setAttribute('action', $this->url('ticket', array('action' => 'getResults')))
+    ->prepare();
+    $title = 'Поиск';
     } elseif ($type == 'list') {
-        $form->setAttribute('action', $this->url('ticket'))
-            ->prepare();
-        $title = 'Просмотр';
+    $form->setAttribute('action', $this->url('ticket'))
+    ->prepare();
+    $title = 'Просмотр';
     }
-}
+    }
 
-echo $this->form()->openTag($form);
+    echo $this->form()->openTag($form);
 
-$currency = $form->get('currency');
-$money = $form->get('money');
-$formPay = $form->get('formPay');
-$typeTicket = $form->get('typeTicket');
-$typeTSForm = $form->get('type');
-$includeNds = $form->get('includeNds');
-$rate = $form->get('rate');
+    $currency = $form->get('currency');
+    $money = $form->get('money');
+    $formPay = $form->get('formPay');
+    $typeTicket = $form->get('typeTicket');
+    $typeTSForm = $form->get('type');
+    $includeNds = $form->get('includeNds');
+    $rate = $form->get('rate');
 
-$formFilterWay = $formsArray[0]['formWay'];
-$cargoOwner = $formFilterWay->get('cargoOwner');
+    $formFilterWay = $formsArray[0]['formWay'];
+    $cargoOwner = $formFilterWay->get('cargoOwner');
 
-$dateStartFilterFrom  = clone $formFilterWay->get('dateStart');
-$dateStartFilterFrom=$dateStartFilterFrom->setName('dateStartFilterFrom')->setOptions(array("label" => 'Загрузка с'));
-$dateStartFilterTo = clone $formFilterWay->get('dateStart');
-$dateStartFilterTo=$dateStartFilterTo->setName('dateStartFilterTo')->setOptions(array("label" => 'По'));
+    $dateStartFilterFrom  = clone $formFilterWay->get('dateStart');
+    $dateStartFilterFrom=$dateStartFilterFrom->setName('dateStartFilterFrom')->setOptions(array("label" => 'Загрузка с'));
+    $dateStartFilterTo = clone $formFilterWay->get('dateStart');
+    $dateStartFilterTo=$dateStartFilterTo->setName('dateStartFilterTo')->setOptions(array("label" => 'По'));
 
-$createdFilterFrom= clone $form->get('created');
-$createdFilterFrom=$createdFilterFrom->setName('createdFilterFrom')->setOptions(array("label" => 'Заявка создана с'));
-$createdFilterTo= clone $form->get('created');
-$createdFilterTo=$createdFilterTo->setName('createdFilterTo')->setOptions(array("label" => 'По'));
+    $createdFilterFrom= clone $form->get('created');
+    $createdFilterFrom=$createdFilterFrom->setName('createdFilterFrom')->setOptions(array("label" => 'Заявка создана с'));
+    $createdFilterTo= clone $form->get('created');
+    $createdFilterTo=$createdFilterTo->setName('createdFilterTo')->setOptions(array("label" => 'По'));
 
-$ownerId = clone $cargoOwner;
-$ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'));
+    $ownerId = clone $cargoOwner;
+    $ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'));
 
-$multiField=$form->get('multiField');
-?>
+    $multiField=$form->get('multiField');
+    ?>
 
 <div class='shortFilter'>
     <?php
@@ -80,6 +80,8 @@ $multiField=$form->get('multiField');
     echo $this->formRow($createdFilterTo);
 
     ?>
+    </br>
+    <span onclick='showMulti();' class='showFilter'>Показать/скрыть конструктор полей</span>
     <div class='multiField'>
         <?php echo $this->formRow($multiField); ?>
     </div>
@@ -241,8 +243,8 @@ foreach ($formsArray as $formWayArray) {
         $timeLoadStart = $formWay->get('timeLoadStart')->setName('timeLoadStart-' . $counter);
         $timeLoadEnd = $formWay->get('timeLoadEnd')->setName('timeLoadEnd-' . $counter);
         $timeUnloadStart = $formWay->get('timeUnloadStart')->setName('timeUnloadStart-' . $counter);
-        $timeUnloadEnd = $formWay->get('timeUnloadEnd')->setName('always-' . $counter);
-        $setLoadType = $formWay->get('setLoadType')->setName('timeUnloadEnd-' . $counter);
+        $timeUnloadEnd = $formWay->get('timeUnloadEnd')->setName('timeUnloadEnd-' . $counter);
+        $setLoadType = $formWay->get('setLoadType')->setName('setLoadType-' . $counter);
         $aroundDay = $formWay->get('aroundDay')->setName('aroundDay-' . $counter);
         $prepareToLoad = $formWay->get('prepareToLoad')->setName('prepareToLoad-' . $counter);
         $dateStartPlus = $formWay->get('dateStartPlus')->setName('dateStartPlus-' . $counter);
@@ -275,7 +277,6 @@ foreach ($formsArray as $formWayArray) {
         ?>
         <div class="timeLoadMain">
             <p>Время работы загрузки</p>
-
             <div class="timeLoadStart"><?php echo $this->formRow($timeLoadStart); ?></div>
             <div class="timeLoadEnd"><?php echo $this->formRow($timeLoadEnd); ?></div>
         </div>
@@ -287,7 +288,6 @@ foreach ($formsArray as $formWayArray) {
 
         <div class="timeLoadMain">
             <p>Время работы разгрузки</p>
-
             <div class="timeLoadStart"><?php echo $this->formRow($timeUnloadStart); ?></div>
             <div class="timeLoadEnd"><?php echo $this->formRow($timeUnloadEnd); ?></div>
         </div>
@@ -296,7 +296,7 @@ foreach ($formsArray as $formWayArray) {
     </td>
     <td>
         <?php
-
+        echo $this->formRow($cargoOwner);
         echo $this->formRow($cargoName);
         echo $this->formRow($adr);
 

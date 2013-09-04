@@ -267,7 +267,9 @@ ul.dropdown-menu span.divider {
     border-bottom: #0044cc 1px dashed;
 display: inline !important;
 }
-
+.filters  .multiField {
+    display: none;
+}
 .filters  .multiField label{
     display: block;
 }

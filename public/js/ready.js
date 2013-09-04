@@ -140,3 +140,13 @@ function showFilters() {
     }
 
 }
+
+function showMulti() {
+    var divFilter=$('.filters .multiField');
+    if(divFilter.css('display')=='none') {
+        $('.filters .multiField').show(500);
+    } else {
+        $('.filters .multiField').hide(500);
+    }
+
+}
