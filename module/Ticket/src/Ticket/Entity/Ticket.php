@@ -72,16 +72,9 @@ class Ticket
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Options({"label":"Заявка создана с"})
      * @Annotation\Required(false)
      */
     public $created;
-    /**
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Options({"label":"По"})
-     * @Annotation\Required(false)
-     */
-    public $createdFilterTo;
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
@@ -215,6 +208,13 @@ class Ticket
      * @Annotation\Exclude()
      */
     public $deletedAt;
+    /**
+     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
+     * @Annotation\Options({"label":"Тип загрузки"})
+     * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required(false)
+     */
+    public $multiField;
     /**
      * @return mixed
      */

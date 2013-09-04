@@ -353,21 +353,6 @@ class TicketWay
      * @Annotation\Options({"label":"Загрузка с"})
      */
 
-    public $dateStartFilterFrom;
-    /**
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"По"})
-     */
-
-    public $dateStartFilterTo;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Круглосуточно"})
-     */
-
     public $aroundDay;
 
     /**
