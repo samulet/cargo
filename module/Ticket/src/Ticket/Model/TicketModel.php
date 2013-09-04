@@ -282,10 +282,12 @@ class TicketModel implements ServiceLocatorAwareInterface
         foreach ($rezObj as $cur) {
             $veh = $cargo->listCargo($cur->tsId);
             $ways = $this->returnAllWays($cur->id);
+            $resultArray=get_object_vars($cur);
+            $resultArray['created']=$resultArray['created']->format('d-m-Y');
             array_push(
                 $rezs,
                 array(
-                    'res' => get_object_vars($cur),
+                    'res' => $resultArray,
                     'veh' => $veh,
                     'ways' => $ways,
                     'owner' => $comModel->getCompany($owner_id)
@@ -305,10 +307,12 @@ class TicketModel implements ServiceLocatorAwareInterface
         foreach ($rezObj as $cur) {
             $veh = $cargo->listCargo($cur->tsId);
             $ways = $this->returnAllWays($cur->id);
+            $resultArray=get_object_vars($cur);
+            $resultArray['created']=$resultArray['created']->format('d-m-Y');
             array_push(
                 $rezs,
                 array(
-                    'res' => get_object_vars($cur),
+                    'res' => $resultArray,
                     'veh' => $veh,
                     'ways' => $ways,
                     'owner' => $comModel->getCompany($cur->ownerId)
@@ -551,6 +555,12 @@ class TicketModel implements ServiceLocatorAwareInterface
             $resultArray = get_object_vars($re);
             $resultArray['cargoOwnerTrue'] = $cargoOwnerTrue;
             $resultArray['docArray'] =  $this->getDocumentWay($re->id);
+            if(!empty( $resultArray['dateEnd'])) {
+                $resultArray['dateEnd']=$resultArray['dateEnd']->format('d-m-Y');
+            }
+            if(!empty( $resultArray['dateStart'])) {
+                $resultArray['dateStart']=$resultArray['dateStart']->format('d-m-Y');
+            }
 
             array_push($result, $resultArray);
         }

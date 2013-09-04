@@ -466,8 +466,7 @@ class TicketWay
     public $timeUnloadEnd;
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @ODM\Date
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Options({"label":"Дата готовности к разгрузке"})
      * @Annotation\Required(false)
