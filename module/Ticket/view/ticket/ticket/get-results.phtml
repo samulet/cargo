@@ -1,5 +1,11 @@
 <?php
 $tickets = $this->res;
+$multiField = $this->multiField;
+
+$form = $this->form;
+$formsArray = $this->formsArray;
+$formFilterWay = $formsArray[0]['formWay'];
+$formFilterWayDoc = $formsArray[0]['formsDocArray'][0];
 
 $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пикап' => 'pickup', 'Муковоз' => 'mukovoz');
 ?>
@@ -15,29 +21,18 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
 
 <table class="table">
     <tr>
-        <th>
-            Номер заявки
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-
+        <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
+            <th><?php echo $form->get($field)->getLabel(); ?></th>
+        <?php }} ?>
+        <?php if(!empty($multiField['ticketWay'])) {foreach($multiField['ticketWay'] as $field  =>$value) { ?>
+            <th><?php echo $formFilterWay->get($field)->getLabel(); ?></th>
+        <?php } }?>
+        <?php if(!empty($multiField['ticketWayDoc'])) {foreach($multiField['ticketWayDoc'] as $field  =>$value) { ?>
+            <th><?php echo $formFilterWayDoc->get($field)->getLabel(); ?></th>
+        <?php } }?>
     </tr>
     <?php foreach ($tickets as $ticket) {
+
         $ticketWay=$ticket['ways'];
         $cargo=$ticket['veh'];
         $ticket=$ticket['res'];
