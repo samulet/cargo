@@ -380,8 +380,12 @@ class TicketController extends AbstractActionController
     public function getResultsAction() {
         $res = $this->getTicketModel();
         $post=$this->getRequest()->getPost();
+
         $ticket=$res->returnSearchTicket($post);
-        die(var_dump($post));
+        if(!empty($post->multiField)) {
+            $multiField=$post->multiField;
+            unset($post->multiField);
+        }
         return new ViewModel(array(
             'res' => $ticket
         ));
