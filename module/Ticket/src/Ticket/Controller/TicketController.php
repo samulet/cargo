@@ -195,7 +195,13 @@ class TicketController extends AbstractActionController
                     $typeForm['id']=$id;
                 }
             } elseif($type=='search') {
+                $postData=get_object_vars($post);
+                $formsArray[0]['formWay']->setData($postData);
+                $formsArray[0]['formsDocArray'][0]->setData($postData);
+                $form->setData($postData);
+
                 foreach ($formsArray as $formElement) {
+
                     $formWay=$formElement['formWay'];
                     foreach($formElement['formsDocArray'] as $docWay) {
                         foreach ($docWay as $wayEl) {
@@ -389,7 +395,7 @@ class TicketController extends AbstractActionController
         $ticket=$res->returnSearchTicket($post);
         $multiField=$res->multiFieldProc($multiField);
 
-        $filterArray=$this->addFunction(null,null,'search');
+        $filterArray=$this->addFunction($post,null,'search');
         $fillFrom=new AddListForm();
 
         $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
