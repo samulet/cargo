@@ -419,7 +419,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $propFilterResult = array();
         foreach ($propArray as $key => $value) {
             if (!empty($value)) {
-                if($key!='created') {
+
                     $subStrFrom=substr($key , strlen($key)-10, 10);
                     $subStrTo=substr($key , strlen($key)-8, 8);
                     if($subStrFrom=='FilterFrom') {
@@ -429,9 +429,7 @@ class TicketModel implements ServiceLocatorAwareInterface
                     } else {
                         $propArrayTicketWay[$key] = $value;
                     }
-                } else {
-                    $propFilterResult['created']['from']=$value;
-                }
+
             }
         }
         $propFilterResultTicket=array();

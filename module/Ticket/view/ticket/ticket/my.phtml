@@ -45,13 +45,19 @@ $typeTSForm = $form->get('type');
 $includeNds = $form->get('includeNds');
 $rate = $form->get('rate');
 
-$created= $form->get('created');
-$createdFilterTo= $form->get('createdFilterTo');
-
 $formFilterWay = $formsArray[0]['formWay'];
 $cargoOwner = $formFilterWay->get('cargoOwner');
-$dateStartFilterFrom  = $formFilterWay->get('dateStartFilterFrom');
-$dateStartFilterTo = $formFilterWay->get('dateStartFilterTo');
+
+$dateStartFilterFrom  = clone $formFilterWay->get('dateStart');
+$dateStartFilterFrom=$dateStartFilterFrom->setName('dateStartFilterFrom')->setOptions(array("label" => 'Загрузка с'));
+$dateStartFilterTo = clone $formFilterWay->get('dateStart');
+$dateStartFilterTo=$dateStartFilterTo->setName('dateStartFilterTo')->setOptions(array("label" => 'По'));
+
+$createdFilterFrom= clone $form->get('created');
+$createdFilterFrom=$createdFilterFrom->setName('createdFilterFrom')->setOptions(array("label" => 'Заявка создана с'));
+$createdFilterTo= clone $form->get('created');
+$createdFilterTo=$createdFilterTo->setName('createdFilterTo')->setOptions(array("label" => 'По'));
+
 $ownerId = clone $cargoOwner;
 $ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'));
 ?>
@@ -68,7 +74,7 @@ $ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компа
     ?>
     </br>
     <?php
-    echo $this->formRow($created);
+    echo $this->formRow($createdFilterFrom);
     echo $this->formRow($createdFilterTo);
     ?>
 </div>
