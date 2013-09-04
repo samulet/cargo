@@ -550,6 +550,8 @@ class TicketModel implements ServiceLocatorAwareInterface
             $cargoOwnerTrue = $comModel->getCompany($re->cargoOwner);
             $resultArray = get_object_vars($re);
             $resultArray['cargoOwnerTrue'] = $cargoOwnerTrue;
+            $resultArray['docArray'] =  $this->getDocumentWay($re->id);
+
             array_push($result, $resultArray);
         }
         return $result;
