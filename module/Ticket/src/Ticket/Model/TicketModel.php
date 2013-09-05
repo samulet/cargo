@@ -152,12 +152,17 @@ class TicketModel implements ServiceLocatorAwareInterface
                 unset($res['prepareToLoad']);
             }
 
+
+
             foreach ($res as $key => $value) {
-                if ($key != "ownerTicketId") {
-                    $ticketWay->$key = $value;
-                } else {
-                    $ticketWay->$key = new \MongoId($value);
+                if(!empty($value)) {
+                    if ($key != "ownerTicketId") {
+                        $ticketWay->$key = $value;
+                    } else {
+                        $ticketWay->$key = new \MongoId($value);
+                    }
                 }
+
             }
             $objectManager->persist($ticketWay);
             $objectManager->flush();
