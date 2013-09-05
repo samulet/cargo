@@ -79,6 +79,10 @@ class InteractionModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
+    public function getItemStatus() {
+
+    }
+
     public function acceptInteraction($sendUuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $objectManager->getRepository('Interaction\Entity\Interaction')->createQueryBuilder()
@@ -147,6 +151,13 @@ class InteractionModel implements ServiceLocatorAwareInterface
 
         $objectManager->persist($interaction);
         $objectManager->flush();
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $objectManager->getRepository('Interaction\Entity\Interaction')->createQueryBuilder()
+            ->findAndUpdate()
+            ->field('uuid')->equals($uuid)
+            ->field('status')->set($prop_array['status'])
+            ->getQuery()
+            ->execute();
     }
 
     public function getInteractionIdByUuid($uuid) {

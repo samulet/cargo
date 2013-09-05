@@ -259,6 +259,20 @@ class NotificationModel implements ServiceLocatorAwareInterface
         $this->serviceLocator = $serviceLocator;
     }
 
+    public function getItemStatus($itemId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+
+        $note = $objectManager->getRepository('Notification\Entity\Notification')->findOneBy(
+            array('itemId' => new \MongoId($itemId))
+        );
+        if(!empty($note->status)) {
+            return $note->status;
+        } else {
+            return 'Нет статуса';
+        }
+
+    }
+
     public function getServiceLocator()
     {
         return $this->serviceLocator;

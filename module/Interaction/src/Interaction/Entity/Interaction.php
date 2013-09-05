@@ -61,6 +61,12 @@ class Interaction
      */
     public $accepted;
     /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Exclude()
+     */
+    public $status;
+    /**
      * @ODM\ObjectId
      * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
