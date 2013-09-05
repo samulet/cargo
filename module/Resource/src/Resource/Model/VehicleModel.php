@@ -22,6 +22,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
     protected $organizationModel;
     protected $notificationModel;
     protected $companyModel;
+    protected $queryBuilderModel;
 
     public function addVehicle($post, $owner_id, $owner_org_id, $id)
     {
@@ -96,6 +97,22 @@ class VehicleModel implements ServiceLocatorAwareInterface
             return get_object_vars($res);
         }
         return null;
+    }
+
+    public function returnVehicles($searchArray)
+    {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $vehObj = $objectManager->createQueryBuilder('Resource\Entity\Vehicle');
+        $queryBuilderModel=$this->getQueryBuilderModel();
+        $vehObj=$queryBuilderModel->createQuery($vehObj, $searchArray)->getQuery()->execute();
+        $result = array();
+        $comModel = $this->getCompanyModel();
+
+        foreach ($vehObj as $vehicle) {
+            $com = $comModel->getCompany($vehicle->ownerId);
+            array_push($result, array('res' => get_object_vars($vehicle), 'owner' => $com));
+        }
+        return $result;
     }
 
     public function returnAllVehicle()
@@ -241,5 +258,13 @@ class VehicleModel implements ServiceLocatorAwareInterface
             $this->companyModel = $sm->get('Organization\Model\CompanyModel');
         }
         return $this->companyModel;
+    }
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
     }
 }

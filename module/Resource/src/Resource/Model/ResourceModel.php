@@ -236,7 +236,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $queryBuilderModel=$this->getQueryBuilderModel();
         $resObj=$queryBuilderModel->createQuery($resObj, $searchArray)->getQuery()->execute();
         if(empty($resObj)) {
-            return null;
+            return array();
         }
         $result = array();
         $comModel = $this->getCompanyModel();

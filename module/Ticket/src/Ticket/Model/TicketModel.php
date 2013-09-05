@@ -31,6 +31,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $notificationModel;
     protected $companyUserModel;
     protected $companyModel;
+    protected $queryBuilderModel;
 
     public function unSplitArray($propArraySplit)
     {
@@ -255,12 +256,16 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function returnTickets($params) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+
         $ticket = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
-        $rezObj = $this->searchItemAct($ticket, $params)->getQuery()->execute();
+        $queryBuilderModel=$this->getQueryBuilderModel();
+        $rezObj = $queryBuilderModel->createQuery($ticket, $params)->getQuery()->execute();
+
         $result = array();
         $comModel = $this->getCompanyModel();
         $cargo = $this->getCargoModel();
         foreach ($rezObj as $cur) {
+
             $veh = $cargo->listCargo($cur->tsId);
             $ways = $this->returnAllWays($cur->id);
             $resultArray=get_object_vars($cur);
@@ -689,5 +694,13 @@ class TicketModel implements ServiceLocatorAwareInterface
                 }
             }
         }
+    }
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
     }
 }

@@ -21,7 +21,7 @@ $vehicles = $this->res;
 
 
     </tr>
-    <?php foreach ($vehicles as $vehicle) { $org=$vehicle['org'];$vehicle=$vehicle['res'];?>
+    <?php foreach ($vehicles as $vehicle) { $org=$vehicle['owner'];$vehicle=$vehicle['res'];?>
         <tr>
             <td>
               <a href="<?php echo $this->url('vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'list'));?>">

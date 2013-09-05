@@ -27,24 +27,28 @@ class VehicleController extends AbstractActionController
     public function indexAction()
     {
         $res = $this->getVehicleModel();
+        $vehicles=$res->returnVehicles(array('deletedAt'=>null,'activated'=>'1','ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
         return new ViewModel(array(
-            'res' => $res->returnAllVehicle()
+            'res' => $vehicles
         ));
     }
 
     public function myAction()
     {
         $res = $this->getVehicleModel();
+        $vehicles=$res->returnVehicles(array('deletedAt'=>null,'ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+
         return new ViewModel(array(
-            'res' => $res->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())
+            'res' => $vehicles
         ));
     }
 
     public function myAccAction()
     {
         $res = $this->getVehicleModel();
+        $vehicles=$res->returnVehicles(array('deletedAt'=>null,'ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
         return new ViewModel(array(
-            'res' => $res->returnMyAccVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())
+            'res' => $vehicles
         ));
     }
 

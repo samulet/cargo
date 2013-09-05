@@ -33,14 +33,14 @@ class TicketController extends AbstractActionController
     {
         $res = $this->getTicketModel();
         return new ViewModel(array(
-            'res' => $res->returnTickets(array('activated'=>'1'))
+            'res' => $res->returnTickets(array('deletedAt'=>null,'activated'=>'1'))
         ));
     }
 
     public function myAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnTickets(array('ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+        $ticket=$res->returnTickets(array('deletedAt'=>null,'ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
         $filterArray=$this->addFunction(null,null,'search');
         $fillFrom=new AddListForm();
 
@@ -52,7 +52,7 @@ class TicketController extends AbstractActionController
     public function myAccAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnMyAccTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg());
+        $ticket=$res->returnTickets(array('deletedAt'=>null, 'ownerOrgId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
         return new ViewModel(array(
             'res' => $ticket
         ));
