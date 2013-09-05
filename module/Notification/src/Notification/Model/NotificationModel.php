@@ -19,8 +19,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
-
 class NotificationModel implements ServiceLocatorAwareInterface
 {
 
@@ -28,6 +26,8 @@ class NotificationModel implements ServiceLocatorAwareInterface
     protected $resourceModel;
     protected $ticketModel;
     protected $vehicleModel;
+    protected $queryBuilderModel;
+
 
     public function addNotification($itemId,$ownerUserId,$ownerOrgId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -37,6 +37,13 @@ class NotificationModel implements ServiceLocatorAwareInterface
         $not->ownerOrgId=new \MongoId($ownerOrgId);
         $objectManager->persist($not);
         $objectManager->flush();
+    }
+
+    public function getNotifications($searchArray) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $noteObj = $objectManager->createQueryBuilder('Notification\Entity\Notification');
+        $queryBuilderModel=$this->getQueryBuilderModel();
+        $noteObj=$queryBuilderModel->createQuery($noteObj, $searchArray);
     }
 
     public function getAdminNotifications($orgId) {
@@ -210,5 +217,12 @@ class NotificationModel implements ServiceLocatorAwareInterface
         }
         return $this->vehicleModel;
     }
-
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
+    }
 }
