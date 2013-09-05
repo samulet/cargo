@@ -413,7 +413,7 @@ class TicketController extends AbstractActionController
         $fillFrom=new AddListForm();
 
         $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
-
+       // die(var_dump($filterArray['form']));
         return new ViewModel(array(
             'res' => $ticket,
             'multiField'=>$multiField,
