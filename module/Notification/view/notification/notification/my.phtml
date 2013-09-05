@@ -11,6 +11,8 @@ $notes=$this->notification;
     </tr>
     <?php
     foreach($notes as $note) {
+        $nt=$note['notes'];
+        $note=$note['item'];
 
     ?>
     <tr>
@@ -25,7 +27,7 @@ $notes=$this->notification;
 
             echo $this->url($type,
                 array('action' => 'add','type'=>'list', 'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
-        <td><?php if(!empty($note)) { echo $note['note']; } ?></td>
+        <td><?php if(!empty($nt[count($nt)-1]['note'])) { echo $nt[count($nt)-1]['note']; } ?></td>
         <td><?php echo $note['status']; ?></td>
 
     </tr>

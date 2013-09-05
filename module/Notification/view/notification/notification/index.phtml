@@ -5,13 +5,17 @@ $notes = $this->notification;
 <table class="table">
     <tr>
         <th>Номер Item</th>
-        <th>Владелец</th>
-        <th>Аккаунт</th>
+        <th>Компания Владелец</th>
+        <th>Ваше последнее примечани</th>
         <th>Статус</th>
         <th>Рассмотреть заявку</th>
     </tr>
     <?php
     foreach ($notes as $note) {
+        $owner=$note['owner'];
+        $nt=$note['notes'];
+        $note=$note['item'];
+
         ?>
         <tr>
             <td><a href="<?php
@@ -26,8 +30,8 @@ $notes = $this->notification;
                 echo $this->url($type,
                     array('action' => 'add','type'=>'edit', 'id' => $note['itemId']));?>"><?php echo $note['itemId'] . ' (' . $note['type'] . ')'; ?></a>
             </td>
-            <td><?php echo $note['ownerUserId']; ?></td>
-            <td><?php echo $note['ownerOrgId']; ?></td>
+            <td><?php echo $owner['property'].' '.$owner['name']; ?></td>
+            <td><?php if(!empty($nt[count($nt)-1]['note'])) { echo $nt[count($nt)-1]['note']; } ?></td>
             <td><?php
                 if (!empty($note['status'])) {
                     echo $note['status'];

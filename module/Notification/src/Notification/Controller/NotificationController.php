@@ -17,7 +17,10 @@ class NotificationController extends AbstractActionController
     public function indexAction()
     {
         $notificationModel = $this->getNotificationModel();
-        $notification=$notificationModel->getAdminNotifications($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg());
+
+        //$notification1=$notificationModel->getAdminNotifications($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg());
+        $notification=$notificationModel->getNotifications(array('ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
+
         return new ViewModel(array(
             'notification' =>$notification
         ));
@@ -36,7 +39,7 @@ class NotificationController extends AbstractActionController
 
     public function newAction() {
         $notificationModel = $this->getNotificationModel();
-        $notification=$notificationModel->getNewNotifications($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
+        $notification=$notificationModel->getNotifications(array('ownerUserId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())), array('read'=>'0'));
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Notification\Entity\NotificationNote');
         return new ViewModel(array(
