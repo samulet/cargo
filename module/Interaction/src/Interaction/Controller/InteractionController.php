@@ -21,17 +21,26 @@ class InteractionController extends AbstractActionController
     public function indexAction()
     {
         $interactionModel = $this->getInteractionModel();
-        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getCurrentCom(),'sent');
+        $interaction=$interactionModel->getInteractions(array('accepted'=>null,'ownerUserId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+        return new ViewModel(array(
+            'interaction' =>$interaction
+        ));
+
+    }
+    public function myAction()
+    {
+        $interactionModel = $this->getInteractionModel();
+        $interaction=$interactionModel->getInteractions(array('accepted'=>null,'receiveUserId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
         return new ViewModel(array(
             'interaction' =>$interaction
         ));
 
     }
 
-    public function myAction()
+    public function workAction()
     {
         $interactionModel = $this->getInteractionModel();
-        $interaction=$interactionModel->getInteractions($this->zfcUserAuthentication()->getIdentity()->getCurrentCom(),'receive');
+        $interaction=$interactionModel->getInteractions(array('accepted'=>'1','ownerUserId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
         return new ViewModel(array(
             'interaction' =>$interaction
         ));
