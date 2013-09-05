@@ -206,6 +206,10 @@ class NotificationModel implements ServiceLocatorAwareInterface
             $this->activateItem($note->itemId,'1');
         } elseif($prop_array['status']=='canceled') {
             $this->activateItem($note->itemId,'0');
+        } elseif($prop_array['status']=='work') {
+            $this->activateItem($note->itemId,'0');
+        } elseif($prop_array['status']=='completed') {
+            $this->activateItem($note->itemId,'0');
         }
         $objectManager->persist($note);
         $objectManager->flush();
