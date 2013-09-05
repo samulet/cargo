@@ -36,9 +36,8 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         </th>
         <th>
             Редактировать
-        </th>
-        <th>
-            Добавить аукцион
+        </th><th>
+            Предложить ресурс
         </th>
         <th>
             Копировать
@@ -102,10 +101,8 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
                 );?>">Редактировать</a>
             </td>
             <td>
-                <a href="<?php echo $this->url(
-                    'auction',
-                    array('action' => 'add', 'id' => $ticket['uuid'])
-                );?>">Добавить аукцион</a>
+                <a href="<?php echo $this->url('interaction',
+                    array('action'=>'add', 'id' => $ticket['uuid']));?>">Добавить предложение</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(

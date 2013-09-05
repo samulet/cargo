@@ -46,7 +46,13 @@ class InteractionController extends AbstractActionController
         ));
 
     }
+    public function acceptAction() {
+        $sendUuid= $this->getEvent()->getRouteMatch()->getParam('id');
+        $interactionModel = $this->getInteractionModel();
+        $interactionModel->acceptInteraction($sendUuid);
+        return $this->redirect()->toUrl('/interactions/work');
 
+    }
     public function addAction() {
         $sendUuid= $this->getEvent()->getRouteMatch()->getParam('id');
         $interactionModel = $this->getInteractionModel();

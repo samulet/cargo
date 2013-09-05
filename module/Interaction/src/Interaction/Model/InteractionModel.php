@@ -79,6 +79,16 @@ class InteractionModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
+    public function acceptInteraction($sendUuid) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $objectManager->getRepository('Interaction\Entity\Interaction')->createQueryBuilder()
+            ->findAndUpdate()
+            ->field('uuid')->equals($sendUuid)
+            ->field('accepted')->set('1')
+            ->getQuery()
+            ->execute();
+    }
+
     public function getInteractionStatus($ownerInteractionId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $intNoteObj = $objectManager->getRepository('Interaction\Entity\InteractionNote')->getLastStatusInteractionNote($ownerInteractionId);

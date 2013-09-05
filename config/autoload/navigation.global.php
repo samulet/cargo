@@ -256,6 +256,13 @@ return array(
                 'resource'   => 'route/interaction',
             ),
             array(
+                'label' => 'В работе',
+                'route' => 'interaction',
+                'action' => 'work',
+                'params' => array('id' => null),
+                'resource'   => 'route/interaction',
+            ),
+            array(
                 'label' => 'Аукцион',
                 'type' => 'uri',
                 'uri' => '',

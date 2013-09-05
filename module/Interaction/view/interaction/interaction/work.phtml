@@ -2,7 +2,7 @@
 $interactions=$this->interaction;
 
 ?>
-<h1>Полученные предложения</h1>
+<h1>Заявки/ресурсы работе</h1>
 <table class="table" width="100%">
     <tr>
         <th>
@@ -14,12 +14,9 @@ $interactions=$this->interaction;
         <th>
             Что предложили
         </th>
-        <th>
-            Статус
-        </th>
 
         <th>
-            В работу
+            Статус
         </th>
 
     </tr>
@@ -61,13 +58,6 @@ $interactions=$this->interaction;
             </td>
             <td>
                 <?php echo $interaction['status']; ?>
-            </td>
-
-            <td>
-                <a href="<?php echo $this->url('interaction',
-                    array('action'=>'accept', 'id' => $interaction['uuid']));?>">
-                    Принять предложение
-                </a>
             </td>
         </tr>
     <?php } ?>
