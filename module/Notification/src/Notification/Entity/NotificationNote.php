@@ -68,7 +68,7 @@ class NotificationNote
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус",
-     *                      "value_options" : {"canceled": "Отправлено на доработку", "consideration":"На рассмотрении","published":"Опубликовано"}})
+     *                      "value_options" : {"canceled": "Отправлено на доработку", "consideration":"На рассмотрении","published":"Опубликовано","work":"В работе","completed":"Завершена"}}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
