@@ -19,7 +19,7 @@ $resources=$this->res;
         Транспорт (кузов / гп,т / объем, м3 / загрузка)
         </th>
         <th>
-            Аккаунт
+            Компания
         </th>
         <th>
         Статус
@@ -33,7 +33,8 @@ $resources=$this->res;
     <?php foreach ($resources as $resource) {
     $resourceWay=$resource['ways'];
     $vehicle=$resource['veh'];
-    $org=$resource['org'];
+
+    $owner=$resource['owner'];
     $resource=$resource['res'];
 
     ?>
@@ -88,8 +89,7 @@ $resources=$this->res;
                                </a>
             </td>
         <td>
-        <a href="<?php echo $this->url('account',
-                    array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
+        <?php echo $owner['property'].' '.$owner['name']; ?>
         </td>
         <td>
                         <?php echo $vehicle['status']; ?>
