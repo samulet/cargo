@@ -119,7 +119,7 @@ class AddListForm
         foreach ($form as $wayEl) {
             if( is_object($wayEl)) {
                 $label=$wayEl->getLabel();
-                if(!empty($label)) {
+                if(!empty($label) && ($wayEl->getName()!='multiField') ) {
                     $resultArray=$resultArray+array($wayEl->getName().'_ticket'=>$label.' (Заявка)');
                 }
             }

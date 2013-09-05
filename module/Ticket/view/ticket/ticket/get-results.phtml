@@ -562,15 +562,17 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         <tr>
             <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
                 <td><?php if(!empty($ticket['res'][$field])) {
-                        if($field!='numberInt') {
+                        if( ($field!='numberInt') && ($field!='ownerId')) {
                             echo $ticket['res'][$field];
-                        } else {
+                        } elseif($field=='numberInt')  {
                             ?>
                             <a href="<?php echo $this->url(
                                 'ticket',
                                 array('action' => 'add', 'id' => $ticket['res']['uuid'] ,'type'=>'list')
                             );?>"><?php echo $ticket['res'][$field]; ?></a>
                     <?php
+                        } elseif($field=='ownerId') {
+                            echo $ticket['owner']['property'].' '.$ticket['owner']['name'];
                         }
 
                     } ?></td>
