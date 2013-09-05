@@ -100,3 +100,9 @@ function delDocWay(element) {
         $(element).parent().remove();
     }
 }
+
+function fillExcelForm() {
+    var table=$('#resultTable').html();
+    $('input[name=excelForm]').val('<table>'+table+'</table>');
+    $('#ticketWay').submit();
+}
