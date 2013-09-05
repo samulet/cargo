@@ -47,6 +47,14 @@ class ExcelController extends AbstractActionController
 
     }
 
+    public function createExcelFromTableAction() {
+        $post=$this->getRequest()->getPost();
+        if(!empty($post->excelForm)) {
+            $excelModel=$this->getExcelModel();
+            $excelModel->createExcelFromTable($post->excelForm);
+        }
+
+    }
 
     public function getExcelModel()
     {

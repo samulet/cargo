@@ -19,8 +19,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
-
 class NotificationModel implements ServiceLocatorAwareInterface
 {
 
@@ -28,6 +26,8 @@ class NotificationModel implements ServiceLocatorAwareInterface
     protected $resourceModel;
     protected $ticketModel;
     protected $vehicleModel;
+    protected $queryBuilderModel;
+    protected $companyModel;
 
     public function addNotification($itemId,$ownerUserId,$ownerOrgId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -39,10 +39,55 @@ class NotificationModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
-    public function getAdminNotifications() {
+    public function getNotifications($searchArray,$notesParams = array()) {
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $notes =$objectManager->getRepository('Notification\Entity\Notification')->createQueryBuilder()
-            ->getQuery()->execute();
+        $noteObj = $objectManager->createQueryBuilder('Notification\Entity\Notification');
+        $queryBuilderModel=$this->getQueryBuilderModel();
+        $noteObj=$queryBuilderModel->createQuery($noteObj, $searchArray)->getQuery()->execute();
+        $fullResult=array();
+        foreach($noteObj as $re) {
+            $item=$this->getItem($re->itemId);
+
+            $itemObj=get_object_vars($re);
+            $itemObj['type']=$item['type'];
+            $itemObj['itemId']=$item['uuid'];
+
+            $result=$this->getNotificationNotes(array('ownerNotificationId' => new \MongoId($re->id))+$notesParams);
+
+            if(!isset($notesParams['read'])) {
+                $notesParams['read']='1';
+            }
+            $comModel = $this->getCompanyModel();
+            $owner=$comModel->getCompany($re->ownerUserId);
+            if( (!empty($result)) && ($notesParams['read']=='0') ) {
+                array_push($fullResult, array('item'=>$itemObj, 'notes'=>$result));
+            } elseif($notesParams['read']=='1') {
+                array_push($fullResult, array('item'=>$itemObj, 'notes'=>$result,'owner'=>$owner));
+            }
+
+        }
+        return $fullResult;
+    }
+
+    public function getNotificationNotes($searchArray) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $noteObj = $objectManager->createQueryBuilder('Notification\Entity\NotificationNote');
+        $queryBuilderModel=$this->getQueryBuilderModel();
+        $noteObj=$queryBuilderModel->createQuery($noteObj, $searchArray)->getQuery()->execute();
+        $result=array();
+        foreach($noteObj as $note) {
+            $nt=get_object_vars($note);
+            array_push($result,$nt);
+        }
+        return $result;
+    }
+
+    public function getAdminNotifications($orgId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $notes =$objectManager->getRepository('Notification\Entity\Notification')->findBy(
+            array('ownerOrgId' => new \MongoId($orgId))
+        );
 
         $result=array();
         foreach($notes as $note) {
@@ -93,9 +138,11 @@ class NotificationModel implements ServiceLocatorAwareInterface
 
     public function getMyNotifications($userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        ;
         $res = $objectManager->getRepository('Notification\Entity\Notification')->findBy(
             array('ownerUserId' => new \MongoId($userId))
         );
+
         $fullResult=array();
         foreach($res as $re) {
             $notes = $objectManager->getRepository('Notification\Entity\NotificationNote')->findBy(
@@ -153,6 +200,17 @@ class NotificationModel implements ServiceLocatorAwareInterface
             array('uuid' => $uuid)
         );
         $note->status=$prop_array['status'];
+        if($prop_array['status']=='consideration') {
+            $this->activateItem($note->itemId,'0');
+        } elseif($prop_array['status']=='published') {
+            $this->activateItem($note->itemId,'1');
+        } elseif($prop_array['status']=='canceled') {
+            $this->activateItem($note->itemId,'0');
+        } elseif($prop_array['status']=='work') {
+            $this->activateItem($note->itemId,'0');
+        } elseif($prop_array['status']=='completed') {
+            $this->activateItem($note->itemId,'0');
+        }
         $objectManager->persist($note);
         $objectManager->flush();
 
@@ -170,6 +228,30 @@ class NotificationModel implements ServiceLocatorAwareInterface
             return null;
         }
         return $res->id;
+    }
+
+    public function activateItem($id,$activated) {
+        $resourceModel=$this->getResourceModel();
+        $resUuid=$resourceModel->getUuidById($id);
+        $type='Resource\Entity\Resource';
+        if(empty($resUuid)) {
+            $ticketModel=$this->getTicketModel();
+            $resUuid=$ticketModel->getUuidById($id);
+            $type='Ticket\Entity\Ticket';
+        }
+        if(empty($resUuid)) {
+            $vehicleModel=$this->getVehicleModel();
+            $resUuid=$vehicleModel->getUuidById($id);
+            $type='Resource\Entity\Vehicle';
+        }
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $objectManager->getRepository($type)->createQueryBuilder()
+            ->findAndUpdate()
+            ->field('id')->equals(new \MongoId($id))
+            ->field('activated')->set($activated)
+            ->getQuery()
+            ->execute();
+        return true;
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
@@ -207,5 +289,20 @@ class NotificationModel implements ServiceLocatorAwareInterface
         }
         return $this->vehicleModel;
     }
-
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
+    }
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
+    }
 }

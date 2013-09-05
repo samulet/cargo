@@ -340,20 +340,17 @@ class TicketWay
 
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @ODM\Date
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required(false)
      * @Annotation\Options({"label":"Дата готовности к загрузке"})
      */
 
     public $dateStart;
-
     /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Круглосуточно"})
+     * @Annotation\Type("Zend\Form\Element\Date")
+     * @Annotation\Required(false)
+     * @Annotation\Options({"label":"Загрузка с"})
      */
 
     public $aroundDay;
@@ -367,7 +364,7 @@ class TicketWay
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"prepareToLoad","dateStart","always"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"prepareToLoad"})
+     * @Annotation\Attributes({"value":""})
      * @Annotation\Required({"required":"true" })
      */
 
@@ -469,8 +466,7 @@ class TicketWay
     public $timeUnloadEnd;
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @ODM\Date
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Options({"label":"Дата готовности к разгрузке"})
      * @Annotation\Required(false)

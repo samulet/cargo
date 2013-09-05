@@ -130,3 +130,23 @@ function time_control(element) {
         $(element).val( numVal );
     }
 }
+
+function showFilters() {
+    var divFilter=$('.filters .fullFilter');
+    if(divFilter.css('display')=='none') {
+        $('.filters .fullFilter').show(500);
+    } else {
+        $('.filters .fullFilter').hide(500);
+    }
+
+}
+
+function showMulti() {
+    var divFilter=$('.filters .multiField');
+    if(divFilter.css('display')=='none') {
+        $('.filters .multiField').show(500);
+    } else {
+        $('.filters .multiField').hide(500);
+    }
+
+}

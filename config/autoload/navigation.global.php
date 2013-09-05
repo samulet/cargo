@@ -87,7 +87,13 @@ return array(
                 'params' => array('id' => null),
                 'resource'   => 'route/account',
             ),
-
+            array(
+                'label' => 'Управление айтемами',
+                'route' => 'notification',
+                'action' => 'index',
+                'params' => array('id' => null),
+                'resource'   => 'route/notification',
+            ),
             array(
                 'label' => 'Доска оповещений',
                 'route' => 'notification',
@@ -110,11 +116,18 @@ return array(
                 'resource'   => 'route/resource',
             ),
             array(
-                'label' => 'Все',
+                'label' => 'Все (в системе)',
                 'route' => 'resource',
                 'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'controller/Resource\Controller\Resource:index',
+            ),
+            array(
+                'label' => 'Все (в аккаунте)',
+                'route' => 'resource',
+                'action' => 'myAcc',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Resource\Controller\Resource:myAcc',
             ),
             array(
                 'label' => 'Собственные',
@@ -138,11 +151,18 @@ return array(
                 'resource'   => 'route/vehicle',
             ),
             array(
-                'label' => 'Все',
+                'label' => 'Все (в системе)',
                 'route' => 'vehicle',
                 'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'controller/Resource\Controller\Vehicle:index',
+            ),
+            array(
+                'label' => 'Все (в аккаунте)',
+                'route' => 'vehicle',
+                'action' => 'myAcc',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Resource\Controller\Vehicle:myAcc',
             ),
             array(
                 'label' => 'Собственные',
@@ -159,11 +179,18 @@ return array(
                 'resource'   => 'route/ticket',
             ),
             array(
-                'label' => 'Все',
+                'label' => 'Все (в системе)',
                 'route' => 'ticket',
                 'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'controller/Ticket\Controller\Ticket:index',
+            ),
+            array(
+                'label' => 'Все (в аккаунте)',
+                'route' => 'ticket',
+                'action' => 'myAcc',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Ticket\Controller\Ticket:myAcc',
             ),
             array(
                 'label' => 'Собственные',
@@ -175,9 +202,9 @@ return array(
             array(
                 'label' => 'Поиск',
                 'route' => 'ticket',
-                'action' => 'add',
-                'params' => array('id' => null,'type'=>'search'),
-                'resource'   => 'controller/Ticket\Controller\Ticket:search',
+                'action' => 'getResults',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Ticket\Controller\Ticket:getResults',
             ),
             array(
                 'label' => 'Грузы',
@@ -192,6 +219,13 @@ return array(
                 'action' => 'index',
                 'params' => array('id' => null),
                 'resource'   => 'controller/Ticket\Controller\Cargo:index',
+            ),
+            array(
+                'label' => 'Все (аккаунта)',
+                'route' => 'cargo',
+                'action' => 'myAcc',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Ticket\Controller\Cargo:myAcc',
             ),
             array(
                 'label' => 'Собственные',
