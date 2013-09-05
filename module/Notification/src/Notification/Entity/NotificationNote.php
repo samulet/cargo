@@ -16,7 +16,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 
 /**
  * @ODM\Document(collection="notificationNote", repositoryClass="Notification\Repository\NotificationNoteRepository")
@@ -68,7 +68,7 @@ class NotificationNote
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус",
-     *                      "value_options" : {"canceled": "Отправлено на доработку", "consideration":"На рассмотрении","published":"Опубликовано","work":"В работе","completed":"Завершена"}}})
+     *                      "value_options" : {"canceled": "Отправлено на доработку", "consideration":"На рассмотрении","published":"Опубликовано","work":"В работе","completed":"Завершена"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
