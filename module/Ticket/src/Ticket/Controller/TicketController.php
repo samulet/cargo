@@ -17,6 +17,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Ticket\Form\TicketForm;
 use AddList\Form\AddListForm;
+use Ticket\Entity\FiltersArrayStatic;
 
 class TicketController extends AbstractActionController
 {
@@ -32,26 +33,32 @@ class TicketController extends AbstractActionController
     {
         $res = $this->getTicketModel();
         return new ViewModel(array(
-            'res' => $res->returnAllTicket()
+            'res' => $res->returnTickets(array('deletedAt'=>null,'activated'=>'1'))
         ));
     }
 
     public function myAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
+        $ticket=$res->returnTickets(array('deletedAt'=>null,'ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+        $filterArray=$this->addFunction(null,null,'search');
+        $fillFrom=new AddListForm();
+
+        $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
+        return new ViewModel(
+            array('res' => $ticket)+$filterArray);
+    }
+
+    public function myAccAction()
+    {
+        $res = $this->getTicketModel();
+        $ticket=$res->returnTickets(array('deletedAt'=>null, 'ownerOrgId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
         return new ViewModel(array(
             'res' => $ticket
         ));
     }
 
-
-
-    public function addAction()
-    {
-        $post=$this->getRequest()->getPost();
-        $type = $this->getEvent()->getRouteMatch()->getParam('type');
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+    public function addFunction($post,$type,$id) {
         if($id=='search') {
             $type=$id;
         }
@@ -100,12 +107,12 @@ class TicketController extends AbstractActionController
                 $result=$ticketModel->unSplitArray(get_object_vars($post));
                 $error=0;
                 $formsArray=array();
-                //die(var_dump($result));
                 foreach($result as $resF) {
                     $newForm= clone $formWay;
                     $resF['submit']='submit';
                     $newForm->setData($resF);
                     if(!$newForm->isValid()) {
+
                         $error++;
                     }
                     if(!empty($resF['doc'])) {
@@ -126,11 +133,10 @@ class TicketController extends AbstractActionController
                 $form->setData($post);
                 if(!$form->isValid()) {
                     $error++;
+
                 }
 
                 if(empty($error)) {
-                    $comUserModel = $this->getCompanyUserModel();
-
                     $ticketModel->addTicket($this->getRequest()->getPost(), $comListId, $orgListId, $id);
                     return $this->redirect()->toUrl('/tickets/my');
                 }
@@ -187,7 +193,16 @@ class TicketController extends AbstractActionController
                     $typeForm['id']=$id;
                 }
             } elseif($type=='search') {
+                if(!empty($post)) {
+                    $postData=get_object_vars($post);
+                    $formsArray[0]['formWay']->setData($postData);
+                    $formsArray[0]['formsDocArray'][0]->setData($postData);
+                    $form->setData($postData);
+                }
+
+
                 foreach ($formsArray as $formElement) {
+
                     $formWay=$formElement['formWay'];
                     foreach($formElement['formsDocArray'] as $docWay) {
                         foreach ($docWay as $wayEl) {
@@ -205,11 +220,19 @@ class TicketController extends AbstractActionController
             }
         }
         $ticketModel->addBootstrap3Class($form,$formsArray);
-        return new ViewModel(array(
+        return array(
             'form' => $form,
             'formsArray' =>$formsArray,
             'typeForm' => $typeForm
-        ));
+        );
+    }
+
+    public function addAction()
+    {
+        $post=$this->getRequest()->getPost();
+        $type = $this->getEvent()->getRouteMatch()->getParam('type');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        return new ViewModel($this->addFunction($post,$type,$id));
     }
 
     public function editAction()
@@ -363,10 +386,40 @@ class TicketController extends AbstractActionController
 
     public function getResultsAction() {
         $res = $this->getTicketModel();
-        $ticket=$res->returnSearchTicket($this->getRequest()->getPost());
+        $post=$this->getRequest()->getPost();
+
+        if(!empty($post->multiField)) {
+            $multiField=$post->multiField;
+            $multiFieldData=$multiField;
+            unset($post->multiField);
+            $multiField=$res->multiFieldProc($multiField);
+        } else {
+            $multiFieldData=array();
+            $multiField=array();
+        }
+
+        $ticket=$res->returnSearchTicket($post);
+
+
+        $filterData=FiltersArrayStatic::$list;
+        foreach($filterData as $key => &$value) {
+            if(!empty($post->$key)) {
+                $value=$post->$key;
+            }
+        }
+
+
+        $filterArray=$this->addFunction($post,null,'search');
+        $fillFrom=new AddListForm();
+
+        $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
+       // die(var_dump($filterArray['form']));
         return new ViewModel(array(
-            'res' => $ticket
-        ));
+            'res' => $ticket,
+            'multiField'=>$multiField,
+            'filterData' =>$filterData,
+            'multiFieldData'=>$multiFieldData
+        )+$filterArray);
     }
     public function getCargoModel()
     {

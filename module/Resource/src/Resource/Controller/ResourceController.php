@@ -34,8 +34,9 @@ class ResourceController extends AbstractActionController
         $res = $this->getResourceModel();
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
+        $resources=$res->returnResources(array('deletedAt'=>null,'activated'=>'1'));
         return new ViewModel(array(
-            'res' => $res->returnAllResource(),
+            'res' => $resources,
             'roles'=>$roles
         ));
     }
@@ -43,7 +44,16 @@ class ResourceController extends AbstractActionController
     public function myAction()
     {
         $res = $this->getResourceModel();
-        $resource=$res->returnMyResource($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
+        $resources=$res->returnResources(array('deletedAt'=>null,'ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+        return new ViewModel(array(
+            'res' => $resources
+        ));
+    }
+
+    public function myAccAction()
+    {
+        $res = $this->getResourceModel();
+        $resource=$res->returnResources(array('deletedAt'=>null,'ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
         return new ViewModel(array(
             'res' => $resource
         ));
