@@ -107,7 +107,6 @@ class TicketController extends AbstractActionController
                 $result=$ticketModel->unSplitArray(get_object_vars($post));
                 $error=0;
                 $formsArray=array();
-                //die(var_dump($result));
                 foreach($result as $resF) {
                     $newForm= clone $formWay;
                     $resF['submit']='submit';
@@ -138,8 +137,6 @@ class TicketController extends AbstractActionController
                 }
 
                 if(empty($error)) {
-                    $comUserModel = $this->getCompanyUserModel();
-
                     $ticketModel->addTicket($this->getRequest()->getPost(), $comListId, $orgListId, $id);
                     return $this->redirect()->toUrl('/tickets/my');
                 }
@@ -391,12 +388,12 @@ class TicketController extends AbstractActionController
         $res = $this->getTicketModel();
         $post=$this->getRequest()->getPost();
 
-
         if(!empty($post->multiField)) {
             $multiField=$post->multiField;
             $multiFieldData=$multiField;
             unset($post->multiField);
         }
+
         $ticket=$res->returnSearchTicket($post);
         $multiField=$res->multiFieldProc($multiField);
 
