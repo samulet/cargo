@@ -45,6 +45,18 @@ $(document).ready(function() {
             window.location.replace('/addList/my-fields/'+optionVal);
         }
     });
+    var isDateInputSupported = function(){
+        var elem = document.createElement('input');
+        elem.setAttribute('type','date');
+        elem.value = 'foo';
+        return (elem.type == 'date' && elem.value != 'foo');
+    }
+
+    if (!isDateInputSupported()) {
+        $('input[type="date"]').datepicker();
+    }
+
+
 
 });
 
