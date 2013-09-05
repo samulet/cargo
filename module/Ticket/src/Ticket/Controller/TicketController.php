@@ -392,10 +392,14 @@ class TicketController extends AbstractActionController
             $multiField=$post->multiField;
             $multiFieldData=$multiField;
             unset($post->multiField);
+            $multiField=$res->multiFieldProc($multiField);
+        } else {
+            $multiFieldData=array();
+            $multiField=array();
         }
 
         $ticket=$res->returnSearchTicket($post);
-        $multiField=$res->multiFieldProc($multiField);
+
 
         $filterData=FiltersArrayStatic::$list;
         foreach($filterData as $key => &$value) {
