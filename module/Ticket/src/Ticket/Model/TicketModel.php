@@ -528,7 +528,10 @@ class TicketModel implements ServiceLocatorAwareInterface
         $multiFieldArray=array();
         foreach($multiField as $field) {
             $explodedField=explode('_',$field);
-            $multiFieldArray[$explodedField[1]][$explodedField[0]]=true;
+            if($explodedField[0]!='multiField') {
+                $multiFieldArray[$explodedField[1]][$explodedField[0]]=true;
+            }
+
         }
         return $multiFieldArray;
     }
@@ -647,7 +650,7 @@ class TicketModel implements ServiceLocatorAwareInterface
                 foreach ($docWay as $wayEl) {
                     $attr = $wayEl->getAttributes();
                     if (!empty($attr['type'])) {
-                        if ((($attr['type'] != 'checkbox') && ($attr['type'] != 'radio'))) {
+                        if ((($attr['type'] != 'checkbox') && ($attr['type']!='multi_checkbox') && ($attr['type'] != 'radio'))) {
                             $wayEl->setAttributes(array('class' => 'form-control'));
                         }
                     }
@@ -657,7 +660,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             foreach ($formWay as $wayEl) {
                 $attr = $wayEl->getAttributes();
                 if (!empty($attr['type'])) {
-                    if ((($attr['type'] != 'checkbox') && ($attr['type'] != 'radio'))) {
+                    if ((($attr['type'] != 'checkbox') && ($attr['type']!='multi_checkbox')&& ($attr['type'] != 'radio'))) {
                         $wayEl->setAttributes(array('class' => 'form-control'));
                     }
                 }
@@ -667,7 +670,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         foreach ($form as $el) {
             $attr = $el->getAttributes();
             if (!empty($attr['type'])) {
-                if (($attr['type'] != 'checkbox')) {
+                if (($attr['type'] != 'checkbox')&& ($attr['type']!='multi_checkbox')) {
                     $el->setAttributes(array('class' => 'form-control'));
                 }
             }
