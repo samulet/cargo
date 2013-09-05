@@ -79,10 +79,6 @@ class InteractionModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
-    public function getItemStatus() {
-
-    }
-
     public function acceptInteraction($sendUuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $objectManager->getRepository('Interaction\Entity\Interaction')->createQueryBuilder()
