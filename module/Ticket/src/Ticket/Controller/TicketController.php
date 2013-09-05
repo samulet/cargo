@@ -33,7 +33,7 @@ class TicketController extends AbstractActionController
     {
         $res = $this->getTicketModel();
         return new ViewModel(array(
-            'res' => $res->returnTickets(array('activated'=>1))
+            'res' => $res->returnTickets(array('activated'=>'1'))
         ));
     }
 

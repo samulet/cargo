@@ -18,7 +18,8 @@ $read = $form->get('read');
     </tr>
     <?php
     foreach($notes as $note) {
-
+        $nt=$note['notes'];
+        $note=$note['item'];
         ?>
         <tr>
             <td> <a href="<?php
@@ -32,11 +33,11 @@ $read = $form->get('read');
 
                 echo $this->url($type,
                     array('action' => 'add','type'=>'list',  'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
-            <td><?php if(!empty($note)) { echo $note['note']; } ?></td>
+            <td><?php if(!empty($nt[count($nt)-1]['note'])) { echo $nt[count($nt)-1]['note']; } ?></td>
             <td><?php echo $note['status']; ?></td>
             <td>
                 <?php
-                $read->setValue($note['uuid']);
+                $read->setValue($nt[count($nt)-1]['uuid']);
                 echo $this->form()->openTag($form);
                 echo $this->formRow($read);
                 echo $this->formElement($form->get('submit')->setValue('Прочитать'));
