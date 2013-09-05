@@ -252,6 +252,31 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
     }
 
+
+    public function returnTickets($params) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $ticket = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
+        $rezObj = $this->searchItemAct($ticket, $params)->getQuery()->execute();
+        $result = array();
+        $comModel = $this->getCompanyModel();
+        $cargo = $this->getCargoModel();
+        foreach ($rezObj as $cur) {
+            $veh = $cargo->listCargo($cur->tsId);
+            $ways = $this->returnAllWays($cur->id);
+            $resultArray=get_object_vars($cur);
+            $resultArray['created']=$resultArray['created']->format('d-m-Y');
+            array_push(
+                $result,
+                array(
+                    'res' => $resultArray,
+                    'veh' => $veh,
+                    'ways' => $ways,
+                    'owner' => $comModel->getCompany($cur->ownerId)
+                )
+            );
+        }
+        return $result;
+    }
     public function returnAllTicket()
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -324,22 +349,11 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function returnMyAccTicket($orgId)
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-
         $comModel = $this->getCompanyModel();
         $com = $comModel->returnCompanies($orgId);
         $resultArray = array();
         foreach ($com as $c) {
-            $rezObj = $objectManager->getRepository('Ticket\Entity\Ticket')->getMyAvailableTicket($c['id']);
-            $cargo = $this->getCargoModel();
-            foreach ($rezObj as $cur) {
-                $veh = $cargo->listCargo($cur->tsId);
-                $ways = $this->returnAllWays($cur->id);
-                array_push(
-                    $resultArray,
-                    array('res' => get_object_vars($cur), 'veh' => $veh, 'ways' => $ways, 'owner' => $c)
-                );
-            }
+            $resultArray=array_merge($resultArray, $this->returnTickets(array('ownerId'=> new \MongoId($c['id']) )));
         }
         return $resultArray;
     }

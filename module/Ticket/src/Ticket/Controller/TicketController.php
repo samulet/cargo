@@ -33,14 +33,14 @@ class TicketController extends AbstractActionController
     {
         $res = $this->getTicketModel();
         return new ViewModel(array(
-            'res' => $res->returnAllTicket()
+            'res' => $res->returnTickets(array('activated'=>1))
         ));
     }
 
     public function myAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
+        $ticket=$res->returnTickets(array('ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
         $filterArray=$this->addFunction(null,null,'search');
         $fillFrom=new AddListForm();
 
