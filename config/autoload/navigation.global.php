@@ -202,9 +202,9 @@ return array(
             array(
                 'label' => 'Поиск',
                 'route' => 'ticket',
-                'action' => 'add',
-                'params' => array('id' => null,'type'=>'search'),
-                'resource'   => 'controller/Ticket\Controller\Ticket:search',
+                'action' => 'getResults',
+                'params' => array('id' => null),
+                'resource'   => 'controller/Ticket\Controller\Ticket:getResults',
             ),
             array(
                 'label' => 'Грузы',
