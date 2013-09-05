@@ -584,10 +584,10 @@ class TicketModel implements ServiceLocatorAwareInterface
             $resultArray['cargoOwnerTrue'] = $cargoOwnerTrue;
             $resultArray['docArray'] =  $this->getDocumentWay($re->id);
             if(!empty( $resultArray['dateEnd'])) {
-                $resultArray['dateEnd']=$resultArray['dateEnd']->format('d-m-Y');
+                $resultArray['dateEnd']=$resultArray['dateEnd']->format('Y-m-d');
             }
             if(!empty( $resultArray['dateStart'])) {
-                $resultArray['dateStart']=$resultArray['dateStart']->format('d-m-Y');
+                $resultArray['dateStart']=$resultArray['dateStart']->format('Y-m-d');
             }
 
             array_push($result, $resultArray);
