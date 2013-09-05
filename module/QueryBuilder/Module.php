@@ -4,7 +4,7 @@ namespace QueryBuilder;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
-use Notification\Model\NotificationModel;
+use QueryBuilder\Model\QueryBuilderModel;
 
 
 class Module
@@ -34,8 +34,8 @@ class Module
 
         return array(
             'factories' => array(
-                'Notification\Model\NotificationModel' => function ($sm) {
-                    $auc = new NotificationModel();
+                'QueryBuilder\Model\QueryBuilderModel' => function ($sm) {
+                    $auc = new QueryBuilderModel();
                     return $auc;
                 },
             ),

@@ -40,10 +40,34 @@ class NotificationModel implements ServiceLocatorAwareInterface
     }
 
     public function getNotifications($searchArray) {
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $noteObj = $objectManager->createQueryBuilder('Notification\Entity\Notification');
         $queryBuilderModel=$this->getQueryBuilderModel();
-        $noteObj=$queryBuilderModel->createQuery($noteObj, $searchArray);
+        $noteObj=$queryBuilderModel->createQuery($noteObj, $searchArray)->getQuery()->execute();
+        $fullResult=array();
+        foreach($noteObj as $re) {
+
+            $result=$this->getNotificationNotes($re->itemId,array('ownerNotificationId' => new \MongoId($re->id)));
+            $fullResult=array_merge($fullResult,$result);
+        }
+        return $fullResult;
+    }
+
+    public function getNotificationNotes($itemId,$searchArray) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $noteObj = $objectManager->createQueryBuilder('Notification\Entity\NotificationNote');
+        $queryBuilderModel=$this->getQueryBuilderModel();
+        $noteObj=$queryBuilderModel->createQuery($noteObj, $searchArray)->getQuery()->execute();
+        $result=array();
+        $item=$this->getItem($itemId);
+        foreach($noteObj as $note) {
+            $nt=get_object_vars($note);
+            $nt['type']=$item['type'];
+            $nt['itemId']=$item['uuid'];
+            array_push($result,$nt);
+        }
+        return $result;
     }
 
     public function getAdminNotifications($orgId) {
