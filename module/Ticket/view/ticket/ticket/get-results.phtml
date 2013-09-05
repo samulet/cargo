@@ -545,7 +545,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
     array('action' => 'index')
 );?>">Все заявки</a>
 
-<table class="table">
+<table id="resultTable" class="table">
     <tr>
         <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
             <th><?php echo $form->get($field)->getLabel(); ?></th>
@@ -558,11 +558,6 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         <?php } }?>
     </tr>
     <?php foreach ($tickets as $ticket) {
-
-     //   $ticketWay=$ticket['ways'];
-      //  $cargo=$ticket['veh'];
-       // $ticket=;
-
         ?>
         <tr>
             <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
@@ -618,3 +613,12 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
     <?php } ?>
 
 </table>
+
+<?php
+$formFilterWay->setAttribute('action', $this->url('excel', array('action' => 'createExcelFromTable')))
+    ->prepare();
+echo $this->form()->openTag($formFilterWay);
+?>
+<input type='hidden' name='excelForm' value />
+<button onclick='fillExcelForm();'type="button">Печать</button>
+<?php echo $this->form()->closeTag($formFilterWay); ?>
