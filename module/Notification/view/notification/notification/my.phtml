@@ -24,7 +24,7 @@ $notes=$this->notification;
             }
 
             echo $this->url($type,
-                array('action'=>'edit', 'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
+                array('action' => 'add','type'=>'list', 'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
         <td><?php if(!empty($note)) { echo $note['note']; } ?></td>
         <td><?php echo $note['status']; ?></td>
 
