@@ -41,6 +41,9 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             Добавить аукцион
         </th>
         <th>
+            Предложить заявку
+        </th>
+        <th>
             Копировать
         </th>
         <th>
@@ -116,10 +119,14 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
                 );?>">Добавить аукцион</a>
             </td>
             <td>
+                <a href="<?php echo $this->url('interaction',
+                    array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить предложение</a>
+            </td>
+            <td>
                 <a href="<?php echo $this->url(
                     'resource',
                     array('action' => 'add', 'id' => $resource['uuid'],'type'=>'copy')
-                );?>">Копировать</a>
+                );?>">Дублировать</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(
@@ -127,6 +134,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
                     array('action' => 'delete', 'id' => $resource['uuid'])
                 );?>">Удалить</a>
             </td>
+
         </tr>
     <?php } ?>
 
