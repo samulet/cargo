@@ -22,7 +22,9 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
                 <th>
                     Печать
                 </th>
-
+        <th>
+            Копировать
+        </th>
           <th>
           Предложить ресурс
           </th>
@@ -90,7 +92,12 @@ $typeUnload=implode(' ',$typeUnload);
                                 );?>">Загрузить свой шаблон</a>
             </td>
 
-
+    <td>
+        <a href="<?php echo $this->url(
+            'ticket',
+            array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'copy')
+        );?>">Дублировать</a>
+    </td>
                      <td>
                             <a href="<?php echo $this->url('interaction',
                                 array('action'=>'add', 'id' => $ticket['uuid']));?>">Добавить предложение</a>
