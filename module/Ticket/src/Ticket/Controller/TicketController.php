@@ -150,6 +150,7 @@ class TicketController extends AbstractActionController
                 $formsArray=array();
 
                 foreach($ticketWay as $resF) {
+                    //die(var_dump($resF));
                     $newForm= clone $formWay;
                     $newForm->setData($resF);
                     $documentWays=$ticketModel->getDocumentWay($resF['id']);
