@@ -465,7 +465,8 @@ class TicketModel implements ServiceLocatorAwareInterface
             $propFilterResultTicket['created']=$propFilterResult['created'];
             unset($propFilterResult['created']);
         }
-        $propArrayTicket = array('activated' => '1');
+        //$propArrayTicket = array('activated' => '1');
+        $propArrayTicket = array();
         $unsetTicketArray = array('currency', 'money', 'formPay', 'typeTicket', 'ownerId', 'type', 'rate');
         foreach ($unsetTicketArray as $unsetTicketString) {
             if (!empty($propArrayTicketWay[$unsetTicketString])) {
