@@ -18,6 +18,10 @@ $interactions=$this->interaction;
             Статус
         </th>
 
+        <th>
+            В работу
+        </th>
+
     </tr>
     <?php foreach($interactions as $interaction) { ?>
         <tr>
@@ -57,6 +61,13 @@ $interactions=$this->interaction;
             </td>
             <td>
                 <?php echo $interaction['status']; ?>
+            </td>
+
+            <td>
+                <a href="<?php echo $this->url('interaction',
+                    array('action'=>'accept', 'id' => $interaction['uuid']));?>">
+                    Принять предложение
+                </a>
             </td>
         </tr>
     <?php } ?>
