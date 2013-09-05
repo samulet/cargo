@@ -21,7 +21,8 @@ return array(
         'AddList',
         'Interaction',
         'Notification',
-        'Excel'
+        'Excel',
+        'QueryBuilder'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
