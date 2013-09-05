@@ -19,13 +19,12 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
-
 class InteractionModel implements ServiceLocatorAwareInterface
 {
     protected $ticketModel;
     protected $resourceModel;
     protected $serviceLocator;
+    protected $queryBuilderModel;
 
     public function addInteraction($sendItemId,$receiveItemUuid,$ownerUserId ) {
         $resourceModel=$this->getResourceModel();
@@ -49,13 +48,12 @@ class InteractionModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
-    public function getInteractions($userId,$type) {
+    public function getInteractions($searchArray) {
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if($type=='sent') {
-            $intObj = $objectManager->getRepository('Interaction\Entity\Interaction')->getSentAvailableInteraction($userId);
-        } else {
-            $intObj = $objectManager->getRepository('Interaction\Entity\Interaction')->getReceiveAvailableInteraction($userId);
-        }
+        $intObj = $objectManager->createQueryBuilder('Interaction\Entity\Interaction');
+        $queryBuilderModel=$this->getQueryBuilderModel();
+        $intObj=$queryBuilderModel->createQuery($intObj, $searchArray)->getQuery()->execute();
         $result = array();
         $resourceModel=$this->getResourceModel();
         $ticketModel = $this->getTicketModel();
@@ -179,5 +177,13 @@ class InteractionModel implements ServiceLocatorAwareInterface
             $this->ticketModel = $sm->get('Ticket\Model\TicketModel');
         }
         return $this->ticketModel;
+    }
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
     }
 }

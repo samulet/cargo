@@ -1,0 +1,37 @@
+<?php
+$notes=$this->notification;
+
+?>
+<h1>Доска оповещений</h1>
+<table class="table">
+    <tr>
+        <th>Номер Item</th>
+        <th>Примечание администратора</th>
+        <th>Статус</th>
+    </tr>
+    <?php
+    foreach($notes as $note) {
+        $nt=$note['notes'];
+        $note=$note['item'];
+
+        ?>
+        <tr>
+            <td> <a href="<?php
+                if($note['type']=='Ресурс') {
+                    $type='resource';
+                } elseif($note['type']=='Заявка') {
+                    $type='ticket';
+                } else {
+                    $type='vehicle';
+                }
+
+                echo $this->url($type,
+                    array('action' => 'add','type'=>'list', 'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
+            <td><?php if(!empty($nt[count($nt)-1]['note'])) { echo $nt[count($nt)-1]['note']; } ?></td>
+            <td><?php echo $note['status']; ?></td>
+
+        </tr>
+    <?php
+    }
+    ?>
+</table>

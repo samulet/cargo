@@ -15,8 +15,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
-
 /**
  * @ODM\Document(collection="interaction", repositoryClass="Interaction\Repository\InteractionRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -56,7 +54,12 @@ class Interaction
      * @Annotation\Exclude()
      */
     public $ownerUserId;
-
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Exclude()
+     */
+    public $accepted;
     /**
      * @ODM\ObjectId
      * @var int
