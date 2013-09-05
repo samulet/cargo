@@ -56,6 +56,13 @@ class Ticket
      * @Annotation\Exclude()
      */
     public $tsId;
+
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Exclude()
+     */
+    public $interactionId;
     /**
      * @ODM\ObjectId
      * @var int
