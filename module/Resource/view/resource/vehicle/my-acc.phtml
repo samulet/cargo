@@ -36,7 +36,7 @@ $vehicles = $this->res;
             Удалить
         </th>
     </tr>
-    <?php foreach ($vehicles as $vehicle) { ?>
+    <?php foreach ($vehicles as $vehicle) { $owner=$vehicle['owner']; $vehicle=$vehicle['res'];?>
         <tr>
             <td>
                 <a href="<?php echo $this->url('vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'list'));?>">
@@ -54,7 +54,7 @@ $vehicles = $this->res;
                 <?php echo $vehicle['capacity']; ?>
             </td>
             <td>
-                <?php echo $vehicle['vehicleOwnerTrue']['property'].' '.$vehicle['vehicleOwnerTrue']['name']; ?>
+                <?php echo $owner['property'].' '.$owner['name']; ?>
             </td>
             <td>
                 <a href="<?php echo $this->url(

@@ -93,7 +93,7 @@ return array(
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
                     'action' => array('index'),
-                    'roles' => array('forwarder', 'customer', 'admin')
+                    'roles' => array('admin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
