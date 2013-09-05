@@ -268,6 +268,7 @@ class TicketModel implements ServiceLocatorAwareInterface
 
         $result = array();
         $comModel = $this->getCompanyModel();
+        $noteModel = $this->getNotificationModel();
         $cargo = $this->getCargoModel();
         foreach ($rezObj as $cur) {
 
@@ -275,6 +276,8 @@ class TicketModel implements ServiceLocatorAwareInterface
             $ways = $this->returnAllWays($cur->id);
             $resultArray=get_object_vars($cur);
             $resultArray['created']=$resultArray['created']->format('d-m-Y');
+            $resultArray['statusGlobal']=$noteModel->getItemStatus($cur->id);
+            //$resultArray['statusWork'];
             array_push(
                 $result,
                 array(
