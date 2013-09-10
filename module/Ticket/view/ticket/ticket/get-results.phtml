@@ -2,10 +2,11 @@
 <?php
 $filterData=$this->filterData;
 $multiFieldData=$this->multiFieldData;
-
+$otherData=$this->otherData;
 $form = $this->form;
 $formsArray = $this->formsArray;
 $formsDocArray = $this->formsDocArray;
+$formInteraction=$this->formInteraction;
 
 $typeForm = $this->typeForm;
 
@@ -64,6 +65,8 @@ $createdFilterTo=$createdFilterTo->setName('createdFilterTo')->setOptions(array(
 $ownerId = clone $cargoOwner;
 $ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'))->setValue($filterData['ownerId']);
 $multiField=$form->get('multiField');
+
+$acceptedResource=$formInteraction->get('accepted')->setValue($otherData['accepted']);
 if(!empty($multiFieldData)) {
     $multiField->setValue($multiFieldData);
 }
@@ -74,6 +77,11 @@ if(!empty($multiFieldData)) {
     <?php
     echo $this->formRow($dateStartFilterFrom);
     echo $this->formRow($dateStartFilterTo);
+
+    ?>
+    </br>
+    <?php
+    echo $this->formRow($acceptedResource);
     ?>
     <span>(Поля Грузовладелец и Компания только для поиска внутри Аккаунта)</span>
     <?php

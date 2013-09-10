@@ -57,7 +57,8 @@ class Interaction
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Exclude()
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Options({"label":"Заявки с ресурсами"})
      */
     public $accepted;
     /**

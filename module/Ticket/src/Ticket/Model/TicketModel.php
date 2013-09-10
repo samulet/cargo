@@ -486,8 +486,8 @@ class TicketModel implements ServiceLocatorAwareInterface
         $propAcceptedResource=array();
 
         if(!empty($propArrayTicketWay['accepted'])) {
-            $propAcceptedResource['accepted']=$propArrayTicketWay['created'];
-            unset($propArrayTicketWay['created']);
+            $propAcceptedResource['accepted']=$propArrayTicketWay['accepted'];
+            unset($propArrayTicketWay['accepted']);
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $qTicket = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
@@ -504,7 +504,42 @@ class TicketModel implements ServiceLocatorAwareInterface
         $resultTicketFromWay = $this->searchTicketWay($qTicketWay->getQuery()->execute());
         $resultTicketFromTicket=$this->searchTicket($qTicket->getQuery()->execute());
 
-        return $this->arrayIntersect($resultTicketFromWay, $resultTicketFromTicket);
+        $resultArray=$this->arrayIntersect($resultTicketFromWay, $resultTicketFromTicket);
+
+        if(!empty($propAcceptedResource)) {
+            $resultArray=$this->getAcceptedResourceTickets($resultArray);
+        }
+
+        return $resultArray;
+    }
+
+    public function getAcceptedResourceTickets($resultArray) {
+        if(!empty($resultArray)) {
+            $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+
+            foreach($resultArray as $key => $res) {
+
+                $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
+                    array('receiveItemId' => new \MongoId($res['res']['id']) ,'accepted' => '1')
+                );
+
+                if(empty($item)) {
+                    $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
+                        array('sendItemId' => new \MongoId($res['res']['id']) ,'accepted' => '1')
+                    );
+                }
+                if(empty($item)) {
+                    unset($resultArray[$key]);
+
+                }
+
+            }
+            return $resultArray;
+
+
+        } else {
+            return $resultArray;
+        }
     }
 
     public function arrayIntersect($arr1, $arr2) {

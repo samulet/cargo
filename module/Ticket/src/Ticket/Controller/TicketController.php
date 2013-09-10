@@ -408,18 +408,26 @@ class TicketController extends AbstractActionController
                 $value=$post->$key;
             }
         }
-
+$otherData=array();
+        if(!empty($post->accepted)) {
+            $otherData['accepted']=$post->accepted;
+        } else {
+            $otherData['accepted']=null;
+        }
 
         $filterArray=$this->addFunction($post,null,'search');
         $fillFrom=new AddListForm();
 
         $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
-       // die(var_dump($filterArray['form']));
+        $builder = new AnnotationBuilder();
+        $formInteraction = $builder->createForm('Interaction\Entity\Interaction');
         return new ViewModel(array(
             'res' => $ticket,
             'multiField'=>$multiField,
             'filterData' =>$filterData,
-            'multiFieldData'=>$multiFieldData
+            'multiFieldData'=>$multiFieldData,
+            'formInteraction' =>$formInteraction,
+            'otherData'=>$otherData
         )+$filterArray);
     }
     public function getCargoModel()
