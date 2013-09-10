@@ -200,15 +200,15 @@ class NotificationModel implements ServiceLocatorAwareInterface
             array('uuid' => $uuid)
         );
         $note->status=$prop_array['status'];
-        if($prop_array['status']=='consideration') {
+        if($prop_array['status']=='На рассмотрении') {
             $this->activateItem($note->itemId,'0');
-        } elseif($prop_array['status']=='published') {
+        } elseif($prop_array['status']=='Опубликовано') {
             $this->activateItem($note->itemId,'1');
-        } elseif($prop_array['status']=='canceled') {
+        } elseif($prop_array['status']=='Отправлено на доработку') {
             $this->activateItem($note->itemId,'0');
-        } elseif($prop_array['status']=='work') {
+        } elseif($prop_array['status']=='В работе') {
             $this->activateItem($note->itemId,'0');
-        } elseif($prop_array['status']=='completed') {
+        } elseif($prop_array['status']=='Завершена') {
             $this->activateItem($note->itemId,'0');
         }
         $objectManager->persist($note);
