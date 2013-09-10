@@ -32,6 +32,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $companyUserModel;
     protected $companyModel;
     protected $queryBuilderModel;
+    protected $interactionModel;
 
     public function unSplitArray($propArraySplit)
     {
@@ -269,6 +270,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $result = array();
         $comModel = $this->getCompanyModel();
         $noteModel = $this->getNotificationModel();
+        $intModel = $this->getInteractionModel();
         $cargo = $this->getCargoModel();
         foreach ($rezObj as $cur) {
 
@@ -277,7 +279,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             $resultArray=get_object_vars($cur);
             $resultArray['created']=$resultArray['created']->format('d-m-Y');
             $resultArray['statusGlobal']=$noteModel->getItemStatus($cur->id);
-            //$resultArray['statusWork'];
+            $resultArray['statusWork']=$intModel->getItemStatus($cur->id);
             array_push(
                 $result,
                 array(
@@ -711,5 +713,14 @@ class TicketModel implements ServiceLocatorAwareInterface
             $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
         }
         return $this->queryBuilderModel;
+    }
+
+    public function getInteractionModel()
+    {
+        if (!$this->interactionModel) {
+            $sm = $this->getServiceLocator();
+            $this->interactionModel = $sm->get('Interaction\Model\InteractionModel');
+        }
+        return $this->interactionModel;
     }
 }
