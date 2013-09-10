@@ -466,10 +466,9 @@ class TicketModel implements ServiceLocatorAwareInterface
             }
         }
         $propFilterResultTicket=array();
-        if(!empty($propFilterResult['created'])) {
-            $propFilterResultTicket['created']=$propFilterResult['created'];
-            unset($propFilterResult['created']);
-        }
+
+
+
         //$propArrayTicket = array('activated' => '1');
         $propArrayTicket = array();
         $unsetTicketArray = array('currency', 'money', 'formPay', 'typeTicket', 'ownerId', 'type', 'rate');
@@ -482,6 +481,13 @@ class TicketModel implements ServiceLocatorAwareInterface
                 }
                 unset($propArrayTicketWay[$unsetTicketString]);
             }
+        }
+
+        $propAcceptedResource=array();
+
+        if(!empty($propArrayTicketWay['accepted'])) {
+            $propAcceptedResource['accepted']=$propArrayTicketWay['created'];
+            unset($propArrayTicketWay['created']);
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $qTicket = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
@@ -498,15 +504,17 @@ class TicketModel implements ServiceLocatorAwareInterface
         $resultTicketFromWay = $this->searchTicketWay($qTicketWay->getQuery()->execute());
         $resultTicketFromTicket=$this->searchTicket($qTicket->getQuery()->execute());
 
-       // die(var_dump($propArrayTicketWay));
+        return $this->arrayIntersect($resultTicketFromWay, $resultTicketFromTicket);
+    }
 
-        foreach($resultTicketFromWay as &$el) {
+    public function arrayIntersect($arr1, $arr2) {
+        foreach($arr1 as &$el) {
             $el=serialize($el);
         }
-        foreach($resultTicketFromTicket as &$el) {
+        foreach($arr2 as &$el) {
             $el=serialize($el);
         }
-        $resultArray=array_intersect($resultTicketFromWay,$resultTicketFromTicket);
+        $resultArray=array_intersect($arr1,$arr2);
         foreach($resultArray as &$el) {
             $el=unserialize($el);
         }
