@@ -165,6 +165,29 @@ class InteractionModel implements ServiceLocatorAwareInterface
             return null;
         }
     }
+    public function getItemStatus($itemId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+
+        $note = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
+            array('receiveItemId' => new \MongoId($itemId) ,'accepted' => '1')
+        );
+
+        if(empty($note)) {
+            $note = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
+                array('sendItemId' => new \MongoId($itemId) ,'accepted' => '1')
+            );
+
+        }
+
+
+
+        if(!empty($note->status)) {
+            return $note->status;
+        } else {
+            return 'Нет статуса';
+        }
+
+    }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
