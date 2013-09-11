@@ -102,7 +102,23 @@ function delDocWay(element) {
 }
 
 function fillExcelForm() {
-    var table=$('#resultTable').html();
-    $('input[name=excelForm]').val('<table>'+table+'</table>');
+    var table=$('#resultTable');
+    var changeTable=$('.changeTable');
+    changeTable.html('<table>'+table.html()+'</table>');
+   // changeTable.find('.ticketSelect:checkbox:not(:checked)').parent().parent().remove();
+    //changeTable.find('.changeTable .ticketSelect').not(':checked').parent().parent().remove();
+    //changeTable.find('.ticketSelect:checked').parent().parent().remove();
+    $('.changeTable .ticketSelect input:checkbox:not(:checked)').parent().parent().remove();
+    $('input[name=excelForm]').val('<table>'+changeTable.html()+'</table>');
     $('#ticketWay').submit();
+}
+
+function deleteChecked(element) {
+    var el =$(element);
+    if(typeof el.attr('checked') !== 'undefined') {
+      el.removeAttr('checked');
+    } else {
+        el.attr('checked', 'checked');
+   }
+
 }

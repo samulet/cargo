@@ -573,8 +573,8 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         ?>
 
         <tr>
-            <td>
-                <input class='ticketSelect' type='checkbox' value='<?php echo $ticket['res']['id']; ?>' checked>
+            <td class='ticketSelect'>
+                <input type='checkbox' value='<?php echo $ticket['res']['id']; ?>' checked onclick="deleteChecked(this);"/>
             </td>
             <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
                 <td><?php if(!empty($ticket['res'][$field])) {
@@ -637,6 +637,7 @@ $formFilterWay->setAttribute('action', $this->url('excel', array('action' => 'cr
     ->prepare();
 echo $this->form()->openTag($formFilterWay);
 ?>
+<div style='display:none' class='changeTable'></div>
 <input type='hidden' name='excelForm' value />
 <button onclick='fillExcelForm();'type="button">Печать</button>
 <?php echo $this->form()->closeTag($formFilterWay); ?>
