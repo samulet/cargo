@@ -558,6 +558,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
 
 <table id="resultTable" class="table">
     <tr>
+        <th>#</th>
         <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
             <th><?php echo $form->get($field)->getLabel(); ?></th>
         <?php }} ?>
@@ -570,7 +571,11 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
     </tr>
     <?php foreach ($tickets as $ticket) {
         ?>
+
         <tr>
+            <td>
+                <input class='ticketSelect' type='checkbox' value='<?php echo $ticket['res']['id']; ?>' checked>
+            </td>
             <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
                 <td><?php if(!empty($ticket['res'][$field])) {
                         if( ($field!='numberInt') && ($field!='ownerId')) {
