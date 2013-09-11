@@ -446,10 +446,11 @@ class TicketModel implements ServiceLocatorAwareInterface
     public function returnSearchTicket($post)
     {
         $propArray = get_object_vars($post);
-        unset($propArray['submit']);
         if(empty($propArray)) {
             return array();
         }
+        unset($propArray['submit']);
+
         $propArrayTicketWay = array();
         $propFilterResult = array();
         foreach ($propArray as $key => $value) {
