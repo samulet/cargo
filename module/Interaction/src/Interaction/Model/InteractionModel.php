@@ -208,6 +208,11 @@ class InteractionModel implements ServiceLocatorAwareInterface
         return $this->resourceModel;
     }
 
+    public function getTicketsInWork($currentCom) {
+        $interactionCur=$this->getInteractions(array('accepted'=>'1','ownerUserId'=>new \MongoId($currentCom)));
+        $interactionRes=$this->getInteractions(array('accepted'=>'1','receiveUserId'=>new \MongoId($currentCom)));
+        return array_merge($interactionCur,$interactionRes);
+    }
 
 
     public function getTicketModel()
