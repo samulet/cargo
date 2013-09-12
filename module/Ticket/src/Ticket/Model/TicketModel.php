@@ -33,6 +33,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $companyModel;
     protected $queryBuilderModel;
     protected $interactionModel;
+    protected $resourceModel;
 
     public function unSplitArray($propArraySplit)
     {
@@ -286,11 +287,42 @@ class TicketModel implements ServiceLocatorAwareInterface
                     'res' => $resultArray,
                     'veh' => $veh,
                     'ways' => $ways,
-                    'owner' => $comModel->getCompany($cur->ownerId)
+                    'owner' => $comModel->getCompany($cur->ownerId),
+                    'acceptedResource' => $this->findAcceptedResource($cur->id)
                 )
             );
         }
         return $result;
+    }
+
+    public function findAcceptedResource($ticketId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
+            array('receiveItemId' => new \MongoId($ticketId) ,'accepted' => '1')
+        );
+        if(!empty($item->sendItemId)) {
+            $resId=$item->sendItemId;
+        }
+        if(empty($item)) {
+            $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
+                array('sendItemId' => new \MongoId($ticketId) ,'accepted' => '1')
+            );
+        }
+        if(!empty($item->receiveItemId)) {
+            $resId=$item->receiveItemId;
+        }
+        if(empty($item)) {
+            return array();
+        } else {
+            $resModel = $this->getResourceModel();
+            $result=$resModel->returnResources(array('id' => new \MongoId($resId)));
+
+            if(!empty($result[0])) {
+                return $result[0];
+            } else {
+                return array();
+            }
+        }
     }
     public function returnAllTicket()
     {
@@ -339,27 +371,7 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function returnMyTicketById($id)
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $rezObj = $objectManager->getRepository('Ticket\Entity\Ticket')->findBy(array('id' => new \MongoId($id)));
-        $rezs = array();
-        $comModel = $this->getCompanyModel();
-        $cargo = $this->getCargoModel();
-        foreach ($rezObj as $cur) {
-            $veh = $cargo->listCargo($cur->tsId);
-            $ways = $this->returnAllWays($cur->id);
-            $resultArray=get_object_vars($cur);
-            $resultArray['created']=$resultArray['created']->format('d-m-Y');
-            array_push(
-                $rezs,
-                array(
-                    'res' => $resultArray,
-                    'veh' => $veh,
-                    'ways' => $ways,
-                    'owner' => $comModel->getCompany($cur->ownerId)
-                )
-            );
-        }
-        return $rezs;
+        return $this->returnTickets(array('id' => new \MongoId($id)));
     }
 
     public function returnMyAccTicket($orgId)
@@ -556,7 +568,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             $result=array_merge($result,$this->returnMyTicketById($cur));
         }
         $acceptedTickets=$this->getAcceptedResourceTickets($result);
-
+die(var_dump($acceptedTickets));
     }
 
     public function arrayIntersect($arr1, $arr2) {
@@ -783,4 +795,13 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         return $this->interactionModel;
     }
+    public function getResourceModel()
+    {
+        if (!$this->resourceModel) {
+            $sm = $this->getServiceLocator();
+            $this->resourceModel = $sm->get('Resource\Model\ResourceModel');
+        }
+        return $this->resourceModel;
+    }
+
 }
