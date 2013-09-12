@@ -126,7 +126,7 @@ function deleteChecked(element) {
 function createBill(el) {
     $('#resultTable .ticketSelect input').each(function(index) {
         if(typeof $(this).attr('checked') !=='undefined' ) {
-            $( ".inputBillList" ).append( "<input name='"+index+"' value='"+$(this).val()+"'/>" );
+            $( ".inputBillList" ).append( "<input name='"+$(this).val()+index+"' value='"+$(this).val()+"'/>" );
         }
     });
     $(el).parent().submit();

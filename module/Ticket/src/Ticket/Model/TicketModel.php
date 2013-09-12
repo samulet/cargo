@@ -545,6 +545,20 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
     }
 
+    public function createBill($post) {
+        $propArray=get_object_vars($post);
+
+        if(empty($propArray)) {
+            return false;
+        }
+        $result=array();
+        foreach($propArray as $cur) {
+            $result=array_merge($result,$this->returnMyTicketById($cur));
+        }
+        $acceptedTickets=$this->getAcceptedResourceTickets($result);
+
+    }
+
     public function arrayIntersect($arr1, $arr2) {
         foreach($arr1 as &$el) {
             $el=serialize($el);

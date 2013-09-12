@@ -432,9 +432,8 @@ $otherData=array();
     }
     public function createBillAction() {
         $post=$this->getRequest()->getPost();
-        die(var_dump($post));
         $ticketModel = $this->getTicketModel();
-        $ticketModel->createBill();
+        $ticketModel->createBill($post);
     }
 
     public function getCargoModel()
