@@ -34,6 +34,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     protected $queryBuilderModel;
     protected $interactionModel;
     protected $resourceModel;
+    protected $excelModel;
 
     public function unSplitArray($propArraySplit)
     {
@@ -557,9 +558,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
     }
 
-    public function createBill($post) {
-        $propArray=get_object_vars($post);
-
+    public function createBill($propArray) {
         if(empty($propArray)) {
             return false;
         }
@@ -568,7 +567,13 @@ class TicketModel implements ServiceLocatorAwareInterface
             $result=array_merge($result,$this->returnMyTicketById($cur));
         }
         $acceptedTickets=$this->getAcceptedResourceTickets($result);
-die(var_dump($acceptedTickets));
+        if(empty($acceptedTickets)) {
+            return false;
+        } else {
+
+            $excelModel=$this->getExcelModel();
+            $excelModel->createBill(array_values($acceptedTickets)[0]);
+        }
     }
 
     public function arrayIntersect($arr1, $arr2) {
@@ -803,5 +808,12 @@ die(var_dump($acceptedTickets));
         }
         return $this->resourceModel;
     }
-
+    public function getExcelModel()
+    {
+        if (!$this->excelModel) {
+            $sm = $this->getServiceLocator();
+            $this->excelModel = $sm->get('Excel\Model\ExcelModel');
+        }
+        return $this->excelModel;
+    }
 }

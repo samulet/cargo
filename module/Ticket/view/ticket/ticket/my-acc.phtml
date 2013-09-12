@@ -23,6 +23,9 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             Прикрепленый ресурс
         </th>
         <th>
+            Печать счета
+        </th>
+        <th>
             Статус (Глобальный)
         </th>
         <th>
@@ -114,6 +117,19 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
                     echo 'Нет прикрепленого ресура';
                 }
                 ?>
+            </td>
+            <td>
+                <?php
+                if(!empty($acceptedResource)) {
+                    ?>
+                    <a href="<?php echo $this->url(
+                        'ticket',
+                        array('action' => 'createBill', 'id' => $ticket['id'])
+                    );?>">Печать</a>
+                <?php
+                }
+                ?>
+
             </td>
             <td>
                 <?php echo  $ticket['statusGlobal']; ?>

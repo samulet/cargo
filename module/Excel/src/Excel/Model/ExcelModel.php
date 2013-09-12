@@ -35,6 +35,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
     protected $vehicleModel;
     protected $organizationModel;
     protected $companyModel;
+    protected $excelModel;
 
     public function getExcel($id)
     {
@@ -780,6 +781,45 @@ class ExcelModel implements ServiceLocatorAwareInterface
     public function fillCoordinatesWorksheet($objPHPExcel, $ticketWay, $coord)
     {
 
+    }
+
+    public function createBill($bill) {
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objPHPExcel = $objReader->load("public/xls/templateBill.xls");
+        $ticket=$bill['res'];
+        $ownerCargo=$bill['owner'];
+        $transferCargo=$bill['acceptedResource']['owner'];
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue('A6',  $objPHPExcel->getActiveSheet()->getCell('A6')->getValue().$ticket['numberInt'].' от '.date('d-m-Y'))
+                ->setCellValue('A8',  $objPHPExcel->getActiveSheet()->getCell('A8')->getValue().' '.$ownerCargo['property'].' '.$ownerCargo['name'])
+                ->setCellValue('A9',  $objPHPExcel->getActiveSheet()->getCell('A9')->getValue().' '.$ownerCargo['addressReg'])
+                ->setCellValue('A10',  $objPHPExcel->getActiveSheet()->getCell('A10')->getValue().' '.$ownerCargo['inn'].'/'.$ownerCargo['kpp'])
+                ->setCellValue('A11',  $objPHPExcel->getActiveSheet()->getCell('A11')->getValue().' '.$ownerCargo['property'].' '.$ownerCargo['name'].' '.$ownerCargo['addressFact'])
+                ->setCellValue('A12',  $objPHPExcel->getActiveSheet()->getCell('A12')->getValue().' '.$transferCargo['property'].' '.$transferCargo['name'].' '.$transferCargo['addressFact'])
+                ->setCellValue('A14',  $objPHPExcel->getActiveSheet()->getCell('A14')->getValue().' '.$transferCargo['property'].' '.$transferCargo['name'])
+                ->setCellValue('A15',  $objPHPExcel->getActiveSheet()->getCell('A15')->getValue().' '.$transferCargo['addressReg'])
+                ->setCellValue('A16',  $objPHPExcel->getActiveSheet()->getCell('A16')->getValue().' '.$transferCargo['inn'].'/'.$transferCargo['kpp'])
+                ->setCellValue('A21',  $objPHPExcel->getActiveSheet()->getCell('A21')->getValue().' '.$ticket['created'].' - '.date('d-m-Y'))
+                ->setCellValue('A24',  $objPHPExcel->getActiveSheet()->getCell('A24')->getValue().' ('.$ownerCargo['generalManager'].')')
+                ->setCellValue('H24',  $objPHPExcel->getActiveSheet()->getCell('H24')->getValue().' ('.$ownerCargo['chiefAccountant'].')')
+                ->setCellValue('E21',  $ticket['money'])
+                ->setCellValue('F21',  $ticket['money'])
+                ->setCellValue('I21',  $ticket['money']*0.18)
+                ->setCellValue('I22',  $ticket['money']*0.18)
+                ->setCellValue('J21',  $ticket['money']*1.18)
+                ->setCellValue('J22',  $ticket['money']*1.18)
+            ;
+
+        ob_start();
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="orders.xls"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+        $objWriter->save('php://output');
+
+        ob_end_flush();
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
