@@ -101,7 +101,7 @@ function delDocWay(element) {
     }
 }
 
-function fillExcelForm() {
+function fillExcelForm(el) {
     var table=$('#resultTable');
     var changeTable=$('.changeTable');
     changeTable.html('<table>'+table.html()+'</table>');
@@ -110,7 +110,7 @@ function fillExcelForm() {
     //changeTable.find('.ticketSelect:checked').parent().parent().remove();
     $('.changeTable .ticketSelect input:checkbox:not(:checked)').parent().parent().remove();
     $('input[name=excelForm]').val('<table>'+changeTable.html()+'</table>');
-    $('#ticketWay').submit();
+    $(el).parent().submit();
 }
 
 function deleteChecked(element) {
@@ -121,4 +121,13 @@ function deleteChecked(element) {
         el.attr('checked', 'checked');
    }
 
+}
+
+function createBill(el) {
+    $('#resultTable .ticketSelect input').each(function(index) {
+        if(typeof $(this).attr('checked') !=='undefined' ) {
+            $( ".inputBillList" ).append( "<input name='"+index+"' value='"+$(this).val()+"'/>" );
+        }
+    });
+    $(el).parent().submit();
 }
