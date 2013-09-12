@@ -432,8 +432,15 @@ $otherData=array();
     }
     public function createBillAction() {
         $post=$this->getRequest()->getPost();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $ticketModel = $this->getTicketModel();
-        $ticketModel->createBill($post);
+        if(!empty($id)) {
+            $data=array($id);
+        } else {
+            $data=get_object_vars($post);
+        }
+        $ticketModel->createBill($data);
+        return $this->redirect()->toUrl('/tickets/getResults');
     }
 
     public function getCargoModel()
