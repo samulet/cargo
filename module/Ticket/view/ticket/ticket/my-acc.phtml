@@ -20,7 +20,10 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
 
         </th>
         <th>
-
+            Прикрепленый ресурс
+        </th>
+        <th>
+            Печать счета
         </th>
         <th>
             Статус (Глобальный)
@@ -50,6 +53,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         $ticketWay=$ticket['ways'];
         $cargo=$ticket['veh'];
         $owner=$ticket['owner'];
+        $acceptedResource=$ticket['acceptedResource'];
         $ticket=$ticket['res'];
 
         ?>
@@ -72,13 +76,66 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             </td>
 
             <td>
+                <?php
+                if(!empty($acceptedResource)) {
+                    $vehicle=$acceptedResource['veh'];
+                    $owner=$acceptedResource['owner'];
+                    $resource=$acceptedResource['res'];
+
+                    ?>
+                    <?php echo $owner['property'].' '.$owner['name'].' '; ?>
+                    <?php
+                    $str='';
+                    if(!empty($vehicle['semitrailer'])) {
+                        $str.='Полуприцеп ';
+                    }
+                    if(!empty($vehicle['tractor'])) {
+                        $str.='Тягач ';
+                    }
+                    if(!empty($vehicle['coupling'])) {
+                        $str.='Сцепка ';
+                    }
+                    if(!empty($vehicle['lorry'])) {
+                        $str.='Грузовик ';
+                    }
+
+
+                    ?>
+                    <a href="<?php echo $this->url('resource',
+                        array('action' => 'add', 'id' => $resource['uuid'],'type'=>'list'));?>"> <?php
+
+                        $strLoad='';
+                        foreach($resource['typeLoad'] as $typeLoad) {
+                            $strLoad.=$typeLoad.', ';
+                        }
+                        echo $str.' / '.$vehicle['capacity'].' / '.' / '.$strLoad;
+                        ?>
+                    </a>
+
+                <?php
+                } else {
+                    echo 'Нет прикрепленого ресура';
+                }
+                ?>
+            </td>
+            <td>
+                <?php
+                if(!empty($acceptedResource)) {
+                    ?>
+                    <a href="<?php echo $this->url(
+                        'ticket',
+                        array('action' => 'createBill', 'id' => $ticket['id'])
+                    );?>">Печать</a>
+                <?php
+                }
+                ?>
 
             </td>
             <td>
                 <?php echo  $ticket['statusGlobal']; ?>
             </td>
             <td>
-
+                <?php echo  $ticket['statusWork']; ?>
             </td>
             <td>
                 <?php echo $owner['property'].' '.$owner['name']; ?>
