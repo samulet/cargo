@@ -31,6 +31,25 @@ class QueryBuilderModel implements ServiceLocatorAwareInterface
         return $qb;
     }
 
+    public function isTicket($itemId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $itemId= $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('id' => new \MongoId($itemId)));
+        if(!empty($itemId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isResource($itemId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $itemId= $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($itemId)));
+        if(!empty($itemId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {

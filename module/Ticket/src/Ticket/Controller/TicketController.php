@@ -408,20 +408,41 @@ class TicketController extends AbstractActionController
                 $value=$post->$key;
             }
         }
-
+$otherData=array();
+        if(!empty($post->accepted)) {
+            $otherData['accepted']=$post->accepted;
+        } else {
+            $otherData['accepted']=null;
+        }
 
         $filterArray=$this->addFunction($post,null,'search');
         $fillFrom=new AddListForm();
 
         $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
-       // die(var_dump($filterArray['form']));
+        $builder = new AnnotationBuilder();
+        $formInteraction = $builder->createForm('Interaction\Entity\Interaction');
         return new ViewModel(array(
             'res' => $ticket,
             'multiField'=>$multiField,
             'filterData' =>$filterData,
-            'multiFieldData'=>$multiFieldData
+            'multiFieldData'=>$multiFieldData,
+            'formInteraction' =>$formInteraction,
+            'otherData'=>$otherData
         )+$filterArray);
     }
+    public function createBillAction() {
+        $post=$this->getRequest()->getPost();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $ticketModel = $this->getTicketModel();
+        if(!empty($id)) {
+            $data=array($id);
+        } else {
+            $data=get_object_vars($post);
+        }
+        $ticketModel->createBill($data);
+        return $this->redirect()->toUrl('/tickets/getResults');
+    }
+
     public function getCargoModel()
     {
         if (!$this->cargoModel) {

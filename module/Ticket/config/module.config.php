@@ -44,7 +44,7 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Ticket\Controller\Ticket','action'=> array('add'),'roles' => array('orgAdmin','forwarder','carrier','customer','admin')),
+                array('controller' => 'Ticket\Controller\Ticket','action'=> array('add','createBill'),'roles' => array('orgAdmin','forwarder','carrier','customer','admin')),
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('my'),'roles' => array('forwarder','customer','admin')),
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('delete'),'roles' => array('forwarder','customer','admin','orgAdmin')),
                 array('controller' => 'Ticket\Controller\Ticket','action'=> array('index','search', 'getResults'),'roles' => array('forwarder','carrier','admin')),
