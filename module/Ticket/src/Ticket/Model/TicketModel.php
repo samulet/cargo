@@ -308,11 +308,10 @@ class TicketModel implements ServiceLocatorAwareInterface
             $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
                 array('sendItemId' => new \MongoId($ticketId) ,'accepted' => '1')
             );
+            if(!empty($item->receiveItemId)) {
+                $resId=$item->receiveItemId;
+            }
         }
-        if(!empty($item->receiveItemId)) {
-            $resId=$item->receiveItemId;
-        }
-        die(var_dump($ticketId,$resId));
         if(empty($item)) {
             return array();
         } else {
