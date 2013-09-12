@@ -50,7 +50,19 @@ class QueryBuilderModel implements ServiceLocatorAwareInterface
             return false;
         }
     }
-
+    public function arrayIntersect($arr1, $arr2) {
+        foreach($arr1 as &$el) {
+            $el=serialize($el);
+        }
+        foreach($arr2 as &$el) {
+            $el=serialize($el);
+        }
+        $resultArray=array_intersect($arr1,$arr2);
+        foreach($resultArray as &$el) {
+            $el=unserialize($el);
+        }
+        return $resultArray;
+    }
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;

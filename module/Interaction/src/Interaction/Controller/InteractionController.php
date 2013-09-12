@@ -40,7 +40,7 @@ class InteractionController extends AbstractActionController
     public function workAction()
     {
         $interactionModel = $this->getInteractionModel();
-        $interaction=$interactionModel->getInteractions(array('accepted'=>'1','ownerUserId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+        $interaction=$interactionModel->getTicketsInWork($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         return new ViewModel(array(
             'interaction' =>$interaction
         ));
