@@ -312,6 +312,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         if(!empty($item->receiveItemId)) {
             $resId=$item->receiveItemId;
         }
+        die(var_dump($ticketId,$resId));
         if(empty($item)) {
             return array();
         } else {
