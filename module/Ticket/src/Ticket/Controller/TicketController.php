@@ -430,6 +430,13 @@ $otherData=array();
             'otherData'=>$otherData
         )+$filterArray);
     }
+    public function createBillAction() {
+        $post=$this->getRequest()->getPost();
+        die(var_dump($post));
+        $ticketModel = $this->getTicketModel();
+        $ticketModel->createBill();
+    }
+
     public function getCargoModel()
     {
         if (!$this->cargoModel) {

@@ -639,5 +639,15 @@ echo $this->form()->openTag($formFilterWay);
 ?>
 <div style='display:none' class='changeTable'></div>
 <input type='hidden' name='excelForm' value />
-<button onclick='fillExcelForm();'type="button">Печать</button>
+<button onclick='fillExcelForm(this);'type="button">Печать списка заявок</button>
+<?php echo $this->form()->closeTag($formFilterWay); ?>
+
+<?php
+$formFilterWay->setAttribute('action', $this->url('ticket', array('action' => 'createBill')))
+    ->prepare();
+echo $this->form()->openTag($formFilterWay);
+?>
+<div style='display:none' class='inputBillList'></div>
+
+<button onclick='createBill(this);'type="button">Печать счета</button>
 <?php echo $this->form()->closeTag($formFilterWay); ?>
