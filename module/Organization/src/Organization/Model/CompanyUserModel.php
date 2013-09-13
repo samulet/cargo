@@ -45,6 +45,9 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             $user_id = $post;
 
         }
+        if (!$user_id) {
+            return false;
+        }
         if($param=='admin') {
             $orgTest = $objectManager->getRepository('Organization\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($org_id), 'userId' => new \MongoId($user_id)));
             if(!empty($orgTest)) {
