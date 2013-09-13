@@ -72,7 +72,7 @@ class CompanyUserController extends AbstractActionController
             if ($comUserModel->addUserToCompany($post, $org_id,$param)) {
                 $result = "Успешо";
             } else {
-                $result = "Ошибка, скорее всего юзер уже добавлен";
+                $result = "Ошибка, скорее всего юзер уже добавлен или не существует";
             }
         }
         return new ViewModel(array(
