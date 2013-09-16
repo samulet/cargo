@@ -148,7 +148,9 @@ ul.dropdown-menu span.divider {
 .ourTopMenu .navbar-nav a:hover {
     color: #ccc !important;
 }
-
+.ourTopMenu .dropdown-menu a {
+    color: #428bca !important;
+}
 .vehicle label {
     display: block;
 }
