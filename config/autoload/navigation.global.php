@@ -13,20 +13,6 @@ return array(
                 'resource'   => 'route/account',
             ),
             array(
-                'label' => 'Создать аккаунт',
-                'route' => 'account',
-                'action' => 'addAccount',
-                'params' => array('id' => null),
-                'resource'   => 'route/account',
-            ),
-            array(
-                'label' => 'Выбрать аккаунт и компанию',
-                'route' => 'account',
-                'action' => 'choiceOrgAndCompany',
-                'params' => array('id' => null),
-                'resource'   => 'route/account',
-            ),
-            array(
                 'label' => 'Управление айтемами',
                 'route' => 'notification',
                 'action' => 'index',

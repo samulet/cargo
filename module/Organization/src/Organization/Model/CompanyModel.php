@@ -104,6 +104,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     }
 
+
     public function getCompanyIdByUUID($com_uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
