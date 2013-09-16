@@ -36,44 +36,76 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
             $orgModel = $serviceLocator->get('Organization\Model\OrganizationModel');
 
             $auth = $serviceLocator->get('zfcuser_auth_service');
+            if($auth->hasIdentity()) {
+                $currentOrg = $auth->getIdentity()->getCurrentOrg();
+                $currentCom = $auth->getIdentity()->getCurrentCom();
+                if(!empty($currentCom)) {
+                    $currentCom=$comModel->getCompany($currentCom);
+                    $comName=$currentCom['property'].' '.$currentCom['name'];
+                } else {
+                    $comName='';
+                }
+                if(!empty($currentOrg)) {
+                    $currentOrg=$orgModel->getOrganization($currentOrg);
+                    $orgName=$currentOrg['name'];
+                } else {
+                    $orgName='';
+                }
+                $userId=$auth->getIdentity()->getId();
+                $org = $comUserModel->getOrgWenUserConsist($userId);
 
-            $currentOrg = $auth->getIdentity()->getCurrentOrg();
-            $currentCom = $auth->getIdentity()->getCurrentCom();
-            if(!empty($currentCom)) {
-                $currentCom=$comModel->getCompany($currentCom);
-                $comName=$currentCom['property'].' '.$currentCom['name']
-            } else {
-                $comName='';
-            }
-            if(!empty($currentOrg)) {
-                $currentOrg=$orgModel->getOrganization($currentOrg);
-                $orgName=$currentOrg['name'];
-            } else {
-                $orgName='';
-            }
-            $userId=$auth->getIdentity()->getId();
-            $org = $comUserModel->getOrgWenUserConsist($userId);
+                $accComArray=$comUserModel->addCompanyInOrgWhenConsist($org, $userId);
 
-            $accComArray=$comUserModel->addCompanyInOrgWhenConsist($org, $userId);
+                $pages=array();
 
-            $pages=array(
-                array(
-                    'label' => 'Профиль',
+                foreach($accComArray as $accCom) {
+                    foreach($accCom['acc'] as $key => $value) {
+                        array_push($pages,
+                            array(
+                                'label' => 'Аккаунт - '.$value,
+                                'route' => 'account',
+                                'group' => 'right',
+                                'params' => array('id' => $key, 'param' => 'acc'),
+                                'action' => 'setAccAndCom',
+                                'resource'   => 'route/account',
+                            )
+                        );
+                    }
+                    foreach($accCom['com'] as $key => $value) {
+                        array_push($pages,
+                            array(
+                                'label' => '-- '.$value,
+                                'route' => 'account',
+                                'group' => 'right',
+                                'params' => array('id' => $key, 'param' => 'com'),
+                                'action' => 'setAccAndCom',
+                                'resource'   => 'route/account',
+                            )
+                        );
+                    }
+                }
+                array_push($pages, array(
+                    'label' => 'Создать аккаунт',
+                    'route' => 'account',
+                    'action' => 'addAccount',
+                    'params' => array('id' => null),
+                    'resource'   => 'route/account',
+                ));
+                $setAccArray=array(
                     'route' => 'dashboard',
                     'group' => 'right',
-                    'resource'   => 'route/zfcuser',
-                ),
+                    'resource'   => 'route/dashboard',
+                    'pages' => $pages
+                );
 
-            );
-
-            $setAccArray=array(
-                'label' => 'Выберите аккаунт',
-                'route' => 'dashboard',
-                'group' => 'right',
-                'resource'   => 'route/dashboard',
-                'pages' => $pages
-            );
-
+                if( empty($comName) && empty($orgName) ) {
+                    $setAccArray['label']='Выберите аккаунт/компанию';
+                } else {
+                    $setAccArray['label']=$orgName.' / '.$comName;
+                }
+            } else {
+                $setAccArray=null;
+            }
 
             $configuration['navigation'][$nameMenu] = array(
                 array(
