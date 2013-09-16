@@ -29,6 +29,52 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
                 );
             }
     */
+
+          //  die(var_dump($currentOrg));
+            $comUserModel = $serviceLocator->get('Organization\Model\CompanyUserModel');
+            $comModel = $serviceLocator->get('Organization\Model\CompanyModel');
+            $orgModel = $serviceLocator->get('Organization\Model\OrganizationModel');
+
+            $auth = $serviceLocator->get('zfcuser_auth_service');
+
+            $currentOrg = $auth->getIdentity()->getCurrentOrg();
+            $currentCom = $auth->getIdentity()->getCurrentCom();
+            if(!empty($currentCom)) {
+                $currentCom=$comModel->getCompany($currentCom);
+                $comName=$currentCom['property'].' '.$currentCom['name']
+            } else {
+                $comName='';
+            }
+            if(!empty($currentOrg)) {
+                $currentOrg=$orgModel->getOrganization($currentOrg);
+                $orgName=$currentOrg['name'];
+            } else {
+                $orgName='';
+            }
+            $userId=$auth->getIdentity()->getId();
+            $org = $comUserModel->getOrgWenUserConsist($userId);
+
+            $accComArray=$comUserModel->addCompanyInOrgWhenConsist($org, $userId);
+
+            $pages=array(
+                array(
+                    'label' => 'Профиль',
+                    'route' => 'dashboard',
+                    'group' => 'right',
+                    'resource'   => 'route/zfcuser',
+                ),
+
+            );
+
+            $setAccArray=array(
+                'label' => 'Выберите аккаунт',
+                'route' => 'dashboard',
+                'group' => 'right',
+                'resource'   => 'route/dashboard',
+                'pages' => $pages
+            );
+
+
             $configuration['navigation'][$nameMenu] = array(
                 array(
                     'label' => 'Главная',
@@ -48,6 +94,8 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
                     'group' => 'right',
                     'resource'   => 'route/zfcuser/register',
                 ),
+                $setAccArray
+            ,
                 array(
                     'label' => '##USERNAME##',
                     'route' => 'zfcuser',
@@ -79,22 +127,6 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
                             'route' => 'zfcuser/logout',
                             'resource'   => 'route/zfcuser/logout',
                         ),
-                    ),
-                ),
-
-                array(
-                    'label' => 'Выберите аккаунт',
-                    'route' => 'dashboard',
-                    'group' => 'right',
-                    'resource'   => 'route/dashboard',
-                    'pages' => array(
-                        array(
-                            'label' => 'Профиль',
-                            'route' => 'dashboard',
-                            'group' => 'right',
-                            'resource'   => 'route/zfcuser',
-                        ),
-
                     ),
                 ),
                 array(
@@ -148,4 +180,6 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
          */
         return 'top-menu';
     }
+
+
 }

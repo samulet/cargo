@@ -191,7 +191,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $comUserTmp =$objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('userId' => new \MongoId($userId),'orgId' => null));
         $comModel = $this->getCompanyModel();
         if(empty($comUserTmp)) {
-            return null;
+            return array();
         }
         $resultArray=array();
 
@@ -203,6 +203,25 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
 
         return $resultArray;
+    }
+
+    public function addCompanyInOrgWhenConsist($org, $userId) {
+        if(!empty($org)) {
+            $resultArray=array();
+            $comModel = $this->getCompanyModel();
+            foreach($org as $key => $value) {
+                $comArray=$this->getComWenUserConsist($key, $userId);
+                array_push($resultArray,
+                    array(
+                        'acc'=> array($key => $value),
+                        'com'=>$comArray
+                    )
+                );
+            }
+            return $resultArray;
+        } else {
+            return array();
+        }
     }
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {

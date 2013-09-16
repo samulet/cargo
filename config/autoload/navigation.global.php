@@ -2,68 +2,7 @@
 return array(
     'navigation' => array(
         'top-menu' => array(
-            array(
-                'label' => 'Главная',
-                'route' => 'dashboard',
-                'group' => 'left',
-                'resource'   => 'route/dashboard',
-            ),
-            array(
-                'label' => 'Админка',
-                'route' => 'zfcadmin',
-                'group' => 'left',
-                'resource'   => 'route/zfcadmin',
-            ),
-            array(
-                'label' => 'Регистрация',
-                'route' => 'zfcuser/register',
-                'group' => 'right',
-                'resource'   => 'route/zfcuser/register',
-            ),
-            array(
-                'label' => '##USERNAME##',
-                'route' => 'zfcuser',
-                'group' => 'right',
-                'resource'   => 'route/zfcuser',
-                'pages' => array(
-                    array(
-                        'label' => 'Профиль',
-                        'route' => 'zfcuser',
-                        'group' => 'right',
-                        'resource'   => 'route/zfcuser',
-                    ),
-                    array(
-                        'label' => 'Аккаунты',
-                        'route' => 'account',
-                        'group' => 'right',
-                        'params' => array('id' => null),
-                        'resource'   => 'route/account',
-                    ),
-                    array(
-                        'label' => '',
-                        'type' => 'uri',
-                        'uri' => '',
-                        'class' => 'divider',
-                        'resource'   => 'route/zfcuser/logout',
-                    ),
-                    array(
-                        'label' => 'Выйти',
-                        'route' => 'zfcuser/logout',
-                        'resource'   => 'route/zfcuser/logout',
-                    ),
-                ),
-            ),
-            array(
-                'label' => 'Войти',
-                'route' => 'zfcuser/login',
-                'group' => 'right',
-                'class' => 'js',
-                'data-event' => "click",
-                'data-handler' => "App.Login.dialog",
-                'data-content' => "#login-form",
-                'icon' => 'icon-off',
-                'resource'   => 'route/zfcuser/login',
-            ),
+
         ),
         'sidebar' => array(
             array(
