@@ -279,3 +279,10 @@ display: inline !important;
     display: inline;
     margin: 5px;
 }
+
+.userAdd input{
+    width: 200px;
+}
+.userAdd label{
+    display: block;
+}
