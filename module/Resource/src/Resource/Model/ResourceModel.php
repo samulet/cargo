@@ -131,6 +131,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
     }
 
     public function returnResultsResource($post) {
+
         $propArray = get_object_vars($post);
         unset($propArray['submit']);
 
@@ -144,6 +145,10 @@ class ResourceModel implements ServiceLocatorAwareInterface
         if( !empty($propArrayResult['typeLoad']) ) {
             $propArrayResultFullForm['typeLoad']=$propArrayResult['typeLoad'];
             unset($propArrayResult['typeLoad']);
+        }
+        if( !empty($propArrayResult['tsId']) ) {
+            $propArrayResultFullForm['tsId']=new \MongoId($propArrayResult['tsId']);
+            unset($propArrayResult['tsId']);
         }
         $orgModel = $this->getOrganizationModel();
 
@@ -201,6 +206,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
                     }
 
                 }
+
                 return $result;
             }
         }
