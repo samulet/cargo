@@ -2,6 +2,7 @@
 $users=$this->users;
 $comId=null;
 $param=$this->param;
+$name=$this->name;
 if($this->org_uuid=='all') {
     $param='full';
 } else {
@@ -9,7 +10,7 @@ if($this->org_uuid=='all') {
 }
 
 ?>
-<h1>Список юзеров</h1>
+<h1><?php echo $name; ?> - Список юзеров</h1>
 
 
 
@@ -18,11 +19,12 @@ if($this->org_uuid=='all') {
         <th>Email</th>
         <th>Имя юзера</th>
         <?php if(($param!='full')&&(($param!='admin'))) { ?>
-        <th>Изменить роль юзера</th>
+
         <?php } ?>
         <?php  if( ( (!empty($users[0]['orgName'])) && (!empty($users[0]['comName'])) ) ) {  ?>
         <th>Аккаунт / Компания</th>
         <?php }?>
+        <th>Редактировать юзера</th>
         <th>Удалить юзера</th>
     </tr>
 <?php
@@ -32,17 +34,13 @@ foreach($users as $user) {
         <td><?php echo $user['email']; ?></td>
         <td><?php echo $user['username']; ?></td>
         <?php if(($param!='full')&&(($param!='admin'))) { ?>
-        <td><a href="<?php
-                echo $this->url('company_user', array('action'=>'role', 'org_id' =>$user['id'], 'param' => $param, 'comId'=>$comId));
-
-            ?>
-
-            ">Роль</a>
-        </td>
         <?php } ?>
         <?php if( (!empty($users[0]['orgName'])) && (!empty($users[0]['comName'])) ) { ?>
         <td><?php echo $user['orgName'].' / '.$user['comName']; ?></td>
         <?php }?>
+        <td>
+            <a href="<?php echo $this->url('company_user', array('action'=>'role', 'org_id' =>$user['id'], 'param' => $param, 'comId'=>$comId)); ?>">Редактировать</a>
+        </td>
         <td><a href="<?php echo $this->url('company_user',
                 array('action'=>'delete', 'org_id' => $user['id'], 'param' =>$param, 'comId'=>$comId));?>">Удалить</a></td>
     </tr>
