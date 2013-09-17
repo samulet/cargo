@@ -57,11 +57,10 @@ class User implements UserInterface, ProviderInterface
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пароль"})
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      */
     protected $password;
 
@@ -89,7 +88,7 @@ class User implements UserInterface, ProviderInterface
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
 
      * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Выберите роль добаляемого пользователя",
+     * @Annotation\Options({"label":"Выберите роль пользователя",
      *                      "value_options" : {"forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
      * @Annotation\Validator({"name":"InArray",
      *                        "options":{"haystack":{"1","2","3"},

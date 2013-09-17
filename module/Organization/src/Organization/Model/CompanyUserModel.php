@@ -256,6 +256,11 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
         return $result;
     }
+    public function getUser($id) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $user=$objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($id)));
+        return array('id'=>$user->getId(), 'username'=> $user->getUsername(), 'displayName'=>$user->getDisplayName(),'email'=>$user->getEmail());
+    }
     public function getAllUsersByOrgId($orgId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $com=$objectManager->getRepository('Organization\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($orgId)));
@@ -367,9 +372,12 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return $userObject->orgId;
     }
 
-    public function addRole($userId,$post,$comUuid) {
+    public function updateUserData($userId, $post) {
+
+    }
+
+    public function addRole($userId,$roles,$comUuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $roles=$post->roles;
         $comModel = $this->getCompanyModel();
         $comId=$comModel->getCompanyIdByUUID($comUuid);
 
