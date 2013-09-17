@@ -163,8 +163,8 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 ->field('currentOrg')->set(new \MongoId($com['ownerOrgId']))
                 ->getQuery()
                 ->execute();
-            $this->findUserAndSetRole('currentCom', $userId,$post['currentCom']);
             $this->findUserAndSetRole('currentOrg', $userId,$com['ownerOrgId']);
+            $this->findUserAndSetRole('currentCom', $userId,$post['currentCom']);
         }
     }
 
