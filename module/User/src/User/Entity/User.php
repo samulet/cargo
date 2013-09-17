@@ -24,24 +24,44 @@ class User implements UserInterface, ProviderInterface
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Имя пользователя"})
      */
     protected $username;
 
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Email"})
      */
     protected $email;
 
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Отображаемое имя"})
      */
     protected $displayName;
 
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Пароль"})
      */
     protected $password;
 
