@@ -26,6 +26,7 @@ class CompanyUserController extends AbstractActionController
 {
     protected $companyUserModel;
     protected $organizationModel;
+    protected $companyModel;
 
     public function indexAction()
     {
@@ -97,20 +98,27 @@ class CompanyUserController extends AbstractActionController
             $this->layout('layout/admin');
         }
         $comUserModel = $this->getCompanyUserModel();
-
+        $comModel = $this->getCompanyModel();
+        $orgModel = $this->getOrganizationModel();
+        $name='';
         if(($param=='user')&&($org_uuid!="all")) {
             $users=$comUserModel->getAllUsersByOrgId($orgId);
+            $org=$orgModel->getOrganization($org_uuid);
+            $name=$org['name'];
         } elseif(($param=='admin')&&($org_uuid!="all")) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
         } elseif(($param=='full')&&($orgId=='all')) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
         } elseif(($param=='current')&&($org_uuid!="all")) {
             $users=$comUserModel->getUsersByComId($orgId);
+            $com=$comModel->getCompany($org_uuid);
+            $name=$com['property'].' '.$com['name'];
         }
         return new ViewModel(array(
             'users' => $users,
             'org_uuid'=>$org_uuid,
-            'param' =>$param
+            'param' =>$param,
+            'name'=>$name
         ));
     }
 
@@ -184,5 +192,14 @@ class CompanyUserController extends AbstractActionController
         $comUserModel->addRole($userId,$post,$comId);
         return $this->redirect()->toUrl('/account');
     }
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
+    }
+
 
 }
