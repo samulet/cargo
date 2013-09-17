@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
-
+use Zend\Crypt\Password\Bcrypt;
 
 class CompanyUserModel implements ServiceLocatorAwareInterface
 {
@@ -373,6 +373,34 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     }
 
     public function updateUserData($userId, $post) {
+        if(!empty($post)) {
+            $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+            $user = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId)));
+            if(!empty($user)) {
+                if(empty($post['displayName'])) {
+                    $post['displayName']='';
+                }
+                if(empty($post['email'])) {
+                    $post['email']='';
+                }
+                if(empty($post['username'])) {
+                    $post['username']='';
+                }
+                $user->setDisplayName($post['displayName']);
+                $user->setEmail($post['email']);
+                $user->setUsername($post['username']);
+                if(!empty($post['password'])) {
+                    $bcrypt = new Bcrypt;
+                    $auth = $this->serviceLocator->get('zfcuser_auth_service');
+                    $bcrypt->setCost($auth->getOptions()->getPasswordCost());
+                    $user->setPassword($bcrypt->create($user->getPassword()));
+                      $user->setPassword($post['password']);
+                 }
+                $objectManager->persist($user);
+                $objectManager->flush();
+            }
+        }
+
 
     }
 
