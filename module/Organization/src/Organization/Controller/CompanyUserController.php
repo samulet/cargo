@@ -208,7 +208,7 @@ class CompanyUserController extends AbstractActionController
         }
         $comUserModel->addRole($userId,$roles,$comId);
         $comUserModel->updateUserData($userId, $post);
-        return $this->redirect()->toUrl('/account');
+        return $this->redirect()->toUrl('/account/user/'.$userId.'/role/current/'.$comId);
     }
     public function getCompanyModel()
     {
