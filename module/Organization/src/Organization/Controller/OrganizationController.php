@@ -40,7 +40,19 @@ namespace Organization\Controller {
         {
             return $this->redirect()->toUrl('/account/add');
         }
-
+        public function setAccAndComAction() {
+            $id=$this->getEvent()->getRouteMatch()->getParam('id');
+            $param=$this->getEvent()->getRouteMatch()->getParam('param');
+            if($param=='acc') {
+                $post['currentOrg']=$id;
+            } elseif($param=='com') {
+                $post['currentCom']=$id;
+            }
+            $post['submit']='submit';
+            $comUserModel = $this->getCompanyUserModel();
+            $comUserModel->addOrgAndCompanyToUser($post, $this->zfcUserAuthentication()->getIdentity()->getId());
+            return $this->redirect()->toUrl('/user');
+        }
         public function choiceOrgAndCompanyAction()
         {
 
@@ -50,7 +62,7 @@ namespace Organization\Controller {
 
             $result = null;
             if ($this->getRequest()->isPost()) {
-                $comUserModel->addOrgAndCompanyToUser($post, $this->zfcUserAuthentication()->getIdentity()->getId());
+                $comUserModel->addOrgAndCompanyToUser(get_object_vars($post), $this->zfcUserAuthentication()->getIdentity()->getId());
                 $result = 'Успешно, продлжить выбор Аккаунта и Компании';
             }
             $builder = new AnnotationBuilder();
