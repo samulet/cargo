@@ -181,20 +181,12 @@ namespace Organization\Controller {
             } else {
                 $org_id = null;
             }
-            if ($orgModel->createOrganization(
-                $post,
-                $this->zfcUserAuthentication()->getIdentity()->getId(),
-                $org_id
-            )
-            ) {
-                $result = "Успешо, если желаете сменить аккаунт и компанию, перейдите в 'Выбрать аккаунт и компанию'";
-            } else {
-                $result = "Ошибка";
-            }
+            $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
 
-            return new ViewModel(array(
-                'result' => $result
-            ));
+            $orgModel->createOrganization($post, $userId,$org_id);
+
+
+            return $this->redirect()->toUrl('/account');
 
         }
 
