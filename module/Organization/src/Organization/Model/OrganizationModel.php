@@ -102,6 +102,7 @@ class OrganizationModel implements ServiceLocatorAwareInterface
             $comUserModel = $this->getCompanyUserModel();
             $comUserModel->addUserToCompany($user_id, $org_id,'admin');
 
+            $comUserModel->addOrgAndCompanyToUser(array('currentOrg'=>$org_id),$user_id);
             return true;
         } else return false;
     }
