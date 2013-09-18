@@ -14,10 +14,11 @@ return array(
             'account' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/account[/:action][/:id]',
+                    'route' => '/account[/:action][/:id][/:param]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-z0-9]*',
+                        'param' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\Organization',
@@ -62,7 +63,7 @@ return array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
                 array('controller' => 'Organization\Controller\Organization','action'=>array('index','add', 'edit','list','delete','addIntNumber','createOrganization'), 'roles' => array('admin','orgAdmin')),
-                array('controller' => 'Organization\Controller\Organization','action'=>array('addAccount','add','createOrganization','choiceOrgAndCompany'), 'roles' => array('user','inner')),
+                array('controller' => 'Organization\Controller\Organization','action'=>array('addAccount','add','createOrganization','choiceOrgAndCompany','setAccAndCom'), 'roles' => array('user','inner')),
                 array('controller' => 'Organization\Controller\Company','roles' => array('admin','orgAdmin')),
                 array('controller' => 'Organization\Controller\CompanyUser','roles' => array('admin','orgAdmin')),
             ),

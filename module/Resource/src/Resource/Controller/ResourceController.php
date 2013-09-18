@@ -111,6 +111,11 @@ class ResourceController extends AbstractActionController
                 if(!$form->isValid()) {
                     $error++;
                 }
+                $resource=$resourceModel->returnResultsResource($post);
+
+                if(!empty($resource)) {
+                    $error++;
+                }
                 if(empty($error)) {
 
                     $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();

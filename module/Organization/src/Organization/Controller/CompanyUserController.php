@@ -26,6 +26,7 @@ class CompanyUserController extends AbstractActionController
 {
     protected $companyUserModel;
     protected $organizationModel;
+    protected $companyModel;
 
     public function indexAction()
     {
@@ -97,20 +98,27 @@ class CompanyUserController extends AbstractActionController
             $this->layout('layout/admin');
         }
         $comUserModel = $this->getCompanyUserModel();
-
+        $comModel = $this->getCompanyModel();
+        $orgModel = $this->getOrganizationModel();
+        $name='';
         if(($param=='user')&&($org_uuid!="all")) {
             $users=$comUserModel->getAllUsersByOrgId($orgId);
+            $org=$orgModel->getOrganization($org_uuid);
+            $name=$org['name'];
         } elseif(($param=='admin')&&($org_uuid!="all")) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
         } elseif(($param=='full')&&($orgId=='all')) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
         } elseif(($param=='current')&&($org_uuid!="all")) {
             $users=$comUserModel->getUsersByComId($orgId);
+            $com=$comModel->getCompany($org_uuid);
+            $name=$com['property'].' '.$com['name'];
         }
         return new ViewModel(array(
             'users' => $users,
             'org_uuid'=>$org_uuid,
-            'param' =>$param
+            'param' =>$param,
+            'name'=>$name
         ));
     }
 
@@ -166,13 +174,23 @@ class CompanyUserController extends AbstractActionController
             $this->layout('layout/admin');
         }
         $form = $builder->createForm('User\Entity\User');
+        foreach ($form as $el) {
+            $attr=$el->getAttributes();
+            if(!empty($attr['type'])) {
+                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
+                    $el->setAttributes(array( 'class' => 'form-control' ));
+                }
+            }
+        }
         $comUserModel = $this->getCompanyUserModel();
         $roles=$comUserModel->getRoles($userId,$comId);
+        $data=$comUserModel->getUser($userId);
         return new ViewModel(array(
             'id' =>$userId,
             'form' =>$form,
             'roles'=>$roles,
-            'comId'=>$comId
+            'comId'=>$comId,
+            'data'=>$data
         ));
     }
 
@@ -181,8 +199,25 @@ class CompanyUserController extends AbstractActionController
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $comId = $this->getEvent()->getRouteMatch()->getParam('comId');
         $post=$this->getRequest()->getPost();
-        $comUserModel->addRole($userId,$post,$comId);
-        return $this->redirect()->toUrl('/account');
+        $post=get_object_vars($post);
+        if(empty($post['roles'])) {
+            $roles=array();
+        } else {
+            $roles=$post['roles'];
+            unset($post['roles']);
+        }
+        $comUserModel->addRole($userId,$roles,$comId);
+        $comUserModel->updateUserData($userId, $post);
+        return $this->redirect()->toUrl('/account/user/'.$userId.'/role/current/'.$comId);
     }
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
+    }
+
 
 }

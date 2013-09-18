@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
-
+use Zend\Crypt\Password\Bcrypt;
 
 class CompanyUserModel implements ServiceLocatorAwareInterface
 {
@@ -138,7 +138,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     }
     public function addOrgAndCompanyToUser($post,$userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $post=get_object_vars($post);
+       // $post=;
         unset($post['submit']);
         if(empty($post)) {
             return null;
@@ -154,12 +154,16 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             $this->findUserAndSetRole('currentOrg', $userId,$post['currentOrg']);
         }
         if(!empty($post['currentCom'])) {
+            $comModel = $this->getCompanyModel();
+            $com=$comModel->getCompany($post['currentCom']);
             $objectManager->getRepository('User\Entity\User')->createQueryBuilder()
                 ->findAndUpdate()
                 ->field('id')->equals(new \MongoId($userId))
                 ->field('currentCom')->set(new \MongoId($post['currentCom']))
+                ->field('currentOrg')->set(new \MongoId($com['ownerOrgId']))
                 ->getQuery()
                 ->execute();
+            $this->findUserAndSetRole('currentOrg', $userId,$com['ownerOrgId']);
             $this->findUserAndSetRole('currentCom', $userId,$post['currentCom']);
         }
     }
@@ -191,7 +195,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $comUserTmp =$objectManager->getRepository('Organization\Entity\CompanyUser')->findBy(array('userId' => new \MongoId($userId),'orgId' => null));
         $comModel = $this->getCompanyModel();
         if(empty($comUserTmp)) {
-            return null;
+            return array();
         }
         $resultArray=array();
 
@@ -203,6 +207,25 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
 
         return $resultArray;
+    }
+
+    public function addCompanyInOrgWhenConsist($org, $userId) {
+        if(!empty($org)) {
+            $resultArray=array();
+            $comModel = $this->getCompanyModel();
+            foreach($org as $key => $value) {
+                $comArray=$this->getComWenUserConsist($key, $userId);
+                array_push($resultArray,
+                    array(
+                        'acc'=> array($key => $value),
+                        'com'=>$comArray
+                    )
+                );
+            }
+            return $resultArray;
+        } else {
+            return array();
+        }
     }
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
@@ -232,6 +255,11 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         }
 
         return $result;
+    }
+    public function getUser($id) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $user=$objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($id)));
+        return array('id'=>$user->getId(), 'username'=> $user->getUsername(), 'displayName'=>$user->getDisplayName(),'email'=>$user->getEmail());
     }
     public function getAllUsersByOrgId($orgId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -344,9 +372,40 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return $userObject->orgId;
     }
 
-    public function addRole($userId,$post,$comUuid) {
+    public function updateUserData($userId, $post) {
+        if(!empty($post)) {
+            $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+            $user = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId)));
+            if(!empty($user)) {
+                if(empty($post['displayName'])) {
+                    $post['displayName']='';
+                }
+                if(empty($post['email'])) {
+                    $post['email']='';
+                }
+                if(empty($post['username'])) {
+                    $post['username']='';
+                }
+                $user->setDisplayName($post['displayName']);
+                $user->setEmail($post['email']);
+                $user->setUsername($post['username']);
+                if(!empty($post['password'])) {
+                    $bcrypt = new Bcrypt;
+                    $auth = $this->serviceLocator->get('zfcuser_auth_service');
+                    $bcrypt->setCost($auth->getOptions()->getPasswordCost());
+                    $user->setPassword($bcrypt->create($user->getPassword()));
+                      $user->setPassword($post['password']);
+                 }
+                $objectManager->persist($user);
+                $objectManager->flush();
+            }
+        }
+
+
+    }
+
+    public function addRole($userId,$roles,$comUuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $roles=$post->roles;
         $comModel = $this->getCompanyModel();
         $comId=$comModel->getCompanyIdByUUID($comUuid);
 
