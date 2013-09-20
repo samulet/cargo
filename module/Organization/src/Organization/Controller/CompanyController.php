@@ -46,7 +46,21 @@ class CompanyController extends AbstractActionController
     }
 
     public function addContractAgentToCompanyAction() {
+        $post = $this->getRequest()->getPost();
+        $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comModel = $this->getCompanyModel();
+        $companies=$comModel->getAllCompanies();
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm('Organization\Entity\ContractAgents');
+        $fillFrom=new AddListForm();
+        $fillFrom->fillComNew($form,$companies, 'contactAgentId');
+        if( !empty($post)) {
 
+        }
+        return new ViewModel(array(
+            'form' => $form,
+            'comId' => $comId
+        ));
     }
 
     public function addAction()
