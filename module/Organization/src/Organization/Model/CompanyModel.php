@@ -85,7 +85,17 @@ class CompanyModel implements ServiceLocatorAwareInterface
             return true;
 
     }
-
+    public function getAllCompanies() {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $companiesObj = $objectManager->createQueryBuilder('Organization\Entity\Company')
+            ->getQuery()
+            ->execute();
+        $resultArray=array();
+        foreach($companiesObj as $com) {
+            array_push($resultArray,get_object_vars($com));
+        }
+        return $resultArray;
+    }
     public function getCompany($id)
     {
         $uuid_gen = new UuidGenerator();
