@@ -54,7 +54,12 @@ class ContractAgents
     /**
      * @ODM\ObjectId
      * @var int
-     * @Annotation\Exclude()
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Выберите когнтрагента для добавления"})
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Attributes({"value":"0"})
      */
     public $contactAgentId;
     /**
