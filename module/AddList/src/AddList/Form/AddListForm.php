@@ -53,14 +53,16 @@ class AddListForm
         }
         return $form;
     }
-    public function fillCom($form,$formData) {
-
+    public function fillCom($form,$formData, $param=null) {
+        if(empty($param)) {
+            $param='currentCom';
+        }
         $result_array=array(''=>'Выберите компанию');
         foreach($formData as $key=>$value) {
             $result_array=$result_array+array($key=>$value);
         }
-        if($form->has('currentCom')) {
-            $form->get('currentCom')->setOptions(array("value_options"=>$result_array));
+        if($form->has($param)) {
+            $form->get($param)->setOptions(array("value_options"=>$result_array));
         }
         return $form;
     }
