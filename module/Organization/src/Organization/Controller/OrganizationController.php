@@ -138,7 +138,9 @@ namespace Organization\Controller {
                 'uuid' => $org_uuid
             ));
         }
+        public function addContractAgentToAccountAction() {
 
+        }
         public function listAction()
         {
             $this->loginControl();

@@ -45,6 +45,10 @@ class CompanyController extends AbstractActionController
 
     }
 
+    public function addContractAgentToCompanyAction() {
+
+    }
+
     public function addAction()
     {
         $builder = new AnnotationBuilder();
