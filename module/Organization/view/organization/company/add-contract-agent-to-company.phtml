@@ -1,0 +1,15 @@
+<?php
+
+$form = $this->form;
+$comId=$this->comId;
+$form->setAttribute('action', $this->url('company_user', array('action' => 'addContractAgentToCompany', 'org_id' => $comId)))
+    ->prepare();
+
+$contactAgentId=$form->get('contactAgentId');
+echo $this->form()->openTag($form);
+
+
+echo $this->formRow($contactAgentId);
+
+echo $this->formElement($form->get('submit'));
+echo $this->form()->closeTag();
