@@ -66,6 +66,21 @@ class AddListForm
         }
         return $form;
     }
+
+    public function fillComNew($form,$formData, $param=null) {
+        if(empty($param)) {
+            $param='currentCom';
+        }
+        $result_array=array(''=>'Выберите компанию');
+        foreach($formData as $el) {
+            $result_array=$result_array+array($el['id']=>$el['property'].' '.$el['name']);
+        }
+        if($form->has($param)) {
+            $form->get($param)->setOptions(array("value_options"=>$result_array));
+        }
+        return $form;
+    }
+
     public function fillTS($form,$formData) {
 
         $result_array=array(''=>'Выберите ТС');
