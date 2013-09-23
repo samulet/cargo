@@ -178,6 +178,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
                 $agent= new ContractAgents($comId,$post['contactAgentId'],'company');
                 $objectManager->persist($agent);
                 $objectManager->flush();
+                return true;
             } else {
                 return false;
             }
