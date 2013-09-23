@@ -11,6 +11,7 @@ namespace Organization\Model;
 
 use Organization\Entity\Company;
 
+use Organization\Entity\ContractAgents;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\MongoDB\Connection;
@@ -160,7 +161,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
         }
     }
-    public function checkContractAgentExist($contactAgentId,$comId) {
+    public function isContractAgentExist($contactAgentId,$comId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $agent = $objectManager-> getRepository('Organization\Entity\ContractAgents')->findOneBy(array('contactAgentId' => $contactAgentId,'comId'=>$comId));
         if(empty($agent)) {
@@ -173,7 +174,13 @@ class CompanyModel implements ServiceLocatorAwareInterface
         if(!empty($post['contactAgentId'])) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $comId=$this->getCompanyIdByUUID($comUuid);
-
+            if(!$this->isContractAgentExist($post['contactAgentId'],$comId)) {
+                $agent= new ContractAgents($comId,$post['contactAgentId'],'company');
+                $objectManager->persist($agent);
+                $objectManager->flush();
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
