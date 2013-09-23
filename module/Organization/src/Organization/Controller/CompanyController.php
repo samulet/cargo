@@ -54,6 +54,7 @@ class CompanyController extends AbstractActionController
         $form = $builder->createForm('Organization\Entity\ContractAgents');
         $fillFrom=new AddListForm();
         $fillFrom->fillComNew($form,$companies, 'contactAgentId');
+        $comModel->addBootstrap3Class($form);
         if( !empty($post)) {
 
         }
