@@ -52,6 +52,7 @@ if(!empty($this->org)) {
                    <th>Добавить юзера в компаню</th>
                 <th>Юзеры</th>
                 <th>Добавть контрагента</th>
+                <th>Контрагенты</th>
                 <th></th>
             </tr>
             <?php foreach($oc['com'] as $c) {  ?>
@@ -67,7 +68,8 @@ if(!empty($this->org)) {
                     <td><a href="<?php echo $this->url('company',
                             array('action'=>'addContractAgentToCompany', 'org_id' => $c['uuid']));?>">Добавить</a>
                         </td>
-
+                    <td>
+                        <a href="<?php echo $this->url('company', array('action'=>'contractAgentList','org_id'=>$c['uuid']));?>">Посмотреть контрагентов</a></td>
                 <td>
                                 <a href="<?php echo $this->url('company',
                                     array('action'=>'edit', 'id' => $c['uuid'], 'org_id' => $o['uuid']));?>">Редактировать</a>
