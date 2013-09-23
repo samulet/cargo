@@ -160,4 +160,23 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
         }
     }
+    public function checkContractAgentExist($contactAgentId,$comId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $agent = $objectManager-> getRepository('Organization\Entity\ContractAgents')->findOneBy(array('contactAgentId' => $contactAgentId,'comId'=>$comId));
+        if(empty($agent)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public function addContractAgentToCompany($post,$comUuid) {
+        if(!empty($post['contactAgentId'])) {
+            $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+            $comId=$this->getCompanyIdByUUID($comUuid);
+
+        } else {
+            return false;
+        }
+
+    }
 }
