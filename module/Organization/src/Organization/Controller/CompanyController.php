@@ -44,7 +44,17 @@ class CompanyController extends AbstractActionController
     public function choiceOrgAndComAction() {
 
     }
-
+    public function contractAgentListAction() {
+        $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comModel = $this->getCompanyModel();
+        $agents=$comModel->getContractAgentsFromCompany($comId);
+    }
+    public function errorAction() {
+        $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        return new ViewModel(array(
+            'comId' => $comId
+        ));
+    }
     public function addContractAgentToCompanyAction() {
         $post = get_object_vars($this->getRequest()->getPost());
         $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
