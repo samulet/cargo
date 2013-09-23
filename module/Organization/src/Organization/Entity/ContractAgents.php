@@ -18,7 +18,7 @@ use Zend\Form\Form;
 
 
 /**
- * @ODM\Document(collection="contractAgents", repositoryClass="Organization\Repository\ContractAgentsRepository")
+ * @ODM\Document(collection="contractAgents")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("company")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
@@ -89,7 +89,13 @@ class ContractAgents
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
+
     public $submit;
+
+    /**
+     * @ODM\Date
+     */
+    public $deletedAt;
     /**
      * @return mixed
      */
