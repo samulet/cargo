@@ -51,6 +51,11 @@ class CompanyController extends AbstractActionController
         $comModel = $this->getCompanyModel();
         if( !empty($post)) {
             $res=$comModel->addContractAgentToCompany($post,$comId);
+            if($res) {
+                return $this->redirect()->toUrl('/account/'.$comId.'/company/contractAgentList');
+            } else {
+                return $this->redirect()->toUrl('/account/'.$comId.'/company/error');
+            }
         } else {
 
             $companies=$comModel->getAllCompanies();
