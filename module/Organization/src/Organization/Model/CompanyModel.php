@@ -190,10 +190,11 @@ class CompanyModel implements ServiceLocatorAwareInterface
     public function getContractAgentsFromCompany($comUuid) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $comId=$this->getCompanyIdByUUID($comUuid);
-        $agents = $objectManager-> getRepository('Organization\Entity\ContractAgents')->findBy(array('comId'=>$comId));
+        $agents = $objectManager-> getRepository('Organization\Entity\ContractAgents')->findBy(array('comId'=>new \MongoId($comId)));
         $resultArray=array();
         foreach($agents as $agent) {
-            $com = $this->getCompany($agent['contactAgentId']);
+            $com = $this->getCompany($agent->contactAgentId);
+
             array_push($resultArray,$com);
         }
         return $resultArray;
