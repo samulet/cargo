@@ -193,7 +193,8 @@ class CompanyModel implements ServiceLocatorAwareInterface
         $agents = $objectManager-> getRepository('Organization\Entity\ContractAgents')->findBy(array('comId'=>$comId));
         $resultArray=array();
         foreach($agents as $agent) {
-            array_push($resultArray,get_object_vars($agent));
+            $com = $this->getCompany($agent['contactAgentId']);
+            array_push($resultArray,$com);
         }
         return $resultArray;
     }
