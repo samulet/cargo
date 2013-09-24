@@ -1,6 +1,7 @@
 <?php
 $agents=$this->agents;
 $com=$this->com;
+$accId=$this->accId;
 ?>
 <h1>Контрагенты компании <?php echo $com['property'].' '.$com['name'];?></h1>
 
@@ -20,3 +21,6 @@ $com=$this->com;
     <?php }  ?>
 
 </table>
+
+<td><a href="<?php echo $this->url('company',
+        array('action'=>'add', 'org_id' => $accId,'id' =>'contractAgent'));?>">Добавить новго контрагента</a></td>
