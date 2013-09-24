@@ -32,7 +32,7 @@ return array(
                     'route' => '/account[/:org_id]/company[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-z0-9]*',
+                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'org_id' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
