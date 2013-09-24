@@ -67,6 +67,12 @@ class Company
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Exclude()
+     */
+    public $dirty;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
