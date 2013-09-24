@@ -61,6 +61,9 @@ class CompanyController extends AbstractActionController
             'comId' => $comId
         ));
     }
+    public function addContractAgentAction() {
+
+    }
     public function addContractAgentToCompanyAction() {
         $post = get_object_vars($this->getRequest()->getPost());
         $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
@@ -88,14 +91,12 @@ class CompanyController extends AbstractActionController
         }
     }
 
-    public function addAction()
-    {
+    public function addCompany($orgId,$userListId) {
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Organization\Entity\Company');
         $addListModel = $this->getAddListModel();
         $form_array=array();
         $orgUserModel=$this->getCompanyUserModel();
-        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
         $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
 
 
@@ -105,13 +106,24 @@ class CompanyController extends AbstractActionController
         $form=$fillFrom->fillFrom($form,$formData);
 
 
-        $org_id = $this->getEvent()->getRouteMatch()->getParam('org_id');
+
         $comModel = $this->getCompanyModel();
         $comModel->addBootstrap3Class($form);
-        return new ViewModel(array(
+        return array(
             'form' => $form,
-            'org_id' => $org_id
-        ));
+            'org_id' => $orgId
+        );
+    }
+
+    public function addAction()
+    {
+        $org_id = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
+
+
+        return new ViewModel(
+            $this->addCompany($org_id,$userListId)
+        );
 
 
     }
