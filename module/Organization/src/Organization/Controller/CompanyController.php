@@ -51,11 +51,13 @@ class CompanyController extends AbstractActionController
         $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $comModel = $this->getCompanyModel();
         $agents = $comModel->getContractAgentsFromCompany($comId);
-
+        $orgModel = $this->getOrganizationModel();
         $company = $comModel->getCompany($comId);
+        $acc=$orgModel->getOrganization($company['ownerOrgId']);
         return new ViewModel(array(
             'com' => $company,
-            'agents' => $agents
+            'agents' => $agents,
+            'accId'=>$acc['uuid']
         ));
     }
 
@@ -140,11 +142,15 @@ class CompanyController extends AbstractActionController
         $comModel = $this->getCompanyModel();
 
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
-        $param = $this->getEvent()->getRouteMatch()->getParam('id');
 
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+
         if (!empty($com_uuid)) {
-            $com_id = $comModel->getCompanyIdByUUID($com_uuid);
+            if($com_uuid=='contractAgent') {
+                $com_id = $comModel->getCompanyIdByUUID($com_uuid);
+            } else {
+                $com_id=$com_uuid;
+            }
         } else {
             $com_id = null;
         }
