@@ -23,4 +23,4 @@ $accId=$this->accId;
 </table>
 
 <td><a href="<?php echo $this->url('company',
-        array('action'=>'add', 'org_id' => $accId,'id' =>'contractAgent'));?>">Добавить новго контрагента</a></td>
+        array('action'=>'add', 'org_id' => $accId,'id' =>'contractAgent', 'comId'=>$com['uuid']));?>">Добавить новго контрагента</a></td>

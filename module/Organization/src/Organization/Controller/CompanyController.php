@@ -145,6 +145,8 @@ class CompanyController extends AbstractActionController
 
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
 
+        $comContractUuid = $this->getEvent()->getRouteMatch()->getParam('comId');
+
         if (!empty($com_uuid)) {
             if($com_uuid!='contractAgent') {
                 $com_id = $comModel->getCompanyIdByUUID($com_uuid);
@@ -156,7 +158,11 @@ class CompanyController extends AbstractActionController
         }
         $orgModel = $this->getOrganizationModel();
         $org_id = $orgModel->getOrgIdByUUID($org_uuid);
-        $comModel->createCompany($post, $org_id, $com_id);
+        $newComId=$comModel->createCompany($post, $org_id, $com_id);
+        if($com_uuid=='contractAgent') {
+            $data['contactAgentId']=$newComId;
+            $comModel->addContractAgentToCompany($data,$comContractUuid);
+        }
 
         return $this->redirect()->toUrl('/account');
     }

@@ -85,10 +85,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
             }
             $objectManager->persist($com);
             $objectManager->flush();
-
-            $objectManager->persist($com);
-            $objectManager->flush();
-            return true;
+            return $com->id;
         } else {
             return false;
         }
