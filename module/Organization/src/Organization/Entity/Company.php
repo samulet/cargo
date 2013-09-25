@@ -82,7 +82,16 @@ class Company
      * @Annotation\Options({"label":"Наименование юр. лица"})
      */
     public $name;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Полное наименование юр. лица"})
+     */
+    public $fullName;
 
     /**
      * @var string
@@ -195,6 +204,16 @@ class Company
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
      * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"ОГРН"})
+     */
+    public $ogrn;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"КПП"})
      */
     public $kpp;
@@ -209,7 +228,25 @@ class Company
      * @Annotation\Options({"label":"ОКВЭД"})
      */
     public $okv;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Номер налоговой"})
+     */
+    public $taxNumber;
+
+    /**
+     * @ODM\Date
+     * @Annotation\Type("Zend\Form\Element\Date")
+     * @Annotation\Required(false)
+     * @Annotation\Options({"label":"Дата постановки на учет"})
+     */
+
+    public $dateStart;
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
@@ -233,7 +270,55 @@ class Company
     /**
      * @return mixed
      */
+/*
 
+
+
+
+
+Адреса (Вид адреса, почтовый индекс, субъект РФ, город, населенный пункт, улица, номер дома, корпус, квартира)
+Контакты (Вид контакта, код страны, код города, номер, дополнительный номер), например телефон, факс и т.п.
+
+Способ образования
+Дата регистрации
+Номер налоговой, где проходила регистрация
+Размер уставного капитала
+Количество учредителей
+Учредители (вид учредителя, ссылка на учредителя)
+Уполномоченные лица (вид полномочия, основание деятельности, ассылка на физ лицо)
+Коды ОКВЭД
+Номер страхования в ПФР
+Номер ПФР
+Дата постановки в ПФР
+Номер страхования ФМС
+Номер ФМС
+Дата постановки ФМС
+Лицензии (наименование, срок действия, дата выдачи, кем выдано)
+Заявители при регистрации (вид заявителя, ссылка на заявителя)
+Вид системы налогового учета
+Процентная ставка налога
+Ссылка на файлы выписки из ЕГРЮЛ/ЕГРЮИП
+Устав
+Ссылка на файлы устава
+Остальные учредительные документы
+Наименование документа с решением о создании юр лица
+Номер документа
+Дата документа
+Ссылки на файлы сканов документа
+Наименование документа о назначении генерального Директора
+Номер документа
+Дата документа
+Ссылки на файлы сканов документа
+Для счета
+Ссылки на номер счета
+Ссылка на главного бухгалтера (физ лицо)
+Важное
+Ссылки на других ответственных лиц с указанием области ответственности (сотрудники контрагента) Область ответственности - должность для физ лица для данного контрагента.
+Ссылки на сайты (соц сети сайты визитки и т.д.)
+
+
+
+ */
 
     public function getDeletedAt()
     {
