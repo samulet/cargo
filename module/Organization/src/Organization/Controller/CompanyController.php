@@ -146,7 +146,7 @@ class CompanyController extends AbstractActionController
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
 
         if (!empty($com_uuid)) {
-            if($com_uuid=='contractAgent') {
+            if($com_uuid!='contractAgent') {
                 $com_id = $comModel->getCompanyIdByUUID($com_uuid);
             } else {
                 $com_id=$com_uuid;

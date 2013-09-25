@@ -18,11 +18,11 @@ use Zend\Form\Form;
  */
 class Company
 {
-    public function __construct($ownerOrgId, $param)
+    public function __construct($ownerOrgId, $param=null)
     {
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
-        if($param!='contactAgentId') {
+        if($param!='contractAgent') {
             $this->setOwnerOrgId(new \MongoId($ownerOrgId));
         }
     }

@@ -68,15 +68,15 @@ class CompanyModel implements ServiceLocatorAwareInterface
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
             if (!empty($com_id)) {
-                if($com_id!='contactAgentId') {
-                    $com = new Company($org_id);
+                if($com_id=='contractAgent') {
+                    $com = new Company($org_id,'contractAgent');
                     $prop_array['dirty']=='1';
                 } else {
                     $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
                 }
 
             } else {
-                $com = new Company($org_id,'contactAgentId');
+                $com = new Company($org_id);
             }
 
 
