@@ -29,11 +29,12 @@ return array(
             'company' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/account[/:org_id]/company[/:action][/:id]',
+                    'route' => '/account[/:org_id]/company[/:action][/:id][/:comId]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'org_id' => '[a-z0-9]*',
+                        'org_id' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'comId' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\Company',
