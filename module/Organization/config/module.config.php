@@ -33,8 +33,8 @@ return array(
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'org_id' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'comId' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'org_id' => '[a-z0-9]*',
+                        'comId' => '[a-z0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Organization\Controller\Company',

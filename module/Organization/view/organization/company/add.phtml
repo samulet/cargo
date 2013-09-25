@@ -2,7 +2,8 @@
 
 $form = $this->form;
 $param=$this->param;
-$form->setAttribute('action', $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id,'id'=>$param)))
+$comContractUuid=$this->comContractUuid;
+$form->setAttribute('action', $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id,'id'=>$param, 'comId'=>$comContractUuid)))
     ->prepare();
 
 echo $this->form()->openTag($form);

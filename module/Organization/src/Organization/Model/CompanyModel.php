@@ -70,7 +70,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
             if (!empty($com_id)) {
                 if($com_id=='contractAgent') {
                     $com = new Company($org_id,'contractAgent');
-                    $prop_array['dirty']=='1';
+                    $prop_array['dirty']='1';
                 } else {
                     $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
                 }

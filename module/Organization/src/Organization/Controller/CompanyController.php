@@ -97,7 +97,7 @@ class CompanyController extends AbstractActionController
         }
     }
 
-    public function addCompany($orgId, $userListId, $param)
+    public function addCompany($orgId, $userListId, $comContractUuid,$param)
     {
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Organization\Entity\Company');
@@ -118,6 +118,7 @@ class CompanyController extends AbstractActionController
         return array(
             'form' => $form,
             'org_id' => $orgId,
+            'comContractUuid' =>$comContractUuid,
             'param' => $param
         );
     }
@@ -127,9 +128,9 @@ class CompanyController extends AbstractActionController
         $org_id = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $userListId = $this->zfcUserAuthentication()->getIdentity()->getId();
         $param = $this->getEvent()->getRouteMatch()->getParam('id');
-
+        $comContractUuid = $this->getEvent()->getRouteMatch()->getParam('comId');
         return new ViewModel(
-            $this->addCompany($org_id, $userListId, $param)
+            $this->addCompany($org_id, $userListId, $comContractUuid,$param)
         );
 
 
@@ -161,6 +162,7 @@ class CompanyController extends AbstractActionController
         $newComId=$comModel->createCompany($post, $org_id, $com_id);
         if($com_uuid=='contractAgent') {
             $data['contactAgentId']=$newComId;
+
             $comModel->addContractAgentToCompany($data,$comContractUuid);
         }
 
