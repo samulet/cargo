@@ -65,13 +65,18 @@ class CompanyModel implements ServiceLocatorAwareInterface
             } else {
                 $prop_array = get_object_vars($post);
             }
-        }
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
             if (!empty($com_id)) {
-                $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+                if($com_id!='contactAgentId') {
+                    $com = new Company($org_id);
+                    $prop_array['dirty']=='1';
+                } else {
+                    $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+                }
+
             } else {
-                $com = new Company($org_id);
+                $com = new Company($org_id,'contactAgentId');
             }
 
 
@@ -84,6 +89,10 @@ class CompanyModel implements ServiceLocatorAwareInterface
             $objectManager->persist($com);
             $objectManager->flush();
             return true;
+        } else {
+            return false;
+        }
+
 
     }
     public function getAllCompanies() {
