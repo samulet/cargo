@@ -23,9 +23,9 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
     {
         parent::__construct();
         // $this->setHydrator(new DoctrineHydrator());
-        $sm = $this->getFormFactory()->getFormElementManager()->getServiceLocator();
+        //$sm = $this->getFormFactory()->getFormElementManager()->getServiceLocator();
 
-        //    $this->setHydrator(new \Zend\Stdlib\Hydrator\ClassMethods());
+        $this->setHydrator(new \Zend\Stdlib\Hydrator\ClassMethods());
         //   $addListModel = new AddListModel();
 
 
@@ -41,9 +41,13 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' => 'Вид адреса',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
                 ),
                 'attributes' => array (
                     'class' => 'form-control'
+
                 )
             ));
         $this->add(
@@ -51,9 +55,16 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'name' => 'addressIndex',
                 'options' => array(
                     'label' => 'Почтовый индекс',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
                 ),
                 'attributes' => array (
                     'class' => 'form-control'
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
                 )
             )
         );
@@ -61,6 +72,13 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
             'name' => 'addressSubject',
             'options' => array(
                 'label' => 'Субъект РФ',
+                'label_attributes' => array(
+                    'class'  => 'control-label'
+                ),
+            ),
+            'attributes' => array (
+                'class' => 'form-control'
+
             )
         ));
         $this->add(
@@ -68,6 +86,13 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'name' => 'addressCity',
                 'options' => array(
                     'label' => 'Город',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
                 )
             ));
         $this->add(
@@ -75,6 +100,13 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'name' => 'addressTown',
                 'options' => array(
                     'label' => 'Населенный пункт',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
                 )
             ));
         $this->add(
@@ -82,6 +114,13 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'name' => 'addressStreet',
                 'options' => array(
                     'label' => 'Улица',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
                 )
             ));
         $this->add(
@@ -89,6 +128,13 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'name' => 'addressHouse',
                 'options' => array(
                     'label' => 'Номер дома',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
                 )
             ));
         $this->add(
@@ -96,6 +142,13 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'name' => 'addressPart',
                 'options' => array(
                     'label' => 'Корпус',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
                 )
             )
         );
@@ -104,7 +157,15 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'name' => 'addressRoom',
                 'options' => array(
                     'label' => 'Квартира',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
                 )
+
             )
         );
         $this->add(
@@ -113,9 +174,18 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'name' => 'addressRoom',
                 'options' => array(
                     'label' => 'Квартира',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
                 )
             )
         );
+
+
     }
 
     public function getInputFilterSpecification()
