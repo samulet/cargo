@@ -22,7 +22,7 @@ echo $this->formRow($form->get('chiefAccountant'));
 echo $this->formRow($form->get('note'));
 //echo $this->formRow($form->get('addressFact'));
 //echo $this->formRow($form->get('addressReg'));
-echo  $this->formRow($form->get('address'));
+echo  $this->formElement($form->get('address'));
 echo $this->formRow($form->get('requisites'));
 echo $this->formRow($form->get('inn'));
 echo $this->formRow($form->get('kpp'));
@@ -33,6 +33,7 @@ echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();
 ?>
 </div>
+
 <?php
 
 ?> <a href="<?php echo $this->url('account', array('action' => 'index')); ?>">Вернуться в аккаунт</a>
