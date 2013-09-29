@@ -8,8 +8,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Zend\Form\Annotation;
 use Zend\Form\Element;
 use Zend\Form\Form;
-
-
+use Zend\Form\Element\Collection;
+use \Organization\Form\CompanyAddressFieldset;
 /**
  * @ODM\Document(collection="company", repositoryClass="Organization\Repository\CompanyRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -152,6 +152,15 @@ class Company
     public $note;
 
     /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Territory",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyAddressFieldset"}})
+     */
+    public $address= array();
+
+    /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
@@ -284,34 +293,51 @@ class Company
 Номер налоговой, где проходила регистрация
 Размер уставного капитала
 Количество учредителей
+
 Учредители (вид учредителя, ссылка на учредителя)
+
 Уполномоченные лица (вид полномочия, основание деятельности, ассылка на физ лицо)
+
 Коды ОКВЭД
+
 Номер страхования в ПФР
 Номер ПФР
 Дата постановки в ПФР
 Номер страхования ФМС
 Номер ФМС
 Дата постановки ФМС
+
 Лицензии (наименование, срок действия, дата выдачи, кем выдано)
+
 Заявители при регистрации (вид заявителя, ссылка на заявителя)
+
 Вид системы налогового учета
 Процентная ставка налога
+
 Ссылка на файлы выписки из ЕГРЮЛ/ЕГРЮИП
+
 Устав
 Ссылка на файлы устава
+
 Остальные учредительные документы
+
 Наименование документа с решением о создании юр лица
 Номер документа
 Дата документа
+
 Ссылки на файлы сканов документа
+
 Наименование документа о назначении генерального Директора
 Номер документа
 Дата документа
+
 Ссылки на файлы сканов документа
+
 Для счета
+
 Ссылки на номер счета
 Ссылка на главного бухгалтера (физ лицо)
+
 Важное
 Ссылки на других ответственных лиц с указанием области ответственности (сотрудники контрагента) Область ответственности - должность для физ лица для данного контрагента.
 Ссылки на сайты (соц сети сайты визитки и т.д.)
