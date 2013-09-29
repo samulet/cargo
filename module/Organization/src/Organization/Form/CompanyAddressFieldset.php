@@ -16,37 +16,110 @@ use AddList\Model\AddListModel;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInterface {
+class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInterface
+{
 
-    public function __construct($orgListId = null) {
+    public function __construct($orgListId = null)
+    {
         parent::__construct();
-       // $this->setHydrator(new DoctrineHydrator());
-        $sm=$this->getFormFactory()->getFormElementManager()->getServiceLocator();
+        // $this->setHydrator(new DoctrineHydrator());
+        $sm = $this->getFormFactory()->getFormElementManager()->getServiceLocator();
 
-    //    $this->setHydrator(new \Zend\Stdlib\Hydrator\ClassMethods());
-     //   $addListModel = new AddListModel();
+        //    $this->setHydrator(new \Zend\Stdlib\Hydrator\ClassMethods());
+        //   $addListModel = new AddListModel();
 
 
-    //    $formData=$addListModel->returnDataArray(array(),'company',$orgListId);
-     //   $fillFrom=new AddListForm();
-     //   die(var_dump($orgListId));
+        //    $formData=$addListModel->returnDataArray(array(),'company',$orgListId);
+        //   $fillFrom=new AddListForm();
+        //   die(var_dump($orgListId));
         //"value_options" => $fillFrom->getSelectValueList($formData,'companyAddressType')
+        //Адреса (Вид адреса, почтовый индекс, субъект РФ, город, населенный пункт, улица, номер дома, корпус, квартира)
+
         $this->add(
             array(
                 'name' => 'addressType',
-                'type' =>'Zend\Form\Element\Select',
+                'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' => 'Вид адреса',
-
                 ),
-                'attributes' => array(
-                    'required' => 'required'
+                'attributes' => array (
+                    'class' => 'form-control'
+                )
+            ));
+        $this->add(
+            array(
+                'name' => 'addressIndex',
+                'options' => array(
+                    'label' => 'Почтовый индекс',
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(array(
+            'name' => 'addressSubject',
+            'options' => array(
+                'label' => 'Субъект РФ',
+            )
+        ));
+        $this->add(
+            array(
+                'name' => 'addressCity',
+                'options' => array(
+                    'label' => 'Город',
+                )
+            ));
+        $this->add(
+            array(
+                'name' => 'addressTown',
+                'options' => array(
+                    'label' => 'Населенный пункт',
+                )
+            ));
+        $this->add(
+            array(
+                'name' => 'addressStreet',
+                'options' => array(
+                    'label' => 'Улица',
+                )
+            ));
+        $this->add(
+            array(
+                'name' => 'addressHouse',
+                'options' => array(
+                    'label' => 'Номер дома',
+                )
+            ));
+        $this->add(
+            array(
+                'name' => 'addressPart',
+                'options' => array(
+                    'label' => 'Корпус',
+                )
+            )
+        );
+        $this->add(
+            array(
+                'name' => 'addressRoom',
+                'options' => array(
+                    'label' => 'Квартира',
+                )
+            )
+        );
+        $this->add(
+
+            array(
+                'name' => 'addressRoom',
+                'options' => array(
+                    'label' => 'Квартира',
                 )
             )
         );
     }
 
-    public function getInputFilterSpecification() {
+    public function getInputFilterSpecification()
+    {
         return array();
     }
 
