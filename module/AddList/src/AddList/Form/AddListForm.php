@@ -105,6 +105,14 @@ class AddListForm
         return $form;
     }
 
+    public function getSelectValueList($formData,$value) {
+        $resultArray=array();
+        die(var_dump($formData));
+        foreach($formData as $key =>$value) {
+            $resultArray=$resultArray+array($key=>$value);
+        }
+    }
+
     public function fillFromVehicleSpecial($form,$formData,$elements) {
             foreach($formData as $key => $element) {
 

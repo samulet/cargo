@@ -60,6 +60,14 @@ class AddListNameStatic
             'parentId' => null,
             "child" => null
         ),
+        "companyAddressType" => array(
+            "name" => "Вид адреса",
+            "listName"=> "company",
+            "field" => "companyAddressType",
+            "fieldRusName" => "Компания - Вид адреса" ,
+            'parentId' => null,
+            "child" => null
+        ),
         "prod-group" => array(
             "name" => "Продуктовая группа груза",
             "listName"=> "ticketWay",
