@@ -155,9 +155,12 @@ class Company
      * @var array
      * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Territory",
+     * @Annotation\Options({"label":"Territory", "should_create_template" : "true",
      *                      "target_element" : {"type":"\Organization\Form\CompanyAddressFieldset"}})
+
      */
+
+
     public $address= array();
 
     /**

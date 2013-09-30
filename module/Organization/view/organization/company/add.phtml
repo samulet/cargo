@@ -22,7 +22,31 @@ echo $this->formRow($form->get('chiefAccountant'));
 echo $this->formRow($form->get('note'));
 //echo $this->formRow($form->get('addressFact'));
 //echo $this->formRow($form->get('addressReg'));
-echo  $this->formElement($form->get('address'));
+?>
+    <div class="address">
+
+
+    <?php
+echo  $this->formCollection($form->get('address'));
+?>
+    </div>
+    <script>
+        function add_address() {
+            var currentCount = $('.address .counter').val();
+            if(typeof currentCount=== 'undefined') {
+                $('.address > fieldset').append("<input type='hidden' class='counter' value='1'>");
+                currentCount=1;
+            }
+            var template=$('.address > fieldset > span').data('template');
+            template = template.replace(/__index__/g, currentCount);
+
+            $('.address > fieldset').append(template);
+            currentCount++;
+            $('.address .counter').val(currentCount);
+        }
+    </script>
+    <button type="button" onclick="add_address();">Добавить еще адресс</button>
+    <?php
 echo $this->formRow($form->get('requisites'));
 echo $this->formRow($form->get('inn'));
 echo $this->formRow($form->get('kpp'));
