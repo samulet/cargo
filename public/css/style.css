@@ -287,3 +287,7 @@ display: inline !important;
 .userAdd label{
     display: block;
 }
+
+.template {
+    display: none;
+}

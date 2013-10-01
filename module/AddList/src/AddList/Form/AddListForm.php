@@ -22,8 +22,12 @@ class AddListForm
                 {
                     $this->fillFormFunction($coll,$key,$result_array);
 
+                    //$coll->createTemplateElement();
                 }
+                $collection->setShouldCreateTemplate(true);
+
             }
+
             $this->fillFormFunction($form,$key,$result_array);
 
         }

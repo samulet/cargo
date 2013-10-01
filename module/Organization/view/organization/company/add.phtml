@@ -28,9 +28,10 @@ echo $this->formRow($form->get('note'));
 
     <?php
 
-
-    echo "<span data-template='".$this->formCollection($form->get('address')->getTemplateElement())."'></span>";
+   // echo $this->formCollection()->renderTemplate($form->get('address'));
+    echo '<div class="template">'.$this->formCollection($form->get('address')->getTemplateElement()).'</div>';
     foreach($form->get('address') as $newForm) {
+
         echo '<fieldset>'.$this->formCollection($newForm).'</fieldset>';
     }
 ?>
@@ -44,7 +45,7 @@ echo $this->formRow($form->get('note'));
                 $('.'+item).append("<input type='hidden' class='counter' value='1'>");
                 currentCount=1;
             }
-            var template=$('.'+item+' span').data('template');
+            var template=$('.'+item+' .template').html();
             template = template.replace(/__index__/g, currentCount);
 
             $('.'+item).append('<fieldset>'+template+'</fieldset>');
@@ -61,6 +62,7 @@ echo $this->formRow($form->get('note'));
             }
 
         }
+
     </script>
 
     <?php
