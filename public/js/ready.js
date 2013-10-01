@@ -33,6 +33,25 @@ function setValuesSelect(element) {
 }
 
 
+function fillTemplate() {
+    $( ".template" ).each(function( index ) {
+        //console.log( index + ": " + $( this ).text() );
+        var firstFieldset=$(this).parent().find('fieldset').first();
+        if(typeof firstFieldset.html() === 'undefined') {} else {
+            var selectDataArray=new Array();
+            firstFieldset.find('select').each(function( index ) {
+                selectDataArray[index]=$(this).html();
+
+            });
+
+            $(this).find('select').each(function( index ) {
+                $(this).html(selectDataArray[index]);
+                $(this).find('option').removeAttr('selected');
+            });
+        }
+    });
+}
+
 $(document).ready(function() {
     startSetValues();
     $("select").change(function() {
@@ -57,9 +76,10 @@ $(document).ready(function() {
     }
 
 
-
 });
-
+$(window).load(function() {
+    fillTemplate();
+});
 function time_control(element) {
     var numCount=$(element).val().length;
     var numVal=$(element).val();
