@@ -61,10 +61,6 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 ),
                 'attributes' => array (
                     'class' => 'form-control'
-                ),
-                'attributes' => array (
-                    'class' => 'form-control'
-
                 )
             )
         );
@@ -169,21 +165,17 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
             )
         );
         $this->add(
-
             array(
-                'name' => 'addressRoom',
+                'name' => 'companyAddressDelete',
+                'type' => 'Zend\Form\Element\Button',
                 'options' => array(
-                    'label' => 'Квартира',
-                    'label_attributes' => array(
-                        'class'  => 'control-label'
-                    ),
+                    'label' => 'Удалить'
                 ),
                 'attributes' => array (
-                    'class' => 'form-control'
+                    'onclick' => 'deleteFieldset(this);'
 
                 )
-            )
-        );
+            ));
 
 
     }
