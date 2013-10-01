@@ -28,14 +28,20 @@ echo $this->formRow($form->get('note'));
 
     <?php
 
-echo $this->formCollection($form->get('address'));
+//echo $this->formCollection($form->get('address'));
+   // die(var_dump($form->get('address')));
+   // echo $this->formCollection($form->get('address'));
+    foreach($form->get('address') as $newForm) {
+        echo '<fieldset>'.$this->formCollection($newForm).'</fieldset>';
+    }
 ?>
+        <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
     </div>
     <script>
         function addItem(item) {
             var currentCount = $('.'+item+' .counter').val();
             if(typeof currentCount=== 'undefined') {
-                $('.'+item+' > fieldset').after("<input type='hidden' class='counter' value='1'>");
+                $('.'+item+' > fieldset').last().after("<input type='hidden' class='counter' value='1'>");
                 currentCount=1;
             }
             var template=$('.'+item+' > fieldset > span').data('template');
@@ -49,7 +55,7 @@ echo $this->formCollection($form->get('address'));
 
         }
     </script>
-    <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
+
     <?php
 echo $this->formRow($form->get('requisites'));
 echo $this->formRow($form->get('inn'));
