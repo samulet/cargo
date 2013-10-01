@@ -27,25 +27,29 @@ echo $this->formRow($form->get('note'));
 
 
     <?php
-echo  $this->formCollection($form->get('address'));
+
+echo $this->formCollection($form->get('address'));
 ?>
     </div>
     <script>
-        function add_address() {
-            var currentCount = $('.address .counter').val();
+        function addItem(item) {
+            var currentCount = $('.'+item+' .counter').val();
             if(typeof currentCount=== 'undefined') {
-                $('.address > fieldset').append("<input type='hidden' class='counter' value='1'>");
+                $('.'+item+' > fieldset').after("<input type='hidden' class='counter' value='1'>");
                 currentCount=1;
             }
-            var template=$('.address > fieldset > span').data('template');
+            var template=$('.'+item+' > fieldset > span').data('template');
             template = template.replace(/__index__/g, currentCount);
 
-            $('.address > fieldset').append(template);
+            $('.'+item+' > fieldset').last().after('<fieldset>'+template+'</fieldset>');
             currentCount++;
-            $('.address .counter').val(currentCount);
+            $('.'+item+' .counter').val(currentCount);
+        }
+        function deleteFieldset(element) {
+
         }
     </script>
-    <button type="button" onclick="add_address();">Добавить еще адресс</button>
+    <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
     <?php
 echo $this->formRow($form->get('requisites'));
 echo $this->formRow($form->get('inn'));
