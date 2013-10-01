@@ -20,24 +20,24 @@ echo $this->formRow($form->get('generalManager'));
 echo $this->formRow($form->get('official'));
 echo $this->formRow($form->get('chiefAccountant'));
 echo $this->formRow($form->get('note'));
-//echo $this->formRow($form->get('addressFact'));
-//echo $this->formRow($form->get('addressReg'));
+// echo $this->formCollection()->renderTemplate($form->get('address'));
 ?>
     <div class="address">
-
-
-    <?php
-
-   // echo $this->formCollection()->renderTemplate($form->get('address'));
-    echo '<div class="template">'.$this->formCollection($form->get('address')->getTemplateElement()).'</div>';
-    foreach($form->get('address') as $newForm) {
-
-        echo '<fieldset>'.$this->formCollection($newForm).'</fieldset>';
-    }
-?>
-
+        <?php echo '<div class="template">'.$this->formCollection($form->get('address')->getTemplateElement()).'</div>';
+        foreach($form->get('address') as $newForm) {
+            echo '<fieldset>'.$this->formCollection($newForm).'</fieldset>';
+        } ?>
     </div>
     <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
+
+    <div class="contact">
+        <?php echo '<div class="template">'.$this->formCollection($form->get('contact')->getTemplateElement()).'</div>';
+        foreach($form->get('contact') as $newForm) {
+            echo '<fieldset>'.$this->formCollection($newForm).'</fieldset>';
+        } ?>
+    </div>
+    <button type="button" onclick="addItem('contact');">Добавить контакт</button>
+
     <script>
         function addItem(item) {
             var currentCount = $('.'+item+' .counter').val();

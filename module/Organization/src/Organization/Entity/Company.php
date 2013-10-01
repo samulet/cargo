@@ -155,7 +155,7 @@ class Company
      * @var array
      * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Адреса", "should_create_template" : "true", "count" : 2,"allow_add" : "true",
+     * @Annotation\Options({"label":"Адреса", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
      *                      "target_element" : {"type":"\Organization\Form\CompanyAddressFieldset"}})
 
      */
@@ -163,6 +163,17 @@ class Company
 
     public $address= array();
 
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Контакты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyContactsFieldset"}})
+
+     */
+
+
+    public $contact= array();
     /**
      * @var string
      * @ODM\Field(type="string")
