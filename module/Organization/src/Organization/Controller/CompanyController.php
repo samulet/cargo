@@ -110,7 +110,7 @@ class CompanyController extends AbstractActionController
         $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId);
 
         $fillFrom = new AddListForm();
-        $form = $fillFrom->fillFrom($form, $formData);
+        $form = $fillFrom->fillFrom($form, $formData, array('address'));
 
 
         $comModel = $this->getCompanyModel();
@@ -141,7 +141,7 @@ class CompanyController extends AbstractActionController
         $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $post = $this->getRequest()->getPost();
         $comModel = $this->getCompanyModel();
-
+       // die(var_dump($post));
         $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
 
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');

@@ -37,7 +37,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
 
         $this->add(
             array(
-                'name' => 'addressType',
+                'name' => 'companyAddressType',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' => 'Вид адреса',

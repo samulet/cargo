@@ -9,25 +9,38 @@ use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 class AddListForm
 {
 
-    public function fillFrom($form,$formData) {
+    public function fillFrom($form,$formData,$collections=array()) {
         foreach($formData as $key => $element) {
             $result_array=array(''=>'Выберите значение');
             foreach($element as $el) {
                 $result_array=$result_array+array($el['key']=>$el['value']);
             }
-            if($form->has($key)) {
-                $attr=$form->get($key)->getAttributes();
-                if(!empty($attr['type'])) {
-                    if($attr['type']=='multi_checkbox') {
-                        unset($result_array['']);
-                    }
+
+            foreach($collections as $collectionKey) {
+                $collection=$form->get($collectionKey);
+                foreach ($collection as $coll)
+                {
+                    $this->fillFormFunction($coll,$key,$result_array);
+
                 }
-                $form->get($key)->setOptions(array("value_options"=>$result_array));
             }
+            $this->fillFormFunction($form,$key,$result_array);
 
         }
 
         return $form;
+    }
+
+    public function fillFormFunction($form,$key,$result_array) {
+        if($form->has($key)) {
+            $attr=$form->get($key)->getAttributes();
+            if(!empty($attr['type'])) {
+                if($attr['type']=='multi_checkbox') {
+                    unset($result_array['']);
+                }
+            }
+            $form->get($key)->setOptions(array("value_options"=>$result_array));
+        }
     }
 
     public function fillCG($form,$formData) {

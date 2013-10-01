@@ -155,7 +155,7 @@ class Company
      * @var array
      * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Territory", "should_create_template" : "true",
+     * @Annotation\Options({"label":"Адреса", "should_create_template" : "true", "count" : 1,
      *                      "target_element" : {"type":"\Organization\Form\CompanyAddressFieldset"}})
 
      */
