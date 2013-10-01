@@ -34,23 +34,31 @@ echo $this->formRow($form->get('note'));
         echo '<fieldset>'.$this->formCollection($newForm).'</fieldset>';
     }
 ?>
-        <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
+
     </div>
+    <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
     <script>
         function addItem(item) {
             var currentCount = $('.'+item+' .counter').val();
             if(typeof currentCount=== 'undefined') {
-                $('.'+item+' fieldset').last().after("<input type='hidden' class='counter' value='1'>");
+                $('.'+item).append("<input type='hidden' class='counter' value='1'>");
                 currentCount=1;
             }
             var template=$('.'+item+' span').data('template');
             template = template.replace(/__index__/g, currentCount);
 
-            $('.'+item+' fieldset').last().after('<fieldset>'+template+'</fieldset>');
+            $('.'+item).append('<fieldset>'+template+'</fieldset>');
             currentCount++;
             $('.'+item+' .counter').val(currentCount);
         }
         function deleteFieldset(element) {
+            var conf = confirm('Вы действительно хотите удалить элемент?');
+            if (!conf) {
+                return false;
+            }
+            else {
+                $(element).parent().remove();
+            }
 
         }
     </script>
