@@ -242,7 +242,70 @@ public $authorizedPerson= array();
      */
     public $okved= array();
 
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Номер страхования в ПФР"})
+     */
+    public $insuranceNumberInPfr;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"19. Номер ПФР"})
+     */
+    public $numberInPfr;
+    /**
+     * @ODM\Date
+     * @Annotation\Type("Zend\Form\Element\Date")
+     * @Annotation\Required(false)
+     * @Annotation\Options({"label":"Дата постановки в ПФР"})
+     */
+    public $dateRegistrationPfr;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Номер страхования ФМС"})
+     */
+    public $insuranceNumberFms;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Номер ФМС"})
+     */
+    public $numberInFms;
+    /**
+     * @ODM\Date
+     * @Annotation\Type("Zend\Form\Element\Date")
+     * @Annotation\Required(false)
+     * @Annotation\Options({"label":"Дата постановки ФМС"})
+     */
+    public $dateRegistrationFms;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Коды ОКВЭД", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyLicenseFieldset"}})
+
+     */
+    public $license= array();
     /**
      * @var string
      * @ODM\Field(type="string")

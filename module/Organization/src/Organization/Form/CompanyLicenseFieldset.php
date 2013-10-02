@@ -16,7 +16,7 @@ use AddList\Model\AddListModel;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterProviderInterface
+class CompanyLicenseFieldset extends Fieldset implements InputFilterProviderInterface
 {
 
     public function __construct($orgListId = null)
@@ -25,26 +25,12 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
 
         $this->setHydrator(new \Zend\Stdlib\Hydrator\ClassMethods());
 
-        $this->add(
-            array(
-                'name' => 'companyFounderType',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' => 'Вид учредителя',
-                    'label_attributes' => array(
-                        'class'  => 'control-label'
-                    ),
-                ),
-                'attributes' => array (
-                    'class' => 'form-control'
 
-                )
-            ));
         $this->add(
             array(
-                'name' => 'companyFounderLink',
+                'name' => 'companyLicenseName',
                 'options' => array(
-                    'label' => 'Ссылка на учредителя',
+                    'label' => 'Наименование лицензии',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),
@@ -56,7 +42,50 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
         );
         $this->add(
             array(
-                'name' => 'companyFounderDelete',
+                'name' => 'companyLicenseWhile',
+                'options' => array(
+                    'label' => 'Срок действия',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(
+        array(
+            'name' => 'companyLicenseDate',
+            'type' => 'Zend\Form\Element\Date',
+            'options' => array(
+                'label' => 'Дата выдачи',
+                'label_attributes' => array(
+                    'class'  => 'control-label'
+                ),
+            ),
+            'attributes' => array (
+                'class' => 'form-control'
+
+            )
+        ));
+        $this->add(
+            array(
+                'name' => 'companyLicenseIssueName',
+                'options' => array(
+                    'label' => 'Кем выдано',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(
+            array(
+                'name' => 'companyLicenseDelete',
                 'type' => 'Zend\Form\Element\Button',
                 'options' => array(
                     'label' => 'Удалить'
