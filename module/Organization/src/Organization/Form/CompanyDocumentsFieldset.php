@@ -16,7 +16,7 @@ use AddList\Model\AddListModel;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterProviderInterface
+class CompanyDocumentsFieldset extends Fieldset implements InputFilterProviderInterface
 {
 
     public function __construct($orgListId = null)
@@ -27,10 +27,10 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
 
         $this->add(
             array(
-                'name' => 'companyFounderType',
+                'name' => 'companyDocumentType',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' => 'Вид учредителя',
+                    'label' => 'Наименование документа',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),
@@ -42,9 +42,9 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
             ));
         $this->add(
             array(
-                'name' => 'companyFounderLink',
+                'name' => 'companyDocumentNumber',
                 'options' => array(
-                    'label' => 'Ссылка на учредителя',
+                    'label' => 'Номер документа',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),
@@ -56,7 +56,36 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
         );
         $this->add(
             array(
-                'name' => 'companyFounderDelete',
+                'name' => 'companyDocumentDate',
+                'type' => 'Zend\Form\Element\Date',
+                'options' => array(
+                    'label' => 'Дата документа',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
+                )
+            ));
+        $this->add(
+            array(
+                'name' => 'companyDocumentLink',
+                'options' => array(
+                    'label' => 'Ссылки на файлы сканов документа',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(
+            array(
+                'name' => 'companyDocumentDelete',
                 'type' => 'Zend\Form\Element\Button',
                 'options' => array(
                     'label' => 'Удалить'
