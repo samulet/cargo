@@ -232,6 +232,16 @@ class Company
 
      */
 public $authorizedPerson= array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Коды ОКВЭД", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyOkvedFieldset"}})
+
+     */
+    public $okved= array();
+
 
     /**
      * @var string

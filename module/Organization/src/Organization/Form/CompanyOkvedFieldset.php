@@ -16,7 +16,7 @@ use AddList\Model\AddListModel;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterProviderInterface
+class CompanyOkvedFieldset extends Fieldset implements InputFilterProviderInterface
 {
 
     public function __construct($orgListId = null)
@@ -27,24 +27,9 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
 
         $this->add(
             array(
-                'name' => 'companyFounderType',
-                'type' => 'Zend\Form\Element\Select',
+                'name' => 'companyOkvedCode',
                 'options' => array(
-                    'label' => 'Вид учредителя',
-                    'label_attributes' => array(
-                        'class'  => 'control-label'
-                    ),
-                ),
-                'attributes' => array (
-                    'class' => 'form-control'
-
-                )
-            ));
-        $this->add(
-            array(
-                'name' => 'companyFounderLink',
-                'options' => array(
-                    'label' => 'Ссылка на учредителя',
+                    'label' => 'Код ОКВЭД',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),
@@ -54,6 +39,18 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
                 )
             )
         );
+        $this->add(
+            array(
+                'name' => 'companyOkvedDelete',
+                'type' => 'Zend\Form\Element\Button',
+                'options' => array(
+                    'label' => 'Удалить'
+                ),
+                'attributes' => array (
+                    'onclick' => 'deleteFieldset(this);'
+
+                )
+            ));
 
     }
 

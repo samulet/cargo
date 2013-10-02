@@ -54,7 +54,18 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
                 )
             )
         );
+        $this->add(
+            array(
+                'name' => 'companyFounderDelete',
+                'type' => 'Zend\Form\Element\Button',
+                'options' => array(
+                    'label' => 'Удалить'
+                ),
+                'attributes' => array (
+                    'onclick' => 'deleteFieldset(this);'
 
+                )
+            ));
     }
 
     public function getInputFilterSpecification()

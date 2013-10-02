@@ -42,7 +42,7 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
             ));
         $this->add(
             array(
-                'name' => 'AuthorizedPersonWork',
+                'name' => 'companyAuthorizedPersonWork',
                 'options' => array(
                     'label' => 'Основание деятельности',
                     'label_attributes' => array(
@@ -56,7 +56,7 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
         );
         $this->add(
             array(
-                'name' => 'AuthorizedPersonLink',
+                'name' => 'companyAuthorizedPersonLink',
                 'options' => array(
                     'label' => 'Ссылка на физ лицо',
                     'label_attributes' => array(
@@ -68,7 +68,18 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
                 )
             )
         );
+        $this->add(
+            array(
+                'name' => 'companyAuthorizedPersonDelete',
+                'type' => 'Zend\Form\Element\Button',
+                'options' => array(
+                    'label' => 'Удалить'
+                ),
+                'attributes' => array (
+                    'onclick' => 'deleteFieldset(this);'
 
+                )
+            ));
     }
 
     public function getInputFilterSpecification()

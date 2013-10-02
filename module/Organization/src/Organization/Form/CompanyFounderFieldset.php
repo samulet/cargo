@@ -54,7 +54,18 @@ class CompanyFounderFieldset extends Fieldset implements InputFilterProviderInte
                 )
             )
         );
+        $this->add(
+            array(
+                'name' => 'companyFounderDelete',
+                'type' => 'Zend\Form\Element\Button',
+                'options' => array(
+                    'label' => 'Удалить'
+                ),
+                'attributes' => array (
+                    'onclick' => 'deleteFieldset(this);'
 
+                )
+            ));
     }
 
     public function getInputFilterSpecification()
