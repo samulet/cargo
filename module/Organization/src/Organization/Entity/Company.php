@@ -224,6 +224,16 @@ class Company
      */
     public $founder= array();
     /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Уполномоченные лица", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyAuthorizedPersonsFieldset"}})
+
+     */
+public $authorizedPerson= array();
+
+    /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
