@@ -79,7 +79,7 @@ class Company
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Наименование юр. лица"})
+     * @Annotation\Options({"label":"Полное наименование юр. лица"})
      */
     public $name;
     /**
@@ -89,9 +89,81 @@ class Company
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
      * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Полное наименование юр. лица"})
+     * @Annotation\Options({"label":"Краткое наименование юр. лица"})
      */
-    public $fullName;
+    public $shortName;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"ИНН"})
+     */
+    public $inn;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"ОГРН"})
+     */
+    public $ogrn;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"КПП"})
+     */
+    public $kpp;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Номер налоговой"})
+     */
+    public $taxNumber;
+    /**
+     * @ODM\Date
+     * @Annotation\Type("Zend\Form\Element\Date")
+     * @Annotation\Required(false)
+     * @Annotation\Options({"label":"Дата постановки на учет"})
+     */
+    public $dateStart;
+
+
+
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Адреса", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyAddressFieldset"}})
+
+     */
+
+
+    public $address= array();
+
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Контакты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyContactsFieldset"}})
+
+     */
+    public $contact= array();
 
     /**
      * @var string
@@ -129,15 +201,15 @@ class Company
      */
     public $official;
 
-        /**
-         * @var string
-         * @ODM\Field(type="string")
-         * @Annotation\Filter({"name":"StringTrim"})
-         * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
-         * @Annotation\Attributes({"type":"text"})
-         * @Annotation\Options({"label":"Главный бухгалтер"})
-         */
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Главный бухгалтер"})
+     */
     public $chiefAccountant;
 
     /**
@@ -151,29 +223,6 @@ class Company
      */
     public $note;
 
-    /**
-     * @var array
-     * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Адреса", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Organization\Form\CompanyAddressFieldset"}})
-
-     */
-
-
-    public $address= array();
-
-    /**
-     * @var array
-     * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Контакты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Organization\Form\CompanyContactsFieldset"}})
-
-     */
-
-
-    public $contact= array();
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -210,36 +259,7 @@ class Company
      */
     public $requisites;
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"ИНН"})
-     */
-    public $inn;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"ОГРН"})
-     */
-    public $ogrn;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"КПП"})
-     */
-    public $kpp;
 
     /**
      * @var string
@@ -251,25 +271,9 @@ class Company
      * @Annotation\Options({"label":"ОКВЭД"})
      */
     public $okv;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
 
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер налоговой"})
-     */
-    public $taxNumber;
 
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата постановки на учет"})
-     */
 
-    public $dateStart;
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
