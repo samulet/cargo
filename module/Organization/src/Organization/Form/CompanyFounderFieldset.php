@@ -27,7 +27,7 @@ class CompanyFounderFieldset extends Fieldset implements InputFilterProviderInte
 
         $this->add(
             array(
-                'name' => 'companyFonderType',
+                'name' => 'companyFounderType',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' => 'Вид учредителя',
@@ -42,9 +42,9 @@ class CompanyFounderFieldset extends Fieldset implements InputFilterProviderInte
             ));
         $this->add(
             array(
-                'name' => 'contactCodeCountry',
+                'name' => 'companyFounderLink',
                 'options' => array(
-                    'label' => 'Код страны',
+                    'label' => 'Ссылка на учредителя',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),
