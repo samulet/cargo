@@ -52,7 +52,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
             ));
         $this->add(
             array(
-                'name' => 'addressIndex',
+                'name' => 'companyAddressIndex',
                 'options' => array(
                     'label' => 'Почтовый индекс',
                     'label_attributes' => array(
@@ -65,7 +65,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
             )
         );
         $this->add(array(
-            'name' => 'addressSubject',
+            'name' => 'companyAddressSubject',
             'options' => array(
                 'label' => 'Субъект РФ',
                 'label_attributes' => array(
@@ -79,7 +79,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
         ));
         $this->add(
             array(
-                'name' => 'addressCity',
+                'name' => 'companyAddressCity',
                 'options' => array(
                     'label' => 'Город',
                     'label_attributes' => array(
@@ -93,7 +93,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
             ));
         $this->add(
             array(
-                'name' => 'addressTown',
+                'name' => 'companyAddressTown',
                 'options' => array(
                     'label' => 'Населенный пункт',
                     'label_attributes' => array(
@@ -107,7 +107,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
             ));
         $this->add(
             array(
-                'name' => 'addressStreet',
+                'name' => 'companyAddressStreet',
                 'options' => array(
                     'label' => 'Улица',
                     'label_attributes' => array(
@@ -121,7 +121,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
             ));
         $this->add(
             array(
-                'name' => 'addressHouse',
+                'name' => 'companyAddressHouse',
                 'options' => array(
                     'label' => 'Номер дома',
                     'label_attributes' => array(
@@ -135,7 +135,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
             ));
         $this->add(
             array(
-                'name' => 'addressPart',
+                'name' => 'companyAddressPart',
                 'options' => array(
                     'label' => 'Корпус',
                     'label_attributes' => array(
@@ -150,7 +150,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
         );
         $this->add(
             array(
-                'name' => 'addressRoom',
+                'name' => 'companyAddressRoom',
                 'options' => array(
                     'label' => 'Квартира',
                     'label_attributes' => array(

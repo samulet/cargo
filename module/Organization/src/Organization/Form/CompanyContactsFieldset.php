@@ -27,7 +27,7 @@ class CompanyContactsFieldset extends Fieldset implements InputFilterProviderInt
 
         $this->add(
             array(
-                'name' => 'companyContactType',
+                'name' => 'companyCompanyContactType',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' => 'Вид контакта',
@@ -42,7 +42,7 @@ class CompanyContactsFieldset extends Fieldset implements InputFilterProviderInt
             ));
   $this->add(
       array(
-          'name' => 'contactCodeCountry',
+          'name' => 'companyContactCodeCountry',
           'options' => array(
               'label' => 'Код страны',
               'label_attributes' => array(
@@ -56,7 +56,7 @@ class CompanyContactsFieldset extends Fieldset implements InputFilterProviderInt
   );
   $this->add(
       array(
-          'name' => 'contactCodeCity',
+          'name' => 'companyContactCodeCity',
           'options' => array(
               'label' => 'Код города',
               'label_attributes' => array(
@@ -70,7 +70,7 @@ class CompanyContactsFieldset extends Fieldset implements InputFilterProviderInt
   );
   $this->add(
       array(
-          'name' => 'contactNumber',
+          'name' => 'companyContactNumber',
           'options' => array(
               'label' => 'Номер',
               'label_attributes' => array(
@@ -84,7 +84,7 @@ class CompanyContactsFieldset extends Fieldset implements InputFilterProviderInt
   );
           $this->add(
               array(
-                  'name' => 'contactNumberAdditional',
+                  'name' => 'companyContactNumberAdditional',
                   'options' => array(
                       'label' => 'Дополнительный номер',
                       'label_attributes' => array(
@@ -96,6 +96,18 @@ class CompanyContactsFieldset extends Fieldset implements InputFilterProviderInt
                   )
               )
           );
+        $this->add(
+            array(
+                'name' => 'companyContactDelete',
+                'type' => 'Zend\Form\Element\Button',
+                'options' => array(
+                    'label' => 'Удалить'
+                ),
+                'attributes' => array (
+                    'onclick' => 'deleteFieldset(this);'
+
+                )
+            ));
     }
 
     public function getInputFilterSpecification()
