@@ -307,6 +307,15 @@ public $authorizedPerson= array();
      */
     public $license= array();
     /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Заявители при регистрации", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyApplicantsFieldset"}})
+
+     */
+    public $applicants= array();
+    /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")

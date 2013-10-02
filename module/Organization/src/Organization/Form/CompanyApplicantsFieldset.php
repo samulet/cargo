@@ -16,7 +16,7 @@ use AddList\Model\AddListModel;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterProviderInterface
+class CompanyApplicantsFieldset extends Fieldset implements InputFilterProviderInterface
 {
 
     public function __construct($orgListId = null)
@@ -27,10 +27,10 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
 
         $this->add(
             array(
-                'name' => 'companyFounderType',
+                'name' => 'companyApplicantsType',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' => 'Вид учредителя',
+                    'label' => 'Вид заявителя',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),
@@ -42,9 +42,9 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
             ));
         $this->add(
             array(
-                'name' => 'companyFounderLink',
+                'name' => 'companyApplicantsLink',
                 'options' => array(
-                    'label' => 'Ссылка на учредителя',
+                    'label' => 'Ссылка на заявителя',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),
@@ -54,7 +54,18 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
                 )
             )
         );
+        $this->add(
+            array(
+                'name' => 'companyApplicantsDelete',
+                'type' => 'Zend\Form\Element\Button',
+                'options' => array(
+                    'label' => 'Удалить'
+                ),
+                'attributes' => array (
+                    'onclick' => 'deleteFieldset(this);'
 
+                )
+            ));
     }
 
     public function getInputFilterSpecification()
