@@ -55,6 +55,20 @@ class CompanyAnotherPersonsFieldset extends Fieldset implements InputFilterProvi
         );
         $this->add(
             array(
+                'name' => 'companyAnotherPersonLink',
+                'options' => array(
+                    'label' => 'Ссылка на физ. лицо (email в системе)',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(
+            array(
                 'name' => 'companyAnotherPersonsDelete',
                 'type' => 'Zend\Form\Element\Button',
                 'options' => array(

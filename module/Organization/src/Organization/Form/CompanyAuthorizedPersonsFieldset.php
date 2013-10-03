@@ -58,7 +58,7 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
             array(
                 'name' => 'companyAuthorizedPersonLink',
                 'options' => array(
-                    'label' => 'Ссылка на физ лицо',
+                    'label' => 'Ссылка на физ лицо (email в системе)',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),

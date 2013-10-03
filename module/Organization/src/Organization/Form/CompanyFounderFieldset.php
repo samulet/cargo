@@ -44,7 +44,7 @@ class CompanyFounderFieldset extends Fieldset implements InputFilterProviderInte
             array(
                 'name' => 'companyFounderLink',
                 'options' => array(
-                    'label' => 'Ссылка на учредителя',
+                    'label' => 'Ссылка на учредителя (email в системе)',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),

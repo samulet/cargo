@@ -44,7 +44,7 @@ class CompanyApplicantsFieldset extends Fieldset implements InputFilterProviderI
             array(
                 'name' => 'companyApplicantsLink',
                 'options' => array(
-                    'label' => 'Ссылка на заявителя',
+                    'label' => 'Ссылка на заявителя (email в системе)',
                     'label_attributes' => array(
                         'class'  => 'control-label'
                     ),
