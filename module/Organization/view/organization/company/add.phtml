@@ -6,9 +6,41 @@ $comContractUuid=$this->comContractUuid;
 $form->setAttribute('action', $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id,'id'=>$param, 'comId'=>$comContractUuid)))
     ->prepare();
 
-
+$name=$form->get('name');
+$shortName=$form->get('shortName');
+$ogrn=$form->get('inn');
+$inn=$form->get('address');
+$kpp=$form->get('kpp');
+$taxNumber=$form->get('taxNumber');
+$dateStart=$form->get('dateStart');
 $address=$form->get('address');
 $contact=$form->get('contact');
+$createWay=$form->get('createWay');
+$dateRegistration=$form->get('dateRegistration');
+$nalogNumber=$form->get('nalogNumber');
+$capitalValue=$form->get('capitalValue');
+$founderCount=$form->get('founderCount');
+$founder=$form->get('founder');
+$authorizedPerson=$form->get('authorizedPerson');
+$okved=$form->get('insuranceNumberInPfr');
+$insuranceNumberInPfr=$form->get('numberInPfr');
+$numberInPfr=$form->get('numberInPfr');
+$dateRegistrationPfr=$form->get('dateRegistrationPfr');
+$insuranceNumberFms=$form->get('insuranceNumberFms');
+$numberInFms=$form->get('numberInFms');
+$dateRegistrationFms=$form->get('dateRegistrationFms');
+$license=$form->get('license');
+$applicants=$form->get('applicants');
+$taxSystem=$form->get('taxSystem');
+$taxPercent=$form->get('taxPercent');
+$egrulLink=$form->get('egrulLink');
+$law=$form->get('law');
+$documents=$form->get('documents');
+$bankAccount=$form->get('bankAccount');
+$accountantLink=$form->get('accountantLink');
+$anotherPersons=$form->get('anotherPersons');
+$websites=$form->get('websites');
+
 echo $this->form()->openTag($form);
 ?>
 <div class="companyAdd">
