@@ -393,6 +393,15 @@ public $authorizedPerson= array();
      */
     public $anotherPersons = array();
     /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Ссылки на сайты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyWebsitesFieldset"}})
+
+     */
+    public $websites = array();
+    /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
