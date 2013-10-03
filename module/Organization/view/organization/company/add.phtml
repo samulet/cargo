@@ -43,6 +43,7 @@ $websites=$form->get('websites');
 
 echo $this->form()->openTag($form);
 ?>
+<h1>Добавление компании</h1>
 <div class="companyAdd">
     <table class="table" style="width: 100%">
 
@@ -114,16 +115,38 @@ echo $this->form()->openTag($form);
                     } ?>
                 </div>
                 <button type="button" onclick="addItem('okved');">Добавить код ОКВЭД</button>
-
+                <?php
+                    echo $this->formRow($insuranceNumberInPfr);
+                    echo $this->formRow($numberInPfr);
+                    echo $this->formRow($dateRegistrationPfr);
+                    echo $this->formRow($insuranceNumberFms);
+                    echo $this->formRow($numberInFms);
+                    echo $this->formRow($dateRegistrationFms);
+                ?>
             </td>
         </tr>
 
         <tr>
             <td width='50%'>
+                $license=$form->get('license');
+                <?php
+                echo $this->formRow($taxSystem);
+                echo $this->formRow($taxPercent);
+                echo $this->formRow($egrulLink);
+                ?>
+                $documents=$form->get('documents');
+                $bankAccount=$form->get('bankAccount');
+
+                <?php
+                $accountantLink=$form->get('accountantLink');
+                ?>
+                $websites=$form->get('websites');
 
             </td>
             <td width='50%'>
-
+                $applicants=$form->get('applicants');
+                $law=$form->get('law');
+                $anotherPersons=$form->get('anotherPersons');
             </td>
         </tr>
 
