@@ -128,34 +128,76 @@ echo $this->form()->openTag($form);
 
         <tr>
             <td width='50%'>
-                $license=$form->get('license');
+                <div class="license">
+                    <?php
+                    echo '<h1>'.$license->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($license->getTemplateElement()).'</div>';
+                    foreach($license as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('license');">Добавить лицензию</button>
+
                 <?php
                 echo $this->formRow($taxSystem);
+
                 echo $this->formRow($taxPercent);
                 echo $this->formRow($egrulLink);
+                echo $this->formRow($law);
                 ?>
-                $documents=$form->get('documents');
-                $bankAccount=$form->get('bankAccount');
+                <div class="documents">
+                    <?php
+                    echo '<h1>'.$documents->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($documents->getTemplateElement()).'</div>';
+                    foreach($documents as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('documents');">Добавить документ</button>
 
+                <div class="bankAccount">
+                    <?php
+                    echo '<h1>'.$bankAccount->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($bankAccount->getTemplateElement()).'</div>';
+                    foreach($bankAccount as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('bankAccount');">Добавить банковский счет</button>
                 <?php
                 $accountantLink=$form->get('accountantLink');
                 ?>
-                $websites=$form->get('websites');
+                <div class="websites">
+                    <?php
+                    echo '<h1>'.$websites->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($websites->getTemplateElement()).'</div>';
+                    foreach($websites as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('websites');">Добавить сайт</button>
 
             </td>
             <td width='50%'>
-                $applicants=$form->get('applicants');
-                $law=$form->get('law');
-                $anotherPersons=$form->get('anotherPersons');
-            </td>
-        </tr>
+                <div class="applicants">
+                    <?php
+                    echo '<h1>'.$applicants->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($applicants->getTemplateElement()).'</div>';
+                    foreach($applicants as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('applicants');">Добавить заявителей</button>
 
-        <tr>
-            <td width='50%'>
-
-            </td>
-            <td width='50%'>
-
+                <div class="anotherPersons">
+                    <?php
+                    echo '<h1>'.$anotherPersons->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($anotherPersons->getTemplateElement()).'</div>';
+                    foreach($anotherPersons as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('anotherPersons');">Добавить лиц</button>
             </td>
         </tr>
 
