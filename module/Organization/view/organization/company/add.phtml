@@ -8,8 +8,8 @@ $form->setAttribute('action', $this->url('company', array('action' => 'createCom
 
 $name=$form->get('name');
 $shortName=$form->get('shortName');
-$ogrn=$form->get('inn');
-$inn=$form->get('address');
+$ogrn=$form->get('ogrn');
+$inn=$form->get('inn');
 $kpp=$form->get('kpp');
 $taxNumber=$form->get('taxNumber');
 $dateStart=$form->get('dateStart');
@@ -22,7 +22,7 @@ $capitalValue=$form->get('capitalValue');
 $founderCount=$form->get('founderCount');
 $founder=$form->get('founder');
 $authorizedPerson=$form->get('authorizedPerson');
-$okved=$form->get('insuranceNumberInPfr');
+$okved=$form->get('okved');
 $insuranceNumberInPfr=$form->get('numberInPfr');
 $numberInPfr=$form->get('numberInPfr');
 $dateRegistrationPfr=$form->get('dateRegistrationPfr');
@@ -48,6 +48,15 @@ echo $this->form()->openTag($form);
 
         <tr>
             <td width='50%'>
+                <?php
+                     echo $this->formRow($name);
+                    echo $this->formRow($shortName);
+                    echo $this->formRow($ogrn);
+                    echo $this->formRow($inn);
+                    echo $this->formRow($kpp);
+                    echo $this->formRow($taxNumber);
+                    echo $this->formRow($dateStart);
+                ?>
                 <div class="address">
                     <?php
                     echo '<h1>'.$address->getLabel().'</h1>';
@@ -57,6 +66,17 @@ echo $this->form()->openTag($form);
                     } ?>
                 </div>
                 <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
+                <div class="authorizedPerson">
+                    <?php
+                    echo '<h1>'.$authorizedPerson->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($authorizedPerson->getTemplateElement()).'</div>';
+                    foreach($authorizedPerson as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('authorizedPerson');">Добавить уполномоченное лицо</button>
+
+
             </td>
             <td width='50%'>
                 <div class="contact">
@@ -68,6 +88,33 @@ echo $this->form()->openTag($form);
                     } ?>
                 </div>
                 <button type="button" onclick="addItem('contact');">Добавить контакт</button>
+                <?php
+                echo $this->formRow($createWay);
+                echo $this->formRow($dateRegistration);
+                echo $this->formRow($nalogNumber);
+                echo $this->formRow($capitalValue);
+                echo $this->formRow($founderCount);
+                ?>
+                <div class="founder">
+                    <?php
+                    echo '<h1>'.$founder->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($founder->getTemplateElement()).'</div>';
+                    foreach($founder as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('founder');">Добавить основателя</button>
+
+                <div class="okved">
+                    <?php
+                    echo '<h1>'.$okved->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($okved->getTemplateElement()).'</div>';
+                    foreach($okved as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('okved');">Добавить код ОКВЭД</button>
+
             </td>
         </tr>
 
@@ -90,17 +137,6 @@ echo $this->form()->openTag($form);
         </tr>
 
     </table>
-<?php
-
-
-echo $this->formRow($form->get('name'));
-
-// echo $this->formCollection()->renderTemplate($form->get('address'));
-?>
-
-
-
-
     <script>
         function addItem(item) {
             var currentCount = $('.'+item+' .counter').val();
