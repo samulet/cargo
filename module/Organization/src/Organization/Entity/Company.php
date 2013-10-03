@@ -414,51 +414,7 @@ public $authorizedPerson= array();
      * @Annotation\Attributes({"value":"0"})
      */
 
-    public $property;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Генеральный директор"})
-     */
-    public $generalManager;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Наименование должности должностного лица"})
-     */
-    public $official;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Главный бухгалтер"})
-     */
-    public $chiefAccountant;
-
-    /**
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-
-     * @Annotation\Type("Zend\Form\Element\Textarea")
-     * @Annotation\Options({"label":"Основание деятельности должностного лица"})
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    public $note;
+    public $property='';
 
     /**
      * @ODM\Date

@@ -6,37 +6,68 @@ $comContractUuid=$this->comContractUuid;
 $form->setAttribute('action', $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id,'id'=>$param, 'comId'=>$comContractUuid)))
     ->prepare();
 
+
+$address=$form->get('address');
+$contact=$form->get('contact');
 echo $this->form()->openTag($form);
-//$whoGave= $form->get('whoGave');
-//echo $this->formRow($serialNumber);
 ?>
 <div class="companyAdd">
+    <table class="table" style="width: 100%">
+
+        <tr>
+            <td width='50%'>
+                <div class="address">
+                    <?php
+                    echo '<h1>'.$address->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($address->getTemplateElement()).'</div>';
+                    foreach($address as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
+            </td>
+            <td width='50%'>
+                <div class="contact">
+                    <?php
+                    echo '<h1>'.$contact->getLabel().'</h1>';
+                    echo '<div class="template">'.$this->formCollection($contact->getTemplateElement()).'</div>';
+                    foreach($contact as $collectionForm) {
+                        echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
+                    } ?>
+                </div>
+                <button type="button" onclick="addItem('contact');">Добавить контакт</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td width='50%'>
+
+            </td>
+            <td width='50%'>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td width='50%'>
+
+            </td>
+            <td width='50%'>
+
+            </td>
+        </tr>
+
+    </table>
 <?php
 
 
 echo $this->formRow($form->get('name'));
-echo $this->formRow($form->get('property'));
-echo $this->formRow($form->get('generalManager'));
-echo $this->formRow($form->get('official'));
-echo $this->formRow($form->get('chiefAccountant'));
-echo $this->formRow($form->get('note'));
+
 // echo $this->formCollection()->renderTemplate($form->get('address'));
 ?>
-    <div class="address">
-        <?php echo '<div class="template">'.$this->formCollection($form->get('address')->getTemplateElement()).'</div>';
-        foreach($form->get('address') as $newForm) {
-            echo '<fieldset>'.$this->formCollection($newForm).'</fieldset>';
-        } ?>
-    </div>
-    <button type="button" onclick="addItem('address');">Добавить еще адресс</button>
 
-    <div class="contact">
-        <?php echo '<div class="template">'.$this->formCollection($form->get('contact')->getTemplateElement()).'</div>';
-        foreach($form->get('contact') as $newForm) {
-            echo '<fieldset>'.$this->formCollection($newForm).'</fieldset>';
-        } ?>
-    </div>
-    <button type="button" onclick="addItem('contact');">Добавить контакт</button>
+
+
 
     <script>
         function addItem(item) {
@@ -66,11 +97,7 @@ echo $this->formRow($form->get('note'));
     </script>
 
     <?php
-echo $this->formRow($form->get('requisites'));
-echo $this->formRow($form->get('inn'));
-echo $this->formRow($form->get('kpp'));
-echo $this->formRow($form->get('okv'));
-echo $this->formRow($form->get('personal'));
+
 
 echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();
