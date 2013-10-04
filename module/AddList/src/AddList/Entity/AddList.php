@@ -142,6 +142,15 @@ class AddList
      */
     public $global;
     /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     * @Annotation\Type("Zend\Form\Element\Collection")
+     * @Annotation\Options({"label":"Реквизиты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
+     *                      "target_element" : {"type":"\Organization\Form\CompanyBankAccountFieldset"}})
+
+     */
+    public $requisites= array();
+    /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
