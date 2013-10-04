@@ -174,7 +174,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         $res = new AddList();
        // die(var_dump($prop_array));
 
-        $prop_array['key']=$this->russianToTranslit( $prop_array['value']);
+        $prop_array['key']=$prop_array['value'];
 
         foreach ($prop_array as $key => $value) {
             $res->$key = $value;
