@@ -110,7 +110,7 @@ class CompanyController extends AbstractActionController
         $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId);
 
         $fillFrom = new AddListForm();
-        $form = $fillFrom->fillFrom($form, $formData, array('address'));
+        $form = $fillFrom->fillFrom($form, $formData, array('address','bankAccount'));
 
 
         $comModel = $this->getCompanyModel();

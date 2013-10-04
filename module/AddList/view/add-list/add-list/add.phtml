@@ -13,7 +13,7 @@ $list=$this->listName['list'];
 }
 $value = $form->get('value');
 
-
+$uuid=$this->uuid;
 
 ?>
 
@@ -43,8 +43,12 @@ $value = $form->get('value');
 
 echo $this->form()->openTag($form);
 
+if($form->has($uuid)) {
+    echo $this->formCollection($form->get($uuid));
+} else {
+    echo $this->formRow($value);
+}
 
-echo $this->formRow($value);
 
 if(array_search("admin",$this->roles,true)) {
     echo '<input type="checkbox" name="global" value="global">Глобальное значние </br>';
