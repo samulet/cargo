@@ -170,10 +170,13 @@ class AddListModel implements ServiceLocatorAwareInterface
             $prop_array['listId']=$listUUID;
 
         }
-//die(var_dump($prop_array));
-        $res = new AddList();
-       // die(var_dump($prop_array));
 
+        $res = new AddList();
+
+        if(!empty($prop_array['requisites'])) {
+            $prop_array['requisites']=$prop_array['requisites'][0];
+            $prop_array['value']='р/c'.$prop_array['requisites']['addListRequisitesAccountNumber'].' '.$prop_array['requisites']['addListRequisitesBankName'];
+        }
         $prop_array['key']=$prop_array['value'];
 
         foreach ($prop_array as $key => $value) {
