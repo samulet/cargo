@@ -136,6 +136,19 @@ class AddList
      */
     public $value;
     /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Type("Zend\Form\Element\Radio")
+     * @Annotation\Options({"label":"",
+     *                      "value_options" : {"company":"Для компании","account":"Для аккаунта"}})
+     * @Annotation\Validator({"name":"InArray",
+     *                        "options":{"company":{"prepareToLoad","account"},
+     *                              "messages":{"notInArray":"Please Select a Class"}}})
+     * @Annotation\Attributes({"value":""})
+     * @Annotation\Required({"required":"false" })
+     */
+    public $forAccount;
+    /**
      * @Annotation\Exclude()
      * @var string
      * @ODM\Field(type="string")
