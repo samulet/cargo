@@ -52,7 +52,9 @@ echo $this->doctype(); ?>
 
 
         <div class="nav-collapse collapse navbar-responsive-collapse ourTopMenu">
-            <?php echo $this->navigation('topmenu_navigation')->menu()->setPartial('application/layout/top-menu'); ?>
+            <?php echo $this->navigation('topmenu_navigation')->menu()->setPartial('application/layout/top-menu');
+
+            ?>
         </div>
     </div>
 </div>
@@ -69,7 +71,9 @@ echo $this->doctype(); ?>
         <div class="row">
             <div class="col-lg-2">
                 <div class="leftSide">
-                <?php echo $this->navigation('admin_navigation')->menu()->setPartial(null)->setUlClass('nav nav-list'); ?>
+                <?php echo $this->navigation('admin_navigation')->menu()->setPartial(null)->setUlClass('nav nav-list');
+                echo $this->navigation('list_navigation')->menu()->setPartial(null)->setUlClass('nav nav-list');
+                ?>
                 </div>
             </div>
             <div class="col-lg-10">

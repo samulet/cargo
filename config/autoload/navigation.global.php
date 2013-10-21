@@ -217,6 +217,11 @@ return array(
                 'params' => array('org_id' => 'all', 'param' =>'full'),
 
             ),
+        ),
+
+
+        'list' => array(
+
             array(
                 'label' => 'Справочники',
                 'type' => 'uri',
