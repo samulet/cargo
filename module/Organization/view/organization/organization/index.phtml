@@ -5,10 +5,8 @@ if(!empty($this->org)) {
     $oc=$this->org[0];
      $o=$oc['org']?>
      <h1><?php echo $this->escapeHtml($title).' '.$o['name']; ?></h1>
-
-
-
-</table>
+<a href="<?php echo $this->url('addList',
+    array('action'=>'my'));?>">Мои справочники</a>
 <table class="table">
 <tr>
 
