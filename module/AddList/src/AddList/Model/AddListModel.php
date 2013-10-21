@@ -144,7 +144,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         return str_replace($cyr, $lat, $str);
     }
 
-    public function addList($post,$listUUID,$parentField,$userId,$orgId) {
+    public function addList($post,$listUUID,$parentField,$userId,$orgId,$comId) {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
@@ -177,11 +177,27 @@ class AddListModel implements ServiceLocatorAwareInterface
             $prop_array['requisites']=$prop_array['requisites'][0];
             $prop_array['value']='р/c'.$prop_array['requisites']['addListRequisitesAccountNumber'].' '.$prop_array['requisites']['addListRequisitesBankName'];
         }
+
+        if(!empty($prop_array['forAccount'])) {
+
+            if($prop_array['forAccount']=='company') {
+                if(!empty($prop_array['company'])) {
+
+                    $prop_array['company']=new \MongoId($comId);
+                } else {
+                    $prop_array['company']=new \MongoId($comId);
+                }
+            } elseif ($prop_array['forAccount']=='account') {
+                $prop_array['account']=new \MongoId($orgId);
+            }
+
+        }
         $prop_array['key']=$prop_array['value'];
 
         foreach ($prop_array as $key => $value) {
             $res->$key = $value;
         }
+
         $res->ownerOrgId= new \MongoId($orgId);
         $res->ownerUserId=new \MongoId($userId);
         $objectManager->persist($res);

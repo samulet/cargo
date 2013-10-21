@@ -118,8 +118,10 @@ class AddListController extends AbstractActionController
     public function addListAction() {
 
         $listUUID= $this->getEvent()->getRouteMatch()->getParam('id');
+        $post=$this->getRequest()->getPost();
         $target=$listUUID;
         $parent=$this->getEvent()->getRouteMatch()->getParam('parent');
+
         if($parent=='parent') {
             $parentField=$listUUID;
             $listUUID=null;
@@ -129,11 +131,13 @@ class AddListController extends AbstractActionController
         }
         $addListModel = $this->getAddListModel();
 
-        $orgUserModel=$this->getCompanyUserModel();
-        $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgId=$orgUserModel->getOrgIdByUserId($userId);
 
-        $listId= $addListModel->addList($this->getRequest()->getPost(),$listUUID,$parentField,$userId,$orgId);
+        $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
+
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+
+        $listId= $addListModel->addList($post,$listUUID,$parentField,$userId,$orgListId,$comListId);
 
 
         if(empty($listName['parentId'])) {

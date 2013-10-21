@@ -138,9 +138,7 @@ class AddList
     /**
      * @ODM\ObjectId
      * @var int
-
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Компания"})
      */
@@ -152,8 +150,8 @@ class AddList
      */
     public $account;
     /**
-     * @ODM\ObjectId
-     * @var int
+     * @var string
+     * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Radio")
      * @Annotation\Options({"label":"",
      *                      "value_options" : {"company":"Для компании","account":"Для аккаунта"}})
