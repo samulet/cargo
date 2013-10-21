@@ -56,6 +56,6 @@ return array(
         ),
     ),
     'module_layouts' => array(
-        'AddList' => 'layout/admin',
+        'AddList' => 'layout/list',
     ),
 );
