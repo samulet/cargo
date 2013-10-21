@@ -53,6 +53,15 @@ class AddListController extends AbstractActionController
 
         $fillFrom=new AddListForm();
         $fillFrom->fillComNew($form,$comData,'company');
+
+        $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+        $roles = $authorize->getIdentityRoles();
+
+        if(array_search("admin",$roles,true)) {
+
+            $form->get('forAccount')->setAttribute('required', false);
+        }
+
         return new ViewModel(array(
             'form' => $form,
             'uuid' =>$listNameUuid,

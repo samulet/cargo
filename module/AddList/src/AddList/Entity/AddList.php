@@ -138,12 +138,11 @@ class AddList
     /**
      * @var string
      * @ODM\Field(type="string")
+
      * @Annotation\Type("Zend\Form\Element\Select")
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Компания"})
-     * @Annotation\Attributes({"value":"0"})
-     * @Annotation\Required({"required":"false" })
      */
     public $company;
     /**
