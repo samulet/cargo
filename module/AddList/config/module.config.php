@@ -30,7 +30,7 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'AddList\Controller\AddList','roles' => array('admin')),
+                array('controller' => 'AddList\Controller\AddList','roles' => array('admin','orgAdmin')),
           ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'addList', 'roles' => array('inner')),
