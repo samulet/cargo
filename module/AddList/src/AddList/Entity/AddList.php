@@ -136,6 +136,17 @@ class AddList
      */
     public $value;
     /**
+     * @var string
+     * @ODM\Field(type="string")
+     * @Annotation\Type("Zend\Form\Element\Select")
+
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Компания"})
+     * @Annotation\Required({"required":"false" })
+     * @Annotation\Attributes({"value":"0"})
+     */
+    public $company;
+    /**
      * @ODM\ObjectId
      * @var int
      * @Annotation\Type("Zend\Form\Element\Radio")
@@ -145,7 +156,7 @@ class AddList
      *                        "options":{"company":{"prepareToLoad","account"},
      *                              "messages":{"notInArray":"Please Select a Class"}}})
      * @Annotation\Attributes({"value":""})
-     * @Annotation\Required({"required":"false" })
+     * @Annotation\Required({"required":"true" })
      */
     public $forAccount;
     /**

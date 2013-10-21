@@ -13,6 +13,9 @@ $list=$this->listName['list'];
 }
 $value = $form->get('value');
 
+$company= $form->get('company');
+$forAccount= $form->get('forAccount');
+
 $uuid=$this->uuid;
 
 ?>
@@ -48,7 +51,8 @@ if($form->has($uuid)) {
 } else {
     echo $this->formRow($value);
 }
-
+echo '<p>Сделать доступным для</p>'.$this->formRow($company).'</br>';
+echo $this->formRow($forAccount).'</br>';
 
 if(array_search("admin",$this->roles,true)) {
     echo '<input type="checkbox" name="global" value="global">Глобальное значние </br>';
