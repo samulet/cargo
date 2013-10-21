@@ -142,8 +142,8 @@ class AddList
 
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Компания"})
-     * @Annotation\Required({"required":"false" })
      * @Annotation\Attributes({"value":"0"})
+     * @Annotation\Required({"required":"false" })
      */
     public $company;
     /**

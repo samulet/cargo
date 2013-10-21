@@ -16,12 +16,13 @@ use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use AddList\Form\AddListNameForm;
-
+use AddList\Form\AddListForm;
 class AddListController extends AbstractActionController
 {
     protected $addListModel;
     protected $organizationModel;
     protected $companyUserModel;
+    protected $companyModel;
 
     public function indexAction()
     {
@@ -33,14 +34,10 @@ class AddListController extends AbstractActionController
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
         $addListModel = $this->getAddListModel();
 
-
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
         if(!empty($parent)) {
             $listName=$addListModel->getOneList($listNameUuid);
         } else {
-            $orgUserModel=$this->getCompanyUserModel();
-            $userListId=$this->zfcUserAuthentication()->getIdentity()->getId();
-            $orgListId=$orgUserModel->getOrgIdByUserId($userListId);
-
             $listName=$addListModel->getList($listNameUuid,$orgListId);
         }
 
@@ -51,6 +48,11 @@ class AddListController extends AbstractActionController
         $roles = $authorize->getIdentityRoles();
 
 
+        $comModel = $this->getCompanyModel();
+        $comData=$comModel->getCompanyOfCurrentAccount($orgListId);
+
+        $fillFrom=new AddListForm();
+        $fillFrom->fillComNew($form,$comData,'company');
         return new ViewModel(array(
             'form' => $form,
             'uuid' =>$listNameUuid,
@@ -268,5 +270,13 @@ class AddListController extends AbstractActionController
         $addListModel = $this->getAddListModel();
         $addListModel->addListTranslator();
 
+    }
+    public function getCompanyModel()
+    {
+        if (!$this->companyModel) {
+            $sm = $this->getServiceLocator();
+            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+        }
+        return $this->companyModel;
     }
 }

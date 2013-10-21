@@ -156,6 +156,7 @@ class AddListForm
             }
         return $form;
     }
+
     public function fillMultiFields($form, $formWay,$formWayDoc) {
         $resultArray=array();
         foreach ($form as $wayEl) {

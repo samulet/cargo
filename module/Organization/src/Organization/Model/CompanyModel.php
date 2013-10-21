@@ -205,4 +205,13 @@ class CompanyModel implements ServiceLocatorAwareInterface
         }
         return $resultArray;
     }
+    public function getCompanyOfCurrentAccount($curAcc) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $coms = $objectManager->getRepository('Organization\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($curAcc)));
+        $resultArray=array();
+        foreach($coms as $com) {
+            array_push($resultArray,get_object_vars($com));
+        }
+        return $resultArray;
+    }
 }
