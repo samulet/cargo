@@ -136,8 +136,8 @@ class AddList
      */
     public $value;
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @ODM\ObjectId
+     * @var int
 
      * @Annotation\Type("Zend\Form\Element\Select")
 
@@ -145,6 +145,12 @@ class AddList
      * @Annotation\Options({"label":"Компания"})
      */
     public $company;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     * @Annotation\Exclude()
+     */
+    public $account;
     /**
      * @ODM\ObjectId
      * @var int
