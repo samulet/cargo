@@ -94,21 +94,26 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
-    public function getLocalArray($prefix,$orgListId) {
+    public function getLocalArray($prefix,$itemId, $param) {
+
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $result=array();
-        //$listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
         $listName=$this->getListNameFull();
         foreach($listName as $liName) {
             $id=$liName['id'];
-            $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableList($id,$orgListId);
+            if($param=='account') {
+                $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableAccList($id,$itemId);
+            } elseif($param=='company') {
+                $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableComList($id,$itemId);
+             }
+
             $res=array();
             foreach($list as $li) {
                 $obj_vars = get_object_vars($li);
                 if(!empty($obj_vars['parentFieldId'])) {
 
                     $parentList= $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
-                        array('id' =>  new \MongoId($obj_vars['parentFieldId']),'ownerOrgId'=>new \MongoId($orgListId))
+                        array('id' =>  new \MongoId($obj_vars['parentFieldId']))
                     );
                     $parentListArr=get_object_vars($parentList);
                     if(!empty($parentListArr)) {
@@ -126,8 +131,13 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
-    public function returnDataArray($arrFields,$prefix,$orgListId) {
-        $localArray=$this->getLocalArray($prefix,$orgListId);
+    public function returnDataArray($arrFields,$prefix,$orgListId,$comListId = null) {
+        if(empty($comListId)) {
+            $localArray=$this->getLocalArray($prefix,$orgListId,'account');
+        } else {
+            $localArray=$this->getLocalArray($prefix,$comListId,'company');
+        }
+
         $globalArray=$this->getGlobalArray($prefix);
 
         return array_merge_recursive($globalArray,$localArray);

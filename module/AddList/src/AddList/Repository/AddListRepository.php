@@ -30,6 +30,26 @@ class AddListRepository extends DocumentRepository
             )
             ->getQuery()->execute();
     }
+    public function getLocalAvailableAccList($id,$orgListId)
+    {
+        return $this->createQueryBuilder()
+            ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('global')->equals(null)
+            ->field('account')->equals(new \MongoId($orgListId))
+            ->field('listId')->equals(
+                $id
+            )
+            ->getQuery()->execute();
+    }
+    public function getLocalAvailableComList($id,$orgListId)
+    {
+        return $this->createQueryBuilder()
+            ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('global')->equals(null)
+            ->field('company')->equals(new \MongoId($orgListId))
+            ->field('listId')->equals(
+                $id
+            )
+            ->getQuery()->execute();
+    }
     public function getMyAvailableList($id)
     {
         return $this->createQueryBuilder()
