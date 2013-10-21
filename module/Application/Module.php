@@ -64,6 +64,7 @@ class Module
                 },
                 'topmenu_navigation' => 'Application\Navigation\Service\TopMenuNavigationFactory',
                 'sidebar_navigation' => 'Application\Navigation\Service\SidebarNavigationFactory',
+                'list_navigation' => 'Application\Navigation\Service\ListNavigationFactory',
             ),
         );
     }
