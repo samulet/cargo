@@ -43,7 +43,7 @@ class AddListController extends AbstractActionController
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
-
+        $addListModel->addBootstrap3Class($form);
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
 
