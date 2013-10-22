@@ -200,10 +200,11 @@ class CompanyController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
         $form_array = array();
-        $orgUserModel = $this->getCompanyUserModel();
-        $userListId = $this->zfcUserAuthentication()->getIdentity()->getId();
-        $orgListId = $orgUserModel->getOrgIdByUserId($userListId);
-        $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId);
+
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+
+        $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId,$comListId);
 
         $fillFrom = new CompanyForm();
         $form = $fillFrom->fillFrom($form, $formData, $form_array);

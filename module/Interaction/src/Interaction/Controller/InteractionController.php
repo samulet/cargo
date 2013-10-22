@@ -87,9 +87,11 @@ class InteractionController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
 
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-        $formData=$addListModel->returnDataArray(array(),'interactionNote',$orgListId);
+
+        $formData=$addListModel->returnDataArray(array(),'interactionNote',$orgListId,$comListId);
 
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);

@@ -65,14 +65,17 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array();
+
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
+
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId,$comListId);
 
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
 
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
         $form=$fillFrom->fillFromVehicleSpecial($form,$formData,array('typeLoad'));
 
         $typeForm='';
@@ -147,8 +150,10 @@ class VehicleController extends AbstractActionController
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
 
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
+
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId,$comListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(
@@ -169,8 +174,11 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
+
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
+
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId,$comListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(
@@ -223,8 +231,11 @@ class VehicleController extends AbstractActionController
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
         $form_array=array('mark','model','type','status');
+
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId);
+
+        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId,$comListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(

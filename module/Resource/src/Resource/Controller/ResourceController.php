@@ -87,9 +87,11 @@ class ResourceController extends AbstractActionController
 
         $addListModel = $this->getAddListModel();
 
+
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId);
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
 
 
         $form=$resForm->fillFrom($form,$formData);
