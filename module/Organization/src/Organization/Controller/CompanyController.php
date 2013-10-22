@@ -105,14 +105,14 @@ class CompanyController extends AbstractActionController
             $form = $builder->createForm('Organization\Entity\Company');
             $addListModel = $this->getAddListModel();
             $form_array = array();
-            $orgUserModel = $this->getCompanyUserModel();
-            $orgListId = $orgUserModel->getOrgIdByUserId($userListId);
 
+            $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+            $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-            $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId);
+            $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId,$comListId);
 
             $fillFrom = new AddListForm();
-            $form = $fillFrom->fillFrom($form, $formData, array('address','bankAccount'));
+            $form = $fillFrom->fillFrom($form, $formData, array('address','bankAccount','documents','applicants','authorizedPerson','founder','contact'));
 
             $comModel = $this->getCompanyModel();
             $comModel->addBootstrap3Class($form);
