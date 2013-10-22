@@ -205,7 +205,10 @@ class AddListModel implements ServiceLocatorAwareInterface
         $prop_array['key']=$prop_array['value'];
 
         foreach ($prop_array as $key => $value) {
-            $res->$key = $value;
+            if(!empty($value)) {
+                $res->$key = $value;
+            }
+
         }
 
         $res->ownerOrgId= new \MongoId($orgId);

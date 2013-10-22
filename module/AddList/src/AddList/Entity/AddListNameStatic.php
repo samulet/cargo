@@ -68,6 +68,51 @@ class AddListNameStatic
             'parentId' => null,
             "child" => null
         ),
+
+        "companyFounderType" => array(
+            "name" => "Вид учредителя",
+            "listName"=> "company",
+            "field" => "companyFounderType",
+            "fieldRusName" => "Компания - Вид учредителя" ,
+            'parentId' => null,
+            "child" => null
+        ),
+
+        "companyCompanyContactType" => array(
+            "name" => "Вид контакта",
+            "listName"=> "company",
+            "field" => "companyCompanyContactType",
+            "fieldRusName" => "Компания - Вид контакта" ,
+            'parentId' => null,
+            "child" => null
+        ),
+
+        "companyApplicantsType" => array(
+            "name" => "Вид заявителя",
+            "listName"=> "company",
+            "field" => "companyApplicantsType",
+            "fieldRusName" => "Компания - Вид заявителя" ,
+            'parentId' => null,
+            "child" => null
+        ),
+
+        "companyDocumentType" => array(
+            "name" => "Наименование документа",
+            "listName"=> "company",
+            "field" => "companyDocumentType",
+            "fieldRusName" => "Компания - Наименование документа" ,
+            'parentId' => null,
+            "child" => null
+        ),
+        "companyAuthorizedPersonType" => array(
+            "name" => "Уполномоченные лица",
+            "listName"=> "company",
+            "field" => "companyAuthorizedPersonType",
+            "fieldRusName" => "Компания - Уполномоченные лица" ,
+            'parentId' => null,
+            "child" => null
+        ),
+
         "prod-group" => array(
             "name" => "Продуктовая группа груза",
             "listName"=> "ticketWay",
