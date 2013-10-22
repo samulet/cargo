@@ -43,11 +43,16 @@ function fillTemplate() {
                 selectDataArray[index]=$(this).html();
 
             });
+            $(this).append($(this).data('template'));
 
             $(this).find('select').each(function( index ) {
                 $(this).html(selectDataArray[index]);
                 $(this).find('option').removeAttr('selected');
+
             });
+            $(this).attr('data-template', $(this).html());
+
+            $(this).html('');
         }
     });
 }

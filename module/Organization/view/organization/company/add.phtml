@@ -61,7 +61,7 @@ echo $this->form()->openTag($form);
                 <div class="address">
                     <?php
                     echo '<h1>'.$address->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($address->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($address->getTemplateElement())."'></span>";
                     foreach($address as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -70,7 +70,7 @@ echo $this->form()->openTag($form);
                 <div class="authorizedPerson">
                     <?php
                     echo '<h1>'.$authorizedPerson->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($authorizedPerson->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($authorizedPerson->getTemplateElement())."'></span>";
                     foreach($authorizedPerson as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -83,7 +83,7 @@ echo $this->form()->openTag($form);
                 <div class="contact">
                     <?php
                     echo '<h1>'.$contact->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($contact->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($contact->getTemplateElement())."'></span>";
                     foreach($contact as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -99,7 +99,7 @@ echo $this->form()->openTag($form);
                 <div class="founder">
                     <?php
                     echo '<h1>'.$founder->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($founder->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($founder->getTemplateElement())."'></span>";
                     foreach($founder as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -109,7 +109,7 @@ echo $this->form()->openTag($form);
                 <div class="okved">
                     <?php
                     echo '<h1>'.$okved->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($okved->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($okved->getTemplateElement())."'></span>";
                     foreach($okved as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -131,7 +131,7 @@ echo $this->form()->openTag($form);
                 <div class="license">
                     <?php
                     echo '<h1>'.$license->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($license->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($license->getTemplateElement())."'></span>";
                     foreach($license as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -148,7 +148,7 @@ echo $this->form()->openTag($form);
                 <div class="documents">
                     <?php
                     echo '<h1>'.$documents->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($documents->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($documents->getTemplateElement())."'></span>";
                     foreach($documents as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -158,7 +158,7 @@ echo $this->form()->openTag($form);
                 <div class="bankAccount">
                     <?php
                     echo '<h1>'.$bankAccount->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($bankAccount->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($bankAccount->getTemplateElement())."'></span>";
                     foreach($bankAccount as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -170,7 +170,7 @@ echo $this->form()->openTag($form);
                 <div class="websites">
                     <?php
                     echo '<h1>'.$websites->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($websites->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($websites->getTemplateElement())."'></span>";
                     foreach($websites as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -182,7 +182,7 @@ echo $this->form()->openTag($form);
                 <div class="applicants">
                     <?php
                     echo '<h1>'.$applicants->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($applicants->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($applicants->getTemplateElement())."'></span>";
                     foreach($applicants as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -192,7 +192,7 @@ echo $this->form()->openTag($form);
                 <div class="anotherPersons">
                     <?php
                     echo '<h1>'.$anotherPersons->getLabel().'</h1>';
-                    echo '<div class="template">'.$this->formCollection($anotherPersons->getTemplateElement()).'</div>';
+                    echo "<span class='template' data-template='".$this->formCollection($anotherPersons->getTemplateElement())."'></span>";
                     foreach($anotherPersons as $collectionForm) {
                         echo '<fieldset>'.$this->formCollection($collectionForm).'</fieldset>';
                     } ?>
@@ -209,7 +209,8 @@ echo $this->form()->openTag($form);
                 $('.'+item).append("<input type='hidden' class='counter' value='1'>");
                 currentCount=1;
             }
-            var template=$('.'+item+' .template').html();
+            var template=$('.'+item+' .template').attr('data-template');
+
             template = template.replace(/__index__/g, currentCount);
 
             $('.'+item).append('<fieldset>'+template+'</fieldset>');

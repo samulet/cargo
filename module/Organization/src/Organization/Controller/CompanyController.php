@@ -157,6 +157,7 @@ class CompanyController extends AbstractActionController
         } else {
             $com_id = null;
         }
+       // die(var_dump($post));
         $orgModel = $this->getOrganizationModel();
         $org_id = $orgModel->getOrgIdByUUID($org_uuid);
         $newComId=$comModel->createCompany($post, $org_id, $com_id);
