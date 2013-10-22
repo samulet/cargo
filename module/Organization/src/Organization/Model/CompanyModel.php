@@ -32,10 +32,10 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
-    public function returnCompanies($org_id, $number = '30', $page = '1')
+    public function returnCompanies($accId, $number = '30', $page = '1')
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $cursor = $objectManager->getRepository('Organization\Entity\Company')->getMyAvailableCompany(new \MongoId($org_id));
+        $cursor = $objectManager->getRepository('Organization\Entity\Company')->getMyAvailableCompany(new \MongoId($accId));
 
         $com = array();
         foreach ($cursor as $cur) {
@@ -57,31 +57,29 @@ class CompanyModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function createCompany($post, $org_id, $com_id)
+    public function createCompany($prop_array, $accId, $comId)
     {
         if(!empty($post)) {
-            if(is_array($post)) {
-                $prop_array=$post;
-            } else {
-                $prop_array = get_object_vars($post);
-            }
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
-            if (!empty($com_id)) {
-                if($com_id=='contractAgent') {
-                    $com = new Company($org_id,'contractAgent');
+            if (!empty($comId)) {
+                if($comId=='contractAgent') {
+                    $com = new Company($accId,'contractAgent');
                     $prop_array['dirty']='1';
                 } else {
-                    $com = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+                    $com = $objectManager->getRepository('Organization\Entity\Company')->find($comId);
                 }
 
             } else {
-                $com = new Company($org_id);
+                $com = new Company($accId);
             }
 
 
             foreach ($prop_array as $key => $value) {
-                $com->$key=$value;
+                if(!empty($value)) {
+                    $com->$key=$value;
+                }
+
             }
             $objectManager->persist($com);
             $objectManager->flush();
@@ -125,14 +123,14 @@ class CompanyModel implements ServiceLocatorAwareInterface
     public function getCompanyIdByUUID($com_uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $com_id = $objectManager->getRepository('Organization\Entity\Company')->findOneBy(array('uuid' => $com_uuid));
-        return $com_id->id;
+        $comId = $objectManager->getRepository('Organization\Entity\Company')->findOneBy(array('uuid' => $com_uuid));
+        return $comId->id;
     }
 
-    public function returnCompany($com_id)
+    public function returnCompany($comId)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $com_obj = $objectManager->getRepository('Organization\Entity\Company')->find($com_id);
+        $com_obj = $objectManager->getRepository('Organization\Entity\Company')->find($comId);
         if(!empty($com_obj)) {
             $com = get_object_vars($com_obj);
             unset($com['created']);
@@ -143,14 +141,14 @@ class CompanyModel implements ServiceLocatorAwareInterface
         return $com;
     }
 
-    public function deleteCompany($com_id)
+    public function deleteCompany($comId)
     {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
-        $qb = $objectManager->getRepository('Organization\Entity\Company')->find(new \MongoId($com_id));
+        $qb = $objectManager->getRepository('Organization\Entity\Company')->find(new \MongoId($comId));
         if (!$qb) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $com_id);
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $comId);
         }
         $objectManager->remove($qb);
         $objectManager->flush();
