@@ -132,15 +132,16 @@ class AddListModel implements ServiceLocatorAwareInterface
     }
 
     public function returnDataArray($arrFields,$prefix,$orgListId,$comListId = null) {
-        if(empty($comListId)) {
-            $localArray=$this->getLocalArray($prefix,$orgListId,'account');
-        } else {
-            $localArray=$this->getLocalArray($prefix,$comListId,'company');
+        $localArrayAcc=$this->getLocalArray($prefix,$orgListId,'account');
+        $globalArray=$this->getGlobalArray($prefix);
+        $localArray=array_merge_recursive($globalArray,$localArrayAcc);
+        if(!empty($comListId)) {
+            $localArrayCom=$this->getLocalArray($prefix,$comListId,'company');
+            $localArray=array_merge_recursive($globalArray,$localArrayCom);
         }
 
-        $globalArray=$this->getGlobalArray($prefix);
 
-        return array_merge_recursive($globalArray,$localArray);
+        return $localArray;
     }
 
     public function russianToTranslit($str) {
