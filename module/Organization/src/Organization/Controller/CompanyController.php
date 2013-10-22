@@ -97,9 +97,9 @@ class CompanyController extends AbstractActionController
         }
     }
 
-    public function addCompany($accId, $userListId, $comContractUuid,$param,$post)
+    public function addCompany($accId, $userListId, $comId,$param,$post)
     {
-
+        $comModel = $this->getCompanyModel();
         if(empty($post)) {
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('Organization\Entity\Company');
@@ -116,23 +116,37 @@ class CompanyController extends AbstractActionController
 
             $comModel = $this->getCompanyModel();
             $comModel->addBootstrap3Class($form);
-            if($param=='list') {
+            if( ($param=='list') || ($param=='edit') ) {
+                $comData=$comModel->getCompany($comId);
+                $form->setData($comData);
+                if($param=='list'){
 
-            } if($param=='edit') {
+                    foreach ($form as $el) {
+                        $el->setAttributes(array( 'disabled' => 'disabled' ));
+                        foreach($el as $col) {
+                            foreach($col as $e) {
+                                $e->setAttributes(array( 'disabled' => 'disabled' ));
+                            }
 
+                        }
+
+                    }
+
+                }
             }
+
             return array(
                 'form' => $form,
                 'org_id' => $accId,
-                'comContractUuid' =>$comContractUuid,
+                'comId' =>$comId,
                 'param' => $param
             );
         } else {
 
-            $comModel = $this->getCompanyModel();
+
             if (!empty($param)) {
                 if($param!='contractAgent') {
-                    $comEditId = $comModel->getCompanyIdByUUID($param);
+                    $comEditId = $comModel->getCompanyIdByUUID($comId);
                 } else {
                     $comEditId=$param;
                 }
@@ -146,7 +160,7 @@ class CompanyController extends AbstractActionController
 
             if($param=='contractAgent') {
                 $data['contactAgentId']=$newComId;
-                $comModel->addContractAgentToCompany($data,$comContractUuid);
+                $comModel->addContractAgentToCompany($data,$comId);
             }
 
             return $this->redirect()->toUrl('/account');
