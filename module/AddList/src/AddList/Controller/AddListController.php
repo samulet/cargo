@@ -55,7 +55,7 @@ class AddListController extends AbstractActionController
         $fillFrom->fillComNew($form,$comData,'company');
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
-        $roles = $authorize->getIdentityRoles();
+
 
         if(array_search("admin",$roles,true)) {
 
@@ -95,9 +95,16 @@ class AddListController extends AbstractActionController
                 $el->setAttributes(array( 'disabled' => 'disabled' ));
             }
         }
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $comModel = $this->getCompanyModel();
+        $comData=$comModel->getCompanyOfCurrentAccount($orgListId);
+
+        $fillFrom=new AddListForm();
+        $fillFrom->fillComNew($form,$comData,'company');
+        $form->setData($listData);
         return new ViewModel(array(
             'fieldUuid' => $listUuid,
-            'listData' => $listData,
+
             'form'=>$form,
             'roles'=>$roles,
             'listName'=>$listName,

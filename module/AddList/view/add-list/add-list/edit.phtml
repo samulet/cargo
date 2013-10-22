@@ -10,6 +10,10 @@ $listParent=$this->listParent;
 $fieldName='';
 $actionType=$this->actionType;
 $saveString='';
+
+$company= $form->get('company');
+$forAccount= $form->get('forAccount');
+
 if(empty($actionType)) {
     $saveString='без сохранения';
 }
@@ -36,6 +40,10 @@ echo $this->form()->openTag($form);
 
 
 echo $this->formRow($value);
+
+echo '<p>Сделать доступным для</p>'.$this->formRow($company).'</br>';
+echo $this->formRow($forAccount).'</br>';
+
 if(array_search("admin",$this->roles,true)) {
     $global='';
     if(!empty($this->listData['global'])) {
@@ -45,7 +53,7 @@ if(array_search("admin",$this->roles,true)) {
 }
 ?>
 <?php if(empty($actionType)) {
-echo $this->formElement($form->get('submit'));
+echo $this->formElement($form->get('submit')->setValue('Редактировать'));
 }?>
 <?php  echo $this->form()->closeTag();
 ?>
