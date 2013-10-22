@@ -44,14 +44,14 @@ class AddListNameStatic
             'parentId' => null,
             "child" => null
         ),
-        "ownerships" => array(
+     /*   "ownerships" => array(
             "name" => "Формы собственности компаний" ,
             "listName"=> "company",
             "field" => "property",
             "fieldRusName" => "Компания Форма собственности" ,
             'parentId' => null,
             "child" => null
-        ),
+        ), */
         "requisites" => array(
             "name" => "Реквизиты компаний",
             "listName"=> "company",

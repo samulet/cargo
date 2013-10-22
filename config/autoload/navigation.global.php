@@ -265,17 +265,46 @@ return array(
                 'resource'   => 'route/addList',
             ),
             array(
-                'label' => 'Компания Формы собственности',
-                'route' => 'addList',
-                'action' => 'my-fields',
-                'params' => array('id' => 'ownerships'),
-                'resource'   => 'route/addList',
-            ),
-            array(
                 'label' => 'Компания Реквизиты',
                 'route' => 'addList',
                 'action' => 'my-fields',
                 'params' => array('id' => 'requisites'),
+                'resource'   => 'route/addList',
+            ),
+
+            array(
+                'label' => 'Компания Вид адреса',
+                'route' => 'addList',
+                'action' => 'my-fields',
+                'params' => array('id' => 'companyAddressType'),
+                'resource'   => 'route/addList',
+            ),
+            array(
+                'label' => 'Компания Вид учредителя',
+                'route' => 'addList',
+                'action' => 'my-fields',
+                'params' => array('id' => 'companyFounderType'),
+                'resource'   => 'route/addList',
+            ),
+            array(
+                'label' => 'Компания Вид контакта',
+                'route' => 'addList',
+                'action' => 'my-fields',
+                'params' => array('id' => 'companyCompanyContactType'),
+                'resource'   => 'route/addList',
+            ),
+            array(
+                'label' => 'Компания Вид заявителя',
+                'route' => 'addList',
+                'action' => 'my-fields',
+                'params' => array('id' => 'companyApplicantsType'),
+                'resource'   => 'route/addList',
+            ),
+            array(
+                'label' => 'Компания Уполномоченные лица',
+                'route' => 'addList',
+                'action' => 'my-fields',
+                'params' => array('id' => 'companyDocumentType'),
                 'resource'   => 'route/addList',
             ),
             array(
