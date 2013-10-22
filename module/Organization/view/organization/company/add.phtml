@@ -2,8 +2,8 @@
 
 $form = $this->form;
 $param=$this->param;
-$comContractUuid=$this->comContractUuid;
-$form->setAttribute('action', $this->url('company', array('action' => 'add', 'org_id' => $this->org_id,'id'=>$param, 'comId'=>$comContractUuid)))
+$comId=$this->comId;
+$form->setAttribute('action', $this->url('company', array('action' => 'add', 'org_id' => $this->org_id,'id'=>$param, 'comId'=>$comId)))
     ->prepare();
 
 $name=$form->get('name');
@@ -232,7 +232,9 @@ echo $this->form()->openTag($form);
 
     <?php
 
-
+if($param=='edit') {
+    $form->get('submit')->setValue('Редактировать');
+}
 echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();
 ?>

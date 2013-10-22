@@ -56,7 +56,7 @@ if(!empty($this->org)) {
             <?php foreach($oc['com'] as $c) {  ?>
                 <tr>
                     <td><a href="<?php echo $this->url('company',
-                            array('action'=>'list', 'org_id'=>$o['uuid'],'id' => $c['uuid']));?>"><?php echo $c['name']; ?></a></td>
+                            array('action'=>'add', 'org_id'=>$o['uuid'],'id'=>'list','comId' => $c['uuid']));?>"><?php echo $c['name']; ?></a></td>
        <td>
                 <a href="<?php echo $this->url('company_user', array('action'=>'list','org_id'=>$c['uuid'], 'param' => 'current'));?>">Посмотреть юзеров</a></td>
                                               <td><a href="<?php echo $this->url('company_user',
@@ -70,7 +70,7 @@ if(!empty($this->org)) {
                         <a href="<?php echo $this->url('company', array('action'=>'contractAgentList','org_id'=>$c['uuid']));?>">Посмотреть контрагентов</a></td>
                 <td>
                                 <a href="<?php echo $this->url('company',
-                                    array('action'=>'edit', 'id' => $c['uuid'], 'org_id' => $o['uuid']));?>">Редактировать</a>
+                                    array('action'=>'add','id'=>'edit','comId' => $c['uuid'], 'org_id' => $o['uuid']));?>">Редактировать</a>
                                 <a href="<?php echo $this->url('company',
                                     array('action'=>'delete', 'id' => $c['uuid'],'org_id' => $o['uuid']));?>">Удалить</a>
                 </td>
