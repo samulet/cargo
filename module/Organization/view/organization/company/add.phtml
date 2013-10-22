@@ -3,7 +3,7 @@
 $form = $this->form;
 $param=$this->param;
 $comContractUuid=$this->comContractUuid;
-$form->setAttribute('action', $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id,'id'=>$param, 'comId'=>$comContractUuid)))
+$form->setAttribute('action', $this->url('company', array('action' => 'add', 'org_id' => $this->org_id,'id'=>$param, 'comId'=>$comContractUuid)))
     ->prepare();
 
 $name=$form->get('name');

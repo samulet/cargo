@@ -59,7 +59,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     public function createCompany($prop_array, $accId, $comId)
     {
-        if(!empty($post)) {
+        if(!empty($prop_array)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
             if (!empty($comId)) {

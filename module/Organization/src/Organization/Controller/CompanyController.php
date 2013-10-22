@@ -99,6 +99,7 @@ class CompanyController extends AbstractActionController
 
     public function addCompany($accId, $userListId, $comContractUuid,$param,$post)
     {
+
         if(empty($post)) {
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('Organization\Entity\Company');
@@ -115,6 +116,11 @@ class CompanyController extends AbstractActionController
 
             $comModel = $this->getCompanyModel();
             $comModel->addBootstrap3Class($form);
+            if($param=='list') {
+
+            } if($param=='edit') {
+
+            }
             return array(
                 'form' => $form,
                 'org_id' => $accId,
