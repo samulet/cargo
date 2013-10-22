@@ -31,8 +31,8 @@ class CompanyController extends AbstractActionController
         } else {
             $comModel = $this->getCompanyModel();
             $orgModel = $this->getOrganizationModel();
-            $org_id = $orgModel->getOrgIdByUUID($org_uuid);
-            $com = $comModel->returnCompanies($org_id);
+            $accId = $orgModel->getOrgIdByUUID($org_uuid);
+            $com = $comModel->returnCompanies($accId);
         }
         return new ViewModel(array(
             'org' => $com,
@@ -97,77 +97,69 @@ class CompanyController extends AbstractActionController
         }
     }
 
-    public function addCompany($orgId, $userListId, $comContractUuid,$param)
+    public function addCompany($accId, $userListId, $comContractUuid,$param,$post)
     {
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Organization\Entity\Company');
-        $addListModel = $this->getAddListModel();
-        $form_array = array();
-        $orgUserModel = $this->getCompanyUserModel();
-        $orgListId = $orgUserModel->getOrgIdByUserId($userListId);
+        if(empty($post)) {
+            $builder = new AnnotationBuilder();
+            $form = $builder->createForm('Organization\Entity\Company');
+            $addListModel = $this->getAddListModel();
+            $form_array = array();
+            $orgUserModel = $this->getCompanyUserModel();
+            $orgListId = $orgUserModel->getOrgIdByUserId($userListId);
 
 
-        $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId);
+            $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId);
 
-        $fillFrom = new AddListForm();
-        $form = $fillFrom->fillFrom($form, $formData, array('address','bankAccount'));
+            $fillFrom = new AddListForm();
+            $form = $fillFrom->fillFrom($form, $formData, array('address','bankAccount'));
 
+            $comModel = $this->getCompanyModel();
+            $comModel->addBootstrap3Class($form);
+            return array(
+                'form' => $form,
+                'org_id' => $accId,
+                'comContractUuid' =>$comContractUuid,
+                'param' => $param
+            );
+        } else {
 
-        $comModel = $this->getCompanyModel();
-        $comModel->addBootstrap3Class($form);
-        return array(
-            'form' => $form,
-            'org_id' => $orgId,
-            'comContractUuid' =>$comContractUuid,
-            'param' => $param
-        );
+            $comModel = $this->getCompanyModel();
+            if (!empty($param)) {
+                if($param!='contractAgent') {
+                    $comEditId = $comModel->getCompanyIdByUUID($param);
+                } else {
+                    $comEditId=$param;
+                }
+            } else {
+                $comEditId = null;
+            }
+
+            $orgModel = $this->getOrganizationModel();
+            $accId = $orgModel->getOrgIdByUUID($accId);
+            $newComId=$comModel->createCompany($post, $accId, $comEditId);
+
+            if($param=='contractAgent') {
+                $data['contactAgentId']=$newComId;
+                $comModel->addContractAgentToCompany($data,$comContractUuid);
+            }
+
+            return $this->redirect()->toUrl('/account');
+        }
+
     }
 
     public function addAction()
     {
-        $org_id = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $accId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $userListId = $this->zfcUserAuthentication()->getIdentity()->getId();
         $param = $this->getEvent()->getRouteMatch()->getParam('id');
         $comContractUuid = $this->getEvent()->getRouteMatch()->getParam('comId');
+        $post=get_object_vars($this->getRequest()->getPost());
         return new ViewModel(
-            $this->addCompany($org_id, $userListId, $comContractUuid,$param)
+            $this->addCompany($accId, $userListId, $comContractUuid,$param,$post)
         );
 
 
-    }
-
-    public function createCompanyAction()
-    {
-        $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
-        $post = $this->getRequest()->getPost();
-        $comModel = $this->getCompanyModel();
-       // die(var_dump($post));
-        $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
-
-        $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-
-        $comContractUuid = $this->getEvent()->getRouteMatch()->getParam('comId');
-
-        if (!empty($com_uuid)) {
-            if($com_uuid!='contractAgent') {
-                $com_id = $comModel->getCompanyIdByUUID($com_uuid);
-            } else {
-                $com_id=$com_uuid;
-            }
-        } else {
-            $com_id = null;
-        }
-       // die(var_dump($post));
-        $orgModel = $this->getOrganizationModel();
-        $org_id = $orgModel->getOrgIdByUUID($org_uuid);
-        $newComId=$comModel->createCompany($post, $org_id, $com_id);
-        if($com_uuid=='contractAgent') {
-            $data['contactAgentId']=$newComId;
-
-            $comModel->addContractAgentToCompany($data,$comContractUuid);
-        }
-
-        return $this->redirect()->toUrl('/account');
     }
 
     public function editAction()
@@ -179,7 +171,7 @@ class CompanyController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Organization\Entity\Company');
 
-        $org_id = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $accId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
 
 
@@ -199,7 +191,7 @@ class CompanyController extends AbstractActionController
         return new ViewModel(array(
             'com' => $com,
             'form' => $form,
-            'org_id' => $org_id,
+            'org_id' => $accId,
             'com_id' => $com_uuid
         ));
     }
@@ -209,8 +201,8 @@ class CompanyController extends AbstractActionController
         $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $comModel = $this->getCompanyModel();
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-        $com_id = $comModel->getCompanyIdByUUID($com_uuid);
-        $comModel->deleteCompany($com_id);
+        $comEditId = $comModel->getCompanyIdByUUID($com_uuid);
+        $comModel->deleteCompany($comEditId);
         return $this->redirect()->toUrl('/account');
     }
 
