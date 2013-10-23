@@ -189,8 +189,8 @@ class AddListModel implements ServiceLocatorAwareInterface
         $res = new AddList();
 
         if(!empty($prop_array['requisites'])) {
-            $prop_array['requisites']=$prop_array['requisites'][0];
-            $prop_array['value']='р/c'.$prop_array['requisites']['addListRequisitesAccountNumber'].' '.$prop_array['requisites']['addListRequisitesBankName'];
+
+            $prop_array['value']='р/c'.$prop_array['requisites'][0]['addListRequisitesAccountNumber'].' '.$prop_array['requisites'][0]['addListRequisitesBankName'];
         }
 
         if(!empty($prop_array['forAccount'])) {

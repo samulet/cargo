@@ -4,6 +4,7 @@ $form->setAttribute('action', $this->url('addList', array('action' => 'editField
     ->prepare();
 
 $value = $form->get('value');
+$uuid=$this->uuid;
 $listName=$this->listName;
 $listData=$this->listData;
 $listParent=$this->listParent;
@@ -39,8 +40,11 @@ if(empty($actionType)) {
 echo $this->form()->openTag($form);
 
 
-echo $this->formRow($value);
-
+if($form->has($uuid)) {
+    echo $this->formCollection($form->get($uuid));
+} else {
+    echo $this->formRow($value);
+}
 echo '<p>Сделать доступным для</p>'.$this->formRow($company).'</br>';
 echo $this->formRow($forAccount).'</br>';
 
