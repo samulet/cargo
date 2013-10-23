@@ -12,25 +12,8 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
 
     protected function getPages(ServiceLocatorInterface $serviceLocator)
     {
-
         if (null === $this->pages) {
-            //FETCH data from table menu :
-//die(var_dump($serviceLocator->get('navigation')));
             $nameMenu=$this->getName();
-
-    /*     $fetchMenu = $serviceLocator->get('menu')->fetchAll();
-
-            $configuration['navigation'][$nameMenu] = array();
-            foreach($fetchMenu as $key=>$row)
-            {
-                $configuration['navigation'][$nameMenu][$row['name']] = array(
-                    'label' => $row['label'],
-                    'route' => $row['route'],
-                );
-            }
-    */
-
-          //  die(var_dump($currentOrg));
             $comUserModel = $serviceLocator->get('Organization\Model\CompanyUserModel');
             $comModel = $serviceLocator->get('Organization\Model\CompanyModel');
             $orgModel = $serviceLocator->get('Organization\Model\OrganizationModel');
