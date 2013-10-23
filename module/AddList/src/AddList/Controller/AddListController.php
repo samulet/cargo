@@ -102,6 +102,7 @@ class AddListController extends AbstractActionController
         $fillFrom=new AddListForm();
         $fillFrom->fillComNew($form,$comData,'company');
         $form->setData($listData);
+        //die(var_dump($listData));
         return new ViewModel(array(
             'fieldUuid' => $listUuid,
 

@@ -3,7 +3,7 @@ $form = $this->form;
 $form->setAttribute('action', $this->url('addList', array('action' => 'editField','id'=>$this->fieldUuid)))
     ->prepare();
 
-$value = $form->get('value')->setValue($this->listData['value']);
+$value = $form->get('value');
 $listName=$this->listName;
 $listData=$this->listData;
 $listParent=$this->listParent;
