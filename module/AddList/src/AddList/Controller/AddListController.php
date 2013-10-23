@@ -161,7 +161,7 @@ class AddListController extends AbstractActionController
     public function myAction() {;
 
         $addListModel = $this->getAddListModel();
-        $list=$addListModel->getListName($this->getRequest()->getPost());
+        $list=$addListModel->getListName();
 
         return new ViewModel(array(
 

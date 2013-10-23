@@ -356,7 +356,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $trueListNameArray;
     }
 
-    public function getListName($id) {
+    public function getListName($id = null) {
         $list=AddListNameStatic::$list;
         if(is_string($id)) {
            if(!empty($list[$id])) {
@@ -371,75 +371,6 @@ class AddListModel implements ServiceLocatorAwareInterface
         }
 
         return $list;
-
-
-/*
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if(!is_string($id)) {
-            $propArray=get_object_vars($id);
-
-        } else {
-            $propArray=$id;
-        }
-        $res = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName($propArray);
-        $result=array();
-
-        foreach($res as $re)
-        {
-
-            $child=$objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName($re->id,'child');
-            $counter=0;
-            foreach($child as $ch) {
-                $child=$ch;
-                $counter++;
-            }
-            if($counter==0) {
-                $child=null;
-            }
-            $childArray=array();
-            while(!empty($child)) {
-
-                    if(empty($childArray)) {
-                        $childArray= array('list'=>get_object_vars($child), 'child'=>null);
-
-                    } else {
-                        $arrTmp=$childArray['child'];
-                        $targetChild=&$childArray['child'];
-                        while(!empty($arrTmp)) {
-                            $arrTmp=$arrTmp['child'];
-                            $targetChild=&$targetChild['child'];
-                        }
-                        $targetChild= array('list'=>get_object_vars($child), 'child'=>null);
-
-                    }
-
-
-
-                $child=$objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListName($child->id,'child');
-                $counter=0;
-                foreach($child as $ch) {
-                    $counter++;
-                    $child=$ch;
-                }
-                if($counter==0) {
-                    $child=null;
-                }
-
-            }
-
-            array_push($result,array('list'=>get_object_vars($re), 'child'=>$childArray));
-        }
-
-        if(!empty($propArray)) {
-            $result=$result[0]['list'];
-        }
-        if(empty($result)) {
-            $result=null;
-        }
-
-
-        return $result;
-        */
     }
 
     public function deleteList($uuid)
