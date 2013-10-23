@@ -243,7 +243,9 @@ class AddListController extends AbstractActionController
     public function editFieldAction() {
         $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $listId=$addListModel->editField($listUuid,$this->getRequest()->getPost());
+        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $listId=$addListModel->editField($listUuid,$this->getRequest()->getPost(),$orgListId,$comListId);
         $listName=$addListModel->getListName((string)$listId['listId']);
         return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
     }

@@ -439,19 +439,42 @@ class AddListModel implements ServiceLocatorAwareInterface
 
     }
 
-    public function editField($uuid,$post) {
+    public function editField($uuid,$post,$orgId,$comId) {
         $prop_array = get_object_vars($post);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list=  $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
             array('uuid' => $uuid)
         );
-        $prop_array['key']=$this->russianToTranslit( $prop_array['value']);
+        $prop_array['key']= $prop_array['value'];
+        if(!empty($prop_array['requisites'])) {
+            $prop_array['requisites']=$prop_array['requisites'][0];
+            $prop_array['value']='р/c'.$prop_array['requisites']['addListRequisitesAccountNumber'].' '.$prop_array['requisites']['addListRequisitesBankName'];
+        }
+
+        if(!empty($prop_array['forAccount'])) {
+
+            if($prop_array['forAccount']=='company') {
+                if(!empty($prop_array['company'])) {
+
+                    $prop_array['company']=new \MongoId($comId);
+                } else {
+                    $prop_array['company']=new \MongoId($comId);
+                }
+            } elseif ($prop_array['forAccount']=='account') {
+                $prop_array['account']=new \MongoId($orgId);
+            }
+
+        }
 
         foreach ($prop_array as $key => $value) {
-            $list->$key = $value;
+            if(!empty($value)) {
+                $list->$key = $value;
+            }
+
         }
         $objectManager->persist($list);
         $objectManager->flush();
+
         return get_object_vars($list);
     }
 
