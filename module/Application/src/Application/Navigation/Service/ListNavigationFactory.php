@@ -40,6 +40,21 @@ class ListNavigationFactory extends DefaultNavigationFactory
 
 
             $pages=array();
+            array_push($pages,
+                array(
+                    'label' => 'Справочники',
+                    'type' => 'uri',
+                    'uri' => '',
+                    'class' => 'nav-header',
+                    'resource'   => 'route/addList',
+                ),
+                array(
+                    'label' => 'Мои справочники',
+                    'route' => 'addList',
+                    'action' => 'my',
+                    'params' => array('id' => null),
+                    'resource'   => 'route/addList',
+                ));
             foreach($list as $lName =>$l) {
                 array_push($pages,array(
                         'label' => $l['fieldRusName'],
