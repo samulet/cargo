@@ -403,7 +403,12 @@ class AddListModel implements ServiceLocatorAwareInterface
         if(empty($list)) {
             $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('uuid' => $uuid));
         }
-        return $list->id;
+        if(empty($list)) {
+            return null;
+        } else {
+            return $list->id;
+        }
+
     }
 
     public function getChildName($id) {
