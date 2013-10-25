@@ -31,10 +31,10 @@ class CompanyWebsitesFieldset extends Fieldset implements InputFilterProviderInt
                 'options' => array(
                     'label' => 'Тип сайта',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -45,10 +45,10 @@ class CompanyWebsitesFieldset extends Fieldset implements InputFilterProviderInt
                 'options' => array(
                     'label' => 'Ссылка на сайт',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -60,11 +60,12 @@ class CompanyWebsitesFieldset extends Fieldset implements InputFilterProviderInt
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
     }
 
     public function getInputFilterSpecification()

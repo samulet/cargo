@@ -6,23 +6,25 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Account\Entity\CompanyUserInterface;
 use Doctrine\ODM\MongoDB\Mapping\Types\Type;
+
 /**
-* @ODM\Document(collection="companyUser")
-*/
+ * @ODM\Document(collection="companyUser")
+ */
 class CompanyUser
 {
-    public function __construct($accId,$user_id, $param, $roles)
+    public function __construct($accId, $user_id, $param, $roles)
     {
 
 
-        if($param=='admin') {
-                $this->orgId=new \MongoId($accId);
+        if ($param == 'admin') {
+            $this->orgId = new \MongoId($accId);
         } else {
-                $this->setCompanyId(new \MongoId($accId));
+            $this->setCompanyId(new \MongoId($accId));
         }
         $this->setUserId(new \MongoId($user_id));
-        $this->roles=$roles;
+        $this->roles = $roles;
     }
+
     /**
      * @ODM\Id
      * @var int
@@ -60,22 +62,24 @@ class CompanyUser
         return $this->id;
     }
 
-        function setId($id)
-        {
-            $this->id = $id;
-            return $this;
-        }
+    function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     /**
      * Set id.
      *
      * @param int $id
      * @return UserInterface
      */
-     public function getOrgId()
-     {
+    public function getOrgId()
+    {
         return $this->orgId;
-     }
-     /**
+    }
+
+    /**
      * Set id.
      *
      * @param int $id
@@ -107,6 +111,7 @@ class CompanyUser
     {
         return $this->userRights;
     }
+
     function setUserRights($userRights)
     {
         $this->userRights = $userRights;

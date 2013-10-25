@@ -32,70 +32,71 @@ class CompanyContactsFieldset extends Fieldset implements InputFilterProviderInt
                 'options' => array(
                     'label' => 'Вид контакта',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
-  $this->add(
-      array(
-          'name' => 'companyContactCodeCountry',
-          'options' => array(
-              'label' => 'Код страны',
-              'label_attributes' => array(
-                  'class'  => 'control-label'
-              ),
-          ),
-          'attributes' => array (
-              'class' => 'form-control'
-          )
-      )
-  );
-  $this->add(
-      array(
-          'name' => 'companyContactCodeCity',
-          'options' => array(
-              'label' => 'Код города',
-              'label_attributes' => array(
-                  'class'  => 'control-label'
-              ),
-          ),
-          'attributes' => array (
-              'class' => 'form-control'
-          )
-      )
-  );
-  $this->add(
-      array(
-          'name' => 'companyContactNumber',
-          'options' => array(
-              'label' => 'Номер',
-              'label_attributes' => array(
-                  'class'  => 'control-label'
-              ),
-          ),
-          'attributes' => array (
-              'class' => 'form-control'
-          )
-      )
-  );
-          $this->add(
-              array(
-                  'name' => 'companyContactNumberAdditional',
-                  'options' => array(
-                      'label' => 'Дополнительный номер',
-                      'label_attributes' => array(
-                          'class'  => 'control-label'
-                      ),
-                  ),
-                  'attributes' => array (
-                      'class' => 'form-control'
-                  )
-              )
-          );
+            )
+        );
+        $this->add(
+            array(
+                'name' => 'companyContactCodeCountry',
+                'options' => array(
+                    'label' => 'Код страны',
+                    'label_attributes' => array(
+                        'class' => 'control-label'
+                    ),
+                ),
+                'attributes' => array(
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(
+            array(
+                'name' => 'companyContactCodeCity',
+                'options' => array(
+                    'label' => 'Код города',
+                    'label_attributes' => array(
+                        'class' => 'control-label'
+                    ),
+                ),
+                'attributes' => array(
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(
+            array(
+                'name' => 'companyContactNumber',
+                'options' => array(
+                    'label' => 'Номер',
+                    'label_attributes' => array(
+                        'class' => 'control-label'
+                    ),
+                ),
+                'attributes' => array(
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(
+            array(
+                'name' => 'companyContactNumberAdditional',
+                'options' => array(
+                    'label' => 'Дополнительный номер',
+                    'label_attributes' => array(
+                        'class' => 'control-label'
+                    ),
+                ),
+                'attributes' => array(
+                    'class' => 'form-control'
+                )
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyContactDelete',
@@ -103,11 +104,12 @@ class CompanyContactsFieldset extends Fieldset implements InputFilterProviderInt
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
     }
 
     public function getInputFilterSpecification()

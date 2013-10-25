@@ -31,10 +31,10 @@ class CompanyOkvedFieldset extends Fieldset implements InputFilterProviderInterf
                 'options' => array(
                     'label' => 'Код ОКВЭД',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -46,11 +46,12 @@ class CompanyOkvedFieldset extends Fieldset implements InputFilterProviderInterf
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
 
     }
 

@@ -42,107 +42,114 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'options' => array(
                     'label' => 'Вид адреса',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyAddressIndex',
                 'options' => array(
                     'label' => 'Почтовый индекс',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
         );
-        $this->add(array(
-            'name' => 'companyAddressSubject',
-            'options' => array(
-                'label' => 'Субъект РФ',
-                'label_attributes' => array(
-                    'class'  => 'control-label'
+        $this->add(
+            array(
+                'name' => 'companyAddressSubject',
+                'options' => array(
+                    'label' => 'Субъект РФ',
+                    'label_attributes' => array(
+                        'class' => 'control-label'
+                    ),
                 ),
-            ),
-            'attributes' => array (
-                'class' => 'form-control'
+                'attributes' => array(
+                    'class' => 'form-control'
 
+                )
             )
-        ));
+        );
         $this->add(
             array(
                 'name' => 'companyAddressCity',
                 'options' => array(
                     'label' => 'Город',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyAddressTown',
                 'options' => array(
                     'label' => 'Населенный пункт',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyAddressStreet',
                 'options' => array(
                     'label' => 'Улица',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyAddressHouse',
                 'options' => array(
                     'label' => 'Номер дома',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyAddressPart',
                 'options' => array(
                     'label' => 'Корпус',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
@@ -154,10 +161,10 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'options' => array(
                     'label' => 'Квартира',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
@@ -171,11 +178,12 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
 
 
     }

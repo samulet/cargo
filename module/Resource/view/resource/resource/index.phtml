@@ -1,10 +1,9 @@
 <?php
-$resources=$this->res;
+$resources = $this->res;
 
 
 ?>
 <h1>Все ресурсы</h1>
-
 
 
 <table class="table">
@@ -16,104 +15,111 @@ $resources=$this->res;
             Тариф
         </th>
         <th>
-        Транспорт (кузов / гп,т / объем, м3 / загрузка)
+            Транспорт (кузов / гп,т / объем, м3 / загрузка)
         </th>
         <th>
             Компания
         </th>
         <th>
-        Статус
+            Статус
         </th>
 
-                   <th>
-                       Действия
-                    </th>
+        <th>
+            Действия
+        </th>
 
     </tr>
     <?php foreach ($resources as $resource) {
-    $resourceWay=$resource['ways'];
-    $vehicle=$resource['veh'];
+        $resourceWay = $resource['ways'];
+        $vehicle = $resource['veh'];
 
-    $owner=$resource['owner'];
-    $resource=$resource['res'];
+        $owner = $resource['owner'];
+        $resource = $resource['res'];
 
-    ?>
-<tr>
-            <td>
-                <?php
-                foreach($resourceWay as $way) {
-                    echo $way['areaLoad'].' '.$way['dateStart'] . ' / ' . $way['areaUnload']. ' '.$way['timeStart'].'</br>';
-                }
-                ?>
-
-            </td>
-            <td>
-                <?php
-                foreach($resourceWay as $way) {
-
-                    echo $way['money'] . ' ' . $way['currency'].'</br>';
-                }
-                ?>
-
-            </td>
-
-
-
-            <td>
-            <?php
-            $str='';
-            if(!empty($vehicle['semitrailer'])) {
-                $str.='Полуприцеп ';
-            }
-            if(!empty($vehicle['tractor'])) {
-                            $str.='Тягач ';
-                        }
-                        if(!empty($vehicle['coupling'])) {
-                                        $str.='Сцепка ';
-                                    }
-                                    if(!empty($vehicle['lorry'])) {
-                                                    $str.='Грузовик ';
-                                                }
-
-
-            ?>
-               <a href="<?php echo $this->url('resource',
-                               array('action' => 'add', 'id' => $resource['uuid'],'type'=>'list'));?>"> <?php
-
-                                 $strLoad='';
-                                 foreach($resource['typeLoad'] as $typeLoad) {
-                                                   $strLoad.=$typeLoad.', ';
-                                               }
-                               echo $str.' / '.$vehicle['capacity'].' / '.' / '.$strLoad;
-                               ?>
-                               </a>
-            </td>
-        <td>
-        <?php echo $owner['property'].' '.$owner['name']; ?>
-        </td>
-        <td>
-                        <?php echo $vehicle['status']; ?>
-                    </td>
-         <?php
-        if(array_search("admin",$this->roles,true)) {
-           ?>
-        <td>
-            <a href="<?php echo $this->url('resource',
-                array('action' => 'add', 'id' => $resource['uuid'],'type'=>'edit'));?>">Редактировать</a>
-        </td>
-           <?php
-        }
         ?>
-        <td>
-            <a href="<?php echo $this->url('auction',
-                array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить аукцион</a>
-        </td>
-                <td>
-                    <a href="<?php echo $this->url('interaction',
-                        array('action'=>'add', 'id' => $resource['uuid']));?>">Добавить предложение</a>
-                </td>
+        <tr>
+            <td>
+                <?php
+                foreach ($resourceWay as $way) {
+                    echo $way['areaLoad'] . ' ' . $way['dateStart'] . ' / ' . $way['areaUnload'] . ' ' . $way['timeStart'] . '</br>';
+                }
+                ?>
 
-</tr>
+            </td>
+            <td>
+                <?php
+                foreach ($resourceWay as $way) {
+
+                    echo $way['money'] . ' ' . $way['currency'] . '</br>';
+                }
+                ?>
+
+            </td>
+
+
+            <td>
+                <?php
+                $str = '';
+                if (!empty($vehicle['semitrailer'])) {
+                    $str .= 'Полуприцеп ';
+                }
+                if (!empty($vehicle['tractor'])) {
+                    $str .= 'Тягач ';
+                }
+                if (!empty($vehicle['coupling'])) {
+                    $str .= 'Сцепка ';
+                }
+                if (!empty($vehicle['lorry'])) {
+                    $str .= 'Грузовик ';
+                }
+
+
+                ?>
+                <a href="<?php echo $this->url(
+                    'resource',
+                    array('action' => 'add', 'id' => $resource['uuid'], 'type' => 'list')
+                );?>"> <?php
+
+                    $strLoad = '';
+                    foreach ($resource['typeLoad'] as $typeLoad) {
+                        $strLoad .= $typeLoad . ', ';
+                    }
+                    echo $str . ' / ' . $vehicle['capacity'] . ' / ' . ' / ' . $strLoad;
+                    ?>
+                </a>
+            </td>
+            <td>
+                <?php echo $owner['property'] . ' ' . $owner['name']; ?>
+            </td>
+            <td>
+                <?php echo $vehicle['status']; ?>
+            </td>
+            <?php
+            if (array_search("admin", $this->roles, true)) {
+                ?>
+                <td>
+                    <a href="<?php echo $this->url(
+                        'resource',
+                        array('action' => 'add', 'id' => $resource['uuid'], 'type' => 'edit')
+                    );?>">Редактировать</a>
+                </td>
+            <?php
+            }
+            ?>
+            <td>
+                <a href="<?php echo $this->url(
+                    'auction',
+                    array('action' => 'add', 'id' => $resource['uuid'])
+                );?>">Добавить аукцион</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'interaction',
+                    array('action' => 'add', 'id' => $resource['uuid'])
+                );?>">Добавить предложение</a>
+            </td>
+
+        </tr>
     <?php } ?>
 
 </table>

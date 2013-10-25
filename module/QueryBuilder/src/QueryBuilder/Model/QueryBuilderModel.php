@@ -31,38 +31,47 @@ class QueryBuilderModel implements ServiceLocatorAwareInterface
         return $qb;
     }
 
-    public function isTicket($itemId) {
+    public function isTicket($itemId)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $itemId= $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(array('id' => new \MongoId($itemId)));
-        if(!empty($itemId)) {
+        $itemId = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(
+            array('id' => new \MongoId($itemId))
+        );
+        if (!empty($itemId)) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function isResource($itemId) {
+    public function isResource($itemId)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $itemId= $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($itemId)));
-        if(!empty($itemId)) {
+        $itemId = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
+            array('id' => new \MongoId($itemId))
+        );
+        if (!empty($itemId)) {
             return true;
         } else {
             return false;
         }
     }
-    public function arrayIntersect($arr1, $arr2) {
-        foreach($arr1 as &$el) {
-            $el=serialize($el);
+
+    public function arrayIntersect($arr1, $arr2)
+    {
+        foreach ($arr1 as &$el) {
+            $el = serialize($el);
         }
-        foreach($arr2 as &$el) {
-            $el=serialize($el);
+        foreach ($arr2 as &$el) {
+            $el = serialize($el);
         }
-        $resultArray=array_intersect($arr1,$arr2);
-        foreach($resultArray as &$el) {
-            $el=unserialize($el);
+        $resultArray = array_intersect($arr1, $arr2);
+        foreach ($resultArray as &$el) {
+            $el = unserialize($el);
         }
         return $resultArray;
     }
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;

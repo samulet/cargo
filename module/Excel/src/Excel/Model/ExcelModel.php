@@ -69,15 +69,22 @@ class ExcelModel implements ServiceLocatorAwareInterface
         foreach ($ticketWay as $way) {
             if ($counter != 1) {
                 $start = $offset + ($counter - 1) * $step;
-                $objPHPExcel->getActiveSheet()->getStyle('D' . ($start + 1) . ':G' . ($start + $step - 1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                $objPHPExcel->getActiveSheet()->getStyle(
+                    'D' . ($start + 1) . ':G' . ($start + $step - 1)
+                )->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                 $objPHPExcel->getActiveSheet()->getStyle('A' . $start . ':G' . $start)->getFont()->setBold(true);
-                $objPHPExcel->getActiveSheet()->getStyle('A' . $start . ':G' . $start)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('A' . $start . ':G' . $start)->getAlignment()->setHorizontal(
+                    PHPExcel_Style_Alignment::HORIZONTAL_CENTER
+                );
                 $objPHPExcel->getActiveSheet()->mergeCells('A' . $start . ':G' . $start);
                 $copyCounter = $offset + 1;
                 for ($i = $start + 1; $i < $start + $step; $i++) {
                     $objPHPExcel->getActiveSheet()->mergeCells('A' . $i . ':C' . $i);
                     $objPHPExcel->getActiveSheet()->mergeCells('D' . $i . ':G' . $i);
-                    $objPHPExcel->getActiveSheet()->setCellValue('A' . $i, $objPHPExcel->getActiveSheet()->getCell('A' . $copyCounter)->getValue());
+                    $objPHPExcel->getActiveSheet()->setCellValue(
+                        'A' . $i,
+                        $objPHPExcel->getActiveSheet()->getCell('A' . $copyCounter)->getValue()
+                    );
                     $copyCounter++;
                 }
                 $objPHPExcel->getActiveSheet()
@@ -89,9 +96,15 @@ class ExcelModel implements ServiceLocatorAwareInterface
             $objPHPExcel->getActiveSheet()
                 ->setCellValue('D' . (++$start), $way['cargoOwner'])
                 ->setCellValue('D' . (++$start), '')
-                ->setCellValue('D' . (++$start), $way['dateStart'] . ' / с ' . $way['timeLoadStart'] . ' по ' . $way['timeLoadEnd'])
+                ->setCellValue(
+                    'D' . (++$start),
+                    $way['dateStart'] . ' / с ' . $way['timeLoadStart'] . ' по ' . $way['timeLoadEnd']
+                )
                 ->setCellValue('D' . (++$start), $way['areaLoad'])
-                ->setCellValue('D' . (++$start), $way['dateEnd'] . ' / ' . $way['timeLoadEnd'] . ' по ' . $way['timeUnloadEnd'])
+                ->setCellValue(
+                    'D' . (++$start),
+                    $way['dateEnd'] . ' / ' . $way['timeLoadEnd'] . ' по ' . $way['timeUnloadEnd']
+                )
                 ->setCellValue('D' . (++$start), $way['areaUnload'])
                 ->setCellValue('D' . (++$start), '')
                 ->setCellValue('D' . (++$start), '')
@@ -248,7 +261,10 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
         foreach ($coord['ticket'] as $key => $value) {
             $objPHPExcel->getActiveSheet()
-                ->setCellValue($value['column'] . $value['row'], $objPHPExcel->getActiveSheet()->getCell($value['column'] . $value['row']) . ' ' . $ticket[$key]);
+                ->setCellValue(
+                    $value['column'] . $value['row'],
+                    $objPHPExcel->getActiveSheet()->getCell($value['column'] . $value['row']) . ' ' . $ticket[$key]
+                );
         }
         return $objPHPExcel;
     }
@@ -287,16 +303,29 @@ class ExcelModel implements ServiceLocatorAwareInterface
             foreach ($coordWay as $key => &$value) {
                 if (isset($tick[$key])) {
                     $objPHPExcel->getActiveSheet()
-                        ->setCellValue($value['column'] . $value['row'], $objPHPExcel->getActiveSheet()->getCell($value['column'] . $value['row']) . ' ' . $tick[$key]);
-                    $objPHPExcel->getActiveSheet()->getStyle($value['column'] . $value['row'])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                        ->setCellValue(
+                            $value['column'] . $value['row'],
+                            $objPHPExcel->getActiveSheet()->getCell(
+                                $value['column'] . $value['row']
+                            ) . ' ' . $tick[$key]
+                        );
+                    $objPHPExcel->getActiveSheet()->getStyle($value['column'] . $value['row'])->getAlignment(
+                    )->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $value['column']++;
                 }
             }
             $objPHPExcel->getActiveSheet()
-                ->setCellValue($coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row'], $loadCountName . $loadCount);
+                ->setCellValue(
+                    $coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row'],
+                    $loadCountName . $loadCount
+                );
             $loadCount++;
-            $objPHPExcel->getActiveSheet()->getStyle($coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row'])->getFont()->setBold(true);
-            $objPHPExcel->getActiveSheet()->getStyle($coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row'])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle(
+                $coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row']
+            )->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle(
+                $coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row']
+            )->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getColumnDimension($coord['special']['loadNumber']['column'])
                 ->setAutoSize(true);
             $coord['special']['loadNumber']['column']++;
@@ -329,8 +358,14 @@ class ExcelModel implements ServiceLocatorAwareInterface
             foreach ($coordWay as $key => &$value) {
                 if (isset($tick[$key])) {
                     $objPHPExcel->getActiveSheet()
-                        ->setCellValue($value['column'] . $value['row'], $objPHPExcel->getActiveSheet()->getCell($value['column'] . $value['row']) . ' ' . $tick[$key]);
-                    $objPHPExcel->getActiveSheet()->getStyle($value['column'] . $value['row'])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                        ->setCellValue(
+                            $value['column'] . $value['row'],
+                            $objPHPExcel->getActiveSheet()->getCell(
+                                $value['column'] . $value['row']
+                            ) . ' ' . $tick[$key]
+                        );
+                    $objPHPExcel->getActiveSheet()->getStyle($value['column'] . $value['row'])->getAlignment(
+                    )->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $value['row'] = $value['row'] + $offset;
                 }
             }
@@ -350,10 +385,17 @@ class ExcelModel implements ServiceLocatorAwareInterface
             }
 
             $objPHPExcel->getActiveSheet()
-                ->setCellValue($coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row'], $loadCountName . $loadCount);
+                ->setCellValue(
+                    $coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row'],
+                    $loadCountName . $loadCount
+                );
             $loadCount++;
-            $objPHPExcel->getActiveSheet()->getStyle($coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row'])->getFont()->setBold(true);
-            $objPHPExcel->getActiveSheet()->getStyle($coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row'])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle(
+                $coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row']
+            )->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle(
+                $coord['special']['loadNumber']['column'] . $coord['special']['loadNumber']['row']
+            )->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getColumnDimension($coord['special']['loadNumber']['column'])
                 ->setAutoSize(true);
             $coord['special']['loadNumber']['row'] = $coord['special']['loadNumber']['row'] + $offset;
@@ -482,7 +524,11 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                 $headrows[$h]['valign'][] = 'top';
                             }
                             if ($ths->item($x)->hasAttribute('bgcolor')) {
-                                $headrows[$h]['bgcolor'][] = str_replace("#", "", $ths->item($x)->getAttribute('bgcolor'));
+                                $headrows[$h]['bgcolor'][] = str_replace(
+                                    "#",
+                                    "",
+                                    $ths->item($x)->getAttribute('bgcolor')
+                                );
                             } else {
                                 $headrows[$h]['bgcolor'][] = 'FFFFFF';
                             }
@@ -532,7 +578,11 @@ class ExcelModel implements ServiceLocatorAwareInterface
                                 $bodyrows[$r]['valign'][] = 'top';
                             }
                             if ($tds->item($x)->hasAttribute('bgcolor')) {
-                                $bodyrows[$r]['bgcolor'][] = str_replace("#", "", $tds->item($x)->getAttribute('bgcolor'));
+                                $bodyrows[$r]['bgcolor'][] = str_replace(
+                                    "#",
+                                    "",
+                                    $tds->item($x)->getAttribute('bgcolor')
+                                );
                             } else {
                                 $bodyrows[$r]['bgcolor'][] = 'FFFFFF';
                             }
@@ -550,23 +600,42 @@ class ExcelModel implements ServiceLocatorAwareInterface
             $objPHPExcel->setActiveSheetIndex($z); // each sheet corresponds to a table in html
             $objPHPExcel->getActiveSheet()->setTitle($wksheetname); // tab name
             $worksheet = $objPHPExcel->getActiveSheet(); // set worksheet we're working on
-            $style_overlay = array('font' =>
-            array('color' =>
-            array('rgb' => '000000'), 'bold' => false,),
+            $style_overlay = array(
+                'font' =>
+                array(
+                    'color' =>
+                    array('rgb' => '000000'),
+                    'bold' => false,
+                ),
                 'fill' =>
                 array('type' => PHPExcel_Style_Fill::FILL_SOLID, 'color' => array('rgb' => 'CCCCFF')),
                 'alignment' =>
-                array('wrap' => true, 'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-                    'vertical' => PHPExcel_Style_Alignment::VERTICAL_TOP),
-                'borders' => array('top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                array(
+                    'wrap' => true,
+                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                    'vertical' => PHPExcel_Style_Alignment::VERTICAL_TOP
+                ),
+                'borders' => array(
+                    'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
                     'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
                     'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
-                    'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN)),
+                    'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+                ),
             );
             $xcol = '';
             $xrow = 1;
             $usedhdrows = 0;
-            $heightvars = array(1 => '42', 2 => '42', 3 => '48', 4 => '52', 5 => '58', 6 => '64', 7 => '68', 8 => '76', 9 => '82');
+            $heightvars = array(
+                1 => '42',
+                2 => '42',
+                3 => '48',
+                4 => '52',
+                5 => '58',
+                6 => '64',
+                7 => '68',
+                8 => '76',
+                9 => '82'
+            );
             for ($h = 0; $h < count($headrows); $h++) {
                 $th = $headrows[$h]['th'];
                 $colspans = $headrows[$h]['colspan'];
@@ -635,7 +704,9 @@ class ExcelModel implements ServiceLocatorAwareInterface
             }
             //Put an auto filter on last row of heading only if last row was not merged
             if (!$mergedcells) {
-                $worksheet->setAutoFilter("A$usedhdrows:" . $worksheet->getHighestColumn() . $worksheet->getHighestRow());
+                $worksheet->setAutoFilter(
+                    "A$usedhdrows:" . $worksheet->getHighestColumn() . $worksheet->getHighestRow()
+                );
             }
 
             // Freeze heading lines starting after heading lines
@@ -730,7 +801,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $doc = $node->ownerDocument;
         $frag = $doc->createDocumentFragment();
         foreach ($node->childNodes as $child) {
-            $frag->appendChild($child->cloneNode(TRUE));
+            $frag->appendChild($child->cloneNode(true));
         }
         return $doc->saveXML($frag);
     }
@@ -746,7 +817,9 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $end = ";"; // should end with semicolon
         $node = " " . $node; // prefix node with blank
         $ini = stripos($node, $start); // look for #
-        if ($ini === false) return "000000"; // not found, return default color of black
+        if ($ini === false) {
+            return "000000";
+        } // not found, return default color of black
         $ini += strlen($start); // get 1 byte past start string
         $len = stripos($node, $end, $ini) - $ini; // grab substr between start and end positions
         return substr($node, $ini, $len); // return the RGB color without # sign
@@ -783,32 +856,78 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
     }
 
-    public function createBill($bill) {
+    public function createBill($bill)
+    {
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
         $objPHPExcel = $objReader->load("public/xls/templateBill.xls");
-        $ticket=$bill['res'];
-        $ownerCargo=$bill['owner'];
-        $transferCargo=$bill['acceptedResource']['owner'];
-            $objPHPExcel->getActiveSheet()
-                ->setCellValue('A6',  $objPHPExcel->getActiveSheet()->getCell('A6')->getValue().$ticket['numberInt'].' от '.date('d-m-Y'))
-                ->setCellValue('A8',  $objPHPExcel->getActiveSheet()->getCell('A8')->getValue().' '.$ownerCargo['property'].' '.$ownerCargo['name'])
-                ->setCellValue('A9',  $objPHPExcel->getActiveSheet()->getCell('A9')->getValue().' '.$ownerCargo['addressReg'])
-                ->setCellValue('A10',  $objPHPExcel->getActiveSheet()->getCell('A10')->getValue().' '.$ownerCargo['inn'].'/'.$ownerCargo['kpp'])
-                ->setCellValue('A11',  $objPHPExcel->getActiveSheet()->getCell('A11')->getValue().' '.$ownerCargo['property'].' '.$ownerCargo['name'].' '.$ownerCargo['addressFact'])
-                ->setCellValue('A12',  $objPHPExcel->getActiveSheet()->getCell('A12')->getValue().' '.$transferCargo['property'].' '.$transferCargo['name'].' '.$transferCargo['addressFact'])
-                ->setCellValue('A14',  $objPHPExcel->getActiveSheet()->getCell('A14')->getValue().' '.$transferCargo['property'].' '.$transferCargo['name'])
-                ->setCellValue('A15',  $objPHPExcel->getActiveSheet()->getCell('A15')->getValue().' '.$transferCargo['addressReg'])
-                ->setCellValue('A16',  $objPHPExcel->getActiveSheet()->getCell('A16')->getValue().' '.$transferCargo['inn'].'/'.$transferCargo['kpp'])
-                ->setCellValue('A21',  $objPHPExcel->getActiveSheet()->getCell('A21')->getValue().' '.$ticket['created'].' - '.date('d-m-Y'))
-                ->setCellValue('A24',  $objPHPExcel->getActiveSheet()->getCell('A24')->getValue().' ('.$ownerCargo['generalManager'].')')
-                ->setCellValue('H24',  $objPHPExcel->getActiveSheet()->getCell('H24')->getValue().' ('.$ownerCargo['chiefAccountant'].')')
-                ->setCellValue('E21',  $ticket['money'])
-                ->setCellValue('F21',  $ticket['money'])
-                ->setCellValue('I21',  $ticket['money']*0.18)
-                ->setCellValue('I22',  $ticket['money']*0.18)
-                ->setCellValue('J21',  $ticket['money']*1.18)
-                ->setCellValue('J22',  $ticket['money']*1.18)
-            ;
+        $ticket = $bill['res'];
+        $ownerCargo = $bill['owner'];
+        $transferCargo = $bill['acceptedResource']['owner'];
+        $objPHPExcel->getActiveSheet()
+            ->setCellValue(
+                'A6',
+                $objPHPExcel->getActiveSheet()->getCell('A6')->getValue() . $ticket['numberInt'] . ' от ' . date(
+                    'd-m-Y'
+                )
+            )
+            ->setCellValue(
+                'A8',
+                $objPHPExcel->getActiveSheet()->getCell('A8')->getValue(
+                ) . ' ' . $ownerCargo['property'] . ' ' . $ownerCargo['name']
+            )
+            ->setCellValue(
+                'A9',
+                $objPHPExcel->getActiveSheet()->getCell('A9')->getValue() . ' ' . $ownerCargo['addressReg']
+            )
+            ->setCellValue(
+                'A10',
+                $objPHPExcel->getActiveSheet()->getCell('A10')->getValue(
+                ) . ' ' . $ownerCargo['inn'] . '/' . $ownerCargo['kpp']
+            )
+            ->setCellValue(
+                'A11',
+                $objPHPExcel->getActiveSheet()->getCell('A11')->getValue(
+                ) . ' ' . $ownerCargo['property'] . ' ' . $ownerCargo['name'] . ' ' . $ownerCargo['addressFact']
+            )
+            ->setCellValue(
+                'A12',
+                $objPHPExcel->getActiveSheet()->getCell('A12')->getValue(
+                ) . ' ' . $transferCargo['property'] . ' ' . $transferCargo['name'] . ' ' . $transferCargo['addressFact']
+            )
+            ->setCellValue(
+                'A14',
+                $objPHPExcel->getActiveSheet()->getCell('A14')->getValue(
+                ) . ' ' . $transferCargo['property'] . ' ' . $transferCargo['name']
+            )
+            ->setCellValue(
+                'A15',
+                $objPHPExcel->getActiveSheet()->getCell('A15')->getValue() . ' ' . $transferCargo['addressReg']
+            )
+            ->setCellValue(
+                'A16',
+                $objPHPExcel->getActiveSheet()->getCell('A16')->getValue(
+                ) . ' ' . $transferCargo['inn'] . '/' . $transferCargo['kpp']
+            )
+            ->setCellValue(
+                'A21',
+                $objPHPExcel->getActiveSheet()->getCell('A21')->getValue() . ' ' . $ticket['created'] . ' - ' . date(
+                    'd-m-Y'
+                )
+            )
+            ->setCellValue(
+                'A24',
+                $objPHPExcel->getActiveSheet()->getCell('A24')->getValue() . ' (' . $ownerCargo['generalManager'] . ')'
+            )
+            ->setCellValue(
+                'H24',
+                $objPHPExcel->getActiveSheet()->getCell('H24')->getValue() . ' (' . $ownerCargo['chiefAccountant'] . ')'
+            )
+            ->setCellValue('E21', $ticket['money'])
+            ->setCellValue('F21', $ticket['money'])
+            ->setCellValue('I21', $ticket['money'] * 0.18)
+            ->setCellValue('I22', $ticket['money'] * 0.18)
+            ->setCellValue('J21', $ticket['money'] * 1.18)
+            ->setCellValue('J22', $ticket['money'] * 1.18);
 
         ob_start();
         header('Content-Type: application/vnd.ms-excel');

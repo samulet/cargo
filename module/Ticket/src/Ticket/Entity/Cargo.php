@@ -64,7 +64,6 @@ class Cargo
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Имя груза"})
      */
@@ -82,18 +81,15 @@ class Cargo
     public $deletedAt;
 
 
-
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
      * @ODM\Field(type="string")
      */
     public $note;
-
 
 
     /**

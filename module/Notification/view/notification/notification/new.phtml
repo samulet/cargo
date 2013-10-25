@@ -1,5 +1,5 @@
 <?php
-$notes=$this->notification;
+$notes = $this->notification;
 $form = $this->form;
 $form->setAttribute('action', $this->url('notification', array('action' => 'read')))
     ->prepare();
@@ -17,27 +17,31 @@ $read = $form->get('read');
         <th>Прочитать</th>
     </tr>
     <?php
-    foreach($notes as $note) {
-        $nt=$note['notes'];
-        $note=$note['item'];
+    foreach ($notes as $note) {
+        $nt = $note['notes'];
+        $note = $note['item'];
         ?>
         <tr>
-            <td> <a href="<?php
-                if($note['type']=='Ресурс') {
-                    $type='resource';
-                } elseif($note['type']=='Заявка') {
-                    $type='ticket';
+            <td><a href="<?php
+                if ($note['type'] == 'Ресурс') {
+                    $type = 'resource';
+                } elseif ($note['type'] == 'Заявка') {
+                    $type = 'ticket';
                 } else {
-                    $type='vehicle';
+                    $type = 'vehicle';
                 }
 
-                echo $this->url($type,
-                    array('action' => 'add','type'=>'list',  'id' => $note['itemId']));?>"><?php echo $note['itemId'].' ('.$note['type'].')'; ?></a></td>
-            <td><?php if(!empty($nt[count($nt)-1]['note'])) { echo $nt[count($nt)-1]['note']; } ?></td>
+                echo $this->url(
+                    $type,
+                    array('action' => 'add', 'type' => 'list', 'id' => $note['itemId'])
+                );?>"><?php echo $note['itemId'] . ' (' . $note['type'] . ')'; ?></a></td>
+            <td><?php if (!empty($nt[count($nt) - 1]['note'])) {
+                    echo $nt[count($nt) - 1]['note'];
+                } ?></td>
             <td><?php echo $note['status']; ?></td>
             <td>
                 <?php
-                $read->setValue($nt[count($nt)-1]['uuid']);
+                $read->setValue($nt[count($nt) - 1]['uuid']);
                 echo $this->form()->openTag($form);
                 echo $this->formRow($read);
                 echo $this->formElement($form->get('submit')->setValue('Прочитать'));

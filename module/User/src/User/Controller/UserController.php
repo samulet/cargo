@@ -23,7 +23,8 @@ class UserController extends AbstractActionController
     protected $userModel;
 
 
-    public function roleAction() {
+    public function roleAction()
+    {
         return new ViewModel(array(
             'res' => 'asd'
         ));

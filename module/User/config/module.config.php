@@ -42,7 +42,7 @@ return array(
         ),
     ),
     'service_manager' => array(
-        'invokables'  => array(
+        'invokables' => array(
             'BjyAuthorize\View\RedirectionStrategy' => 'User\View\RedirectionStrategy',
         ),
     ),

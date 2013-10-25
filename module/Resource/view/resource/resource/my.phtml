@@ -46,38 +46,38 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         </th>
     </tr>
     <?php foreach ($resources as $resource) {
-        $resourceWay=$resource['ways'];
-        $vehicle=$resource['veh'];
-        $resource=$resource['res'];
+        $resourceWay = $resource['ways'];
+        $vehicle = $resource['veh'];
+        $resource = $resource['res'];
 
         ?>
         <tr>
             <td>
                 <a href="<?php echo $this->url(
                     'resource',
-                    array('action' => 'add', 'id' => $resource['uuid'], 'type'=>'list')
+                    array('action' => 'add', 'id' => $resource['uuid'], 'type' => 'list')
                 );?>"><?php echo $resource['uuid']; ?></a>
             </td>
             <td>
                 <?php
-                foreach($resourceWay as $way) {
-                    echo $way['dateStart'] . ' / ' . $way['timeStart'].'</br>';
+                foreach ($resourceWay as $way) {
+                    echo $way['dateStart'] . ' / ' . $way['timeStart'] . '</br>';
                 }
                 ?>
             </td>
             <td>
                 <?php
-                foreach($resourceWay as $way) {
-                    echo $way['areaLoad'] . ' / ' . $way['areaUnload'].'</br>';
+                foreach ($resourceWay as $way) {
+                    echo $way['areaLoad'] . ' / ' . $way['areaUnload'] . '</br>';
                 }
                 ?>
 
             </td>
             <td>
                 <?php
-                foreach($resourceWay as $way) {
+                foreach ($resourceWay as $way) {
 
-                    echo $way['money'] . ' ' . $way['currency'].'</br>';
+                    echo $way['money'] . ' ' . $way['currency'] . '</br>';
                 }
                 ?>
 
@@ -86,12 +86,12 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'vehicle',
-                    array('action' => 'add', 'type' => 'list','id' => $vehicle['uuid'])
-                );?>"><?php echo $vehicle['carNumber'].' '.$vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
+                    array('action' => 'add', 'type' => 'list', 'id' => $vehicle['uuid'])
+                );?>"><?php echo $vehicle['carNumber'] . ' ' . $vehicle['mark'] . ' / ' . $vehicle['model']; ?></a>
             </td>
             <td>
-                <?php foreach($resource['typeLoad'] as $typeLoad) {
-                    echo $typeLoad.'</br>';
+                <?php foreach ($resource['typeLoad'] as $typeLoad) {
+                    echo $typeLoad . '</br>';
                 } ?>
             </td>
             <td>
@@ -100,13 +100,13 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'resource',
-                    array('action' => 'add', 'id' => $resource['uuid'],'type'=>'edit')
+                    array('action' => 'add', 'id' => $resource['uuid'], 'type' => 'edit')
                 );?>">Редактировать</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(
                     'resource',
-                    array('action' => 'add', 'id' => $resource['uuid'],'type'=>'copy')
+                    array('action' => 'add', 'id' => $resource['uuid'], 'type' => 'copy')
                 );?>">Копировать</a>
             </td>
             <td>

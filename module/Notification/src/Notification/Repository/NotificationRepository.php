@@ -11,6 +11,7 @@ class NotificationRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
+
     public function getSentAvailableNotification($userId)
     {
         return $this->createQueryBuilder()
@@ -19,6 +20,7 @@ class NotificationRepository extends DocumentRepository
             )
             ->getQuery()->execute();
     }
+
     public function getReceiveAvailableNotification($userId)
     {
         return $this->createQueryBuilder()

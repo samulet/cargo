@@ -26,7 +26,6 @@ class UserModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
 
 
-
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
@@ -37,6 +36,5 @@ class UserModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
- 
 
 }

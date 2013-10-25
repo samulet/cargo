@@ -84,7 +84,7 @@ class Module
 
                     // Store ACL and role in the proxy helper:
                     $navigation->setAcl($authorize->getAcl())
-                               ->setRole($authorize->getIdentity());
+                        ->setRole($authorize->getIdentity());
 
                     // Return the new navigation helper instance
                     return $navigation;

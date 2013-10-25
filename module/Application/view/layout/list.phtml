@@ -69,7 +69,9 @@ echo $this->doctype(); ?>
         <div class="row">
             <div class="col-lg-2">
                 <div class="leftSide">
-                    <?php echo $this->navigation('list_navigation')->menu()->setPartial(null)->setUlClass('nav nav-list'); ?>
+                    <?php echo $this->navigation('list_navigation')->menu()->setPartial(null)->setUlClass(
+                        'nav nav-list'
+                    ); ?>
                 </div>
             </div>
             <div class="col-lg-10">

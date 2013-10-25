@@ -18,11 +18,11 @@ use Zend\Form\Element\Collection;
  */
 class Company
 {
-    public function __construct($ownerOrgId, $param=null)
+    public function __construct($ownerOrgId, $param = null)
     {
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
-        if($param!='contractAgent') {
+        if ($param != 'contractAgent') {
             $this->setOwnerOrgId(new \MongoId($ownerOrgId));
         }
     }
@@ -77,7 +77,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Полное наименование юр. лица"})
      */
@@ -87,7 +86,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Краткое наименование юр. лица"})
      */
@@ -98,7 +96,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"ИНН"})
      */
@@ -108,7 +105,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"ОГРН"})
      */
@@ -118,7 +114,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"КПП"})
      */
@@ -128,7 +123,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер налоговой"})
      */
@@ -142,7 +136,6 @@ class Company
     public $dateStart;
 
 
-
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -153,7 +146,7 @@ class Company
      */
 
 
-    public $address= array();
+    public $address = array();
 
     /**
      * @var array
@@ -163,14 +156,13 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyContactsFieldset"}})
 
      */
-    public $contact= array();
+    public $contact = array();
 
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Способ образования"})
      */
@@ -188,7 +180,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер налоговой, где проходила регистрация"})
      */
@@ -198,7 +189,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Размер уставного капитала"})
      */
@@ -208,7 +198,6 @@ class Company
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Количество учредителей"})
      */
@@ -222,7 +211,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyFounderFieldset"}})
 
      */
-    public $founder= array();
+    public $founder = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -231,7 +220,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyAuthorizedPersonsFieldset"}})
 
      */
-public $authorizedPerson= array();
+    public $authorizedPerson = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -240,14 +229,13 @@ public $authorizedPerson= array();
      *                      "target_element" : {"type":"\Account\Form\CompanyOkvedFieldset"}})
 
      */
-    public $okved= array();
+    public $okved = array();
 
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер страхования в ПФР"})
      */
@@ -258,7 +246,6 @@ public $authorizedPerson= array();
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"19. Номер ПФР"})
      */
@@ -275,7 +262,6 @@ public $authorizedPerson= array();
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер страхования ФМС"})
      */
@@ -285,7 +271,6 @@ public $authorizedPerson= array();
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер ФМС"})
      */
@@ -305,7 +290,7 @@ public $authorizedPerson= array();
      *                      "target_element" : {"type":"\Account\Form\CompanyLicenseFieldset"}})
 
      */
-    public $license= array();
+    public $license = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -314,13 +299,12 @@ public $authorizedPerson= array();
      *                      "target_element" : {"type":"\Account\Form\CompanyApplicantsFieldset"}})
 
      */
-    public $applicants= array();
+    public $applicants = array();
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Вид системы налогового учета"})
      */
@@ -330,7 +314,6 @@ public $authorizedPerson= array();
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Процентная ставка налога"})
      */
@@ -340,7 +323,6 @@ public $authorizedPerson= array();
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Ссылка на файлы выписки из ЕГРЮЛ/ЕГРЮИП"})
      */
@@ -350,7 +332,6 @@ public $authorizedPerson= array();
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Ссылка на файлы устава"})
      */
@@ -363,7 +344,7 @@ public $authorizedPerson= array();
      *                      "target_element" : {"type":"\Account\Form\CompanyDocumentsFieldset"}})
 
      */
-    public $documents= array();
+    public $documents = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -372,13 +353,12 @@ public $authorizedPerson= array();
      *                      "target_element" : {"type":"\Account\Form\CompanyBankAccountFieldset"}})
 
      */
-    public $bankAccount= array();
+    public $bankAccount = array();
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Ссылка на главного бухгалтера"})
      */
@@ -405,7 +385,6 @@ public $authorizedPerson= array();
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Вид собственности"})
      * @Annotation\Validator({"name":"InArray",
@@ -414,7 +393,7 @@ public $authorizedPerson= array();
      * @Annotation\Attributes({"value":"0"})
      */
 
-    public $property='';
+    public $property = '';
 
     /**
      * @ODM\Date
@@ -425,6 +404,7 @@ public $authorizedPerson= array();
      * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
+
     /**
      * @return mixed
      */
@@ -441,6 +421,7 @@ public $authorizedPerson= array();
     {
         $this->deletedAt = $deletedAt;
     }
+
     /**
      * Get id.
      *

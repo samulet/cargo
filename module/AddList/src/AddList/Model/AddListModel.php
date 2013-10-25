@@ -30,116 +30,120 @@ class AddListModel implements ServiceLocatorAwareInterface
     protected $organizationModel;
 
 
-    public function getAllDataArray($prefix) {
+    public function getAllDataArray($prefix)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $result=array();
-       // $listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
-        $listName=$this->getListNameFull();
-        foreach($listName as $liName) {
-            $id=$liName['id'];
+        $result = array();
+        // $listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
+        $listName = $this->getListNameFull();
+        foreach ($listName as $liName) {
+            $id = $liName['id'];
             $list = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($id);
-            $res=array();
-            foreach($list as $li) {
+            $res = array();
+            foreach ($list as $li) {
                 $obj_vars = get_object_vars($li);
-                if(!empty($obj_vars['parentFieldId'])) {
+                if (!empty($obj_vars['parentFieldId'])) {
 
-                    $parentList= $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
-                        array('id' =>  new \MongoId($obj_vars['parentFieldId']))
+                    $parentList = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+                        array('id' => new \MongoId($obj_vars['parentFieldId']))
                     );
-                    $parentListArr=get_object_vars($parentList);
-                    if(!empty($parentListArr)) {
-                        $pr='parent-'.$parentListArr['key'].'-';
+                    $parentListArr = get_object_vars($parentList);
+                    if (!empty($parentListArr)) {
+                        $pr = 'parent-' . $parentListArr['key'] . '-';
                     } else {
-                        $pr=null;
+                        $pr = null;
                     }
                 } else {
-                    $pr=null;
+                    $pr = null;
                 }
-                array_push($res, array('key'=>$pr.$obj_vars['key'],'value'=>$obj_vars['value']));
+                array_push($res, array('key' => $pr . $obj_vars['key'], 'value' => $obj_vars['value']));
             }
-            $result=$result+array($liName['field'] => $res);
+            $result = $result + array($liName['field'] => $res);
         }
         return $result;
     }
 
-    public function getGlobalArray($prefix) {
+    public function getGlobalArray($prefix)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $result=array();
+        $result = array();
         //$listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
-        $listName=$this->getListNameFull();
-        foreach($listName as $liName) {
-            $id=$liName['id'];
+        $listName = $this->getListNameFull();
+        foreach ($listName as $liName) {
+            $id = $liName['id'];
             $list = $objectManager->getRepository('AddList\Entity\AddList')->getGlobalAvailableList($id);
-            $res=array();
-            foreach($list as $li) {
+            $res = array();
+            foreach ($list as $li) {
                 $obj_vars = get_object_vars($li);
-                if(!empty($obj_vars['parentFieldId'])) {
+                if (!empty($obj_vars['parentFieldId'])) {
 
-                    $parentList= $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
-                        array('id' =>  new \MongoId($obj_vars['parentFieldId']),'global'=>'global')
+                    $parentList = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+                        array('id' => new \MongoId($obj_vars['parentFieldId']), 'global' => 'global')
                     );
-                    $parentListArr=get_object_vars($parentList);
-                    if(!empty($parentListArr)) {
-                        $pr='parent-'.$parentListArr['key'].'-';
+                    $parentListArr = get_object_vars($parentList);
+                    if (!empty($parentListArr)) {
+                        $pr = 'parent-' . $parentListArr['key'] . '-';
                     } else {
-                        $pr=null;
+                        $pr = null;
                     }
                 } else {
-                    $pr=null;
+                    $pr = null;
                 }
-                array_push($res, array('key'=>$pr.$obj_vars['key'],'value'=>$obj_vars['value']));
+                array_push($res, array('key' => $pr . $obj_vars['key'], 'value' => $obj_vars['value']));
             }
-            $result=$result+array($liName['field'] => $res);
+            $result = $result + array($liName['field'] => $res);
         }
         return $result;
     }
 
-    public function getLocalArray($prefix,$itemId, $param) {
+    public function getLocalArray($prefix, $itemId, $param)
+    {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $result=array();
-        $listName=$this->getListNameFull();
-        foreach($listName as $liName) {
-            $id=$liName['id'];
-            if($param=='account') {
-                $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableAccList($id,$itemId);
-            } elseif($param=='company') {
-                $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableComList($id,$itemId);
-             }
+        $result = array();
+        $listName = $this->getListNameFull();
+        foreach ($listName as $liName) {
+            $id = $liName['id'];
+            if ($param == 'account') {
+                $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableAccList($id, $itemId);
+            } elseif ($param == 'company') {
+                $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableComList($id, $itemId);
+            }
 
-            $res=array();
-            foreach($list as $li) {
+            $res = array();
+            foreach ($list as $li) {
                 $obj_vars = get_object_vars($li);
-                if(!empty($obj_vars['parentFieldId'])) {
+                if (!empty($obj_vars['parentFieldId'])) {
 
-                    $parentList= $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
-                        array('id' =>  new \MongoId($obj_vars['parentFieldId']))
+                    $parentList = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+                        array('id' => new \MongoId($obj_vars['parentFieldId']))
                     );
-                    $parentListArr=get_object_vars($parentList);
-                    if(!empty($parentListArr)) {
-                        $pr='parent-'.$parentListArr['key'].'-';
+                    $parentListArr = get_object_vars($parentList);
+                    if (!empty($parentListArr)) {
+                        $pr = 'parent-' . $parentListArr['key'] . '-';
                     } else {
-                        $pr=null;
+                        $pr = null;
                     }
                 } else {
-                    $pr=null;
+                    $pr = null;
                 }
-                array_push($res, array('key'=>$pr.$obj_vars['key'],'value'=>$obj_vars['value']));
+                array_push($res, array('key' => $pr . $obj_vars['key'], 'value' => $obj_vars['value']));
             }
-            $result=$result+array($liName['field'] => $res);
+            $result = $result + array($liName['field'] => $res);
         }
         return $result;
     }
 
-    public function returnDataArray($arrFields,$prefix,$accListId,$comListId = null) {
+    public function returnDataArray($arrFields, $prefix, $accListId, $comListId = null)
+    {
 
-        $localArrayAcc=$this->getLocalArray($prefix,$accListId,'account');
+        $localArrayAcc = $this->getLocalArray($prefix, $accListId, 'account');
 
-        $globalArray=$this->getGlobalArray($prefix);
-        $localArray=array_merge_recursive($globalArray,$localArrayAcc);
-        if(!empty($comListId)) {
-            $localArrayCom=$this->getLocalArray($prefix,$comListId,'company');
-            $localArray=array_merge_recursive($localArray,$localArrayCom);
+        $globalArray = $this->getGlobalArray($prefix);
+        $localArray = array_merge_recursive($globalArray, $localArrayAcc);
+        if (!empty($comListId)) {
+            $localArrayCom = $this->getLocalArray($prefix, $comListId, 'company');
+            $localArray = array_merge_recursive($localArray, $localArrayCom);
         }
 
 
@@ -147,19 +151,137 @@ class AddListModel implements ServiceLocatorAwareInterface
     }
 
 
-
-    public function russianToTranslit($str) {
-        $cyr  = array('а','б','в','г','д','e','ж','з','и','й','к','л','м','н','о','п','р','с','т','у',
-            'ф','х','ц','ч','ш','щ','ъ','ь', 'ю','я','А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У',
-            'Ф','Х','Ц','Ч','Ш','Щ','Ъ','Ь', 'Ю','Я' );
-        $lat = array( 'a','b','v','g','d','e','zh','z','i','y','k','l','m','n','o','p','r','s','t','u',
-            'f' ,'h' ,'ts' ,'ch','sh' ,'sht' ,'a' ,'y' ,'yu' ,'ya','A','B','V','G','D','E','Zh',
-            'Z','I','Y','K','L','M','N','O','P','R','S','T','U',
-            'F' ,'H' ,'Ts' ,'Ch','Sh' ,'Sht' ,'A' ,'Y' ,'Yu' ,'Ya' );
+    public function russianToTranslit($str)
+    {
+        $cyr = array(
+            'а',
+            'б',
+            'в',
+            'г',
+            'д',
+            'e',
+            'ж',
+            'з',
+            'и',
+            'й',
+            'к',
+            'л',
+            'м',
+            'н',
+            'о',
+            'п',
+            'р',
+            'с',
+            'т',
+            'у',
+            'ф',
+            'х',
+            'ц',
+            'ч',
+            'ш',
+            'щ',
+            'ъ',
+            'ь',
+            'ю',
+            'я',
+            'А',
+            'Б',
+            'В',
+            'Г',
+            'Д',
+            'Е',
+            'Ж',
+            'З',
+            'И',
+            'Й',
+            'К',
+            'Л',
+            'М',
+            'Н',
+            'О',
+            'П',
+            'Р',
+            'С',
+            'Т',
+            'У',
+            'Ф',
+            'Х',
+            'Ц',
+            'Ч',
+            'Ш',
+            'Щ',
+            'Ъ',
+            'Ь',
+            'Ю',
+            'Я'
+        );
+        $lat = array(
+            'a',
+            'b',
+            'v',
+            'g',
+            'd',
+            'e',
+            'zh',
+            'z',
+            'i',
+            'y',
+            'k',
+            'l',
+            'm',
+            'n',
+            'o',
+            'p',
+            'r',
+            's',
+            't',
+            'u',
+            'f',
+            'h',
+            'ts',
+            'ch',
+            'sh',
+            'sht',
+            'a',
+            'y',
+            'yu',
+            'ya',
+            'A',
+            'B',
+            'V',
+            'G',
+            'D',
+            'E',
+            'Zh',
+            'Z',
+            'I',
+            'Y',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'R',
+            'S',
+            'T',
+            'U',
+            'F',
+            'H',
+            'Ts',
+            'Ch',
+            'Sh',
+            'Sht',
+            'A',
+            'Y',
+            'Yu',
+            'Ya'
+        );
         return str_replace($cyr, $lat, $str);
     }
 
-    public function addList($post,$listUUID,$parentField,$userId,$orgId,$comId) {
+    public function addList($post, $listUUID, $parentField, $userId, $orgId, $comId)
+    {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
@@ -167,81 +289,81 @@ class AddListModel implements ServiceLocatorAwareInterface
         $propArray = get_object_vars($post);
 
 
+        if (is_string($parentField)) {
 
-        if(is_string($parentField)) {
-
-            $listId=$this->getIdByUUID($parentField);
-            $mongoId=new \MongoId($listId);
-            $propArray['parentFieldId']=new \MongoId($this->getIdByUUID($parentField));
-            $list=  $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
-                array('id' =>  $mongoId)
+            $listId = $this->getIdByUUID($parentField);
+            $mongoId = new \MongoId($listId);
+            $propArray['parentFieldId'] = new \MongoId($this->getIdByUUID($parentField));
+            $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+                array('id' => $mongoId)
             );
 
-            $listName=  $this->getListName('veh-models');
-            $propArray['listId']=$listName['id'];
+            $listName = $this->getListName('veh-models');
+            $propArray['listId'] = $listName['id'];
 
         }
-        if(is_string($listUUID)) {
-            $propArray['listId']=$listUUID;
+        if (is_string($listUUID)) {
+            $propArray['listId'] = $listUUID;
 
         }
 
         $res = new AddList();
 
-        if(!empty($propArray['requisites'])) {
+        if (!empty($propArray['requisites'])) {
 
-            $propArray['value']='р/c'.$propArray['requisites'][0]['addListRequisitesAccountNumber'].' '.$propArray['requisites'][0]['addListRequisitesBankName'];
+            $propArray['value'] = 'р/c' . $propArray['requisites'][0]['addListRequisitesAccountNumber'] . ' ' . $propArray['requisites'][0]['addListRequisitesBankName'];
         }
 
-        if(!empty($propArray['forAccount'])) {
+        if (!empty($propArray['forAccount'])) {
 
-            if($propArray['forAccount']=='company') {
-                if(!empty($propArray['company'])) {
+            if ($propArray['forAccount'] == 'company') {
+                if (!empty($propArray['company'])) {
 
-                    $propArray['company']=new \MongoId($comId);
+                    $propArray['company'] = new \MongoId($comId);
                 } else {
-                    $propArray['company']=new \MongoId($comId);
+                    $propArray['company'] = new \MongoId($comId);
                 }
-            } elseif ($propArray['forAccount']=='account') {
-                $propArray['account']=new \MongoId($orgId);
+            } elseif ($propArray['forAccount'] == 'account') {
+                $propArray['account'] = new \MongoId($orgId);
             }
 
         }
-        $propArray['key']=$propArray['value'];
+        $propArray['key'] = $propArray['value'];
 
         foreach ($propArray as $key => $value) {
-            if(!empty($value)) {
+            if (!empty($value)) {
                 $res->$key = $value;
             }
 
         }
 
-        $res->ownerOrgId= new \MongoId($orgId);
-        $res->ownerUserId=new \MongoId($userId);
+        $res->ownerOrgId = new \MongoId($orgId);
+        $res->ownerUserId = new \MongoId($userId);
         $objectManager->persist($res);
         $objectManager->flush();
 
         return get_object_vars($res);
     }
 
-    public function addListName($post,$list_uuid) {
+    public function addListName($post, $list_uuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if(empty($list_uuid)) {
+        if (empty($list_uuid)) {
             $res = new AddListName();
         } else {
-            $res=  $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(
+            $res = $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(
                 array('uuid' => $list_uuid)
             );
             unset($res->parentId);
         }
 
         $propArray = get_object_vars($post);
-        if($propArray['parentId']=='empty') {
+        if ($propArray['parentId'] == 'empty') {
             unset($propArray['parentId']);
         }
 
         foreach ($propArray as $key => $value) {
-            if($res->$key!='parentId') {
+            if ($res->$key != 'parentId') {
                 $res->$key = $value;
             } else {
                 $res->$key = new \MongoId($value);
@@ -250,7 +372,6 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager->persist($res);
         $objectManager->flush();
     }
-
 
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
@@ -263,92 +384,91 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getListAdmin($uuid) {
-        $id=$uuid;
+    public function getListAdmin($uuid)
+    {
+        $id = $uuid;
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('AddList\Entity\AddList')->getMyAvailableList($id);
-        $list=$this->getListName($id);
+        $list = $this->getListName($id);
 
-        $result=array();
-        foreach($res as $re)
-        {
+        $result = array();
+        foreach ($res as $re) {
 
-            $vars=get_object_vars($re);
+            $vars = get_object_vars($re);
 
-            $organizationModel=$this->getAccountModel();
+            $organizationModel = $this->getAccountModel();
 
-            $acc=$organizationModel->getAccount($vars['ownerOrgId']);
-            if(!empty($acc)) {
-                $vars['ownerOrgId']=$acc;
+            $acc = $organizationModel->getAccount($vars['ownerOrgId']);
+            if (!empty($acc)) {
+                $vars['ownerOrgId'] = $acc;
             }
-            if(!empty($vars['parentFieldId'])) {
-                $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($vars['parentFieldId']);
-                foreach($parent as $par)
-                {
-                    $parent=$par;
+            if (!empty($vars['parentFieldId'])) {
+                $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList(
+                    $vars['parentFieldId']
+                );
+                foreach ($parent as $par) {
+                    $parent = $par;
                 }
-                $parent=get_object_vars($parent);
+                $parent = get_object_vars($parent);
             } else {
-                $parent=null;
+                $parent = null;
             }
-            array_push($result,array('it'=>$vars,'parent'=>$parent));
+            array_push($result, array('it' => $vars, 'parent' => $parent));
         }
 
 
-
-
-        return array('field'=>$result,'list'=>$list);
+        return array('field' => $result, 'list' => $list);
     }
 
-    public function getList($uuid,$accListId) {
-        $id=$uuid;
+    public function getList($uuid, $accListId)
+    {
+        $id = $uuid;
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableList($id,$accListId);
-        $list=$this->getListName($id);
+        $res = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableList($id, $accListId);
+        $list = $this->getListName($id);
 
-        $result=array();
-        foreach($res as $re)
-        {
+        $result = array();
+        foreach ($res as $re) {
 
-            $vars=get_object_vars($re);
-            $organizationModel=$this->getAccountModel();
+            $vars = get_object_vars($re);
+            $organizationModel = $this->getAccountModel();
 
-            $acc=$organizationModel->getAccount($vars['ownerOrgId']);
+            $acc = $organizationModel->getAccount($vars['ownerOrgId']);
 
-            if(!empty($acc)) {
-                $vars['ownerOrgId']= $acc;
+            if (!empty($acc)) {
+                $vars['ownerOrgId'] = $acc;
             }
-            if(!empty($vars['parentFieldId'])) {
-                $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($vars['parentFieldId']);
-                foreach($parent as $par)
-                {
-                    $parent=$par;
+            if (!empty($vars['parentFieldId'])) {
+                $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList(
+                    $vars['parentFieldId']
+                );
+                foreach ($parent as $par) {
+                    $parent = $par;
                 }
-                $parent=get_object_vars($parent);
-             } else {
-                $parent=null;
+                $parent = get_object_vars($parent);
+            } else {
+                $parent = null;
             }
-            array_push($result,array('it'=>$vars,'parent'=>$parent));
+            array_push($result, array('it' => $vars, 'parent' => $parent));
         }
 
 
-
-
-        return array('field'=>$result,'list'=>$list);
+        return array('field' => $result, 'list' => $list);
     }
 
-    public function getListNameFull($list=null) {
-        if(empty($list)) {
-            $list=AddListNameStatic::$list;
+    public function getListNameFull($list = null)
+    {
+        if (empty($list)) {
+            $list = AddListNameStatic::$list;
         }
-        $trueListNameArray=array();
-        foreach($list as $liKey=>$liName) {
-            $liName['uuid']=$liKey;
-            $liName['id']=$liKey;
-            if(!empty($liName['child'])) {
-                $trueListNameArray=$trueListNameArray+$this->getListNameFull($liName['child']);
+        $trueListNameArray = array();
+        foreach ($list as $liKey => $liName) {
+            $liName['uuid'] = $liKey;
+            $liName['id'] = $liKey;
+            if (!empty($liName['child'])) {
+                $trueListNameArray = $trueListNameArray + $this->getListNameFull($liName['child']);
                 unset($liName['child']);
             }
             array_push($trueListNameArray, $liName);
@@ -356,18 +476,19 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $trueListNameArray;
     }
 
-    public function getListName($id = null) {
-        $list=AddListNameStatic::$list;
-        if(is_string($id)) {
-           if(!empty($list[$id])) {
-               $list=$list[$id];
-               $list['id']=$id;
-               $list['uuid']=$id;
-           } elseif(!empty($list['veh-marks']['child'][$id])) {
-               $list=$list['veh-marks']['child'][$id];
-               $list['id']=$id;
-               $list['uuid']=$id;
-           }
+    public function getListName($id = null)
+    {
+        $list = AddListNameStatic::$list;
+        if (is_string($id)) {
+            if (!empty($list[$id])) {
+                $list = $list[$id];
+                $list['id'] = $id;
+                $list['uuid'] = $id;
+            } elseif (!empty($list['veh-marks']['child'][$id])) {
+                $list = $list['veh-marks']['child'][$id];
+                $list['id'] = $id;
+                $list['uuid'] = $id;
+            }
         }
 
         return $list;
@@ -385,25 +506,26 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
-    public function getAllListName() {
+    public function getAllListName()
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list = $objectManager->getRepository('AddList\Entity\AddListName')->getAllAvailableListName();
-        $result=array();
-        foreach($list as $re)
-        {
-            array_push($result,get_object_vars($re));
+        $result = array();
+        foreach ($list as $re) {
+            array_push($result, get_object_vars($re));
         }
         return $result;
     }
 
-    public function getIdByUUID($uuid) {
+    public function getIdByUUID($uuid)
+    {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list = $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(array('uuid' => $uuid));
-        if(empty($list)) {
+        if (empty($list)) {
             $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('uuid' => $uuid));
         }
-        if(empty($list)) {
+        if (empty($list)) {
             return null;
         } else {
             return $list->id;
@@ -411,63 +533,68 @@ class AddListModel implements ServiceLocatorAwareInterface
 
     }
 
-    public function getChildName($id) {
+    public function getChildName($id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $list = $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(array('parentId' => new \MongoId($id)));
-        if(empty($list)) {
-            $result=null;
+        $list = $objectManager->getRepository('AddList\Entity\AddListName')->findOneBy(
+            array('parentId' => new \MongoId($id))
+        );
+        if (empty($list)) {
+            $result = null;
         } else {
-            $result=get_object_vars($list);
+            $result = get_object_vars($list);
         }
         return $result;
     }
 
-    public function getOneList($uuid) {
-        $id=$this->getIdByUUID($uuid);
+    public function getOneList($uuid)
+    {
+        $id = $this->getIdByUUID($uuid);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($id);
-        foreach($list as $li) {
-            $list=$li;
+        foreach ($list as $li) {
+            $list = $li;
         }
-        if(empty($list)) {
-            $result=null;
+        if (empty($list)) {
+            $result = null;
         } else {
-            $result=get_object_vars($list);
+            $result = get_object_vars($list);
         }
         return $result;
 
 
     }
 
-    public function editField($uuid,$post,$orgId,$comId) {
+    public function editField($uuid, $post, $orgId, $comId)
+    {
         $propArray = get_object_vars($post);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $list=  $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+        $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
             array('uuid' => $uuid)
         );
-        $propArray['key']= $propArray['value'];
-        if(!empty($propArray['requisites'])) {
-            $propArray['requisites']=$propArray['requisites'][0];
-            $propArray['value']='р/c'.$propArray['requisites']['addListRequisitesAccountNumber'].' '.$propArray['requisites']['addListRequisitesBankName'];
+        $propArray['key'] = $propArray['value'];
+        if (!empty($propArray['requisites'])) {
+            $propArray['requisites'] = $propArray['requisites'][0];
+            $propArray['value'] = 'р/c' . $propArray['requisites']['addListRequisitesAccountNumber'] . ' ' . $propArray['requisites']['addListRequisitesBankName'];
         }
 
-        if(!empty($propArray['forAccount'])) {
+        if (!empty($propArray['forAccount'])) {
 
-            if($propArray['forAccount']=='company') {
-                if(!empty($propArray['company'])) {
+            if ($propArray['forAccount'] == 'company') {
+                if (!empty($propArray['company'])) {
 
-                    $propArray['company']=new \MongoId($comId);
+                    $propArray['company'] = new \MongoId($comId);
                 } else {
-                    $propArray['company']=new \MongoId($comId);
+                    $propArray['company'] = new \MongoId($comId);
                 }
-            } elseif ($propArray['forAccount']=='account') {
-                $propArray['account']=new \MongoId($orgId);
+            } elseif ($propArray['forAccount'] == 'account') {
+                $propArray['account'] = new \MongoId($orgId);
             }
 
         }
 
         foreach ($propArray as $key => $value) {
-            if(!empty($value)) {
+            if (!empty($value)) {
                 $list->$key = $value;
             }
 
@@ -478,25 +605,27 @@ class AddListModel implements ServiceLocatorAwareInterface
         return get_object_vars($list);
     }
 
-    public function listParentAction($uuid) {
+    public function listParentAction($uuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $listParent=  $this->getOneList($uuid);
-        $listChild=  $objectManager->getRepository('AddList\Entity\AddList')->findBy(
-            array('parentFieldId' =>  new \MongoId($listParent['id']))
+        $listParent = $this->getOneList($uuid);
+        $listChild = $objectManager->getRepository('AddList\Entity\AddList')->findBy(
+            array('parentFieldId' => new \MongoId($listParent['id']))
         );
-        $result=array();
-        foreach($listChild as $re)
-        {
-            array_push($result,get_object_vars($re));
+        $result = array();
+        foreach ($listChild as $re) {
+            array_push($result, get_object_vars($re));
         }
         return $result;
     }
 
-    public function getListUuidById($id) {
+    public function getListUuidById($id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('id' => new \MongoId($id)));
         return $list->uuid;
     }
+
     public function getAccountModel()
     {
         if (!$this->organizationModel) {
@@ -506,39 +635,45 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $this->organizationModel;
     }
 
-    public function getChildUuid($id) {
+    public function getChildUuid($id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('parentFieldId' => new \MongoId($id)));
+        $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
+            array('parentFieldId' => new \MongoId($id))
+        );
         return $list->uuid;
     }
 
-    public function addListTranslator() {
+    public function addListTranslator()
+    {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $listName = $objectManager->getRepository('AddList\Entity\AddListName')->createQueryBuilder()
             ->getQuery()->execute();
-        foreach($listName as $name) {
-            $trueResult='';
-            $newList=AddListNameStatic::$list;
+        foreach ($listName as $name) {
+            $trueResult = '';
+            $newList = AddListNameStatic::$list;
 
-            foreach($newList as $newListElementKey => $newListElementValue) {
+            foreach ($newList as $newListElementKey => $newListElementValue) {
 
-                if( ($newListElementValue['field']==$name->field) && ($newListElementValue['listName']==$name->listName) ) {
-                    $trueResult=$newListElementKey;
+                if (($newListElementValue['field'] == $name->field) && ($newListElementValue['listName'] == $name->listName)) {
+                    $trueResult = $newListElementKey;
 
                 }
-                echo $newListElementValue['field'].' == '.$name->field.' / '.$newListElementValue['listName'].' == '.$name->listName.' || ';
+                echo $newListElementValue['field'] . ' == ' . $name->field . ' / ' . $newListElementValue['listName'] . ' == ' . $name->listName . ' || ';
             }
 
-            if(empty($trueResult)) {
-                if( (AddListNameStatic::$list["veh-marks"]["child"]["veh-models"]['field']==$name->field) && (AddListNameStatic::$list["veh-marks"]["child"]["veh-models"]['listName']==$name->listName) ) {
-                    $trueResult="veh-models";
+            if (empty($trueResult)) {
+                if ((AddListNameStatic::$list["veh-marks"]["child"]["veh-models"]['field'] == $name->field) && (AddListNameStatic::$list["veh-marks"]["child"]["veh-models"]['listName'] == $name->listName)) {
+                    $trueResult = "veh-models";
                 }
             }
 
-            if(!empty($trueResult)) {
-                $list = $objectManager->getRepository('AddList\Entity\AddList')->findBy(array('listId'=>new \MongoId($name->id)));
-                foreach($list as $li) {
+            if (!empty($trueResult)) {
+                $list = $objectManager->getRepository('AddList\Entity\AddList')->findBy(
+                    array('listId' => new \MongoId($name->id))
+                );
+                foreach ($list as $li) {
 
                     $objectManager->getRepository('AddList\Entity\AddList')->createQueryBuilder()
 
@@ -548,8 +683,8 @@ class AddListModel implements ServiceLocatorAwareInterface
                         ->getQuery()
                         ->execute();
                 }
-              //  $objectManager->persist($list);
-               // $objectManager->flush();
+                //  $objectManager->persist($list);
+                // $objectManager->flush();
             }
         }
     }
@@ -559,7 +694,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         foreach ($form as $el) {
             $attr = $el->getAttributes();
             if (!empty($attr['type'])) {
-                if (($attr['type'] != 'checkbox')&& ($attr['type']!='multi_checkbox')&& ($attr['type']!='radio')) {
+                if (($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox') && ($attr['type'] != 'radio')) {
                     $el->setAttributes(array('class' => 'form-control'));
                 }
             }

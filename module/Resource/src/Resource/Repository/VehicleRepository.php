@@ -11,6 +11,7 @@ class VehicleRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
+
     public function getMyAvailableVehicle($owner_id)
     {
         return $this->createQueryBuilder()

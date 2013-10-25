@@ -2,13 +2,15 @@
 
 
 $form = $this->form;
-$form->setAttribute('action', $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id, 'id' => $this->com_id)))
+$form->setAttribute(
+    'action',
+    $this->url('company', array('action' => 'createCompany', 'org_id' => $this->org_id, 'id' => $this->com_id))
+)
     ->prepare();
 
 echo $this->form()->openTag($form);
 //$whoGave= $form->get('whoGave');
 //echo $this->formRow($serialNumber);
-
 
 
 echo $this->formRow($form->get('name')->setValue($this->com['name']));

@@ -24,5 +24,4 @@ class QueryBuilderController extends AbstractActionController
     }
 
 
-
 }

@@ -32,24 +32,25 @@ class CompanyFounderFieldset extends Fieldset implements InputFilterProviderInte
                 'options' => array(
                     'label' => 'Вид учредителя',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyFounderLink',
                 'options' => array(
                     'label' => 'Ссылка на учредителя (email в системе)',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -61,11 +62,12 @@ class CompanyFounderFieldset extends Fieldset implements InputFilterProviderInte
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
     }
 
     public function getInputFilterSpecification()

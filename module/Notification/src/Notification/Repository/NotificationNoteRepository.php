@@ -11,6 +11,7 @@ class NotificationNoteRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
+
     public function getMyAvailableNotificationNote($ownerNotificationId)
     {
         return $this->createQueryBuilder()
@@ -19,7 +20,9 @@ class NotificationNoteRepository extends DocumentRepository
             )
             ->getQuery()->execute();
     }
-    public function getLastStatusNotificationNote($ownerNotificationId) {
+
+    public function getLastStatusNotificationNote($ownerNotificationId)
+    {
         return $this->createQueryBuilder()
 
             ->field('deletedAt')->equals(null)->field('ownerNotificationId')->equals(

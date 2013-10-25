@@ -1,16 +1,16 @@
 <?php
-$id=$this->id;
+$id = $this->id;
 $form = $this->form;
-$form->setAttribute('action', $this->url('excel', array('action' => 'generateTemplate', 'id'=>$id)))
+$form->setAttribute('action', $this->url('excel', array('action' => 'generateTemplate', 'id' => $id)))
     ->prepare();
 ?>
 <div class="col-lg-4">
-<?php
-echo $this->form()->openTag($form);
-echo $this->formRow($form->get('type')->setAttributes(array( 'class' => 'form-control' )));
-echo $this->formRow($form->get('file')->setAttributes(array( 'class' => 'form-control' )));
-echo $this->formRow($form->get('newStringDown'));
-echo $this->formElement($form->get('submit')->setAttributes(array( 'class' => 'form-control' )));
-echo $this->form()->closeTag();
-?>
+    <?php
+    echo $this->form()->openTag($form);
+    echo $this->formRow($form->get('type')->setAttributes(array('class' => 'form-control')));
+    echo $this->formRow($form->get('file')->setAttributes(array('class' => 'form-control')));
+    echo $this->formRow($form->get('newStringDown'));
+    echo $this->formElement($form->get('submit')->setAttributes(array('class' => 'form-control')));
+    echo $this->form()->closeTag();
+    ?>
 </div>

@@ -19,10 +19,12 @@ class NotificationController extends AbstractActionController
         $notificationModel = $this->getNotificationModel();
 
         //$notification1=$notificationModel->getAdminNotifications($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc());
-        $notification=$notificationModel->getNotifications(array('ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc())));
+        $notification = $notificationModel->getNotifications(
+            array('ownerOrgId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc()))
+        );
 
         return new ViewModel(array(
-            'notification' =>$notification
+            'notification' => $notification
         ));
 
     }
@@ -30,33 +32,41 @@ class NotificationController extends AbstractActionController
     public function myAction()
     {
         $notificationModel = $this->getNotificationModel();
-        $notification=$notificationModel->getNotifications(array('ownerUserId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+        $notification = $notificationModel->getNotifications(
+            array('ownerUserId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom()))
+        );
         return new ViewModel(array(
-            'notification' =>$notification
+            'notification' => $notification
         ));
 
     }
 
-    public function newAction() {
+    public function newAction()
+    {
         $notificationModel = $this->getNotificationModel();
-        $notification=$notificationModel->getNotifications(array('ownerUserId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())), array('read'=>'0'));
+        $notification = $notificationModel->getNotifications(
+            array('ownerUserId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())),
+            array('read' => '0')
+        );
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Notification\Entity\NotificationNote');
         return new ViewModel(array(
-            'notification' =>$notification,
-            'form'=>$form
+            'notification' => $notification,
+            'form' => $form
         ));
     }
 
-    public function readAction() {
-        $post=$this->getRequest()->getPost();
+    public function readAction()
+    {
+        $post = $this->getRequest()->getPost();
         $notificationModel = $this->getNotificationModel();
         $notificationModel->addRead($post);
         return $this->redirect()->toUrl('/notifications/new');
     }
 
-    public function addAction() {
-        $sendUuid= $this->getEvent()->getRouteMatch()->getParam('id');
+    public function addAction()
+    {
+        $sendUuid = $this->getEvent()->getRouteMatch()->getParam('id');
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Notification\Entity\NotificationNote');
@@ -64,15 +74,16 @@ class NotificationController extends AbstractActionController
 
         return new ViewModel(array(
             'form' => $form,
-            'uuid'=>$sendUuid
+            'uuid' => $sendUuid
         ));
     }
 
-    public function addNotificationNoteAction() {
-        $sendUuid= $this->getEvent()->getRouteMatch()->getParam('id');
-        $post=$this->getRequest()->getPost();
+    public function addNotificationNoteAction()
+    {
+        $sendUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+        $post = $this->getRequest()->getPost();
         $notificationModel = $this->getNotificationModel();
-        $notificationModel->addNotificationNote($sendUuid,$post);
+        $notificationModel->addNotificationNote($sendUuid, $post);
         return $this->redirect()->toUrl('/notifications');
     }
 
@@ -84,7 +95,6 @@ class NotificationController extends AbstractActionController
         }
         return $this->notificationModel;
     }
-
 
 
 }

@@ -11,6 +11,7 @@ class InteractionRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
+
     public function getSentAvailableInteraction($userId)
     {
         return $this->createQueryBuilder()
@@ -19,6 +20,7 @@ class InteractionRepository extends DocumentRepository
             )
             ->getQuery()->execute();
     }
+
     public function getReceiveAvailableInteraction($userId)
     {
         return $this->createQueryBuilder()

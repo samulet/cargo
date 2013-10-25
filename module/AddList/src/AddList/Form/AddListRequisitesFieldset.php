@@ -30,10 +30,10 @@ class AddListRequisitesFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'Номер счета',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -44,10 +44,10 @@ class AddListRequisitesFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'Банк получателя',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -58,10 +58,10 @@ class AddListRequisitesFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'БИК',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -72,10 +72,10 @@ class AddListRequisitesFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'Кор. Счет',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -86,10 +86,10 @@ class AddListRequisitesFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'ИНН Банка',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -101,10 +101,10 @@ class AddListRequisitesFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'КПП Банка',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -116,10 +116,10 @@ class AddListRequisitesFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'ОГРН',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )

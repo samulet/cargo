@@ -1,16 +1,18 @@
 <?php
 $form = $this->form;
 $formWay = $this->formWay;
-$ways= $this->way;
-$resource= $this->res;
+$ways = $this->way;
+$resource = $this->res;
 
 $form->setAttribute('action', $this->url('resource', array('action' => 'addResource', 'id' => $this->id)))
     ->prepare();
 
 echo $this->form()->openTag($form);
 
-$tsId= $form->get('tsId')->setAttributes(array( 'disabled' => 'disabled' ));
-$kindOfLoad=$form->get('kindOfLoad')->setValue($resource['kindOfLoad'])->setAttributes(array( 'disabled' => 'disabled' ));
+$tsId = $form->get('tsId')->setAttributes(array('disabled' => 'disabled'));
+$kindOfLoad = $form->get('kindOfLoad')->setValue($resource['kindOfLoad'])->setAttributes(
+    array('disabled' => 'disabled')
+);
 
 
 ?>
@@ -49,34 +51,52 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($resource['kindOfLoad'])->setAttr
 
         </tr>
         <?php
-        $counter=0;
-        foreach($ways as $way) {
-            if($counter==0) {
-                $areaLoad= $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad')->setAttributes(array( 'disabled' => 'disabled' ));
-                $areaUnload= $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload')->setAttributes(array( 'disabled' => 'disabled' ));
-                $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart')->setAttributes(array( 'disabled' => 'disabled' ));
-                $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart')->setAttributes(array( 'disabled' => 'disabled' ));
-                $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency')->setAttributes(array( 'disabled' => 'disabled' ));
-                $money= $formWay->get('money')->setValue($way['money'])->setName('money')->setAttributes(array( 'disabled' => 'disabled' ));
-                $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay')->setAttributes(array( 'disabled' => 'disabled' ));
-                $note= $formWay->get('note')->setValue($way['note'])->setName('note')->setAttributes(array( 'disabled' => 'disabled' ));
+        $counter = 0;
+        foreach ($ways as $way) {
+            if ($counter == 0) {
+                $areaLoad = $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad')->setAttributes(
+                    array('disabled' => 'disabled')
+                );
+                $areaUnload = $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName(
+                    'areaUnload'
+                )->setAttributes(array('disabled' => 'disabled'));
+                $dateStart = $formWay->get('dateStart')->setValue($way['dateStart'])->setName(
+                    'dateStart'
+                )->setAttributes(array('disabled' => 'disabled'));
+                $timeStart = $formWay->get('timeStart')->setValue($way['timeStart'])->setName(
+                    'timeStart'
+                )->setAttributes(array('disabled' => 'disabled'));
+                $currency = $formWay->get('currency')->setValue($way['currency'])->setName('currency')->setAttributes(
+                    array('disabled' => 'disabled')
+                );
+                $money = $formWay->get('money')->setValue($way['money'])->setName('money')->setAttributes(
+                    array('disabled' => 'disabled')
+                );
+                $formPay = $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay')->setAttributes(
+                    array('disabled' => 'disabled')
+                );
+                $note = $formWay->get('note')->setValue($way['note'])->setName('note')->setAttributes(
+                    array('disabled' => 'disabled')
+                );
             } else {
-                $areaLoad= $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad-'.$counter);
-                $areaUnload= $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload-'.$counter);
-                $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart-'.$counter);
-                $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart-'.$counter);
-                $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency-'.$counter);
-                $money= $formWay->get('money')->setValue($way['money'])->setName('money-'.$counter);
-                $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay-'.$counter);
-                $note= $formWay->get('note')->setValue($way['note'])->setName('note-'.$counter);
+                $areaLoad = $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad-' . $counter);
+                $areaUnload = $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName(
+                    'areaUnload-' . $counter
+                );
+                $dateStart = $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart-' . $counter);
+                $timeStart = $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart-' . $counter);
+                $currency = $formWay->get('currency')->setValue($way['currency'])->setName('currency-' . $counter);
+                $money = $formWay->get('money')->setValue($way['money'])->setName('money-' . $counter);
+                $formPay = $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay-' . $counter);
+                $note = $formWay->get('note')->setValue($way['note'])->setName('note-' . $counter);
             }
 
             ?>
             <tr class="<?php
-            if($counter==0) {
+            if ($counter == 0) {
                 echo 'wayTr';
             } else {
-                echo 'wayTr-'.$counter;
+                echo 'wayTr-' . $counter;
             }
             ?>">
                 <td>
@@ -111,7 +131,7 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($resource['kindOfLoad'])->setAttr
         ?>
         <tr class="addTr">
             <td>
-                <input id="counter" type="hidden" value='<?php echo $counter ?>' />
+                <input id="counter" type="hidden" value='<?php echo $counter ?>'/>
 
             </td>
         </tr>

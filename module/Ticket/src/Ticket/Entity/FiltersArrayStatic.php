@@ -7,14 +7,15 @@
  * To change this template use File | Settings | File Templates.
  */
 namespace Ticket\Entity;
+
 class FiltersArrayStatic
 {
     public static $list = array(
-        'dateStartFilterFrom'=>'',
-        'dateStartFilterTo'=>'',
-        'createdFilterFrom'=>'',
-        'createdFilterTo'=>'',
-        'ownerId'=>''
+        'dateStartFilterFrom' => '',
+        'dateStartFilterTo' => '',
+        'createdFilterFrom' => '',
+        'createdFilterTo' => '',
+        'ownerId' => ''
     );
 
 }

@@ -16,6 +16,7 @@ use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Ticket\Form\CargoForm;
+
 class CargoController extends AbstractActionController
 {
 
@@ -35,7 +36,7 @@ class CargoController extends AbstractActionController
     public function myAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
+        $ticket = $res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         return new ViewModel(array(
             'res' => $ticket
         ));
@@ -45,7 +46,7 @@ class CargoController extends AbstractActionController
     public function myAccAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnMyAccTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc());
+        $ticket = $res->returnMyAccTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc());
         return new ViewModel(array(
             'res' => $ticket
         ));
@@ -57,11 +58,11 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $formArray=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($formArray,'cargo');
+        $formArray = array('mark', 'model', 'type', 'status');
+        $formData = $addListModel->returnDataArray($formArray, 'cargo');
 
-        $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$formArray);
+        $fillFrom = new CargoForm();
+        $form = $fillFrom->fillFrom($form, $formData, $formArray);
         return new ViewModel(array(
             'form' => $form
         ));
@@ -76,10 +77,10 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $formArray=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($formArray,'cargo');
-        $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$formArray);
+        $formArray = array('mark', 'model', 'type', 'status');
+        $formData = $addListModel->returnDataArray($formArray, 'cargo');
+        $fillFrom = new CargoForm();
+        $form = $fillFrom->fillFrom($form, $formData, $formArray);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res,
@@ -133,7 +134,9 @@ class CargoController extends AbstractActionController
         }
         return $this->companyUserModel;
     }
-    public function copyAction() {
+
+    public function copyAction()
+    {
 
         $resModel = $this->getCargoModel();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
@@ -142,15 +145,16 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $formArray=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($formArray,'cargo');
-        $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$formArray);
+        $formArray = array('mark', 'model', 'type', 'status');
+        $formData = $addListModel->returnDataArray($formArray, 'cargo');
+        $fillFrom = new CargoForm();
+        $form = $fillFrom->fillFrom($form, $formData, $formArray);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res
         ));
     }
+
     public function getAddListModel()
     {
         if (!$this->addListModel) {
@@ -159,6 +163,7 @@ class CargoController extends AbstractActionController
         }
         return $this->addListModel;
     }
+
     public function getTicketModel()
     {
         if (!$this->ticketModel) {

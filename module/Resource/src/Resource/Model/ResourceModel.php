@@ -30,19 +30,20 @@ class ResourceModel implements ServiceLocatorAwareInterface
     protected $companyModel;
     protected $queryBuilderModel;
 
-    public function addResourceWay($propArraySplit,$ownerResourceId,$resId) {
-        $result=array();
-        foreach($propArraySplit as $key =>$value) {
-            $elementSplit=explode('-',$key);
-            if(!empty($elementSplit['1'])) {
-                $result['elementSplit'.$elementSplit['1']][$elementSplit['0']]=$value;
-                if(empty($result['elementSplit'.$elementSplit['1']]['ownerResourceId'])) {
-                    $result['elementSplit'.$elementSplit['1']]['ownerResourceId']=$ownerResourceId;
+    public function addResourceWay($propArraySplit, $ownerResourceId, $resId)
+    {
+        $result = array();
+        foreach ($propArraySplit as $key => $value) {
+            $elementSplit = explode('-', $key);
+            if (!empty($elementSplit['1'])) {
+                $result['elementSplit' . $elementSplit['1']][$elementSplit['0']] = $value;
+                if (empty($result['elementSplit' . $elementSplit['1']]['ownerResourceId'])) {
+                    $result['elementSplit' . $elementSplit['1']]['ownerResourceId'] = $ownerResourceId;
                 }
             } else {
-                $result['elementSplit0'][$elementSplit['0']]=$value;
-                if(empty($result['elementSplit0']['ownerResourceId'])) {
-                    $result['elementSplit0']['ownerResourceId']=$ownerResourceId;
+                $result['elementSplit0'][$elementSplit['0']] = $value;
+                if (empty($result['elementSplit0']['ownerResourceId'])) {
+                    $result['elementSplit0']['ownerResourceId'] = $ownerResourceId;
                 }
             }
         }
@@ -51,21 +52,21 @@ class ResourceModel implements ServiceLocatorAwareInterface
             $objectManager->createQueryBuilder('Resource\Entity\ResourceWay')
                 ->remove()
                 ->field('ownerResourceId')->equals(new \MongoId($resId))
-                 ->getQuery()
+                ->getQuery()
                 ->execute();
         }
-            foreach($result as $res) {
-                $resourceWay = new ResourceWay();
-                foreach ($res as $key => $value) {
-                    if($key!="ownerResourceId") {
-                        $resourceWay->$key = $value;
-                    } else {
-                        $resourceWay->$key=new \MongoId($value);
-                    }
+        foreach ($result as $res) {
+            $resourceWay = new ResourceWay();
+            foreach ($res as $key => $value) {
+                if ($key != "ownerResourceId") {
+                    $resourceWay->$key = $value;
+                } else {
+                    $resourceWay->$key = new \MongoId($value);
                 }
-                $objectManager->persist($resourceWay);
-                $objectManager->flush();
             }
+            $objectManager->persist($resourceWay);
+            $objectManager->flush();
+        }
 
 
     }
@@ -73,30 +74,29 @@ class ResourceModel implements ServiceLocatorAwareInterface
     public function addResource($post, $owner_id, $owner_org_id, $id)
     {
 
-        if(!empty($post)) {
-            if(is_array($post)) {
-                $propArray=$post;
+        if (!empty($post)) {
+            if (is_array($post)) {
+                $propArray = $post;
             } else {
                 $propArray = get_object_vars($post);
             }
 
 
         }
-        $prop_array_split=$propArray;
+        $prop_array_split = $propArray;
         unset($prop_array_split['tsId']);
-        if(!empty($prop_array_split['typeLoad'])) {
+        if (!empty($prop_array_split['typeLoad'])) {
             unset($prop_array_split['typeLoad']);
-            $prop_array_new['typeLoad']=$propArray['typeLoad'];
+            $prop_array_new['typeLoad'] = $propArray['typeLoad'];
         }
 
         unset($prop_array_split['submit']);
 
 
-        $prop_array_new['tsId']=$propArray['tsId'];
+        $prop_array_new['tsId'] = $propArray['tsId'];
 
 
-        $propArray=$prop_array_new;
-
+        $propArray = $prop_array_new;
 
 
         $propArray['ownerId'] = $owner_id;
@@ -110,10 +110,10 @@ class ResourceModel implements ServiceLocatorAwareInterface
             $res = new Resource();
         }
         foreach ($propArray as $key => $value) {
-            if($key!="tsId") {
+            if ($key != "tsId") {
                 $res->$key = $value;
             } else {
-                $res->$key=new \MongoId($value);
+                $res->$key = new \MongoId($value);
             }
         }
         $objectManager->persist($res);
@@ -121,52 +121,58 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
 
 
-        $this->addResourceWay($prop_array_split,$res->id,$this->getIdByUuid($id));
+        $this->addResourceWay($prop_array_split, $res->id, $this->getIdByUuid($id));
 
-        $noteModel=$this->getNotificationModel();
+        $noteModel = $this->getNotificationModel();
 
-        $noteModel->addNotification($res->id,$owner_id,$owner_org_id);
+        $noteModel->addNotification($res->id, $owner_id, $owner_org_id);
 
         return $res->uuid;
     }
 
-    public function returnResultsResource($post) {
+    public function returnResultsResource($post)
+    {
 
         $propArray = get_object_vars($post);
         unset($propArray['submit']);
 
-        $propArrayResult=array();
-        foreach($propArray as $key => $value) {
-            if(!empty($value)) {
-                $propArrayResult[$key]=$value;
+        $propArrayResult = array();
+        foreach ($propArray as $key => $value) {
+            if (!empty($value)) {
+                $propArrayResult[$key] = $value;
             }
         }
-        $propArrayResultFullForm=array();
-        if( !empty($propArrayResult['typeLoad']) ) {
-            $propArrayResultFullForm['typeLoad']=$propArrayResult['typeLoad'];
+        $propArrayResultFullForm = array();
+        if (!empty($propArrayResult['typeLoad'])) {
+            $propArrayResultFullForm['typeLoad'] = $propArrayResult['typeLoad'];
             unset($propArrayResult['typeLoad']);
         }
-        if( !empty($propArrayResult['tsId']) ) {
-            $propArrayResultFullForm['tsId']=new \MongoId($propArrayResult['tsId']);
+        if (!empty($propArrayResult['tsId'])) {
+            $propArrayResultFullForm['tsId'] = new \MongoId($propArrayResult['tsId']);
             unset($propArrayResult['tsId']);
         }
         $accModel = $this->getAccountModel();
 
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default') ;
-        if(empty($propArrayResultFullForm)) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        if (empty($propArrayResultFullForm)) {
             $rezObj = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy($propArrayResult);
 
-            if(!empty($rezObj)) {
+            if (!empty($rezObj)) {
                 $result = array();
                 $cargo = $this->getVehicleModel();
                 foreach ($rezObj as $cur) {
 
-                    $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerResourceId)));
+                    $cur = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
+                        array('id' => new \MongoId($cur->ownerResourceId))
+                    );
 
-                    $veh=$cargo->listVehicle($cur->tsId);
-                    $ways=$this->returnAllWays($cur->id);
+                    $veh = $cargo->listVehicle($cur->tsId);
+                    $ways = $this->returnAllWays($cur->id);
                     $acc = $accModel->getAccount($cur->ownerOrgId);
-                    array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways,"org"=>$acc));
+                    array_push(
+                        $result,
+                        array('res' => get_object_vars($cur), 'veh' => $veh, 'ways' => $ways, "org" => $acc)
+                    );
                 }
                 return $result;
             } else {
@@ -174,35 +180,52 @@ class ResourceModel implements ServiceLocatorAwareInterface
             }
         } else {
 
-            $ticketFindObjects = $objectManager->getRepository('Resource\Entity\Resource')->findBy($propArrayResultFullForm);
+            $ticketFindObjects = $objectManager->getRepository('Resource\Entity\Resource')->findBy(
+                $propArrayResultFullForm
+            );
 
-            if(!empty($ticketFindObjects)) {
+            if (!empty($ticketFindObjects)) {
 
                 $result = array();
 
-                foreach($ticketFindObjects as $ticketFindObject) {
+                foreach ($ticketFindObjects as $ticketFindObject) {
 
-                    if(!empty($propArrayResult)) {
-                        $propArrayResult['ownerResourceId']= new \MongoId($ticketFindObject->id);
+                    if (!empty($propArrayResult)) {
+                        $propArrayResult['ownerResourceId'] = new \MongoId($ticketFindObject->id);
                         // die(var_dump($propArrayResult));
-                        $rezObj = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy($propArrayResult);
-                        if(!empty($rezObj)) {
+                        $rezObj = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy(
+                            $propArrayResult
+                        );
+                        if (!empty($rezObj)) {
                             $cargo = $this->getVehicleModel();
                             foreach ($rezObj as $cur) {
-                                $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerResourceId)));
-                                $veh=$cargo->listVehicle($cur->tsId);
-                                $ways=$this->returnAllWays($cur->id);
+                                $cur = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
+                                    array('id' => new \MongoId($cur->ownerResourceId))
+                                );
+                                $veh = $cargo->listVehicle($cur->tsId);
+                                $ways = $this->returnAllWays($cur->id);
                                 $acc = $accModel->getAccount($cur->ownerOrgId);
-                                array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways,"org"=>$acc));
+                                array_push(
+                                    $result,
+                                    array('res' => get_object_vars($cur), 'veh' => $veh, 'ways' => $ways, "org" => $acc)
+                                );
                             }
 
                         }
                     } else {
                         $cargo = $this->getVehicleModel();
-                        $veh=$cargo->listVehicle($ticketFindObject->tsId);
-                        $ways=$this->returnAllWays($ticketFindObject->id);
+                        $veh = $cargo->listVehicle($ticketFindObject->tsId);
+                        $ways = $this->returnAllWays($ticketFindObject->id);
                         $acc = $accModel->getAccount($ticketFindObject->ownerOrgId);
-                        array_push($result, array('res'=>get_object_vars($ticketFindObject),'veh'=>$veh,'ways'=>$ways,"org"=>$acc));
+                        array_push(
+                            $result,
+                            array(
+                                'res' => get_object_vars($ticketFindObject),
+                                'veh' => $veh,
+                                'ways' => $ways,
+                                "org" => $acc
+                            )
+                        );
                     }
 
                 }
@@ -217,7 +240,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('uuid' => $id));
-        if(empty($res)) {
+        if (empty($res)) {
             return null;
         } else {
             return get_object_vars($res);
@@ -229,19 +252,20 @@ class ResourceModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($id)));
-        if(!empty($res)) {
+        if (!empty($res)) {
             return get_object_vars($res);
         } else {
             return null;
         }
     }
 
-    public function returnResources($searchArray) {
+    public function returnResources($searchArray)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $resObj = $objectManager->createQueryBuilder('Resource\Entity\Resource');
-        $queryBuilderModel=$this->getQueryBuilderModel();
-        $resObj=$queryBuilderModel->createQuery($resObj, $searchArray)->getQuery()->execute();
-        if(empty($resObj)) {
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $resObj = $queryBuilderModel->createQuery($resObj, $searchArray)->getQuery()->execute();
+        if (empty($resObj)) {
             return array();
         }
         $result = array();
@@ -249,15 +273,15 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $vehicle = $this->getVehicleModel();
         foreach ($resObj as $cur) {
             $obj_vars = get_object_vars($cur);
-            if(!empty($cur->tsId)) {
-                $veh=$vehicle->listVehicle($cur->tsId);
-            }  else {
-                $veh=null;
+            if (!empty($cur->tsId)) {
+                $veh = $vehicle->listVehicle($cur->tsId);
+            } else {
+                $veh = null;
             }
-            $ways=$this->returnAllWays($cur->id);
+            $ways = $this->returnAllWays($cur->id);
 
             $com = $comModel->getCompany($obj_vars['ownerId']);
-            array_push($result, array('res' => $obj_vars, 'owner' => $com,'veh'=>$veh,'ways'=>$ways));
+            array_push($result, array('res' => $obj_vars, 'owner' => $com, 'veh' => $veh, 'ways' => $ways));
         }
         return $result;
     }
@@ -268,20 +292,20 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $rezObj = $objectManager->getRepository('Resource\Entity\Resource')->getAllAvailableResource();
         $rezs = array();
         $accModel = $this->getAccountModel();
-        if(empty($rezObj)) {
+        if (empty($rezObj)) {
             return null;
         }
         $vehicle = $this->getVehicleModel();
         foreach ($rezObj as $cur) {
             $obj_vars = get_object_vars($cur);
-            if(!empty($cur->tsId)) {
-                $veh=$vehicle->listVehicle($cur->tsId);
-            }  else {
-                $veh=null;
+            if (!empty($cur->tsId)) {
+                $veh = $vehicle->listVehicle($cur->tsId);
+            } else {
+                $veh = null;
             }
-            $ways=$this->returnAllWays($cur->id);
+            $ways = $this->returnAllWays($cur->id);
             $acc = $accModel->getAccount($obj_vars['ownerOrgId']);
-            array_push($rezs, array('res' => $obj_vars, 'org' => $acc,'veh'=>$veh,'ways'=>$ways));
+            array_push($rezs, array('res' => $obj_vars, 'org' => $acc, 'veh' => $veh, 'ways' => $ways));
         }
         return $rezs;
     }
@@ -293,34 +317,38 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $rezs = array();
         $vehicle = $this->getVehicleModel();
         foreach ($rezObj as $cur) {
-            if(!empty($cur->tsId)) {
-                $veh=$vehicle->listVehicle($cur->tsId);
+            if (!empty($cur->tsId)) {
+                $veh = $vehicle->listVehicle($cur->tsId);
             } else {
-                $veh=null;
+                $veh = null;
             }
 
-            $ways=$this->returnAllWays($cur->id);
-            array_push($rezs, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways));
+            $ways = $this->returnAllWays($cur->id);
+            array_push($rezs, array('res' => get_object_vars($cur), 'veh' => $veh, 'ways' => $ways));
         }
         return $rezs;
     }
+
     public function returnMyAccResource($orgId)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $comModel = $this->getCompanyModel();
         $com = $comModel->returnCompanies($orgId);
-        $resultArray=array();
-        foreach($com as $c) {
+        $resultArray = array();
+        foreach ($com as $c) {
             $rezObj = $objectManager->getRepository('Resource\Entity\Resource')->getMyAvailableResource($c['id']);
             $vehicle = $this->getVehicleModel();
             foreach ($rezObj as $cur) {
-                if(!empty($cur->tsId)) {
-                    $veh=$vehicle->listVehicle($cur->tsId);
+                if (!empty($cur->tsId)) {
+                    $veh = $vehicle->listVehicle($cur->tsId);
                 } else {
-                    $veh=null;
+                    $veh = null;
                 }
-                $ways=$this->returnAllWays($cur->id);
-                array_push($resultArray, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways, 'owner'=>$c));
+                $ways = $this->returnAllWays($cur->id);
+                array_push(
+                    $resultArray,
+                    array('res' => get_object_vars($cur), 'veh' => $veh, 'ways' => $ways, 'owner' => $c)
+                );
             }
         }
         return $resultArray;
@@ -357,13 +385,15 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $objectManager->remove($recourse);
         $objectManager->flush();
     }
-    public function copyResource($uuid) {
-        $res=$this->listResource($uuid);
+
+    public function copyResource($uuid)
+    {
+        $res = $this->listResource($uuid);
         unset($res['created']);
         unset($res['updated']);
         unset($res['id']);
         unset($res['uuid']);
-        return $this->addResource($res,$res['ownerId'],$res['ownerOrgId'],null);
+        return $this->addResource($res, $res['ownerId'], $res['ownerOrgId'], null);
     }
 
     public function getVehicleModel()
@@ -375,41 +405,44 @@ class ResourceModel implements ServiceLocatorAwareInterface
         return $this->vehicleModel;
     }
 
-    public function returnAllWays($id) {
+    public function returnAllWays($id)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Resource\Entity\ResourceWay')->findBy(
             array('ownerResourceId' => new \MongoId($id))
         );
-        $result=array();
-        foreach($res as $re){
-            array_push($result,get_object_vars($re));
+        $result = array();
+        foreach ($res as $re) {
+            array_push($result, get_object_vars($re));
         }
         return $result;
     }
 
-    public function getIdByUuid($uuid) {
-        if(empty($uuid)) {
+    public function getIdByUuid($uuid)
+    {
+        if (empty($uuid)) {
             return null;
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
             array('uuid' => $uuid)
         );
-        if(empty($res)) {
+        if (empty($res)) {
             return null;
         }
         return $res->id;
     }
 
-    public function getUuidById($id) {
-        if(empty($id)) {
+    public function getUuidById($id)
+    {
+        if (empty($id)) {
             return null;
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
             array('id' => new \MongoId($id))
         );
-        if(empty($res)) {
+        if (empty($res)) {
             return null;
         }
         return $res->uuid;
@@ -423,25 +456,28 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         return $this->notificationModel;
     }
-    public function addBootstrap3Class(&$form,&$formWay) {
+
+    public function addBootstrap3Class(&$form, &$formWay)
+    {
         foreach ($formWay as $wayEl) {
-            $attr=$wayEl->getAttributes();
-            if(!empty($attr['type'])) {
-                if(($attr['type']!='checkbox')) {
-                    $wayEl->setAttributes(array( 'class' => 'form-control' ));
+            $attr = $wayEl->getAttributes();
+            if (!empty($attr['type'])) {
+                if (($attr['type'] != 'checkbox')) {
+                    $wayEl->setAttributes(array('class' => 'form-control'));
                 }
             }
         }
         foreach ($form as $el) {
-            $attr=$el->getAttributes();
-            if(!empty($attr['type'])) {
-                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
-                    $el->setAttributes(array( 'class' => 'form-control' ));
+            $attr = $el->getAttributes();
+            if (!empty($attr['type'])) {
+                if (($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox')) {
+                    $el->setAttributes(array('class' => 'form-control'));
                 }
             }
 
         }
     }
+
     public function getCompanyModel()
     {
         if (!$this->companyModel) {
@@ -450,6 +486,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         }
         return $this->companyModel;
     }
+
     public function getQueryBuilderModel()
     {
         if (!$this->queryBuilderModel) {

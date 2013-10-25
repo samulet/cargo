@@ -66,7 +66,6 @@ class Notification
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус"})
      * @Annotation\Validator({"name":"InArray",
@@ -86,6 +85,7 @@ class Notification
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -101,6 +101,7 @@ class Notification
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function getUUID()
     {
         return $this->uuid;

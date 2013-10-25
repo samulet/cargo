@@ -103,8 +103,8 @@ class VehicleModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $vehObj = $objectManager->createQueryBuilder('Resource\Entity\Vehicle');
-        $queryBuilderModel=$this->getQueryBuilderModel();
-        $vehObj=$queryBuilderModel->createQuery($vehObj, $searchArray)->getQuery()->execute();
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $vehObj = $queryBuilderModel->createQuery($vehObj, $searchArray)->getQuery()->execute();
         $result = array();
         $comModel = $this->getCompanyModel();
 
@@ -148,13 +148,13 @@ class VehicleModel implements ServiceLocatorAwareInterface
         $comModel = $this->getCompanyModel();
         $com = $comModel->returnCompanies($orgId);
         $resultArray = array();
-        foreach($com as $c) {
+        foreach ($com as $c) {
             $rezObj = $objectManager->getRepository('Resource\Entity\Vehicle')
                 ->getMyAvailableVehicle($c['id']);
             foreach ($rezObj as $cur) {
-                $resultVars=get_object_vars($cur);
-                $resultVars['vehicleOwnerTrue']=$c;
-                array_push($resultArray,$resultVars );
+                $resultVars = get_object_vars($cur);
+                $resultVars['vehicleOwnerTrue'] = $c;
+                array_push($resultArray, $resultVars);
             }
         }
         return $resultArray;
@@ -251,6 +251,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
 
         }
     }
+
     public function getCompanyModel()
     {
         if (!$this->companyModel) {
@@ -259,6 +260,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
         }
         return $this->companyModel;
     }
+
     public function getQueryBuilderModel()
     {
         if (!$this->queryBuilderModel) {

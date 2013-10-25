@@ -25,7 +25,7 @@ $vehicles = $this->res;
             Марка / Модель
         </th>
         <th>
-           Грузоподъемность
+            Грузоподъемность
         </th>
         <th>
             Опубликовать
@@ -42,10 +42,14 @@ $vehicles = $this->res;
             Удалить
         </th>
     </tr>
-    <?php foreach ($vehicles as $vehicle) { $vehicle=$vehicle['res']; ?>
+    <?php foreach ($vehicles as $vehicle) {
+        $vehicle = $vehicle['res']; ?>
         <tr>
             <td>
-                <a href="<?php echo $this->url('vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'list'));?>">
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'list')
+                ); ?>">
                     <?php echo $vehicle['carNumber']; ?>
                 </a>
             </td>
@@ -59,15 +63,18 @@ $vehicles = $this->res;
             <td>
                 <?php echo $vehicle['capacity']; ?>
             </td>
-<td>
-    <a href="<?php echo $this->url(
-        'resource',
-        array('action' => 'add', 'id' => $vehicle['uuid'])
-    );?>">Опубликовать</a>
-
-</td>
             <td>
-                <a href="<?php echo $this->url( 'vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'edit'));?>">Редактировать</a>
+                <a href="<?php echo $this->url(
+                    'resource',
+                    array('action' => 'add', 'id' => $vehicle['uuid'])
+                );?>">Опубликовать</a>
+
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'edit')
+                ); ?>">Редактировать</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(

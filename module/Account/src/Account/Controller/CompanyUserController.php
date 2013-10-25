@@ -43,7 +43,7 @@ class CompanyUserController extends AbstractActionController
         return new ViewModel(array(
             'form' => $form,
             'org_id' => $accUuid,
-            'param' =>$param,
+            'param' => $param,
             'formRoles' => $formRoles
         ));
     }
@@ -55,13 +55,13 @@ class CompanyUserController extends AbstractActionController
         $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
         $uuid_gen = new UuidGenerator();
-        $form=null;
+        $form = null;
 
         if (!$uuid_gen->isValid($accUuid)) {
             $result = "Ошибка";
         } else {
             $accModel = $this->getAccountModel();
-            if($param=='admin') {
+            if ($param == 'admin') {
                 $accId = $accModel->getOrgIdByUUID($accUuid);
             } else {
 
@@ -69,7 +69,7 @@ class CompanyUserController extends AbstractActionController
             }
 
             $comUserModel = $this->getCompanyUserModel();
-            if ($comUserModel->addUserToCompany($post, $accId,$param)) {
+            if ($comUserModel->addUserToCompany($post, $accId, $param)) {
                 $result = "Успешо";
             } else {
                 $result = "Ошибка, скорее всего юзер уже добавлен или не существует";
@@ -80,12 +80,13 @@ class CompanyUserController extends AbstractActionController
         ));
     }
 
-    public function listAction() {
+    public function listAction()
+    {
         $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
-        if($accUuid!="all") {
+        if ($accUuid != "all") {
             $accModel = $this->getAccountModel();
-            if($param=='current') {
+            if ($param == 'current') {
                 $orgId = $accModel->getComIdByUUID($accUuid);
             } else {
                 $orgId = $accModel->getOrgIdByUUID($accUuid);
@@ -93,44 +94,45 @@ class CompanyUserController extends AbstractActionController
 
 
         } else {
-            $orgId='all';
+            $orgId = 'all';
             $this->layout('layout/admin');
         }
         $comUserModel = $this->getCompanyUserModel();
         $comModel = $this->getCompanyModel();
         $accModel = $this->getAccountModel();
-        $name='';
-        if(($param=='user')&&($accUuid!="all")) {
-            $users=$comUserModel->getAllUsersByOrgId($orgId);
-            $acc=$accModel->getAccount($accUuid);
-            $name=$acc['name'];
-        } elseif(($param=='admin')&&($accUuid!="all")) {
-            $users=$comUserModel->getUsersByOrgId($orgId,$param);
-        } elseif(($param=='full')&&($orgId=='all')) {
-            $users=$comUserModel->getUsersByOrgId($orgId,$param);
-        } elseif(($param=='current')&&($accUuid!="all")) {
-            $users=$comUserModel->getUsersByComId($orgId);
-            $com=$comModel->getCompany($accUuid);
-            $name=$com['property'].' '.$com['name'];
+        $name = '';
+        if (($param == 'user') && ($accUuid != "all")) {
+            $users = $comUserModel->getAllUsersByOrgId($orgId);
+            $acc = $accModel->getAccount($accUuid);
+            $name = $acc['name'];
+        } elseif (($param == 'admin') && ($accUuid != "all")) {
+            $users = $comUserModel->getUsersByOrgId($orgId, $param);
+        } elseif (($param == 'full') && ($orgId == 'all')) {
+            $users = $comUserModel->getUsersByOrgId($orgId, $param);
+        } elseif (($param == 'current') && ($accUuid != "all")) {
+            $users = $comUserModel->getUsersByComId($orgId);
+            $com = $comModel->getCompany($accUuid);
+            $name = $com['property'] . ' ' . $com['name'];
         }
         return new ViewModel(array(
             'users' => $users,
-            'org_uuid'=>$accUuid,
-            'param' =>$param,
-            'name'=>$name
+            'org_uuid' => $accUuid,
+            'param' => $param,
+            'name' => $name
         ));
     }
 
-    public function deleteAction() {
+    public function deleteAction()
+    {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
         $itemId = $this->getEvent()->getRouteMatch()->getParam('comId');
         $comUserModel = $this->getCompanyUserModel();
-        if($param=='full') {
+        if ($param == 'full') {
             $comUserModel->deleteUserFull($userId);
             return $this->redirect()->toUrl('/account/user/all/list');
         } else {
-            $comUserModel->deleteUserFromOrg($userId, $itemId,$param);
+            $comUserModel->deleteUserFromOrg($userId, $itemId, $param);
             return $this->redirect()->toUrl('/account');
         }
     }
@@ -139,8 +141,7 @@ class CompanyUserController extends AbstractActionController
     {
         if ($this->zfcUserAuthentication()->hasIdentity()) {
             return true;
-        }
-        else {
+        } else {
             return $this->redirect()->toUrl('/user/login');
         }
     }
@@ -163,52 +164,55 @@ class CompanyUserController extends AbstractActionController
         return $this->companyUserModel;
     }
 
-    public function roleAction() {
+    public function roleAction()
+    {
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $adminParam = $this->getEvent()->getRouteMatch()->getParam('param');
         $comId = $this->getEvent()->getRouteMatch()->getParam('comId');
 
         $builder = new AnnotationBuilder();
-        if($adminParam=='admin') {
+        if ($adminParam == 'admin') {
             $this->layout('layout/admin');
         }
         $form = $builder->createForm('User\Entity\User');
         foreach ($form as $el) {
-            $attr=$el->getAttributes();
-            if(!empty($attr['type'])) {
-                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
-                    $el->setAttributes(array( 'class' => 'form-control' ));
+            $attr = $el->getAttributes();
+            if (!empty($attr['type'])) {
+                if (($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox')) {
+                    $el->setAttributes(array('class' => 'form-control'));
                 }
             }
         }
         $comUserModel = $this->getCompanyUserModel();
-        $roles=$comUserModel->getRoles($userId,$comId);
-        $data=$comUserModel->getUser($userId);
+        $roles = $comUserModel->getRoles($userId, $comId);
+        $data = $comUserModel->getUser($userId);
         return new ViewModel(array(
-            'id' =>$userId,
-            'form' =>$form,
-            'roles'=>$roles,
-            'comId'=>$comId,
-            'data'=>$data
+            'id' => $userId,
+            'form' => $form,
+            'roles' => $roles,
+            'comId' => $comId,
+            'data' => $data
         ));
     }
 
-    public function roleEditAction() {
+    public function roleEditAction()
+    {
         $comUserModel = $this->getCompanyUserModel();
         $userId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $comId = $this->getEvent()->getRouteMatch()->getParam('comId');
-        $post=$this->getRequest()->getPost();
-        $post=get_object_vars($post);
-        if(empty($post['roles'])) {
-            $roles=array();
+        $post = $this->getRequest()->getPost();
+        $post = get_object_vars($post);
+        if (empty($post['roles'])) {
+            $roles = array();
         } else {
-            $roles=$post['roles'];
+            $roles = $post['roles'];
             unset($post['roles']);
         }
-        $comUserModel->addRole($userId,$roles,$comId);
+        $comUserModel->addRole($userId, $roles, $comId);
         $comUserModel->updateUserData($userId, $post);
-        return $this->redirect()->toUrl('/account/user/'.$userId.'/role/current/'.$comId);
+        return $this->redirect()->toUrl('/account/user/' . $userId . '/role/current/' . $comId);
     }
+
     public function getCompanyModel()
     {
         if (!$this->companyModel) {

@@ -1,5 +1,5 @@
 <?php
-$auc=$this->auc;
+$auc = $this->auc;
 
 ?>
 <h1>Аукционы</h1>
@@ -16,31 +16,41 @@ $auc=$this->auc;
         </th>
         <th>
             Сделать ставка
-         </th>
+        </th>
         <th>
             Подробнее
         </th>
     </tr>
-<?php foreach($auc as $au) { ?>
-    <tr>
-        <td>
-        <?php if($au['str']=='up') echo 'Ресурс';
-              else echo 'Заявка';?>
-        </td>
-        <td>
-        </td>
-        <td>
-        <?php if($au['str']=='up') echo 'Минимальная: '. $au['money'].' '. $au['currency'] ;
-                      else echo 'Максимальная: '. $au['money'].' '. $au['currency'] ; ?>
-        </td>
-        <td>
-                <a href="<?php echo $this->url('auction',
-                    array('action'=>'addBid', 'id' => $au['uuid']));?>">Сделать ставку</a>
-        </td>
-        <td>
-                <a href="<?php echo $this->url('auction',
-                    array('action'=>'list', 'id' => $au['uuid']));?>">Подробнее</a>
-        </td>
-    </tr>
-<?php } ?>
+    <?php foreach ($auc as $au) { ?>
+        <tr>
+            <td>
+                <?php if ($au['str'] == 'up') {
+                    echo 'Ресурс';
+                } else {
+                    echo 'Заявка';
+                }?>
+            </td>
+            <td>
+            </td>
+            <td>
+                <?php if ($au['str'] == 'up') {
+                    echo 'Минимальная: ' . $au['money'] . ' ' . $au['currency'];
+                } else {
+                    echo 'Максимальная: ' . $au['money'] . ' ' . $au['currency'];
+                } ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'auction',
+                    array('action' => 'addBid', 'id' => $au['uuid'])
+                );?>">Сделать ставку</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'auction',
+                    array('action' => 'list', 'id' => $au['uuid'])
+                );?>">Подробнее</a>
+            </td>
+        </tr>
+    <?php } ?>
 </table>

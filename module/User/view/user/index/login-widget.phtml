@@ -30,8 +30,8 @@ $form->get('submit')->setAttribute('class', 'btn btn-primary');
 
     <?php if ($this->enableRegistration) : ?>
         Not registered? <a href="<?php echo $this->url(
-            'zfcuser/register'
-        ) . ($this->redirect ? '?redirect=' . $this->redirect : '') ?>">Sign up!</a>
+                'zfcuser/register'
+            ) . ($this->redirect ? '?redirect=' . $this->redirect : '') ?>">Sign up!</a>
     <?php endif; ?>
 
 </div>

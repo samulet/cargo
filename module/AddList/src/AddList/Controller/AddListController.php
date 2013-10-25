@@ -17,6 +17,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use AddList\Form\AddListNameForm;
 use AddList\Form\AddListForm;
+
 class AddListController extends AbstractActionController
 {
     protected $addListModel;
@@ -28,17 +29,18 @@ class AddListController extends AbstractActionController
     {
 
     }
+
     public function addAction()
     {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
         $addListModel = $this->getAddListModel();
 
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
-        if(!empty($parent)) {
-            $listName=$addListModel->getOneList($listNameUuid);
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
+        if (!empty($parent)) {
+            $listName = $addListModel->getOneList($listNameUuid);
         } else {
-            $listName=$addListModel->getList($listNameUuid,$accListId);
+            $listName = $addListModel->getList($listNameUuid, $accListId);
         }
 
         $builder = new AnnotationBuilder();
@@ -49,36 +51,37 @@ class AddListController extends AbstractActionController
 
 
         $comModel = $this->getCompanyModel();
-        $comData=$comModel->getCompanyOfCurrentAccount($accListId);
+        $comData = $comModel->getCompanyOfCurrentAccount($accListId);
 
-        $fillFrom=new AddListForm();
-        $fillFrom->fillComNew($form,$comData,'company');
+        $fillFrom = new AddListForm();
+        $fillFrom->fillComNew($form, $comData, 'company');
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
 
 
-        if(array_search("admin",$roles,true)) {
+        if (array_search("admin", $roles, true)) {
 
             $form->get('forAccount')->setAttribute('required', false);
         }
 
         return new ViewModel(array(
             'form' => $form,
-            'uuid' =>$listNameUuid,
-            'parent'=>$parent,
-            'listName'=>$listName,
-            'roles'=>$roles
+            'uuid' => $listNameUuid,
+            'parent' => $parent,
+            'listName' => $listName,
+            'roles' => $roles
 
         ));
     }
 
 
-    public function editAction() {
+    public function editAction()
+    {
         $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $actionType = $this->getEvent()->getRouteMatch()->getParam('parent');
         $addListModel = $this->getAddListModel();
-        $listData=$addListModel->getOneList($listUuid);
-        $listName=$addListModel->getListName($listData['listId']);
+        $listData = $addListModel->getOneList($listUuid);
+        $listName = $addListModel->getListName($listData['listId']);
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
@@ -86,32 +89,32 @@ class AddListController extends AbstractActionController
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
-        $listParent=null;
-        if(!empty($listData['parentFieldId'])) {
-            $listParent=$addListModel->getOneList($addListModel->getListUuidById($listData['parentFieldId']));
+        $listParent = null;
+        if (!empty($listData['parentFieldId'])) {
+            $listParent = $addListModel->getOneList($addListModel->getListUuidById($listData['parentFieldId']));
         }
-        if($actionType=='list') {
+        if ($actionType == 'list') {
             foreach ($form as $el) {
-                $el->setAttributes(array( 'disabled' => 'disabled' ));
+                $el->setAttributes(array('disabled' => 'disabled'));
             }
         }
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
         $comModel = $this->getCompanyModel();
-        $comData=$comModel->getCompanyOfCurrentAccount($accListId);
+        $comData = $comModel->getCompanyOfCurrentAccount($accListId);
 
-        $fillFrom=new AddListForm();
-        $fillFrom->fillComNew($form,$comData,'company');
+        $fillFrom = new AddListForm();
+        $fillFrom->fillComNew($form, $comData, 'company');
         $form->setData($listData);
 
 
         return new ViewModel(array(
             'fieldUuid' => $listUuid,
-            'uuid'=>$listData['listId'],
-            'form'=>$form,
-            'roles'=>$roles,
-            'listName'=>$listName,
-            'listParent'=>$listParent,
-            'actionType' =>$actionType
+            'uuid' => $listData['listId'],
+            'form' => $form,
+            'roles' => $roles,
+            'listName' => $listName,
+            'listParent' => $listParent,
+            'actionType' => $actionType
         ));
     }
 
@@ -124,46 +127,49 @@ class AddListController extends AbstractActionController
         return $this->addListModel;
     }
 
-    public function addListAction() {
+    public function addListAction()
+    {
 
-        $listUUID= $this->getEvent()->getRouteMatch()->getParam('id');
-        $post=$this->getRequest()->getPost();
-        $target=$listUUID;
-        $parent=$this->getEvent()->getRouteMatch()->getParam('parent');
+        $listUUID = $this->getEvent()->getRouteMatch()->getParam('id');
+        $post = $this->getRequest()->getPost();
+        $target = $listUUID;
+        $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
 
-        if($parent=='parent') {
-            $parentField=$listUUID;
-            $listUUID=null;
-            $target=$parentField;
+        if ($parent == 'parent') {
+            $parentField = $listUUID;
+            $listUUID = null;
+            $target = $parentField;
         } else {
-            $parentField=null;
+            $parentField = null;
         }
         $addListModel = $this->getAddListModel();
 
 
-        $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
+        $userId = $this->zfcUserAuthentication()->getIdentity()->getId();
 
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
+        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $listId= $addListModel->addList($post,$listUUID,$parentField,$userId,$accListId,$comListId);
+        $listId = $addListModel->addList($post, $listUUID, $parentField, $userId, $accListId, $comListId);
 
 
-        if(empty($listName['parentId'])) {
-            return $this->redirect()->toUrl('/addList/my-fields/'.$listId['listId']);
+        if (empty($listName['parentId'])) {
+            return $this->redirect()->toUrl('/addList/my-fields/' . $listId['listId']);
         } else {
-            $parentUuid=$addListModel->getListUuidById($listId['parentFieldId']);
+            $parentUuid = $addListModel->getListUuidById($listId['parentFieldId']);
 
-            return $this->redirect()->toUrl('/addList/list-parent/'.$parentUuid);
+            return $this->redirect()->toUrl('/addList/list-parent/' . $parentUuid);
         }
 
     }
 
 
-    public function myAction() {;
+    public function myAction()
+    {
+        ;
 
         $addListModel = $this->getAddListModel();
-        $list=$addListModel->getListName();
+        $list = $addListModel->getListName();
 
         return new ViewModel(array(
 
@@ -171,97 +177,99 @@ class AddListController extends AbstractActionController
         ));
     }
 
-    public function deleteAction() {
+    public function deleteAction()
+    {
         $list_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $list=$addListModel->getOneList($list_uuid);
+        $list = $addListModel->getOneList($list_uuid);
         $addListModel->deleteList($list_uuid);
-        $listName=$addListModel->getListName((string)$list['listId']);
-        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
+        $listName = $addListModel->getListName((string)$list['listId']);
+        return $this->redirect()->toUrl('/addList/my-fields/' . $listName['uuid']);
     }
 
-    public function addNameAction() {
-        $addListNameForm= new AddListNameForm();
+    public function addNameAction()
+    {
+        $addListNameForm = new AddListNameForm();
         $addListModel = $this->getAddListModel();
-        $formData=$addListModel->getAllListName();
+        $formData = $addListModel->getAllListName();
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddListName');
-        $form=$addListNameForm->fillParentFrom($form,$formData);
+        $form = $addListNameForm->fillParentFrom($form, $formData);
         return new ViewModel(array(
             'form' => $form
         ));
     }
 
-    public function addListNameAction() {
+    public function addListNameAction()
+    {
         $list_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $addListModel->addListName($this->getRequest()->getPost(),$list_uuid);
+        $addListModel->addListName($this->getRequest()->getPost(), $list_uuid);
         return $this->redirect()->toUrl('/addList/addName');
     }
 
-    public function myFieldsAction() {
+    public function myFieldsAction()
+    {
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
 
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
 
-        if(array_search("admin",$roles,true)) {
-            $list=$addListModel->getListAdmin($listNameUuid);
+        if (array_search("admin", $roles, true)) {
+            $list = $addListModel->getListAdmin($listNameUuid);
         } else {
-            $list=$addListModel->getList($listNameUuid,$accListId);
+            $list = $addListModel->getList($listNameUuid, $accListId);
         }
 
 
-
-
-
-        if(!empty($list['list']['parentId'])) {
-            $parentList=$addListModel->getListName($list['list']['parentId']);
+        if (!empty($list['list']['parentId'])) {
+            $parentList = $addListModel->getListName($list['list']['parentId']);
         } else {
-            $parentList=null;
+            $parentList = null;
         }
-        $listChild=null;
-        if(!empty($list['list']['child'])) {
-            $listChild=$addListModel->getListName('veh-models');
+        $listChild = null;
+        if (!empty($list['list']['child'])) {
+            $listChild = $addListModel->getListName('veh-models');
         }
         //$listChild=$addListModel->getChildName($list['list']['id']);
-
 
 
         return new ViewModel(array(
             'field' => $list['field'],
             'list' => $list['list'],
-            'parentList' =>$parentList,
-            'listChild'=>$listChild
+            'parentList' => $parentList,
+            'listChild' => $listChild
         ));
     }
 
 
-    public function editFieldAction() {
+    public function editFieldAction()
+    {
         $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
-        $listId=$addListModel->editField($listUuid,$this->getRequest()->getPost(),$accListId,$comListId);
-        $listName=$addListModel->getListName((string)$listId['listId']);
-        return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
+        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
+        $listId = $addListModel->editField($listUuid, $this->getRequest()->getPost(), $accListId, $comListId);
+        $listName = $addListModel->getListName((string)$listId['listId']);
+        return $this->redirect()->toUrl('/addList/my-fields/' . $listName['uuid']);
     }
 
-    public function listParentAction() {
+    public function listParentAction()
+    {
         $parentListUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $listChild=$addListModel->listParentAction($parentListUuid);
-        $listParent=$addListModel->getOneList($parentListUuid);
-        $listName=$addListModel->getListName($listParent['listId']);
+        $listChild = $addListModel->listParentAction($parentListUuid);
+        $listParent = $addListModel->getOneList($parentListUuid);
+        $listName = $addListModel->getListName($listParent['listId']);
         return new ViewModel(array(
-            'listChild'=>$listChild,
-            'listParent'=>$listParent,
-            'uuid'=>$parentListUuid,
-            'listName'=>$listName
+            'listChild' => $listChild,
+            'listParent' => $listParent,
+            'uuid' => $parentListUuid,
+            'listName' => $listName
         ));
     }
 
@@ -283,18 +291,21 @@ class AddListController extends AbstractActionController
         return $this->companyUserModel;
     }
 
-    public function gotToTheChildAction() {
+    public function gotToTheChildAction()
+    {
         $listId = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
-        $uuid=$addListModel->getChildUuid($listId);
-        return $this->redirect()->toUrl('/addList/list-parent/'.$uuid);
+        $uuid = $addListModel->getChildUuid($listId);
+        return $this->redirect()->toUrl('/addList/list-parent/' . $uuid);
     }
 
-    public function addListTranslatorAction() {
+    public function addListTranslatorAction()
+    {
         $addListModel = $this->getAddListModel();
         $addListModel->addListTranslator();
 
     }
+
     public function getCompanyModel()
     {
         if (!$this->companyModel) {

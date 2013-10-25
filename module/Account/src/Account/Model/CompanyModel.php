@@ -59,13 +59,13 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     public function createCompany($propArray, $accId, $comId)
     {
-        if(!empty($propArray)) {
+        if (!empty($propArray)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
             if (!empty($comId)) {
-                if($comId=='contractAgent') {
-                    $com = new Company($accId,'contractAgent');
-                    $propArray['dirty']='1';
+                if ($comId == 'contractAgent') {
+                    $com = new Company($accId, 'contractAgent');
+                    $propArray['dirty'] = '1';
                 } else {
                     $com = $objectManager->getRepository('Account\Entity\Company')->find($comId);
                 }
@@ -76,8 +76,8 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
 
             foreach ($propArray as $key => $value) {
-                if(!empty($value)) {
-                    $com->$key=$value;
+                if (!empty($value)) {
+                    $com->$key = $value;
                 }
 
             }
@@ -90,28 +90,31 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
 
     }
-    public function getAllCompanies() {
+
+    public function getAllCompanies()
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $companiesObj = $objectManager->createQueryBuilder('Account\Entity\Company')
             ->getQuery()
             ->execute();
-        $resultArray=array();
-        foreach($companiesObj as $com) {
-            array_push($resultArray,get_object_vars($com));
+        $resultArray = array();
+        foreach ($companiesObj as $com) {
+            array_push($resultArray, get_object_vars($com));
         }
         return $resultArray;
     }
+
     public function getCompany($id)
     {
         $uuid_gen = new UuidGenerator();
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if ($uuid_gen->isValid($id)) {
-            $acc = $objectManager-> getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $id));
+            $acc = $objectManager->getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $id));
         } else {
-            $acc = $objectManager-> getRepository('Account\Entity\Company')->findOneBy(array('id' => new \MongoId($id)));
+            $acc = $objectManager->getRepository('Account\Entity\Company')->findOneBy(array('id' => new \MongoId($id)));
         }
 
-        if(!empty($acc)) {
+        if (!empty($acc)) {
             return get_object_vars($acc);
         } else {
             return null;
@@ -131,12 +134,12 @@ class CompanyModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $com_obj = $objectManager->getRepository('Account\Entity\Company')->find($comId);
-        if(!empty($com_obj)) {
+        if (!empty($com_obj)) {
             $com = get_object_vars($com_obj);
             unset($com['created']);
             unset($com['updated']);
         } else {
-            $com=null;
+            $com = null;
         }
         return $com;
     }
@@ -153,33 +156,41 @@ class CompanyModel implements ServiceLocatorAwareInterface
         $objectManager->remove($qb);
         $objectManager->flush();
     }
-    public function addBootstrap3Class(&$form) {
+
+    public function addBootstrap3Class(&$form)
+    {
 
         foreach ($form as $el) {
-            $attr=$el->getAttributes();
-            if(!empty($attr['type'])) {
-                if(($attr['type']!='checkbox')&&($attr['type']!='multi_checkbox')) {
-                    $el->setAttributes(array( 'class' => 'form-control' ));
+            $attr = $el->getAttributes();
+            if (!empty($attr['type'])) {
+                if (($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox')) {
+                    $el->setAttributes(array('class' => 'form-control'));
                 }
             }
 
         }
     }
-    public function isContractAgentExist($contactAgentId,$comId) {
+
+    public function isContractAgentExist($contactAgentId, $comId)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $agent = $objectManager-> getRepository('Account\Entity\ContractAgents')->findOneBy(array('contactAgentId' => $contactAgentId,'comId'=>$comId));
-        if(empty($agent)) {
+        $agent = $objectManager->getRepository('Account\Entity\ContractAgents')->findOneBy(
+            array('contactAgentId' => $contactAgentId, 'comId' => $comId)
+        );
+        if (empty($agent)) {
             return false;
         } else {
             return true;
         }
     }
-    public function addContractAgentToCompany($post,$comUuid) {
-        if(!empty($post['contactAgentId'])) {
+
+    public function addContractAgentToCompany($post, $comUuid)
+    {
+        if (!empty($post['contactAgentId'])) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-            $comId=$this->getCompanyIdByUUID($comUuid);
-            if(!$this->isContractAgentExist($post['contactAgentId'],$comId)) {
-                $agent= new ContractAgents($comId,$post['contactAgentId'],'company');
+            $comId = $this->getCompanyIdByUUID($comUuid);
+            if (!$this->isContractAgentExist($post['contactAgentId'], $comId)) {
+                $agent = new ContractAgents($comId, $post['contactAgentId'], 'company');
                 $objectManager->persist($agent);
                 $objectManager->flush();
                 return true;
@@ -191,24 +202,32 @@ class CompanyModel implements ServiceLocatorAwareInterface
         }
 
     }
-    public function getContractAgentsFromCompany($comUuid) {
+
+    public function getContractAgentsFromCompany($comUuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $comId=$this->getCompanyIdByUUID($comUuid);
-        $agents = $objectManager-> getRepository('Account\Entity\ContractAgents')->findBy(array('comId'=>new \MongoId($comId)));
-        $resultArray=array();
-        foreach($agents as $agent) {
+        $comId = $this->getCompanyIdByUUID($comUuid);
+        $agents = $objectManager->getRepository('Account\Entity\ContractAgents')->findBy(
+            array('comId' => new \MongoId($comId))
+        );
+        $resultArray = array();
+        foreach ($agents as $agent) {
             $com = $this->getCompany($agent->contactAgentId);
 
-            array_push($resultArray,$com);
+            array_push($resultArray, $com);
         }
         return $resultArray;
     }
-    public function getCompanyOfCurrentAccount($curAcc) {
+
+    public function getCompanyOfCurrentAccount($curAcc)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $coms = $objectManager->getRepository('Account\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($curAcc)));
-        $resultArray=array();
-        foreach($coms as $com) {
-            array_push($resultArray,get_object_vars($com));
+        $coms = $objectManager->getRepository('Account\Entity\Company')->findBy(
+            array('ownerOrgId' => new \MongoId($curAcc))
+        );
+        $resultArray = array();
+        foreach ($coms as $com) {
+            array_push($resultArray, get_object_vars($com));
         }
         return $resultArray;
     }

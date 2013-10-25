@@ -17,9 +17,8 @@ namespace Account\Controller {
 
         public function indexAction()
         {
-           $accModel = $this->getAccountModel();
+            $accModel = $this->getAccountModel();
             $acc = $accModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc());
-
             $tickModel = $this->getTicketModel();
             $resModel = $this->getResourceModel();
             $res = $resModel->returnAllResource();
@@ -37,19 +36,22 @@ namespace Account\Controller {
         {
             return $this->redirect()->toUrl('/account/add');
         }
-        public function setAccAndComAction() {
-            $id=$this->getEvent()->getRouteMatch()->getParam('id');
-            $param=$this->getEvent()->getRouteMatch()->getParam('param');
-            if($param=='acc') {
-                $post['currentAcc']=$id;
-            } elseif($param=='com') {
-                $post['currentCom']=$id;
+
+        public function setAccAndComAction()
+        {
+            $id = $this->getEvent()->getRouteMatch()->getParam('id');
+            $param = $this->getEvent()->getRouteMatch()->getParam('param');
+            if ($param == 'acc') {
+                $post['currentAcc'] = $id;
+            } elseif ($param == 'com') {
+                $post['currentCom'] = $id;
             }
-            $post['submit']='submit';
+            $post['submit'] = 'submit';
             $comUserModel = $this->getCompanyUserModel();
             $comUserModel->addOrgAndCompanyToUser($post, $this->zfcUserAuthentication()->getIdentity()->getId());
             return $this->redirect()->toUrl('/user');
         }
+
         public function choiceOrgAndCompanyAction()
         {
 
@@ -59,7 +61,10 @@ namespace Account\Controller {
 
             $result = null;
             if ($this->getRequest()->isPost()) {
-                $comUserModel->addOrgAndCompanyToUser(get_object_vars($post), $this->zfcUserAuthentication()->getIdentity()->getId());
+                $comUserModel->addOrgAndCompanyToUser(
+                    get_object_vars($post),
+                    $this->zfcUserAuthentication()->getIdentity()->getId()
+                );
                 $result = 'Успешно, продлжить выбор Аккаунта и Компании';
             }
             $builder = new AnnotationBuilder();
@@ -105,7 +110,7 @@ namespace Account\Controller {
         {
             $post = $this->getRequest();
 
-            if($post->isPost()) {
+            if ($post->isPost()) {
                 $accModel = $this->getAccountModel();
                 $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
                 if (!empty($accUuid)) {
@@ -113,8 +118,8 @@ namespace Account\Controller {
                 } else {
                     $accId = null;
                 }
-                $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
-                $accModel->createAccount($post->getPost(), $userId,$accId);
+                $userId = $this->zfcUserAuthentication()->getIdentity()->getId();
+                $accModel->createAccount($post->getPost(), $userId, $accId);
                 return $this->redirect()->toUrl('/account');
             } else {
                 $builder = new AnnotationBuilder();
@@ -142,7 +147,8 @@ namespace Account\Controller {
             ));
         }
 
-        public function addContractAgentToAccountAction() {
+        public function addContractAgentToAccountAction()
+        {
 
         }
 

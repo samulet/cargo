@@ -24,9 +24,9 @@ class CargoModel implements ServiceLocatorAwareInterface
 
     public function addCargo($post, $owner_id, $owner_org_id, $id)
     {
-        if(!empty($post)) {
-            if(is_array($post)) {
-                $propArray=$post;
+        if (!empty($post)) {
+            if (is_array($post)) {
+                $propArray = $post;
             } else {
                 $propArray = get_object_vars($post);
             }
@@ -42,8 +42,8 @@ class CargoModel implements ServiceLocatorAwareInterface
         } else {
             $res = new Cargo();
         }
-        $model=explode('-',$propArray['model']);
-        $propArray['model']=$model[2];
+        $model = explode('-', $propArray['model']);
+        $propArray['model'] = $model[2];
         foreach ($propArray as $key => $value) {
             $res->$key = $value;
         }
@@ -62,7 +62,7 @@ class CargoModel implements ServiceLocatorAwareInterface
             $res = $objectManager->getRepository('Ticket\Entity\Cargo')->find(new \MongoId($id));
         }
 
-        if(!empty($res)) {
+        if (!empty($res)) {
             return get_object_vars($res);
         }
         return null;
@@ -87,7 +87,7 @@ class CargoModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $rezObj = $objectManager->getRepository('Ticket\Entity\Cargo')
-            -> getMyAvailableCargo($owner_id);
+            ->getMyAvailableCargo($owner_id);
         $rezs = array();
         foreach ($rezObj as $cur) {
             array_push($rezs, get_object_vars($cur));
@@ -126,16 +126,18 @@ class CargoModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
     }
 
-    public function copyCargo($uuid) {
-        $res=$this->listCargo($uuid);
+    public function copyCargo($uuid)
+    {
+        $res = $this->listCargo($uuid);
         unset($res['created']);
         unset($res['updated']);
         unset($res['id']);
         unset($res['uuid']);
-        return $this->addCargo($res,$res['ownerId'],$res['ownerOrgId'],null);
+        return $this->addCargo($res, $res['ownerId'], $res['ownerOrgId'], null);
     }
 
-    public function getIdByUuid($uuid) {
+    public function getIdByUuid($uuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $cargo = $objectManager->getRepository('Ticket\Entity\Cargo')->findOneBy(array('uuid' => $uuid));
         return $cargo->id;

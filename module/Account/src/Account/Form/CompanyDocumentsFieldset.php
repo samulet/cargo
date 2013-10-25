@@ -32,24 +32,25 @@ class CompanyDocumentsFieldset extends Fieldset implements InputFilterProviderIn
                 'options' => array(
                     'label' => 'Наименование документа',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyDocumentNumber',
                 'options' => array(
                     'label' => 'Номер документа',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -61,24 +62,25 @@ class CompanyDocumentsFieldset extends Fieldset implements InputFilterProviderIn
                 'options' => array(
                     'label' => 'Дата документа',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyDocumentLink',
                 'options' => array(
                     'label' => 'Ссылки на файлы сканов документа',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -90,11 +92,12 @@ class CompanyDocumentsFieldset extends Fieldset implements InputFilterProviderIn
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
 
     }
 

@@ -32,10 +32,10 @@ class CompanyLicenseFieldset extends Fieldset implements InputFilterProviderInte
                 'options' => array(
                     'label' => 'Наименование лицензии',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -46,39 +46,40 @@ class CompanyLicenseFieldset extends Fieldset implements InputFilterProviderInte
                 'options' => array(
                     'label' => 'Срок действия',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
         );
         $this->add(
-        array(
-            'name' => 'companyLicenseDate',
-            'type' => 'Zend\Form\Element\Date',
-            'options' => array(
-                'label' => 'Дата выдачи',
-                'label_attributes' => array(
-                    'class'  => 'control-label'
+            array(
+                'name' => 'companyLicenseDate',
+                'type' => 'Zend\Form\Element\Date',
+                'options' => array(
+                    'label' => 'Дата выдачи',
+                    'label_attributes' => array(
+                        'class' => 'control-label'
+                    ),
                 ),
-            ),
-            'attributes' => array (
-                'class' => 'form-control'
+                'attributes' => array(
+                    'class' => 'form-control'
 
+                )
             )
-        ));
+        );
         $this->add(
             array(
                 'name' => 'companyLicenseIssueName',
                 'options' => array(
                     'label' => 'Кем выдано',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -90,11 +91,12 @@ class CompanyLicenseFieldset extends Fieldset implements InputFilterProviderInte
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
     }
 
     public function getInputFilterSpecification()

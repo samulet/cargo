@@ -1,11 +1,11 @@
 <?php
 
 $form = $this->form;
-$comId=$this->comId;
+$comId = $this->comId;
 $form->setAttribute('action', $this->url('company', array('action' => 'addContractAgentToCompany', 'org_id' => $comId)))
     ->prepare();
 
-$contactAgentId=$form->get('contactAgentId');
+$contactAgentId = $form->get('contactAgentId');
 echo $this->form()->openTag($form);
 
 

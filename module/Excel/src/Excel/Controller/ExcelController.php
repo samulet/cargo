@@ -14,43 +14,46 @@ class ExcelController extends AbstractActionController
 {
     protected $excelModel;
 
-    public function getExcelAction() {
+    public function getExcelAction()
+    {
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $excelModel=$this->getExcelModel();
+        $excelModel = $this->getExcelModel();
         $excelModel->getExcel($id);
     }
 
-    public function generateTemplateAction() {
+    public function generateTemplateAction()
+    {
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-       // $post=get_object_vars($this->getRequest()->getPost());
+        // $post=get_object_vars($this->getRequest()->getPost());
         $request = $this->getRequest();
-        if($request->isPost()) {
+        if ($request->isPost()) {
 
             $post = $request->getPost()->toArray();
-            if(!empty($post['newStringDown'])) {
-                $newStringDown=$post['newStringDown'];
+            if (!empty($post['newStringDown'])) {
+                $newStringDown = $post['newStringDown'];
             } else {
-                $newStringDown='';
+                $newStringDown = '';
             }
-            $file    = $this->params()->fromFiles('file');
+            $file = $this->params()->fromFiles('file');
 
-            $excelModel=$this->getExcelModel();
-            $excelModel->generateTemplate($id,$post['type'],$file['tmp_name'],$newStringDown);
+            $excelModel = $this->getExcelModel();
+            $excelModel->generateTemplate($id, $post['type'], $file['tmp_name'], $newStringDown);
         } else {
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('Excel\Entity\Excel');
             return new ViewModel(array(
-                'form' =>$form,
-                'id'=>$id
+                'form' => $form,
+                'id' => $id
             ));
         }
 
     }
 
-    public function createExcelFromTableAction() {
-        $post=$this->getRequest()->getPost();
-        if(!empty($post->excelForm)) {
-            $excelModel=$this->getExcelModel();
+    public function createExcelFromTableAction()
+    {
+        $post = $this->getRequest()->getPost();
+        if (!empty($post->excelForm)) {
+            $excelModel = $this->getExcelModel();
             $excelModel->createExcelFromTable($post->excelForm);
         }
 

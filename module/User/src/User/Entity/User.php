@@ -26,7 +26,6 @@ class User implements UserInterface, ProviderInterface
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Имя пользователя"})
      */
@@ -37,7 +36,6 @@ class User implements UserInterface, ProviderInterface
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Email"})
      */
@@ -48,7 +46,6 @@ class User implements UserInterface, ProviderInterface
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Отображаемое имя"})
      */
@@ -86,7 +83,6 @@ class User implements UserInterface, ProviderInterface
      * @var array
      * @ODM\Collection(strategy="pushAll")
      * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Выберите роль пользователя",
      *                      "value_options" : {"forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
@@ -105,7 +101,6 @@ class User implements UserInterface, ProviderInterface
      * @ODM\ObjectId
      * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Выберите организацию от которой вы работаете"})
      * @Annotation\Required({"required":"true" })
@@ -116,12 +111,12 @@ class User implements UserInterface, ProviderInterface
      * @ODM\ObjectId
      * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Выберите компанию от которой вы работаете"})
      * @Annotation\Attributes({"value":"0"})
      */
     public $currentCom;
+
     /**
      * Initialies the roles variable.
      */
@@ -149,6 +144,7 @@ class User implements UserInterface, ProviderInterface
     {
         return $this->currentCom;
     }
+
     /**
      * Set id.
      *

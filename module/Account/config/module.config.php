@@ -63,15 +63,23 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Account\Controller\Account','action'=>array('index','add', 'edit','list','delete','addIntNumber','createAccount'), 'roles' => array('admin','accAdmin')),
-                array('controller' => 'Account\Controller\Account','action'=>array('addAccount','add','createAccount','choiceOrgAndCompany','setAccAndCom'), 'roles' => array('user','inner')),
-                array('controller' => 'Account\Controller\Company','roles' => array('admin','accAdmin')),
-                array('controller' => 'Account\Controller\CompanyUser','roles' => array('admin','accAdmin')),
+                array(
+                    'controller' => 'Account\Controller\Account',
+                    'action' => array('index', 'add', 'edit', 'list', 'delete', 'addIntNumber', 'createAccount'),
+                    'roles' => array('admin', 'accAdmin')
+                ),
+                array(
+                    'controller' => 'Account\Controller\Account',
+                    'action' => array('addAccount', 'add', 'createAccount', 'choiceOrgAndCompany', 'setAccAndCom'),
+                    'roles' => array('user', 'inner')
+                ),
+                array('controller' => 'Account\Controller\Company', 'roles' => array('admin', 'accAdmin')),
+                array('controller' => 'Account\Controller\CompanyUser', 'roles' => array('admin', 'accAdmin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'account', 'roles' => array('admin','accAdmin')),
-                array('route' => 'company', 'roles' => array('admin','accAdmin')),
-                array('route' => 'company_user', 'roles' => array('admin','accAdmin')),
+                array('route' => 'account', 'roles' => array('admin', 'accAdmin')),
+                array('route' => 'company', 'roles' => array('admin', 'accAdmin')),
+                array('route' => 'company_user', 'roles' => array('admin', 'accAdmin')),
             ),
         ),
     ),
@@ -93,7 +101,6 @@ return array(
             'account' => __DIR__ . '/../view',
         ),
     ),
-    'module_layouts' => array(
-        //'Account\Controller\CompanyUser' => 'layout/admin',
+    'module_layouts' => array(//'Account\Controller\CompanyUser' => 'layout/admin',
     ),
 );

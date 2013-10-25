@@ -32,24 +32,25 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
                 'options' => array(
                     'label' => 'Вид полномочия',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyAuthorizedPersonWork',
                 'options' => array(
                     'label' => 'Основание деятельности',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -60,10 +61,10 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
                 'options' => array(
                     'label' => 'Ссылка на физ лицо (email в системе)',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -75,11 +76,12 @@ class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterPr
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
     }
 
     public function getInputFilterSpecification()

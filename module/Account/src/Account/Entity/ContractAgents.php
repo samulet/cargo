@@ -25,14 +25,14 @@ use Zend\Form\Form;
  */
 class ContractAgents
 {
-    public function __construct($itemId,$contactAgentId,$param)
+    public function __construct($itemId, $contactAgentId, $param)
     {
-        if($param=='company') {
-            $this->comId=$itemId;
+        if ($param == 'company') {
+            $this->comId = $itemId;
         } else {
-            $this->accId=$itemId;
+            $this->accId = $itemId;
         }
-        $this->contactAgentId=$contactAgentId;
+        $this->contactAgentId = $contactAgentId;
     }
 
     /**
@@ -58,7 +58,6 @@ class ContractAgents
      * @ODM\ObjectId
      * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Выберите когнтрагента для добавления"})
      * @Annotation\Required({"required":"true" })
@@ -96,6 +95,7 @@ class ContractAgents
      * @ODM\Date
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -113,6 +113,7 @@ class ContractAgents
     {
         $this->deletedAt = $deletedAt;
     }
+
     /**
      * Get id.
      *

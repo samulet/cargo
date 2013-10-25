@@ -1,26 +1,30 @@
 <?php
-$agents=$this->agents;
-$com=$this->com;
-$accId=$this->accId;
+$agents = $this->agents;
+$com = $this->com;
+$accId = $this->accId;
 ?>
-<h1>Контрагенты компании <?php echo $com['property'].' '.$com['name'];?></h1>
+<h1>Контрагенты компании <?php echo $com['property'] . ' ' . $com['name']; ?></h1>
 
 <a href="<?php echo $this->url('account', array('action' => 'index')); ?>">Вернуться в аккаунт</a>
-<table  class="table">
+<table class="table">
     <tr>
         <th>Название контрагента</th>
         <th></th>
     </tr>
-    <?php foreach($agents as $c) {  ?>
+    <?php foreach ($agents as $c) { ?>
         <tr>
-            <td><a href="<?php echo $this->url('company',
-                    array('action'=>'list', 'org_id'=>$c['uuid'],'id' => $c['uuid']));?>"><?php echo $c['property'].' '.$c['name']; ?></a></td>
+            <td><a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'list', 'org_id' => $c['uuid'], 'id' => $c['uuid'])
+                );?>"><?php echo $c['property'] . ' ' . $c['name']; ?></a></td>
         </tr>
 
 
-    <?php }  ?>
+    <?php } ?>
 
 </table>
 
-<td><a href="<?php echo $this->url('company',
-        array('action'=>'add', 'org_id' => $accId,'id' =>'contractAgent', 'comId'=>$com['uuid']));?>">Добавить новго контрагента</a></td>
+<td><a href="<?php echo $this->url(
+        'company',
+        array('action' => 'add', 'org_id' => $accId, 'id' => 'contractAgent', 'comId' => $com['uuid'])
+    );?>">Добавить новго контрагента</a></td>

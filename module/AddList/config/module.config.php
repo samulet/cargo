@@ -16,7 +16,7 @@ return array(
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'parent' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'global' =>'[a-zA-Z][a-zA-Z0-9_-]*',
+                        'global' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z0-9][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
@@ -30,8 +30,8 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'AddList\Controller\AddList','roles' => array('admin','accAdmin')),
-          ),
+                array('controller' => 'AddList\Controller\AddList', 'roles' => array('admin', 'accAdmin')),
+            ),
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'addList', 'roles' => array('inner')),
             ),

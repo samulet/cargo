@@ -63,7 +63,6 @@ class Account
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Наименование аккаунта"})
      */
@@ -82,6 +81,7 @@ class Account
      * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
+
     /**
      * @return mixed
      */
@@ -97,6 +97,7 @@ class Account
     {
         $this->deletedAt = $deletedAt;
     }
+
     /**
      * Get id.
      *

@@ -3,15 +3,9 @@ namespace Account\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Account\Entity\Company;
-use Account\Model\CompanyModel;
-use Account\Model\AccountModel;
-use Account\Entity\Account;
-use Account\Form\CompanyCreate;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Account\Form\CompanyForm;
 use AddList\Form\AddListForm;
 
 class CompanyController extends AbstractActionController
@@ -23,7 +17,6 @@ class CompanyController extends AbstractActionController
 
     public function indexAction()
     {
-        $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $uuid_gen = new UuidGenerator();
         if (!$uuid_gen->isValid($accUuid)) {
@@ -53,11 +46,11 @@ class CompanyController extends AbstractActionController
         $agents = $comModel->getContractAgentsFromCompany($comId);
         $accModel = $this->getAccountModel();
         $company = $comModel->getCompany($comId);
-        $acc=$accModel->getAccount($company['ownerOrgId']);
+        $acc = $accModel->getAccount($company['ownerOrgId']);
         return new ViewModel(array(
             'com' => $company,
             'agents' => $agents,
-            'accId'=>$acc['uuid']
+            'accId' => $acc['uuid']
         ));
     }
 
@@ -97,35 +90,39 @@ class CompanyController extends AbstractActionController
         }
     }
 
-    public function addCompany($accId, $userListId, $comId,$param,$post)
+    public function addCompany($accId, $userListId, $comId, $param, $post)
     {
         $comModel = $this->getCompanyModel();
-        if(empty($post)) {
+        if (empty($post)) {
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('Account\Entity\Company');
             $addListModel = $this->getAddListModel();
             $formArray = array();
 
-            $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-            $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
+            $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+            $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-            $formData = $addListModel->returnDataArray($formArray, 'company', $accListId,$comListId);
+            $formData = $addListModel->returnDataArray($formArray, 'company', $accListId, $comListId);
 
             $fillFrom = new AddListForm();
-            $form = $fillFrom->fillFrom($form, $formData, array('address','bankAccount','documents','applicants','authorizedPerson','founder','contact'));
+            $form = $fillFrom->fillFrom(
+                $form,
+                $formData,
+                array('address', 'bankAccount', 'documents', 'applicants', 'authorizedPerson', 'founder', 'contact')
+            );
 
             $comModel = $this->getCompanyModel();
             $comModel->addBootstrap3Class($form);
-            if( ($param=='list') || ($param=='edit') ) {
-                $comData=$comModel->getCompany($comId);
+            if (($param == 'list') || ($param == 'edit')) {
+                $comData = $comModel->getCompany($comId);
                 $form->setData($comData);
-                if($param=='list'){
+                if ($param == 'list') {
 
                     foreach ($form as $el) {
-                        $el->setAttributes(array( 'disabled' => 'disabled' ));
-                        foreach($el as $col) {
-                            foreach($col as $e) {
-                                $e->setAttributes(array( 'disabled' => 'disabled' ));
+                        $el->setAttributes(array('disabled' => 'disabled'));
+                        foreach ($el as $col) {
+                            foreach ($col as $e) {
+                                $e->setAttributes(array('disabled' => 'disabled'));
                             }
 
                         }
@@ -138,17 +135,17 @@ class CompanyController extends AbstractActionController
             return array(
                 'form' => $form,
                 'org_id' => $accId,
-                'comId' =>$comId,
+                'comId' => $comId,
                 'param' => $param
             );
         } else {
 
 
             if (!empty($param)) {
-                if($param!='contractAgent') {
+                if ($param != 'contractAgent') {
                     $comEditId = $comModel->getCompanyIdByUUID($comId);
                 } else {
-                    $comEditId=$param;
+                    $comEditId = $param;
                 }
             } else {
                 $comEditId = null;
@@ -156,11 +153,11 @@ class CompanyController extends AbstractActionController
 
             $accModel = $this->getAccountModel();
             $accId = $accModel->getOrgIdByUUID($accId);
-            $newComId=$comModel->createCompany($post, $accId, $comEditId);
+            $newComId = $comModel->createCompany($post, $accId, $comEditId);
 
-            if($param=='contractAgent') {
-                $data['contactAgentId']=$newComId;
-                $comModel->addContractAgentToCompany($data,$comId);
+            if ($param == 'contractAgent') {
+                $data['contactAgentId'] = $newComId;
+                $comModel->addContractAgentToCompany($data, $comId);
             }
 
             return $this->redirect()->toUrl('/account');
@@ -174,9 +171,9 @@ class CompanyController extends AbstractActionController
         $userListId = $this->zfcUserAuthentication()->getIdentity()->getId();
         $param = $this->getEvent()->getRouteMatch()->getParam('id');
         $comContractUuid = $this->getEvent()->getRouteMatch()->getParam('comId');
-        $post=get_object_vars($this->getRequest()->getPost());
+        $post = get_object_vars($this->getRequest()->getPost());
         return new ViewModel(
-            $this->addCompany($accId, $userListId, $comContractUuid,$param,$post)
+            $this->addCompany($accId, $userListId, $comContractUuid, $param, $post)
         );
 
 
@@ -201,10 +198,10 @@ class CompanyController extends AbstractActionController
         $addListModel = $this->getAddListModel();
         $formArray = array();
 
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
+        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData = $addListModel->returnDataArray($formArray, 'company', $accListId,$comListId);
+        $formData = $addListModel->returnDataArray($formArray, 'company', $accListId, $comListId);
 
         $fillFrom = new CompanyForm();
         $form = $fillFrom->fillFrom($form, $formData, $formArray);

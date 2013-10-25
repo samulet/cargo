@@ -32,24 +32,25 @@ class CompanyApplicantsFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'Вид заявителя',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
 
                 )
-            ));
+            )
+        );
         $this->add(
             array(
                 'name' => 'companyApplicantsLink',
                 'options' => array(
                     'label' => 'Ссылка на заявителя (email в системе)',
                     'label_attributes' => array(
-                        'class'  => 'control-label'
+                        'class' => 'control-label'
                     ),
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'class' => 'form-control'
                 )
             )
@@ -61,11 +62,12 @@ class CompanyApplicantsFieldset extends Fieldset implements InputFilterProviderI
                 'options' => array(
                     'label' => 'Удалить'
                 ),
-                'attributes' => array (
+                'attributes' => array(
                     'onclick' => 'deleteFieldset(this);'
 
                 )
-            ));
+            )
+        );
     }
 
     public function getInputFilterSpecification()
