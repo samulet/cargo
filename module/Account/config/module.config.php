@@ -63,15 +63,15 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Account\Controller\Account','action'=>array('index','add', 'edit','list','delete','addIntNumber','createAccount'), 'roles' => array('admin','orgAdmin')),
+                array('controller' => 'Account\Controller\Account','action'=>array('index','add', 'edit','list','delete','addIntNumber','createAccount'), 'roles' => array('admin','accAdmin')),
                 array('controller' => 'Account\Controller\Account','action'=>array('addAccount','add','createAccount','choiceOrgAndCompany','setAccAndCom'), 'roles' => array('user','inner')),
-                array('controller' => 'Account\Controller\Company','roles' => array('admin','orgAdmin')),
-                array('controller' => 'Account\Controller\CompanyUser','roles' => array('admin','orgAdmin')),
+                array('controller' => 'Account\Controller\Company','roles' => array('admin','accAdmin')),
+                array('controller' => 'Account\Controller\CompanyUser','roles' => array('admin','accAdmin')),
             ),
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'account', 'roles' => array('admin','orgAdmin')),
-                array('route' => 'company', 'roles' => array('admin','orgAdmin')),
-                array('route' => 'company_user', 'roles' => array('admin','orgAdmin')),
+                array('route' => 'account', 'roles' => array('admin','accAdmin')),
+                array('route' => 'company', 'roles' => array('admin','accAdmin')),
+                array('route' => 'company_user', 'roles' => array('admin','accAdmin')),
             ),
         ),
     ),

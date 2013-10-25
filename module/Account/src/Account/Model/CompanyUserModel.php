@@ -62,7 +62,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
         if ($user_id) {
             if($param=='admin') {
-                $roles=array('orgAdmin');
+                $roles=array('accAdmin');
             } else {
                 if(!empty($post['roles'])) {
                     $roles=$post['roles'];
@@ -127,7 +127,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             } else {
                 $roles=array();
             }
-            $this->updateUserRoles($roles,$userId,array("orgAdmin","forwarder", "carrier", "customer" ));
+            $this->updateUserRoles($roles,$userId,array("accAdmin","forwarder", "carrier", "customer" ));
         } elseif($type=='currentCom') {
 
             $com=$orgTest = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('companyId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
@@ -322,7 +322,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             $user = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('orgId'=> new \MongoId($orgId),'userId' => new \MongoId($userId)));
             $userT = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId), 'currentOrg' =>new \MongoId($orgId)));
             if(!empty($userT)) {
-                $this->updateUserRoles(array(),$userId,array("orgAdmin" ));
+                $this->updateUserRoles(array(),$userId,array("accAdmin" ));
 
                 if(empty($userT->currentCom)) {
                     $userT->currentOrg=null;
@@ -339,7 +339,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             if(!empty($userT)) {
                 $this->updateUserRoles(array(),$userId,array("forwarder", "carrier", "customer" ));
                 $userT->currentCom=null;
-                if(!is_int(array_search('orgAdmin',$userT->getRoles()))) {
+                if(!is_int(array_search('accAdmin',$userT->getRoles()))) {
                     $userT->currentOrg=null;
                 }
                     $objectManager->persist($userT);
