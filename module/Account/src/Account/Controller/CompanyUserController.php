@@ -63,14 +63,14 @@ class CompanyUserController extends AbstractActionController
         } else {
             $orgModel = $this->getAccountModel();
             if($param=='admin') {
-                $org_id = $orgModel->getOrgIdByUUID($org_uuid);
+                $accId = $orgModel->getOrgIdByUUID($org_uuid);
             } else {
 
-                $org_id = $orgModel->getComIdByUUID($org_uuid);
+                $accId = $orgModel->getComIdByUUID($org_uuid);
             }
 
             $comUserModel = $this->getCompanyUserModel();
-            if ($comUserModel->addUserToCompany($post, $org_id,$param)) {
+            if ($comUserModel->addUserToCompany($post, $accId,$param)) {
                 $result = "Успешо";
             } else {
                 $result = "Ошибка, скорее всего юзер уже добавлен или не существует";

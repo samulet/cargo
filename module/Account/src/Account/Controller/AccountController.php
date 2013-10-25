@@ -146,9 +146,9 @@ namespace Account\Controller {
         public function listAction()
         {
             $this->loginControl();
-            $org_id = $this->getEvent()->getRouteMatch()->getParam('id');
+            $accId = $this->getEvent()->getRouteMatch()->getParam('id');
             $orgModel = $this->getAccountModel();
-            $org = $orgModel->getAccount($org_id);
+            $org = $orgModel->getAccount($accId);
             if (!$org) {
                 $org = false;
             }
@@ -162,8 +162,8 @@ namespace Account\Controller {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $orgModel = $this->getAccountModel();
             $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-            $org_id = $orgModel->getOrgIdByUUID($org_uuid);
-            $orgModel->deleteAccount($org_id);
+            $accId = $orgModel->getOrgIdByUUID($org_uuid);
+            $orgModel->deleteAccount($accId);
             return $this->redirect()->toUrl('/account');
         }
 
@@ -181,13 +181,13 @@ namespace Account\Controller {
             $orgModel = $this->getAccountModel();
             $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
             if (!empty($org_uuid)) {
-                $org_id = $orgModel->getOrgIdByUUID($org_uuid);
+                $accId = $orgModel->getOrgIdByUUID($org_uuid);
             } else {
-                $org_id = null;
+                $accId = null;
             }
             $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
 
-            $orgModel->createAccount($post, $userId,$org_id);
+            $orgModel->createAccount($post, $userId,$accId);
 
 
             return $this->redirect()->toUrl('/account');

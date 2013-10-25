@@ -5,11 +5,11 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 
 class AccountRepository extends DocumentRepository
 {
-    public function getMyAvailableAccount($org_id)
+    public function getMyAvailableAccount($accId)
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null)->field('id')->equals(
-                new \MongoId($org_id)
+                new \MongoId($accId)
             )
             ->getQuery()->execute();
     }

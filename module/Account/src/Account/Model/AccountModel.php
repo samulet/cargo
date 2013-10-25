@@ -75,13 +75,13 @@ class AccountModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function createAccount($post, $user_id, $org_id)
+    public function createAccount($post, $user_id, $accId)
     {
         if (!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $org_item = $post->account;
-            if (!empty($org_id)) $org = $objectManager->getRepository('Account\Entity\Account')->findOneBy(
-                array('id' => new \MongoId($org_id))
+            if (!empty($accId)) $org = $objectManager->getRepository('Account\Entity\Account')->findOneBy(
+                array('id' => new \MongoId($accId))
             );
             else {
                 $org = new Account($user_id);
@@ -94,12 +94,12 @@ class AccountModel implements ServiceLocatorAwareInterface
             $objectManager->flush();
 
 
-            $org_id = $this->getOrgIdByUUID($org_uuid);
+            $accId = $this->getOrgIdByUUID($org_uuid);
 
             $comUserModel = $this->getCompanyUserModel();
-            $comUserModel->addUserToCompany($user_id, $org_id,'admin');
+            $comUserModel->addUserToCompany($user_id, $accId,'admin');
 
-            $comUserModel->addOrgAndCompanyToUser(array('currentOrg'=>$org_id),$user_id);
+            $comUserModel->addOrgAndCompanyToUser(array('currentOrg'=>$accId),$user_id);
             return true;
         } else return false;
     }
@@ -199,39 +199,39 @@ class AccountModel implements ServiceLocatorAwareInterface
         return $this->companyUserModel;
     }
 
-    public function deleteAccount($org_id)
+    public function deleteAccount($accId)
     {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
-        $qb = $objectManager->getRepository('Account\Entity\Account')->find(new \MongoId($org_id));
+        $qb = $objectManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
         if (!$qb) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
         $objectManager->remove($qb);
         $objectManager->flush();
 
         $qb2 = $objectManager->createQueryBuilder('Account\Entity\CompanyUser');
-        $qb2->remove()->field('orgId')->equals(new \MongoId($org_id))->getQuery()
+        $qb2->remove()->field('orgId')->equals(new \MongoId($accId))->getQuery()
             ->execute();
 
-        $qb3 = $objectManager->getRepository('Account\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        $qb3 = $objectManager->getRepository('Account\Entity\Company')->findBy(array('ownerOrgId' => new \MongoId($accId)));
         if (!$qb3) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
         $objectManager->remove($qb3);
         $objectManager->flush();
 
-        $qb4 = $objectManager->getRepository('Resource\Entity\Resource')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        $qb4 = $objectManager->getRepository('Resource\Entity\Resource')->findBy(array('ownerOrgId' => new \MongoId($accId)));
         if (!$qb4) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
         $objectManager->remove($qb4);
         $objectManager->flush();
 
-        $qb5 = $objectManager->getRepository('Ticket\Entity\Ticket')->findBy(array('ownerOrgId' => new \MongoId($org_id)));
+        $qb5 = $objectManager->getRepository('Ticket\Entity\Ticket')->findBy(array('ownerOrgId' => new \MongoId($accId)));
         if (!$qb5) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $org_id);
+            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
         $objectManager->remove($qb5);
         $objectManager->flush();

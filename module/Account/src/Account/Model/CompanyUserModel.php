@@ -32,7 +32,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     protected $accountModel;
     protected $companyModel;
 
-    public function addUserToCompany($post, $org_id,$param)
+    public function addUserToCompany($post, $accId,$param)
     {
         $roles=array();
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -49,12 +49,12 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             return false;
         }
         if($param=='admin') {
-            $orgTest = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($org_id), 'userId' => new \MongoId($user_id)));
+            $orgTest = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($accId), 'userId' => new \MongoId($user_id)));
             if(!empty($orgTest)) {
                 return false;
             }
         } else {
-            $comTest =$objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('companyId' => new \MongoId($org_id), 'userId' => new \MongoId($user_id)));
+            $comTest =$objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('companyId' => new \MongoId($accId), 'userId' => new \MongoId($user_id)));
             if(!empty($comTest)) {
                 return false;
             }
@@ -68,7 +68,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                     $roles=$post['roles'];
                 }
             }
-            $comUser = new CompanyUser($org_id, $user_id,$param,$roles);
+            $comUser = new CompanyUser($accId, $user_id,$param,$roles);
         } else {
             return false;
         }

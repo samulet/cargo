@@ -110,9 +110,9 @@ class CargoController extends AbstractActionController
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $comUserModel = $this->getCompanyUserModel();
         $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-        $org_id = $comUserModel->getOrgIdByUserId($user_id);
+        $accId = $comUserModel->getOrgIdByUserId($user_id);
         $res = $this->getCargoModel();
-        $res->addCargo($this->getRequest()->getPost(), $user_id, $org_id, $id);
+        $res->addCargo($this->getRequest()->getPost(), $user_id, $accId, $id);
         return $this->redirect()->toUrl('/cargos/my');
     }
 
