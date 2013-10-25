@@ -78,14 +78,15 @@ class AccountModel implements ServiceLocatorAwareInterface
     public function createAccount($post, $user_id, $accId)
     {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-            $org_item = $post->account;
+            $propArray=get_object_vars($post);
+
             if (!empty($accId)) $acc = $objectManager->getRepository('Account\Entity\Account')->findOneBy(
                 array('id' => new \MongoId($accId))
             );
             else {
                 $acc = new Account($user_id);
             }
-            $acc->setName($org_item['name']);
+            $acc->setName($propArray['name']);
             $acc->lastItemNumber=0;
             $acc->setActivated(1);
             $accUuid = $acc->getUUID();

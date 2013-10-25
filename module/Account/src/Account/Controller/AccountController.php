@@ -18,7 +18,7 @@ namespace Account\Controller {
         public function indexAction()
         {
            $accModel = $this->getAccountModel();
-            $acc = $accModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getcurrentOrg());
+            $acc = $accModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc());
 
             $tickModel = $this->getTicketModel();
             $resModel = $this->getResourceModel();
@@ -104,6 +104,7 @@ namespace Account\Controller {
         public function addAction()
         {
             $post = $this->getRequest();
+
             if($post->isPost()) {
                 $accModel = $this->getAccountModel();
                 $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
@@ -113,7 +114,7 @@ namespace Account\Controller {
                     $accId = null;
                 }
                 $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
-                $accModel->createAccount($post, $userId,$accId);
+                $accModel->createAccount($post->getPost(), $userId,$accId);
                 return $this->redirect()->toUrl('/account');
             } else {
                 $builder = new AnnotationBuilder();
