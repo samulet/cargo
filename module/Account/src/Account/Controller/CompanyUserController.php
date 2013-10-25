@@ -35,7 +35,6 @@ class CompanyUserController extends AbstractActionController
 
     public function addAction()
     {
-        $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $form = new CompanyUserCreate();
         $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');

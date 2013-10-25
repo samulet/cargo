@@ -219,7 +219,6 @@ class CompanyController extends AbstractActionController
 
     public function deleteAction()
     {
-        $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $comModel = $this->getCompanyModel();
         $com_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $comEditId = $comModel->getCompanyIdByUUID($com_uuid);

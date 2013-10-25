@@ -19,8 +19,7 @@ namespace Account\Controller {
 
         public function indexAction()
         {
-            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
-            $accModel = $this->getAccountModel();
+           $accModel = $this->getAccountModel();
             $acc = $accModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getcurrentOrg());
 
             $tickModel = $this->getTicketModel();
@@ -115,7 +114,6 @@ namespace Account\Controller {
 
         public function addAction()
         {
-            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $form = new AccountCreate();
             $accModel = $this->getAccountModel();
             $accModel->addBootstrap3Class($form);
@@ -126,7 +124,6 @@ namespace Account\Controller {
 
         public function editAction()
         {
-            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $form = new AccountCreate();
             $accModel = $this->getAccountModel();
 
@@ -159,7 +156,6 @@ namespace Account\Controller {
 
         public function deleteAction()
         {
-            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $accModel = $this->getAccountModel();
             $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
             $accId = $accModel->getOrgIdByUUID($accUuid);
@@ -176,7 +172,6 @@ namespace Account\Controller {
 
         public function createAccountAction()
         {
-            $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $post = $this->getRequest()->getPost();
             $accModel = $this->getAccountModel();
             $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
