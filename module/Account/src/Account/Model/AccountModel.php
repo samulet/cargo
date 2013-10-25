@@ -48,8 +48,6 @@ class AccountModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $org_obj = $objectManager->getRepository('Account\Entity\Account')->getMyAvailableAccount($orgId);
-
-          //  find(new \MongoId($org_id));
         if (empty($org_obj)) {
             return null;
         }
@@ -57,10 +55,9 @@ class AccountModel implements ServiceLocatorAwareInterface
             $org = get_object_vars($org_ob);
             break;
         }
-
-
-        unset($org['created']);
-        unset($org['updated']);
+        if(empty($org)) {
+            return null;
+        }
         $comModel = $this->getCompanyModel();
         $com = $comModel->returnCompanies($orgId);
         $orgs=array();
