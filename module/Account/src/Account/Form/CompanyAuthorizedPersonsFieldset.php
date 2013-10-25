@@ -19,7 +19,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class CompanyAuthorizedPersonsFieldset extends Fieldset implements InputFilterProviderInterface
 {
 
-    public function __construct($orgListId = null)
+    public function __construct($accListId = null)
     {
         parent::__construct();
 

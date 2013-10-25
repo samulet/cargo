@@ -131,9 +131,9 @@ class AddListModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
-    public function returnDataArray($arrFields,$prefix,$orgListId,$comListId = null) {
+    public function returnDataArray($arrFields,$prefix,$accListId,$comListId = null) {
 
-        $localArrayAcc=$this->getLocalArray($prefix,$orgListId,'account');
+        $localArrayAcc=$this->getLocalArray($prefix,$accListId,'account');
 
         $globalArray=$this->getGlobalArray($prefix);
         $localArray=array_merge_recursive($globalArray,$localArrayAcc);
@@ -301,11 +301,11 @@ class AddListModel implements ServiceLocatorAwareInterface
         return array('field'=>$result,'list'=>$list);
     }
 
-    public function getList($uuid,$orgListId) {
+    public function getList($uuid,$accListId) {
         $id=$uuid;
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableList($id,$orgListId);
+        $res = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableList($id,$accListId);
         $list=$this->getListName($id);
 
         $result=array();

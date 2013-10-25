@@ -20,31 +20,31 @@ class AddListRepository extends DocumentRepository
             )
             ->getQuery()->execute();
     }
-    public function getLocalAvailableList($id,$orgListId)
+    public function getLocalAvailableList($id,$accListId)
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('global')->equals(null)
-            ->field('ownerOrgId')->equals(new \MongoId($orgListId))
+            ->field('ownerOrgId')->equals(new \MongoId($accListId))
             ->field('listId')->equals(
                 $id
             )
             ->getQuery()->execute();
     }
-    public function getLocalAvailableAccList($id,$orgListId)
+    public function getLocalAvailableAccList($id,$accListId)
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('global')->equals(null)
-            ->field('account')->equals(new \MongoId($orgListId))
+            ->field('account')->equals(new \MongoId($accListId))
             ->field('listId')->equals(
                 $id
             )
             ->getQuery()->execute();
     }
-    public function getLocalAvailableComList($id,$orgListId)
+    public function getLocalAvailableComList($id,$accListId)
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null) ->sort('parentFieldId', 'desc')->field('global')->equals(null)
-            ->field('company')->equals(new \MongoId($orgListId))
+            ->field('company')->equals(new \MongoId($accListId))
             ->field('listId')->equals(
                 $id
             )

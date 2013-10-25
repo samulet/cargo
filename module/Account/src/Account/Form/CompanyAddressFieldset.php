@@ -19,7 +19,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInterface
 {
 
-    public function __construct($orgListId = null)
+    public function __construct($accListId = null)
     {
         parent::__construct();
         // $this->setHydrator(new DoctrineHydrator());
@@ -29,9 +29,9 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
         //   $addListModel = new AddListModel();
 
 
-        //    $formData=$addListModel->returnDataArray(array(),'company',$orgListId);
+        //    $formData=$addListModel->returnDataArray(array(),'company',$accListId);
         //   $fillFrom=new AddListForm();
-        //   die(var_dump($orgListId));
+        //   die(var_dump($accListId));
         //"value_options" => $fillFrom->getSelectValueList($formData,'companyAddressType')
         //Адреса (Вид адреса, почтовый индекс, субъект РФ, город, населенный пункт, улица, номер дома, корпус, квартира)
 

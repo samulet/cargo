@@ -107,9 +107,9 @@ class CompanyController extends AbstractActionController
             $form_array = array();
 
             $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-            $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+            $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-            $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId,$comListId);
+            $formData = $addListModel->returnDataArray($form_array, 'company', $accListId,$comListId);
 
             $fillFrom = new AddListForm();
             $form = $fillFrom->fillFrom($form, $formData, array('address','bankAccount','documents','applicants','authorizedPerson','founder','contact'));
@@ -202,9 +202,9 @@ class CompanyController extends AbstractActionController
         $form_array = array();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-        $formData = $addListModel->returnDataArray($form_array, 'company', $orgListId,$comListId);
+        $formData = $addListModel->returnDataArray($form_array, 'company', $accListId,$comListId);
 
         $fillFrom = new CompanyForm();
         $form = $fillFrom->fillFrom($form, $formData, $form_array);

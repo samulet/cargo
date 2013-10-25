@@ -75,10 +75,10 @@ class TicketController extends AbstractActionController
 
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
-        $formVehicleData=$addListModel->returnDataArray(array(),'vehicle',$orgListId,$comListId);
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
+        $formVehicleData=$addListModel->returnDataArray(array(),'vehicle',$accListId,$comListId);
 
         $fillFrom=new AddListForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
@@ -87,7 +87,7 @@ class TicketController extends AbstractActionController
         $form=$fillFrom->fillFromVehicleSpecial($form,$formVehicleData,array('type'));
 
 
-        $formCargoOwnerData=$ticketModel->getCargoOwnerData($orgListId);
+        $formCargoOwnerData=$ticketModel->getCargoOwnerData($accListId);
 
         $formWay=$fillFrom->fillCargoOwner($formWay,$formCargoOwnerData);
         $docWay=$fillFrom->fillFromVehicleSpecial($docWay,$formData,array('docType'));
@@ -137,7 +137,7 @@ class TicketController extends AbstractActionController
                 }
 
                 if(empty($error)) {
-                    $ticketModel->addTicket($this->getRequest()->getPost(), $comListId, $orgListId, $id);
+                    $ticketModel->addTicket($this->getRequest()->getPost(), $comListId, $accListId, $id);
                     return $this->redirect()->toUrl('/tickets/my');
                 }
             }
@@ -362,9 +362,9 @@ class TicketController extends AbstractActionController
         $addListModel = $this->getAddListModel();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
 
         $fillFrom=new AddListForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData);

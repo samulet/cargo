@@ -716,10 +716,10 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $this->notificationModel;
     }
 
-    public function getCargoOwnerData($orgListId)
+    public function getCargoOwnerData($accListId)
     {
         $comModel = $this->getCompanyModel();
-        $com = $comModel->returnCompanies($orgListId);
+        $com = $comModel->returnCompanies($accListId);
         if (!empty($com)) {
             $result = array();
             foreach ($com as $c) {

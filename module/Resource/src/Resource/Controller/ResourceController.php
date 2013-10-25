@@ -89,9 +89,9 @@ class ResourceController extends AbstractActionController
 
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
 
 
         $form=$resForm->fillFrom($form,$formData);
@@ -121,7 +121,7 @@ class ResourceController extends AbstractActionController
                 if(empty($error)) {
 
                     $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-                    $resourceModel->addResource($post, $comListId, $orgListId, $id);
+                    $resourceModel->addResource($post, $comListId, $accListId, $id);
 
                     return $this->redirect()->toUrl('/resources/my');
                 }
@@ -227,9 +227,9 @@ class ResourceController extends AbstractActionController
         $addListModel = $this->getAddListModel();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
+        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
 
 
         $form=$resForm->fillFrom($form,$formData,$form_array);

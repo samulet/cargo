@@ -34,11 +34,11 @@ class AddListController extends AbstractActionController
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
         $addListModel = $this->getAddListModel();
 
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
         if(!empty($parent)) {
             $listName=$addListModel->getOneList($listNameUuid);
         } else {
-            $listName=$addListModel->getList($listNameUuid,$orgListId);
+            $listName=$addListModel->getList($listNameUuid,$accListId);
         }
 
         $builder = new AnnotationBuilder();
@@ -49,7 +49,7 @@ class AddListController extends AbstractActionController
 
 
         $comModel = $this->getCompanyModel();
-        $comData=$comModel->getCompanyOfCurrentAccount($orgListId);
+        $comData=$comModel->getCompanyOfCurrentAccount($accListId);
 
         $fillFrom=new AddListForm();
         $fillFrom->fillComNew($form,$comData,'company');
@@ -95,9 +95,9 @@ class AddListController extends AbstractActionController
                 $el->setAttributes(array( 'disabled' => 'disabled' ));
             }
         }
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
         $comModel = $this->getCompanyModel();
-        $comData=$comModel->getCompanyOfCurrentAccount($orgListId);
+        $comData=$comModel->getCompanyOfCurrentAccount($accListId);
 
         $fillFrom=new AddListForm();
         $fillFrom->fillComNew($form,$comData,'company');
@@ -144,9 +144,9 @@ class AddListController extends AbstractActionController
         $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
-        $listId= $addListModel->addList($post,$listUUID,$parentField,$userId,$orgListId,$comListId);
+        $listId= $addListModel->addList($post,$listUUID,$parentField,$userId,$accListId,$comListId);
 
 
         if(empty($listName['parentId'])) {
@@ -203,7 +203,7 @@ class AddListController extends AbstractActionController
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
 
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
 
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
@@ -212,7 +212,7 @@ class AddListController extends AbstractActionController
         if(array_search("admin",$roles,true)) {
             $list=$addListModel->getListAdmin($listNameUuid);
         } else {
-            $list=$addListModel->getList($listNameUuid,$orgListId);
+            $list=$addListModel->getList($listNameUuid,$accListId);
         }
 
 
@@ -245,8 +245,8 @@ class AddListController extends AbstractActionController
         $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-        $listId=$addListModel->editField($listUuid,$this->getRequest()->getPost(),$orgListId,$comListId);
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $listId=$addListModel->editField($listUuid,$this->getRequest()->getPost(),$accListId,$comListId);
         $listName=$addListModel->getListName((string)$listId['listId']);
         return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);
     }
