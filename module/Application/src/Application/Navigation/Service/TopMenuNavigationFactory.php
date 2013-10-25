@@ -16,7 +16,7 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
             $nameMenu=$this->getName();
             $comUserModel = $serviceLocator->get('Account\Model\CompanyUserModel');
             $comModel = $serviceLocator->get('Account\Model\CompanyModel');
-            $orgModel = $serviceLocator->get('Account\Model\AccountModel');
+            $accModel = $serviceLocator->get('Account\Model\AccountModel');
 
             $auth = $serviceLocator->get('zfcuser_auth_service');
             if($auth->hasIdentity()) {
@@ -29,15 +29,15 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
                     $comName='';
                 }
                 if(!empty($currentOrg)) {
-                    $currentOrg=$orgModel->getAccount($currentOrg);
+                    $currentOrg=$accModel->getAccount($currentOrg);
                     $orgName=$currentOrg['name'];
                 } else {
                     $orgName='';
                 }
                 $userId=$auth->getIdentity()->getId();
-                $org = $comUserModel->getOrgWenUserConsist($userId);
+                $acc = $comUserModel->getOrgWenUserConsist($userId);
 
-                $accComArray=$comUserModel->addCompanyInOrgWhenConsist($org, $userId);
+                $accComArray=$comUserModel->addCompanyInOrgWhenConsist($acc, $userId);
 
                 $pages=array();
 

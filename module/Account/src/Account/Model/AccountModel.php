@@ -31,16 +31,16 @@ class AccountModel implements ServiceLocatorAwareInterface
 
     protected $serviceLocator;
 
-    public function getOrgIdByUUID($org_uuid)
+    public function getOrgIdByUUID($accUuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $org_uuid));
+        $qb = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $accUuid));
         return $qb->getId();
     }
-    public function getComIdByUUID($org_uuid)
+    public function getComIdByUUID($accUuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $org_uuid));
+        $qb = $objectManager->getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $accUuid));
         return $qb->getId();
     }
 
@@ -52,16 +52,16 @@ class AccountModel implements ServiceLocatorAwareInterface
             return null;
         }
         foreach($org_obj as $org_ob) {
-            $org = get_object_vars($org_ob);
+            $acc = get_object_vars($org_ob);
             break;
         }
-        if(empty($org)) {
+        if(empty($acc)) {
             return null;
         }
         $comModel = $this->getCompanyModel();
         $com = $comModel->returnCompanies($orgId);
         $orgs=array();
-        array_push($orgs, array('org' => $org, 'com' => $com));
+        array_push($orgs, array('org' => $acc, 'com' => $com));
         return $orgs;
     }
 
@@ -80,21 +80,21 @@ class AccountModel implements ServiceLocatorAwareInterface
         if (!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $org_item = $post->account;
-            if (!empty($accId)) $org = $objectManager->getRepository('Account\Entity\Account')->findOneBy(
+            if (!empty($accId)) $acc = $objectManager->getRepository('Account\Entity\Account')->findOneBy(
                 array('id' => new \MongoId($accId))
             );
             else {
-                $org = new Account($user_id);
+                $acc = new Account($user_id);
             }
-            $org->setName($org_item['name']);
-            $org->lastItemNumber=0;
-            $org->setActivated(1);
-            $org_uuid = $org->getUUID();
-            $objectManager->persist($org);
+            $acc->setName($org_item['name']);
+            $acc->lastItemNumber=0;
+            $acc->setActivated(1);
+            $accUuid = $acc->getUUID();
+            $objectManager->persist($acc);
             $objectManager->flush();
 
 
-            $accId = $this->getOrgIdByUUID($org_uuid);
+            $accId = $this->getOrgIdByUUID($accUuid);
 
             $comUserModel = $this->getCompanyUserModel();
             $comUserModel->addUserToCompany($user_id, $accId,'admin');
@@ -119,20 +119,20 @@ class AccountModel implements ServiceLocatorAwareInterface
           return null;
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $org = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $id));
-        if (empty($org)) {
-            $org = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('id' => new \MongoId($id)));
+        $acc = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $id));
+        if (empty($acc)) {
+            $acc = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('id' => new \MongoId($id)));
         }
-        if (empty($org)) {
+        if (empty($acc)) {
             return null;
         }
 
-        $user = $objectManager->find('User\Entity\User', $org->getOwnerId());
+        $user = $objectManager->find('User\Entity\User', $acc->getOwnerId());
 
         if (empty($user)) {
             return null;
         }
-        return get_object_vars($org);
+        return get_object_vars($acc);
     }
 
     public function addIntNumber() {
@@ -142,13 +142,13 @@ class AccountModel implements ServiceLocatorAwareInterface
             ->getQuery()
             ->execute()->toArray();
         $orgs['lastOrg']['id']=null;
-        foreach($orgs as $org) {
+        foreach($orgs as $acc) {
 
-            if(!empty($org->id)) {
-                $id=new \MongoId($org->id);
+            if(!empty($acc->id)) {
+                $id=new \MongoId($acc->id);
 
             } else {
-                $id=$org['id'];
+                $id=$acc['id'];
             }
             $lastItemNumber=1;
             if(!empty($id)) {
@@ -173,7 +173,7 @@ class AccountModel implements ServiceLocatorAwareInterface
                     ->execute();
                 $lastItemNumber++;
             }
-            if(!empty($org->id)) {
+            if(!empty($acc->id)) {
                 //$this->increaseLastItemNumber($id,$lastItemNumber);
             }
 

@@ -37,13 +37,13 @@ class CompanyUserController extends AbstractActionController
     {
         $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
         $form = new CompanyUserCreate();
-        $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
         $builder = new AnnotationBuilder();
         $formRoles = $builder->createForm('User\Entity\User');
         return new ViewModel(array(
             'form' => $form,
-            'org_id' => $org_uuid,
+            'org_id' => $accUuid,
             'param' =>$param,
             'formRoles' => $formRoles
         ));
@@ -53,20 +53,20 @@ class CompanyUserController extends AbstractActionController
     {
         $post = $this->getRequest()->getPost();
         $this->loginControl();
-        $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
         $uuid_gen = new UuidGenerator();
         $form=null;
 
-        if (!$uuid_gen->isValid($org_uuid)) {
+        if (!$uuid_gen->isValid($accUuid)) {
             $result = "Ошибка";
         } else {
-            $orgModel = $this->getAccountModel();
+            $accModel = $this->getAccountModel();
             if($param=='admin') {
-                $accId = $orgModel->getOrgIdByUUID($org_uuid);
+                $accId = $accModel->getOrgIdByUUID($accUuid);
             } else {
 
-                $accId = $orgModel->getComIdByUUID($org_uuid);
+                $accId = $accModel->getComIdByUUID($accUuid);
             }
 
             $comUserModel = $this->getCompanyUserModel();
@@ -82,14 +82,14 @@ class CompanyUserController extends AbstractActionController
     }
 
     public function listAction() {
-        $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $param = $this->getEvent()->getRouteMatch()->getParam('param');
-        if($org_uuid!="all") {
-            $orgModel = $this->getAccountModel();
+        if($accUuid!="all") {
+            $accModel = $this->getAccountModel();
             if($param=='current') {
-                $orgId = $orgModel->getComIdByUUID($org_uuid);
+                $orgId = $accModel->getComIdByUUID($accUuid);
             } else {
-                $orgId = $orgModel->getOrgIdByUUID($org_uuid);
+                $orgId = $accModel->getOrgIdByUUID($accUuid);
             }
 
 
@@ -99,24 +99,24 @@ class CompanyUserController extends AbstractActionController
         }
         $comUserModel = $this->getCompanyUserModel();
         $comModel = $this->getCompanyModel();
-        $orgModel = $this->getAccountModel();
+        $accModel = $this->getAccountModel();
         $name='';
-        if(($param=='user')&&($org_uuid!="all")) {
+        if(($param=='user')&&($accUuid!="all")) {
             $users=$comUserModel->getAllUsersByOrgId($orgId);
-            $org=$orgModel->getAccount($org_uuid);
-            $name=$org['name'];
-        } elseif(($param=='admin')&&($org_uuid!="all")) {
+            $acc=$accModel->getAccount($accUuid);
+            $name=$acc['name'];
+        } elseif(($param=='admin')&&($accUuid!="all")) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
         } elseif(($param=='full')&&($orgId=='all')) {
             $users=$comUserModel->getUsersByOrgId($orgId,$param);
-        } elseif(($param=='current')&&($org_uuid!="all")) {
+        } elseif(($param=='current')&&($accUuid!="all")) {
             $users=$comUserModel->getUsersByComId($orgId);
-            $com=$comModel->getCompany($org_uuid);
+            $com=$comModel->getCompany($accUuid);
             $name=$com['property'].' '.$com['name'];
         }
         return new ViewModel(array(
             'users' => $users,
-            'org_uuid'=>$org_uuid,
+            'org_uuid'=>$accUuid,
             'param' =>$param,
             'name'=>$name
         ));

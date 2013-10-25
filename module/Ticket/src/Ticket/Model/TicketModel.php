@@ -177,7 +177,7 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function addTicket($post, $owner_id, $owner_org_id, $id)
     {
-        $orgModel = $this->getAccountModel();
+        $accModel = $this->getAccountModel();
 
         if (!empty($post)) {
             if (is_array($post)) {
@@ -213,10 +213,10 @@ class TicketModel implements ServiceLocatorAwareInterface
                 array('uuid' => $id)
             );
         } else {
-            $lastItemNumber = $orgModel->getAccount($owner_org_id)['lastItemNumber'];
+            $lastItemNumber = $accModel->getAccount($owner_org_id)['lastItemNumber'];
             $lastItemNumber++;
             $prop_array['numberInt'] = $lastItemNumber;
-            $orgModel->increaseLastItemNumber($owner_org_id, $lastItemNumber);
+            $accModel->increaseLastItemNumber($owner_org_id, $lastItemNumber);
             $res = new Ticket();
         }
         foreach ($prop_array as $key => $value) {
@@ -330,7 +330,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $rezObj = $objectManager->getRepository('Ticket\Entity\Ticket')->getAllAvailableTicket();
         $rezs = array();
-        $orgModel = $this->getAccountModel();
+        $accModel = $this->getAccountModel();
         if (empty($rezObj)) {
             return null;
         }
@@ -339,8 +339,8 @@ class TicketModel implements ServiceLocatorAwareInterface
             $obj_vars = get_object_vars($cur);
             $veh = $cargo->listCargo($cur->tsId);
             $ways = $this->returnAllWays($cur->id);
-            $org = $orgModel->getAccount($obj_vars['ownerOrgId']);
-            array_push($rezs, array('res' => $obj_vars, 'org' => $org, 'veh' => $veh, 'ways' => $ways));
+            $acc = $accModel->getAccount($obj_vars['ownerOrgId']);
+            array_push($rezs, array('res' => $obj_vars, 'org' => $acc, 'veh' => $veh, 'ways' => $ways));
         }
         return $rezs;
     }

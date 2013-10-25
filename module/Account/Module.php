@@ -35,8 +35,8 @@ class Module
         return array(
             'factories' => array(
                 'Account\Model\AccountModel' => function ($sm) {
-                    $org = new AccountModel();
-                    return $org;
+                    $acc = new AccountModel();
+                    return $acc;
                 },
                 'Account\Model\CompanyModel' => function ($sm) {
                     $com = new CompanyModel();

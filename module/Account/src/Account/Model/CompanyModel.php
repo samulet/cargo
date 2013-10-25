@@ -106,13 +106,13 @@ class CompanyModel implements ServiceLocatorAwareInterface
         $uuid_gen = new UuidGenerator();
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if ($uuid_gen->isValid($id)) {
-            $org = $objectManager-> getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $id));
+            $acc = $objectManager-> getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $id));
         } else {
-            $org = $objectManager-> getRepository('Account\Entity\Company')->findOneBy(array('id' => new \MongoId($id)));
+            $acc = $objectManager-> getRepository('Account\Entity\Company')->findOneBy(array('id' => new \MongoId($id)));
         }
 
-        if(!empty($org)) {
-            return get_object_vars($org);
+        if(!empty($acc)) {
+            return get_object_vars($acc);
         } else {
             return null;
         }

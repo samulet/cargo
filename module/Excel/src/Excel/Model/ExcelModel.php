@@ -42,8 +42,8 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $ticketModel = $this->getTicketModel();
         $ticket = $ticketModel->listTicket($id);
         $ticketWay = $ticketModel->returnAllWays($ticket['id']);
-        $orgModel = $this->getAccountModel();
-        $org = $orgModel->getAccount($ticket['ownerOrgId']);
+        $accModel = $this->getAccountModel();
+        $acc = $accModel->getAccount($ticket['ownerOrgId']);
         $ticketWay = $this->addAdditionalData($ticketWay);
 
         $objReader = PHPExcel_IOFactory::createReader('Excel5');
@@ -59,7 +59,7 @@ class ExcelModel implements ServiceLocatorAwareInterface
         $mainParams = $mainParams + 2;
 
         $objPHPExcel->getActiveSheet()
-            ->setCellValue('D' . ($mainParams), $org['name'])
+            ->setCellValue('D' . ($mainParams), $acc['name'])
             ->setCellValue('D' . (++$mainParams), '')
             ->setCellValue('D' . (++$mainParams), '')
             ->setCellValue('D' . (++$mainParams), $ticket['type'])
@@ -140,9 +140,9 @@ class ExcelModel implements ServiceLocatorAwareInterface
 
         $ticketWay = $this->addAdditionalData($ticketWay);
 
-        $orgModel = $this->getAccountModel();
-        $org = $orgModel->getAccount($ticket['ownerOrgId']);
-        $ticket['owner'] = $org['name'];
+        $accModel = $this->getAccountModel();
+        $acc = $accModel->getAccount($ticket['ownerOrgId']);
+        $ticket['owner'] = $acc['name'];
 
 
         $objReader = PHPExcel_IOFactory::createReader('Excel5');

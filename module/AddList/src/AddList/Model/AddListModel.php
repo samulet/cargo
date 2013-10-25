@@ -278,9 +278,9 @@ class AddListModel implements ServiceLocatorAwareInterface
 
             $organizationModel=$this->getAccountModel();
 
-            $org=$organizationModel->getAccount($vars['ownerOrgId']);
-            if(!empty($org)) {
-                $vars['ownerOrgId']=$org;
+            $acc=$organizationModel->getAccount($vars['ownerOrgId']);
+            if(!empty($acc)) {
+                $vars['ownerOrgId']=$acc;
             }
             if(!empty($vars['parentFieldId'])) {
                 $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($vars['parentFieldId']);
@@ -315,10 +315,10 @@ class AddListModel implements ServiceLocatorAwareInterface
             $vars=get_object_vars($re);
             $organizationModel=$this->getAccountModel();
 
-            $org=$organizationModel->getAccount($vars['ownerOrgId']);
+            $acc=$organizationModel->getAccount($vars['ownerOrgId']);
 
-            if(!empty($org)) {
-                $vars['ownerOrgId']= $org;
+            if(!empty($acc)) {
+                $vars['ownerOrgId']= $acc;
             }
             if(!empty($vars['parentFieldId'])) {
                 $parent = $objectManager->getRepository('AddList\Entity\AddList')->getOneMyAvailableList($vars['parentFieldId']);

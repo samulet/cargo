@@ -20,8 +20,8 @@ namespace Account\Controller {
         public function indexAction()
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
-            $orgModel = $this->getAccountModel();
-            $org = $orgModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getcurrentOrg());
+            $accModel = $this->getAccountModel();
+            $acc = $accModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getcurrentOrg());
 
             $tickModel = $this->getTicketModel();
             $resModel = $this->getResourceModel();
@@ -29,7 +29,7 @@ namespace Account\Controller {
             $tick = $tickModel->returnAllTicket();
 
             return new ViewModel(array(
-                'org' => $org,
+                'org' => $acc,
                 'tick' => $tick,
                 'res' => $res
             ));
@@ -58,7 +58,7 @@ namespace Account\Controller {
 
             $post = $this->getRequest()->getPost();
             $comUserModel = $this->getCompanyUserModel();
-            $orgModel = $this->getAccountModel();
+            $accModel = $this->getAccountModel();
 
             $result = null;
             if ($this->getRequest()->isPost()) {
@@ -67,11 +67,11 @@ namespace Account\Controller {
             }
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('User\Entity\User');
-            $orgModel->addBootstrap3Class($form);
+            $accModel->addBootstrap3Class($form);
 
-            $org = $comUserModel->getOrgWenUserConsist($this->zfcUserAuthentication()->getIdentity()->getId());
+            $acc = $comUserModel->getOrgWenUserConsist($this->zfcUserAuthentication()->getIdentity()->getId());
             $fillFrom = new AddListForm();
-            $form = $fillFrom->fillOrg($form, $org);
+            $form = $fillFrom->fillOrg($form, $acc);
             $currentOrg = $this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
             if (!empty($currentOrg)) {
                 $form->get('currentOrg')->setValue($currentOrg);
@@ -117,8 +117,8 @@ namespace Account\Controller {
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $form = new AccountCreate();
-            $orgModel = $this->getAccountModel();
-            $orgModel->addBootstrap3Class($form);
+            $accModel = $this->getAccountModel();
+            $accModel->addBootstrap3Class($form);
             return new ViewModel(array(
                 'form' => $form
             ));
@@ -128,14 +128,14 @@ namespace Account\Controller {
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $form = new AccountCreate();
-            $orgModel = $this->getAccountModel();
+            $accModel = $this->getAccountModel();
 
-            $org = $orgModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getId());
-            $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            $acc = $accModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getId());
+            $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
             return new ViewModel(array(
                 'form' => $form,
-                'org' => $org[0]['org'],
-                'uuid' => $org_uuid
+                'org' => $acc[0]['org'],
+                'uuid' => $accUuid
             ));
         }
 
@@ -147,30 +147,30 @@ namespace Account\Controller {
         {
             $this->loginControl();
             $accId = $this->getEvent()->getRouteMatch()->getParam('id');
-            $orgModel = $this->getAccountModel();
-            $org = $orgModel->getAccount($accId);
-            if (!$org) {
-                $org = false;
+            $accModel = $this->getAccountModel();
+            $acc = $accModel->getAccount($accId);
+            if (!$acc) {
+                $acc = false;
             }
             return new ViewModel(array(
-                'org' => $org
+                'org' => $acc
             ));
         }
 
         public function deleteAction()
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
-            $orgModel = $this->getAccountModel();
-            $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-            $accId = $orgModel->getOrgIdByUUID($org_uuid);
-            $orgModel->deleteAccount($accId);
+            $accModel = $this->getAccountModel();
+            $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            $accId = $accModel->getOrgIdByUUID($accUuid);
+            $accModel->deleteAccount($accId);
             return $this->redirect()->toUrl('/account');
         }
 
         public function addIntNumberAction()
         {
-            $orgModel = $this->getAccountModel();
-            $orgModel->addIntNumber();
+            $accModel = $this->getAccountModel();
+            $accModel->addIntNumber();
             return $this->redirect()->toUrl('/account');
         }
 
@@ -178,16 +178,16 @@ namespace Account\Controller {
         {
             $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
             $post = $this->getRequest()->getPost();
-            $orgModel = $this->getAccountModel();
-            $org_uuid = $this->getEvent()->getRouteMatch()->getParam('id');
-            if (!empty($org_uuid)) {
-                $accId = $orgModel->getOrgIdByUUID($org_uuid);
+            $accModel = $this->getAccountModel();
+            $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+            if (!empty($accUuid)) {
+                $accId = $accModel->getOrgIdByUUID($accUuid);
             } else {
                 $accId = null;
             }
             $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
 
-            $orgModel->createAccount($post, $userId,$accId);
+            $accModel->createAccount($post, $userId,$accId);
 
 
             return $this->redirect()->toUrl('/account');

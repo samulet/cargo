@@ -121,9 +121,9 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if($type=='currentOrg') {
-            $org=$orgTest = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
-            if(!empty($org)) {
-                $roles=$org->roles;
+            $acc=$orgTest = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
+            if(!empty($acc)) {
+                $roles=$acc->roles;
             } else {
                 $roles=array();
             }
@@ -171,17 +171,17 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     public function getOrgWenUserConsist($userId) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $orgTmp =$objectManager->getRepository('Account\Entity\CompanyUser')->findBy(array('userId' => new \MongoId($userId)));
-        $orgModel = $this->getAccountModel();
+        $accModel = $this->getAccountModel();
         $comModel = $this->getCompanyModel();
         $resultArray=array();
 
         foreach($orgTmp as $or) {
             if(!empty($or->companyId)) {
                 $comTmp=$comModel->getCompany($or->companyId);
-                $orgLocal=$orgModel->getAccount($comTmp['ownerOrgId']);
+                $orgLocal=$accModel->getAccount($comTmp['ownerOrgId']);
                 $resultArray=$resultArray+array($orgLocal['id'] => $orgLocal['name']);
             } elseif(!empty($or->orgId)) {
-                $orgLocal=$orgModel->getAccount($or->orgId);
+                $orgLocal=$accModel->getAccount($or->orgId);
 
                 $resultArray=$resultArray+array($orgLocal['id'] => $orgLocal['name']);
             }
@@ -209,11 +209,11 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         return $resultArray;
     }
 
-    public function addCompanyInOrgWhenConsist($org, $userId) {
-        if(!empty($org)) {
+    public function addCompanyInOrgWhenConsist($acc, $userId) {
+        if(!empty($acc)) {
             $resultArray=array();
             $comModel = $this->getCompanyModel();
-            foreach($org as $key => $value) {
+            foreach($acc as $key => $value) {
                 $comArray=$this->getComWenUserConsist($key, $userId);
                 array_push($resultArray,
                     array(
@@ -242,8 +242,8 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $comModel = $this->getCompanyModel();
         $company=$comModel->getCompany($orgId);
 
-        $orgModel = $this->getAccountModel();
-        $orgName=$orgModel->getAccount($company['ownerOrgId']);
+        $accModel = $this->getAccountModel();
+        $orgName=$accModel->getAccount($company['ownerOrgId']);
         $result=array();
         $users = $objectManager->getRepository('Account\Entity\CompanyUser')->findBy(array('companyId' => new \MongoId($orgId)));
         foreach($users as $userT) {
@@ -267,8 +267,8 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         if(empty($com)) {
             return null;
         }
-        $orgModel = $this->getAccountModel();
-        $orgName=$orgModel->getAccount($orgId);
+        $accModel = $this->getAccountModel();
+        $orgName=$accModel->getAccount($orgId);
 
         $result=array();
         foreach($com as $c) {
@@ -317,8 +317,8 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     public function deleteUserFromOrg($userId, $itemId,$param) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if($param=='admin') {
-            $orgModel = $this->getAccountModel();
-            $orgId=$orgModel->getOrgIdByUUID($itemId);
+            $accModel = $this->getAccountModel();
+            $orgId=$accModel->getOrgIdByUUID($itemId);
             $user = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('orgId'=> new \MongoId($orgId),'userId' => new \MongoId($userId)));
             $userT = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId), 'currentOrg' =>new \MongoId($orgId)));
             if(!empty($userT)) {

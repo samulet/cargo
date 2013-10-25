@@ -24,19 +24,19 @@ class CompanyController extends AbstractActionController
     public function indexAction()
     {
         $this->loginControl(); //проверяем, авторизован ли юзер, если нет перенаправляем на страницу авторизации
-        $org_uuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $uuid_gen = new UuidGenerator();
-        if (!$uuid_gen->isValid($org_uuid)) {
+        if (!$uuid_gen->isValid($accUuid)) {
             $com = "Ошибка";
         } else {
             $comModel = $this->getCompanyModel();
-            $orgModel = $this->getAccountModel();
-            $accId = $orgModel->getOrgIdByUUID($org_uuid);
+            $accModel = $this->getAccountModel();
+            $accId = $accModel->getOrgIdByUUID($accUuid);
             $com = $comModel->returnCompanies($accId);
         }
         return new ViewModel(array(
             'org' => $com,
-            'org_id' => $org_uuid
+            'org_id' => $accUuid
 
         ));
     }
@@ -51,9 +51,9 @@ class CompanyController extends AbstractActionController
         $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
         $comModel = $this->getCompanyModel();
         $agents = $comModel->getContractAgentsFromCompany($comId);
-        $orgModel = $this->getAccountModel();
+        $accModel = $this->getAccountModel();
         $company = $comModel->getCompany($comId);
-        $acc=$orgModel->getAccount($company['ownerOrgId']);
+        $acc=$accModel->getAccount($company['ownerOrgId']);
         return new ViewModel(array(
             'com' => $company,
             'agents' => $agents,
@@ -154,8 +154,8 @@ class CompanyController extends AbstractActionController
                 $comEditId = null;
             }
 
-            $orgModel = $this->getAccountModel();
-            $accId = $orgModel->getOrgIdByUUID($accId);
+            $accModel = $this->getAccountModel();
+            $accId = $accModel->getOrgIdByUUID($accId);
             $newComId=$comModel->createCompany($post, $accId, $comEditId);
 
             if($param=='contractAgent') {

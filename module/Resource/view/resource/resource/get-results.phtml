@@ -33,7 +33,7 @@ $resources=$this->res;
     <?php foreach ($resources as $resource) {
     $resourceWay=$resource['ways'];
     $vehicle=$resource['veh'];
-    $org=$resource['org'];
+    $acc=$resource['org'];
     $resource=$resource['res'];
 
     ?>
@@ -89,7 +89,7 @@ $resources=$this->res;
             </td>
         <td>
         <a href="<?php echo $this->url('account',
-                    array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
+                    array('action'=>'list', 'id' => $acc['uuid']));?>"><?php echo $acc['name']; ?></a>
         </td>
         <td>
                         <?php echo $vehicle['status']; ?>
