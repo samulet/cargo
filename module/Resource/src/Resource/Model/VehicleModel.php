@@ -174,7 +174,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
         }
         return $this->organizationModel;
     }
@@ -255,7 +255,7 @@ class VehicleModel implements ServiceLocatorAwareInterface
     {
         if (!$this->companyModel) {
             $sm = $this->getServiceLocator();
-            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+            $this->companyModel = $sm->get('Account\Model\CompanyModel');
         }
         return $this->companyModel;
     }

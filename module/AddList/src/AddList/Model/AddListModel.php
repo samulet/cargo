@@ -501,7 +501,7 @@ class AddListModel implements ServiceLocatorAwareInterface
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
         }
         return $this->organizationModel;
     }

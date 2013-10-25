@@ -14,9 +14,9 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
     {
         if (null === $this->pages) {
             $nameMenu=$this->getName();
-            $comUserModel = $serviceLocator->get('Organization\Model\CompanyUserModel');
-            $comModel = $serviceLocator->get('Organization\Model\CompanyModel');
-            $orgModel = $serviceLocator->get('Organization\Model\OrganizationModel');
+            $comUserModel = $serviceLocator->get('Account\Model\CompanyUserModel');
+            $comModel = $serviceLocator->get('Account\Model\CompanyModel');
+            $orgModel = $serviceLocator->get('Account\Model\OrganizationModel');
 
             $auth = $serviceLocator->get('zfcuser_auth_service');
             if($auth->hasIdentity()) {

@@ -158,7 +158,7 @@ class InteractionController extends AbstractActionController
     {
         if (!$this->companyUserModel) {
             $sm = $this->getServiceLocator();
-            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            $this->companyUserModel = $sm->get('Account\Model\CompanyUserModel');
         }
         return $this->companyUserModel;
     }

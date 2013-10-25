@@ -1,0 +1,77 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: salerat
+ * Date: 9/29/13
+ * Time: 10:31 AM
+ * To change this template use File | Settings | File Templates.
+ */
+namespace Account\Form;
+
+use Zend\Form\Fieldset;
+use Zend\InputFilter\InputFilterProviderInterface;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use AddList\Form\AddListForm;
+use AddList\Model\AddListModel;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+class CompanyApplicantsFieldset extends Fieldset implements InputFilterProviderInterface
+{
+
+    public function __construct($orgListId = null)
+    {
+        parent::__construct();
+
+        $this->setHydrator(new \Zend\Stdlib\Hydrator\ClassMethods());
+
+        $this->add(
+            array(
+                'name' => 'companyApplicantsType',
+                'type' => 'Zend\Form\Element\Select',
+                'options' => array(
+                    'label' => 'Вид заявителя',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+
+                )
+            ));
+        $this->add(
+            array(
+                'name' => 'companyApplicantsLink',
+                'options' => array(
+                    'label' => 'Ссылка на заявителя (email в системе)',
+                    'label_attributes' => array(
+                        'class'  => 'control-label'
+                    ),
+                ),
+                'attributes' => array (
+                    'class' => 'form-control'
+                )
+            )
+        );
+        $this->add(
+            array(
+                'name' => 'companyApplicantsDelete',
+                'type' => 'Zend\Form\Element\Button',
+                'options' => array(
+                    'label' => 'Удалить'
+                ),
+                'attributes' => array (
+                    'onclick' => 'deleteFieldset(this);'
+
+                )
+            ));
+    }
+
+    public function getInputFilterSpecification()
+    {
+        return array();
+    }
+
+
+}

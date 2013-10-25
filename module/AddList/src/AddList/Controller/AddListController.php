@@ -269,7 +269,7 @@ class AddListController extends AbstractActionController
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
         }
         return $this->organizationModel;
     }
@@ -278,7 +278,7 @@ class AddListController extends AbstractActionController
     {
         if (!$this->companyUserModel) {
             $sm = $this->getServiceLocator();
-            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            $this->companyUserModel = $sm->get('Account\Model\CompanyUserModel');
         }
         return $this->companyUserModel;
     }
@@ -299,7 +299,7 @@ class AddListController extends AbstractActionController
     {
         if (!$this->companyModel) {
             $sm = $this->getServiceLocator();
-            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+            $this->companyModel = $sm->get('Account\Model\CompanyModel');
         }
         return $this->companyModel;
     }

@@ -315,7 +315,7 @@ class NotificationModel implements ServiceLocatorAwareInterface
     {
         if (!$this->companyModel) {
             $sm = $this->getServiceLocator();
-            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+            $this->companyModel = $sm->get('Account\Model\CompanyModel');
         }
         return $this->companyModel;
     }

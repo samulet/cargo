@@ -14,7 +14,7 @@ return array(
         'EdpModuleLayouts',
         'Application',
         'User',
-        'Organization',
+        'Account',
         'Resource',
         'Ticket',
         'Auction',
