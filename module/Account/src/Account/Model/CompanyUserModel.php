@@ -120,7 +120,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     public  function findUserAndSetRole($type, $userId ,$itemId) {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        if($type=='currentOrg') {
+        if($type=='currentAcc') {
             $acc=$orgTest = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('orgId' => new \MongoId($itemId), 'userId' => new \MongoId($userId)));
             if(!empty($acc)) {
                 $roles=$acc->roles;
@@ -143,15 +143,15 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         if(empty($post)) {
             return null;
         }
-        if(!empty($post['currentOrg'])) {
+        if(!empty($post['currentAcc'])) {
             $objectManager->getRepository('User\Entity\User')->createQueryBuilder()
                 ->findAndUpdate()
                 ->field('id')->equals(new \MongoId($userId))
-                ->field('currentOrg')->set(new \MongoId($post['currentOrg']))
+                ->field('currentAcc')->set(new \MongoId($post['currentAcc']))
                 ->field('currentCom')->set(null)
                 ->getQuery()
                 ->execute();
-            $this->findUserAndSetRole('currentOrg', $userId,$post['currentOrg']);
+            $this->findUserAndSetRole('currentAcc', $userId,$post['currentAcc']);
         }
         if(!empty($post['currentCom'])) {
             $comModel = $this->getCompanyModel();
@@ -160,10 +160,10 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 ->findAndUpdate()
                 ->field('id')->equals(new \MongoId($userId))
                 ->field('currentCom')->set(new \MongoId($post['currentCom']))
-                ->field('currentOrg')->set(new \MongoId($com['ownerOrgId']))
+                ->field('currentAcc')->set(new \MongoId($com['ownerOrgId']))
                 ->getQuery()
                 ->execute();
-            $this->findUserAndSetRole('currentOrg', $userId,$com['ownerOrgId']);
+            $this->findUserAndSetRole('currentAcc', $userId,$com['ownerOrgId']);
             $this->findUserAndSetRole('currentCom', $userId,$post['currentCom']);
         }
     }
@@ -320,12 +320,12 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
             $accModel = $this->getAccountModel();
             $orgId=$accModel->getOrgIdByUUID($itemId);
             $user = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(array('orgId'=> new \MongoId($orgId),'userId' => new \MongoId($userId)));
-            $userT = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId), 'currentOrg' =>new \MongoId($orgId)));
+            $userT = $objectManager->getRepository('User\Entity\User')->findOneBy(array('id' => new \MongoId($userId), 'currentAcc' =>new \MongoId($orgId)));
             if(!empty($userT)) {
                 $this->updateUserRoles(array(),$userId,array("accAdmin" ));
 
                 if(empty($userT->currentCom)) {
-                    $userT->currentOrg=null;
+                    $userT->currentAcc=null;
                 }
 
                 $objectManager->persist($userT);
@@ -340,7 +340,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 $this->updateUserRoles(array(),$userId,array("forwarder", "carrier", "customer" ));
                 $userT->currentCom=null;
                 if(!is_int(array_search('accAdmin',$userT->getRoles()))) {
-                    $userT->currentOrg=null;
+                    $userT->currentAcc=null;
                 }
                     $objectManager->persist($userT);
                     $objectManager->flush();

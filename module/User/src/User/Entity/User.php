@@ -142,7 +142,7 @@ class User implements UserInterface, ProviderInterface
 
     public function getCurrentOrg()
     {
-        return $this->currentOrg;
+        return $this->currentAcc;
     }
 
     public function getCurrentCom()

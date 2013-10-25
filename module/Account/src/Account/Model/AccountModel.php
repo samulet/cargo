@@ -77,7 +77,6 @@ class AccountModel implements ServiceLocatorAwareInterface
 
     public function createAccount($post, $user_id, $accId)
     {
-        if (!empty($post->csrf)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
             $org_item = $post->account;
             if (!empty($accId)) $acc = $objectManager->getRepository('Account\Entity\Account')->findOneBy(
@@ -99,9 +98,8 @@ class AccountModel implements ServiceLocatorAwareInterface
             $comUserModel = $this->getCompanyUserModel();
             $comUserModel->addUserToCompany($user_id, $accId,'admin');
 
-            $comUserModel->addOrgAndCompanyToUser(array('currentOrg'=>$accId),$user_id);
+            $comUserModel->addOrgAndCompanyToUser(array('currentAcc'=>$accId),$user_id);
             return true;
-        } else return false;
     }
     public function increaseLastItemNumber($orgId,$lastItemNumber) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');

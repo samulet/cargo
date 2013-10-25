@@ -65,8 +65,8 @@ class AddListForm
         foreach($formData as $key=>$value) {
             $result_array=$result_array+array($key=>$value);
         }
-        if($form->has('currentOrg')) {
-            $form->get('currentOrg')->setOptions(array("value_options"=>$result_array));
+        if($form->has('currentAcc')) {
+            $form->get('currentAcc')->setOptions(array("value_options"=>$result_array));
         }
         return $form;
     }

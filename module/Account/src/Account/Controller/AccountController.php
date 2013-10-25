@@ -41,7 +41,7 @@ namespace Account\Controller {
             $id=$this->getEvent()->getRouteMatch()->getParam('id');
             $param=$this->getEvent()->getRouteMatch()->getParam('param');
             if($param=='acc') {
-                $post['currentOrg']=$id;
+                $post['currentAcc']=$id;
             } elseif($param=='com') {
                 $post['currentCom']=$id;
             }
@@ -71,7 +71,7 @@ namespace Account\Controller {
             $form = $fillFrom->fillOrg($form, $acc);
             $currentOrg = $this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
             if (!empty($currentOrg)) {
-                $form->get('currentOrg')->setValue($currentOrg);
+                $form->get('currentAcc')->setValue($currentOrg);
                 $com = $comUserModel->getComWenUserConsist(
                     $currentOrg,
                     $this->zfcUserAuthentication()->getIdentity()->getId()
@@ -105,14 +105,6 @@ namespace Account\Controller {
         {
             $post = $this->getRequest()->getRequest();
             if($post->isPost()) {
-                $builder = new AnnotationBuilder();
-                $form = $builder->createForm('Account\Entity\Account');
-                $accModel = $this->getAccountModel();
-                $accModel->addBootstrap3Class($form);
-                return new ViewModel(array(
-                    'form' => $form
-                ));
-            } else {
                 $accModel = $this->getAccountModel();
                 $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
                 if (!empty($accUuid)) {
@@ -123,6 +115,14 @@ namespace Account\Controller {
                 $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
                 $accModel->createAccount($post, $userId,$accId);
                 return $this->redirect()->toUrl('/account');
+            } else {
+                $builder = new AnnotationBuilder();
+                $form = $builder->createForm('Account\Entity\Account');
+                $accModel = $this->getAccountModel();
+                $accModel->addBootstrap3Class($form);
+                return new ViewModel(array(
+                    'form' => $form
+                ));
             }
         }
 
