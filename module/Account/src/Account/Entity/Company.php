@@ -9,7 +9,7 @@ use Zend\Form\Annotation;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Form\Element\Collection;
-use \Account\Form\CompanyAddressFieldset;
+
 /**
  * @ODM\Document(collection="company", repositoryClass="Account\Repository\CompanyRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")

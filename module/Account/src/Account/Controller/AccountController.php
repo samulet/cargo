@@ -3,10 +3,8 @@ namespace Account\Controller {
 
     use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
     use Zend\Form\Annotation\AnnotationBuilder;
-    use Account\Form\AccountCreate;
     use Zend\Mvc\Controller\AbstractActionController;
     use Zend\View\Model\ViewModel;
-
     use AddList\Form\AddListForm;
 
     class AccountController extends AbstractActionController
@@ -94,15 +92,6 @@ namespace Account\Controller {
             ));
         }
 
-        private function loginControl()
-        {
-            if ($this->zfcUserAuthentication()->hasIdentity()) {
-                return true;
-            } else {
-                return $this->redirect()->toUrl('/user/login');
-            }
-        }
-
         public function getAccountModel()
         {
             if (!$this->accountModel) {
@@ -114,7 +103,8 @@ namespace Account\Controller {
 
         public function addAction()
         {
-            $form = new AccountCreate();
+            $builder = new AnnotationBuilder();
+            $form = $builder->createForm('Account\Entity\Account');
             $accModel = $this->getAccountModel();
             $accModel->addBootstrap3Class($form);
             return new ViewModel(array(
@@ -124,7 +114,8 @@ namespace Account\Controller {
 
         public function editAction()
         {
-            $form = new AccountCreate();
+            $builder = new AnnotationBuilder();
+            $form = $builder->createForm('Account\Entity\Account');
             $accModel = $this->getAccountModel();
 
             $acc = $accModel->returnAccounts($this->zfcUserAuthentication()->getIdentity()->getId());
@@ -142,7 +133,6 @@ namespace Account\Controller {
 
         public function listAction()
         {
-            $this->loginControl();
             $accId = $this->getEvent()->getRouteMatch()->getParam('id');
             $accModel = $this->getAccountModel();
             $acc = $accModel->getAccount($accId);

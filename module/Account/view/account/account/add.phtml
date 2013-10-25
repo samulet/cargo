@@ -10,9 +10,7 @@ $form->setAttribute('action', $this->url('account', array('action' => 'createAcc
 <?php
 echo $this->form()->openTag($form);
 
-$acc = $form->get('account');
-echo $this->formRow($acc->get('name')->setAttributes(array( 'class' => 'form-control' )));
-echo $this->formHidden($form->get('csrf')->setAttributes(array( 'class' => 'form-control' )));
+echo $this->formRow($form->get('name')->setAttributes(array( 'class' => 'form-control' )));
 echo $this->formElement($form->get('submit')->setAttributes(array( 'class' => 'form-control' )));
 echo $this->form()->closeTag();
 ?> </div><a href="<?php echo $this->url('account', array('action' => 'index')); ?>">Вернуться в аккаунт</a>

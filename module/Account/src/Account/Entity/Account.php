@@ -4,14 +4,18 @@ namespace Account\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Account\Entity\AccountInterface;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-
+use Zend\Form\Annotation;
+use Zend\Form\Element;
+use Zend\Form\Form;
+use Zend\Form\Element\Collection;
 
 /**
  *
  * @ODM\Document(collection="account", repositoryClass="Account\Repository\AccountRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @Annotation\Name("account")
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class Account
 {
@@ -57,6 +61,11 @@ class Account
     /**
      * @var string
      * @ODM\Field(type="string")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
+
+     * @Annotation\Attributes({"type":"text"})
+     * @Annotation\Options({"label":"Наименование аккаунта"})
      */
     public $name;
     /**
@@ -68,7 +77,11 @@ class Account
      * @ODM\Date
      */
     public $deletedAt;
-
+    /**
+     * @Annotation\Type("Zend\Form\Element\Submit")
+     * @Annotation\Attributes({"value":"Отправить"})
+     */
+    public $submit;
     /**
      * @return mixed
      */
