@@ -181,29 +181,29 @@ class TicketModel implements ServiceLocatorAwareInterface
 
         if (!empty($post)) {
             if (is_array($post)) {
-                $prop_array = $post;
+                $propArray = $post;
             } else {
-                $prop_array = get_object_vars($post);
+                $propArray = get_object_vars($post);
             }
         }
-        $prop_array_split = $prop_array;
+        $prop_array_split = $propArray;
 
 
         unset($prop_array_split['submit']);
         $prop_array_new = array();
-        $prop_array = $prop_array_new;
+        $propArray = $prop_array_new;
 
 
-        $prop_array['ownerId'] = $owner_id;
-        $prop_array['ownerOrgId'] = $owner_org_id;
-        $prop_array['currency'] = $prop_array_split['currency'];
-        $prop_array['money'] = $prop_array_split['money'];
-        $prop_array['typeTicket'] = $prop_array_split['typeTicket'];
-        $prop_array['formPay'] = $prop_array_split['formPay'];
-        $prop_array['type'] = $prop_array_split['type'];
-        $prop_array['rate'] = $prop_array_split['rate'];
+        $propArray['ownerId'] = $owner_id;
+        $propArray['ownerOrgId'] = $owner_org_id;
+        $propArray['currency'] = $prop_array_split['currency'];
+        $propArray['money'] = $prop_array_split['money'];
+        $propArray['typeTicket'] = $prop_array_split['typeTicket'];
+        $propArray['formPay'] = $prop_array_split['formPay'];
+        $propArray['type'] = $prop_array_split['type'];
+        $propArray['rate'] = $prop_array_split['rate'];
         if (!empty($prop_array_split['includeNds'])) {
-            $prop_array['includeNds'] = $prop_array_split['includeNds'];
+            $propArray['includeNds'] = $prop_array_split['includeNds'];
         }
 
 
@@ -215,11 +215,11 @@ class TicketModel implements ServiceLocatorAwareInterface
         } else {
             $lastItemNumber = $accModel->getAccount($owner_org_id)['lastItemNumber'];
             $lastItemNumber++;
-            $prop_array['numberInt'] = $lastItemNumber;
+            $propArray['numberInt'] = $lastItemNumber;
             $accModel->increaseLastItemNumber($owner_org_id, $lastItemNumber);
             $res = new Ticket();
         }
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             if (($key == 'ownerId') || ($key == 'ownerOrgId')) {
                 $res->$key = new \MongoId($value);
             } else {

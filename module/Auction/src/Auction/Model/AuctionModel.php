@@ -59,12 +59,12 @@ class AuctionModel implements ServiceLocatorAwareInterface
 
     public function addAuctionBid($post, $owner_id)
     {
-        $prop_array = get_object_vars($post);
-        $prop_array['ownerId'] = $owner_id;
+        $propArray = get_object_vars($post);
+        $propArray['ownerId'] = $owner_id;
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = new Resource();
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             $res->$key = $value;
         }
         $objectManager->persist($res);
@@ -73,12 +73,12 @@ class AuctionModel implements ServiceLocatorAwareInterface
 
     public function addAuction($post, $ownerItemId)
     {
-        $prop_array = get_object_vars($post);
-        $prop_array['ownerItemId'] = $ownerItemId;
+        $propArray = get_object_vars($post);
+        $propArray['ownerItemId'] = $ownerItemId;
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $res = new Auction();
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             $res->$key = $value;
         }
         $objectManager->persist($res);
@@ -104,9 +104,9 @@ class AuctionModel implements ServiceLocatorAwareInterface
 
     public function  addBidEngine($aucId, $userId, $post)
     {
-        $prop_array = get_object_vars($post);
+        $propArray = get_object_vars($post);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $res = new AuctionBid($aucId, $userId, $prop_array['bid'], $prop_array['currency']);
+        $res = new AuctionBid($aucId, $userId, $propArray['bid'], $propArray['currency']);
         $objectManager->persist($res);
         $objectManager->flush();
     }

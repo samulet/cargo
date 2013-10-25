@@ -75,32 +75,32 @@ class ResourceModel implements ServiceLocatorAwareInterface
 
         if(!empty($post)) {
             if(is_array($post)) {
-                $prop_array=$post;
+                $propArray=$post;
             } else {
-                $prop_array = get_object_vars($post);
+                $propArray = get_object_vars($post);
             }
 
 
         }
-        $prop_array_split=$prop_array;
+        $prop_array_split=$propArray;
         unset($prop_array_split['tsId']);
         if(!empty($prop_array_split['typeLoad'])) {
             unset($prop_array_split['typeLoad']);
-            $prop_array_new['typeLoad']=$prop_array['typeLoad'];
+            $prop_array_new['typeLoad']=$propArray['typeLoad'];
         }
 
         unset($prop_array_split['submit']);
 
 
-        $prop_array_new['tsId']=$prop_array['tsId'];
+        $prop_array_new['tsId']=$propArray['tsId'];
 
 
-        $prop_array=$prop_array_new;
+        $propArray=$prop_array_new;
 
 
 
-        $prop_array['ownerId'] = $owner_id;
-        $prop_array['ownerOrgId'] = $owner_org_id;
+        $propArray['ownerId'] = $owner_id;
+        $propArray['ownerOrgId'] = $owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
             $res = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
@@ -109,7 +109,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         } else {
             $res = new Resource();
         }
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             if($key!="tsId") {
                 $res->$key = $value;
             } else {

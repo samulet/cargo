@@ -103,7 +103,7 @@ namespace Account\Controller {
 
         public function addAction()
         {
-            $post = $this->getRequest()->getRequest();
+            $post = $this->getRequest();
             if($post->isPost()) {
                 $accModel = $this->getAccountModel();
                 $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');

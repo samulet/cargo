@@ -26,14 +26,14 @@ class CargoModel implements ServiceLocatorAwareInterface
     {
         if(!empty($post)) {
             if(is_array($post)) {
-                $prop_array=$post;
+                $propArray=$post;
             } else {
-                $prop_array = get_object_vars($post);
+                $propArray = get_object_vars($post);
             }
 
         }
-        $prop_array['ownerId'] = $owner_id;
-        $prop_array['ownerOrgId'] = $owner_org_id;
+        $propArray['ownerId'] = $owner_id;
+        $propArray['ownerOrgId'] = $owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
             $res = $objectManager->getRepository('Ticket\Entity\Cargo')->findOneBy(
@@ -42,9 +42,9 @@ class CargoModel implements ServiceLocatorAwareInterface
         } else {
             $res = new Cargo();
         }
-        $model=explode('-',$prop_array['model']);
-        $prop_array['model']=$model[2];
-        foreach ($prop_array as $key => $value) {
+        $model=explode('-',$propArray['model']);
+        $propArray['model']=$model[2];
+        foreach ($propArray as $key => $value) {
             $res->$key = $value;
         }
         $objectManager->persist($res);

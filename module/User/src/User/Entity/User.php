@@ -111,7 +111,7 @@ class User implements UserInterface, ProviderInterface
      * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
-    public $currentOrg;
+    public $currentAcc;
     /**
      * @ODM\ObjectId
      * @var int

@@ -132,15 +132,15 @@ class InteractionModel implements ServiceLocatorAwareInterface
 
     public function addProposal($uuid,$post) {
 
-        $prop_array=get_object_vars($post);
+        $propArray=get_object_vars($post);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $id=$this->getInteractionIdByUuid($uuid);
 
         $interaction = new InteractionNote();
 
-        $prop_array['ownerInteractionId']=new \MongoId($id);
+        $propArray['ownerInteractionId']=new \MongoId($id);
 
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             $interaction->$key = $value;
 
         }
@@ -151,7 +151,7 @@ class InteractionModel implements ServiceLocatorAwareInterface
         $objectManager->getRepository('Interaction\Entity\Interaction')->createQueryBuilder()
             ->findAndUpdate()
             ->field('uuid')->equals($uuid)
-            ->field('status')->set($prop_array['status'])
+            ->field('status')->set($propArray['status'])
             ->getQuery()
             ->execute();
     }

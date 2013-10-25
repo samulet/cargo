@@ -183,11 +183,11 @@ class NotificationModel implements ServiceLocatorAwareInterface
     public function addNotificationNote($uuid,$post) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $id=$this->getIdByUuid($uuid);
-        $prop_array = get_object_vars($post);
-        $prop_array['ownerNotificationId']=$id;
-        $prop_array['read']=0;
+        $propArray = get_object_vars($post);
+        $propArray['ownerNotificationId']=$id;
+        $propArray['read']=0;
         $res=new NotificationNote();
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             if($key!='ownerNotificationId') {
                 $res->$key=$value;
             } else {
@@ -199,16 +199,16 @@ class NotificationModel implements ServiceLocatorAwareInterface
         $note = $objectManager->getRepository('Notification\Entity\Notification')->findOneBy(
             array('uuid' => $uuid)
         );
-        $note->status=$prop_array['status'];
-        if($prop_array['status']=='На рассмотрении') {
+        $note->status=$propArray['status'];
+        if($propArray['status']=='На рассмотрении') {
             $this->activateItem($note->itemId,'0');
-        } elseif($prop_array['status']=='Опубликовано') {
+        } elseif($propArray['status']=='Опубликовано') {
             $this->activateItem($note->itemId,'1');
-        } elseif($prop_array['status']=='Отправлено на доработку') {
+        } elseif($propArray['status']=='Отправлено на доработку') {
             $this->activateItem($note->itemId,'0');
-        } elseif($prop_array['status']=='В работе') {
+        } elseif($propArray['status']=='В работе') {
             $this->activateItem($note->itemId,'0');
-        } elseif($prop_array['status']=='Завершена') {
+        } elseif($propArray['status']=='Завершена') {
             $this->activateItem($note->itemId,'0');
         }
         $objectManager->persist($note);

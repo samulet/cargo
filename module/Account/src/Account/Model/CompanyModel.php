@@ -57,15 +57,15 @@ class CompanyModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function createCompany($prop_array, $accId, $comId)
+    public function createCompany($propArray, $accId, $comId)
     {
-        if(!empty($prop_array)) {
+        if(!empty($propArray)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
             if (!empty($comId)) {
                 if($comId=='contractAgent') {
                     $com = new Company($accId,'contractAgent');
-                    $prop_array['dirty']='1';
+                    $propArray['dirty']='1';
                 } else {
                     $com = $objectManager->getRepository('Account\Entity\Company')->find($comId);
                 }
@@ -75,7 +75,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
             }
 
 
-            foreach ($prop_array as $key => $value) {
+            foreach ($propArray as $key => $value) {
                 if(!empty($value)) {
                     $com->$key=$value;
                 }

@@ -164,7 +164,7 @@ class AddListModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
 
-        $prop_array = get_object_vars($post);
+        $propArray = get_object_vars($post);
 
 
 
@@ -172,44 +172,44 @@ class AddListModel implements ServiceLocatorAwareInterface
 
             $listId=$this->getIdByUUID($parentField);
             $mongoId=new \MongoId($listId);
-            $prop_array['parentFieldId']=new \MongoId($this->getIdByUUID($parentField));
+            $propArray['parentFieldId']=new \MongoId($this->getIdByUUID($parentField));
             $list=  $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
                 array('id' =>  $mongoId)
             );
 
             $listName=  $this->getListName('veh-models');
-            $prop_array['listId']=$listName['id'];
+            $propArray['listId']=$listName['id'];
 
         }
         if(is_string($listUUID)) {
-            $prop_array['listId']=$listUUID;
+            $propArray['listId']=$listUUID;
 
         }
 
         $res = new AddList();
 
-        if(!empty($prop_array['requisites'])) {
+        if(!empty($propArray['requisites'])) {
 
-            $prop_array['value']='р/c'.$prop_array['requisites'][0]['addListRequisitesAccountNumber'].' '.$prop_array['requisites'][0]['addListRequisitesBankName'];
+            $propArray['value']='р/c'.$propArray['requisites'][0]['addListRequisitesAccountNumber'].' '.$propArray['requisites'][0]['addListRequisitesBankName'];
         }
 
-        if(!empty($prop_array['forAccount'])) {
+        if(!empty($propArray['forAccount'])) {
 
-            if($prop_array['forAccount']=='company') {
-                if(!empty($prop_array['company'])) {
+            if($propArray['forAccount']=='company') {
+                if(!empty($propArray['company'])) {
 
-                    $prop_array['company']=new \MongoId($comId);
+                    $propArray['company']=new \MongoId($comId);
                 } else {
-                    $prop_array['company']=new \MongoId($comId);
+                    $propArray['company']=new \MongoId($comId);
                 }
-            } elseif ($prop_array['forAccount']=='account') {
-                $prop_array['account']=new \MongoId($orgId);
+            } elseif ($propArray['forAccount']=='account') {
+                $propArray['account']=new \MongoId($orgId);
             }
 
         }
-        $prop_array['key']=$prop_array['value'];
+        $propArray['key']=$propArray['value'];
 
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             if(!empty($value)) {
                 $res->$key = $value;
             }
@@ -235,12 +235,12 @@ class AddListModel implements ServiceLocatorAwareInterface
             unset($res->parentId);
         }
 
-        $prop_array = get_object_vars($post);
-        if($prop_array['parentId']=='empty') {
-            unset($prop_array['parentId']);
+        $propArray = get_object_vars($post);
+        if($propArray['parentId']=='empty') {
+            unset($propArray['parentId']);
         }
 
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             if($res->$key!='parentId') {
                 $res->$key = $value;
             } else {
@@ -440,33 +440,33 @@ class AddListModel implements ServiceLocatorAwareInterface
     }
 
     public function editField($uuid,$post,$orgId,$comId) {
-        $prop_array = get_object_vars($post);
+        $propArray = get_object_vars($post);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $list=  $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(
             array('uuid' => $uuid)
         );
-        $prop_array['key']= $prop_array['value'];
-        if(!empty($prop_array['requisites'])) {
-            $prop_array['requisites']=$prop_array['requisites'][0];
-            $prop_array['value']='р/c'.$prop_array['requisites']['addListRequisitesAccountNumber'].' '.$prop_array['requisites']['addListRequisitesBankName'];
+        $propArray['key']= $propArray['value'];
+        if(!empty($propArray['requisites'])) {
+            $propArray['requisites']=$propArray['requisites'][0];
+            $propArray['value']='р/c'.$propArray['requisites']['addListRequisitesAccountNumber'].' '.$propArray['requisites']['addListRequisitesBankName'];
         }
 
-        if(!empty($prop_array['forAccount'])) {
+        if(!empty($propArray['forAccount'])) {
 
-            if($prop_array['forAccount']=='company') {
-                if(!empty($prop_array['company'])) {
+            if($propArray['forAccount']=='company') {
+                if(!empty($propArray['company'])) {
 
-                    $prop_array['company']=new \MongoId($comId);
+                    $propArray['company']=new \MongoId($comId);
                 } else {
-                    $prop_array['company']=new \MongoId($comId);
+                    $propArray['company']=new \MongoId($comId);
                 }
-            } elseif ($prop_array['forAccount']=='account') {
-                $prop_array['account']=new \MongoId($orgId);
+            } elseif ($propArray['forAccount']=='account') {
+                $propArray['account']=new \MongoId($orgId);
             }
 
         }
 
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             if(!empty($value)) {
                 $list->$key = $value;
             }
