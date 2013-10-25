@@ -406,7 +406,7 @@ class Ticket
      * Set type.
      *
      * @param string $type
-     * @return OrganizationInterface
+     * @return AccountInterface
      */
     public function setType($type)
     {

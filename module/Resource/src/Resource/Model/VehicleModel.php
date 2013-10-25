@@ -121,10 +121,10 @@ class VehicleModel implements ServiceLocatorAwareInterface
         $vehiclesCollection = $objectManager->getRepository('Resource\Entity\Vehicle')->getAllAvailableVehicle();
 
         $result = array();
-        $organizationModel = $this->getOrganizationModel();
+        $organizationModel = $this->getAccountModel();
         foreach ($vehiclesCollection as $vehicle) {
             /** @var \Resource\Entity\Vehicle $vehicle */
-            $organization = $organizationModel->getOrganization($vehicle->getOwnerOrgId());
+            $organization = $organizationModel->getAccount($vehicle->getOwnerOrgId());
             array_push($result, array('res' => get_object_vars($vehicle), 'org' => $organization));
         }
         return $result;
@@ -170,11 +170,11 @@ class VehicleModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }

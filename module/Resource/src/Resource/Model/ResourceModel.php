@@ -150,7 +150,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
             $propArrayResultFullForm['tsId']=new \MongoId($propArrayResult['tsId']);
             unset($propArrayResult['tsId']);
         }
-        $orgModel = $this->getOrganizationModel();
+        $orgModel = $this->getAccountModel();
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default') ;
         if(empty($propArrayResultFullForm)) {
@@ -165,7 +165,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
 
                     $veh=$cargo->listVehicle($cur->tsId);
                     $ways=$this->returnAllWays($cur->id);
-                    $org = $orgModel->getOrganization($cur->ownerOrgId);
+                    $org = $orgModel->getAccount($cur->ownerOrgId);
                     array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways,"org"=>$org));
                 }
                 return $result;
@@ -192,7 +192,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
                                 $cur=$objectManager->getRepository('Resource\Entity\Resource')->findOneBy(array('id' => new \MongoId($cur->ownerResourceId)));
                                 $veh=$cargo->listVehicle($cur->tsId);
                                 $ways=$this->returnAllWays($cur->id);
-                                $org = $orgModel->getOrganization($cur->ownerOrgId);
+                                $org = $orgModel->getAccount($cur->ownerOrgId);
                                 array_push($result, array('res'=>get_object_vars($cur),'veh'=>$veh,'ways'=>$ways,"org"=>$org));
                             }
 
@@ -201,7 +201,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
                         $cargo = $this->getVehicleModel();
                         $veh=$cargo->listVehicle($ticketFindObject->tsId);
                         $ways=$this->returnAllWays($ticketFindObject->id);
-                        $org = $orgModel->getOrganization($ticketFindObject->ownerOrgId);
+                        $org = $orgModel->getAccount($ticketFindObject->ownerOrgId);
                         array_push($result, array('res'=>get_object_vars($ticketFindObject),'veh'=>$veh,'ways'=>$ways,"org"=>$org));
                     }
 
@@ -267,7 +267,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $rezObj = $objectManager->getRepository('Resource\Entity\Resource')->getAllAvailableResource();
         $rezs = array();
-        $orgModel = $this->getOrganizationModel();
+        $orgModel = $this->getAccountModel();
         if(empty($rezObj)) {
             return null;
         }
@@ -280,7 +280,7 @@ class ResourceModel implements ServiceLocatorAwareInterface
                 $veh=null;
             }
             $ways=$this->returnAllWays($cur->id);
-            $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
+            $org = $orgModel->getAccount($obj_vars['ownerOrgId']);
             array_push($rezs, array('res' => $obj_vars, 'org' => $org,'veh'=>$veh,'ways'=>$ways));
         }
         return $rezs;
@@ -337,11 +337,11 @@ class ResourceModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }

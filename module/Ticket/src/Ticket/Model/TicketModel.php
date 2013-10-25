@@ -177,7 +177,7 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function addTicket($post, $owner_id, $owner_org_id, $id)
     {
-        $orgModel = $this->getOrganizationModel();
+        $orgModel = $this->getAccountModel();
 
         if (!empty($post)) {
             if (is_array($post)) {
@@ -213,7 +213,7 @@ class TicketModel implements ServiceLocatorAwareInterface
                 array('uuid' => $id)
             );
         } else {
-            $lastItemNumber = $orgModel->getOrganization($owner_org_id)['lastItemNumber'];
+            $lastItemNumber = $orgModel->getAccount($owner_org_id)['lastItemNumber'];
             $lastItemNumber++;
             $prop_array['numberInt'] = $lastItemNumber;
             $orgModel->increaseLastItemNumber($owner_org_id, $lastItemNumber);
@@ -330,7 +330,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $rezObj = $objectManager->getRepository('Ticket\Entity\Ticket')->getAllAvailableTicket();
         $rezs = array();
-        $orgModel = $this->getOrganizationModel();
+        $orgModel = $this->getAccountModel();
         if (empty($rezObj)) {
             return null;
         }
@@ -339,7 +339,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             $obj_vars = get_object_vars($cur);
             $veh = $cargo->listCargo($cur->tsId);
             $ways = $this->returnAllWays($cur->id);
-            $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
+            $org = $orgModel->getAccount($obj_vars['ownerOrgId']);
             array_push($rezs, array('res' => $obj_vars, 'org' => $org, 'veh' => $veh, 'ways' => $ways));
         }
         return $rezs;
@@ -600,11 +600,11 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }

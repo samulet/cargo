@@ -265,11 +265,11 @@ class AddListController extends AbstractActionController
         ));
     }
 
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }

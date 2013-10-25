@@ -74,10 +74,10 @@ class CargoModel implements ServiceLocatorAwareInterface
         $cargosCollection = $objectManager->getRepository('Ticket\Entity\Cargo')->getAllAvailableCargo();
 
         $result = array();
-        $organizationModel = $this->getOrganizationModel();
+        $organizationModel = $this->getAccountModel();
         foreach ($cargosCollection as $cargo) {
             /** @var \Ticket\Entity\Cargo $cargo */
-            $organization = $organizationModel->getOrganization($cargo->getOwnerOrgId());
+            $organization = $organizationModel->getAccount($cargo->getOwnerOrgId());
             array_push($result, array('res' => get_object_vars($cargo), 'org' => $organization));
         }
         return $result;
@@ -105,11 +105,11 @@ class CargoModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }

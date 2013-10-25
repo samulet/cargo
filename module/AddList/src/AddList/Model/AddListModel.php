@@ -276,9 +276,9 @@ class AddListModel implements ServiceLocatorAwareInterface
 
             $vars=get_object_vars($re);
 
-            $organizationModel=$this->getOrganizationModel();
+            $organizationModel=$this->getAccountModel();
 
-            $org=$organizationModel->getOrganization($vars['ownerOrgId']);
+            $org=$organizationModel->getAccount($vars['ownerOrgId']);
             if(!empty($org)) {
                 $vars['ownerOrgId']=$org;
             }
@@ -313,9 +313,9 @@ class AddListModel implements ServiceLocatorAwareInterface
         {
 
             $vars=get_object_vars($re);
-            $organizationModel=$this->getOrganizationModel();
+            $organizationModel=$this->getAccountModel();
 
-            $org=$organizationModel->getOrganization($vars['ownerOrgId']);
+            $org=$organizationModel->getAccount($vars['ownerOrgId']);
 
             if(!empty($org)) {
                 $vars['ownerOrgId']= $org;
@@ -497,11 +497,11 @@ class AddListModel implements ServiceLocatorAwareInterface
         $list = $objectManager->getRepository('AddList\Entity\AddList')->findOneBy(array('id' => new \MongoId($id)));
         return $list->uuid;
     }
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Account\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }
