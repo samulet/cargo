@@ -103,13 +103,27 @@ namespace Account\Controller {
 
         public function addAction()
         {
-            $builder = new AnnotationBuilder();
-            $form = $builder->createForm('Account\Entity\Account');
-            $accModel = $this->getAccountModel();
-            $accModel->addBootstrap3Class($form);
-            return new ViewModel(array(
-                'form' => $form
-            ));
+            $post = $this->getRequest()->getRequest();
+            if($post->isPost()) {
+                $builder = new AnnotationBuilder();
+                $form = $builder->createForm('Account\Entity\Account');
+                $accModel = $this->getAccountModel();
+                $accModel->addBootstrap3Class($form);
+                return new ViewModel(array(
+                    'form' => $form
+                ));
+            } else {
+                $accModel = $this->getAccountModel();
+                $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
+                if (!empty($accUuid)) {
+                    $accId = $accModel->getOrgIdByUUID($accUuid);
+                } else {
+                    $accId = null;
+                }
+                $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
+                $accModel->createAccount($post, $userId,$accId);
+                return $this->redirect()->toUrl('/account');
+            }
         }
 
         public function editAction()
@@ -158,25 +172,6 @@ namespace Account\Controller {
             $accModel = $this->getAccountModel();
             $accModel->addIntNumber();
             return $this->redirect()->toUrl('/account');
-        }
-
-        public function createAccountAction()
-        {
-            $post = $this->getRequest()->getPost();
-            $accModel = $this->getAccountModel();
-            $accUuid = $this->getEvent()->getRouteMatch()->getParam('id');
-            if (!empty($accUuid)) {
-                $accId = $accModel->getOrgIdByUUID($accUuid);
-            } else {
-                $accId = null;
-            }
-            $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
-
-            $accModel->createAccount($post, $userId,$accId);
-
-
-            return $this->redirect()->toUrl('/account');
-
         }
 
         public function getResourceModel()
