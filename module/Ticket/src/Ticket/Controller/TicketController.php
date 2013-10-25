@@ -69,7 +69,7 @@ class TicketController extends AbstractActionController
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
         $docWay= $builder->createForm('Ticket\Entity\DocumentWay');
 
-        $form_array=array();
+        $formArray=array();
 
         $addListModel = $this->getAddListModel();
 
@@ -77,11 +77,11 @@ class TicketController extends AbstractActionController
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'ticketWay',$accListId,$comListId);
         $formVehicleData=$addListModel->returnDataArray(array(),'vehicle',$accListId,$comListId);
 
         $fillFrom=new AddListForm();
-        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+        $formWay=$fillFrom->fillFrom($formWay,$formData,$formArray);
 
         $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
         $form=$fillFrom->fillFromVehicleSpecial($form,$formVehicleData,array('type'));
@@ -248,14 +248,14 @@ class TicketController extends AbstractActionController
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
 
 
-        $form_array=array();
+        $formArray=array();
 
         $addListModel = $this->getAddListModel();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay');
+        $formData=$addListModel->returnDataArray($formArray,'ticketWay');
 
         $fillFrom=new AddListForm();
-        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+        $formWay=$fillFrom->fillFrom($formWay,$formData,$formArray);
 
 
         $way=$resModel->returnAllWays($res['id']);
@@ -285,7 +285,7 @@ class TicketController extends AbstractActionController
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
 
 
-        $form_array=array();
+        $formArray=array();
 
         $addListModel = $this->getAddListModel();
 
@@ -357,14 +357,14 @@ class TicketController extends AbstractActionController
 
         $formWay= $builder->createForm('Ticket\Entity\TicketWay');
 
-        $form_array=array();
+        $formArray=array();
 
         $addListModel = $this->getAddListModel();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'ticketWay',$accListId,$comListId);
 
         $fillFrom=new AddListForm();
         $formWay=$fillFrom->fillFrom($formWay,$formData);

@@ -83,7 +83,7 @@ class ResourceController extends AbstractActionController
         $tsUuid = $this->getEvent()->getRouteMatch()->getParam('id');
 
 
-        $form_array=array();
+        $formArray=array();
 
         $addListModel = $this->getAddListModel();
 
@@ -91,7 +91,7 @@ class ResourceController extends AbstractActionController
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'ticketWay',$accListId,$comListId);
 
 
         $form=$resForm->fillFrom($form,$formData);
@@ -222,17 +222,17 @@ class ResourceController extends AbstractActionController
         $tsUuid = $this->getEvent()->getRouteMatch()->getParam('id');
 
 
-        $form_array=array();
+        $formArray=array();
 
         $addListModel = $this->getAddListModel();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'ticketWay',$accListId,$comListId);
 
 
-        $form=$resForm->fillFrom($form,$formData,$form_array);
+        $form=$resForm->fillFrom($form,$formData,$formArray);
 
 
         if(!empty($tsUuid)) {

@@ -104,12 +104,12 @@ class CompanyController extends AbstractActionController
             $builder = new AnnotationBuilder();
             $form = $builder->createForm('Account\Entity\Company');
             $addListModel = $this->getAddListModel();
-            $form_array = array();
+            $formArray = array();
 
             $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
             $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-            $formData = $addListModel->returnDataArray($form_array, 'company', $accListId,$comListId);
+            $formData = $addListModel->returnDataArray($formArray, 'company', $accListId,$comListId);
 
             $fillFrom = new AddListForm();
             $form = $fillFrom->fillFrom($form, $formData, array('address','bankAccount','documents','applicants','authorizedPerson','founder','contact'));
@@ -199,15 +199,15 @@ class CompanyController extends AbstractActionController
         $com = $comModel->returnCompany($comModel->getCompanyIdByUUID($com_uuid));
 
         $addListModel = $this->getAddListModel();
-        $form_array = array();
+        $formArray = array();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData = $addListModel->returnDataArray($form_array, 'company', $accListId,$comListId);
+        $formData = $addListModel->returnDataArray($formArray, 'company', $accListId,$comListId);
 
         $fillFrom = new CompanyForm();
-        $form = $fillFrom->fillFrom($form, $formData, $form_array);
+        $form = $fillFrom->fillFrom($form, $formData, $formArray);
 
         return new ViewModel(array(
             'com' => $com,

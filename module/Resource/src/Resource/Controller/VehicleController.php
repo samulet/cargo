@@ -64,18 +64,18 @@ class VehicleController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
-        $form_array=array();
+        $formArray=array();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'vehicle',$accListId,$comListId);
 
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
 
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'ticketWay',$accListId,$comListId);
         $form=$fillFrom->fillFromVehicleSpecial($form,$formData,array('typeLoad'));
 
         $typeForm='';
@@ -148,12 +148,12 @@ class VehicleController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
+        $formArray=array('mark','model','type','status');
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'vehicle',$accListId,$comListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(
@@ -173,12 +173,12 @@ class VehicleController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
+        $formArray=array('mark','model','type','status');
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'vehicle',$accListId,$comListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(
@@ -230,12 +230,12 @@ class VehicleController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
+        $formArray=array('mark','model','type','status');
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
         $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$accListId,$comListId);
+        $formData=$addListModel->returnDataArray($formArray,'vehicle',$accListId,$comListId);
         $fillFrom=new AddListForm();
         $form=$fillFrom->fillFrom($form,$formData);
         return new ViewModel(array(

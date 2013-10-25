@@ -57,11 +57,11 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'cargo');
+        $formArray=array('mark','model','type','status');
+        $formData=$addListModel->returnDataArray($formArray,'cargo');
 
         $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $form=$fillFrom->fillFrom($form,$formData,$formArray);
         return new ViewModel(array(
             'form' => $form
         ));
@@ -76,10 +76,10 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'cargo');
+        $formArray=array('mark','model','type','status');
+        $formData=$addListModel->returnDataArray($formArray,'cargo');
         $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $form=$fillFrom->fillFrom($form,$formData,$formArray);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res,
@@ -142,10 +142,10 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'cargo');
+        $formArray=array('mark','model','type','status');
+        $formData=$addListModel->returnDataArray($formArray,'cargo');
         $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $form=$fillFrom->fillFrom($form,$formData,$formArray);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res
