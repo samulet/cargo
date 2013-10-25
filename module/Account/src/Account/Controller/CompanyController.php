@@ -107,7 +107,7 @@ class CompanyController extends AbstractActionController
             $form_array = array();
 
             $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-            $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+            $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
             $formData = $addListModel->returnDataArray($form_array, 'company', $accListId,$comListId);
 
@@ -202,7 +202,7 @@ class CompanyController extends AbstractActionController
         $form_array = array();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
         $formData = $addListModel->returnDataArray($form_array, 'company', $accListId,$comListId);
 

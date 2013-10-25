@@ -20,7 +20,7 @@ class TopMenuNavigationFactory extends DefaultNavigationFactory
 
             $auth = $serviceLocator->get('zfcuser_auth_service');
             if($auth->hasIdentity()) {
-                $currentOrg = $auth->getIdentity()->getCurrentOrg();
+                $currentOrg = $auth->getIdentity()->getCurrentAcc();
                 $currentCom = $auth->getIdentity()->getCurrentCom();
                 if(!empty($currentCom)) {
                     $currentCom=$comModel->getCompany($currentCom);

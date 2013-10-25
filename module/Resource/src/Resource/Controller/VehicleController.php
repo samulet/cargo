@@ -46,7 +46,7 @@ class VehicleController extends AbstractActionController
     public function myAccAction()
     {
         $res = $this->getVehicleModel();
-        $vehicles=$res->returnVehicles(array('deletedAt'=>null,'ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
+        $vehicles=$res->returnVehicles(array('deletedAt'=>null,'ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc())));
         return new ViewModel(array(
             'res' => $vehicles
         ));
@@ -67,7 +67,7 @@ class VehicleController extends AbstractActionController
         $form_array=array();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$accListId,$comListId);
 
@@ -151,7 +151,7 @@ class VehicleController extends AbstractActionController
         $form_array=array('mark','model','type','status');
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$accListId,$comListId);
         $fillFrom=new AddListForm();
@@ -176,7 +176,7 @@ class VehicleController extends AbstractActionController
         $form_array=array('mark','model','type','status');
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$accListId,$comListId);
         $fillFrom=new AddListForm();
@@ -233,7 +233,7 @@ class VehicleController extends AbstractActionController
         $form_array=array('mark','model','type','status');
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
         $formData=$addListModel->returnDataArray($form_array,'vehicle',$accListId,$comListId);
         $fillFrom=new AddListForm();

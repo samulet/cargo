@@ -53,7 +53,7 @@ class ResourceController extends AbstractActionController
     public function myAccAction()
     {
         $res = $this->getResourceModel();
-        $resource=$res->returnResources(array('deletedAt'=>null,'ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
+        $resource=$res->returnResources(array('deletedAt'=>null,'ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc())));
         return new ViewModel(array(
             'res' => $resource
         ));
@@ -89,7 +89,7 @@ class ResourceController extends AbstractActionController
 
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
 
@@ -227,7 +227,7 @@ class ResourceController extends AbstractActionController
         $addListModel = $this->getAddListModel();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
         $formData=$addListModel->returnDataArray($form_array,'ticketWay',$accListId,$comListId);
 

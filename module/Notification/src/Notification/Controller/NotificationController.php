@@ -18,8 +18,8 @@ class NotificationController extends AbstractActionController
     {
         $notificationModel = $this->getNotificationModel();
 
-        //$notification1=$notificationModel->getAdminNotifications($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg());
-        $notification=$notificationModel->getNotifications(array('ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
+        //$notification1=$notificationModel->getAdminNotifications($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc());
+        $notification=$notificationModel->getNotifications(array('ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc())));
 
         return new ViewModel(array(
             'notification' =>$notification

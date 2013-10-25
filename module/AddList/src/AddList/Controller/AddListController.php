@@ -34,7 +34,7 @@ class AddListController extends AbstractActionController
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
         $addListModel = $this->getAddListModel();
 
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
         if(!empty($parent)) {
             $listName=$addListModel->getOneList($listNameUuid);
         } else {
@@ -95,7 +95,7 @@ class AddListController extends AbstractActionController
                 $el->setAttributes(array( 'disabled' => 'disabled' ));
             }
         }
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
         $comModel = $this->getCompanyModel();
         $comData=$comModel->getCompanyOfCurrentAccount($accListId);
 
@@ -144,7 +144,7 @@ class AddListController extends AbstractActionController
         $userId=$this->zfcUserAuthentication()->getIdentity()->getId();
 
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
         $listId= $addListModel->addList($post,$listUUID,$parentField,$userId,$accListId,$comListId);
 
@@ -203,7 +203,7 @@ class AddListController extends AbstractActionController
         $listNameUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
 
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
@@ -245,7 +245,7 @@ class AddListController extends AbstractActionController
         $listUuid = $this->getEvent()->getRouteMatch()->getParam('id');
         $addListModel = $this->getAddListModel();
         $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $accListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
         $listId=$addListModel->editField($listUuid,$this->getRequest()->getPost(),$accListId,$comListId);
         $listName=$addListModel->getListName((string)$listId['listId']);
         return $this->redirect()->toUrl('/addList/my-fields/'.$listName['uuid']);

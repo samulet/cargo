@@ -28,7 +28,7 @@ class ListNavigationFactory extends DefaultNavigationFactory
             $paramId=$match->getParam('id');
 
             $auth = $serviceLocator->get('zfcuser_auth_service');
-            $currentOrg = $auth->getIdentity()->getCurrentOrg();
+            $currentOrg = $auth->getIdentity()->getCurrentAcc();
             $authorize = $serviceLocator->get('BjyAuthorize\Provider\Identity\ProviderInterface');
             $roles = $authorize->getIdentityRoles();
             $listDataName=$addListModel->getOneList($paramId);

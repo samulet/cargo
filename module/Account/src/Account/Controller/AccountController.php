@@ -69,7 +69,7 @@ namespace Account\Controller {
             $acc = $comUserModel->getOrgWenUserConsist($this->zfcUserAuthentication()->getIdentity()->getId());
             $fillFrom = new AddListForm();
             $form = $fillFrom->fillOrg($form, $acc);
-            $currentOrg = $this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+            $currentOrg = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
             if (!empty($currentOrg)) {
                 $form->get('currentAcc')->setValue($currentOrg);
                 $com = $comUserModel->getComWenUserConsist(
