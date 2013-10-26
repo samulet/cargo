@@ -12,10 +12,8 @@ namespace Resource\Controller;
 use Entity\Recources;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Resource\Form\VehicleForm;
 use AddList\Form\AddListForm;
 
 class VehicleController extends AbstractActionController
@@ -156,54 +154,6 @@ class VehicleController extends AbstractActionController
 
     }
 
-    public function listAction()
-    {
-        $resModel = $this->getVehicleModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listVehicle($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Vehicle');
-        $addListModel = $this->getAddListModel();
-        $formArray = array('mark', 'model', 'type', 'status');
-
-        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
-
-        $formData = $addListModel->returnDataArray($formArray, 'vehicle', $accListId, $comListId);
-        $fillFrom = new AddListForm();
-        $form = $fillFrom->fillFrom($form, $formData);
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'id' => $id
-        ));
-
-    }
-
-    public function editAction()
-    {
-        $resModel = $this->getVehicleModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listVehicle($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Vehicle');
-        $addListModel = $this->getAddListModel();
-        $formArray = array('mark', 'model', 'type', 'status');
-
-        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
-
-        $formData = $addListModel->returnDataArray($formArray, 'vehicle', $accListId, $comListId);
-        $fillFrom = new AddListForm();
-        $form = $fillFrom->fillFrom($form, $formData);
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'id' => $id
-        ));
-    }
 
 
     public function deleteAction()
@@ -238,29 +188,7 @@ class VehicleController extends AbstractActionController
         return $this->companyUserModel;
     }
 
-    public function copyAction()
-    {
 
-        $resModel = $this->getVehicleModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listVehicle($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Vehicle');
-        $addListModel = $this->getAddListModel();
-        $formArray = array('mark', 'model', 'type', 'status');
-
-        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
-
-        $formData = $addListModel->returnDataArray($formArray, 'vehicle', $accListId, $comListId);
-        $fillFrom = new AddListForm();
-        $form = $fillFrom->fillFrom($form, $formData);
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res
-        ));
-    }
 
     public function getAddListModel()
     {
