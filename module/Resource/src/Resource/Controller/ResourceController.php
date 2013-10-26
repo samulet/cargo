@@ -13,10 +13,8 @@ namespace Resource\Controller;
 use Entity\Recources;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Resource\Form\ResourceForm;
 use AddList\Form\AddListForm;
 
 class ResourceController extends AbstractActionController
@@ -181,37 +179,6 @@ class ResourceController extends AbstractActionController
         ));
     }
 
-    public function editAction()
-    {
-        $resModel = $this->getResourceModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listResource($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Resource');
-
-        $formWay = $builder->createForm('Resource\Entity\ResourceWay');
-
-        $veh = $this->getVehicleModel();
-        $myV = $veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
-        $resForm = new AddListForm();
-
-        $form = $resForm->fillTS($form, $myV);
-
-        $way = $resModel->returnAllWays($res['id']);
-
-        $form->get('tsId')->setValue($res['tsId']);
-
-
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'formWay' => $formWay,
-            'way' => $way,
-            'id' => $id
-        ));
-    }
-
 
     public function searchAction()
     {
@@ -266,39 +233,6 @@ class ResourceController extends AbstractActionController
         ));
     }
 
-
-    public function listAction()
-    {
-        $resModel = $this->getResourceModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listResource($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Resource');
-
-        $formWay = $builder->createForm('Resource\Entity\ResourceWay');
-
-        $veh = $this->getVehicleModel();
-        $myV = $veh->returnMyVehicle($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
-        $resForm = new AddListForm();
-
-        $form = $resForm->fillTS($form, $myV);
-
-        $way = $resModel->returnAllWays($res['id']);
-
-        $form->get('tsId')->setValue($res['tsId']);
-
-
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'formWay' => $formWay,
-            'way' => $way,
-            'id' => $id
-        ));
-
-    }
-
     public function deleteAction()
     {
         $uuid = $this->getEvent()->getRouteMatch()->getParam('id');
@@ -326,20 +260,6 @@ class ResourceController extends AbstractActionController
         return $this->companyUserModel;
     }
 
-    public function copyAction()
-    {
-        $resModel = $this->getResourceModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listResource($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Resource');
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-
-        ));
-    }
 
     public function getVehicleModel()
     {
