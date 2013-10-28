@@ -101,6 +101,6 @@ return array(
             'account' => __DIR__ . '/../view',
         ),
     ),
-    'module_layouts' => array(//'Account\Controller\CompanyUser' => 'layout/admin',
+    'module_layouts' => array(
     ),
 );
