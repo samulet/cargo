@@ -13,28 +13,19 @@ use AddList\Entity\AddListName;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use User\Entity\User;
 use AddList\Entity\AddList;
 use AddList\Entity\AddListNameStatic;
-use Doctrine\ODM\MongoDB\LoggableCursor;
 
 class AddListModel implements ServiceLocatorAwareInterface
 {
-
     protected $serviceLocator;
     protected $organizationModel;
-
 
     public function getAllDataArray($prefix)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $result = array();
-        // $listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
         $listName = $this->getListNameFull();
         foreach ($listName as $liName) {
             $id = $liName['id'];
@@ -67,7 +58,6 @@ class AddListModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $result = array();
-        //$listName = $objectManager->getRepository('AddList\Entity\AddListName')->getMyAvailableListsByName($prefix);
         $listName = $this->getListNameFull();
         foreach ($listName as $liName) {
             $id = $liName['id'];
@@ -109,7 +99,6 @@ class AddListModel implements ServiceLocatorAwareInterface
             } elseif ($param == 'company') {
                 $list = $objectManager->getRepository('AddList\Entity\AddList')->getLocalAvailableComList($id, $itemId);
             }
-
             $res = array();
             foreach ($list as $li) {
                 $obj_vars = get_object_vars($li);
@@ -577,7 +566,6 @@ class AddListModel implements ServiceLocatorAwareInterface
             $propArray['requisites'] = $propArray['requisites'][0];
             $propArray['value'] = 'р/c' . $propArray['requisites']['addListRequisitesAccountNumber'] . ' ' . $propArray['requisites']['addListRequisitesBankName'];
         }
-
         if (!empty($propArray['forAccount'])) {
 
             if ($propArray['forAccount'] == 'company') {
@@ -646,7 +634,6 @@ class AddListModel implements ServiceLocatorAwareInterface
 
     public function addListTranslator()
     {
-
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $listName = $objectManager->getRepository('AddList\Entity\AddListName')->createQueryBuilder()
             ->getQuery()->execute();
@@ -683,8 +670,6 @@ class AddListModel implements ServiceLocatorAwareInterface
                         ->getQuery()
                         ->execute();
                 }
-                //  $objectManager->persist($list);
-                // $objectManager->flush();
             }
         }
     }

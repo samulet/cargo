@@ -3,8 +3,6 @@ namespace AddList\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Zend\InputFilter\InputFilter;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class AddListForm
 {
@@ -21,8 +19,6 @@ class AddListForm
                 $collection = $form->get($collectionKey);
                 foreach ($collection as $coll) {
                     $this->fillFormFunction($coll, $key, $result_array);
-
-                    //$coll->createTemplateElement();
                 }
                 $collection->setShouldCreateTemplate(true);
 
@@ -128,15 +124,6 @@ class AddListForm
             $form->get('cargoOwner')->setOptions(array("value_options" => $result_array));
         }
         return $form;
-    }
-
-    public function getSelectValueList($formData, $value)
-    {
-        $resultArray = array();
-        die(var_dump($formData));
-        foreach ($formData as $key => $value) {
-            $resultArray = $resultArray + array($key => $value);
-        }
     }
 
     public function fillFromVehicleSpecial($form, $formData, $elements)

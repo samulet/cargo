@@ -1,9 +1,7 @@
 <?php
 namespace AddList;
 
-
 use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 use AddList\Model\AddListModel;
 
 class Module

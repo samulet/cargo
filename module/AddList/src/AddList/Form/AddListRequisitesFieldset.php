@@ -10,15 +10,9 @@ namespace AddList\Form;
 
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use AddList\Form\AddListForm;
-use AddList\Model\AddListModel;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class AddListRequisitesFieldset extends Fieldset implements InputFilterProviderInterface
 {
-
     public function __construct($accListId = null)
     {
         parent::__construct();
