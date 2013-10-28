@@ -9,19 +9,13 @@
 
 namespace Excel\Model;
 
-
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Excel\Entity\ExcelStatic;
 use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_Shared_Date;
-use PHPExcel_RichText;
 use PHPExcel_Style_Alignment;
 use PHPExcel_Style_Fill;
 use PHPExcel_Style_Border;
@@ -92,7 +86,6 @@ class ExcelModel implements ServiceLocatorAwareInterface
             } else {
                 $start = $offset;
             }
-            //'timeLoadStart','timeLoadEnd' 'timeUnloadStart','timeUnloadEnd'
             $objPHPExcel->getActiveSheet()
                 ->setCellValue('D' . (++$start), $way['cargoOwner'])
                 ->setCellValue('D' . (++$start), '')

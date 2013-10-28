@@ -2,13 +2,10 @@
 
 namespace Excel\Controller;
 
-
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use AddList\Form\AddListForm;
-
 
 class ExcelController extends AbstractActionController
 {
@@ -24,7 +21,6 @@ class ExcelController extends AbstractActionController
     public function generateTemplateAction()
     {
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        // $post=get_object_vars($this->getRequest()->getPost());
         $request = $this->getRequest();
         if ($request->isPost()) {
 

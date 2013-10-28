@@ -1,11 +1,8 @@
 <?php
 namespace Excel;
 
-
 use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 use Excel\Model\ExcelModel;
-
 
 class Module
 {
