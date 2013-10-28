@@ -16,7 +16,6 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
-
 /**
  * @ODM\Document(collection="documentWay")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
