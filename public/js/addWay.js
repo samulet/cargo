@@ -131,3 +131,28 @@ function createBill(el) {
     });
     $(el).parent().submit();
 }
+
+function addItem(item) {
+    var currentCount = $('.' + item + ' .counter').val();
+    if (typeof currentCount === 'undefined') {
+        $('.' + item).append("<input type='hidden' class='counter' value='1'>");
+        currentCount = 1;
+    }
+    var template = $('.' + item + ' .template').attr('data-template');
+
+    template = template.replace(/__index__/g, currentCount);
+
+    $('.' + item).append('<fieldset>' + template + '</fieldset>');
+    currentCount++;
+    $('.' + item + ' .counter').val(currentCount);
+}
+function deleteFieldset(element) {
+    var conf = confirm('Вы действительно хотите удалить элемент?');
+    if (!conf) {
+        return false;
+    }
+    else {
+        $(element).parent().remove();
+    }
+
+}

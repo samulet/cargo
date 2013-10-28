@@ -1,11 +1,11 @@
 <?php
-// module/Album/view/album/album/add.phtml:
+
 $form = $this->form;
 $form->setAttribute('action', $this->url('account', array('action' => 'createAccount', 'id' => $this->uuid)))
     ->prepare();
 
 echo $this->form()->openTag($form);
-//die(var_dump($acc));
+
 $acc = $form->get('account');
 echo $this->formRow($acc->get('name')->setValue($this->org['name']));
 echo $this->formRow($acc->get('type')->setValue($this->org['type']));
