@@ -1,0 +1,48 @@
+<?php
+$title = 'Компании';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url(
+        'company',
+        array('action' => 'add', 'org_id' => $this->org_id)
+    );?>">Добавить юр. лицо</a>
+</p>
+<table class="table">
+    <tr>
+        <th>Название юр. лица</th>
+        <th>Тип юр. лица</th>
+        <th>Описание юр. лица</th>
+        <th>Добавить юзера в компаню</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach ($this->org as $c) { ?>
+
+        <tr>
+            <td><a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'list', 'id' => $c['uuid'])
+                );?>"><?php echo $c['name']; ?></a></td>
+            <td></td>
+            <td></td>
+            <td><a href="<?php echo $this->url(
+                    'company_user',
+                    array('action' => 'add', 'org_id' => $c['uuid'])
+                );?>">Добавить</a></td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'edit', 'id' => $c['uuid'])
+                );?>">Редактировать</a>
+                <a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'delete', 'id' => $c['uuid'])
+                );?>">Удалить</a>
+            </td>
+        </tr>
+
+
+    <?php } ?>
+
+</table>

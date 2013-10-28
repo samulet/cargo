@@ -11,6 +11,7 @@ class CargoRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
+
     public function getMyAvailableCargo($owner_id)
     {
         return $this->createQueryBuilder()

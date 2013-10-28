@@ -11,6 +11,7 @@ class ResourceRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
+
     public function getMyAvailableResource($owner_id)
     {
         return $this->createQueryBuilder()

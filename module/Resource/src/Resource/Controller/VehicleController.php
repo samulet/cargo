@@ -12,11 +12,10 @@ namespace Resource\Controller;
 use Entity\Recources;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Resource\Form\VehicleForm;
 use AddList\Form\AddListForm;
+
 class VehicleController extends AbstractActionController
 {
 
@@ -27,7 +26,13 @@ class VehicleController extends AbstractActionController
     public function indexAction()
     {
         $res = $this->getVehicleModel();
-        $vehicles=$res->returnVehicles(array('deletedAt'=>null,'activated'=>'1','ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+        $vehicles = $res->returnVehicles(
+            array(
+                'deletedAt' => null,
+                'activated' => '1',
+                'ownerId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())
+            )
+        );
         return new ViewModel(array(
             'res' => $vehicles
         ));
@@ -36,7 +41,12 @@ class VehicleController extends AbstractActionController
     public function myAction()
     {
         $res = $this->getVehicleModel();
-        $vehicles=$res->returnVehicles(array('deletedAt'=>null,'ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
+        $vehicles = $res->returnVehicles(
+            array(
+                'deletedAt' => null,
+                'ownerId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())
+            )
+        );
 
         return new ViewModel(array(
             'res' => $vehicles
@@ -46,7 +56,12 @@ class VehicleController extends AbstractActionController
     public function myAccAction()
     {
         $res = $this->getVehicleModel();
-        $vehicles=$res->returnVehicles(array('deletedAt'=>null,'ownerOrgId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
+        $vehicles = $res->returnVehicles(
+            array(
+                'deletedAt' => null,
+                'ownerOrgId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc())
+            )
+        );
         return new ViewModel(array(
             'res' => $vehicles
         ));
@@ -55,7 +70,7 @@ class VehicleController extends AbstractActionController
     public function addAction()
     {
 
-        $post=$this->getRequest()->getPost();
+        $post = $this->getRequest()->getPost();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $type = $this->getEvent()->getRouteMatch()->getParam('type');
 
@@ -64,41 +79,41 @@ class VehicleController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Resource\Entity\Vehicle');
         $addListModel = $this->getAddListModel();
-        $form_array=array();
+        $formArray = array();
 
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId,$comListId);
+        $formData = $addListModel->returnDataArray($formArray, 'vehicle', $accListId, $comListId);
 
-        $fillFrom=new AddListForm();
-        $form=$fillFrom->fillFrom($form,$formData);
+        $fillFrom = new AddListForm();
+        $form = $fillFrom->fillFrom($form, $formData);
 
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
-        $form=$fillFrom->fillFromVehicleSpecial($form,$formData,array('typeLoad'));
+        $formData = $addListModel->returnDataArray($formArray, 'ticketWay', $accListId, $comListId);
+        $form = $fillFrom->fillFromVehicleSpecial($form, $formData, array('typeLoad'));
 
-        $typeForm='';
-        if(empty($type)) {
-            if(!empty($post->submit)) {
-                $error=0;
+        $typeForm = '';
+        if (empty($type)) {
+            if (!empty($post->submit)) {
+                $error = 0;
 
 
                 $form->setData($post);;
 
-                if(!$form->isValid()) {
+                if (!$form->isValid()) {
                     $error++;
 
                 }
 
 
-                if(empty($error)) {
+                if (empty($error)) {
 
-                    $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+                    $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
 
-                    $veh=$vehicleModel->addVehicle($this->getRequest()->getPost(), $comListId, $orgListId, $id);
+                    $veh = $vehicleModel->addVehicle($this->getRequest()->getPost(), $comListId, $accListId, $id);
 
-                    if(empty($veh)) {
+                    if (empty($veh)) {
                         return $this->redirect()->toUrl('/vehicles/error');
                     } else {
                         return $this->redirect()->toUrl('/vehicles/my');
@@ -109,83 +124,34 @@ class VehicleController extends AbstractActionController
         } else {
             $vehicle = $vehicleModel->listVehicle($id);
 
-            if( ($type=='copy')||($type=='edit')||($type=='list') ) {
+            if (($type == 'copy') || ($type == 'edit') || ($type == 'list')) {
                 $form->setData($vehicle);
-                if($type=='edit') {
-                    $typeForm['action']='edit';
-                    $typeForm['id']=$id;
-                }
-                elseif($type=='copy') {
+                if ($type == 'edit') {
+                    $typeForm['action'] = 'edit';
+                    $typeForm['id'] = $id;
+                } elseif ($type == 'copy') {
                     $form->get('serialNumber')->setValue('');
                     $form->get('vin')->setValue('');
                     $form->get('serialNumberDoc')->setValue('');
                     $form->get('carNumber')->setValue('');
 
-                    $typeForm['action']='copy';
-                    $typeForm['id']=$id;
-                } elseif($type=='list') {
+                    $typeForm['action'] = 'copy';
+                    $typeForm['id'] = $id;
+                } elseif ($type == 'list') {
                     foreach ($form as $el) {
-                        $el->setAttributes(array( 'disabled' => 'disabled' ));
+                        $el->setAttributes(array('disabled' => 'disabled'));
                     }
-                    $typeForm['action']='list';
-                    $typeForm['id']=$id;
+                    $typeForm['action'] = 'list';
+                    $typeForm['id'] = $id;
                 }
             }
         }
         $vehicleModel->addBootstrap3Class($form);
         return new ViewModel(array(
             'form' => $form,
-           'typeForm'=>$typeForm
+            'typeForm' => $typeForm
         ));
 
-    }
-    public function listAction()
-    {
-        $resModel = $this->getVehicleModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listVehicle($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Vehicle');
-        $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId,$comListId);
-        $fillFrom=new AddListForm();
-        $form=$fillFrom->fillFrom($form,$formData);
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'id' => $id
-        ));
-
-    }
-
-    public function editAction()
-    {
-        $resModel = $this->getVehicleModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listVehicle($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Vehicle');
-        $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId,$comListId);
-        $fillFrom=new AddListForm();
-        $form=$fillFrom->fillFrom($form,$formData);
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'id' => $id
-        ));
     }
 
 
@@ -199,8 +165,8 @@ class VehicleController extends AbstractActionController
     }
 
 
-
-    public function errorAction() {
+    public function errorAction()
+    {
 
     }
 
@@ -217,32 +183,13 @@ class VehicleController extends AbstractActionController
     {
         if (!$this->companyUserModel) {
             $sm = $this->getServiceLocator();
-            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            $this->companyUserModel = $sm->get('Account\Model\CompanyUserModel');
         }
         return $this->companyUserModel;
     }
-    public function copyAction() {
 
-        $resModel = $this->getVehicleModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listVehicle($id);
 
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Resource\Entity\Vehicle');
-        $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
 
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
-
-        $formData=$addListModel->returnDataArray($form_array,'vehicle',$orgListId,$comListId);
-        $fillFrom=new AddListForm();
-        $form=$fillFrom->fillFrom($form,$formData);
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res
-        ));
-    }
     public function getAddListModel()
     {
         if (!$this->addListModel) {

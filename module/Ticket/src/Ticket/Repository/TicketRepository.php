@@ -11,6 +11,7 @@ class TicketRepository extends DocumentRepository
             ->field('deletedAt')->equals(null)
             ->getQuery()->execute();
     }
+
     public function getMyAvailableTicket($owner_id)
     {
         return $this->createQueryBuilder()

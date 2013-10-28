@@ -54,7 +54,6 @@ class InteractionNote
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -65,7 +64,6 @@ class InteractionNote
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус"})
      * @Annotation\Validator({"name":"InArray",
@@ -85,6 +83,7 @@ class InteractionNote
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -100,6 +99,7 @@ class InteractionNote
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function getUUID()
     {
         return $this->uuid;

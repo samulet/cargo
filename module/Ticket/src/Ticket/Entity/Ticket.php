@@ -67,7 +67,6 @@ class Ticket
      * @ODM\ObjectId
      * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Компания (создавшая заявку)"})
      * @Annotation\Attributes({"value":"0"})
@@ -101,7 +100,6 @@ class Ticket
      * @Annotation\Exclude()
      */
     public $activated;
-
 
 
     /**
@@ -171,7 +169,6 @@ class Ticket
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -184,7 +181,6 @@ class Ticket
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Тип ТС"})
      * @Annotation\Required({"required":"true" })
@@ -224,6 +220,7 @@ class Ticket
      * @Annotation\Required(false)
      */
     public $multiField;
+
     /**
      * @return mixed
      */
@@ -239,6 +236,7 @@ class Ticket
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -406,7 +404,7 @@ class Ticket
      * Set type.
      *
      * @param string $type
-     * @return OrganizationInterface
+     * @return AccountInterface
      */
     public function setType($type)
     {

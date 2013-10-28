@@ -17,7 +17,6 @@ use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 
-
 /**
  * @ODM\Document(collection="addList", repositoryClass="AddList\Repository\AddListRepository")
  * @Annotation\Name("addList")
@@ -31,6 +30,7 @@ class AddList
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
     }
+
     /**
      * @ODM\Id
      * @var int
@@ -115,7 +115,6 @@ class AddList
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Занчение в БД"})
      * @Annotation\Required({"required":"true" })
@@ -127,7 +126,6 @@ class AddList
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Имя поля"})
      * @Annotation\Required({"required":"true" })
@@ -176,7 +174,7 @@ class AddList
      *                      "target_element" : {"type":"\AddList\Form\AddListRequisitesFieldset"}})
 
      */
-    public $requisites= array();
+    public $requisites = array();
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
@@ -188,6 +186,7 @@ class AddList
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -203,11 +202,13 @@ class AddList
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function setId($id)
     {
         $this->id = $id;
         return $this;
     }
+
     public function getUUID()
     {
         return $this->uuid;

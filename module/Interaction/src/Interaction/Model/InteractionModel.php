@@ -26,60 +26,71 @@ class InteractionModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
     protected $queryBuilderModel;
 
-    public function addInteraction($sendItemId,$receiveItemUuid,$ownerUserId ) {
-        $resourceModel=$this->getResourceModel();
+    public function addInteraction($sendItemId, $receiveItemUuid, $ownerUserId)
+    {
+        $resourceModel = $this->getResourceModel();
         $ticketModel = $this->getTicketModel();
 
-        $receiveItemId=$resourceModel->getIdByUuid($receiveItemUuid);
-        if(empty($receiveItemId)) {
-            $receiveItemId=$ticketModel->getIdByUuid($receiveItemUuid);
-            $element=$ticketModel->listTicketById($receiveItemId);
+        $receiveItemId = $resourceModel->getIdByUuid($receiveItemUuid);
+        if (empty($receiveItemId)) {
+            $receiveItemId = $ticketModel->getIdByUuid($receiveItemUuid);
+            $element = $ticketModel->listTicketById($receiveItemId);
 
         } else {
-            $element=$resourceModel->listResourceById($receiveItemId);
+            $element = $resourceModel->listResourceById($receiveItemId);
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $interaction = new Interaction();
-        $interaction->sendItemId=new \MongoId($sendItemId);
-        $interaction->receiveItemId=new \MongoId($receiveItemId);
-        $interaction->ownerUserId=new \MongoId($ownerUserId);
-        $interaction->receiveUserId=new \MongoId($element['ownerId']);
+        $interaction->sendItemId = new \MongoId($sendItemId);
+        $interaction->receiveItemId = new \MongoId($receiveItemId);
+        $interaction->ownerUserId = new \MongoId($ownerUserId);
+        $interaction->receiveUserId = new \MongoId($element['ownerId']);
         $objectManager->persist($interaction);
         $objectManager->flush();
     }
 
-    public function getInteractions($searchArray) {
+    public function getInteractions($searchArray)
+    {
 
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $intObj = $objectManager->createQueryBuilder('Interaction\Entity\Interaction');
-        $queryBuilderModel=$this->getQueryBuilderModel();
-        $intObj=$queryBuilderModel->createQuery($intObj, $searchArray)->getQuery()->execute();
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $intObj = $queryBuilderModel->createQuery($intObj, $searchArray)->getQuery()->execute();
         $result = array();
-        $resourceModel=$this->getResourceModel();
+        $resourceModel = $this->getResourceModel();
         $ticketModel = $this->getTicketModel();
         foreach ($intObj as $int) {
-            $resource=$resourceModel->listResourceById($int->sendItemId);
-            if(empty($resource)) {
-                $ticket= $ticketModel->listTicketById($int->sendItemId);
-                $resource=$resourceModel->listResourceById($int->receiveItemId);
-                $receiveStatus="Ресурс";
-                $sendStatus="Заявка";
-                $sendItem=array('uuid'=>$ticket['uuid'],'status'=>$sendStatus);
-                $receiveItem=array('uuid'=>$resource['uuid'],'status'=>$receiveStatus);
+            $resource = $resourceModel->listResourceById($int->sendItemId);
+            if (empty($resource)) {
+                $ticket = $ticketModel->listTicketById($int->sendItemId);
+                $resource = $resourceModel->listResourceById($int->receiveItemId);
+                $receiveStatus = "Ресурс";
+                $sendStatus = "Заявка";
+                $sendItem = array('uuid' => $ticket['uuid'], 'status' => $sendStatus);
+                $receiveItem = array('uuid' => $resource['uuid'], 'status' => $receiveStatus);
             } else {
-                $ticket= $ticketModel->listTicketById($int->receiveItemId);
-                $receiveStatus="Заявка";
-                $sendStatus="Ресурс";
+                $ticket = $ticketModel->listTicketById($int->receiveItemId);
+                $receiveStatus = "Заявка";
+                $sendStatus = "Ресурс";
 
-                $sendItem=array('uuid'=>$resource['uuid'],'status'=>$sendStatus);
-                $receiveItem=array('uuid'=>$ticket['uuid'],'status'=>$receiveStatus);
+                $sendItem = array('uuid' => $resource['uuid'], 'status' => $sendStatus);
+                $receiveItem = array('uuid' => $ticket['uuid'], 'status' => $receiveStatus);
             }
-            array_push($result, array('uuid'=>$int->uuid,'sendItem'=>$sendItem,'receiveItem'=>$receiveItem,'status'=>$this->getInteractionStatus($int->id)));
+            array_push(
+                $result,
+                array(
+                    'uuid' => $int->uuid,
+                    'sendItem' => $sendItem,
+                    'receiveItem' => $receiveItem,
+                    'status' => $this->getInteractionStatus($int->id)
+                )
+            );
         }
         return $result;
     }
 
-    public function acceptInteraction($sendUuid) {
+    public function acceptInteraction($sendUuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $objectManager->getRepository('Interaction\Entity\Interaction')->createQueryBuilder()
             ->findAndUpdate()
@@ -89,11 +100,14 @@ class InteractionModel implements ServiceLocatorAwareInterface
             ->execute();
     }
 
-    public function getInteractionStatus($ownerInteractionId) {
+    public function getInteractionStatus($ownerInteractionId)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $intNoteObj = $objectManager->getRepository('Interaction\Entity\InteractionNote')->getLastStatusInteractionNote($ownerInteractionId);
-        foreach($intNoteObj as $intNote) {
-            if(empty($intNote)) {
+        $intNoteObj = $objectManager->getRepository('Interaction\Entity\InteractionNote')->getLastStatusInteractionNote(
+            $ownerInteractionId
+        );
+        foreach ($intNoteObj as $intNote) {
+            if (empty($intNote)) {
                 return 'Нет статуса';
             } else {
 
@@ -103,26 +117,30 @@ class InteractionModel implements ServiceLocatorAwareInterface
         return 'Нет статуса';
     }
 
-    public function getListProposalData($sendUuid,$userId) {
-        $resourceModel=$this->getResourceModel();
+    public function getListProposalData($sendUuid, $userId)
+    {
+        $resourceModel = $this->getResourceModel();
         $ticketModel = $this->getTicketModel();
-        $resourceId=$resourceModel->getIdByUuid($sendUuid);
-        if(!empty($resourceId)) {
-            $ticket=$ticketModel->returnMyTicket($userId);
+        $resourceId = $resourceModel->getIdByUuid($sendUuid);
+        if (!empty($resourceId)) {
+            $ticket = $ticketModel->returnMyTicket($userId);
             return $ticket;
         } else {
-            $resource=$resourceModel->returnMyResource($userId);
+            $resource = $resourceModel->returnMyResource($userId);
             return $resource;
         }
     }
 
-    public function getProposal($uuid) {
+    public function getProposal($uuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $id=$this->getInteractionIdByUuid($uuid);
-        $proposalObject=$objectManager->getRepository('Interaction\Entity\InteractionNote')->getMyAvailableInteractionNote($id);
-        $result=array();
-        foreach($proposalObject as $proposal) {
-            if(empty($proposal)) {
+        $id = $this->getInteractionIdByUuid($uuid);
+        $proposalObject = $objectManager->getRepository(
+            'Interaction\Entity\InteractionNote'
+        )->getMyAvailableInteractionNote($id);
+        $result = array();
+        foreach ($proposalObject as $proposal) {
+            if (empty($proposal)) {
                 return null;
             }
             array_push($result, get_object_vars($proposal));
@@ -130,17 +148,18 @@ class InteractionModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
-    public function addProposal($uuid,$post) {
+    public function addProposal($uuid, $post)
+    {
 
-        $prop_array=get_object_vars($post);
+        $propArray = get_object_vars($post);
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $id=$this->getInteractionIdByUuid($uuid);
+        $id = $this->getInteractionIdByUuid($uuid);
 
         $interaction = new InteractionNote();
 
-        $prop_array['ownerInteractionId']=new \MongoId($id);
+        $propArray['ownerInteractionId'] = new \MongoId($id);
 
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             $interaction->$key = $value;
 
         }
@@ -151,37 +170,39 @@ class InteractionModel implements ServiceLocatorAwareInterface
         $objectManager->getRepository('Interaction\Entity\Interaction')->createQueryBuilder()
             ->findAndUpdate()
             ->field('uuid')->equals($uuid)
-            ->field('status')->set($prop_array['status'])
+            ->field('status')->set($propArray['status'])
             ->getQuery()
             ->execute();
     }
 
-    public function getInteractionIdByUuid($uuid) {
+    public function getInteractionIdByUuid($uuid)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $int = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(array('uuid' => $uuid));
-        if(!empty($int)) {
+        if (!empty($int)) {
             return $int->id;
         } else {
             return null;
         }
     }
-    public function getItemStatus($itemId) {
+
+    public function getItemStatus($itemId)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
         $note = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
-            array('receiveItemId' => new \MongoId($itemId) ,'accepted' => '1')
+            array('receiveItemId' => new \MongoId($itemId), 'accepted' => '1')
         );
 
-        if(empty($note)) {
+        if (empty($note)) {
             $note = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
-                array('sendItemId' => new \MongoId($itemId) ,'accepted' => '1')
+                array('sendItemId' => new \MongoId($itemId), 'accepted' => '1')
             );
 
         }
 
 
-
-        if(!empty($note->status)) {
+        if (!empty($note->status)) {
             return $note->status;
         } else {
             return 'Нет статуса';
@@ -208,10 +229,13 @@ class InteractionModel implements ServiceLocatorAwareInterface
         return $this->resourceModel;
     }
 
-    public function getTicketsInWork($currentCom) {
-        $interactionCur=$this->getInteractions(array('accepted'=>'1','ownerUserId'=>new \MongoId($currentCom)));
-        $interactionRes=$this->getInteractions(array('accepted'=>'1','receiveUserId'=>new \MongoId($currentCom)));
-        return array_merge($interactionCur,$interactionRes);
+    public function getTicketsInWork($currentCom)
+    {
+        $interactionCur = $this->getInteractions(array('accepted' => '1', 'ownerUserId' => new \MongoId($currentCom)));
+        $interactionRes = $this->getInteractions(
+            array('accepted' => '1', 'receiveUserId' => new \MongoId($currentCom))
+        );
+        return array_merge($interactionCur, $interactionRes);
     }
 
 
@@ -223,6 +247,7 @@ class InteractionModel implements ServiceLocatorAwareInterface
         }
         return $this->ticketModel;
     }
+
     public function getQueryBuilderModel()
     {
         if (!$this->queryBuilderModel) {

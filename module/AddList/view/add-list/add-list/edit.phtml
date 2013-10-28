@@ -1,21 +1,22 @@
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('addList', array('action' => 'editField','id'=>$this->fieldUuid)))
+$form->setAttribute('action', $this->url('addList', array('action' => 'editField', 'id' => $this->fieldUuid)))
     ->prepare();
 
-$value = $form->get('value')->setValue($this->listData['value']);
-$listName=$this->listName;
-$listData=$this->listData;
-$listParent=$this->listParent;
-$fieldName='';
-$actionType=$this->actionType;
-$saveString='';
+$value = $form->get('value');
+$uuid = $this->uuid;
+$listName = $this->listName;
+$listData = $this->listData;
+$listParent = $this->listParent;
+$fieldName = '';
+$actionType = $this->actionType;
+$saveString = '';
 
-$company= $form->get('company');
-$forAccount= $form->get('forAccount');
+$company = $form->get('company');
+$forAccount = $form->get('forAccount');
 
-if(empty($actionType)) {
-    $saveString='без сохранения';
+if (empty($actionType)) {
+    $saveString = 'без сохранения';
 }
 ?>
 <a href="<?php echo $this->url(
@@ -23,37 +24,42 @@ if(empty($actionType)) {
     array('action' => 'myFields', 'id' => $listName['id'])
 );?>">Вернуться <?php
 
-    echo 'в <b>'.$listName['fieldRusName'].'</b> '.$saveString;
+    echo 'в <b>' . $listName['fieldRusName'] . '</b> ' . $saveString;
     ?></a>
-<?php if(!empty($listParent)) { ?>
-<a href="<?php echo $this->url(
-    'addList',
-    array('action' => 'listParent', 'id' => $listParent['uuid'])
-);?>"></br>Вернуться <?php
+<?php if (!empty($listParent)) { ?>
+    <a href="<?php echo $this->url(
+        'addList',
+        array('action' => 'listParent', 'id' => $listParent['uuid'])
+    );?>"></br>Вернуться <?php
 
-    echo 'в <b>'.$listParent['value'].'</b> '.$saveString;
-    ?></a>
-<?php $fieldName='- '.$listParent['value']; } ?>
-<p>Редактирование поля <b><?php echo $listData['value']; ?></b> в <b><?php echo $this->listName['fieldRusName'].' '.$fieldName; ?></b></p>
+        echo 'в <b>' . $listParent['value'] . '</b> ' . $saveString;
+        ?></a>
+    <?php $fieldName = '- ' . $listParent['value'];
+} ?>
+<p>Редактирование поля <b><?php echo $listData['value']; ?></b> в
+    <b><?php echo $this->listName['fieldRusName'] . ' ' . $fieldName; ?></b></p>
 <?php
 echo $this->form()->openTag($form);
 
 
-echo $this->formRow($value);
+if ($form->has($uuid)) {
+    echo $this->formCollection($form->get($uuid));
+} else {
+    echo $this->formRow($value);
+}
+echo '<p>Сделать доступным для</p>' . $this->formRow($company) . '</br>';
+echo $this->formRow($forAccount) . '</br>';
 
-echo '<p>Сделать доступным для</p>'.$this->formRow($company).'</br>';
-echo $this->formRow($forAccount).'</br>';
-
-if(array_search("admin",$this->roles,true)) {
-    $global='';
-    if(!empty($this->listData['global'])) {
-        $global='checked';
+if (array_search("admin", $this->roles, true)) {
+    $global = '';
+    if (!empty($this->listData['global'])) {
+        $global = 'checked';
     }
-    echo '<input type="checkbox" name="global" '.$global.' value="global" >Глобальное значние </br>';
+    echo '<input type="checkbox" name="global" ' . $global . ' value="global" >Глобальное значние </br>';
 }
 ?>
-<?php if(empty($actionType)) {
-echo $this->formElement($form->get('submit')->setValue('Редактировать'));
+<?php if (empty($actionType)) {
+    echo $this->formElement($form->get('submit')->setValue('Редактировать'));
 }?>
 <?php  echo $this->form()->closeTag();
 ?>

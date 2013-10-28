@@ -6,17 +6,17 @@ $form->setAttribute('action', $this->url('resource', array('action' => 'getResul
     ->prepare();
 echo $this->form()->openTag($form);
 
-$tsId= $form->get('tsId')->setAttributes(array('required'  => '' ));
-$typeLoad=$form->get('typeLoad')->setAttributes(array('required'  => '' ));
+$tsId = $form->get('tsId')->setAttributes(array('required' => ''));
+$typeLoad = $form->get('typeLoad')->setAttributes(array('required' => ''));
 
-$areaLoad= $formWay->get('areaLoad')->setAttributes(array('required'  => '' ));
-$areaUnload= $formWay->get('areaUnload')->setAttributes(array('required'  => '' ));
-$dateStart= $formWay->get('dateStart')->setAttributes(array('required'  => '' ));
-$timeStart= $formWay->get('timeStart')->setAttributes(array('required'  => '' ));
-$currency= $formWay->get('currency')->setAttributes(array('required'  => '' ));
-$money= $formWay->get('money')->setAttributes(array('required'  => '' ));
-$formPay= $formWay->get('formPay')->setAttributes(array('required'  => '' ));
-$note= $formWay->get('note')->setAttributes(array('required'  => '' ));
+$areaLoad = $formWay->get('areaLoad')->setAttributes(array('required' => ''));
+$areaUnload = $formWay->get('areaUnload')->setAttributes(array('required' => ''));
+$dateStart = $formWay->get('dateStart')->setAttributes(array('required' => ''));
+$timeStart = $formWay->get('timeStart')->setAttributes(array('required' => ''));
+$currency = $formWay->get('currency')->setAttributes(array('required' => ''));
+$money = $formWay->get('money')->setAttributes(array('required' => ''));
+$formPay = $formWay->get('formPay')->setAttributes(array('required' => ''));
+$note = $formWay->get('note')->setAttributes(array('required' => ''));
 ?>
     <h1>Поиск по ресурсам</h1>
     <p><b>Впишите поля, по которым будет вестись поиск. Пустые поля будут пропущены.</b></p>
@@ -29,8 +29,8 @@ $note= $formWay->get('note')->setAttributes(array('required'  => '' ));
         <tr>
             <td style="border-left:none;">
                 <?php
-             //   echo $this->formRow($tsId);
-              //  echo $this->formRow($typeLoad);
+                //   echo $this->formRow($tsId);
+                //  echo $this->formRow($typeLoad);
                 ?>
             </td>
         </tr>
@@ -86,7 +86,7 @@ $note= $formWay->get('note')->setAttributes(array('required'  => '' ));
         </tr>
         <tr class="addTr">
             <td>
-                <input id="counter" type="hidden" value='0' />
+                <input id="counter" type="hidden" value='0'/>
 
             </td>
         </tr>

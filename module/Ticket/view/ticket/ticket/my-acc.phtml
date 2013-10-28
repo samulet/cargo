@@ -39,7 +39,8 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         </th>
         <th>
             Редактировать
-        </th><th>
+        </th>
+        <th>
             Предложить ресурс
         </th>
         <th>
@@ -50,18 +51,18 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
         </th>
     </tr>
     <?php foreach ($tickets as $ticket) {
-        $ticketWay=$ticket['ways'];
-        $cargo=$ticket['veh'];
-        $owner=$ticket['owner'];
-        $acceptedResource=$ticket['acceptedResource'];
-        $ticket=$ticket['res'];
+        $ticketWay = $ticket['ways'];
+        $cargo = $ticket['veh'];
+        $owner = $ticket['owner'];
+        $acceptedResource = $ticket['acceptedResource'];
+        $ticket = $ticket['res'];
 
         ?>
         <tr>
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'add', 'id' => $ticket['uuid'] ,'type'=>'list')
+                    array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'list')
                 );?>"><?php echo $ticket['numberInt']; ?></a>
             </td>
             <td>
@@ -77,38 +78,40 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
 
             <td>
                 <?php
-                if(!empty($acceptedResource)) {
-                    $vehicle=$acceptedResource['veh'];
-                    $owner=$acceptedResource['owner'];
-                    $resource=$acceptedResource['res'];
+                if (!empty($acceptedResource)) {
+                    $vehicle = $acceptedResource['veh'];
+                    $owner = $acceptedResource['owner'];
+                    $resource = $acceptedResource['res'];
 
                     ?>
-                    <?php echo $owner['property'].' '.$owner['name'].' '; ?>
+                    <?php echo $owner['property'] . ' ' . $owner['name'] . ' '; ?>
                     <?php
-                    $str='';
-                    if(!empty($vehicle['semitrailer'])) {
-                        $str.='Полуприцеп ';
+                    $str = '';
+                    if (!empty($vehicle['semitrailer'])) {
+                        $str .= 'Полуприцеп ';
                     }
-                    if(!empty($vehicle['tractor'])) {
-                        $str.='Тягач ';
+                    if (!empty($vehicle['tractor'])) {
+                        $str .= 'Тягач ';
                     }
-                    if(!empty($vehicle['coupling'])) {
-                        $str.='Сцепка ';
+                    if (!empty($vehicle['coupling'])) {
+                        $str .= 'Сцепка ';
                     }
-                    if(!empty($vehicle['lorry'])) {
-                        $str.='Грузовик ';
+                    if (!empty($vehicle['lorry'])) {
+                        $str .= 'Грузовик ';
                     }
 
 
                     ?>
-                    <a href="<?php echo $this->url('resource',
-                        array('action' => 'add', 'id' => $resource['uuid'],'type'=>'list'));?>"> <?php
+                    <a href="<?php echo $this->url(
+                        'resource',
+                        array('action' => 'add', 'id' => $resource['uuid'], 'type' => 'list')
+                    );?>"> <?php
 
-                        $strLoad='';
-                        foreach($resource['typeLoad'] as $typeLoad) {
-                            $strLoad.=$typeLoad.', ';
+                        $strLoad = '';
+                        foreach ($resource['typeLoad'] as $typeLoad) {
+                            $strLoad .= $typeLoad . ', ';
                         }
-                        echo $str.' / '.$vehicle['capacity'].' / '.' / '.$strLoad;
+                        echo $str . ' / ' . $vehicle['capacity'] . ' / ' . ' / ' . $strLoad;
                         ?>
                     </a>
 
@@ -120,7 +123,7 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             </td>
             <td>
                 <?php
-                if(!empty($acceptedResource)) {
+                if (!empty($acceptedResource)) {
                     ?>
                     <a href="<?php echo $this->url(
                         'ticket',
@@ -132,13 +135,13 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
 
             </td>
             <td>
-                <?php echo  $ticket['statusGlobal']; ?>
+                <?php echo $ticket['statusGlobal']; ?>
             </td>
             <td>
-                <?php echo  $ticket['statusWork']; ?>
+                <?php echo $ticket['statusWork']; ?>
             </td>
             <td>
-                <?php echo $owner['property'].' '.$owner['name']; ?>
+                <?php echo $owner['property'] . ' ' . $owner['name']; ?>
             </td>
             <td>
                 <a href="<?php echo $this->url(
@@ -154,17 +157,19 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'add', 'id' => $ticket['uuid'],'type'=>'edit')
+                    array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'edit')
                 );?>">Редактировать</a>
             </td>
             <td>
-                <a href="<?php echo $this->url('interaction',
-                    array('action'=>'add', 'id' => $ticket['uuid']));?>">Добавить предложение</a>
+                <a href="<?php echo $this->url(
+                    'interaction',
+                    array('action' => 'add', 'id' => $ticket['uuid'])
+                );?>">Добавить предложение</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(
                     'ticket',
-                    array('action' => 'add', 'id' => $ticket['uuid'],'type'=>'copy')
+                    array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'copy')
                 );?>">Дублировать</a>
             </td>
             <td>

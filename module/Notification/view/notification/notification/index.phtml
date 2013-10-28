@@ -12,9 +12,9 @@ $notes = $this->notification;
     </tr>
     <?php
     foreach ($notes as $note) {
-        $owner=$note['owner'];
-        $nt=$note['notes'];
-        $note=$note['item'];
+        $owner = $note['owner'];
+        $nt = $note['notes'];
+        $note = $note['item'];
 
         ?>
         <tr>
@@ -27,11 +27,15 @@ $notes = $this->notification;
                     $type = 'vehicle';
                 }
 
-                echo $this->url($type,
-                    array('action' => 'add','type'=>'edit', 'id' => $note['itemId']));?>"><?php echo $note['itemId'] . ' (' . $note['type'] . ')'; ?></a>
+                echo $this->url(
+                    $type,
+                    array('action' => 'add', 'type' => 'edit', 'id' => $note['itemId'])
+                );?>"><?php echo $note['itemId'] . ' (' . $note['type'] . ')'; ?></a>
             </td>
-            <td><?php echo $owner['property'].' '.$owner['name']; ?></td>
-            <td><?php if(!empty($nt[count($nt)-1]['note'])) { echo $nt[count($nt)-1]['note']; } ?></td>
+            <td><?php echo $owner['property'] . ' ' . $owner['name']; ?></td>
+            <td><?php if (!empty($nt[count($nt) - 1]['note'])) {
+                    echo $nt[count($nt) - 1]['note'];
+                } ?></td>
             <td><?php
                 if (!empty($note['status'])) {
                     echo $note['status'];
@@ -41,8 +45,10 @@ $notes = $this->notification;
 
 
                 ?></td>
-            <td><a href="<?php echo $this->url('notification',
-                    array('action' => 'add', 'id' => $note['uuid']));?>">Рассмотерть</a></td>
+            <td><a href="<?php echo $this->url(
+                    'notification',
+                    array('action' => 'add', 'id' => $note['uuid'])
+                );?>">Рассмотерть</a></td>
         </tr>
     <?php
     }

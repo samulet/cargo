@@ -1,50 +1,47 @@
 <?php
 $form = $this->form;
 $formWay = $this->formWay;
-$typeForm=$this->typeForm;
-$title='';
-if(empty($typeForm)) {
+$typeForm = $this->typeForm;
+$title = '';
+if (empty($typeForm)) {
     $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
         ->prepare();
-    $title='Добавление';
+    $title = 'Добавление';
 } else {
-    $type=$typeForm['action'];
-    if($type=='edit') {
+    $type = $typeForm['action'];
+    if ($type == 'edit') {
         $form->setAttribute('action', $this->url('resource', array('action' => 'add', 'id' => $typeForm['id'])))
             ->prepare();
-        $title='Редактирование';
-    }
-    elseif($type=='copy') {
+        $title = 'Редактирование';
+    } elseif ($type == 'copy') {
         $form->setAttribute('action', $this->url('resource', array('action' => 'add')))
             ->prepare();
-        $title='Копирование';
-    }
-    elseif($type=='search') {
+        $title = 'Копирование';
+    } elseif ($type == 'search') {
         $form->setAttribute('action', $this->url('resource', array('action' => 'getResults')))
             ->prepare();
-        $title='Поиск';
-    }
-    elseif($type=='list') {
+        $title = 'Поиск';
+    } elseif ($type == 'list') {
         $form->setAttribute('action', $this->url('resource'))
             ->prepare();
-        $title='Просмотр';
+        $title = 'Просмотр';
     }
 }
 
 
 echo $this->form()->openTag($form);
 
-$tsId= $form->get('tsId');
-$typeLoad=$form->get('typeLoad');
+$tsId = $form->get('tsId');
+$typeLoad = $form->get('typeLoad');
 
-$areaLoad= $formWay->get('areaLoad');
-$areaUnload= $formWay->get('areaUnload');
-$dateStart= $formWay->get('dateStart');
-$timeStart= $formWay->get('timeStart')->setAttributes(array('onkeyup'  => 'time_control(this);' ));
-$currency= $formWay->get('currency');
-$money= $formWay->get('money');
-$formPay= $formWay->get('formPay');
-$note= $formWay->get('note');
+$areaLoad = $formWay->get('areaLoad');
+$areaUnload = $formWay->get('areaUnload');
+$dateStart = $formWay->get('dateStart');
+$timeStart = $formWay->get('timeStart')->setAttributes(array('onkeyup' => 'time_control(this);'));
+$currency = $formWay->get('currency');
+$money = $formWay->get('money');
+$formPay = $formWay->get('formPay');
+$note = $formWay->get('note');
 
 
 
@@ -58,10 +55,14 @@ $note= $formWay->get('note');
         </tr>
         <tr>
             <td style="border-left:none;">
-                <div <?php if(!empty($typeForm)) { if($typeForm['action']=='search') { echo "style='display:none;' "; } }?> ><?php echo $this->formRow($tsId); ?></div>
+                <div <?php if (!empty($typeForm)) {
+                    if ($typeForm['action'] == 'search') {
+                        echo "style='display:none;' ";
+                    }
+                } ?> ><?php echo $this->formRow($tsId); ?></div>
                 <?php
                 echo $this->formRow($typeLoad);
-               ?>
+                ?>
             </td>
         </tr>
     </table>
@@ -114,32 +115,32 @@ $note= $formWay->get('note');
         </tr>
         <tr class="addTr">
             <td>
-                <input id="counter" type="hidden" value='0' />
-           <!--     <input type="button" onclick="addWay('wayTr');" value="Добавить пункт назначения "/> -->
+                <input id="counter" type="hidden" value='0'/>
+                <!--     <input type="button" onclick="addWay('wayTr');" value="Добавить пункт назначения "/> -->
             </td>
         </tr>
     </table>
 <?php
-$subVal='';
-if(!empty($typeForm)) {
-    if($typeForm['action']=='search') {
-        $subVal='Поиск';
-    } elseif($typeForm['action']=='edit') {
-        $subVal='Редактировать';
-    } elseif($typeForm['action']=='copy') {
-        $subVal='Дублировать';
+$subVal = '';
+if (!empty($typeForm)) {
+    if ($typeForm['action'] == 'search') {
+        $subVal = 'Поиск';
+    } elseif ($typeForm['action'] == 'edit') {
+        $subVal = 'Редактировать';
+    } elseif ($typeForm['action'] == 'copy') {
+        $subVal = 'Дублировать';
     }
 } else {
-    $subVal='Отправить';
+    $subVal = 'Отправить';
 }
-if(!empty($typeForm)) {
-    if($typeForm['action']!='list') {
-    ?>
+if (!empty($typeForm)) {
+    if ($typeForm['action'] != 'list') {
+        ?>
         <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
     <?php
     }
 } else {
-?>
+    ?>
     <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
 <?php
 }

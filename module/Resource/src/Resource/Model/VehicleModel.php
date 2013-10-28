@@ -28,14 +28,14 @@ class VehicleModel implements ServiceLocatorAwareInterface
     {
         if (!empty($post)) {
             if (is_array($post)) {
-                $prop_array = $post;
+                $propArray = $post;
             } else {
-                $prop_array = get_object_vars($post);
+                $propArray = get_object_vars($post);
             }
 
         }
-        $prop_array['ownerId'] = $owner_id;
-        $prop_array['ownerOrgId'] = $owner_org_id;
+        $propArray['ownerId'] = $owner_id;
+        $propArray['ownerOrgId'] = $owner_org_id;
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         if (!empty($id)) {
             $res = $objectManager->getRepository('Resource\Entity\Vehicle')->findOneBy(
@@ -44,9 +44,9 @@ class VehicleModel implements ServiceLocatorAwareInterface
         } else {
             $res = new Vehicle();
         }
-        $model = explode('-', $prop_array['model']);
-        $prop_array['model'] = $model[2];
-        foreach ($prop_array as $key => $value) {
+        $model = explode('-', $propArray['model']);
+        $propArray['model'] = $model[2];
+        foreach ($propArray as $key => $value) {
             $res->$key = $value;
         }
 
@@ -103,8 +103,8 @@ class VehicleModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $vehObj = $objectManager->createQueryBuilder('Resource\Entity\Vehicle');
-        $queryBuilderModel=$this->getQueryBuilderModel();
-        $vehObj=$queryBuilderModel->createQuery($vehObj, $searchArray)->getQuery()->execute();
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $vehObj = $queryBuilderModel->createQuery($vehObj, $searchArray)->getQuery()->execute();
         $result = array();
         $comModel = $this->getCompanyModel();
 
@@ -121,10 +121,10 @@ class VehicleModel implements ServiceLocatorAwareInterface
         $vehiclesCollection = $objectManager->getRepository('Resource\Entity\Vehicle')->getAllAvailableVehicle();
 
         $result = array();
-        $organizationModel = $this->getOrganizationModel();
+        $organizationModel = $this->getAccountModel();
         foreach ($vehiclesCollection as $vehicle) {
             /** @var \Resource\Entity\Vehicle $vehicle */
-            $organization = $organizationModel->getOrganization($vehicle->getOwnerOrgId());
+            $organization = $organizationModel->getAccount($vehicle->getOwnerOrgId());
             array_push($result, array('res' => get_object_vars($vehicle), 'org' => $organization));
         }
         return $result;
@@ -148,13 +148,13 @@ class VehicleModel implements ServiceLocatorAwareInterface
         $comModel = $this->getCompanyModel();
         $com = $comModel->returnCompanies($orgId);
         $resultArray = array();
-        foreach($com as $c) {
+        foreach ($com as $c) {
             $rezObj = $objectManager->getRepository('Resource\Entity\Vehicle')
                 ->getMyAvailableVehicle($c['id']);
             foreach ($rezObj as $cur) {
-                $resultVars=get_object_vars($cur);
-                $resultVars['vehicleOwnerTrue']=$c;
-                array_push($resultArray,$resultVars );
+                $resultVars = get_object_vars($cur);
+                $resultVars['vehicleOwnerTrue'] = $c;
+                array_push($resultArray, $resultVars);
             }
         }
         return $resultArray;
@@ -170,11 +170,11 @@ class VehicleModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }
@@ -251,14 +251,16 @@ class VehicleModel implements ServiceLocatorAwareInterface
 
         }
     }
+
     public function getCompanyModel()
     {
         if (!$this->companyModel) {
             $sm = $this->getServiceLocator();
-            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+            $this->companyModel = $sm->get('Account\Model\CompanyModel');
         }
         return $this->companyModel;
     }
+
     public function getQueryBuilderModel()
     {
         if (!$this->queryBuilderModel) {

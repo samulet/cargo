@@ -48,17 +48,17 @@ return array(
                 array(
                     'controller' => 'Resource\Controller\Resource',
                     'action' => array('index'),
-                    'roles' => array('admin','forwarder', 'customer')
+                    'roles' => array('admin', 'forwarder', 'customer')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Resource',
                     'action' => array('add'),
-                    'roles' => array('forwarder','orgAdmin', 'customer', 'carrier', 'admin')
+                    'roles' => array('forwarder', 'accAdmin', 'customer', 'carrier', 'admin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Resource',
                     'action' => array('myAcc'),
-                    'roles' => array('forwarder','orgAdmin', 'admin')
+                    'roles' => array('forwarder', 'accAdmin', 'admin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Resource',
@@ -73,12 +73,12 @@ return array(
                 array(
                     'controller' => 'Resource\Controller\Resource',
                     'action' => array('delete'),
-                    'roles' => array('forwarder', 'carrier', 'admin','orgAdmin')
+                    'roles' => array('forwarder', 'carrier', 'admin', 'accAdmin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
                     'action' => array('add'),
-                    'roles' => array('forwarder','orgAdmin', 'customer', 'carrier', 'admin')
+                    'roles' => array('forwarder', 'accAdmin', 'customer', 'carrier', 'admin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
@@ -88,7 +88,7 @@ return array(
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
                     'action' => array('delete'),
-                    'roles' => array('forwarder', 'admin', 'carrier','orgAdmin')
+                    'roles' => array('forwarder', 'admin', 'carrier', 'accAdmin')
                 ),
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
@@ -98,7 +98,7 @@ return array(
                 array(
                     'controller' => 'Resource\Controller\Vehicle',
                     'action' => array('myAcc'),
-                    'roles' => array('forwarder','orgAdmin', 'admin')
+                    'roles' => array('forwarder', 'accAdmin', 'admin')
                 ),
             ),
             'BjyAuthorize\Guard\Route' => array(

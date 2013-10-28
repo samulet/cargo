@@ -10,7 +10,6 @@ use Zend\Form\Form;
 
 /**
  * @ODM\Document(collection="vehicle",repositoryClass="Resource\Repository\VehicleRepository")
-
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Name("vehicle")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
@@ -87,7 +86,6 @@ class Vehicle
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Марка ТС"})
      * @Annotation\Required({"required":"true" })
@@ -120,7 +118,6 @@ class Vehicle
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус ТС"})
      * @Annotation\Required({"required":"true" })
@@ -155,7 +152,6 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Cерия и номер свидетельства"})
      */
@@ -166,7 +162,6 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер регистрационного знака ТС "})
      */
@@ -223,7 +218,6 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Фио собственника"})
      */
@@ -234,11 +228,10 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Город, район, насел пункт, улица, дом, корпус/строение, квартира/офис"})
      */
-    public $whoGave ;
+    public $whoGave;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -248,7 +241,7 @@ class Vehicle
      * "options" : {"messages" : {\Zend\Validator\NotEmpty::IS_EMPTY : "Выберите элемент из списка." } } })
      * @Annotation\Attributes({"value":"0"})
      */
-    public $typeLoad =array();
+    public $typeLoad = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -276,7 +269,6 @@ class Vehicle
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Тип кузова"})
      */
@@ -331,7 +323,6 @@ class Vehicle
     public $lorry;
 
 
-
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -374,14 +365,12 @@ class Vehicle
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
      * @ODM\Field(type="string")
      */
     public $note;
-
 
 
     /**

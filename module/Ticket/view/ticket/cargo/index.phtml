@@ -1,7 +1,7 @@
 <?php
-$tickets=$this->res;
+$tickets = $this->res;
 
-$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+$types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пикап' => 'pickup', 'Муковоз' => 'mukovoz');
 ?>
 
 <h1>Все грузы</h1>
@@ -9,41 +9,42 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
 <table class="table">
     <tr>
         <th>
-Пункт загрузки
+            Пункт загрузки
         </th>
         <th>
-Пункт выгрузки
+            Пункт выгрузки
         </th>
         <th>
-Грузовладелец
+            Грузовладелец
         </th>
         <th>
-Тип ТС
+            Тип ТС
         </th>
 
     </tr>
     <?php foreach ($tickets as $ticket) {
-    $ticketWay=$ticket['ways'];
-    $cargo=$ticket['veh'];
-    $org=$ticket['org'];
-    $ticket=$ticket['res'];
-foreach($ticketWay as $way){
-    ?>
-<tr>
- <td>
-<?php echo $way['areaLoad']; ?>
-            </td>
-            <td>
-<?php echo $way['areaUnload']; ?>
-            </td>
-            <td>
-<?php echo $way['cargoOwner']; ?>
-            </td>
-            <td>
-<?php echo $way['type']; ?>
-            </td>
+        $ticketWay = $ticket['ways'];
+        $cargo = $ticket['veh'];
+        $acc = $ticket['org'];
+        $ticket = $ticket['res'];
+        foreach ($ticketWay as $way) {
+            ?>
+            <tr>
+                <td>
+                    <?php echo $way['areaLoad']; ?>
+                </td>
+                <td>
+                    <?php echo $way['areaUnload']; ?>
+                </td>
+                <td>
+                    <?php echo $way['cargoOwner']; ?>
+                </td>
+                <td>
+                    <?php echo $way['type']; ?>
+                </td>
 
-</tr>
-    <?php }} ?>
+            </tr>
+        <?php }
+    } ?>
 
 </table>

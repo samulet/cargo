@@ -1,41 +1,44 @@
 <?php
 
 $form = $this->form;
-$form->setAttribute('action', $this->url('addList', array('action' => 'addList','id'=>$this->uuid,'parent'=>$this->parent)))
+$form->setAttribute(
+    'action',
+    $this->url('addList', array('action' => 'addList', 'id' => $this->uuid, 'parent' => $this->parent))
+)
     ->prepare();
 
-if(empty($this->parent)) {
-$list=$this->listName['list'];
-    $name=$this->listName['list']['fieldRusName'];
+if (empty($this->parent)) {
+    $list = $this->listName['list'];
+    $name = $this->listName['list']['fieldRusName'];
 } else {
-    $list=$this->listName;
-    $name=$this->listName['value'];
+    $list = $this->listName;
+    $name = $this->listName['value'];
 }
 $value = $form->get('value');
 
-$company= $form->get('company');
-$forAccount= $form->get('forAccount');
+$company = $form->get('company');
+$forAccount = $form->get('forAccount');
 
-$uuid=$this->uuid;
+$uuid = $this->uuid;
 
 ?>
 
-<?php if(!empty($this->listName['value'])) { ?>
+<?php if (!empty($this->listName['value'])) { ?>
     <a href="<?php echo $this->url(
         'addList',
         array('action' => 'listParent', 'id' => $list['uuid'])
     );?>"></br>Вернуться <?php
 
-        echo 'в <b>'.$name.'</b> без сохранения';
+        echo 'в <b>' . $name . '</b> без сохранения';
         ?></a>
-    <?php  } else { ?>
+<?php } else { ?>
 
     <a href="<?php echo $this->url(
         'addList',
         array('action' => 'myFields', 'id' => $list['id'])
     );?>">Вернуться <?php
 
-        echo 'в <b>'.$name.'</b> без сохранения';
+        echo 'в <b>' . $name . '</b> без сохранения';
         ?></a>
 
 <?php } ?>
@@ -46,15 +49,15 @@ $uuid=$this->uuid;
 
 echo $this->form()->openTag($form);
 
-if($form->has($uuid)) {
+if ($form->has($uuid)) {
     echo $this->formCollection($form->get($uuid));
 } else {
     echo $this->formRow($value);
 }
-echo '<p>Сделать доступным для</p>'.$this->formRow($company).'</br>';
-echo $this->formRow($forAccount).'</br>';
+echo '<p>Сделать доступным для</p>' . $this->formRow($company) . '</br>';
+echo $this->formRow($forAccount) . '</br>';
 
-if(array_search("admin",$this->roles,true)) {
+if (array_search("admin", $this->roles, true)) {
     echo '<input type="checkbox" name="global" value="global">Глобальное значние </br>';
 }
 

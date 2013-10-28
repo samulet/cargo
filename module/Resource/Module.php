@@ -6,6 +6,7 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Resource\Model\ResourceModel;
 use Resource\Model\VehicleModel;
+
 class Module
 {
     public function getAutoloaderConfig()

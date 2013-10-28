@@ -15,6 +15,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+
 /**
  * @ODM\Document(collection="interaction", repositoryClass="Interaction\Repository\InteractionRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -71,7 +72,6 @@ class Interaction
      * @ODM\ObjectId
      * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус"})
      * @Annotation\Validator({"name":"InArray",
@@ -97,6 +97,7 @@ class Interaction
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -112,6 +113,7 @@ class Interaction
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function getUUID()
     {
         return $this->uuid;

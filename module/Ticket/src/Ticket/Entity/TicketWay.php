@@ -80,7 +80,6 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт загрузки"})
      * @Annotation\Required({"required":"true" })
@@ -92,7 +91,6 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Пункт выгрузки"})
      * @Annotation\Required({"required":"true" })
@@ -104,7 +102,6 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Грузовладелец"})
      * @Annotation\Required({"required":"true" })
@@ -117,7 +114,6 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Наименование груза"})
      * @Annotation\Required({"required":"true" })
@@ -129,7 +125,6 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"ADR",
      *                      "value_options" : {"0":"","1":"1","2":"2","3":"3"}})
@@ -144,7 +139,6 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Кубы"})
      * @Annotation\Required(false)
@@ -252,7 +246,6 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Температурный режим"})
      * @Annotation\Required(false)
@@ -264,7 +257,6 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Постоянно (загрузка)",
      *                      "value_options" : {"0":"","По рабочим дням":"По рабочим дням","Ежедневно":"Ежедневно"}})
@@ -296,7 +288,7 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      */
-    public $type='';
+    public $type = '';
 
     /**
      * @var array
@@ -308,7 +300,7 @@ class TicketWay
      * @Annotation\Attributes({"value":"0"})
      * @Annotation\Required(false)
      */
-    public $typeLoad =array();
+    public $typeLoad = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -325,7 +317,6 @@ class TicketWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -334,9 +325,7 @@ class TicketWay
      */
 
 
-
     public $note;
-
 
 
     /**
@@ -371,12 +360,10 @@ class TicketWay
     public $setLoadType;
 
 
-
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Готов к загрузке",
      *                      "value_options" : {"0":"","Только сегодня":"Только сегодня","Сегодня и завтра":"Сегодня и завтра"}})
@@ -391,7 +378,6 @@ class TicketWay
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"+ дней",
      *                      "value_options" : {"0":"0","1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"10"}})
@@ -475,12 +461,12 @@ class TicketWay
     public $dateEnd;
 
 
-
     /**
      * @ODM\Date
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -496,6 +482,7 @@ class TicketWay
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -663,7 +650,7 @@ class TicketWay
      * Set type.
      *
      * @param string $type
-     * @return OrganizationInterface
+     * @return AccountInterface
      */
     public function setType($type)
     {

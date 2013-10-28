@@ -53,7 +53,6 @@ class Resource
      * @ODM\ObjectId
      * @var int
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Прикрепите ТС к ресурсу"})
      * @Annotation\Required({"required":"true" })
@@ -93,7 +92,6 @@ class Resource
     public $submit;
 
 
-
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -110,6 +108,7 @@ class Resource
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -125,6 +124,7 @@ class Resource
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -292,7 +292,7 @@ class Resource
      * Set type.
      *
      * @param string $type
-     * @return OrganizationInterface
+     * @return AccountInterface
      */
     public function setType($type)
     {

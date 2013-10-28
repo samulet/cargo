@@ -1,7 +1,7 @@
 <?php
-$tickets=$this->res;
+$tickets = $this->res;
 
-$types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пикап'=> 'pickup', 'Муковоз'=>'mukovoz');
+$types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пикап' => 'pickup', 'Муковоз' => 'mukovoz');
 ?>
 
 <h1>Все заявки</h1>
@@ -11,74 +11,86 @@ $types_r=array('Тентовый'=>'tent', 'Фургон' => 'furgon', 'Пика
     <tr>
 
         <th>
-Маршрут и сроки
+            Маршрут и сроки
         </th>
         <th>
-Груз (вес / объем / наименование)
+            Груз (вес / объем / наименование)
         </th>
         <th>
-Транспорт (тип ТС / Температурный режим / загрузка - выгрузка)
+            Транспорт (тип ТС / Температурный режим / загрузка - выгрузка)
         </th>
-                <th>
-                    Печать
-                </th>
+        <th>
+            Печать
+        </th>
         <th>
             Копировать
         </th>
-          <th>
-          Предложить ресурс
-          </th>
+        <th>
+            Предложить ресурс
+        </th>
 
     </tr>
     <?php foreach ($tickets as $ticket) {
 
-    $ticketWay=$ticket['ways'];
-    $cargo=$ticket['veh'];
-    $org=$ticket['owner'];
-    $ticket=$ticket['res'];
+        $ticketWay = $ticket['ways'];
+        $cargo = $ticket['veh'];
+        $acc = $ticket['owner'];
+        $ticket = $ticket['res'];
 
-    ?>
-<tr>
+        ?>
+        <tr>
             <td>
-                 <a href="<?php echo $this->url( 'ticket', array('action' => 'add', 'id' => $ticket['uuid'] ,'type'=>'list'));?>">
-                 <?php
-                 foreach($ticketWay as $way) {
-                 $wayArr=array('dateStart','timeLoadStart','timeLoadEnd','areaLoad','dateEnd','timeUnloadStart','timeUnloadEnd','areaUnload');
-                 foreach($wayArr as $wayMinEl) {
-                    if(empty($way[$wayMinEl])) {
-                     $way[$wayMinEl]='';
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'list')
+                ); ?>">
+                    <?php
+                    foreach ($ticketWay as $way) {
+                        $wayArr = array(
+                            'dateStart',
+                            'timeLoadStart',
+                            'timeLoadEnd',
+                            'areaLoad',
+                            'dateEnd',
+                            'timeUnloadStart',
+                            'timeUnloadEnd',
+                            'areaUnload'
+                        );
+                        foreach ($wayArr as $wayMinEl) {
+                            if (empty($way[$wayMinEl])) {
+                                $way[$wayMinEl] = '';
+                            }
+                        }
+                        echo $way['dateStart'] . ' с ' . $way['timeLoadStart'] . ' по ' . $way['timeLoadEnd'] . ' ' . $way['areaLoad'] . ' / ' . $way['dateEnd'] . ' с ' . $way['timeUnloadStart'] . ' по ' . $way['timeUnloadEnd'] . ' ' . $way['areaUnload'] . '</br>';
+
                     }
-                 }
-                     echo $way['dateStart'].' с '.$way['timeLoadStart'].' по '.$way['timeLoadEnd'].' '.$way['areaLoad'].' / '.$way['dateEnd'].' с '.$way['timeUnloadStart'].' по '.$way['timeUnloadEnd'].' '.$way['areaUnload'].'</br>';
-
-                 }
-                 ?>
-                  </a>
+                    ?>
+                </a>
             </td>
             <td>
-            <?php
-                             foreach($ticketWay as $way) {
-                                 echo $way['weight'].' / '.$way['cargoValue'].' / '.$way['cargoName'].'</br>';
+                <?php
+                foreach ($ticketWay as $way) {
+                    echo $way['weight'] . ' / ' . $way['cargoValue'] . ' / ' . $way['cargoName'] . '</br>';
 
-                             }
-?>
+                }
+                ?>
             </td>
             <td>
-            <?php
-foreach($ticketWay as $way) {
-$typeLoad=$way['typeLoad'];
-$typeUnload=$way['typeUnload'];
-if(is_array($typeLoad)) {
-$typeLoad =implode(' ',$typeLoad);
-}
-if(is_array($typeUnload)) {
-$typeUnload=implode(' ',$typeUnload);
-}
+                <?php
+                foreach ($ticketWay as $way) {
+                    $typeLoad = $way['typeLoad'];
+                    $typeUnload = $way['typeUnload'];
+                    if (is_array($typeLoad)) {
+                        $typeLoad = implode(' ', $typeLoad);
+                    }
+                    if (is_array($typeUnload)) {
+                        $typeUnload = implode(' ', $typeUnload);
+                    }
 
-                                 echo $way['type'].' / '.$way['temperature'].' / '.$typeLoad.' - '.$typeUnload.'</br>';
+                    echo $way['type'] . ' / ' . $way['temperature'] . ' / ' . $typeLoad . ' - ' . $typeUnload . '</br>';
 
-                             }
-                             ?>
+                }
+                ?>
             </td>
             <td>
                 <a href="<?php echo $this->url(
@@ -86,24 +98,26 @@ $typeUnload=implode(' ',$typeUnload);
                     array('action' => 'getExcel', 'id' => $ticket['uuid'])
                 );?>">Печать</a>
                 </br>
-                                <a href="<?php echo $this->url(
-                                    'excel',
-                                    array('action' => 'generateTemplate', 'id' => $ticket['uuid'])
-                                );?>">Загрузить свой шаблон</a>
+                <a href="<?php echo $this->url(
+                    'excel',
+                    array('action' => 'generateTemplate', 'id' => $ticket['uuid'])
+                );?>">Загрузить свой шаблон</a>
             </td>
 
-    <td>
-        <a href="<?php echo $this->url(
-            'ticket',
-            array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'copy')
-        );?>">Дублировать</a>
-    </td>
-                     <td>
-                            <a href="<?php echo $this->url('interaction',
-                                array('action'=>'add', 'id' => $ticket['uuid']));?>">Добавить предложение</a>
-                        </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'ticket',
+                    array('action' => 'add', 'id' => $ticket['uuid'], 'type' => 'copy')
+                );?>">Дублировать</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'interaction',
+                    array('action' => 'add', 'id' => $ticket['uuid'])
+                );?>">Добавить предложение</a>
+            </td>
 
-</tr>
+        </tr>
     <?php } ?>
 
 </table>

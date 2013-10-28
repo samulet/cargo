@@ -48,7 +48,6 @@ class Excel
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Вид формирования экселя"})
      * @Annotation\Attributes({"options":{"right":"Вывод марщрутов по горизонтали вправо","down":"Вывод марщрутов по вертикали вниз"}})
@@ -84,6 +83,7 @@ class Excel
      */
 
     public $newStringDown;
+
     /**
      * @return mixed
      */
@@ -99,6 +99,7 @@ class Excel
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function getUUID()
     {
         return $this->uuid;

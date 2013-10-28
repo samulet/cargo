@@ -70,7 +70,6 @@ class ResourceWay
     public $activated;
 
 
-
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
@@ -80,7 +79,6 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Место загрузки ТС"})
      * @Annotation\Required({"required":"true" })
@@ -92,7 +90,6 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Место разгрузки ТС"})
      * @Annotation\Required({"required":"true" })
@@ -104,7 +101,6 @@ class ResourceWay
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -181,12 +177,12 @@ class ResourceWay
     public $timeStart;
 
 
-
     /**
      * @ODM\Date
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -202,6 +198,7 @@ class ResourceWay
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -369,7 +366,7 @@ class ResourceWay
      * Set type.
      *
      * @param string $type
-     * @return OrganizationInterface
+     * @return AccountInterface
      */
     public function setType($type)
     {

@@ -7,56 +7,57 @@ $form->setAttribute('action', $this->url('ticket', array('action' => 'getResults
 echo $this->form()->openTag($form);
 
 
-$areaLoad= $formWay->get('areaLoad')->setAttributes(array('required'  => '' ));
-$areaUnload= $formWay->get('areaUnload')->setAttributes(array('required'  => '' ));
+$areaLoad = $formWay->get('areaLoad')->setAttributes(array('required' => ''));
+$areaUnload = $formWay->get('areaUnload')->setAttributes(array('required' => ''));
 
-$cargoOwner= $formWay->get('cargoOwner')->setAttributes(array('required'  => '' ));
-$cargoName= $formWay->get('cargoName')->setAttributes(array('required'  => '' ));
+$cargoOwner = $formWay->get('cargoOwner')->setAttributes(array('required' => ''));
+$cargoName = $formWay->get('cargoName')->setAttributes(array('required' => ''));
 
-$adr= $formWay->get('adr')->setAttributes(array('required'  => '' ));
-$cubs= $formWay->get('cubs')->setAttributes(array('required'  => '' ));
-$dimensions= $formWay->get('dimensions')->setAttributes(array('required'  => '' ));
-$weight= $formWay->get('weight')->setAttributes(array('required'  => '' ));
-$rubles= $formWay->get('rubles')->setAttributes(array('required'  => '' ));
-$pallet= $formWay->get('pallet')->setAttributes(array('required'  => '' ));
-$box= $formWay->get('box')->setAttributes(array('required'  => '' ));
+$adr = $formWay->get('adr')->setAttributes(array('required' => ''));
+$cubs = $formWay->get('cubs')->setAttributes(array('required' => ''));
+$dimensions = $formWay->get('dimensions')->setAttributes(array('required' => ''));
+$weight = $formWay->get('weight')->setAttributes(array('required' => ''));
+$rubles = $formWay->get('rubles')->setAttributes(array('required' => ''));
+$pallet = $formWay->get('pallet')->setAttributes(array('required' => ''));
+$box = $formWay->get('box')->setAttributes(array('required' => ''));
 
-$type= $formWay->get('type')->setAttributes(array('required'  => '' ));
-$temperature= $formWay->get('temperature')->setAttributes(array('required'  => '' ));
+$type = $formWay->get('type')->setAttributes(array('required' => ''));
+$temperature = $formWay->get('temperature')->setAttributes(array('required' => ''));
 
-$typeLoad= $formWay->get('typeLoad')->setAttributes(array('required'  => '' ));
-$typeUnload= $formWay->get('typeLoad')->setName('typeUnload')->setOptions(array("label"=>'Тип выгрузки'))->setAttributes(array('required'  => '' ));
-
-
-
-$airSuspension= $formWay->get('airSuspension')->setAttributes(array('required'  => '' ));
-$coupling= $formWay->get('coupling')->setAttributes(array('required'  => '' ));
-
-$dateStart= $formWay->get('dateStart')->setAttributes(array('required'  => '' ));
-$timeStart= $formWay->get('timeStart')->setAttributes(array('required'  => '' ));
-$dateEnd= $formWay->get('dateEnd')->setAttributes(array('required'  => '' ));
-$timeEnd= $formWay->get('timeEnd')->setAttributes(array('required'  => '' ));
-
-$currency= $form->get('currency')->setAttributes(array('required'  => '' ));
-$money= $form->get('money')->setAttributes(array('required'  => '' ));
+$typeLoad = $formWay->get('typeLoad')->setAttributes(array('required' => ''));
+$typeUnload = $formWay->get('typeLoad')->setName('typeUnload')->setOptions(
+    array("label" => 'Тип выгрузки')
+)->setAttributes(array('required' => ''));
 
 
-$formPay= $form->get('formPay')->setAttributes(array('required'  => '' ));
-$typeTicket= $form->get('typeTicket')->setAttributes(array('required'  => '' ));
+$airSuspension = $formWay->get('airSuspension')->setAttributes(array('required' => ''));
+$coupling = $formWay->get('coupling')->setAttributes(array('required' => ''));
+
+$dateStart = $formWay->get('dateStart')->setAttributes(array('required' => ''));
+$timeStart = $formWay->get('timeStart')->setAttributes(array('required' => ''));
+$dateEnd = $formWay->get('dateEnd')->setAttributes(array('required' => ''));
+$timeEnd = $formWay->get('timeEnd')->setAttributes(array('required' => ''));
+
+$currency = $form->get('currency')->setAttributes(array('required' => ''));
+$money = $form->get('money')->setAttributes(array('required' => ''));
 
 
-$note= $formWay->get('note')->setAttributes(array('required'  => '' ));
+$formPay = $form->get('formPay')->setAttributes(array('required' => ''));
+$typeTicket = $form->get('typeTicket')->setAttributes(array('required' => ''));
 
-$docNumber = $formWay->get('docNumber')->setAttributes(array('required'  => '' ));
-$docWay = $formWay->get('docWay')->setAttributes(array('required'  => '' ));
-$docNote = $formWay->get('docNote')->setAttributes(array('required'  => '' ));
-$docDate = $formWay->get('docDate')->setAttributes(array('required'  => '' ));
-$docType= $formWay->get('docType')->setAttributes(array('required'  => '' ));
+
+$note = $formWay->get('note')->setAttributes(array('required' => ''));
+
+$docNumber = $formWay->get('docNumber')->setAttributes(array('required' => ''));
+$docWay = $formWay->get('docWay')->setAttributes(array('required' => ''));
+$docNote = $formWay->get('docNote')->setAttributes(array('required' => ''));
+$docDate = $formWay->get('docDate')->setAttributes(array('required' => ''));
+$docType = $formWay->get('docType')->setAttributes(array('required' => ''));
 
 
 ?>
-<h1>Поиск по заявкам</h1>
-<p><b>Впишите поля, по которым будет вестись поиск. Пустые поля будут пропущены.</b></p>
+    <h1>Поиск по заявкам</h1>
+    <p><b>Впишите поля, по которым будет вестись поиск. Пустые поля будут пропущены.</b></p>
     <table class="table spec_table" style="">
         <tr>
             <th>
@@ -68,7 +69,7 @@ $docType= $formWay->get('docType')->setAttributes(array('required'  => '' ));
                 <?php
                 //echo $this->formRow($currency);
                 //echo $this->formRow($money);
-               // echo $this->formRow($formPay);
+                // echo $this->formRow($formPay);
                 //echo $this->formRow($typeTicket);
                 ?>
             </td>
@@ -121,30 +122,30 @@ $docType= $formWay->get('docType')->setAttributes(array('required'  => '' ));
             </td>
             <td>
                 <?php
-                echo $this->formRow( $adr);
-                echo $this->formRow( $cubs);
-                echo $this->formRow(  $dimensions);
-                echo $this->formRow(  $weight);
-                echo $this->formRow(  $rubles);
-                echo $this->formRow(  $pallet);
-                echo $this->formRow( $box);
+                echo $this->formRow($adr);
+                echo $this->formRow($cubs);
+                echo $this->formRow($dimensions);
+                echo $this->formRow($weight);
+                echo $this->formRow($rubles);
+                echo $this->formRow($pallet);
+                echo $this->formRow($box);
 
                 ?>
             </td>
             <td>
                 <?php
-                echo $this->formRow( $type);
+                echo $this->formRow($type);
                 echo $this->formRow($temperature);
                 ?>
                 <div class="muliboxTicket">
                     <?php
-                    echo $this->formRow( $typeLoad);
-                    echo $this->formRow( $typeUnload);
+                    echo $this->formRow($typeLoad);
+                    echo $this->formRow($typeUnload);
                     ?>
                 </div>
                 <?php
-                echo $this->formRow( $airSuspension);
-                echo $this->formRow( $coupling);
+                echo $this->formRow($airSuspension);
+                echo $this->formRow($coupling);
                 ?>
             </td>
             <td>
@@ -158,9 +159,9 @@ $docType= $formWay->get('docType')->setAttributes(array('required'  => '' ));
             <td>
                 <?php
                 echo $this->formRow($docNumber);
-                echo $this->formRow($docWay );
-                echo $this->formRow($docNote );
-                echo $this->formRow($docDate );
+                echo $this->formRow($docWay);
+                echo $this->formRow($docNote);
+                echo $this->formRow($docDate);
                 echo $this->formRow($docType);
                 ?>
             </td>
@@ -176,7 +177,7 @@ $docType= $formWay->get('docType')->setAttributes(array('required'  => '' ));
         </tr>
         <tr class="addTr">
             <td>
-                <input id="counter" type="hidden" value='0' />
+                <input id="counter" type="hidden" value='0'/>
 
             </td>
         </tr>

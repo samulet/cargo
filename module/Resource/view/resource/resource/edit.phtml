@@ -1,16 +1,16 @@
 <?php
 $form = $this->form;
 $formWay = $this->formWay;
-$ways= $this->way;
-$resource= $this->res;
+$ways = $this->way;
+$resource = $this->res;
 
 $form->setAttribute('action', $this->url('resource', array('action' => 'addResource', 'id' => $this->id)))
     ->prepare();
 
 echo $this->form()->openTag($form);
 
-$tsId= $form->get('tsId');
-$kindOfLoad=$form->get('kindOfLoad')->setValue($resource['kindOfLoad']);
+$tsId = $form->get('tsId');
+$kindOfLoad = $form->get('kindOfLoad')->setValue($resource['kindOfLoad']);
 
 
 ?>
@@ -51,75 +51,77 @@ $kindOfLoad=$form->get('kindOfLoad')->setValue($resource['kindOfLoad']);
 
         </tr>
         <?php
-        $counter=0;
-        foreach($ways as $way) {
-            if($counter==0) {
-                $areaLoad= $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad');
-                $areaUnload= $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload');
-                $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart');
-                $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart');
-                $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency');
-                $money= $formWay->get('money')->setValue($way['money'])->setName('money');
-                $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay');
-                $note= $formWay->get('note')->setValue($way['note'])->setName('note');
+        $counter = 0;
+        foreach ($ways as $way) {
+            if ($counter == 0) {
+                $areaLoad = $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad');
+                $areaUnload = $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload');
+                $dateStart = $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart');
+                $timeStart = $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart');
+                $currency = $formWay->get('currency')->setValue($way['currency'])->setName('currency');
+                $money = $formWay->get('money')->setValue($way['money'])->setName('money');
+                $formPay = $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay');
+                $note = $formWay->get('note')->setValue($way['note'])->setName('note');
             } else {
-                $areaLoad= $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad-'.$counter);
-                $areaUnload= $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName('areaUnload-'.$counter);
-                $dateStart= $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart-'.$counter);
-                $timeStart= $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart-'.$counter);
-                $currency= $formWay->get('currency')->setValue($way['currency'])->setName('currency-'.$counter);
-                $money= $formWay->get('money')->setValue($way['money'])->setName('money-'.$counter);
-                $formPay= $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay-'.$counter);
-                $note= $formWay->get('note')->setValue($way['note'])->setName('note-'.$counter);
+                $areaLoad = $formWay->get('areaLoad')->setValue($way['areaLoad'])->setName('areaLoad-' . $counter);
+                $areaUnload = $formWay->get('areaUnload')->setValue($way['areaUnload'])->setName(
+                    'areaUnload-' . $counter
+                );
+                $dateStart = $formWay->get('dateStart')->setValue($way['dateStart'])->setName('dateStart-' . $counter);
+                $timeStart = $formWay->get('timeStart')->setValue($way['timeStart'])->setName('timeStart-' . $counter);
+                $currency = $formWay->get('currency')->setValue($way['currency'])->setName('currency-' . $counter);
+                $money = $formWay->get('money')->setValue($way['money'])->setName('money-' . $counter);
+                $formPay = $formWay->get('formPay')->setValue($way['formPay'])->setName('formPay-' . $counter);
+                $note = $formWay->get('note')->setValue($way['note'])->setName('note-' . $counter);
             }
 
-        ?>
-        <tr class="<?php
-            if($counter==0) {
+            ?>
+            <tr class="<?php
+            if ($counter == 0) {
                 echo 'wayTr';
             } else {
-                echo 'wayTr-'.$counter;
+                echo 'wayTr-' . $counter;
             }
-        ?>">
-            <td>
-                <?php
-                echo $this->formRow($areaLoad);
-                echo $this->formRow($areaUnload);
-                ?>
-            </td>
-            <td>
-                <?php
-                echo $this->formRow($dateStart);
-                echo $this->formRow($timeStart);
-                ?>
-            </td>
-            <td>
-                <?php
-                echo $this->formRow($currency);
-                echo $this->formRow($money);
-                echo $this->formRow($formPay);
-                ?>
-            </td>
-            <td>
-                <?php
-                echo $this->formRow($note);
-                ?>
-            </td>
-            <td>
-                <input name="deleteWay" class="deleteWay" onclick="<?php
-                if($counter!=0) {
-                    echo "delWay('wayTr-".$counter."');";
-                }
-                ?>" type="button" value="Удалть"/>
-            </td>
-        </tr>
-        <?php
+            ?>">
+                <td>
+                    <?php
+                    echo $this->formRow($areaLoad);
+                    echo $this->formRow($areaUnload);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    echo $this->formRow($dateStart);
+                    echo $this->formRow($timeStart);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    echo $this->formRow($currency);
+                    echo $this->formRow($money);
+                    echo $this->formRow($formPay);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    echo $this->formRow($note);
+                    ?>
+                </td>
+                <td>
+                    <input name="deleteWay" class="deleteWay" onclick="<?php
+                    if ($counter != 0) {
+                        echo "delWay('wayTr-" . $counter . "');";
+                    }
+                    ?>" type="button" value="Удалть"/>
+                </td>
+            </tr>
+            <?php
             $counter++;
         }
         ?>
         <tr class="addTr">
             <td>
-                <input id="counter" type="hidden" value='<?php echo $counter ?>' />
+                <input id="counter" type="hidden" value='<?php echo $counter ?>'/>
                 <input type="button" onclick="addWay('wayTr');" value="Добавить пункт назначения "/>
             </td>
         </tr>

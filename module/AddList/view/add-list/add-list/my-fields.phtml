@@ -2,32 +2,32 @@
 
 $field = $this->field;
 $list = $this->list;
-$parentList=$this->parentList;
-$listChild=$this->listChild;
+$parentList = $this->parentList;
+$listChild = $this->listChild;
 
 ?>
 
 
 
 <h1> <?php
-    echo 'Справочник '.$list['fieldRusName'];
+    echo 'Справочник ' . $list['fieldRusName'];
     ?></h1>
 <?php
-if(empty($parentList)) {
-?>
-<a href="<?php echo $this->url(
-    'addList',
-    array('action' => 'add', 'id' => $list['uuid'])
-);?>">Добавить поле в справочник</a>
+if (empty($parentList)) {
+    ?>
+    <a href="<?php echo $this->url(
+        'addList',
+        array('action' => 'add', 'id' => $list['uuid'])
+    );?>">Добавить поле в справочник</a>
     <?php
 
-    if(!empty($listChild)) {
+    if (!empty($listChild)) {
         ?>
         <a href="<?php echo $this->url(
             'addList',
             array('action' => 'my-fields', 'id' => $listChild['uuid'])
         );?>">Просмотреть поля зависимого спика <?php
-            if(!empty($listChild)) {
+            if (!empty($listChild)) {
                 echo $listChild['fieldRusName'];
             } ?></a></a>
     <?php
@@ -37,10 +37,10 @@ if(empty($parentList)) {
 <?php
 } else {
     ?>
-<a href="<?php echo $this->url(
-    'addList',
-    array('action' => 'my-fields', 'id' => $parentList['uuid'])
-);?>">Назад к родителю</a>
+    <a href="<?php echo $this->url(
+        'addList',
+        array('action' => 'my-fields', 'id' => $parentList['uuid'])
+    );?>">Назад к родителю</a>
 
 
 
@@ -52,19 +52,19 @@ if(empty($parentList)) {
         <th>
             Имя поля
         </th>
-        <?php if((!empty($listChild)) || (!empty($parent['value'])) ){
+        <?php if ((!empty($listChild)) || (!empty($parent['value']))) {
 
             ?>
 
 
-        <th>
-            Добавить поля, зависимые от этого поля
-            <?php
-            if(!empty($listChild)) {
-                echo 'в '.$listChild['fieldRusName'];
-            }
-            ?>
-        </th>
+            <th>
+                Добавить поля, зависимые от этого поля
+                <?php
+                if (!empty($listChild)) {
+                    echo 'в ' . $listChild['fieldRusName'];
+                }
+                ?>
+            </th>
         <?php
         } ?>
         <th>
@@ -78,66 +78,68 @@ if(empty($parentList)) {
         </th>
     </tr>
     <?php
-    foreach($field as $fi) {
+    foreach ($field as $fi) {
 
-        $parent=$fi['parent'];
-        $fi=$fi['it'];
+        $parent = $fi['parent'];
+        $fi = $fi['it'];
         ?>
 
         <tr>
             <td>
                 <?php
-                if(!empty($parent['value'])) {
+                if (!empty($parent['value'])) {
 
                     ?>
                     <a href="<?php echo $this->url(
                         'addList',
                         array('action' => 'list-parent', 'id' => $parent['uuid'])
-                    );?>"> <?php echo $parent['value'].' => '; ?></a>
+                    );?>"> <?php echo $parent['value'] . ' => '; ?></a>
 
-                <?php echo $fi['value']; ?>
+                    <?php echo $fi['value']; ?>
                 <?php
-                } elseif(!empty($listChild)) {
+                } elseif (!empty($listChild)) {
                     ?>
                     <a href="<?php echo $this->url(
                         'addList',
                         array('action' => 'list-parent', 'id' => $fi['uuid'])
                     );?>"> <?php echo $fi['value']; ?></a>
                 <?php
-                } else { ?>
+                } else {
+                    ?>
                     <a href="<?php echo $this->url(
                         'addList',
-                        array('action' => 'edit', 'id' => $fi['uuid'], 'parent' =>'list')
+                        array('action' => 'edit', 'id' => $fi['uuid'], 'parent' => 'list')
                     );?>"> <?php echo $fi['value']; ?></a>
                 <?php
                 } ?>
 
             </td>
-            <?php if((!empty($listChild)) || (!empty($parent['value'])) ){
+            <?php if ((!empty($listChild)) || (!empty($parent['value']))) {
 
-            ?>
-                <?php if(empty($parent['value'])) { ?>
-            <td>
+                ?>
+                <?php if (empty($parent['value'])) { ?>
+                    <td>
 
-                <a href="<?php echo $this->url(
-                    'addList',
-                    array('action' => 'add', 'id' => $fi['uuid'],'parent'=>'parent')
-                );?>">Добавить <?php
-                    if(!empty($listChild)) {
-                        echo 'в '.$fi['value'];
-                    } ?></a>
+                    <a href="<?php echo $this->url(
+                        'addList',
+                        array('action' => 'add', 'id' => $fi['uuid'], 'parent' => 'parent')
+                    );?>">Добавить <?php
+                        if (!empty($listChild)) {
+                            echo 'в ' . $fi['value'];
+                        } ?></a>
                 <?php } ?>
-            </td>
+                </td>
             <?php } ?>
             <td>
                 <?php
-                if(empty($fi['global'])) {
-                ?>
+                if (empty($fi['global'])) {
+                    ?>
                     <a href="<?php echo $this->url(
                         'account',
                         array('action' => 'list', 'id' => $fi['ownerOrgId']['uuid'])
                     );?>"><?php echo $fi['ownerOrgId']['name'] ?></a>
-                <?php } else {
+                <?php
+                } else {
                     ?>
                     Глобальный
                 <?php

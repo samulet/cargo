@@ -9,13 +9,14 @@ use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 class AddListNameForm
 {
 
-    public function fillParentFrom($form,$formData) {
+    public function fillParentFrom($form, $formData)
+    {
 
-        $result_array=array('empty'=>'Нет родителя');
-        foreach($formData as $el) {
-           $result_array=$result_array+array($el['id']=>$el['fieldRusName'].' - '.$el['field']);
+        $result_array = array('empty' => 'Нет родителя');
+        foreach ($formData as $el) {
+            $result_array = $result_array + array($el['id'] => $el['fieldRusName'] . ' - ' . $el['field']);
         }
-        $form->get('parentId')->setOptions(array("value_options"=>$result_array));
+        $form->get('parentId')->setOptions(array("value_options" => $result_array));
         return $form;
     }
 }

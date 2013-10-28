@@ -8,6 +8,7 @@
  */
 
 namespace Excel\Entity;
+
 class ExcelStatic
 {
     public static $list = array(
@@ -47,7 +48,6 @@ class ExcelStatic
             "dateEnd" => "Дата разгрузки",
             "timeEnd" => "Время разгрузки",
             "documents" => "Список документов",
-
 
 
         ),

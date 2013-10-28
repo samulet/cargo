@@ -1,13 +1,12 @@
-
 <?php
 $form = $this->form;
-$proposals=$this->proposal;
+$proposals = $this->proposal;
 //die(var_dump($proposals));
 $form->setAttribute('action', $this->url('interaction', array('action' => 'addProposal', 'id' => $this->uuid)))
     ->prepare();
 
 $note = $form->get('note');
-$status= $form->get('status');
+$status = $form->get('status');
 
 echo $this->form()->openTag($form);
 
@@ -22,24 +21,24 @@ echo $this->form()->closeTag();
 <h2>История предожения</h2>
 <table class="table" width="100%">
     <tr>
-<th>
-    Текст
-</th>
-    <th>
-        Статус
-    </th>
+        <th>
+            Текст
+        </th>
+        <th>
+            Статус
+        </th>
     </tr>
-<?php
-foreach($proposals as $proposal) {
-?>
-    <tr style="width:70%;">
-        <td><?php echo $proposal['note'];?></td>
-    <td><?php echo $proposal['status'];?></td>
+    <?php
+    foreach ($proposals as $proposal) {
+        ?>
+        <tr style="width:70%;">
+            <td><?php echo $proposal['note']; ?></td>
+            <td><?php echo $proposal['status']; ?></td>
 
-    </tr>
-<?php
-}
+        </tr>
+    <?php
+    }
 
-?>
+    ?>
 
 </table>

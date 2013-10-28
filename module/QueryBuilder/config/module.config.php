@@ -10,8 +10,8 @@ return array(
     'bjyauthorize' => array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'QueryBuilder\Controller\QueryBuilder','roles' => array('inner','admin')),
- ),
+                array('controller' => 'QueryBuilder\Controller\QueryBuilder', 'roles' => array('inner', 'admin')),
+            ),
 
         ),
     ),

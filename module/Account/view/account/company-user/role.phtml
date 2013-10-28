@@ -1,0 +1,29 @@
+<?php
+$form = $this->form;
+$comId = $this->comId;
+$data = $this->data;
+$roles = $form->get('roles')->setValue($this->roles);
+$displayName = $form->get('displayName')->setValue($data['displayName']);
+$email = $form->get('email')->setValue($data['email']);
+$username = $form->get('username')->setValue($data['username']);
+$password = $form->get('password');
+
+$form->setAttribute(
+    'action',
+    $this->url(
+        'company_user',
+        array('action' => 'roleEdit', 'comId' => $comId, 'param' => 'company', 'org_id' => $this->id)
+    )
+)
+    ->prepare();
+echo $this->form()->openTag($form);
+?>
+    <div class='userAdd'>
+        <?php echo $this->formRow($displayName); ?>
+        <?php echo $this->formRow($email); ?>
+        <?php echo $this->formRow($username); ?>
+        <?php echo $this->formRow($password); ?>
+        <?php echo $this->formRow($roles); ?>
+        <?php echo $this->formElement($form->get('submit')); ?>
+    </div>
+<?php echo $this->form()->closeTag(); ?>

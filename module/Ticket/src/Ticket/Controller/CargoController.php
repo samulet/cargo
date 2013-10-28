@@ -16,6 +16,7 @@ use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Ticket\Form\CargoForm;
+
 class CargoController extends AbstractActionController
 {
 
@@ -35,7 +36,7 @@ class CargoController extends AbstractActionController
     public function myAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
+        $ticket = $res->returnMyTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentCom());
         return new ViewModel(array(
             'res' => $ticket
         ));
@@ -45,7 +46,7 @@ class CargoController extends AbstractActionController
     public function myAccAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnMyAccTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg());
+        $ticket = $res->returnMyAccTicket($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc());
         return new ViewModel(array(
             'res' => $ticket
         ));
@@ -57,11 +58,11 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'cargo');
+        $formArray = array('mark', 'model', 'type', 'status');
+        $formData = $addListModel->returnDataArray($formArray, 'cargo');
 
-        $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $fillFrom = new CargoForm();
+        $form = $fillFrom->fillFrom($form, $formData, $formArray);
         return new ViewModel(array(
             'form' => $form
         ));
@@ -76,10 +77,10 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'cargo');
-        $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $formArray = array('mark', 'model', 'type', 'status');
+        $formData = $addListModel->returnDataArray($formArray, 'cargo');
+        $fillFrom = new CargoForm();
+        $form = $fillFrom->fillFrom($form, $formData, $formArray);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res,
@@ -110,9 +111,9 @@ class CargoController extends AbstractActionController
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $comUserModel = $this->getCompanyUserModel();
         $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-        $org_id = $comUserModel->getOrgIdByUserId($user_id);
+        $accId = $comUserModel->getOrgIdByUserId($user_id);
         $res = $this->getCargoModel();
-        $res->addCargo($this->getRequest()->getPost(), $user_id, $org_id, $id);
+        $res->addCargo($this->getRequest()->getPost(), $user_id, $accId, $id);
         return $this->redirect()->toUrl('/cargos/my');
     }
 
@@ -129,11 +130,13 @@ class CargoController extends AbstractActionController
     {
         if (!$this->companyUserModel) {
             $sm = $this->getServiceLocator();
-            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            $this->companyUserModel = $sm->get('Account\Model\CompanyUserModel');
         }
         return $this->companyUserModel;
     }
-    public function copyAction() {
+
+    public function copyAction()
+    {
 
         $resModel = $this->getCargoModel();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
@@ -142,15 +145,16 @@ class CargoController extends AbstractActionController
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Cargo');
         $addListModel = $this->getAddListModel();
-        $form_array=array('mark','model','type','status');
-        $formData=$addListModel->returnDataArray($form_array,'cargo');
-        $fillFrom=new CargoForm();
-        $form=$fillFrom->fillFrom($form,$formData,$form_array);
+        $formArray = array('mark', 'model', 'type', 'status');
+        $formData = $addListModel->returnDataArray($formArray, 'cargo');
+        $fillFrom = new CargoForm();
+        $form = $fillFrom->fillFrom($form, $formData, $formArray);
         return new ViewModel(array(
             'form' => $form,
             'res' => $res
         ));
     }
+
     public function getAddListModel()
     {
         if (!$this->addListModel) {
@@ -159,6 +163,7 @@ class CargoController extends AbstractActionController
         }
         return $this->addListModel;
     }
+
     public function getTicketModel()
     {
         if (!$this->ticketModel) {

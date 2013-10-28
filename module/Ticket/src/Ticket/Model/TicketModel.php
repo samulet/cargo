@@ -156,9 +156,8 @@ class TicketModel implements ServiceLocatorAwareInterface
             }
 
 
-
             foreach ($res as $key => $value) {
-                if(!empty($value)) {
+                if (!empty($value)) {
                     if ($key != "ownerTicketId") {
                         $ticketWay->$key = $value;
                     } else {
@@ -177,33 +176,33 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     public function addTicket($post, $owner_id, $owner_org_id, $id)
     {
-        $orgModel = $this->getOrganizationModel();
+        $accModel = $this->getAccountModel();
 
         if (!empty($post)) {
             if (is_array($post)) {
-                $prop_array = $post;
+                $propArray = $post;
             } else {
-                $prop_array = get_object_vars($post);
+                $propArray = get_object_vars($post);
             }
         }
-        $prop_array_split = $prop_array;
+        $prop_array_split = $propArray;
 
 
         unset($prop_array_split['submit']);
         $prop_array_new = array();
-        $prop_array = $prop_array_new;
+        $propArray = $prop_array_new;
 
 
-        $prop_array['ownerId'] = $owner_id;
-        $prop_array['ownerOrgId'] = $owner_org_id;
-        $prop_array['currency'] = $prop_array_split['currency'];
-        $prop_array['money'] = $prop_array_split['money'];
-        $prop_array['typeTicket'] = $prop_array_split['typeTicket'];
-        $prop_array['formPay'] = $prop_array_split['formPay'];
-        $prop_array['type'] = $prop_array_split['type'];
-        $prop_array['rate'] = $prop_array_split['rate'];
+        $propArray['ownerId'] = $owner_id;
+        $propArray['ownerOrgId'] = $owner_org_id;
+        $propArray['currency'] = $prop_array_split['currency'];
+        $propArray['money'] = $prop_array_split['money'];
+        $propArray['typeTicket'] = $prop_array_split['typeTicket'];
+        $propArray['formPay'] = $prop_array_split['formPay'];
+        $propArray['type'] = $prop_array_split['type'];
+        $propArray['rate'] = $prop_array_split['rate'];
         if (!empty($prop_array_split['includeNds'])) {
-            $prop_array['includeNds'] = $prop_array_split['includeNds'];
+            $propArray['includeNds'] = $prop_array_split['includeNds'];
         }
 
 
@@ -213,13 +212,13 @@ class TicketModel implements ServiceLocatorAwareInterface
                 array('uuid' => $id)
             );
         } else {
-            $lastItemNumber = $orgModel->getOrganization($owner_org_id)['lastItemNumber'];
+            $lastItemNumber = $accModel->getAccount($owner_org_id)['lastItemNumber'];
             $lastItemNumber++;
-            $prop_array['numberInt'] = $lastItemNumber;
-            $orgModel->increaseLastItemNumber($owner_org_id, $lastItemNumber);
+            $propArray['numberInt'] = $lastItemNumber;
+            $accModel->increaseLastItemNumber($owner_org_id, $lastItemNumber);
             $res = new Ticket();
         }
-        foreach ($prop_array as $key => $value) {
+        foreach ($propArray as $key => $value) {
             if (($key == 'ownerId') || ($key == 'ownerOrgId')) {
                 $res->$key = new \MongoId($value);
             } else {
@@ -262,11 +261,12 @@ class TicketModel implements ServiceLocatorAwareInterface
     }
 
 
-    public function returnTickets($params) {
+    public function returnTickets($params)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
         $ticket = $objectManager->createQueryBuilder('Ticket\Entity\Ticket');
-        $queryBuilderModel=$this->getQueryBuilderModel();
+        $queryBuilderModel = $this->getQueryBuilderModel();
         $rezObj = $queryBuilderModel->createQuery($ticket, $params)->getQuery()->execute();
 
         $result = array();
@@ -278,10 +278,10 @@ class TicketModel implements ServiceLocatorAwareInterface
 
             $veh = $cargo->listCargo($cur->tsId);
             $ways = $this->returnAllWays($cur->id);
-            $resultArray=get_object_vars($cur);
-            $resultArray['created']=$resultArray['created']->format('d-m-Y');
-            $resultArray['statusGlobal']=$noteModel->getItemStatus($cur->id);
-            $resultArray['statusWork']=$intModel->getItemStatus($cur->id);
+            $resultArray = get_object_vars($cur);
+            $resultArray['created'] = $resultArray['created']->format('d-m-Y');
+            $resultArray['statusGlobal'] = $noteModel->getItemStatus($cur->id);
+            $resultArray['statusWork'] = $intModel->getItemStatus($cur->id);
             array_push(
                 $result,
                 array(
@@ -296,41 +296,43 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $result;
     }
 
-    public function findAcceptedResource($ticketId) {
+    public function findAcceptedResource($ticketId)
+    {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
-            array('receiveItemId' => new \MongoId($ticketId) ,'accepted' => '1')
+            array('receiveItemId' => new \MongoId($ticketId), 'accepted' => '1')
         );
-        if(!empty($item->sendItemId)) {
-            $resId=$item->sendItemId;
+        if (!empty($item->sendItemId)) {
+            $resId = $item->sendItemId;
         }
-        if(empty($item)) {
+        if (empty($item)) {
             $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
-                array('sendItemId' => new \MongoId($ticketId) ,'accepted' => '1')
+                array('sendItemId' => new \MongoId($ticketId), 'accepted' => '1')
             );
-            if(!empty($item->receiveItemId)) {
-                $resId=$item->receiveItemId;
+            if (!empty($item->receiveItemId)) {
+                $resId = $item->receiveItemId;
             }
         }
-        if(empty($item)) {
+        if (empty($item)) {
             return array();
         } else {
             $resModel = $this->getResourceModel();
-            $result=$resModel->returnResources(array('id' => new \MongoId($resId)));
+            $result = $resModel->returnResources(array('id' => new \MongoId($resId)));
 
-            if(!empty($result[0])) {
+            if (!empty($result[0])) {
                 return $result[0];
             } else {
                 return array();
             }
         }
     }
+
     public function returnAllTicket()
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $rezObj = $objectManager->getRepository('Ticket\Entity\Ticket')->getAllAvailableTicket();
         $rezs = array();
-        $orgModel = $this->getOrganizationModel();
+        $accModel = $this->getAccountModel();
         if (empty($rezObj)) {
             return null;
         }
@@ -339,8 +341,8 @@ class TicketModel implements ServiceLocatorAwareInterface
             $obj_vars = get_object_vars($cur);
             $veh = $cargo->listCargo($cur->tsId);
             $ways = $this->returnAllWays($cur->id);
-            $org = $orgModel->getOrganization($obj_vars['ownerOrgId']);
-            array_push($rezs, array('res' => $obj_vars, 'org' => $org, 'veh' => $veh, 'ways' => $ways));
+            $acc = $accModel->getAccount($obj_vars['ownerOrgId']);
+            array_push($rezs, array('res' => $obj_vars, 'org' => $acc, 'veh' => $veh, 'ways' => $ways));
         }
         return $rezs;
     }
@@ -355,8 +357,8 @@ class TicketModel implements ServiceLocatorAwareInterface
         foreach ($rezObj as $cur) {
             $veh = $cargo->listCargo($cur->tsId);
             $ways = $this->returnAllWays($cur->id);
-            $resultArray=get_object_vars($cur);
-            $resultArray['created']=$resultArray['created']->format('d-m-Y');
+            $resultArray = get_object_vars($cur);
+            $resultArray['created'] = $resultArray['created']->format('d-m-Y');
             array_push(
                 $rezs,
                 array(
@@ -381,7 +383,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         $com = $comModel->returnCompanies($orgId);
         $resultArray = array();
         foreach ($com as $c) {
-            $resultArray=array_merge($resultArray, $this->returnTickets(array('ownerId'=> new \MongoId($c['id']) )));
+            $resultArray = array_merge($resultArray, $this->returnTickets(array('ownerId' => new \MongoId($c['id']))));
         }
         return $resultArray;
     }
@@ -399,14 +401,14 @@ class TicketModel implements ServiceLocatorAwareInterface
         if (!empty($rezObj)) {
             $result = array();
             foreach ($rezObj as $cur) {
-               $result=array_merge($result,$this->returnMyTicketById($cur->ownerTicketId));
+                $result = array_merge($result, $this->returnMyTicketById($cur->ownerTicketId));
             }
-            foreach($result as &$el) {
-                $el=serialize($el);
+            foreach ($result as &$el) {
+                $el = serialize($el);
             }
-            $resultArray=array_unique($result);
-            foreach($resultArray as &$el) {
-                $el=unserialize($el);
+            $resultArray = array_unique($result);
+            foreach ($resultArray as &$el) {
+                $el = unserialize($el);
             }
             return $resultArray;
         } else {
@@ -418,8 +420,8 @@ class TicketModel implements ServiceLocatorAwareInterface
     {
         $result = array();
         if (!empty($ticketFindObjects)) {
-            foreach($ticketFindObjects as $cur) {
-                $result=array_merge($result,$this->returnMyTicketById($cur->id));
+            foreach ($ticketFindObjects as $cur) {
+                $result = array_merge($result, $this->returnMyTicketById($cur->id));
             }
         }
         return $result;
@@ -430,20 +432,21 @@ class TicketModel implements ServiceLocatorAwareInterface
 
     }
 
-    public function rangeSearch($qb,$propFilterResult) {
-        if(!empty($propFilterResult)) {
-            foreach($propFilterResult as $key =>$range) {
-                if(!empty($range['from'])) {
-                    if( (substr($key , 0, 4)=='date') || ($key=='created') ) {
-                        $range['from']=new \DateTime($range['from']);
+    public function rangeSearch($qb, $propFilterResult)
+    {
+        if (!empty($propFilterResult)) {
+            foreach ($propFilterResult as $key => $range) {
+                if (!empty($range['from'])) {
+                    if ((substr($key, 0, 4) == 'date') || ($key == 'created')) {
+                        $range['from'] = new \DateTime($range['from']);
                     }
                 }
-                if(!empty($range['to'])) {
-                    if( (substr($key , 0, 4)=='date') || ($key=='created') ) {
-                        $range['to']=new \DateTime($range['to']);
+                if (!empty($range['to'])) {
+                    if ((substr($key, 0, 4) == 'date') || ($key == 'created')) {
+                        $range['to'] = new \DateTime($range['to']);
                     }
                 }
-                if( (!empty($range['from']))&&(!empty($range['to'])) ) {
+                if ((!empty($range['from'])) && (!empty($range['to']))) {
                     $qb->field($key)->gte($range['from'])->lte($range['to']);
                 } elseif (!empty($range['from'])) {
                     $qb->field($key)->gte($range['from']);
@@ -459,7 +462,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     public function returnSearchTicket($post)
     {
         $propArray = get_object_vars($post);
-        if(empty($propArray)) {
+        if (empty($propArray)) {
             return array();
         }
         unset($propArray['submit']);
@@ -469,20 +472,19 @@ class TicketModel implements ServiceLocatorAwareInterface
         foreach ($propArray as $key => $value) {
             if (!empty($value)) {
 
-                    $subStrFrom=substr($key , strlen($key)-10, 10);
-                    $subStrTo=substr($key , strlen($key)-8, 8);
-                    if($subStrFrom=='FilterFrom') {
-                        $propFilterResult[substr($key , 0, strlen($key)-10)]['from']=$value;
-                    } elseif($subStrTo=='FilterTo') {
-                        $propFilterResult[substr($key , 0, strlen($key)-8)]['to']=$value;
-                    } else {
-                        $propArrayTicketWay[$key] = $value;
-                    }
+                $subStrFrom = substr($key, strlen($key) - 10, 10);
+                $subStrTo = substr($key, strlen($key) - 8, 8);
+                if ($subStrFrom == 'FilterFrom') {
+                    $propFilterResult[substr($key, 0, strlen($key) - 10)]['from'] = $value;
+                } elseif ($subStrTo == 'FilterTo') {
+                    $propFilterResult[substr($key, 0, strlen($key) - 8)]['to'] = $value;
+                } else {
+                    $propArrayTicketWay[$key] = $value;
+                }
 
             }
         }
-        $propFilterResultTicket=array();
-
+        $propFilterResultTicket = array();
 
 
         //$propArrayTicket = array('activated' => '1');
@@ -499,10 +501,10 @@ class TicketModel implements ServiceLocatorAwareInterface
             }
         }
 
-        $propAcceptedResource=array();
+        $propAcceptedResource = array();
 
-        if(!empty($propArrayTicketWay['accepted'])) {
-            $propAcceptedResource['accepted']=$propArrayTicketWay['accepted'];
+        if (!empty($propArrayTicketWay['accepted'])) {
+            $propAcceptedResource['accepted'] = $propArrayTicketWay['accepted'];
             unset($propArrayTicketWay['accepted']);
         }
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -510,41 +512,41 @@ class TicketModel implements ServiceLocatorAwareInterface
         $qTicketWay = $objectManager->createQueryBuilder('Ticket\Entity\TicketWay');
 
 
+        $qTicketWay = $this->searchItemAct($qTicketWay, $propArrayTicketWay);
+        $qTicketWay = $this->rangeSearch($qTicketWay, $propFilterResult);
 
-        $qTicketWay=$this->searchItemAct($qTicketWay, $propArrayTicketWay);
-        $qTicketWay = $this->rangeSearch($qTicketWay,$propFilterResult);
-
-        $qTicket=$this->searchItemAct($qTicket, $propArrayTicket);
-        $qTicket= $this->rangeSearch($qTicket,$propFilterResultTicket);
+        $qTicket = $this->searchItemAct($qTicket, $propArrayTicket);
+        $qTicket = $this->rangeSearch($qTicket, $propFilterResultTicket);
 
         $resultTicketFromWay = $this->searchTicketWay($qTicketWay->getQuery()->execute());
-        $resultTicketFromTicket=$this->searchTicket($qTicket->getQuery()->execute());
+        $resultTicketFromTicket = $this->searchTicket($qTicket->getQuery()->execute());
 
-        $resultArray=$this->arrayIntersect($resultTicketFromWay, $resultTicketFromTicket);
+        $resultArray = $this->arrayIntersect($resultTicketFromWay, $resultTicketFromTicket);
 
-        if(!empty($propAcceptedResource)) {
-            $resultArray=$this->getAcceptedResourceTickets($resultArray);
+        if (!empty($propAcceptedResource)) {
+            $resultArray = $this->getAcceptedResourceTickets($resultArray);
         }
 
         return $resultArray;
     }
 
-    public function getAcceptedResourceTickets($resultArray) {
-        if(!empty($resultArray)) {
+    public function getAcceptedResourceTickets($resultArray)
+    {
+        if (!empty($resultArray)) {
             $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
-            foreach($resultArray as $key => $res) {
+            foreach ($resultArray as $key => $res) {
 
                 $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
-                    array('receiveItemId' => new \MongoId($res['res']['id']) ,'accepted' => '1')
+                    array('receiveItemId' => new \MongoId($res['res']['id']), 'accepted' => '1')
                 );
 
-                if(empty($item)) {
+                if (empty($item)) {
                     $item = $objectManager->getRepository('Interaction\Entity\Interaction')->findOneBy(
-                        array('sendItemId' => new \MongoId($res['res']['id']) ,'accepted' => '1')
+                        array('sendItemId' => new \MongoId($res['res']['id']), 'accepted' => '1')
                     );
                 }
-                if(empty($item)) {
+                if (empty($item)) {
                     unset($resultArray[$key]);
 
                 }
@@ -558,34 +560,36 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
     }
 
-    public function createBill($propArray) {
-        if(empty($propArray)) {
+    public function createBill($propArray)
+    {
+        if (empty($propArray)) {
             return false;
         }
-        $result=array();
-        foreach($propArray as $cur) {
-            $result=array_merge($result,$this->returnMyTicketById($cur));
+        $result = array();
+        foreach ($propArray as $cur) {
+            $result = array_merge($result, $this->returnMyTicketById($cur));
         }
-        $acceptedTickets=$this->getAcceptedResourceTickets($result);
-        if(empty($acceptedTickets)) {
+        $acceptedTickets = $this->getAcceptedResourceTickets($result);
+        if (empty($acceptedTickets)) {
             return false;
         } else {
 
-            $excelModel=$this->getExcelModel();
+            $excelModel = $this->getExcelModel();
             $excelModel->createBill(array_values($acceptedTickets)[0]);
         }
     }
 
-    public function arrayIntersect($arr1, $arr2) {
-        foreach($arr1 as &$el) {
-            $el=serialize($el);
+    public function arrayIntersect($arr1, $arr2)
+    {
+        foreach ($arr1 as &$el) {
+            $el = serialize($el);
         }
-        foreach($arr2 as &$el) {
-            $el=serialize($el);
+        foreach ($arr2 as &$el) {
+            $el = serialize($el);
         }
-        $resultArray=array_intersect($arr1,$arr2);
-        foreach($resultArray as &$el) {
-            $el=unserialize($el);
+        $resultArray = array_intersect($arr1, $arr2);
+        foreach ($resultArray as &$el) {
+            $el = unserialize($el);
         }
         return $resultArray;
     }
@@ -600,11 +604,11 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $this->serviceLocator;
     }
 
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }
@@ -631,12 +635,13 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $this->addTicket($res, $res['ownerId'], $res['ownerOrgId'], null);
     }
 
-    public function multiFieldProc($multiField) {
-        $multiFieldArray=array();
-        foreach($multiField as $field) {
-            $explodedField=explode('_',$field);
-            if($explodedField[0]!='multiField') {
-                $multiFieldArray[$explodedField[1]][$explodedField[0]]=true;
+    public function multiFieldProc($multiField)
+    {
+        $multiFieldArray = array();
+        foreach ($multiField as $field) {
+            $explodedField = explode('_', $field);
+            if ($explodedField[0] != 'multiField') {
+                $multiFieldArray[$explodedField[1]][$explodedField[0]] = true;
             }
 
         }
@@ -664,12 +669,12 @@ class TicketModel implements ServiceLocatorAwareInterface
             $cargoOwnerTrue = $comModel->getCompany($re->cargoOwner);
             $resultArray = get_object_vars($re);
             $resultArray['cargoOwnerTrue'] = $cargoOwnerTrue;
-            $resultArray['docArray'] =  $this->getDocumentWay($re->id);
-            if(!empty( $resultArray['dateEnd'])) {
-                $resultArray['dateEnd']=$resultArray['dateEnd']->format('Y-m-d');
+            $resultArray['docArray'] = $this->getDocumentWay($re->id);
+            if (!empty($resultArray['dateEnd'])) {
+                $resultArray['dateEnd'] = $resultArray['dateEnd']->format('Y-m-d');
             }
-            if(!empty( $resultArray['dateStart'])) {
-                $resultArray['dateStart']=$resultArray['dateStart']->format('Y-m-d');
+            if (!empty($resultArray['dateStart'])) {
+                $resultArray['dateStart'] = $resultArray['dateStart']->format('Y-m-d');
             }
 
             array_push($result, $resultArray);
@@ -716,10 +721,10 @@ class TicketModel implements ServiceLocatorAwareInterface
         return $this->notificationModel;
     }
 
-    public function getCargoOwnerData($orgListId)
+    public function getCargoOwnerData($accListId)
     {
         $comModel = $this->getCompanyModel();
-        $com = $comModel->returnCompanies($orgListId);
+        $com = $comModel->returnCompanies($accListId);
         if (!empty($com)) {
             $result = array();
             foreach ($com as $c) {
@@ -735,7 +740,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     {
         if (!$this->companyUserModel) {
             $sm = $this->getServiceLocator();
-            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            $this->companyUserModel = $sm->get('Account\Model\CompanyUserModel');
         }
         return $this->companyUserModel;
     }
@@ -744,7 +749,7 @@ class TicketModel implements ServiceLocatorAwareInterface
     {
         if (!$this->companyModel) {
             $sm = $this->getServiceLocator();
-            $this->companyModel = $sm->get('Organization\Model\CompanyModel');
+            $this->companyModel = $sm->get('Account\Model\CompanyModel');
         }
         return $this->companyModel;
     }
@@ -757,7 +762,7 @@ class TicketModel implements ServiceLocatorAwareInterface
                 foreach ($docWay as $wayEl) {
                     $attr = $wayEl->getAttributes();
                     if (!empty($attr['type'])) {
-                        if ((($attr['type'] != 'checkbox') && ($attr['type']!='multi_checkbox') && ($attr['type'] != 'radio'))) {
+                        if ((($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox') && ($attr['type'] != 'radio'))) {
                             $wayEl->setAttributes(array('class' => 'form-control'));
                         }
                     }
@@ -767,7 +772,7 @@ class TicketModel implements ServiceLocatorAwareInterface
             foreach ($formWay as $wayEl) {
                 $attr = $wayEl->getAttributes();
                 if (!empty($attr['type'])) {
-                    if ((($attr['type'] != 'checkbox') && ($attr['type']!='multi_checkbox')&& ($attr['type'] != 'radio'))) {
+                    if ((($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox') && ($attr['type'] != 'radio'))) {
                         $wayEl->setAttributes(array('class' => 'form-control'));
                     }
                 }
@@ -777,12 +782,13 @@ class TicketModel implements ServiceLocatorAwareInterface
         foreach ($form as $el) {
             $attr = $el->getAttributes();
             if (!empty($attr['type'])) {
-                if (($attr['type'] != 'checkbox')&& ($attr['type']!='multi_checkbox')) {
+                if (($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox')) {
                     $el->setAttributes(array('class' => 'form-control'));
                 }
             }
         }
     }
+
     public function getQueryBuilderModel()
     {
         if (!$this->queryBuilderModel) {
@@ -800,6 +806,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         return $this->interactionModel;
     }
+
     public function getResourceModel()
     {
         if (!$this->resourceModel) {
@@ -808,6 +815,7 @@ class TicketModel implements ServiceLocatorAwareInterface
         }
         return $this->resourceModel;
     }
+
     public function getExcelModel()
     {
         if (!$this->excelModel) {

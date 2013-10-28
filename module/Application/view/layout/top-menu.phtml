@@ -66,7 +66,7 @@ foreach ($this->container as $page) {
         $label = $this->zfcUserIdentity() ? $this->zfcUserIdentity()->getDisplayname() : 'ПОЛЬЗОВАТЕЛЬ';
         if ($this->zfcUserIdentity()) {
             $label = $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 20))
-                   . '&nbsp;&nbsp;' . $this->escapeHtml($label);
+                . '&nbsp;&nbsp;' . $this->escapeHtml($label);
         }
     } else {
         $label = $this->escapeHtml($label);
@@ -100,16 +100,16 @@ foreach ($this->container as $page) {
 ?>
 
 <ul class="nav navbar-nav">
-<?php
-foreach ($left as $link) {
-    echo $link;
-}
-?>
+    <?php
+    foreach ($left as $link) {
+        echo $link;
+    }
+    ?>
 </ul>
 <ul class="nav navbar-nav pull-right">
-<?php
-foreach ($right as $link) {
-    echo $link;
-}
-?>
+    <?php
+    foreach ($right as $link) {
+        echo $link;
+    }
+    ?>
 </ul>

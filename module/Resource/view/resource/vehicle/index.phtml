@@ -9,36 +9,40 @@ $vehicles = $this->res;
 <table class="table">
     <tr>
         <th>
-           Номер транспортного средства
+            Номер транспортного средства
         </th>
-                <th>
-                    Статус
-                </th>
+        <th>
+            Статус
+        </th>
         <th>
             Марка / Модель
         </th>
 
 
-
     </tr>
-    <?php foreach ($vehicles as $vehicle) { $org=$vehicle['owner'];$vehicle=$vehicle['res'];?>
+    <?php foreach ($vehicles as $vehicle) {
+        $acc = $vehicle['owner'];
+        $vehicle = $vehicle['res']; ?>
         <tr>
             <td>
-              <a href="<?php echo $this->url('vehicle',array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'list'));?>">
-                            <?php echo $vehicle['carNumber']; ?>
-                            </a>
+                <a href="<?php echo $this->url(
+                    'vehicle',
+                    array('action' => 'add', 'id' => $vehicle['uuid'], 'type' => 'list')
+                ); ?>">
+                    <?php echo $vehicle['carNumber']; ?>
+                </a>
 
             </td>
-                        <td>
-                            <?php echo $vehicle['status']; ?>
-                        </td>
+            <td>
+                <?php echo $vehicle['status']; ?>
+            </td>
             <td>
                 <?php echo $vehicle['mark'] . ' / ' . $vehicle['model']; ?>
             </td>
 
-              <!--      <td>
+            <!--      <td>
                     <a href="<?php echo $this->url('account',
-                                array('action'=>'list', 'id' => $org['uuid']));?>"><?php echo $org['name']; ?></a>
+                                array('action'=>'list', 'id' => $acc['uuid']));?>"><?php echo $acc['name']; ?></a>
                     </td>
 
             <td>

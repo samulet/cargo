@@ -4,38 +4,38 @@ $form->setAttribute('action', $this->url('cargo', array('action' => 'addCargo'))
     ->prepare();
 $name = $form->get('name');
 
-$serialNumber= $form->get('serialNumber');
-$vin= $form->get('vin');
-$mark= $form->get('mark')->setValue($this->res['mark']);
-$model= $form->get('model')->setValue($this->res['model']);
-$type= $form->get('type')->setValue($this->res['type']);
-$dateMade= $form->get('dateMade')->setValue($this->res['dateMade']);
-$owner= $form->get('owner')->setValue($this->res['owner']);
+$serialNumber = $form->get('serialNumber');
+$vin = $form->get('vin');
+$mark = $form->get('mark')->setValue($this->res['mark']);
+$model = $form->get('model')->setValue($this->res['model']);
+$type = $form->get('type')->setValue($this->res['type']);
+$dateMade = $form->get('dateMade')->setValue($this->res['dateMade']);
+$owner = $form->get('owner')->setValue($this->res['owner']);
 
-$semitrailer= $form->get('semitrailer')->setValue($this->res['semitrailer']);
-$tractor= $form->get('tractor')->setValue($this->res['tractor']);
-$coupling= $form->get('coupling')->setValue($this->res['coupling']);
-$lorry= $form->get('lorry')->setValue($this->res['lorry']);
+$semitrailer = $form->get('semitrailer')->setValue($this->res['semitrailer']);
+$tractor = $form->get('tractor')->setValue($this->res['tractor']);
+$coupling = $form->get('coupling')->setValue($this->res['coupling']);
+$lorry = $form->get('lorry')->setValue($this->res['lorry']);
 
 $hydroLift = $form->get('hydroLift')->setValue($this->res['hydroLift']);
 $EKMT = $form->get('EKMT')->setValue($this->res['EKMT']);
 $TIR = $form->get('TIR')->setValue($this->res['TIR']);
-$adr= $form->get('adr')->setValue($this->res['adr']);
-$note= $form->get('note')->setValue($this->res['note']);
+$adr = $form->get('adr')->setValue($this->res['adr']);
+$note = $form->get('note')->setValue($this->res['note']);
 
 
-$status= $form->get('status');
-$dateMade= $form->get('dateMade');
-$owner= $form->get('owner');
+$status = $form->get('status');
+$dateMade = $form->get('dateMade');
+$owner = $form->get('owner');
 
-$serialNumberDoc= $form->get('serialNumberDoc');
-$carNumber= $form->get('carNumber');
-$ecologicalClass= $form->get('ecologicalClass')->setValue($this->res['ecologicalClass']);
-$allowedMaxMass= $form->get('allowedMaxMass')->setValue($this->res['allowedMaxMass']);
-$axles= $form->get('axles')->setValue($this->res['axles']);
-$capacity= $form->get('capacity')->setValue($this->res['capacity']);
-$ownerName= $form->get('ownerName')->setValue($this->res['ownerName']);
-$whoGave= $form->get('whoGave')->setValue($this->res['whoGave']);
+$serialNumberDoc = $form->get('serialNumberDoc');
+$carNumber = $form->get('carNumber');
+$ecologicalClass = $form->get('ecologicalClass')->setValue($this->res['ecologicalClass']);
+$allowedMaxMass = $form->get('allowedMaxMass')->setValue($this->res['allowedMaxMass']);
+$axles = $form->get('axles')->setValue($this->res['axles']);
+$capacity = $form->get('capacity')->setValue($this->res['capacity']);
+$ownerName = $form->get('ownerName')->setValue($this->res['ownerName']);
+$whoGave = $form->get('whoGave')->setValue($this->res['whoGave']);
 
 echo $this->form()->openTag($form);
 
@@ -45,7 +45,7 @@ echo $this->form()->openTag($form);
 ?>
 
     <table class="table spec_table cargo">
-        <tr >
+        <tr>
             <th style="width:50%; text-align: center;">
                 ПТС
             </th>

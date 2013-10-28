@@ -1,12 +1,12 @@
 <div class='filters'>
 <?php
-$filterData=$this->filterData;
-$multiFieldData=$this->multiFieldData;
-$otherData=$this->otherData;
+$filterData = $this->filterData;
+$multiFieldData = $this->multiFieldData;
+$otherData = $this->otherData;
 $form = $this->form;
 $formsArray = $this->formsArray;
 $formsDocArray = $this->formsDocArray;
-$formInteraction=$this->formInteraction;
+$formInteraction = $this->formInteraction;
 
 $typeForm = $this->typeForm;
 
@@ -52,22 +52,32 @@ $formFilterWay = $formsArray[0]['formWay'];
 
 $cargoOwner = $formFilterWay->get('cargoOwner');
 
-$dateStartFilterFrom  = clone $formFilterWay->get('dateStart');
-$dateStartFilterFrom=$dateStartFilterFrom->setName('dateStartFilterFrom')->setOptions(array("label" => 'Загрузка с'))->setValue($filterData['dateStartFilterFrom']);
+$dateStartFilterFrom = clone $formFilterWay->get('dateStart');
+$dateStartFilterFrom = $dateStartFilterFrom->setName('dateStartFilterFrom')->setOptions(
+    array("label" => 'Загрузка с')
+)->setValue($filterData['dateStartFilterFrom']);
 $dateStartFilterTo = clone $formFilterWay->get('dateStart');
-$dateStartFilterTo=$dateStartFilterTo->setName('dateStartFilterTo')->setOptions(array("label" => 'По'))->setValue($filterData['dateStartFilterTo']);
+$dateStartFilterTo = $dateStartFilterTo->setName('dateStartFilterTo')->setOptions(array("label" => 'По'))->setValue(
+    $filterData['dateStartFilterTo']
+);
 
-$createdFilterFrom= clone $form->get('created');
-$createdFilterFrom=$createdFilterFrom->setName('createdFilterFrom')->setOptions(array("label" => 'Заявка создана с'))->setValue($filterData['createdFilterFrom']);
-$createdFilterTo= clone $form->get('created');
-$createdFilterTo=$createdFilterTo->setName('createdFilterTo')->setOptions(array("label" => 'По'))->setValue($filterData['createdFilterTo']);
+$createdFilterFrom = clone $form->get('created');
+$createdFilterFrom = $createdFilterFrom->setName('createdFilterFrom')->setOptions(
+    array("label" => 'Заявка создана с')
+)->setValue($filterData['createdFilterFrom']);
+$createdFilterTo = clone $form->get('created');
+$createdFilterTo = $createdFilterTo->setName('createdFilterTo')->setOptions(array("label" => 'По'))->setValue(
+    $filterData['createdFilterTo']
+);
 
 $ownerId = clone $cargoOwner;
-$ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'))->setValue($filterData['ownerId']);
-$multiField=$form->get('multiField');
+$ownerId = $ownerId->setName('ownerId')->setOptions(array("label" => 'Компания (создавшая заявку)'))->setValue(
+    $filterData['ownerId']
+);
+$multiField = $form->get('multiField');
 
-$acceptedResource=$formInteraction->get('accepted')->setValue($otherData['accepted']);
-if(!empty($multiFieldData)) {
+$acceptedResource = $formInteraction->get('accepted')->setValue($otherData['accepted']);
+if (!empty($multiFieldData)) {
     $multiField->setValue($multiFieldData);
 }
 
@@ -96,6 +106,7 @@ if(!empty($multiFieldData)) {
     ?>
     </br>
     <span onclick='showMulti();' class='showFilter'>Показать/скрыть конструктор полей</span>
+
     <div class='multiField'>
         <?php echo $this->formRow($multiField); ?>
     </div>
@@ -291,6 +302,7 @@ foreach ($formsArray as $formWayArray) {
         ?>
         <div class="timeLoadMain">
             <p>Время работы загрузки</p>
+
             <div class="timeLoadStart"><?php echo $this->formRow($timeLoadStart); ?></div>
             <div class="timeLoadEnd"><?php echo $this->formRow($timeLoadEnd); ?></div>
         </div>
@@ -302,6 +314,7 @@ foreach ($formsArray as $formWayArray) {
 
         <div class="timeLoadMain">
             <p>Время работы разгрузки</p>
+
             <div class="timeLoadStart"><?php echo $this->formRow($timeUnloadStart); ?></div>
             <div class="timeLoadEnd"><?php echo $this->formRow($timeUnloadEnd); ?></div>
         </div>
@@ -559,74 +572,87 @@ $types_r = array('Тентовый' => 'tent', 'Фургон' => 'furgon', 'Пи
 <table id="resultTable" class="table">
     <tr>
         <th>#</th>
-        <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
-            <th><?php echo $form->get($field)->getLabel(); ?></th>
-        <?php }} ?>
-        <?php if(!empty($multiField['ticketWay'])) {foreach($multiField['ticketWay'] as $field  =>$value) { ?>
-            <th><?php echo $formFilterWay->get($field)->getLabel(); ?></th>
-        <?php } }?>
-        <?php if(!empty($multiField['ticketWayDoc'])) {foreach($multiField['ticketWayDoc'] as $field  =>$value) { ?>
-            <th><?php echo $formFilterWayDoc->get($field)->getLabel(); ?></th>
-        <?php } }?>
+        <?php if (!empty($multiField['ticket'])) {
+            foreach ($multiField['ticket'] as $field => $value) { ?>
+                <th><?php echo $form->get($field)->getLabel(); ?></th>
+            <?php }
+        } ?>
+        <?php if (!empty($multiField['ticketWay'])) {
+            foreach ($multiField['ticketWay'] as $field => $value) { ?>
+                <th><?php echo $formFilterWay->get($field)->getLabel(); ?></th>
+            <?php }
+        } ?>
+        <?php if (!empty($multiField['ticketWayDoc'])) {
+            foreach ($multiField['ticketWayDoc'] as $field => $value) { ?>
+                <th><?php echo $formFilterWayDoc->get($field)->getLabel(); ?></th>
+            <?php }
+        } ?>
     </tr>
     <?php foreach ($tickets as $ticket) {
         ?>
 
         <tr>
             <td class='ticketSelect'>
-                <input type='checkbox' value='<?php echo $ticket['res']['id']; ?>' checked onclick="deleteChecked(this);"/>
+                <input type='checkbox' value='<?php echo $ticket['res']['id']; ?>' checked
+                       onclick="deleteChecked(this);"/>
             </td>
-            <?php if(!empty($multiField['ticket'])) {foreach($multiField['ticket'] as $field =>$value) { ?>
-                <td><?php if(!empty($ticket['res'][$field])) {
-                        if( ($field!='numberInt') && ($field!='ownerId')) {
-                            echo $ticket['res'][$field];
-                        } elseif($field=='numberInt')  {
-                            ?>
-                            <a href="<?php echo $this->url(
-                                'ticket',
-                                array('action' => 'add', 'id' => $ticket['res']['uuid'] ,'type'=>'list')
-                            );?>"><?php echo $ticket['res'][$field]; ?></a>
-                    <?php
-                        } elseif($field=='ownerId') {
-                            echo $ticket['owner']['property'].' '.$ticket['owner']['name'];
-                        }
+            <?php if (!empty($multiField['ticket'])) {
+                foreach ($multiField['ticket'] as $field => $value) { ?>
+                    <td><?php if (!empty($ticket['res'][$field])) {
+                            if (($field != 'numberInt') && ($field != 'ownerId')) {
+                                echo $ticket['res'][$field];
+                            } elseif ($field == 'numberInt') {
+                                ?>
+                                <a href="<?php echo $this->url(
+                                    'ticket',
+                                    array('action' => 'add', 'id' => $ticket['res']['uuid'], 'type' => 'list')
+                                );?>"><?php echo $ticket['res'][$field]; ?></a>
+                            <?php
+                            } elseif ($field == 'ownerId') {
+                                echo $ticket['owner']['property'] . ' ' . $ticket['owner']['name'];
+                            }
 
-                    } ?></td>
-            <?php }} ?>
-            <?php if(!empty($multiField['ticketWay'])) {foreach($multiField['ticketWay'] as $field =>$value) { ?>
-                <td><?php
-                    $counter=1;
-                    foreach($ticket['ways'] as $way) {
-                        if($field!='cargoOwner') {
-                            if(!empty($way[$field])) {
-                                echo '(Груз '.$counter.') '.$way[$field].'</br>';
-                            }
-                        } else {
-                            if(!empty($way[$field])) {
-                                echo '(Груз '.$counter.') '.$way['cargoOwnerTrue']['property'].' '.$way['cargoOwnerTrue']['name'].'</br>';
-                            }
-                        }
-                        $counter++;
-                    }
-                    ?></td>
-            <?php }} ?>
-            <?php if(!empty($multiField['ticketWayDoc'])) {foreach($multiField['ticketWayDoc'] as $field =>$value) { ?>
-                <td><?php
-                    $counterWay=1;
-                    foreach($ticket['ways'] as $way) {
-                        $counterDoc=1;
-                        if(!empty($way['docArray'])) {
-                            foreach ($way['docArray'] as $doc) {
-                                if(!empty($doc[$field])) {
-                                    echo '(Груз '.$counterWay.' Док '.$counterDoc.') '.$doc[$field].'</br>';
+                        } ?></td>
+                <?php }
+            } ?>
+            <?php if (!empty($multiField['ticketWay'])) {
+                foreach ($multiField['ticketWay'] as $field => $value) { ?>
+                    <td><?php
+                        $counter = 1;
+                        foreach ($ticket['ways'] as $way) {
+                            if ($field != 'cargoOwner') {
+                                if (!empty($way[$field])) {
+                                    echo '(Груз ' . $counter . ') ' . $way[$field] . '</br>';
                                 }
-                                $counterDoc++;
+                            } else {
+                                if (!empty($way[$field])) {
+                                    echo '(Груз ' . $counter . ') ' . $way['cargoOwnerTrue']['property'] . ' ' . $way['cargoOwnerTrue']['name'] . '</br>';
+                                }
                             }
+                            $counter++;
                         }
-                        $counterWay++;
-                    }
-                    ?></td>
-            <?php }} ?>
+                        ?></td>
+                <?php }
+            } ?>
+            <?php if (!empty($multiField['ticketWayDoc'])) {
+                foreach ($multiField['ticketWayDoc'] as $field => $value) { ?>
+                    <td><?php
+                        $counterWay = 1;
+                        foreach ($ticket['ways'] as $way) {
+                            $counterDoc = 1;
+                            if (!empty($way['docArray'])) {
+                                foreach ($way['docArray'] as $doc) {
+                                    if (!empty($doc[$field])) {
+                                        echo '(Груз ' . $counterWay . ' Док ' . $counterDoc . ') ' . $doc[$field] . '</br>';
+                                    }
+                                    $counterDoc++;
+                                }
+                            }
+                            $counterWay++;
+                        }
+                        ?></td>
+                <?php }
+            } ?>
         </tr>
     <?php } ?>
 
@@ -638,8 +664,8 @@ $formFilterWay->setAttribute('action', $this->url('excel', array('action' => 'cr
 echo $this->form()->openTag($formFilterWay);
 ?>
 <div style='display:none' class='changeTable'></div>
-<input type='hidden' name='excelForm' value />
-<button onclick='fillExcelForm(this);'type="button">Печать списка заявок</button>
+<input type='hidden' name='excelForm' value/>
+<button onclick='fillExcelForm(this);' type="button">Печать списка заявок</button>
 <?php echo $this->form()->closeTag($formFilterWay); ?>
 
 <?php
@@ -649,5 +675,5 @@ echo $this->form()->openTag($formFilterWay);
 ?>
 <div style='display:none' class='inputBillList'></div>
 
-<button onclick='createBill(this);'type="button">Печать счета</button>
+<button onclick='createBill(this);' type="button">Печать счета</button>
 <?php echo $this->form()->closeTag($formFilterWay); ?>

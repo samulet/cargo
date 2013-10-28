@@ -17,7 +17,6 @@ use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 
-
 /**
  * @ODM\Document(collection="addListName", repositoryClass="AddList\Repository\AddListNameRepository")
  * @Annotation\Name("addListName")
@@ -31,6 +30,7 @@ class AddListName
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
     }
+
     /**
      * @ODM\Id
      * @var int
@@ -77,7 +77,6 @@ class AddListName
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Имя списка"})
      * @Annotation\Required({"required":"true" })
@@ -90,7 +89,6 @@ class AddListName
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Имя поля"})
      * @Annotation\Required({"required":"true" })
@@ -103,7 +101,6 @@ class AddListName
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Имя поля на русском"})
      * @Annotation\Required({"required":"true" })
@@ -125,6 +122,7 @@ class AddListName
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -140,11 +138,13 @@ class AddListName
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function setId($id)
     {
         $this->id = $id;
         return $this;
     }
+
     public function getUUID()
     {
         return $this->uuid;

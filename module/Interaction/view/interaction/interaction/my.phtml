@@ -1,5 +1,5 @@
 <?php
-$interactions=$this->interaction;
+$interactions = $this->interaction;
 
 ?>
 <h1>Полученные предложения</h1>
@@ -23,40 +23,46 @@ $interactions=$this->interaction;
         </th>
 
     </tr>
-    <?php foreach($interactions as $interaction) { ?>
+    <?php foreach ($interactions as $interaction) { ?>
         <tr>
             <td>
-                <a href="<?php echo $this->url('interaction',
-                    array('action'=>'proposal', 'id' => $interaction['uuid']));?>">
-                    <?php echo $interaction['uuid'];?>
+                <a href="<?php echo $this->url(
+                    'interaction',
+                    array('action' => 'proposal', 'id' => $interaction['uuid'])
+                );?>">
+                    <?php echo $interaction['uuid']; ?>
                 </a>
             </td>
             <td>
 
                 <a href="<?php
 
-                if($interaction['sendItem']['status']=='Заявка') {
-                    $rout='ticket';
+                if ($interaction['sendItem']['status'] == 'Заявка') {
+                    $rout = 'ticket';
                 } else {
-                    $rout='resource';
+                    $rout = 'resource';
                 }
-                echo $this->url($rout,
-                    array('action'=>'add', 'type'=>'list',  'id' => $interaction['sendItem']['uuid']));?>">
-                    <?php echo $interaction['sendItem']['uuid'].'('.$interaction['sendItem']['status'].')';?>
+                echo $this->url(
+                    $rout,
+                    array('action' => 'add', 'type' => 'list', 'id' => $interaction['sendItem']['uuid'])
+                );?>">
+                    <?php echo $interaction['sendItem']['uuid'] . '(' . $interaction['sendItem']['status'] . ')'; ?>
                 </a>
             </td>
             <td>
 
                 <a href="<?php
 
-                if($interaction['receiveItem']['status']=='Заявка') {
-                    $rout='ticket';
+                if ($interaction['receiveItem']['status'] == 'Заявка') {
+                    $rout = 'ticket';
                 } else {
-                    $rout='resource';
+                    $rout = 'resource';
                 }
-                echo $this->url($rout,
-                    array('action'=>'add', 'type'=>'list', 'id' => $interaction['receiveItem']['uuid']));?>">
-                    <?php echo $interaction['receiveItem']['uuid'].'('.$interaction['receiveItem']['status'].')';?>
+                echo $this->url(
+                    $rout,
+                    array('action' => 'add', 'type' => 'list', 'id' => $interaction['receiveItem']['uuid'])
+                );?>">
+                    <?php echo $interaction['receiveItem']['uuid'] . '(' . $interaction['receiveItem']['status'] . ')'; ?>
                 </a>
             </td>
             <td>
@@ -64,8 +70,10 @@ $interactions=$this->interaction;
             </td>
 
             <td>
-                <a href="<?php echo $this->url('interaction',
-                    array('action'=>'accept', 'id' => $interaction['uuid']));?>">
+                <a href="<?php echo $this->url(
+                    'interaction',
+                    array('action' => 'accept', 'id' => $interaction['uuid'])
+                );?>">
                     Принять предложение
                 </a>
             </td>

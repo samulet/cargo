@@ -54,7 +54,6 @@ class NotificationNote
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
-
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Примечание"})
      * @var string
@@ -65,7 +64,6 @@ class NotificationNote
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Type("Zend\Form\Element\Select")
-
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Статус",
      *                      "value_options" : {"Отправлено на доработку": "Отправлено на доработку", "На рассмотрении":"На рассмотрении","Опубликовано":"Опубликовано","В работе":"В работе","Завершена":"Завершена"}})
@@ -80,7 +78,6 @@ class NotificationNote
      * @ODM\Field(type="string")
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-
      * @Annotation\Attributes({"type":"hidden"})
 
      */
@@ -101,6 +98,7 @@ class NotificationNote
      * @Annotation\Exclude()
      */
     public $deletedAt;
+
     /**
      * @return mixed
      */
@@ -116,6 +114,7 @@ class NotificationNote
     {
         $this->deletedAt = $deletedAt;
     }
+
     public function getUUID()
     {
         return $this->uuid;

@@ -1,75 +1,73 @@
 <?php
 $form = $this->form;
-$typeForm=$this->typeForm;
+$typeForm = $this->typeForm;
 
-$formData= $this->formData;
-$title='';
-if(empty($typeForm)) {
+$formData = $this->formData;
+$title = '';
+if (empty($typeForm)) {
     $form->setAttribute('action', $this->url('vehicle', array('action' => 'add')))
         ->prepare();
-    $title='Добавление';
+    $title = 'Добавление';
 } else {
-    $type=$typeForm['action'];
-    if($type=='edit') {
+    $type = $typeForm['action'];
+    if ($type == 'edit') {
         $form->setAttribute('action', $this->url('vehicle', array('action' => 'add', 'id' => $typeForm['id'])))
             ->prepare();
-        $title='Редактирование';
-    }
-    elseif($type=='copy') {
+        $title = 'Редактирование';
+    } elseif ($type == 'copy') {
         $form->setAttribute('action', $this->url('vehicle', array('action' => 'add')))
             ->prepare();
-        $title='Копирование';
-    }
-    elseif($type=='list') {
+        $title = 'Копирование';
+    } elseif ($type == 'list') {
         $form->setAttribute('action', $this->url('vehicle'))
             ->prepare();
-        $title='Просмотр';
+        $title = 'Просмотр';
     }
 
 }
 
-$serialNumber= $form->get('serialNumber');
-$vin= $form->get('vin');
-$mark= $form->get('mark');
+$serialNumber = $form->get('serialNumber');
+$vin = $form->get('vin');
+$mark = $form->get('mark');
 $mark->setAttributes(array('id' => 'parent-model-mark'));
-$model= $form->get('model');
+$model = $form->get('model');
 
 $model->setAttributes(array('id' => 'child-mark-model'));
 
-$type= $form->get('type');
+$type = $form->get('type');
 
-$semitrailer= $form->get('semitrailer');
-$tractor= $form->get('tractor');
-$coupling= $form->get('coupling');
-$lorry= $form->get('lorry');
+$semitrailer = $form->get('semitrailer');
+$tractor = $form->get('tractor');
+$coupling = $form->get('coupling');
+$lorry = $form->get('lorry');
 
 $hydroLift = $form->get('hydroLift');
 $EKMT = $form->get('EKMT');
 $TIR = $form->get('TIR');
-$adr= $form->get('adr');
-$note= $form->get('note');
+$adr = $form->get('adr');
+$note = $form->get('note');
 
 
-$status= $form->get('status');
-$dateMade= $form->get('dateMade');
+$status = $form->get('status');
+$dateMade = $form->get('dateMade');
 
 
-$serialNumberDoc= $form->get('serialNumberDoc');
-$carNumber= $form->get('carNumber');
-$ecologicalClass= $form->get('ecologicalClass');
-$allowedMaxMass= $form->get('allowedMaxMass');
-$axles= $form->get('axles');
-$capacity= $form->get('capacity');
-$ownerName= $form->get('ownerName');
-$whoGave= $form->get('whoGave');
+$serialNumberDoc = $form->get('serialNumberDoc');
+$carNumber = $form->get('carNumber');
+$ecologicalClass = $form->get('ecologicalClass');
+$allowedMaxMass = $form->get('allowedMaxMass');
+$axles = $form->get('axles');
+$capacity = $form->get('capacity');
+$ownerName = $form->get('ownerName');
+$whoGave = $form->get('whoGave');
 
 
-$typeLoad= $form->get('typeLoad');
-$typeUnload=clone $form->get('typeLoad');
+$typeLoad = $form->get('typeLoad');
+$typeUnload = clone $form->get('typeLoad');
 
-$typeUnload= $typeUnload->setName('typeUnload')->setOptions(array("label"=>'Тип выгрузки'));
+$typeUnload = $typeUnload->setName('typeUnload')->setOptions(array("label" => 'Тип выгрузки'));
 $bodyValue = $form->get('bodyValue');
-$bodyType= $form->get('bodyType');
+$bodyType = $form->get('bodyType');
 
 
 echo $this->form()->openTag($form);
@@ -79,84 +77,84 @@ echo $this->form()->openTag($form);
 
 ?>
     <h1>ТС - <?php echo $title; ?></h1>
-<table class="table spec_table vehicle">
-    <tr >
-        <th style="width:50%; text-align: center;">
-            ПТС
-        </th>
-        <th style="width:50%; text-align: center;">
-            Свидетельстов о регистрации
-        </th>
-    </tr>
-    <tr style="border-right: 1px dashed #dddddd;">
-        <td style="width:50%;">
-            <?php
-            echo $this->formRow($serialNumber);
-            echo $this->formRow($vin);
-            echo $this->formRow($mark);
-            echo $this->formRow($model);
-            echo $this->formRow($type);
-            ?>
+    <table class="table spec_table vehicle">
+        <tr>
+            <th style="width:50%; text-align: center;">
+                ПТС
+            </th>
+            <th style="width:50%; text-align: center;">
+                Свидетельстов о регистрации
+            </th>
+        </tr>
+        <tr style="border-right: 1px dashed #dddddd;">
+            <td style="width:50%;">
+                <?php
+                echo $this->formRow($serialNumber);
+                echo $this->formRow($vin);
+                echo $this->formRow($mark);
+                echo $this->formRow($model);
+                echo $this->formRow($type);
+                ?>
 
-            <?php
-            echo $this->formRow($semitrailer);
-            echo $this->formRow($tractor);
-            echo $this->formRow($coupling);
-            echo $this->formRow($lorry);
-            ?>
+                <?php
+                echo $this->formRow($semitrailer);
+                echo $this->formRow($tractor);
+                echo $this->formRow($coupling);
+                echo $this->formRow($lorry);
+                ?>
 
-            <?php
-            echo $this->formRow($dateMade);
+                <?php
+                echo $this->formRow($dateMade);
 
-            ?>
-        </td>
-        <td style="width:50%;">
-            <?php
-            echo $this->formRow($serialNumberDoc);
-            echo $this->formRow($carNumber);
-            echo $this->formRow($ecologicalClass);
-            echo $this->formRow($allowedMaxMass);
-            echo $this->formRow($axles);
-            echo $this->formRow($capacity);
-            echo $this->formRow($ownerName);
-            echo $this->formRow($whoGave);
-            ?>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <?php  echo $this->formRow($status);
-            echo $this->formRow($hydroLift);
-            echo $this->formRow($EKMT);
-            echo $this->formRow($TIR);
-            echo $this->formRow($adr);
-            ?>
-        </td>
-        <td>
-            <?php  echo $this->formRow($note);
-            echo $this->formRow($typeLoad);
-            echo $this->formRow($typeUnload);
-            echo $this->formRow($bodyValue);
-            echo $this->formRow($bodyType);
-            ?>
-        </td>
-    </tr>
+                ?>
+            </td>
+            <td style="width:50%;">
+                <?php
+                echo $this->formRow($serialNumberDoc);
+                echo $this->formRow($carNumber);
+                echo $this->formRow($ecologicalClass);
+                echo $this->formRow($allowedMaxMass);
+                echo $this->formRow($axles);
+                echo $this->formRow($capacity);
+                echo $this->formRow($ownerName);
+                echo $this->formRow($whoGave);
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php  echo $this->formRow($status);
+                echo $this->formRow($hydroLift);
+                echo $this->formRow($EKMT);
+                echo $this->formRow($TIR);
+                echo $this->formRow($adr);
+                ?>
+            </td>
+            <td>
+                <?php  echo $this->formRow($note);
+                echo $this->formRow($typeLoad);
+                echo $this->formRow($typeUnload);
+                echo $this->formRow($bodyValue);
+                echo $this->formRow($bodyType);
+                ?>
+            </td>
+        </tr>
     </table>
 <?php
-$subVal='';
-if(!empty($typeForm)) {
-    if($typeForm['action']=='search') {
-        $subVal='Поиск';
-    } elseif($typeForm['action']=='edit') {
-        $subVal='Редактировать';
-    } elseif($typeForm['action']=='copy') {
-        $subVal='Дублировать';
+$subVal = '';
+if (!empty($typeForm)) {
+    if ($typeForm['action'] == 'search') {
+        $subVal = 'Поиск';
+    } elseif ($typeForm['action'] == 'edit') {
+        $subVal = 'Редактировать';
+    } elseif ($typeForm['action'] == 'copy') {
+        $subVal = 'Дублировать';
     }
 } else {
-    $subVal='Отправить';
+    $subVal = 'Отправить';
 }
-if(!empty($typeForm)) {
-    if($typeForm['action']!='list') {
+if (!empty($typeForm)) {
+    if ($typeForm['action'] != 'list') {
         ?>
         <div class="submit_cl"><?php echo $this->formElement($form->get('submit')->setValue($subVal)); ?> </div>
     <?php

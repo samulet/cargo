@@ -9,13 +9,10 @@
 
 namespace Ticket\Controller;
 
-use Entity\Recources;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Ticket\Form\TicketForm;
 use AddList\Form\AddListForm;
 use Ticket\Entity\FiltersArrayStatic;
 
@@ -27,175 +24,188 @@ class TicketController extends AbstractActionController
     protected $cargoModel;
     protected $addListModel;
     protected $interactionModel;
-
     protected $organizationModel;
+
     public function indexAction()
     {
         $res = $this->getTicketModel();
         return new ViewModel(array(
-            'res' => $res->returnTickets(array('deletedAt'=>null,'activated'=>'1'))
+            'res' => $res->returnTickets(array('deletedAt' => null, 'activated' => '1'))
         ));
     }
 
     public function myAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnTickets(array('deletedAt'=>null,'ownerId'=>new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())));
-        $filterArray=$this->addFunction(null,null,'search');
-        $fillFrom=new AddListForm();
+        $ticket = $res->returnTickets(
+            array(
+                'deletedAt' => null,
+                'ownerId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentCom())
+            )
+        );
+        $filterArray = $this->addFunction(null, null, 'search');
+        $fillFrom = new AddListForm();
 
-        $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
+        $filterArray['form'] = $fillFrom->fillMultiFields(
+            $filterArray['form'],
+            $filterArray['formsArray'][0]['formWay'],
+            $filterArray['formsArray'][0]['formsDocArray'][0]
+        );
         return new ViewModel(
-            array('res' => $ticket)+$filterArray);
+            array('res' => $ticket) + $filterArray);
     }
 
     public function myAccAction()
     {
         $res = $this->getTicketModel();
-        $ticket=$res->returnTickets(array('deletedAt'=>null, 'ownerOrgId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentOrg())));
+        $ticket = $res->returnTickets(
+            array(
+                'deletedAt' => null,
+                'ownerOrgId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc())
+            )
+        );
         return new ViewModel(array(
             'res' => $ticket
         ));
     }
 
-    public function addFunction($post,$type,$id) {
-        if($id=='search') {
-            $type=$id;
+    public function addFunction($post, $type, $id)
+    {
+        if ($id == 'search') {
+            $type = $id;
         }
         $ticketModel = $this->getTicketModel();
-        $typeForm=array();
+        $typeForm = array();
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
-        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
-        $docWay= $builder->createForm('Ticket\Entity\DocumentWay');
+        $formWay = $builder->createForm('Ticket\Entity\TicketWay');
+        $docWay = $builder->createForm('Ticket\Entity\DocumentWay');
 
-        $form_array=array();
+        $formArray = array();
 
         $addListModel = $this->getAddListModel();
 
 
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
-        $formVehicleData=$addListModel->returnDataArray(array(),'vehicle',$orgListId,$comListId);
+        $formData = $addListModel->returnDataArray($formArray, 'ticketWay', $accListId, $comListId);
+        $formVehicleData = $addListModel->returnDataArray(array(), 'vehicle', $accListId, $comListId);
 
-        $fillFrom=new AddListForm();
-        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
+        $fillFrom = new AddListForm();
+        $formWay = $fillFrom->fillFrom($formWay, $formData, $formArray);
 
-        $formWay=$fillFrom->fillFromVehicleSpecial($formWay,$formData,array('typeLoad'));
-        $form=$fillFrom->fillFromVehicleSpecial($form,$formVehicleData,array('type'));
+        $formWay = $fillFrom->fillFromVehicleSpecial($formWay, $formData, array('typeLoad'));
+        $form = $fillFrom->fillFromVehicleSpecial($form, $formVehicleData, array('type'));
 
 
-        $formCargoOwnerData=$ticketModel->getCargoOwnerData($orgListId);
+        $formCargoOwnerData = $ticketModel->getCargoOwnerData($accListId);
 
-        $formWay=$fillFrom->fillCargoOwner($formWay,$formCargoOwnerData);
-        $docWay=$fillFrom->fillFromVehicleSpecial($docWay,$formData,array('docType'));
+        $formWay = $fillFrom->fillCargoOwner($formWay, $formCargoOwnerData);
+        $docWay = $fillFrom->fillFromVehicleSpecial($docWay, $formData, array('docType'));
 
-        $formsDocArray=array($docWay);
-        $formsArray=array(
+        $formsDocArray = array($docWay);
+        $formsArray = array(
             array(
-                'formWay' =>$formWay,
-                'formsDocArray'=>$formsDocArray
+                'formWay' => $formWay,
+                'formsDocArray' => $formsDocArray
 
             )
         );
 
-        if(empty($type)) {
-            if(!empty($post->submit)) {
+        if (empty($type)) {
+            if (!empty($post->submit)) {
 
-                $result=$ticketModel->unSplitArray(get_object_vars($post));
-                $error=0;
-                $formsArray=array();
-                foreach($result as $resF) {
-                    $newForm= clone $formWay;
-                    $resF['submit']='submit';
+                $result = $ticketModel->unSplitArray(get_object_vars($post));
+                $error = 0;
+                $formsArray = array();
+                foreach ($result as $resF) {
+                    $newForm = clone $formWay;
+                    $resF['submit'] = 'submit';
                     $newForm->setData($resF);
-                    if(!$newForm->isValid()) {
+                    if (!$newForm->isValid()) {
 
                         $error++;
                     }
-                    if(!empty($resF['doc'])) {
-                        $formsDocArray=array();
-                        foreach($resF['doc'] as $doc) {
-                            $newFormDoc= clone $docWay;
-                            $doc['submit']='submit';
+                    if (!empty($resF['doc'])) {
+                        $formsDocArray = array();
+                        foreach ($resF['doc'] as $doc) {
+                            $newFormDoc = clone $docWay;
+                            $doc['submit'] = 'submit';
                             $newFormDoc->setData($doc);
-                            if(!$newFormDoc->isValid()) {
+                            if (!$newFormDoc->isValid()) {
                                 $error++;
                             }
-                            array_push($formsDocArray,$newFormDoc);
+                            array_push($formsDocArray, $newFormDoc);
                         }
                     }
-                    array_push($formsArray,array('formWay' =>$newForm,'formsDocArray'=>$formsDocArray));
+                    array_push($formsArray, array('formWay' => $newForm, 'formsDocArray' => $formsDocArray));
                 }
 
                 $form->setData($post);
-                if(!$form->isValid()) {
+                if (!$form->isValid()) {
                     $error++;
 
                 }
 
-                if(empty($error)) {
-                    $ticketModel->addTicket($this->getRequest()->getPost(), $comListId, $orgListId, $id);
+                if (empty($error)) {
+                    $ticketModel->addTicket($this->getRequest()->getPost(), $comListId, $accListId, $id);
                     return $this->redirect()->toUrl('/tickets/my');
                 }
             }
         } else {
             $ticket = $ticketModel->listTicket($id);
-            $ticketWay=$ticketModel->returnAllWays($ticket['id']);
-            if( ($type=='copy')||($type=='edit')||($type=='list') ) {
+            $ticketWay = $ticketModel->returnAllWays($ticket['id']);
+            if (($type == 'copy') || ($type == 'edit') || ($type == 'list')) {
                 $form->setData($ticket);
 
-                $formsArray=array();
+                $formsArray = array();
 
-                foreach($ticketWay as $resF) {
-                    //die(var_dump($resF));
-                    $newForm= clone $formWay;
+                foreach ($ticketWay as $resF) {
+                    $newForm = clone $formWay;
                     $newForm->setData($resF);
-                    $documentWays=$ticketModel->getDocumentWay($resF['id']);
-                    if(!empty($documentWays)) {
-                        $formsDocArray=array();
-                        foreach($documentWays as $doc) {
-                            $newFormDoc= clone $docWay;
-                            $doc['submit']='submit';
+                    $documentWays = $ticketModel->getDocumentWay($resF['id']);
+                    if (!empty($documentWays)) {
+                        $formsDocArray = array();
+                        foreach ($documentWays as $doc) {
+                            $newFormDoc = clone $docWay;
+                            $doc['submit'] = 'submit';
                             $newFormDoc->setData($doc);
 
-                            array_push($formsDocArray,$newFormDoc);
+                            array_push($formsDocArray, $newFormDoc);
                         }
                     }
-                    array_push($formsArray,array('formWay' =>$newForm,'formsDocArray'=>$formsDocArray));
+                    array_push($formsArray, array('formWay' => $newForm, 'formsDocArray' => $formsDocArray));
                 }
 
-                if($type=='edit') {
-                    $typeForm['action']='edit';
-                    $typeForm['id']=$id;
-                }
-                elseif($type=='copy') {
-                    $typeForm['action']='copy';
-                    $typeForm['id']=$id;
-                } elseif($type=='list') {
+                if ($type == 'edit') {
+                    $typeForm['action'] = 'edit';
+                    $typeForm['id'] = $id;
+                } elseif ($type == 'copy') {
+                    $typeForm['action'] = 'copy';
+                    $typeForm['id'] = $id;
+                } elseif ($type == 'list') {
                     foreach ($formsArray as $formElement) {
-                        $formWay=$formElement['formWay'];
-                        foreach($formElement['formsDocArray'] as $docWay) {
+                        $formWay = $formElement['formWay'];
+                        foreach ($formElement['formsDocArray'] as $docWay) {
                             foreach ($docWay as $wayEl) {
-                                $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
+                                $wayEl->setAttributes(array('disabled' => 'disabled'));
                             }
                         }
                         foreach ($formWay as $wayEl) {
-                            $wayEl->setAttributes(array( 'disabled' => 'disabled' ));
+                            $wayEl->setAttributes(array('disabled' => 'disabled'));
                         }
                     }
 
                     foreach ($form as $el) {
-                        $el->setAttributes(array( 'disabled' => 'disabled' ));
+                        $el->setAttributes(array('disabled' => 'disabled'));
                     }
-                    $typeForm['action']='list';
-                    $typeForm['id']=$id;
+                    $typeForm['action'] = 'list';
+                    $typeForm['id'] = $id;
                 }
-            } elseif($type=='search') {
-                if(!empty($post)) {
-                    $postData=get_object_vars($post);
+            } elseif ($type == 'search') {
+                if (!empty($post)) {
+                    $postData = get_object_vars($post);
                     $formsArray[0]['formWay']->setData($postData);
                     $formsArray[0]['formsDocArray'][0]->setData($postData);
                     $form->setData($postData);
@@ -204,112 +214,38 @@ class TicketController extends AbstractActionController
 
                 foreach ($formsArray as $formElement) {
 
-                    $formWay=$formElement['formWay'];
-                    foreach($formElement['formsDocArray'] as $docWay) {
+                    $formWay = $formElement['formWay'];
+                    foreach ($formElement['formsDocArray'] as $docWay) {
                         foreach ($docWay as $wayEl) {
-                            $wayEl->setAttributes(array('required'  => '' ));
+                            $wayEl->setAttributes(array('required' => ''));
                         }
                     }
                     foreach ($formWay as $wayEl) {
-                        $wayEl->setAttributes(array('required'  => '' ));
+                        $wayEl->setAttributes(array('required' => ''));
                     }
                 }
                 foreach ($form as $el) {
-                    $el->setAttributes(array('required'  => '' ));
+                    $el->setAttributes(array('required' => ''));
                 }
-                $typeForm['action']='search';
+                $typeForm['action'] = 'search';
             }
         }
-        $ticketModel->addBootstrap3Class($form,$formsArray);
+        $ticketModel->addBootstrap3Class($form, $formsArray);
         return array(
             'form' => $form,
-            'formsArray' =>$formsArray,
+            'formsArray' => $formsArray,
             'typeForm' => $typeForm
         );
     }
 
     public function addAction()
     {
-        $post=$this->getRequest()->getPost();
+        $post = $this->getRequest()->getPost();
         $type = $this->getEvent()->getRouteMatch()->getParam('type');
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        return new ViewModel($this->addFunction($post,$type,$id));
+        return new ViewModel($this->addFunction($post, $type, $id));
     }
 
-    public function editAction()
-    {
-        $resModel = $this->getTicketModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listTicket($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Ticket\Entity\Ticket');
-
-        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
-
-
-        $form_array=array();
-
-        $addListModel = $this->getAddListModel();
-
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay');
-
-        $fillFrom=new AddListForm();
-        $formWay=$fillFrom->fillFrom($formWay,$formData,$form_array);
-
-
-        $way=$resModel->returnAllWays($res['id']);
-
-
-
-
-
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'formWay'=>$formWay,
-            'way'=>$way,
-            'id' => $id
-        ));
-    }
-
-    public function listAction()
-    {
-        $resModel = $this->getTicketModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listTicket($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Ticket\Entity\Ticket');
-
-        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
-
-
-        $form_array=array();
-
-        $addListModel = $this->getAddListModel();
-
-        $formData=$addListModel->getAllDataArray('ticketWay');
-
-        $fillFrom=new AddListForm();
-        $formWay=$fillFrom->fillFrom($formWay,$formData);
-
-
-        $way=$resModel->returnAllWays($res['id']);
-
-
-
-
-
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-            'formWay'=>$formWay,
-            'way'=>$way,
-            'id' => $id
-        ));
-
-    }
 
     public function deleteAction()
     {
@@ -318,7 +254,6 @@ class TicketController extends AbstractActionController
         $resModel->deleteTicket($uuid);
         return $this->redirect()->toUrl('/tickets/my');
     }
-
 
 
     public function getTicketModel()
@@ -334,111 +269,106 @@ class TicketController extends AbstractActionController
     {
         if (!$this->companyUserModel) {
             $sm = $this->getServiceLocator();
-            $this->companyUserModel = $sm->get('Organization\Model\CompanyUserModel');
+            $this->companyUserModel = $sm->get('Account\Model\CompanyUserModel');
         }
         return $this->companyUserModel;
     }
-    public function copyAction() {
-        $resModel = $this->getTicketModel();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $res = $resModel->listTicket($id);
-
-        $builder = new AnnotationBuilder();
-        $form = $builder->createForm('Ticket\Entity\Ticket');
-        return new ViewModel(array(
-            'form' => $form,
-            'res' => $res,
-
-        ));
-    }
-    public function searchAction() {
+    public function searchAction()
+    {
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('Ticket\Entity\Ticket');
 
-        $formWay= $builder->createForm('Ticket\Entity\TicketWay');
+        $formWay = $builder->createForm('Ticket\Entity\TicketWay');
 
-        $form_array=array();
+        $formArray = array();
 
         $addListModel = $this->getAddListModel();
 
-        $comListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
-        $orgListId=$this->zfcUserAuthentication()->getIdentity()->getCurrentOrg();
+        $comListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentCom();
+        $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-        $formData=$addListModel->returnDataArray($form_array,'ticketWay',$orgListId,$comListId);
+        $formData = $addListModel->returnDataArray($formArray, 'ticketWay', $accListId, $comListId);
 
-        $fillFrom=new AddListForm();
-        $formWay=$fillFrom->fillFrom($formWay,$formData);
+        $fillFrom = new AddListForm();
+        $formWay = $fillFrom->fillFrom($formWay, $formData);
 
 
         return new ViewModel(array(
             'form' => $form,
-            'formWay' =>$formWay
+            'formWay' => $formWay
 
         ));
     }
 
-    public function getOrganizationModel()
+    public function getAccountModel()
     {
         if (!$this->organizationModel) {
             $sm = $this->getServiceLocator();
-            $this->organizationModel = $sm->get('Organization\Model\OrganizationModel');
+            $this->organizationModel = $sm->get('Account\Model\AccountModel');
         }
         return $this->organizationModel;
     }
 
-    public function getResultsAction() {
+    public function getResultsAction()
+    {
         $res = $this->getTicketModel();
-        $post=$this->getRequest()->getPost();
+        $post = $this->getRequest()->getPost();
 
-        if(!empty($post->multiField)) {
-            $multiField=$post->multiField;
-            $multiFieldData=$multiField;
+        if (!empty($post->multiField)) {
+            $multiField = $post->multiField;
+            $multiFieldData = $multiField;
             unset($post->multiField);
-            $multiField=$res->multiFieldProc($multiField);
+            $multiField = $res->multiFieldProc($multiField);
         } else {
-            $multiFieldData=array();
-            $multiField=array();
+            $multiFieldData = array();
+            $multiField = array();
         }
 
-        $ticket=$res->returnSearchTicket($post);
+        $ticket = $res->returnSearchTicket($post);
 
 
-        $filterData=FiltersArrayStatic::$list;
-        foreach($filterData as $key => &$value) {
-            if(!empty($post->$key)) {
-                $value=$post->$key;
+        $filterData = FiltersArrayStatic::$list;
+        foreach ($filterData as $key => &$value) {
+            if (!empty($post->$key)) {
+                $value = $post->$key;
             }
         }
-$otherData=array();
-        if(!empty($post->accepted)) {
-            $otherData['accepted']=$post->accepted;
+        $otherData = array();
+        if (!empty($post->accepted)) {
+            $otherData['accepted'] = $post->accepted;
         } else {
-            $otherData['accepted']=null;
+            $otherData['accepted'] = null;
         }
 
-        $filterArray=$this->addFunction($post,null,'search');
-        $fillFrom=new AddListForm();
+        $filterArray = $this->addFunction($post, null, 'search');
+        $fillFrom = new AddListForm();
 
-        $filterArray['form']=$fillFrom->fillMultiFields($filterArray['form'],$filterArray['formsArray'][0]['formWay'],$filterArray['formsArray'][0]['formsDocArray'][0]);
+        $filterArray['form'] = $fillFrom->fillMultiFields(
+            $filterArray['form'],
+            $filterArray['formsArray'][0]['formWay'],
+            $filterArray['formsArray'][0]['formsDocArray'][0]
+        );
         $builder = new AnnotationBuilder();
         $formInteraction = $builder->createForm('Interaction\Entity\Interaction');
         return new ViewModel(array(
             'res' => $ticket,
-            'multiField'=>$multiField,
-            'filterData' =>$filterData,
-            'multiFieldData'=>$multiFieldData,
-            'formInteraction' =>$formInteraction,
-            'otherData'=>$otherData
-        )+$filterArray);
+            'multiField' => $multiField,
+            'filterData' => $filterData,
+            'multiFieldData' => $multiFieldData,
+            'formInteraction' => $formInteraction,
+            'otherData' => $otherData
+        ) + $filterArray);
     }
-    public function createBillAction() {
-        $post=$this->getRequest()->getPost();
+
+    public function createBillAction()
+    {
+        $post = $this->getRequest()->getPost();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $ticketModel = $this->getTicketModel();
-        if(!empty($id)) {
-            $data=array($id);
+        if (!empty($id)) {
+            $data = array($id);
         } else {
-            $data=get_object_vars($post);
+            $data = get_object_vars($post);
         }
         $ticketModel->createBill($data);
         return $this->redirect()->toUrl('/tickets/getResults');
@@ -452,6 +382,7 @@ $otherData=array();
         }
         return $this->cargoModel;
     }
+
     public function getAddListModel()
     {
         if (!$this->addListModel) {

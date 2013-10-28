@@ -1,9 +1,9 @@
 <?php
 
 
-$listParent=$this->listParent;
-$listChild=$this->listChild;
-$listName=$this->listName;
+$listParent = $this->listParent;
+$listChild = $this->listChild;
+$listName = $this->listName;
 
 //die(var_dump($listName));
 ?>
@@ -18,15 +18,15 @@ $listName=$this->listName;
     array('action' => 'myFields', 'id' => $listName['id'])
 );?>">Вернуться <?php
 
-    echo 'в '.$listName['fieldRusName'];
+    echo 'в ' . $listName['fieldRusName'];
     ?></a>
 
 <a href="<?php echo $this->url(
     'addList',
-    array('action' => 'add', 'id' => $this->uuid,'parent'=>'parent')
+    array('action' => 'add', 'id' => $this->uuid, 'parent' => 'parent')
 );?>"></br>Добавить <?php
 
-    echo 'в '.$listParent['value'];
+    echo 'в ' . $listParent['value'];
     ?></a>
 
 <table class="table">
@@ -43,7 +43,7 @@ $listName=$this->listName;
         </th>
     </tr>
     <?php
-    foreach($listChild as $list) {
+    foreach ($listChild as $list) {
 
         ?>
 
@@ -51,7 +51,7 @@ $listName=$this->listName;
             <td>
                 <a href="<?php echo $this->url(
                     'addList',
-                    array('action' => 'edit', 'id' => $list['uuid'], 'parent' =>'list')
+                    array('action' => 'edit', 'id' => $list['uuid'], 'parent' => 'list')
                 );?>"> <?php echo $list['value']; ?></a>
 
             </td>

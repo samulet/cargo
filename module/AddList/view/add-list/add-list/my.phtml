@@ -15,58 +15,59 @@ $list = $this->list;
         </th>
     </tr>
     <?php
-    foreach($list as $link => $li) {
-        $child=$li['child'];
-        $li['uuid']=$link;
-    ?>
-
-    <tr>
-        <td>
-            <a href="<?php echo $this->url(
-                'addList',
-                array('action' => 'my-fields', 'id' => $li['uuid'])
-            );?>"><?php
-            echo $li['fieldRusName'];
-            ?></a>
-        </td>
-        <td>
-            <a href="<?php echo $this->url(
-                'addList',
-                array('action' => 'add', 'id' => $li['uuid'])
-            );?>">Добавить <?php
-
-                    echo 'в '.$li['fieldRusName'];
-                 ?></a>
-        </td>
-    </tr>
-
-
-    <?php
-        $padding=1;
-
-        while(!empty($child)) {
-            $key=key($child);
-            $child=$child[$key];
-            $child['uuid']=$key;
-            $li=$child;
+    foreach ($list as $link => $li) {
+        $child = $li['child'];
+        $li['uuid'] = $link;
         ?>
 
+        <tr>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'my-fields', 'id' => $li['uuid'])
+                );?>"><?php
+                    echo $li['fieldRusName'];
+                    ?></a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'addList',
+                    array('action' => 'add', 'id' => $li['uuid'])
+                );?>">Добавить <?php
+
+                    echo 'в ' . $li['fieldRusName'];
+                    ?></a>
+            </td>
+        </tr>
+
+
+        <?php
+        $padding = 1;
+
+        while (!empty($child)) {
+            $key = key($child);
+            $child = $child[$key];
+            $child['uuid'] = $key;
+            $li = $child;
+            ?>
+
             <tr>
-                <td  style="<?php $pad=$padding*30;echo "padding-left:".$pad."px";?>">Вложенный справочник:
+                <td style="<?php $pad = $padding * 30;
+                echo "padding-left:" . $pad . "px"; ?>">Вложенный справочник:
                     <a href="<?php echo $this->url(
                         'addList',
                         array('action' => 'my-fields', 'id' => $li['uuid'])
                     );?>">  <?php
-                    echo $li['fieldRusName'];
-                    ?></a>
+                        echo $li['fieldRusName'];
+                        ?></a>
                 </td>
                 <td>
 
                 </td>
             </tr>
 
-        <?php
-            $child=$child['child'];
+            <?php
+            $child = $child['child'];
             $padding++;
         }
         ?>
