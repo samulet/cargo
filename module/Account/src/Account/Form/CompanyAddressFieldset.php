@@ -10,11 +10,6 @@ namespace Account\Form;
 
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use AddList\Form\AddListForm;
-use AddList\Model\AddListModel;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInterface
 {
@@ -22,19 +17,7 @@ class CompanyAddressFieldset extends Fieldset implements InputFilterProviderInte
     public function __construct($accListId = null)
     {
         parent::__construct();
-        // $this->setHydrator(new DoctrineHydrator());
-        //$sm = $this->getFormFactory()->getFormElementManager()->getServiceLocator();
-
         $this->setHydrator(new \Zend\Stdlib\Hydrator\ClassMethods());
-        //   $addListModel = new AddListModel();
-
-
-        //    $formData=$addListModel->returnDataArray(array(),'company',$accListId);
-        //   $fillFrom=new AddListForm();
-        //   die(var_dump($accListId));
-        //"value_options" => $fillFrom->getSelectValueList($formData,'companyAddressType')
-        //Адреса (Вид адреса, почтовый индекс, субъект РФ, город, населенный пункт, улица, номер дома, корпус, квартира)
-
         $this->add(
             array(
                 'name' => 'companyAddressType',

@@ -11,7 +11,6 @@ namespace Account\Form;
 
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class CompanyUserFieldset extends Fieldset implements InputFilterProviderInterface
 {
