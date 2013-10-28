@@ -28,7 +28,6 @@ class Module
 
     public function getServiceConfig()
     {
-
         return array(
             'factories' => array(
                 'AddList\Model\AddListModel' => function ($sm) {
