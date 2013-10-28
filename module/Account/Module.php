@@ -1,12 +1,10 @@
 <?php
 namespace Account;
 
-use Account\Entity\Account;
 use Account\Model\AccountModel;
 use Account\Model\CompanyModel;
 use Account\Model\CompanyUserModel;
 use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 
 class Module
 {
