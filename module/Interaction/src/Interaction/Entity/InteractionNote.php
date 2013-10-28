@@ -7,7 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-
 namespace Interaction\Entity;
 
 use Zend\Form\Annotation;
@@ -16,7 +15,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
  * @ODM\Document(collection="interactionNote", repositoryClass="Interaction\Repository\InteractionNoteRepository")

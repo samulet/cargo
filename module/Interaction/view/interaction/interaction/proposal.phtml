@@ -1,7 +1,6 @@
 <?php
 $form = $this->form;
 $proposals = $this->proposal;
-//die(var_dump($proposals));
 $form->setAttribute('action', $this->url('interaction', array('action' => 'addProposal', 'id' => $this->uuid)))
     ->prepare();
 

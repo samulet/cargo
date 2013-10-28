@@ -10,8 +10,6 @@ namespace Interaction\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Zend\InputFilter\InputFilter;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class InteractionForm
 {
