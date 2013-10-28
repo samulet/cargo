@@ -16,7 +16,6 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
-
 /**
  * @ODM\Document(collection="notification", repositoryClass="Notification\Repository\NotificationRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
