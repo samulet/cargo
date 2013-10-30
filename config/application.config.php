@@ -5,6 +5,8 @@ return array(
         'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineMongoODMModule',
+        'ScnSocialAuth',
+        'ScnSocialAuthDoctrineMongoODM',
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineMongoODM',
@@ -17,7 +19,7 @@ return array(
         'Account',
         'Resource',
         'Ticket',
-        'Auction',
+
         'AddList',
         'Interaction',
         'Notification',

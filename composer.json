@@ -18,14 +18,15 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.2.*@stable",
-        "zf-commons/zfc-user-doctrine-mongo-odm": "dev-master",
-        "zendframework/zend-developer-tools": "dev-master",
+        "jhuet/zfc-user-doctrine-mongo-odm": "dev-master",
+        "jhuet/scn-social-auth-doctrine-mongo-odm": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
         "yassa/rollbar": "*",
         "zf-commons/zfc-admin": "*",
         "bjyoungblood/bjy-authorize": "1.2.*",
         "evandotpro/edp-module-layouts": "1.*",
-        "phpoffice/phpexcel": "*"
+        "phpoffice/phpexcel": "*",
+        "zendframework/zend-developer-tools": "dev-master"
     },
     "minimum-stability": "dev",
     "require-dev": {
