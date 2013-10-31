@@ -22,7 +22,8 @@ return array(
         'Interaction',
         'Notification',
         'Excel',
-        'QueryBuilder'
+        'QueryBuilder',
+        'Contract'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
