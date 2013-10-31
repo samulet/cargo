@@ -48,45 +48,14 @@ class Contract
      * @var int
      * @Annotation\Exclude()
      */
-    public $receiveUserId;
+    public $firstCompanyId;
     /**
      * @ODM\ObjectId
      * @var int
      * @Annotation\Exclude()
      */
-    public $ownerUserId;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Заявки с ресурсами"})
-     */
-    public $accepted;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Exclude()
-     */
-    public $status;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Статус"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
-     */
-    public $sendItemId;
+    public $secondCompanyId;
 
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Exclude()
-     */
-    public $receiveItemId;
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
