@@ -13,16 +13,20 @@ namespace Contract\Entity;
 class ContractRoleStatic {
     public static $role = array(
         'contractRoleCustomer' => array(
-            'rusName' => 'Заказчик'
+            'rusName' => 'Заказчик',
+            'fieldset' => 'ContractRoleCustomerFieldset'
         ),
         'contractRoleLogist'=> array(
-            'rusName' => 'Экспедитор'
+            'rusName' => 'Экспедитор',
+            'fieldset' => 'ContractRoleLogistFieldset'
         ),
         'contractRoleOwner'=> array(
-            'rusName' => 'Грузовладелец'
+            'rusName' => 'Грузовладелец',
+            'fieldset' => 'ContractRoleOwnerFieldset'
         ),
         'contractRolePayer'=> array(
-            'rusName' => 'Плательщик'
+            'rusName' => 'Плательщик',
+            'fieldset' => 'ContractRolePayerFieldset'
         ),
     );
 }

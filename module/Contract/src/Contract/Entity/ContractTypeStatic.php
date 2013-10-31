@@ -11,10 +11,12 @@ namespace Contract\Entity;
 class ContractTypeStatic {
     public static $type = array(
         'contractEcs' => array(
-            'rusName' => 'Договор экспедиции'
+            'rusName' => 'Договор экспедиции',
+            'fieldset' => 'ContractEcsFieldset'
         ),
         'contractTr'=> array(
-            'rusName' => 'Договор перевозки'
+            'rusName' => 'Договор перевозки',
+            'fieldset' => 'ContractTrFieldset'
         ),
     );
 }
