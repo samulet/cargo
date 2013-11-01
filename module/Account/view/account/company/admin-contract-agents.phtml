@@ -23,20 +23,29 @@ $this->headTitle($title);
             <td>
                 <a href="<?php echo $this->url(
                     'company',
-                    array('action' => 'adminContractAgentUnity', 'id'=>$c['uuid'],'org_id' => 'unity')
+                    array('action' => 'adminContractAgentUnity', 'org_id'=>$c['id'])
                 );?>">Объеденить</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(
                     'company',
-                    array('action' => 'adminContractAgent', 'id'=>$c['uuid'],'org_id' => 'approve')
+                    array('action' => 'adminContractAgents', 'id'=>$c['id'],'org_id' => 'approve')
                 );?>">Утвердить</a>
             </td>
             <td>
                 <a href="<?php echo $this->url(
                     'company',
-                    array('action' => 'adminContractAgent', 'id'=>$c['uuid'],'org_id' => 'block')
+                    array('action' => 'adminContractAgents', 'id'=>$c['id'],'org_id' => 'block')
                 );?>">Заблокировать</a>
+                <?php
+                if(!empty($c['activated'])) {
+                    if($c['activated']!='1') {
+                        echo ' (Заблокировано)';
+                    }
+                } else {
+                    echo ' (Заблокировано)';
+                }
+                ?>
             </td>
 
         </tr>
