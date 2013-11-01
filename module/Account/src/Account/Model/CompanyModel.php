@@ -151,7 +151,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
         $qb = $objectManager->getRepository('Account\Entity\Company')->find(new \MongoId($comId));
         if (!$qb) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $comId);
+            throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $comId);
         }
         $objectManager->remove($qb);
         $objectManager->flush();
