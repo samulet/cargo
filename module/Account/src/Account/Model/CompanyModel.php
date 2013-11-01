@@ -23,16 +23,10 @@ use User\Entity\User;
 
 class CompanyModel implements ServiceLocatorAwareInterface
 {
-
-
-    public function __construct()
-    {
-
-    }
-
     protected $serviceLocator;
+    protected $queryBuilderModel;
 
-    public function returnCompanies($accId, $number = '30', $page = '1')
+    public function returnCompanies($accId)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $cursor = $objectManager->getRepository('Account\Entity\Company')->getMyAvailableCompany(new \MongoId($accId));

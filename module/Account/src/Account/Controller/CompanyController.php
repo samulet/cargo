@@ -273,4 +273,12 @@ class CompanyController extends AbstractActionController
         }
         return $this->companyUserModel;
     }
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
+    }
 }
