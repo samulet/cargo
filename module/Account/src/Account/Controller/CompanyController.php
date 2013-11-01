@@ -18,15 +18,11 @@ class CompanyController extends AbstractActionController
     public function indexAction()
     {
         $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
-        $uuid_gen = new UuidGenerator();
-        if (!$uuid_gen->isValid($accUuid)) {
-            $com = "Ошибка";
-        } else {
-            $comModel = $this->getCompanyModel();
-            $accModel = $this->getAccountModel();
-            $accId = $accModel->getOrgIdByUUID($accUuid);
-            $com = $comModel->returnCompanies($accId);
-        }
+        $comModel = $this->getCompanyModel();
+        $accModel = $this->getAccountModel();
+        $accId = $accModel->getOrgIdByUUID($accUuid);
+        $com = $comModel->returnCompanies($accId);
+
         return new ViewModel(array(
             'org' => $com,
             'org_id' => $accUuid
@@ -207,6 +203,10 @@ class CompanyController extends AbstractActionController
             'org_id' => $accId,
             'com_id' => $com_uuid
         ));
+    }
+
+    public function adminContractAgentsAction() {
+
     }
 
     public function deleteAction()
