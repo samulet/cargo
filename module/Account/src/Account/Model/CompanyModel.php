@@ -26,12 +26,17 @@ class CompanyModel implements ServiceLocatorAwareInterface
     protected $serviceLocator;
     protected $queryBuilderModel;
 
-    public function returnCompanies($accId)
+    public function returnCompanies($accId,$params = array())
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+
+        $params = array_map(function () {
+                return array_sum(func_get_args());
+            }, $params, array('deletedAt' => null,'ownerOrgId'=>new \MongoId($accId)));
+
         $company = $objectManager->getRepository('Account\Entity\Company');
         $queryBuilderModel = $this->getQueryBuilderModel();
-        $cursor = $queryBuilderModel->createQuery($company, array('deletedAt' => null))->getQuery()->execute();
+        $cursor = $queryBuilderModel->createQuery($company, $params)->getQuery()->execute();
         $com = array();
         foreach ($cursor as $cur) {
             $arr = get_object_vars($cur);
