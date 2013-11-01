@@ -25,6 +25,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
     protected $queryBuilderModel;
+    protected $accountModel;
 
     public function returnCompanies($accId,$params = array())
     {
@@ -255,5 +256,13 @@ class CompanyModel implements ServiceLocatorAwareInterface
             $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
         }
         return $this->queryBuilderModel;
+    }
+    public function getAccountModel()
+    {
+        if (!$this->accountModel) {
+            $sm = $this->getServiceLocator();
+            $this->accountModel = $sm->get('Account\Model\AccountModel');
+        }
+        return $this->accountModel;
     }
 }
