@@ -35,7 +35,7 @@ return array(
 
                         'org_id' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'comId' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-z0-9]*',
+                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*'
                     ),
                     'defaults' => array(
                         'controller' => 'Account\Controller\Company',

@@ -21,7 +21,7 @@ class CompanyController extends AbstractActionController
         $comModel = $this->getCompanyModel();
         $accModel = $this->getAccountModel();
         $accId = $accModel->getOrgIdByUUID($accUuid);
-        $com = $comModel->returnCompanies($accId);
+        $com = $comModel->returnCompanies($accId,array('activated' =>'1'));
 
         return new ViewModel(array(
             'org' => $com,
