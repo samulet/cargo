@@ -47,6 +47,18 @@ class CompanyModel implements ServiceLocatorAwareInterface
         return $com;
     }
 
+    public function update($paramsFind,$paramsUpdate) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $company = $objectManager->getRepository('Account\Entity\Company')->findAndUpdate();
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $company=$queryBuilderModel->createSetQuery($company,$paramsFind);
+        $company=$queryBuilderModel->createSetQuery($company,$paramsUpdate);
+        $company->getQuery()->execute();
+        if (!$company) {
+            throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $paramsFind,$paramsUpdate);
+        }
+    }
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
