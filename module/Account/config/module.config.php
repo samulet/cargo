@@ -32,10 +32,9 @@ return array(
                     'route' => '/account[/:org_id]/company[/:action][/:id][/:comId]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-
-                        'org_id' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'comId' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*'
+                        'id' => '[a-z0-9][a-zA-Z][a-zA-Z0-9_-]*',
+                        'org_id' => '[a-z0-9][a-zA-Z][a-zA-Z0-9_-]*',
+                        'comId' => '[a-z0-9][a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Account\Controller\Company',
