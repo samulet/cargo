@@ -30,17 +30,17 @@ class CompanyModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 
-        $params = array_map(function () {
-                return array_sum(func_get_args());
-            }, $params, array('deletedAt' => null));
+        $params =$params+array('deletedAt' => null,'activated' =>'1');
         if(!empty($accId)) {
             $params['ownerOrgId']=new \MongoId($accId);
         }
-        $company = $objectManager->getRepository('Account\Entity\Company');
+
+        $company = $objectManager->createQueryBuilder('Account\Entity\Company');
         $queryBuilderModel = $this->getQueryBuilderModel();
         $cursor = $queryBuilderModel->createQuery($company, $params)->getQuery()->execute();
         $com = array();
         foreach ($cursor as $cur) {
+
             $arr = get_object_vars($cur);
             array_push($com, $arr);
         }
@@ -49,7 +49,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     public function update($paramsFind,$paramsUpdate) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $company = $objectManager->getRepository('Account\Entity\Company')->findAndUpdate();
+        $company = $objectManager->createQueryBuilder('Account\Entity\Company')->findAndUpdate();
         $queryBuilderModel = $this->getQueryBuilderModel();
         $company=$queryBuilderModel->createSetQuery($company,$paramsFind);
         $company=$queryBuilderModel->createSetQuery($company,$paramsUpdate);
@@ -243,5 +243,14 @@ class CompanyModel implements ServiceLocatorAwareInterface
             array_push($resultArray, get_object_vars($com));
         }
         return $resultArray;
+    }
+
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
     }
 }
