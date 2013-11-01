@@ -206,6 +206,20 @@ class CompanyController extends AbstractActionController
 
     public function adminContractAgentUnityAction() {
         $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comUnityId = $this->getEvent()->getRouteMatch()->getParam('id');
+        $comModel = $this->getCompanyModel();
+        if(!empty($comUnityId)) {
+            $comModel->unityContractAgent($comId,$comUnityId);
+            $comModel->deleteCompany($comId);
+            return $this->redirect()->toUrl('/account/all/company/adminContractAgents');
+        }
+
+        $company = $comModel->getCompany($comId);
+        $com = $comModel->returnCompanies(null,array('activated'=>'1','dirty' =>null));
+        return new ViewModel(array(
+            'com' => $com,
+            'company' =>$company
+        ));
     }
 
     public function adminContractAgentsAction() {

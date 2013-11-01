@@ -51,6 +51,19 @@ class CompanyModel implements ServiceLocatorAwareInterface
         return $com;
     }
 
+    public function unityContractAgent($comId,$comUnityId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $contract = $objectManager->createQueryBuilder('Account\Entity\ContractAgents');
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $contract=$queryBuilderModel->createQuery($contract,array('contactAgentId' => new \MongoId($comId)));
+        $contract=$queryBuilderModel->createSetQuery($contract,array('contactAgentId' => new \MongoId($comUnityId)));
+        $com=$contract->findAndUpdate()->getQuery()->execute();
+
+        if (!$com) {
+            throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $comId,$comUnityId);
+        }
+    }
+
     public function update($paramsFind,$paramsUpdate) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $company = $objectManager->createQueryBuilder('Account\Entity\Company');
@@ -161,6 +174,8 @@ class CompanyModel implements ServiceLocatorAwareInterface
         }
         return $com;
     }
+
+
 
     public function deleteCompany($comId)
     {
