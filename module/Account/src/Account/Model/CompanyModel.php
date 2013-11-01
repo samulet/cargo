@@ -34,7 +34,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
         if(!empty($accId)) {
             $params['ownerAccId']=new \MongoId($accId);
         }
-
+        $accModel = $this->getAccountModel();
         $company = $objectManager->createQueryBuilder('Account\Entity\Company');
         $queryBuilderModel = $this->getQueryBuilderModel();
         $cursor = $queryBuilderModel->createQuery($company, $params)->getQuery()->execute();
@@ -42,6 +42,9 @@ class CompanyModel implements ServiceLocatorAwareInterface
         foreach ($cursor as $cur) {
 
             $arr = get_object_vars($cur);
+            if(!empty($arr['ownerAccId'])) {
+                $arr['accUuid']=$accModel->getAccount($arr['ownerAccId']);
+            }
             array_push($com, $arr);
         }
         return $com;
