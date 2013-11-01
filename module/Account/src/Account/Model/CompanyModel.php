@@ -231,8 +231,12 @@ class CompanyModel implements ServiceLocatorAwareInterface
         $resultArray = array();
         foreach ($agents as $agent) {
             $com = $this->getCompany($agent->contactAgentId);
+            if(!empty($com['activated'])) {
+                if($com['activated']=='1') {
+                    array_push($resultArray, $com);
+                }
+            }
 
-            array_push($resultArray, $com);
         }
         return $resultArray;
     }
