@@ -86,6 +86,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
                 $com = new Company($accId);
             }
 
+            $propArray['activated'] = '1';
 
             foreach ($propArray as $key => $value) {
                 if (!empty($value)) {
