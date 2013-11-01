@@ -4,8 +4,6 @@ namespace Account\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Account\Entity\CompanyUserInterface;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 
 /**
  * @ODM\Document(collection="companyUser")

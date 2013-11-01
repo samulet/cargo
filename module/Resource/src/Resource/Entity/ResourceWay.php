@@ -7,7 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-
 namespace Resource\Entity;
 
 use Zend\Form\Annotation;

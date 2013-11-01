@@ -2,13 +2,10 @@
 
 namespace Notification\Controller;
 
-
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Notification\Form\NotificationForm;
-use AddList\Form\AddListForm;
 
 class NotificationController extends AbstractActionController
 {
@@ -17,8 +14,6 @@ class NotificationController extends AbstractActionController
     public function indexAction()
     {
         $notificationModel = $this->getNotificationModel();
-
-        //$notification1=$notificationModel->getAdminNotifications($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc());
         $notification = $notificationModel->getNotifications(
             array('ownerOrgId' => new \MongoId($this->zfcUserAuthentication()->getIdentity()->getCurrentAcc()))
         );

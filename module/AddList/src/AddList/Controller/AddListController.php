@@ -12,7 +12,6 @@ namespace AddList\Controller;
 use Entity\Recources;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Zend\Form\Element\Checkbox;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use AddList\Form\AddListNameForm;
@@ -24,11 +23,6 @@ class AddListController extends AbstractActionController
     protected $organizationModel;
     protected $companyUserModel;
     protected $companyModel;
-
-    public function indexAction()
-    {
-
-    }
 
     public function addAction()
     {
@@ -56,9 +50,6 @@ class AddListController extends AbstractActionController
         $fillFrom = new AddListForm();
         $fillFrom->fillComNew($form, $comData, 'company');
 
-        $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
-
-
         if (array_search("admin", $roles, true)) {
 
             $form->get('forAccount')->setAttribute('required', false);
@@ -70,7 +61,6 @@ class AddListController extends AbstractActionController
             'parent' => $parent,
             'listName' => $listName,
             'roles' => $roles
-
         ));
     }
 
@@ -85,7 +75,6 @@ class AddListController extends AbstractActionController
 
         $builder = new AnnotationBuilder();
         $form = $builder->createForm('AddList\Entity\AddList');
-
 
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
@@ -105,7 +94,6 @@ class AddListController extends AbstractActionController
         $fillFrom = new AddListForm();
         $fillFrom->fillComNew($form, $comData, 'company');
         $form->setData($listData);
-
 
         return new ViewModel(array(
             'fieldUuid' => $listUuid,
@@ -132,18 +120,15 @@ class AddListController extends AbstractActionController
 
         $listUUID = $this->getEvent()->getRouteMatch()->getParam('id');
         $post = $this->getRequest()->getPost();
-        $target = $listUUID;
         $parent = $this->getEvent()->getRouteMatch()->getParam('parent');
 
         if ($parent == 'parent') {
             $parentField = $listUUID;
             $listUUID = null;
-            $target = $parentField;
         } else {
             $parentField = null;
         }
         $addListModel = $this->getAddListModel();
-
 
         $userId = $this->zfcUserAuthentication()->getIdentity()->getId();
 
@@ -152,27 +137,21 @@ class AddListController extends AbstractActionController
 
         $listId = $addListModel->addList($post, $listUUID, $parentField, $userId, $accListId, $comListId);
 
-
         if (empty($listName['parentId'])) {
             return $this->redirect()->toUrl('/addList/my-fields/' . $listId['listId']);
         } else {
             $parentUuid = $addListModel->getListUuidById($listId['parentFieldId']);
-
             return $this->redirect()->toUrl('/addList/list-parent/' . $parentUuid);
         }
-
     }
 
 
     public function myAction()
     {
-        ;
-
         $addListModel = $this->getAddListModel();
         $list = $addListModel->getListName();
 
         return new ViewModel(array(
-
             'list' => $list
         ));
     }
@@ -215,7 +194,6 @@ class AddListController extends AbstractActionController
 
         $accListId = $this->zfcUserAuthentication()->getIdentity()->getCurrentAcc();
 
-
         $authorize = $this->getServiceLocator()->get('BjyAuthorize\Provider\Identity\ProviderInterface');
         $roles = $authorize->getIdentityRoles();
 
@@ -235,9 +213,6 @@ class AddListController extends AbstractActionController
         if (!empty($list['list']['child'])) {
             $listChild = $addListModel->getListName('veh-models');
         }
-        //$listChild=$addListModel->getChildName($list['list']['id']);
-
-
         return new ViewModel(array(
             'field' => $list['field'],
             'list' => $list['list'],

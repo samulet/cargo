@@ -13,14 +13,12 @@ use Ticket\Entity\Cargo;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 class CargoModel implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
     protected $organizationModel;
-
 
     public function addCargo($post, $owner_id, $owner_org_id, $id)
     {

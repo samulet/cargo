@@ -146,12 +146,6 @@ namespace Account\Controller {
                 'uuid' => $accUuid
             ));
         }
-
-        public function addContractAgentToAccountAction()
-        {
-
-        }
-
         public function listAction()
         {
             $accId = $this->getEvent()->getRouteMatch()->getParam('id');

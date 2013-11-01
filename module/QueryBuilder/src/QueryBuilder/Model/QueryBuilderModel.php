@@ -9,18 +9,12 @@
 
 namespace QueryBuilder\Model;
 
-
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 class QueryBuilderModel implements ServiceLocatorAwareInterface
 {
-
     protected $serviceLocator;
 
     public function createQuery($qb, $searchArray)

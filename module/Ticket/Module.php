@@ -1,9 +1,7 @@
 <?php
 namespace Ticket;
 
-
 use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 use Ticket\Model\TicketModel;
 use Ticket\Model\CargoModel;
 

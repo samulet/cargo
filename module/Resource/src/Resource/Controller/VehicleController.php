@@ -9,7 +9,6 @@
 
 namespace Resource\Controller;
 
-use Entity\Recources;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -18,7 +17,6 @@ use AddList\Form\AddListForm;
 
 class VehicleController extends AbstractActionController
 {
-
     protected $companyUserModel;
     protected $vehicleModel;
     protected $addListModel;

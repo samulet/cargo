@@ -34,11 +34,6 @@ class CompanyController extends AbstractActionController
         ));
     }
 
-    public function choiceOrgAndComAction()
-    {
-
-    }
-
     public function contractAgentListAction()
     {
         $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');

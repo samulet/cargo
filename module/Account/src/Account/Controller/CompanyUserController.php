@@ -11,27 +11,16 @@ namespace Account\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Account\Entity\Company;
-use Account\Model\CompanyModel;
-use Account\Model\AccountModel;
-use Account\Entity\CompanyUser;
 use Account\Form\CompanyUserCreate;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Zend\Form\Annotation\AnnotationBuilder;
-
-use Zend\ModuleManager\ModuleManager;
 
 class CompanyUserController extends AbstractActionController
 {
     protected $companyUserModel;
     protected $accountModel;
     protected $companyModel;
-
-    public function indexAction()
-    {
-
-    }
 
     public function addAction()
     {
@@ -91,8 +80,6 @@ class CompanyUserController extends AbstractActionController
             } else {
                 $orgId = $accModel->getOrgIdByUUID($accUuid);
             }
-
-
         } else {
             $orgId = 'all';
             $this->layout('layout/admin');
