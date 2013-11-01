@@ -26,7 +26,6 @@ class CompanyController extends AbstractActionController
         return new ViewModel(array(
             'org' => $com,
             'org_id' => $accUuid
-
         ));
     }
 
@@ -206,6 +205,11 @@ class CompanyController extends AbstractActionController
     }
 
     public function adminContractAgentsAction() {
+        $comModel = $this->getCompanyModel();
+        $com = $comModel->returnCompanies(null,array('dirty'=>'1'));
+        return new ViewModel(array(
+            'com' => $com
+        ));
 
     }
 

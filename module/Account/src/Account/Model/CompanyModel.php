@@ -32,8 +32,10 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
         $params = array_map(function () {
                 return array_sum(func_get_args());
-            }, $params, array('deletedAt' => null,'ownerOrgId'=>new \MongoId($accId)));
-
+            }, $params, array('deletedAt' => null));
+        if(!empty($accId)) {
+            $params['ownerOrgId']=new \MongoId($accId);
+        }
         $company = $objectManager->getRepository('Account\Entity\Company');
         $queryBuilderModel = $this->getQueryBuilderModel();
         $cursor = $queryBuilderModel->createQuery($company, $params)->getQuery()->execute();
