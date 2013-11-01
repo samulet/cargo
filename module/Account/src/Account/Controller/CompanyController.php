@@ -36,7 +36,7 @@ class CompanyController extends AbstractActionController
         $agents = $comModel->getContractAgentsFromCompany($comId);
         $accModel = $this->getAccountModel();
         $company = $comModel->getCompany($comId);
-        $acc = $accModel->getAccount($company['ownerOrgId']);
+        $acc = $accModel->getAccount($company['ownerAccId']);
         return new ViewModel(array(
             'com' => $company,
             'agents' => $agents,
@@ -204,8 +204,21 @@ class CompanyController extends AbstractActionController
         ));
     }
 
+    public function adminContractAgentUnityAction() {
+        $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+    }
+
     public function adminContractAgentsAction() {
+        $param = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comId = $this->getEvent()->getRouteMatch()->getParam('id');
+
         $comModel = $this->getCompanyModel();
+        if($param=='approve') {
+            $comModel->update(array('id'=>new \MongoId($comId)),array('dirty' =>null));
+        } elseif($param=='block') {
+            $comModel->update(array('id'=>new \MongoId($comId)),array('activated' =>null));
+        }
+
         $com = $comModel->returnCompanies(null,array('dirty'=>'1'));
         return new ViewModel(array(
             'com' => $com

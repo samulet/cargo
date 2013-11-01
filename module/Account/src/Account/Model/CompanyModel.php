@@ -30,8 +30,8 @@ class CompanyModel implements ServiceLocatorAwareInterface
     public function returnCompanies($accId,$params = array())
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $params =array('deletedAt' => null)+$params;
 
-        $params =$params+array('deletedAt' => null,'activated' =>'1');
         if(!empty($accId)) {
             $params['ownerAccId']=new \MongoId($accId);
         }
@@ -53,12 +53,13 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
     public function update($paramsFind,$paramsUpdate) {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $company = $objectManager->createQueryBuilder('Account\Entity\Company')->findAndUpdate();
+        $company = $objectManager->createQueryBuilder('Account\Entity\Company');
         $queryBuilderModel = $this->getQueryBuilderModel();
-        $company=$queryBuilderModel->createSetQuery($company,$paramsFind);
+        $company=$queryBuilderModel->createQuery($company,$paramsFind);
         $company=$queryBuilderModel->createSetQuery($company,$paramsUpdate);
-        $company->getQuery()->execute();
-        if (!$company) {
+        $com=$company->findAndUpdate()->getQuery()->execute();
+
+        if (!$com) {
             throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $paramsFind,$paramsUpdate);
         }
     }
