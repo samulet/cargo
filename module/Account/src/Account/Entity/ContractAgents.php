@@ -278,12 +278,12 @@ class ContractAgents
 
     public function getOwnerOrgId()
     {
-        return $this->ownerOrgId;
+        return $this->ownerAccId;
     }
 
-    public function setOwnerOrgId($ownerOrgId)
+    public function setOwnerOrgId($ownerAccId)
     {
-        $this->ownerOrgId = $ownerOrgId;
+        $this->ownerAccId = $ownerAccId;
         return $this;
     }
 

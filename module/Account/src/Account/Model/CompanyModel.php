@@ -32,7 +32,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
         $params =$params+array('deletedAt' => null,'activated' =>'1');
         if(!empty($accId)) {
-            $params['ownerOrgId']=new \MongoId($accId);
+            $params['ownerAccId']=new \MongoId($accId);
         }
 
         $company = $objectManager->createQueryBuilder('Account\Entity\Company');
@@ -236,7 +236,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $coms = $objectManager->getRepository('Account\Entity\Company')->findBy(
-            array('ownerOrgId' => new \MongoId($curAcc))
+            array('ownerAccId' => new \MongoId($curAcc))
         );
         $resultArray = array();
         foreach ($coms as $com) {

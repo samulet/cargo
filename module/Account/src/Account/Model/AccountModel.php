@@ -159,7 +159,7 @@ class AccountModel implements ServiceLocatorAwareInterface
             $lastItemNumber = 1;
             if (!empty($id)) {
                 $tickets = $objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
-                    ->field('ownerOrgId')->equals($id)
+                    ->field('ownerAccId')->equals($id)
                     ->field('numberInt')->equals(null)
                     ->getQuery()
                     ->execute();
@@ -222,7 +222,7 @@ class AccountModel implements ServiceLocatorAwareInterface
             ->execute();
 
         $qb3 = $objectManager->getRepository('Account\Entity\Company')->findBy(
-            array('ownerOrgId' => new \MongoId($accId))
+            array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb3) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
@@ -231,7 +231,7 @@ class AccountModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
 
         $qb4 = $objectManager->getRepository('Resource\Entity\Resource')->findBy(
-            array('ownerOrgId' => new \MongoId($accId))
+            array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb4) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
@@ -240,7 +240,7 @@ class AccountModel implements ServiceLocatorAwareInterface
         $objectManager->flush();
 
         $qb5 = $objectManager->getRepository('Ticket\Entity\Ticket')->findBy(
-            array('ownerOrgId' => new \MongoId($accId))
+            array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb5) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);

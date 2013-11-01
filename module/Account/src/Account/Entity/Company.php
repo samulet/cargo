@@ -18,12 +18,12 @@ use Zend\Form\Element\Collection;
  */
 class Company
 {
-    public function __construct($ownerOrgId, $param = null)
+    public function __construct($ownerAccId, $param = null)
     {
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
         if ($param != 'contractAgent') {
-            $this->setOwnerOrgId(new \MongoId($ownerOrgId));
+            $this->setOwnerOrgId(new \MongoId($ownerAccId));
         }
     }
 
@@ -45,7 +45,7 @@ class Company
      * @var int
      * @Annotation\Exclude()
      */
-    public $ownerOrgId;
+    public $ownerAccId;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -587,12 +587,12 @@ class Company
 
     public function getOwnerOrgId()
     {
-        return $this->ownerOrgId;
+        return $this->ownerAccId;
     }
 
-    public function setOwnerOrgId($ownerOrgId)
+    public function setOwnerOrgId($ownerAccId)
     {
-        $this->ownerOrgId = $ownerOrgId;
+        $this->ownerAccId = $ownerAccId;
         return $this;
     }
 
