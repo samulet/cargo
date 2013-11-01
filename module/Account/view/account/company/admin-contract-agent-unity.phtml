@@ -1,0 +1,32 @@
+<?php
+$title = 'Объеденить компанию '.$this->company['name'].' с:';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<table class="table">
+    <tr>
+        <th>Название юр. лица</th>
+        <th>Объеденить</th>
+    </tr>
+    <?php foreach ($this->com as $c) { ?>
+
+        <tr>
+            <td>
+                <a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'add', 'org_id' => 'contractAgent', 'id' => 'list', 'comId' => $c['uuid'])
+                );?>"><?php echo $c['name']; ?></a>
+            </td>
+
+            <td>
+                <a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'adminContractAgentUnity', 'org_id'=>$this->company['id'] ,'id' =>$c['id'])
+                );?>">Объеденить</a>
+            </td>
+        </tr>
+
+
+    <?php } ?>
+
+</table>
