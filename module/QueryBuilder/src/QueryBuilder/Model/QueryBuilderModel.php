@@ -25,6 +25,14 @@ class QueryBuilderModel implements ServiceLocatorAwareInterface
         return $qb;
     }
 
+    public function createSetQuery($qb, $searchArray)
+    {
+        foreach ($searchArray as $key => $value) {
+            $qb->field($key)->set($value);
+        }
+        return $qb;
+    }
+
     public function isTicket($itemId)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
