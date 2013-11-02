@@ -17,7 +17,6 @@ return array(
         'Account',
         'Resource',
         'Ticket',
-        'Auction',
         'AddList',
         'Interaction',
         'Notification',
