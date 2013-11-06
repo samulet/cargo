@@ -20,7 +20,7 @@ angular.module('website', [
         PUBLIC: 0,
         AUTHORIZED: 1
     })
-    .config(['$routeProvider', '$httpProvider', 'ACCESS_LEVEL', function ($routeProvider, $httpProvider, ACCESS_LEVEL) {
+    .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL) {
         var pathToIncs = '/pages/';
         $routeProvider.when('/', {templateUrl: pathToIncs + 'main_page.html', controller: 'mainPageController', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when('/sign/up', {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
@@ -39,8 +39,8 @@ angular.module('website', [
         $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
 
             /*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
-                //TODO redirect or smt else
-            }*/
+             //TODO redirect or smt else
+             }*/
         });
 
     }])

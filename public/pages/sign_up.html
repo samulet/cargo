@@ -1,0 +1,37 @@
+Страница регистрации
+
+<div id="wrapper" ng-controller="signUpController">
+
+    <div>
+        <div id="login_med_container" class="full_width">
+            <div id="login_block" class="pull_right">
+                <form ng-submit="signUp()" name="signUpForm" id="login_form" class="vertical_form">
+                    <ul>
+                        <li>
+                            <label for="signup_email" class="lbl-default">Email </label>
+                            <input type="text" id="signup_email" title="Email" alt="Email" placeholder="Email"
+                                   ng-model="signUpData.email" required/>
+                        </li>
+                        <li>
+                            <label for="signup_password" class="lbl-default">Password </label>
+                            <input type="text" id="signup_password" title="Password" alt="Password"
+                                   placeholder="Password" ng-model="signUpData.password"
+                                   ng-minlength="4"
+                                   ng-maxlength="20" ng-pattern="/[a-zA-Z0-9]/" required/>
+                        </li>
+                        <!--<div class="alert" ng-class="alert.type" ng-show="alert">
+                            <ul>
+                                <li ng-repeat="message in alert.messages">{{message}}</li>
+                            </ul>
+                        </div>-->
+                        <div>
+                            <button class="btn btn-label-width btn-default" ng-click="signIn()">Вход</button>
+                            <button class="btn btn-input-width btn-default" ng-click="signUp()">Регистрация
+                            </button>
+                        </div>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
