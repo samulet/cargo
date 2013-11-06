@@ -26,23 +26,21 @@ angular.module('website', [
         $routeProvider.when('/sign/up', {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when('/sign/in', {templateUrl: pathToIncs + 'sign_up.html', controller: 'signUpController', access: ACCESS_LEVEL.PUBLIC});
 
-        $routeProvider.when(ROUTES.PAGE_NOT_FOUND, {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when('/404', {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
 
-        $routeProvider.otherwise({redirectTo: ROUTES.PAGE_NOT_FOUND});
+        $routeProvider.otherwise({redirectTo: '/404'});
 
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
 
     }])
 
-    .run(['$rootScope', 'ROUTES', 'LOCALE_STORAGE', 'COOKIE', 'ACCESS_LEVEL', 'cookieFactory', function ($rootScope, ROUTES, LOCALE_STORAGE, COOKIE, ACCESS_LEVEL, cookieFactory) {
-        $rootScope.ROUTES = ROUTES;
-
+    .run(['$rootScope', 'ACCESS_LEVEL', function ($rootScope, ACCESS_LEVEL) {
         $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
 
-            if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
+            /*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
                 //TODO redirect or smt else
-            }
+            }*/
         });
 
     }])
