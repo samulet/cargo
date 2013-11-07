@@ -40,6 +40,7 @@ html, body {
     border: 0;
     min-height: 30px;
     margin-bottom: 0;
+    display: block;
 }
 
 .tiny_navbar .navbar-brand {

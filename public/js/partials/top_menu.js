@@ -3,7 +3,16 @@
 
 angular.module('website.top.menu', [])
 
-    .controller('topPublicMenuController', ['$scope', '$http', function ($scope, $http) {
-
-    }])
+    .directive('topPublicMenu', function () {
+        return {
+            restrict: 'A',
+            /*scope: {
+             current: '=current'
+             },*/
+            templateUrl: 'partials/public/top_menu.html',
+            controller: function ($scope) {
+                //
+            }
+        };
+    })
 ;
