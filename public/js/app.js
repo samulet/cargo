@@ -2,6 +2,7 @@
 'use strict';
 
 angular.module('website', [
+        'common.factories',
         'website.top.menu',
         'website.sign',
         'website.mainPage'

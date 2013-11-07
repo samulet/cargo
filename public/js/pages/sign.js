@@ -3,9 +3,15 @@
 
 angular.module('website.sign', [])
 
-    .controller('signUpController', ['$scope', '$http', function ($scope, $http) {
+    .controller('signUpController', ['$scope', '$http', 'storageFactory', function ($scope, $http, storageFactory) {
         $scope.signUp = function () {
-            //TODO
+            $http.post('', {
+                email: this.signUpData.email,
+                password: this.signUpData.password
+            }).success(function (data) {
+                    alert('success sign up');
+                    storageFactory.setUser(data.user);
+                }).error(onError);
         };
     }])
 ;
