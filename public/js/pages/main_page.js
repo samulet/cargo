@@ -1,12 +1,10 @@
 ;
 'use strict';
 
-angular.module('website.sign', [])
+angular.module('website.mainPage', [])
 
     .controller('mainPageController', ['$scope', '$http', function ($scope, $http) {
-        $scope.signIn = function () {
-            //TODO
-        };
+
     }])
 
 ;

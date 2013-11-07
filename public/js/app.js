@@ -2,7 +2,9 @@
 'use strict';
 
 angular.module('website', [
-        //TODO add dependencies
+        'website.top.menu',
+        'website.sign',
+        'website.mainPage'
     ])
     .constant('RESPONSE_STATUS', {
         OK: 200,
@@ -21,10 +23,10 @@ angular.module('website', [
         AUTHORIZED: 1
     })
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL) {
-        var pathToIncs = '/pages/';
+        var pathToIncs = 'pages/';
         $routeProvider.when('/', {templateUrl: pathToIncs + 'main_page.html', controller: 'mainPageController', access: ACCESS_LEVEL.PUBLIC});
-        $routeProvider.when('/sign/up', {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
-        $routeProvider.when('/sign/in', {templateUrl: pathToIncs + 'sign_up.html', controller: 'signUpController', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when('/sign/up', {templateUrl: pathToIncs + 'sign_up.html', controller: 'signUpController', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when('/sign/in', {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
 
         $routeProvider.when('/404', {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
 
