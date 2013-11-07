@@ -4,6 +4,10 @@
 angular.module('website.sign', [])
 
     .controller('signUpController', ['$scope', '$http', 'storageFactory', function ($scope, $http, storageFactory) {
+        function onError(data, error) {
+            //
+        }
+
         $scope.signUp = function () {
             $http.post('', {
                 email: this.signUpData.email,

@@ -1,0 +1,29 @@
+{
+  "name": "Cargo",
+  "version": "0.0.1",
+  "description": "Проект CARGO",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-bower": "~0.7.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-jshint": "~0.7.1",
+    "grunt-contrib-uglify": "~0.2.5",
+    "grunt-contrib-watch": "~0.5.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MashaiMedvedi/cargo.git"
+  },
+  "author": "Cargo team",
+  "license": "none",
+  "gitHead": "303abb4bfc5cf7f1802d4c693b61c8c127f73657",
+  "readmeFilename": "README.md"
+}
