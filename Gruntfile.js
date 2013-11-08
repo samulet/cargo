@@ -46,13 +46,6 @@ module.exports = function (grunt) {
                 dev: {
                     dest: 'dest/path'
                 }
-            },
-            protractor: {
-                options: {
-                    configFile: "node_modules/protractor/referenceConf.js",
-                    keepAlive: true, // If false, the grunt process stops when the test fails.
-                    args: {}
-                }
             }
         }
     );
@@ -61,10 +54,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-bower');
 
     grunt.registerTask('default', ['concat:js', 'jshint', 'min:js', 'watch']);
-    grunt.registerTask('test', ['protractor']);
 }
 ;
