@@ -54,9 +54,9 @@ module.exports = function (grunt) {
             },
             cssmin: {
                 minify: {
-                    banner: '/* Cargo project css */',
                     files: {
-                        '<%= cssDir %>/cargo.min.css': ['<%= cssDir %>/additional_markup.css', '<%= cssDir %>/handheld.css', '<%= cssDir %>/theme.css']
+                        '<%= cssDir %>/cargo.min.css': ['<%= cssDir %>/additional_markup.css', '<%= cssDir %>/theme.css'],
+                        '<%= cssDir %>/cargo.handheld.min.css': ['<%= cssDir %>/handheld.css']
                     }
                 }
             },
@@ -125,7 +125,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    grunt.registerTask('dev', ['ngconstant:dev', 'concat:js', 'jshint', 'cssmin:minify', 'watch']);
+    grunt.registerTask('dev', ['ngconstant:dev', 'concat:js', 'jshint', 'cssmin:minify']);
     grunt.registerTask('prod', ['ngconstant:prod', 'concat:js', 'jshint', 'uglify:js', 'cssmin:minify', 'clean:prod']);
 }
 ;
