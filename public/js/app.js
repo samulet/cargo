@@ -2,6 +2,7 @@
 'use strict';
 
 angular.module('website', [
+        'env.config',
         'common.factories',
         'website.top.menu',
         'website.sign',

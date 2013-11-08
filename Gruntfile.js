@@ -4,14 +4,14 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
             pkg: grunt.file.readJSON('package.json'),
-            devJsDir: ['public/js/**/'],
-            compiledJs: '<%= compiledDir %>/js/cargo.js',
-            compiledMinJs: '<%= compiledDir %>/js/cargo.min.js',
+            jsDir: ['public/js/'],
+            compiledJs: '<%= jsDir %>compiled/cargo.js',
+            compiledMinJs: '<%= jsDir %>compiled/cargo.min.js',
 
             concat: {
                 js: {
                     src: [
-                        '<%= devJsDir %>*.js'
+                        '<%= jsDir %>*.js'
                     ],
                     dest: '<%= compiledJs %>'
                 }
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
             uglify: {
                 js: {
                     files: {
-                        '<%= compiledMinJs %>': ['<%= devJsDir %>*.js']
+                        '<%= compiledMinJs %>': ['<%= jsDir %>*.js']
                     }
                 }
             },
@@ -33,19 +33,50 @@ module.exports = function (grunt) {
                 files: ['<%= compiledJs %>']
             },
             watch: {
-                stylus: {
-                    files: ['<%= devDirStylus %>*.styl'],
-                    tasks: 'stylus'
-                },
                 js: {
-                    files: ['<%= devJsDir %>*.js', '<%= devJsDir %>pages/*.js'],
+                    files: ['<%= jsDir %>/**/*.js'],
                     tasks: 'concat lint'
                 }
             },
             bower: {
                 dev: {
-                    dest: 'dest/path'
+                    dest: 'public/lib'
                 }
+            },
+            ngconstant: {
+                options: {
+                    space: '  '
+                },
+                development: [
+                    {
+                        dest: '<%= jsDir %>/env_config.js',
+                        wrap: '"use strict";\n\n <%= __ngModule %>',
+                        name: 'env.config',
+                        constants: {
+                            PROTOCOL: 'http',
+                            HOST: 'localhost',
+                            ZONE: '',
+                            HOST_CONTEXT: '',
+                            PORT: '8080',
+                            REST_URL: 'http://localhost:8080'
+                        }
+                    }
+                ],
+                production: [
+                    {
+                        dest: '<%= jsDir %>/env_config.js',
+                        wrap: '"use strict";\n\n <%= __ngModule %>',
+                        name: 'env.config',
+                        constants: {
+                            PROTOCOL: '',
+                            HOST: '',
+                            ZONE: '',
+                            HOST_CONTEXT: '',
+                            PORT: '',
+                            REST_URL: ''
+                        }
+                    }
+                ]
             }
         }
     );
@@ -55,7 +86,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-bower');
+    grunt.loadNpmTasks('grunt-ng-constant');
 
-    grunt.registerTask('default', ['concat:js', 'jshint', 'min:js', 'watch']);
+    grunt.registerTask('default', ['ngconstant:development', 'concat:js', 'jshint', 'uglify:js', 'watch']);
+    grunt.registerTask('production', ['ngconstant:production', 'concat:js', 'jshint', 'uglify:js', 'watch']);
 }
 ;
