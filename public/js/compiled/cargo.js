@@ -1,6 +1,8 @@
-"use strict";
+;
+'use strict';
 
 angular.module('website', [
+        'env.config',
         'common.factories',
         'website.top.menu',
         'website.sign',
@@ -48,8 +50,8 @@ angular.module('website', [
     }])
 ;
 
-
-"use strict";
+;
+'use strict';
 
 angular.module('common.factories', [])
     .factory('storageFactory', ['$http', function ($http) {
@@ -147,10 +149,18 @@ angular.module('common.factories', [])
             }
         }
     }])
+;
 "use strict";
 
- angular.module("config", [])
+ angular.module("env.config", [])
 
-.constant("ENV", "development")
+.constant("REST_CONFIG", {
+  "PROTOCOL": "http",
+  "HOST": "localhost",
+  "HOST_CONTEXT": "",
+  "PORT": "8080",
+  "DOMAIN": "localhost",
+  "BASE_URL": "http://localhost:8080"
+})
 
 ;

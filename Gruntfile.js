@@ -5,6 +5,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
             pkg: grunt.file.readJSON('package.json'),
             jsDir: ['public/js/'],
+            cssDir: 'public/css/',
             compiledJs: '<%= jsDir %>compiled/cargo.js',
             compiledMinJs: '<%= jsDir %>compiled/cargo.min.js',
 
@@ -36,6 +37,10 @@ module.exports = function (grunt) {
                 js: {
                     files: ['<%= jsDir %>/**/*.js'],
                     tasks: 'concat lint'
+                },
+                css: {
+                    files: ['<%= cssDir %>/additional_markup.css', '<%= cssDir %>/handheld.css', '<%= cssDir %>/theme.css'],
+                    tasks: 'cssmin:minify'
                 }
             },
             bower: {
@@ -43,37 +48,67 @@ module.exports = function (grunt) {
                     dest: 'public/lib'
                 }
             },
+            clean: {
+                dev: ['<%= compiledMinJs %>'],
+                prod: ['<%= compiledJs %>']
+            },
+            cssmin: {
+                minify: {
+                    banner: '/* Cargo project css */',
+                    files: {
+                        '<%= cssDir %>/cargo.min.css': ['<%= cssDir %>/additional_markup.css', '<%= cssDir %>/handheld.css', '<%= cssDir %>/theme.css']
+                    }
+                }
+            },
             ngconstant: {
                 options: {
                     space: '  '
                 },
-                development: [
+                dev: [
                     {
                         dest: '<%= jsDir %>/env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
                         name: 'env.config',
                         constants: {
-                            PROTOCOL: 'http',
-                            HOST: 'localhost',
-                            ZONE: '',
-                            HOST_CONTEXT: '',
-                            PORT: '8080',
-                            REST_URL: 'http://localhost:8080'
+                            REST_CONFIG: (function () {
+                                var PROTOCOL = 'http';
+                                var HOST = 'localhost';
+                                var ZONE = '';
+                                var HOST_CONTEXT = '';
+                                var PORT = '8080';
+                                return {
+                                    PROTOCOL: PROTOCOL,
+                                    HOST: HOST,
+                                    HOST_CONTEXT: HOST_CONTEXT,
+                                    PORT: PORT,
+                                    DOMAIN: HOST + ZONE,
+                                    BASE_URL: PROTOCOL + "://" + HOST + ZONE + ':' + PORT + HOST_CONTEXT
+                                };
+                            })()
                         }
                     }
                 ],
-                production: [
+                prod: [
                     {
                         dest: '<%= jsDir %>/env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
                         name: 'env.config',
                         constants: {
-                            PROTOCOL: '',
-                            HOST: '',
-                            ZONE: '',
-                            HOST_CONTEXT: '',
-                            PORT: '',
-                            REST_URL: ''
+                            REST_CONFIG: (function () { //TODO fill up production settings
+                                var PROTOCOL = '';
+                                var HOST = '';
+                                var ZONE = '';
+                                var HOST_CONTEXT = '';
+                                var PORT = '';
+                                return {
+                                    PROTOCOL: PROTOCOL,
+                                    HOST: HOST,
+                                    HOST_CONTEXT: HOST_CONTEXT,
+                                    PORT: PORT,
+                                    DOMAIN: HOST + ZONE,
+                                    BASE_URL: PROTOCOL + "://" + HOST + ZONE + ':' + PORT + HOST_CONTEXT
+                                };
+                            })()
                         }
                     }
                 ]
@@ -87,8 +122,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-bower');
     grunt.loadNpmTasks('grunt-ng-constant');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    grunt.registerTask('default', ['ngconstant:development', 'concat:js', 'jshint', 'uglify:js', 'watch']);
-    grunt.registerTask('production', ['ngconstant:production', 'concat:js', 'jshint', 'uglify:js', 'watch']);
+    grunt.registerTask('dev', ['ngconstant:dev', 'concat:js', 'jshint', 'cssmin:minify', 'watch']);
+    grunt.registerTask('prod', ['ngconstant:prod', 'concat:js', 'jshint', 'uglify:js', 'cssmin:minify', 'clean:prod']);
 }
 ;

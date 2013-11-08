@@ -1,7 +1,14 @@
 "use strict";
 
- angular.module("config", [])
+ angular.module("env.config", [])
 
-.constant("ENV", "development")
+.constant("REST_CONFIG", {
+  "PROTOCOL": "http",
+  "HOST": "localhost",
+  "HOST_CONTEXT": "",
+  "PORT": "8080",
+  "DOMAIN": "localhost",
+  "BASE_URL": "http://localhost:8080"
+})
 
 ;
