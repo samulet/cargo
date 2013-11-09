@@ -9,3 +9,8 @@ nbproject
 dev
 .vagrant
 Vagrantfile
+files
+logs
+puppet
+shell
+hiera.yaml
