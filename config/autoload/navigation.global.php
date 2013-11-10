@@ -217,6 +217,13 @@ return array(
                 'params' => array('org_id' => 'all', 'param' =>'full'),
 
             ),
+            array(
+                'label' => 'Управление контралентами',
+                'route' => 'company',
+                'action' => 'adminContractAgents',
+                'params' => array('org_id' => 'all'),
+
+            ),
         ),
 
 

@@ -23,28 +23,58 @@ use User\Entity\User;
 
 class CompanyModel implements ServiceLocatorAwareInterface
 {
-
-
-    public function __construct()
-    {
-
-    }
-
     protected $serviceLocator;
+    protected $queryBuilderModel;
+    protected $accountModel;
 
-    public function returnCompanies($accId, $number = '30', $page = '1')
+    public function returnCompanies($accId,$params = array())
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $cursor = $objectManager->getRepository('Account\Entity\Company')->getMyAvailableCompany(new \MongoId($accId));
+        $params =array('deletedAt' => null)+$params;
 
+        if(!empty($accId)) {
+            $params['ownerAccId']=new \MongoId($accId);
+        }
+        $accModel = $this->getAccountModel();
+        $company = $objectManager->createQueryBuilder('Account\Entity\Company');
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $cursor = $queryBuilderModel->createQuery($company, $params)->getQuery()->execute();
         $com = array();
         foreach ($cursor as $cur) {
+
             $arr = get_object_vars($cur);
-            unset($arr['created']);
-            unset($arr['updated']);
+            if(!empty($arr['ownerAccId'])) {
+                $arr['accUuid']=$accModel->getAccount($arr['ownerAccId']);
+            }
             array_push($com, $arr);
         }
         return $com;
+    }
+
+    public function unityContractAgent($comId,$comUnityId) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $contract = $objectManager->createQueryBuilder('Account\Entity\ContractAgents');
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $contract=$queryBuilderModel->createQuery($contract,array('contactAgentId' => new \MongoId($comId)));
+        $contract=$queryBuilderModel->createSetQuery($contract,array('contactAgentId' => new \MongoId($comUnityId)));
+        $com=$contract->findAndUpdate()->getQuery()->execute();
+
+        if (!$com) {
+            throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $comId,$comUnityId);
+        }
+    }
+
+    public function update($paramsFind,$paramsUpdate) {
+        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
+        $company = $objectManager->createQueryBuilder('Account\Entity\Company');
+        $queryBuilderModel = $this->getQueryBuilderModel();
+        $company=$queryBuilderModel->createQuery($company,$paramsFind);
+        $company=$queryBuilderModel->createSetQuery($company,$paramsUpdate);
+        $com=$company->findAndUpdate()->getQuery()->execute();
+
+        if (!$com) {
+            throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $paramsFind,$paramsUpdate);
+        }
     }
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
@@ -74,6 +104,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
                 $com = new Company($accId);
             }
 
+            $propArray['activated'] = '1';
 
             foreach ($propArray as $key => $value) {
                 if (!empty($value)) {
@@ -144,6 +175,8 @@ class CompanyModel implements ServiceLocatorAwareInterface
         return $com;
     }
 
+
+
     public function deleteCompany($comId)
     {
 
@@ -151,7 +184,7 @@ class CompanyModel implements ServiceLocatorAwareInterface
 
         $qb = $objectManager->getRepository('Account\Entity\Company')->find(new \MongoId($comId));
         if (!$qb) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $comId);
+            throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $comId);
         }
         $objectManager->remove($qb);
         $objectManager->flush();
@@ -213,8 +246,12 @@ class CompanyModel implements ServiceLocatorAwareInterface
         $resultArray = array();
         foreach ($agents as $agent) {
             $com = $this->getCompany($agent->contactAgentId);
+            if(!empty($com['activated'])) {
+                if($com['activated']=='1') {
+                    array_push($resultArray, $com);
+                }
+            }
 
-            array_push($resultArray, $com);
         }
         return $resultArray;
     }
@@ -223,12 +260,29 @@ class CompanyModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $coms = $objectManager->getRepository('Account\Entity\Company')->findBy(
-            array('ownerOrgId' => new \MongoId($curAcc))
+            array('ownerAccId' => new \MongoId($curAcc))
         );
         $resultArray = array();
         foreach ($coms as $com) {
             array_push($resultArray, get_object_vars($com));
         }
         return $resultArray;
+    }
+
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
+    }
+    public function getAccountModel()
+    {
+        if (!$this->accountModel) {
+            $sm = $this->getServiceLocator();
+            $this->accountModel = $sm->get('Account\Model\AccountModel');
+        }
+        return $this->accountModel;
     }
 }

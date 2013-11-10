@@ -1,0 +1,56 @@
+<?php
+$title = 'Компании добавленные в контрагенты';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<table class="table">
+    <tr>
+        <th>Название юр. лица</th>
+        <th>Объеденить</th>
+        <th>Утвердить</th>
+        <th>Заблокировать</th>
+    </tr>
+    <?php foreach ($this->com as $c) { ?>
+
+        <tr>
+            <td>
+                <a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'add', 'org_id' => 'contractAgent', 'id' => 'list', 'comId' => $c['uuid'])
+                );?>"><?php echo $c['name']; ?></a>
+            </td>
+
+            <td>
+                <a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'adminContractAgentUnity', 'org_id'=>$c['id'])
+                );?>">Объеденить</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'adminContractAgents', 'id'=>$c['id'],'org_id' => 'approve')
+                );?>">Утвердить</a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(
+                    'company',
+                    array('action' => 'adminContractAgents', 'id'=>$c['id'],'org_id' => 'block')
+                );?>">Заблокировать</a>
+                <?php
+                if(!empty($c['activated'])) {
+                    if($c['activated']!='1') {
+                        echo ' (Заблокировано)';
+                    }
+                } else {
+                    echo ' (Заблокировано)';
+                }
+                ?>
+            </td>
+
+        </tr>
+
+
+    <?php } ?>
+
+</table>

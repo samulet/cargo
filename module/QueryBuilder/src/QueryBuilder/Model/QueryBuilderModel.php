@@ -19,8 +19,17 @@ class QueryBuilderModel implements ServiceLocatorAwareInterface
 
     public function createQuery($qb, $searchArray)
     {
+
         foreach ($searchArray as $key => $value) {
             $qb->field($key)->equals($value);
+        }
+        return $qb;
+    }
+
+    public function createSetQuery($qb, $searchArray)
+    {
+        foreach ($searchArray as $key => $value) {
+            $qb->field($key)->set($value);
         }
         return $qb;
     }

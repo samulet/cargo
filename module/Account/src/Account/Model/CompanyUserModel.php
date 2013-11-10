@@ -175,10 +175,10 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
                 ->findAndUpdate()
                 ->field('id')->equals(new \MongoId($userId))
                 ->field('currentCom')->set(new \MongoId($post['currentCom']))
-                ->field('currentAcc')->set(new \MongoId($com['ownerOrgId']))
+                ->field('currentAcc')->set(new \MongoId($com['ownerAccId']))
                 ->getQuery()
                 ->execute();
-            $this->findUserAndSetRole('currentAcc', $userId, $com['ownerOrgId']);
+            $this->findUserAndSetRole('currentAcc', $userId, $com['ownerAccId']);
             $this->findUserAndSetRole('currentCom', $userId, $post['currentCom']);
         }
     }
@@ -196,7 +196,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         foreach ($orgTmp as $or) {
             if (!empty($or->companyId)) {
                 $comTmp = $comModel->getCompany($or->companyId);
-                $orgLocal = $accModel->getAccount($comTmp['ownerOrgId']);
+                $orgLocal = $accModel->getAccount($comTmp['ownerAccId']);
                 $resultArray = $resultArray + array($orgLocal['id'] => $orgLocal['name']);
             } elseif (!empty($or->orgId)) {
                 $orgLocal = $accModel->getAccount($or->orgId);
@@ -222,7 +222,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
 
         foreach ($comUserTmp as $comUser) {
             $comTmp = $comModel->getCompany($comUser->companyId);
-            if ($comTmp['ownerOrgId'] == $orgId) {
+            if ($comTmp['ownerAccId'] == $orgId) {
                 $resultArray = $resultArray + array($comTmp['id'] => $comTmp['name']);
             }
         }
@@ -268,7 +268,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         $company = $comModel->getCompany($orgId);
 
         $accModel = $this->getAccountModel();
-        $orgName = $accModel->getAccount($company['ownerOrgId']);
+        $orgName = $accModel->getAccount($company['ownerAccId']);
         $result = array();
         $users = $objectManager->getRepository('Account\Entity\CompanyUser')->findBy(
             array('companyId' => new \MongoId($orgId))
@@ -309,7 +309,7 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $com = $objectManager->getRepository('Account\Entity\Company')->findBy(
-            array('ownerOrgId' => new \MongoId($orgId))
+            array('ownerAccId' => new \MongoId($orgId))
         );
         if (empty($com)) {
             return null;

@@ -18,19 +18,14 @@ class CompanyController extends AbstractActionController
     public function indexAction()
     {
         $accUuid = $this->getEvent()->getRouteMatch()->getParam('org_id');
-        $uuid_gen = new UuidGenerator();
-        if (!$uuid_gen->isValid($accUuid)) {
-            $com = "Ошибка";
-        } else {
-            $comModel = $this->getCompanyModel();
-            $accModel = $this->getAccountModel();
-            $accId = $accModel->getOrgIdByUUID($accUuid);
-            $com = $comModel->returnCompanies($accId);
-        }
+        $comModel = $this->getCompanyModel();
+        $accModel = $this->getAccountModel();
+        $accId = $accModel->getOrgIdByUUID($accUuid);
+        $com = $comModel->returnCompanies($accId,array('activated' =>'1'));
+
         return new ViewModel(array(
             'org' => $com,
             'org_id' => $accUuid
-
         ));
     }
 
@@ -41,7 +36,7 @@ class CompanyController extends AbstractActionController
         $agents = $comModel->getContractAgentsFromCompany($comId);
         $accModel = $this->getAccountModel();
         $company = $comModel->getCompany($comId);
-        $acc = $accModel->getAccount($company['ownerOrgId']);
+        $acc = $accModel->getAccount($company['ownerAccId']);
         return new ViewModel(array(
             'com' => $company,
             'agents' => $agents,
@@ -209,6 +204,42 @@ class CompanyController extends AbstractActionController
         ));
     }
 
+    public function adminContractAgentUnityAction() {
+        $comId = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comUnityId = $this->getEvent()->getRouteMatch()->getParam('id');
+        $comModel = $this->getCompanyModel();
+        if(!empty($comUnityId)) {
+            $comModel->unityContractAgent($comId,$comUnityId);
+            $comModel->deleteCompany($comId);
+            return $this->redirect()->toUrl('/account/all/company/adminContractAgents');
+        }
+
+        $company = $comModel->getCompany($comId);
+        $com = $comModel->returnCompanies(null,array('activated'=>'1','dirty' =>null));
+        return new ViewModel(array(
+            'com' => $com,
+            'company' =>$company
+        ));
+    }
+
+    public function adminContractAgentsAction() {
+        $param = $this->getEvent()->getRouteMatch()->getParam('org_id');
+        $comId = $this->getEvent()->getRouteMatch()->getParam('id');
+
+        $comModel = $this->getCompanyModel();
+        if($param=='approve') {
+            $comModel->update(array('id'=>new \MongoId($comId)),array('dirty' =>null));
+        } elseif($param=='block') {
+            $comModel->update(array('id'=>new \MongoId($comId)),array('activated' =>null));
+        }
+
+        $com = $comModel->returnCompanies(null,array('dirty'=>'1'));
+        return new ViewModel(array(
+            'com' => $com
+        ));
+
+    }
+
     public function deleteAction()
     {
         $comModel = $this->getCompanyModel();
@@ -272,5 +303,13 @@ class CompanyController extends AbstractActionController
             $this->companyUserModel = $sm->get('Account\Model\CompanyUserModel');
         }
         return $this->companyUserModel;
+    }
+    public function getQueryBuilderModel()
+    {
+        if (!$this->queryBuilderModel) {
+            $sm = $this->getServiceLocator();
+            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
+        }
+        return $this->queryBuilderModel;
     }
 }
