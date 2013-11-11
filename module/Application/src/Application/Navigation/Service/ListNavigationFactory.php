@@ -30,8 +30,6 @@ class ListNavigationFactory extends DefaultNavigationFactory
 
             $auth = $serviceLocator->get('zfcuser_auth_service');
             $currentOrg = $auth->getIdentity()->getCurrentAcc();
-            $authorize = $serviceLocator->get('BjyAuthorize\Provider\Identity\ProviderInterface');
-            $roles = $authorize->getIdentityRoles();
             $listDataName = $addListModel->getOneList($paramId);
             if (!empty($listDataName['listId'])) {
                 $listId = $listDataName['listId'];
@@ -70,11 +68,7 @@ class ListNavigationFactory extends DefaultNavigationFactory
                     )
                 );
                 if (($paramId == $lName) || ($listId == $lName)) {
-                    if (array_search("admin", $roles, true)) {
-                        $listFields = $addListModel->getListAdmin($lName)['field'];
-                    } else {
-                        $listFields = $addListModel->getList($lName, $currentOrg)['field'];
-                    }
+                    $listFields = $addListModel->getList($lName, $currentOrg)['field'];
                     foreach ($listFields as $fi) {
                         $fi = $fi['it'];
 

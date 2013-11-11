@@ -8,7 +8,6 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineMongoODM',
-        'BjyAuthorize',
         'User',
         'ZfcAdmin',
         'EdpModuleLayouts',

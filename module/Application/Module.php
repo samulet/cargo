@@ -72,24 +72,6 @@ class Module
     public function getViewHelperConfig()
     {
         return array(
-            'factories' => array(
-                // This will overwrite the native navigation helper
-                'navigation' => function (HelperPluginManager $pluginManager) {
-                    /** @var \Zend\View\Helper\Navigation $navigation */
-                    $navigation = $pluginManager->get('Zend\View\Helper\Navigation');
-
-                    $serviceLocator = $pluginManager->getServiceLocator();
-                    /* @var $authorize \BjyAuthorize\Service\Authorize */
-                    $authorize = $serviceLocator->get('BjyAuthorize\Service\Authorize');
-
-                    // Store ACL and role in the proxy helper:
-                    $navigation->setAcl($authorize->getAcl())
-                        ->setRole($authorize->getIdentity());
-
-                    // Return the new navigation helper instance
-                    return $navigation;
-                }
-            )
         );
     }
 
