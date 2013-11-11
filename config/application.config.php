@@ -5,6 +5,8 @@ return array(
         'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineMongoODMModule',
+        'ScnSocialAuth',
+        'ScnSocialAuthDoctrineMongoODM',
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineMongoODM',

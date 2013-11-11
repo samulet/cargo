@@ -2,7 +2,7 @@
 return array(
     'doctrine' => array(
         'driver' => array(
-             'zfcuser_driver' =>array(
+            'zfcuser_driver' =>array(
                 'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(__DIR__ .'/../../module/User/src/User/Entity')

@@ -20,6 +20,15 @@ class Module
                 $user->addRole('user');
             }
         );
+        $scnServiceEvents = $e->getApplication()->getServiceManager()->get('ScnSocialAuth\Authentication\Adapter\HybridAuth')->getEventManager();
+        $scnServiceEvents->attach(
+            'register.post',
+            function ($e) {
+                /* @var $user \User\Entity\User */
+                $user = $e->getParam('user');
+                $user->addRole('user');
+            }
+        );
     }
 
     public function getConfig()

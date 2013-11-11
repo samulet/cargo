@@ -16,11 +16,13 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4",
         "zendframework/zendframework": "2.2.*@stable",
-        "zf-commons/zfc-user-doctrine-mongo-odm": "dev-master",
         "zendframework/zend-developer-tools": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
+        "bladeofsteel/zfc-user-doctrine-mongo-odm": "@dev",
+        "bladeofsteel/scn-social-auth-doctrine-mongo-odm": "*@dev",
+        "bladeofsteel/scn-social-auth": "*@dev",
         "yassa/rollbar": "*",
         "zf-commons/zfc-admin": "*",
         "evandotpro/edp-module-layouts": "1.*",
@@ -32,10 +34,6 @@
         "ccampbell/chromephp": "*"
     },
     "repositories": [
-        {
-            "type": "git",
-            "url": "git://github.com/bladeofsteel/ZfcUserDoctrineMongoODM.git"
-        },
         {
             "type": "vcs",
             "url": "https://github.com/csanquer/PHPExcel.git"
