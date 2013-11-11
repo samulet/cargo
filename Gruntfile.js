@@ -10,7 +10,7 @@ module.exports = function (grunt) {
             compiledMinJs: '<%= jsDir %>compiled/cargo.min.js',
             devJsSources: [
                 '<%= jsDir %>*.js',
-                '<%= jsDir %>/pages/*.js,',
+                '<%= jsDir %>/pages/*.js',
                 '<%= jsDir %>/partials/*.js'
             ],
 
