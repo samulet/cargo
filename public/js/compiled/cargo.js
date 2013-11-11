@@ -1,4 +1,3 @@
-;
 'use strict';
 
 angular.module('website', [
@@ -24,13 +23,21 @@ angular.module('website', [
         PUBLIC: 0,
         AUTHORIZED: 1
     })
-    .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL) {
+    .constant('ROUTES', {
+        START_PAGE: '/',
+        START_PAGE_ALT: '',
+        SIGN_UP: '/sign/up',
+        SIGN_IN: '/sign/in',
+        NOT_FOUND: '/404'
+    })
+    .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'pages/';
-        $routeProvider.when('/', {templateUrl: pathToIncs + 'main_page.html', controller: 'mainPageController', access: ACCESS_LEVEL.PUBLIC});
-        $routeProvider.when('/sign/up', {templateUrl: pathToIncs + 'sign_up.html', controller: 'signUpController', access: ACCESS_LEVEL.PUBLIC});
-        $routeProvider.when('/sign/in', {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.START_PAGE, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.START_PAGE_ALT, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.SIGN_UP, {templateUrl: pathToIncs + 'sign_up.html', controller: 'signUpController', access: ACCESS_LEVEL.PUBLIC});
 
-        $routeProvider.when('/404', {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
 
         $routeProvider.otherwise({redirectTo: '/404'});
 
@@ -38,7 +45,11 @@ angular.module('website', [
         $locationProvider.hashPrefix('!');
 
     }])
-
+    .filter('routeFilter', ['localeFactory', '$filter', function (localeFactory, $filter) {
+        return function (route) {
+            return   '/#!' + route;
+        };
+    }])
     .run(['$rootScope', 'ACCESS_LEVEL', function ($rootScope, ACCESS_LEVEL) {
         $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
 
@@ -50,7 +61,6 @@ angular.module('website', [
     }])
 ;
 
-;
 'use strict';
 
 angular.module('common.factories', [])
@@ -79,7 +89,7 @@ angular.module('common.factories', [])
                 set(userKey, user);
             }
 
-        }
+        };
     }])
 
     .factory('redirectFactory', [function () {
@@ -109,13 +119,13 @@ angular.module('common.factories', [])
         }
 
         return {
-            goBusinessHomePage: function () {
-                redirectTo(businessUrl + '/home');
+            goHomePage: function () {
+                redirectTo('/');
             },
             redirectCustomPath: function (path) {
                 redirectTo(path);
             }
-        }
+        };
     }])
 
     .factory('cookieFactory', [function () {
@@ -147,7 +157,7 @@ angular.module('common.factories', [])
             removeItem: function (name) {
                 document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
             }
-        }
+        };
     }])
 ;
 "use strict";
@@ -163,4 +173,21 @@ angular.module('common.factories', [])
   "BASE_URL": "http://localhost:8080"
 })
 
+;
+'use strict';
+
+angular.module('website.top.menu', [])
+
+    .directive('topPublicMenu', function () {
+        return {
+            restrict: 'A',
+            /*scope: {
+             current: '=current'
+             },*/
+            templateUrl: 'partials/public/top_menu.html',
+            controller: function ($scope) {
+                //
+            }
+        };
+    })
 ;

@@ -1,4 +1,3 @@
-;
 'use strict';
 
 angular.module('common.factories', [])
@@ -27,7 +26,7 @@ angular.module('common.factories', [])
                 set(userKey, user);
             }
 
-        }
+        };
     }])
 
     .factory('redirectFactory', [function () {
@@ -57,13 +56,13 @@ angular.module('common.factories', [])
         }
 
         return {
-            goBusinessHomePage: function () {
-                redirectTo(businessUrl + '/home');
+            goHomePage: function () {
+                redirectTo('/');
             },
             redirectCustomPath: function (path) {
                 redirectTo(path);
             }
-        }
+        };
     }])
 
     .factory('cookieFactory', [function () {
@@ -95,6 +94,6 @@ angular.module('common.factories', [])
             removeItem: function (name) {
                 document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
             }
-        }
+        };
     }])
 ;

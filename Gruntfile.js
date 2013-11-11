@@ -8,35 +8,57 @@ module.exports = function (grunt) {
             cssDir: 'public/css/',
             compiledJs: '<%= jsDir %>compiled/cargo.js',
             compiledMinJs: '<%= jsDir %>compiled/cargo.min.js',
+            devJsSources: [
+                '<%= jsDir %>*.js',
+                '<%= jsDir %>/pages/*.js,',
+                '<%= jsDir %>/partials/*.js'
+            ],
 
             concat: {
                 js: {
-                    src: [
-                        '<%= jsDir %>*.js'
-                    ],
+                    src: '<%= devJsSources %>',
                     dest: '<%= compiledJs %>'
                 }
             },
             uglify: {
                 js: {
                     files: {
-                        '<%= compiledMinJs %>': ['<%= jsDir %>*.js']
+                        '<%= compiledMinJs %>': '<%= devJsSources %>'
                     }
                 }
             },
             jshint: {
-                options: {
-                    smarttabs: true
+                beforeconcat: {
+                    options: {
+                        globalstrict: true,
+                        globals: {
+                            angular: true,
+                            localStorage: true,
+                            document: true,
+                            window: true,
+                            navigator: true
+                        }
+                    },
+                    src: '<%= devJsSources %>'
                 },
-                js: ['<%= compiledJs %>']
-            },
-            lint: {
-                files: ['<%= compiledJs %>']
+                afterconcat: {
+                    options: {
+                        globalstrict: true,
+                        globals: {
+                            angular: true,
+                            localStorage: true,
+                            document: true,
+                            window: true,
+                            navigator: true
+                        }
+                    },
+                    src: ['<%= compiledJs %>']
+                }
             },
             watch: {
                 js: {
                     files: ['<%= jsDir %>/**/*.js'],
-                    tasks: 'concat lint'
+                    tasks: 'concat'
                 },
                 css: {
                     files: ['<%= cssDir %>/additional_markup.css', '<%= cssDir %>/handheld.css', '<%= cssDir %>/theme.css'],
@@ -125,7 +147,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    grunt.registerTask('dev', ['ngconstant:dev', 'concat:js', 'jshint', 'cssmin:minify']);
-    grunt.registerTask('prod', ['ngconstant:prod', 'concat:js', 'jshint', 'uglify:js', 'cssmin:minify', 'clean:prod']);
+    grunt.registerTask('check_js', ['jshint:beforeconcat']);
+    grunt.registerTask('dev', ['ngconstant:dev', 'concat:js', 'jshint:afterconcat', 'cssmin:minify']);
+    grunt.registerTask('prod', ['ngconstant:prod', 'concat:js', 'jshint:afterconcat', 'uglify:js', 'cssmin:minify', 'clean:prod']);
 }
 ;
