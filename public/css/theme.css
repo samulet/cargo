@@ -18,20 +18,21 @@
     background: #6DB700;
 }
 
-/* END Classes */
-
-/* IDs */
-#sign_up_block, #sign_in_block {
+.filled_bg {
     background-color: #6DB700;
     color: #FFF;
 }
 
-#sign_in_block a {
+.filled_bg a {
+    color: #FFF;
+}
+
+.filled_bg .btn-invisible {
     color: white;
 }
 
-#sign_in_block .btn-invisible {
-    color: white;
-}
+/* END Classes */
+
+/* IDs */
 
 /* END IDs */

@@ -101,6 +101,15 @@ html, body {
     margin-top: 10px;
 }
 
+#self_presentation_block {
+    font-size: 1.3em;
+    margin: 15px 0;
+}
+
+#features_block li {
+    display: inline-block;
+    margin: 15px 25px;
+}
 /* END IDs */
 
 /* Screen-specified options */
