@@ -73,15 +73,32 @@ html, body {
     line-height: 1.5;
 }
 
+.btn-invisible {
+    background: none;
+    border: 0;
+}
+
 /* END Classes */
 
 /* IDs */
-#sign_up_block {
+#sign_up_block, #sign_in_block {
     padding: 40px;
 }
 
-#sign_up_form_block {
+#sign_up_form_block, #sign_in_form_block {
     padding: 0 15px;
+}
+
+#sign_in_header {
+    margin-bottom: 15px;
+}
+
+#sign_in_header a {
+    font-weight: bold;
+}
+
+#sign_in_social_buttons {
+    margin-top: 10px;
 }
 
 /* END IDs */

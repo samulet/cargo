@@ -1,1 +1,78 @@
-Страница логина
+<div top-public-menu></div>
+
+<div ng-controller="signInController">
+    <div id="sign_in_block">
+        <div class="container">
+            <div id="sign_in_form_block" class="pull_right">
+                <form ng-submit="signIn()" name="signInForm" role="form">
+                    <ul style="list-style: none;">
+                        <li id="sign_in_header">
+                            <span>Вход</span>
+                            <a href="{{ROUTES.SIGN_UP | routeFilter}}" class="pull_right">Регистрация</a>
+                        </li>
+                        <li class="form-group">
+                            <input type="email" id="sign_in_email" title="Email" alt="Email"
+                                   placeholder="Email"
+                                   ng-model="signInData.email" class="form-control" required/>
+                        </li>
+                        <li class="form-group">
+                            <input type="password" id="sign_in_password" title="Password" alt="Password"
+                                   placeholder="Password"
+                                   ng-model="signInData.password"
+                                   ng-minlength="4"
+                                   ng-maxlength="20" ng-pattern="/[a-zA-Z0-9]/" class="form-control" required/>
+                        </li>
+                        <li class="form-group pull_right">
+                            <button class="btn btn-invisible" ng-click="remindPassword()" style="padding: 0;">
+                                Напомнить пароль
+                            </button>
+                        </li>
+                        <li class="form-group">
+                            <label for="sign_in_remember">
+                                <input type="checkbox" id="sign_in_remember" title="Запомнить" alt="Запомнить"
+                                       ng-model="signInData.remember"/>
+                                Запомнить меня</label>
+                        </li>
+
+                        <!--<div class="alert" ng-class="alert.type" ng-show="alert">
+                            <ul>
+                                <li ng-repeat="message in alert.messages">{{message}}</li>
+                            </ul>
+                        </div>-->
+                        <li>
+                            <button class="btn btn-block btn-green" ng-click="signIn()">Войти</button>
+                        </li>
+                        <li id="sign_in_social_buttons">
+                            <div>Войти через</div>
+                            <button type="button" class="btn btn-invisible btn-lg" title="Mail.ru">M</button>
+                            <button type="button" class="btn btn-invisible btn-lg" title="Одноклассники">О</button>
+                            <button type="button" class="btn btn-invisible btn-lg" title="Яндекс">Ya</button>
+                            <button type="button" class="btn btn-invisible btn-lg" title="Google">
+                                <i class="fa fa-google-plus-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-invisible btn-lg" title="Facebook">
+                                <i class="fa fa-facebook-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-invisible btn-lg" title="Вконтакте">
+                                <i class="fa fa-vk"></i>
+                            </button>
+                            <button type="button" class="btn btn-invisible btn-lg" title="Linked.In">
+                                <i class="fa fa-linkedin-square"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <h1 class="marketing_header">Some inspiration wow-text.</h1>
+
+            <p class="marketing_subheader">Some short explain of who we are and etc</p>
+        </div>
+    </div>
+    <script type="text/javascript" src="//yandex.st/share/share.js"
+            charset="utf-8"></script>
+    <div class="yashare-auto-init" data-yashareL10n="ru"
+         data-yashareType="button" data-yashareQuickServices="yaru,odnoklassniki,moimir"
+
+            ></div>
+</div>
+

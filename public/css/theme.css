@@ -21,9 +21,17 @@
 /* END Classes */
 
 /* IDs */
-#sign_up_block {
+#sign_up_block, #sign_in_block {
     background-color: #6DB700;
     color: #FFF;
+}
+
+#sign_in_block a {
+    color: white;
+}
+
+#sign_in_block .btn-invisible {
+    color: white;
 }
 
 /* END IDs */
