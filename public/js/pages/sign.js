@@ -3,6 +3,9 @@
 angular.module('website.sign', [])
 
     .controller('signUpController', ['$scope', '$http', 'storageFactory', function ($scope, $http, storageFactory) {
+        //
+    }])
+    .controller('signInController', ['$scope', '$http', 'storageFactory', function ($scope, $http, storageFactory) {
         function onError(data, error) {
             //
         }

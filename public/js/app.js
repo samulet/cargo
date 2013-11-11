@@ -5,7 +5,6 @@ angular.module('website', [
         'common.factories',
         'website.top.menu',
         'website.sign',
-        'website.mainPage'
     ])
     .constant('RESPONSE_STATUS', {
         OK: 200,
@@ -45,11 +44,11 @@ angular.module('website', [
         $locationProvider.hashPrefix('!');
 
     }])
-    .filter('routeFilter', ['localeFactory', '$filter', function (localeFactory, $filter) {
+    .filter('routeFilter', function () {
         return function (route) {
             return   '/#!' + route;
         };
-    }])
+    })
     .run(['$rootScope', 'ACCESS_LEVEL', function ($rootScope, ACCESS_LEVEL) {
         $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
 
