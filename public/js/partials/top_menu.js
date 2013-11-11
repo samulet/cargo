@@ -8,7 +8,7 @@ angular.module('website.top.menu', [])
             /*scope: {
              current: '=current'
              },*/
-            templateUrl: 'partials/public/top_menu.html',
+            templateUrl: 'public/partials/public/top_menu.html',
             controller: function ($scope) {
                 //
             }

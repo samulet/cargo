@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('website', [
+        'ngRoute',
         'env.config',
         'common.factories',
         'website.top.menu',
         'website.sign',
+        'website.page.errors'
     ])
     .constant('RESPONSE_STATUS', {
         OK: 200,
@@ -30,12 +32,11 @@ angular.module('website', [
         NOT_FOUND: '/404'
     })
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
-        var pathToIncs = 'pages/';
+        var pathToIncs = 'public/pages/';
         $routeProvider.when(ROUTES.START_PAGE, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when(ROUTES.START_PAGE_ALT, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when(ROUTES.SIGN_UP, {templateUrl: pathToIncs + 'sign_up.html', controller: 'signUpController', access: ACCESS_LEVEL.PUBLIC});
-
         $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
 
         $routeProvider.otherwise({redirectTo: '/404'});
@@ -49,13 +50,14 @@ angular.module('website', [
             return   '/#!' + route;
         };
     })
-    .run(['$rootScope', 'ACCESS_LEVEL', function ($rootScope, ACCESS_LEVEL) {
-        $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
+    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', function ($rootScope, ACCESS_LEVEL, ROUTES) {
+        $rootScope.ROUTES = ROUTES;
+       /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
 
-            /*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
+            *//*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
              //TODO redirect or smt else
-             }*/
-        });
+             }*//*
+        });*/
 
     }])
 ;
@@ -175,6 +177,14 @@ angular.module('common.factories', [])
 ;
 'use strict';
 
+angular.module('website.page.errors', [])
+
+    .controller('pageNotFoundController', ['$scope', function ($scope) {
+        //
+    }])
+;
+'use strict';
+
 angular.module('website.sign', [])
 
     .controller('signUpController', ['$scope', '$http', 'storageFactory', function ($scope, $http, storageFactory) {
@@ -206,7 +216,7 @@ angular.module('website.top.menu', [])
             /*scope: {
              current: '=current'
              },*/
-            templateUrl: 'partials/public/top_menu.html',
+            templateUrl: 'public/partials/public/top_menu.html',
             controller: function ($scope) {
                 //
             }
