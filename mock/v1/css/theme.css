@@ -1,0 +1,29 @@
+/* Classes */
+.marketing_header {
+    color: #fff;
+}
+
+.marketing_subheader {
+    color: #fff;
+}
+
+.btn-green {
+    color: #FFF;
+    background: #5C9B00;
+    border-color: #FFF;
+}
+
+.btn-green:hover {
+    color: #FFF;
+    background: #6DB700;
+}
+
+/* END Classes */
+
+/* IDs */
+#sign_up_block {
+    background-color: #6DB700;
+    color: #FFF;
+}
+
+/* END IDs */

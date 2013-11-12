@@ -1,0 +1,93 @@
+/* Cross-browser html5 hack*/
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, canvas {
+    display: block;
+}
+
+.modal-body .alert {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* END Cross-browser html5 hack*/
+
+/* Elements */
+html, body {
+    height: 100%;
+    min-height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+/* END Elements */
+
+/* Classes */
+.pull_right {
+    float: right;
+}
+
+.tiny_navbar {
+    border-radius: 0;
+    z-index: 0;
+    border: 0;
+    min-height: 30px;
+    margin-bottom: 0;
+}
+
+.tiny_navbar .navbar-brand {
+    padding: 10px 15px;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.tiny_navbar .navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.tiny_navbar .navbar-nav > li > a {
+    line-height: 16px;
+}
+
+.marketing_header {
+    margin-top: 0;
+    padding-top: 10px;
+    font-size: 70px;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.marketing_subheader {
+    margin: 10px 0 0;
+    font-size: 21px;
+    line-height: 1.5;
+}
+
+/* END Classes */
+
+/* IDs */
+#sign_up_block {
+    padding: 40px;
+}
+
+#sign_up_form_block {
+    padding: 0 15px;
+}
+
+/* END IDs */
+
+/* Screen-specified options */
+@media (min-width: 1px) and (max-width: 1199px) {
+
+}
+
+/* END Screen-specified options */

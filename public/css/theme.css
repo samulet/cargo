@@ -1,0 +1,38 @@
+/* Classes */
+.marketing_header {
+    color: #fff;
+}
+
+.marketing_subheader {
+    color: #fff;
+}
+
+.btn-green {
+    color: #FFF;
+    background: #5C9B00;
+    border-color: #FFF;
+}
+
+.btn-green:hover {
+    color: #FFF;
+    background: #6DB700;
+}
+
+.filled_bg {
+    background-color: #6DB700;
+    color: #FFF;
+}
+
+.filled_bg a {
+    color: #FFF;
+}
+
+.filled_bg .btn-invisible {
+    color: white;
+}
+
+/* END Classes */
+
+/* IDs */
+
+/* END IDs */
