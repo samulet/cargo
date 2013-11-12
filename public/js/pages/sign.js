@@ -8,6 +8,11 @@ angular.module('website.sign', [])
     .controller('signInController', ['$scope', '$rootScope', '$http', 'storageFactory', function ($scope, $rootScope, $http, storageFactory) {
         $rootScope.pageTitle = 'Вход';
 
+        $scope.alerts = [
+            { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
+            { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
+        ];
+
         function onError(data, error) {
             //
         }

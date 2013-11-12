@@ -3,34 +3,12 @@
 angular.module('website', [
         'ngRoute',
         'env.config',
+        'website.constants',
         'common.factories',
         'website.top.menu',
         'website.sign',
         'website.page.errors'
     ])
-    .constant('RESPONSE_STATUS', {
-        OK: 200,
-        CREATED: 201,
-        ACCEPTED: 202,
-        NOT_MODIFIED: 304,
-        BAD_REQUEST: 400,
-        UNAUTHORIZED: 401,
-        FORBIDDEN: 403,
-        NOT_FOUND: 404,
-        METHOD_NOT_ALLOWED: 405,
-        INTERNAL_SERVER_ERROR: 500
-    })
-    .constant('ACCESS_LEVEL', {
-        PUBLIC: 0,
-        AUTHORIZED: 1
-    })
-    .constant('ROUTES', {
-        START_PAGE: '/',
-        START_PAGE_ALT: '',
-        SIGN_UP: '/sign/up',
-        SIGN_IN: '/sign/in',
-        NOT_FOUND: '/404'
-    })
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'public/pages/';
         $routeProvider.when(ROUTES.START_PAGE, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
@@ -50,6 +28,22 @@ angular.module('website', [
             return   '/#!' + route;
         };
     })
+    .directive('alert', function () {
+        return {
+            restrict: 'EA',
+            template: "<div class='alert alert-dismissable' ng-class='type && \"alert-\" + type'>\n <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n <div ng-transclude></div>\n</div>\n",
+            transclude: true,
+            replace: true,
+            scope: {
+                type: '=',
+                close: '&'
+            },
+            link: function (scope, iElement, iAttrs) {
+                scope.closeable = "close" in iAttrs;
+            }
+        };
+    })
+
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', function ($rootScope, ACCESS_LEVEL, ROUTES) {
         $rootScope.ROUTES = ROUTES;
        /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
