@@ -34,12 +34,14 @@
                                 Запомнить меня</label>
                         </li>
 
-                        <div class="alert alert-danger alert-dismissable" ng-show="alert.messages">
+                       <!-- <div class="alert alert-danger alert-dismissable" ng-show="alert.messages">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <ul>
                                 <li ng-repeat="message in alert.messages">{{message}}</li>
                             </ul>
-                        </div>
+                        </div>-->
+
+                        <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
 
                         <li>
                             <button class="btn btn-block btn-green" ng-click="signIn()">Войти</button>
