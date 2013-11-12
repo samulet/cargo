@@ -61,6 +61,15 @@ angular.module('common.factories', [
             goHomePage: function () {
                 redirectTo('/');
             },
+            goSignIn: function () {
+                redirectTo('/sign/in');
+            },
+            goSignUp: function () {
+                redirectTo('/sign/up');
+            },
+            goDashboard: function () {
+                redirectTo('/dashboard');
+            },
             redirectCustomPath: function (path) {
                 redirectTo(path);
             }
