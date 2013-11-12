@@ -101,22 +101,22 @@ angular.module('common.factories', [
 
     .factory('errorFactory', ['RESPONSE_STATUS', 'MESSAGES', '$rootScope', 'redirectFactory', 'cookieFactory', function (RESPONSE_STATUS, MESSAGES, $rootScope, redirectFactory, cookieFactory) {
         return {
-            parseError: function (data, status, isLoginPage) {
-                var messages;
+            resolve: function (data, status, isLoginPage) {
+                var type = (status >= 400) ? 'danger' : 'success';
+
                 if (status === RESPONSE_STATUS.UNAUTHORIZED) {
                     if (isLoginPage === true) {
-                        messages = MESSAGES.ERROR.UNAUTHORIZED;
+                        return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
                     } else {
                         cookieFactory.removeItem("token");
                         redirectFactory.goHomePage();
                         return null;
                     }
                 } else if (status === RESPONSE_STATUS.NOT_FOUND || status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
-                    messages = MESSAGES.ERROR.INTERNAL_SERVER_ERROR;
+                    return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
                 } else {
-                    messages = data.error;
+                    return {msg: data.error, type: type};
                 }
-                return messages;
             }
         }
     }])

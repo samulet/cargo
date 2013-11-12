@@ -190,22 +190,22 @@ angular.module('common.factories', [
 
     .factory('errorFactory', ['RESPONSE_STATUS', 'MESSAGES', '$rootScope', 'redirectFactory', 'cookieFactory', function (RESPONSE_STATUS, MESSAGES, $rootScope, redirectFactory, cookieFactory) {
         return {
-            parseError: function (data, status, isLoginPage) {
-                var messages;
+            resolve: function (data, status, isLoginPage) {
+                var type = (status >= 400) ? 'danger' : 'success';
+
                 if (status === RESPONSE_STATUS.UNAUTHORIZED) {
                     if (isLoginPage === true) {
-                        messages = MESSAGES.ERROR.UNAUTHORIZED;
+                        return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
                     } else {
                         cookieFactory.removeItem("token");
                         redirectFactory.goHomePage();
                         return null;
                     }
                 } else if (status === RESPONSE_STATUS.NOT_FOUND || status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
-                    messages = MESSAGES.ERROR.INTERNAL_SERVER_ERROR;
+                    return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
                 } else {
-                    messages = data.error;
+                    return {msg: data.error, type: type};
                 }
-                return messages;
             }
         }
     }])
@@ -239,16 +239,14 @@ angular.module('website.sign', [])
     .controller('signUpController', ['$scope', '$http', 'storageFactory', function ($scope, $http, storageFactory) {
         //
     }])
-    .controller('signInController', ['$scope', '$rootScope', '$http', 'storageFactory', function ($scope, $rootScope, $http, storageFactory) {
+    .controller('signInController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', function ($scope, $rootScope, $http, storageFactory, errorFactory) {
         $rootScope.pageTitle = 'Вход';
 
-        $scope.alerts = [
-            { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
-            { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
-        ];
+        /*$scope.messages = []; //TODO remove this, when done
+        $scope.messages.push(errorFactory.resolve({error: 'CustomError'}, 400));*/
 
-        function onError(data, error) {
-            //
+        function onError(data, status) {
+            errorFactory.resolve(data, status, true);
         }
 
         $scope.signIn = function () {
