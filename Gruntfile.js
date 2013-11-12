@@ -110,6 +110,30 @@ module.exports = function (grunt) {
                         }
                     }
                 ],
+                manual: [
+                    {
+                        dest: '<%= jsDir %>/env_config.js',
+                        wrap: '"use strict";\n\n <%= __ngModule %>',
+                        name: 'env.config',
+                        constants: {
+                            REST_CONFIG: (function () {
+                                var PROTOCOL = 'http';
+                                var HOST = 'cargo.zfprojects';
+                                var ZONE = 'info';
+                                var HOST_CONTEXT = '';
+                                var PORT = '';
+                                return {
+                                    PROTOCOL: PROTOCOL,
+                                    HOST: HOST,
+                                    HOST_CONTEXT: HOST_CONTEXT,
+                                    PORT: PORT,
+                                    DOMAIN: HOST + ZONE,
+                                    BASE_URL: PROTOCOL + "://" + HOST + ZONE + ':' + PORT + HOST_CONTEXT
+                                };
+                            })()
+                        }
+                    }
+                ],
                 prod: [
                     {
                         dest: '<%= jsDir %>/env_config.js',
@@ -148,7 +172,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('check_js', ['jshint:beforeconcat']);
-    grunt.registerTask('dev', ['ngconstant:dev', 'concat:js', 'jshint:afterconcat', 'cssmin:minify']);
+    grunt.registerTask('dev', ['ngconstant:dev', 'concat:js', 'jshint:beforeconcat', 'cssmin:minify']);
+    grunt.registerTask('manual', ['ngconstant:manual', 'concat:js', 'jshint:afterconcat', 'uglify:js', 'cssmin:minify', 'clean:prod']);
     grunt.registerTask('prod', ['ngconstant:prod', 'concat:js', 'jshint:afterconcat', 'uglify:js', 'cssmin:minify', 'clean:prod']);
 }
 ;
