@@ -8,7 +8,7 @@
                     <ul style="list-style: none;">
                         <li id="sign_in_header">
                             <span>Вход</span>
-                            <a href="{{ROUTES.SIGN_UP | routeFilter}}" class="pull_right">Регистрация</a>
+                            <a href="{{ROUTES.SIGN_UP | routeFilter}}" class="pull_right bold_text">Регистрация</a>
                         </li>
                         <li class="form-group">
                             <input type="email" id="sign_in_email" title="Email" alt="Email"
@@ -23,9 +23,9 @@
                                    ng-maxlength="20" ng-pattern="/[a-zA-Z0-9]/" class="form-control" required/>
                         </li>
                         <li class="form-group pull_right">
-                            <button class="btn btn-invisible" ng-click="remindPassword()" style="padding: 0;">
+                            <a href="#" ng-click="remindPassword()" class="bold_text">
                                 Напомнить пароль
-                            </button>
+                            </a>
                         </li>
                         <li class="form-group">
                             <label for="sign_in_remember">
@@ -34,11 +34,13 @@
                                 Запомнить меня</label>
                         </li>
 
-                        <!--<div class="alert" ng-class="alert.type" ng-show="alert">
+                        <div class="alert alert-danger alert-dismissable" ng-show="alert.messages">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <ul>
                                 <li ng-repeat="message in alert.messages">{{message}}</li>
                             </ul>
-                        </div>-->
+                        </div>
+
                         <li>
                             <button class="btn btn-block btn-green" ng-click="signIn()">Войти</button>
                         </li>

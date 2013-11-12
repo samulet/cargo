@@ -96,4 +96,57 @@ angular.module('common.factories', [])
             }
         };
     }])
+
+
+
+    .factory('messagesFactory', ['HTTP_STATUS', '$rootScope', 'redirectFactory', 'cookieFactory', function (HTTP_STATUS, $rootScope, redirectFactory, cookieFactory) {
+        var container;
+
+        function showMessage(container, type, messages) {
+            if (!container) container = $rootScope.messages;
+            container.type = type;
+            container.msg = angular.isArray(messages) ? messages : [messages];
+        }
+
+        function parseErrors(data, status, isLoginPage) {
+            var messages;
+            if (status === HTTP_STATUS.UNAUTHORIZED) {
+                if (isLoginPage === true) {
+                    messages = window.messages.unauthorizedErrorMessage;
+                } else {
+                    cookieFactory.removeItem("token");
+                    redirectFactory.goLoginPage();
+                    return null;
+                }
+            } else if (status === HTTP_STATUS.NOT_FOUND || status === HTTP_STATUS.INTERNAL_SERVER_ERROR) {
+                messages = window.messages.commonErrorMessage;
+            } else {
+                messages = data.error;
+            }
+            return messages;
+        }
+
+
+        return {
+            showWarning: function (message) {
+                showMessage($rootScope.messages, 'warning', message);
+            },
+            showInfo: function (message) {
+                showMessage($rootScope.messages, 'info', message);
+            },
+            showSuccess: function (message) {
+                showMessage($rootScope.messages, 'success', message);
+            },
+            showError: function (message) {
+                showMessage($rootScope.messages, 'danger', message);
+            },
+            clear: function () {
+                $rootScope.messages = {};
+            },
+            clearP: function () {
+                delete container.type;
+                delete container.msg;
+            }
+        }
+    }])
 ;

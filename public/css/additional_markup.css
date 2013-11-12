@@ -78,6 +78,11 @@ html, body {
     border: 0;
 }
 
+.bold_text{
+    font-weight: bold;
+}
+
+
 /* END Classes */
 
 /* IDs */
@@ -91,10 +96,6 @@ html, body {
 
 #sign_in_header {
     margin-bottom: 15px;
-}
-
-#sign_in_header a {
-    font-weight: bold;
 }
 
 #sign_in_social_buttons {
