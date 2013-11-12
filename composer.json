@@ -31,12 +31,18 @@
     "minimum-stability": "dev",
     "require-dev": {
         "codeception/codeception": "@stable",
-        "ccampbell/chromephp": "*"
+        "ccampbell/chromephp": "*",
+        "zendframework/zftool": "dev-master"
     },
     "repositories": [
         {
             "type": "vcs",
             "url": "https://github.com/csanquer/PHPExcel.git"
         }
-    ]
+    ],
+    "autoload": {
+        "classmap": [
+            "./vendor/hybridauth/hybridauth/additional-providers"
+        ]
+    }
 }
