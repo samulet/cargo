@@ -7,14 +7,6 @@ return array(
             'QueryBuilder\Controller\QueryBuilder' => 'QueryBuilder\Controller\QueryBuilderController',
         ),
     ),
-    'bjyauthorize' => array(
-        'guards' => array(
-            'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'QueryBuilder\Controller\QueryBuilder', 'roles' => array('inner', 'admin')),
-            ),
-
-        ),
-    ),
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(

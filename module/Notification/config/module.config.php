@@ -25,20 +25,6 @@ return array(
             ),
         ),
     ),
-    'bjyauthorize' => array(
-        'guards' => array(
-            'BjyAuthorize\Guard\Controller' => array(
-                array(
-                    'controller' => 'Notification\Controller\Notification',
-                    'action' => array('index', 'my', 'new', 'read', 'add', 'addNotificationNote'),
-                    'roles' => array('inner', 'admin', 'forwarder', 'accAdmin', 'customer', 'carrier')
-                ),
-            ),
-            'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'notification', 'roles' => array('inner')),
-            ),
-        ),
-    ),
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(

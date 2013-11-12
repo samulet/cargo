@@ -41,58 +41,6 @@ return array(
             ),
         ),
     ),
-    'bjyauthorize' => array(
-        'guards' => array(
-            'BjyAuthorize\Guard\Controller' => array(
-                array(
-                    'controller' => 'Ticket\Controller\Ticket',
-                    'action' => array('add', 'createBill'),
-                    'roles' => array('accAdmin', 'forwarder', 'carrier', 'customer', 'admin')
-                ),
-                array(
-                    'controller' => 'Ticket\Controller\Ticket',
-                    'action' => array('my'),
-                    'roles' => array('forwarder', 'customer', 'admin')
-                ),
-                array(
-                    'controller' => 'Ticket\Controller\Ticket',
-                    'action' => array('delete'),
-                    'roles' => array('forwarder', 'customer', 'admin', 'accAdmin')
-                ),
-                array(
-                    'controller' => 'Ticket\Controller\Ticket',
-                    'action' => array('index', 'search', 'getResults'),
-                    'roles' => array('forwarder', 'carrier', 'admin')
-                ),
-                array(
-                    'controller' => 'Ticket\Controller\Ticket',
-                    'action' => array('myAcc'),
-                    'roles' => array('forwarder', 'accAdmin', 'admin')
-                ),
-                array('controller' => 'Ticket\Controller\Cargo', 'action' => array('index'), 'roles' => array('admin')),
-                array(
-                    'controller' => 'Ticket\Controller\Cargo',
-                    'action' => array('my', 'copy'),
-                    'roles' => array('forwarder', 'customer', 'admin')
-                ),
-                array(
-                    'controller' => 'Ticket\Controller\Cargo',
-                    'action' => array('add', 'edit', 'list', 'delete', 'addCargo'),
-                    'roles' => array('accAdmin', 'forwarder', 'customer', 'admin')
-                ),
-                array(
-                    'controller' => 'Ticket\Controller\Cargo',
-                    'action' => array('myAcc'),
-                    'roles' => array('forwarder', 'accAdmin', 'admin')
-                ),
-            ),
-            'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'ticket', 'roles' => array('inner')),
-                array('route' => 'cargo', 'roles' => array('inner')),
-            ),
-
-        ),
-    ),
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(
