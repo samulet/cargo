@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "bladeofsteel/scn-social-auth",
-            "version": "1.9.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladeofsteel/ScnSocialAuth.git",
-                "reference": "f96e68fc0bff1550a61e4437da480587ed52f16c"
+                "reference": "848be6caf1465e4d403bf941513d7af2065ec168"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuth/zipball/f96e68fc0bff1550a61e4437da480587ed52f16c",
-                "reference": "f96e68fc0bff1550a61e4437da480587ed52f16c",
+                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuth/zipball/848be6caf1465e4d403bf941513d7af2065ec168",
+                "reference": "848be6caf1465e4d403bf941513d7af2065ec168",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-04-02 16:49:13"
+            "time": "2013-11-11 21:53:55"
         },
         {
             "name": "bladeofsteel/scn-social-auth-doctrine-mongo-odm",
@@ -61,19 +61,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladeofsteel/ScnSocialAuthDoctrineMongoODM.git",
-                "reference": "2f107d673225f8be8642ca6ebaf1359247ff8fe1"
+                "reference": "7fae05bae0571014b2996fcbcd7984272cda8f22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuthDoctrineMongoODM/zipball/2f107d673225f8be8642ca6ebaf1359247ff8fe1",
-                "reference": "2f107d673225f8be8642ca6ebaf1359247ff8fe1",
+                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuthDoctrineMongoODM/zipball/7fae05bae0571014b2996fcbcd7984272cda8f22",
+                "reference": "7fae05bae0571014b2996fcbcd7984272cda8f22",
                 "shasum": ""
             },
             "require": {
-                "bladeofsteel/scn-social-auth": "1.*",
+                "bladeofsteel/scn-social-auth": "@dev",
                 "bladeofsteel/zfc-user-doctrine-mongo-odm": "dev-master",
-                "php": ">=5.3.3",
-                "zendframework/zendframework": "2.*"
+                "php": ">=5.3.3"
             },
             "type": "library",
             "autoload": {
@@ -111,7 +110,7 @@
                 "zf2",
                 "zfc"
             ],
-            "time": "2013-11-10 20:07:23"
+            "time": "2013-11-12 08:32:19"
         },
         {
             "name": "bladeofsteel/zfc-user-doctrine-mongo-odm",
@@ -1926,12 +1925,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Goutte.git",
-                "reference": "6db1a02449c82f5d7957c5be9d43389306b7468e"
+                "reference": "cff6881c93791edbfef88928ca6b1dfcf60d3273"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/6db1a02449c82f5d7957c5be9d43389306b7468e",
-                "reference": "6db1a02449c82f5d7957c5be9d43389306b7468e",
+                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/cff6881c93791edbfef88928ca6b1dfcf60d3273",
+                "reference": "cff6881c93791edbfef88928ca6b1dfcf60d3273",
                 "shasum": ""
             },
             "require": {
@@ -1974,7 +1973,7 @@
             "keywords": [
                 "scraper"
             ],
-            "time": "2013-10-31 08:53:55"
+            "time": "2013-11-11 19:09:12"
         },
         {
             "name": "facebook/webdriver",
@@ -2269,12 +2268,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "a5010756d905264ea2b3f7f27c7df22fb9a3bd8e"
+                "reference": "516447f91312924c63fafd8e6083f28013dd03d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a5010756d905264ea2b3f7f27c7df22fb9a3bd8e",
-                "reference": "a5010756d905264ea2b3f7f27c7df22fb9a3bd8e",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/516447f91312924c63fafd8e6083f28013dd03d9",
+                "reference": "516447f91312924c63fafd8e6083f28013dd03d9",
                 "shasum": ""
             },
             "require": {
@@ -2282,17 +2281,21 @@
                 "psr/log": "~1.0"
             },
             "require-dev": {
+                "aws/aws-sdk-php": "~2.4.8",
                 "doctrine/couchdb": "dev-master",
                 "mlehner/gelf-php": "1.0.*",
                 "phpunit/phpunit": "~3.7.0",
-                "raven/raven": "0.5.*"
+                "raven/raven": "0.5.*",
+                "ruflin/elastica": "0.90.*"
             },
             "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "mlehner/gelf-php": "Allow sending log messages to a GrayLog2 server",
-                "raven/raven": "Allow sending log messages to a Sentry server"
+                "raven/raven": "Allow sending log messages to a Sentry server",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
             "type": "library",
             "extra": {
@@ -2324,7 +2327,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-11-04 08:48:35"
+            "time": "2013-11-11 22:14:57"
         },
         {
             "name": "phpunit/php-code-coverage",
