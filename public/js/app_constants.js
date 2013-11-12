@@ -20,6 +20,7 @@ angular.module('website.constants', [])
         START_PAGE_ALT: '',
         SIGN_UP: '/sign/up',
         SIGN_IN: '/sign/in',
+        DASHBOARD: '/dashboard',
         NOT_FOUND: '/404'
     })
     .constant('MESSAGES', {

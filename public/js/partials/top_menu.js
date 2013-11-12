@@ -14,4 +14,17 @@ angular.module('website.top.menu', [])
             }
         };
     })
+
+    .directive('topPrivateMenu', function () {
+        return {
+            restrict: 'A',
+            /*scope: {
+             current: '=current'
+             },*/
+            templateUrl: 'public/partials/private/top_menu.html',
+            controller: function ($scope) {
+                //
+            }
+        };
+    })
 ;
