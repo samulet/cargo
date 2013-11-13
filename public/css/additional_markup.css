@@ -82,6 +82,10 @@ html, body {
     font-weight: bold;
 }
 
+.form_list {
+    list-style: none;
+}
+
 /* END Classes */
 
 /* IDs */
@@ -109,10 +113,6 @@ html, body {
 #features_block li {
     display: inline-block;
     margin: 15px 25px;
-}
-
-#sign_in_form_block ul {
-    list-style: none;
 }
 
 /* END IDs */
