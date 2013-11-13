@@ -1,10 +1,10 @@
 /* Classes */
 .marketing_header {
-    color: #fff;
+    color: #FFF;
 }
 
 .marketing_subheader {
-    color: #fff;
+    color: #FFF;
 }
 
 .btn-green {
@@ -28,7 +28,20 @@
 }
 
 .filled_bg .btn-invisible {
-    color: white;
+    color: #000;
+}
+
+.unfilled_bg {
+    background-color: #FFF;
+    color: #000;
+}
+
+.unfilled_bg a {
+    color: #000;
+}
+
+.unfilled_bg .btn-invisible {
+    color: #000;
 }
 
 /* END Classes */

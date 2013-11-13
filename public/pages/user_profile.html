@@ -1,9 +1,12 @@
 <top-private-menu/></top-private-menu>
 
-<div ng-controller="userProfileController" class="filled_bg">
+<div ng-controller="userProfileController" class="unfilled_bg center_horizontal small_block form_block vertical_spaced">
 
-    <div ng-hide="editMode">asd
-        <ul>
+    <div ng-hide="editMode">
+        <ul class="form_list">
+            <li>
+                <h3>Личные данные</h3>
+            </li>
             <li>
                 ФИО: {{profileData.fio}}
             </li>
@@ -44,17 +47,23 @@
                 <i class="fa fa-linkedin-square"> </i> Linked In:
                 {{profileData.social.linkedin}}
             </li>
+            <li>
+                <button ng-click="startEdit()" class="btn btn-primary pull_right" style="margin-right: 10px;">
+                    Редактировать
+                </button>
+                <br style="clear: both;"/>
+            </li>
         </ul>
     </div>
 
     <div ng-show="editMode">
         <form name="profileForm" role="form">
-            <ul class="form_list mobile_centered">
+            <ul class="form_list mobile_centered" style="padding: 15px 30px;">
                 <li id="profile_header">
                     <span>Профиль {{username}}</span>
                 </li>
                 <li class="form-group">
-                    <input type="email" title="ФИО" alt="ФИО"
+                    <input type="text" title="ФИО" alt="ФИО"
                            placeholder="ФИО"
                            ng-model="profileData.fio" class="form-control" required/>
                 </li>
@@ -66,8 +75,8 @@
                 </li>
 
                 <li class="form-group">
-                    <input type="email" title="Паспортные данные" alt="Паспортные данные"
-                           placeholder="ФИО"
+                    <input type="text" title="Паспортные данные" alt="Паспортные данные"
+                           placeholder="Паспортные данные"
                            ng-model="profileData.passportData" class="form-control" required/>
                 </li>
 
@@ -82,7 +91,7 @@
                 </li>
 
                 <li class="form-group">
-                    <button></button>
+                    <button>asd</button>
                 </li>
 
 
@@ -91,7 +100,8 @@
                 </alert>
 
                 <li>
-                    <button class="btn btn-block btn-green" ng-click="signIn()">Войти</button>
+                    <button class="btn btn-danger" ng-click="cancel()">Отменить</button>
+                    <button class="btn btn-primary pull_right" ng-click="save()">Сохранить</button>
                 </li>
             </ul>
         </form>

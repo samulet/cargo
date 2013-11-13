@@ -1,1 +1,23 @@
-.mobile_centered{margin:0;padding:0}#sign_in_form_block{float:none;padding:0}.marketing_header{font-size:3em}#features_block li{display:block;text-align:center;margin:0}
+.mobile_centered {
+    margin: 0;
+    padding: 0
+}
+
+#sign_in_form_block {
+    float: none;
+    padding: 0
+}
+
+.marketing_header {
+    font-size: 3em
+}
+
+#features_block li {
+    display: block;
+    text-align: center;
+    margin: 0
+}
+
+.vertical_spaced {
+    margin-top: 0
+}
