@@ -58,7 +58,7 @@ $settings = array(
      * Read the Facebook docs for more details:
      * http://developers.facebook.com/docs/reference/dialogs#display. Default: page
      */
-    'facebook_display' => 'popup',
+    //'facebook_display' => '',
 
     /**
      * Foursquare Enabled
@@ -75,7 +75,7 @@ $settings = array(
      * You can register a new application at:
      * https://github.com/settings/applications/new
      */
-    'github_enabled' => true,
+    //'github_enabled' => true,
 
     /**
      * Github Scope
@@ -127,7 +127,19 @@ $settings = array(
      */
     //'yahoo_enabled' => true,
 
-    'vkontakte_enabled' => true,
+    /**
+     * tumblr Enabled
+     *
+     * Please specify if tumblr is enabled
+     */
+    //'tumblr_enabled' => true,
+
+    /**
+     * Mailru Enabled
+     *
+     * Please specify if Mailru is enabled
+     */
+    'mailru_enabled' => true,
 
     /**
      * Set to true if you want to display only the social login buttons without

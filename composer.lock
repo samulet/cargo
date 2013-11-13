@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e818565b8c5a1b48bec3632da23d3a5d",
+    "hash": "48c69b3eed0250137a1c93113123eda1",
     "packages": [
         {
             "name": "bladeofsteel/scn-social-auth",
-            "version": "dev-master",
+            "version": "dev-social",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladeofsteel/ScnSocialAuth.git",
-                "reference": "848be6caf1465e4d403bf941513d7af2065ec168"
+                "reference": "5a47682d85d28ffbc24677789e37c22196a4c5c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuth/zipball/848be6caf1465e4d403bf941513d7af2065ec168",
-                "reference": "848be6caf1465e4d403bf941513d7af2065ec168",
+                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuth/zipball/5a47682d85d28ffbc24677789e37c22196a4c5c2",
+                "reference": "5a47682d85d28ffbc24677789e37c22196a4c5c2",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-11-11 21:53:55"
+            "time": "2013-11-12 20:07:52"
         },
         {
             "name": "bladeofsteel/scn-social-auth-doctrine-mongo-odm",
@@ -61,16 +61,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladeofsteel/ScnSocialAuthDoctrineMongoODM.git",
-                "reference": "7fae05bae0571014b2996fcbcd7984272cda8f22"
+                "reference": "ef73761423e5c65262a2b9c1d1ff805e4439c4e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuthDoctrineMongoODM/zipball/7fae05bae0571014b2996fcbcd7984272cda8f22",
-                "reference": "7fae05bae0571014b2996fcbcd7984272cda8f22",
+                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuthDoctrineMongoODM/zipball/ef73761423e5c65262a2b9c1d1ff805e4439c4e6",
+                "reference": "ef73761423e5c65262a2b9c1d1ff805e4439c4e6",
                 "shasum": ""
             },
             "require": {
-                "bladeofsteel/scn-social-auth": "@dev",
+                "bladeofsteel/scn-social-auth": "dev-social",
                 "bladeofsteel/zfc-user-doctrine-mongo-odm": "dev-master",
                 "php": ">=5.3.3"
             },
@@ -110,7 +110,7 @@
                 "zf2",
                 "zfc"
             ],
-            "time": "2013-11-12 08:32:19"
+            "time": "2013-11-13 08:04:58"
         },
         {
             "name": "bladeofsteel/zfc-user-doctrine-mongo-odm",

@@ -112,6 +112,34 @@ $settings = array(
     //'yahoo_secret' => 'your-secret',
 
     /**
+     * tumblr Consumer Key
+     *
+     * Please specify a tumblr Consumer Key
+     */
+    //'tumblr_consumer_key' => 'your-consumer-key',
+
+    /**
+     * tumblr Secret
+     *
+     * Please specify a tumblr Consumer Secret
+     */
+    //'tumblr_consumer_secret' => 'your-consumer-secret',
+
+    /**
+     * Mailru Client ID
+     *
+     * Please specify a Mailru Client ID
+     */
+    //'mailru_client_id' => 'your-client-id',
+
+    /**
+     * Mailru Secret
+     *
+     * Please specify a Mailru Secret
+     */
+    //'mailru_secret' => 'your-secret',
+
+    /**
      * End of ScnSocialAuth configuration
      */
 );
