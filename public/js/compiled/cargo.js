@@ -51,12 +51,14 @@ angular.module('website', [
 
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', function ($rootScope, ACCESS_LEVEL, ROUTES) {
         $rootScope.ROUTES = ROUTES;
-       /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
+        /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
 
-            *//*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
-             //TODO redirect or smt else
-             }*//*
-        });*/
+         */
+        /*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
+         //TODO redirect or smt else
+         }*/
+        /*
+         });*/
 
     }])
 ;
@@ -228,16 +230,16 @@ angular.module('common.factories', [
 ;
 "use strict";
 
- angular.module("env.config", [])
+angular.module("env.config", [])
 
-.constant("REST_CONFIG", {
-  "PROTOCOL": "http",
-  "HOST": "localhost",
-  "HOST_CONTEXT": "",
-  "PORT": "8080",
-  "DOMAIN": "localhost",
-  "BASE_URL": "http://localhost:8080"
-})
+    .constant("REST_CONFIG", {
+        "PROTOCOL": "http",
+        "HOST": "localhost",
+        "HOST_CONTEXT": "",
+        "PORT": "8080",
+        "DOMAIN": "localhost",
+        "BASE_URL": "http://localhost:8080"
+    })
 
 ;
 'use strict';
@@ -309,7 +311,7 @@ angular.module('website.top.menu', [])
 
     .directive('topPublicMenu', function () {
         return {
-            restrict: 'A',
+            restrict: 'E',
             /*scope: {
              current: '=current'
              },*/
@@ -322,7 +324,7 @@ angular.module('website.top.menu', [])
 
     .directive('topPrivateMenu', function () {
         return {
-            restrict: 'A',
+            restrict: 'E',
             /*scope: {
              current: '=current'
              },*/

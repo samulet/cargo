@@ -4,7 +4,7 @@ angular.module('website.top.menu', [])
 
     .directive('topPublicMenu', function () {
         return {
-            restrict: 'A',
+            restrict: 'E',
             /*scope: {
              current: '=current'
              },*/
@@ -17,7 +17,7 @@ angular.module('website.top.menu', [])
 
     .directive('topPrivateMenu', function () {
         return {
-            restrict: 'A',
+            restrict: 'E',
             /*scope: {
              current: '=current'
              },*/
