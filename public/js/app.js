@@ -19,7 +19,8 @@ angular.module('website', [
         $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', controller: 'dashBoardController', access: ACCESS_LEVEL.AUTHORIZED});
 
-        $routeProvider.otherwise({redirectTo: '/404'});
+        //$routeProvider.otherwise({redirectTo: '/404'});
+        $routeProvider.otherwise({redirectTo: ROUTES.START_PAGE}); //TODO remove this hack after solve redirect problem
 
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
