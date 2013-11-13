@@ -1,52 +1,101 @@
-<div top-pprivate-menu></div>
+<div top-private-menu></div>
 
 
-<div ng-controller="userProfileController">
-    <form name="profileForm" role="form">
-        <ul class="form_list mobile_centered">
-            <li id="profile_header">
-                <span>Профиль {{username}}</span>
-            </li>
-            <li class="form-group">
-                <input type="email" title="ФИО" alt="ФИО"
-                       placeholder="ФИО"
-                       ng-model="profileData.fio" class="form-control" required/>
-            </li>
+<div ng-controller="userProfileController" class="filled_bg">
 
-            <li class="form-group">
-                <input type="email" title="Email" alt="Email"
-                       placeholder="Email"
-                       ng-model="profileData.email" class="form-control" required/>
-            </li>
-
-            <li class="form-group">
-                <input type="email" title="Паспортные данные" alt="Паспортные данные"
-                       placeholder="ФИО"
-                       ng-model="profileData.passportData" class="form-control" required/>
-            </li>
-
-            <li class="form-group">
-                <input type="text" title="Телефоны" alt="Телефоны"
-                       placeholder="Телефоны"
-                       ng-model="profileData.phones" class="form-control" required/>
-            </li>
-
+    <div ng-hide="editMode">
+        <ul>
             <li>
-                <span>Аккаунты соцальных сетей</span>
+                ФИО: {{profileData.fio}}
             </li>
-
-            <li class="form-group">
-                <button></button>
-            </li>
-
-
-            <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
-                {{message.msg}}
-            </alert>
-
             <li>
-                <button class="btn btn-block btn-green" ng-click="signIn()">Войти</button>
+                Email: {{profileData.email}}
+            </li>
+            <li>
+                Паспортные данные: {{profileData.passportData}}
+            </li>
+            <li>
+                Телефоны: {{profileData.phones}}
+            </li>
+            <li ng-show="profileData.social.vkontakte">
+                <img src="/img/social/mail_ru.png"/> Mail.ru:
+                {{profileData.social.mailru}}
+            </li>
+            <li ng-show="profileData.social.odnoklassniki">
+                <img src="/img/social/odnoklassniki2.png"/> Одноклассники:
+                {{profileData.social.odnoklassniki}}
+            </li>
+            <li ng-show="profileData.social.yandex">
+                <img src="/img/social/yandex2.png"/> Яндекс
+                {{profileData.social.yandex}}
+            </li>
+            <li ng-show="profileData.social.google">
+                <i class="fa fa-google-plus-square"> </i> Google
+                {{profileData.social.google}}
+            </li>
+            <li ng-show="profileData.social.facebook">
+                <i class="fa fa-facebook-square"> </i> Facebook
+                {{profileData.social.facebook}}
+            </li>
+            <li ng-show="profileData.social.vkontakte">
+                <i class="fa fa-vk"> </i> Вконтакте:
+                {{profileData.social.vkontakte}}
+            </li>
+            <li ng-show="profileData.social.linkedin">
+                <i class="fa fa-linkedin-square"> </i> Linked In:
+                {{profileData.social.linkedin}}
             </li>
         </ul>
-    </form>
+    </div>
+
+    <div ng-show="editMode">
+        <form name="profileForm" role="form">
+            <ul class="form_list mobile_centered">
+                <li id="profile_header">
+                    <span>Профиль {{username}}</span>
+                </li>
+                <li class="form-group">
+                    <input type="email" title="ФИО" alt="ФИО"
+                           placeholder="ФИО"
+                           ng-model="profileData.fio" class="form-control" required/>
+                </li>
+
+                <li class="form-group">
+                    <input type="email" title="Email" alt="Email"
+                           placeholder="Email"
+                           ng-model="profileData.email" class="form-control" required/>
+                </li>
+
+                <li class="form-group">
+                    <input type="email" title="Паспортные данные" alt="Паспортные данные"
+                           placeholder="ФИО"
+                           ng-model="profileData.passportData" class="form-control" required/>
+                </li>
+
+                <li class="form-group">
+                    <input type="text" title="Телефоны" alt="Телефоны"
+                           placeholder="Телефоны"
+                           ng-model="profileData.phones" class="form-control" required/>
+                </li>
+
+                <li>
+                    <span>Аккаунты соцальных сетей</span>
+                </li>
+
+                <li class="form-group">
+                    <button></button>
+                </li>
+
+
+                <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+                    {{message.msg}}
+                </alert>
+
+                <li>
+                    <button class="btn btn-block btn-green" ng-click="signIn()">Войти</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+
 </div>
