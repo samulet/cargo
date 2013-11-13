@@ -78,10 +78,9 @@ html, body {
     border: 0;
 }
 
-.bold_text{
+.bold_text {
     font-weight: bold;
 }
-
 
 /* END Classes */
 
@@ -111,11 +110,40 @@ html, body {
     display: inline-block;
     margin: 15px 25px;
 }
+
+#sign_in_form_block ul {
+    list-style: none;
+}
+
 /* END IDs */
 
 /* Screen-specified options */
-@media (min-width: 1px) and (max-width: 1199px) {
+@media (min-width: 1px) and (max-width: 680px) {
+    .mobile_centered {
+        margin: 0;
+        padding: 0;
+    }
 
+    #sign_in_form_block {
+        float: none;
+        padding: 0;
+    }
+
+    .marketing_header {
+        font-size: 3em;
+    }
+
+    #features_block li {
+        display: block;
+        text-align: center;
+        margin: 0;
+    }
+}
+
+@media (min-width: 681px) and (max-width: 989px) {
+    .marketing_header {
+        font-size: 3em;
+    }
 }
 
 /* END Screen-specified options */
