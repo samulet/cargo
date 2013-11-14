@@ -299,15 +299,22 @@ angular.module('website.user.profile', [])
         $scope.editMode = true; //TODO false
 
         $scope.profileData = {
-            fio: "Petrovasiliev Alexander Fargotovitch",
-            email: "sads-dfdffsd@dsdsd.ff",
-            passportData: "34234r f s sf sdfsdfsd fsdf sd fsd fsd f",
-            phones: "324-432, 324-545"
+            tempPhone: {},
+            social: {},
+            personal: {},
+            passport: {},
+            phones: [],
+            other: {}
         };
 
         $scope.startEdit = function () {
             $scope.editMode = true;
-        }
+        };
+
+        $scope.addPhone = function () {
+            $scope.profileData.phones.push($scope.profileData.tempPhone);
+            $scope.profileData.tempPhone = {};
+        };
 
 
     }])

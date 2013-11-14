@@ -9,19 +9,23 @@
         </li>
         <li>
             <span class="description">ФИО:</span>
-            <span class="user_data_text">{{ (profileData.fio) ? profileData.fio : '—' }}</span>
+            <span class="user_data_text" ng-show="profileData.fio">{{profileData.fio}}</span>
+            <span class="text_placeholder" ng-hide="profileData.fio">______________</span>
         </li>
         <li>
             <span class="description">Email:</span>
-            <span class="user_data_text">{{ (profileData.email) ? profileData.email : '—' }}</span>
+            <span class="user_data_text" ng-show="profileData.email">{{profileData.email}}</span>
+            <span class="text_placeholder" ng-hide="profileData.email">______________</span>
         </li>
         <li>
             <span class="description">Паспортные данные:</span>
-            <span class="user_data_text">{{ (profileData.passportData) ? profileData.passportData : '—' }}</span>
+            <span class="user_data_text" ng-show="profileData.passportData">{{profileData.passportData}}</span>
+            <span class="text_placeholder" ng-hide="profileData.passportData">______________</span>
         </li>
         <li>
             <span class="description">Телефоны:</span>
-            <span class="user_data_text">{{ (profileData.phones) ? profileData.phones : '—' }}</span>
+            <span class="user_data_text" ng-show="profileData.phones">{{profileData.phones}}</span>
+            <span class="text_placeholder" ng-hide="profileData.phones">______________</span>
         </li>
         <li ng-show="profileData.social.vkontakte">
             <span class="description"><img src="/img/social/mail_ru.png"/> Mail.ru:</span>
@@ -62,187 +66,207 @@
 </div>
 
 <div ng-show="editMode" class="fade_anim">
-    <form name="profileForm" role="form">
-        <ul class="form_list mobile_centered" style="padding: 15px 30px;">
-            <li class="input-group">
-                <label for="user-profile-lastName" class="input-group-addon">Фамилия</label>
-                <input id="user-profile-lastName" type="text"
-                       ng-model="profileData.lastName" class="form-control"/>
-            </li>
+<form name="profileForm" role="form">
 
-            <li class="input-group">
-                <label for="user-profile-firstName" class="input-group-addon">Имя</label>
-                <input id="user-profile-firstName" type="text"
-                       ng-model="profileData.firstName" class="form-control"/>
-            </li>
+    <ul class="form_list mobile_centered vertical_form_block">
+        <li class="form_header"><h4>Личные данные</h4></li>
+        <li class="input-group">
+            <label for="user-profile-lastName" class="input-group-addon">Фамилия</label>
+            <input id="user-profile-lastName" type="text"
+                   ng-model="profileData.personal.lastName" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-middleName" class="input-group-addon">Отчество</label>
-                <input id="user-profile-middleName" type="text"
-                       ng-model="profileData.middleName" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-firstName" class="input-group-addon">Имя</label>
+            <input id="user-profile-firstName" type="text"
+                   ng-model="profileData.personal.firstName" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-uniqId" class="input-group-addon">
-                    Уникальный номер
-                </label>
-                <input id="user-profile-uniqId" type="text"
-                       ng-model="profileData.uniqId" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-middleName" class="input-group-addon">Отчество</label>
+            <input id="user-profile-middleName" type="text"
+                   ng-model="profileData.personal.middleName" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-shortName" class="input-group-addon">Краткое имя</label>
-                <input id="user-profile-shortName" type="text"
-                       ng-model="profileData.shortName" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-uniqId" class="input-group-addon">
+                Уникальный номер
+            </label>
+            <input id="user-profile-uniqId" type="text"
+                   ng-model="profileData.personal.uniqId" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-docType" class="input-group-addon">Вид документа</label>
-                <select id="user-profile-docType" ng-model="profileData.docType" class="form-control">
-                    <option value="passport_rf">Паспорт РФ</option>
-                    <option value="passport_foreign">Паспорт другого государства</option>
-                    <option value="military_card">Военный билет</option>
-                    <option value="passport_international">Заграничный паспорт</option>
-                    <option value="certificate">Cправка</option>
-                </select>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-shortName" class="input-group-addon">Краткое имя</label>
+            <input id="user-profile-shortName" type="text"
+                   ng-model="profileData.personal.shortName" class="form-control"/>
+        </li>
 
-            <li style="margin: 15px 0;"><h4>Паспортные данные</h4></li>
+        <li class="input-group">
+            <label for="user-profile-docType" class="input-group-addon">Вид документа</label>
+            <select id="user-profile-docType" ng-model="profileData.personal.docType" class="form-control">
+                <option value="passport_rf">Паспорт РФ</option>
+                <option value="passport_foreign">Паспорт другого государства</option>
+                <option value="military_card">Военный билет</option>
+                <option value="passport_international">Заграничный паспорт</option>
+                <option value="certificate">Cправка</option>
+            </select>
+        </li>
+    </ul>
 
-            <li class="input-group">
-                <label for="user-profile-passport-series" class="input-group-addon inline_addon">Серия</label>
-                <input id="user-profile-passport-series" type="text"
-                       ng-model="profileData.passport.series" class="form-control"/>
-                <label for="user-profile-passport-number" class="input-group-addon inline_addon">Номер</label>
-                <input id="user-profile-passport-number" type="text"
-                       ng-model="profileData.passport.number" class="form-control"/>
-            </li>
+    <ul class="form_list mobile_centered vertical_form_block">
+        <li class="form_header"><h4>Паспортные данные</h4></li>
 
-            <li class="input-group">
-                <label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
-                <input id="user-profile-passport-issue" type="date"
-                       ng-model="profileData.passport.issue" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-passport-series" class="input-group-addon inline_addon">Серия</label>
+            <input id="user-profile-passport-series" type="text"
+                   placeholder="25 01"
+                   ng-model="profileData.passport.series" class="form-control"/>
+            <label for="user-profile-passport-number" class="input-group-addon inline_addon">Номер</label>
+            <input id="user-profile-passport-number" type="text"
+                   placeholder="999 999"
+                   ng-model="profileData.passport.number" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-passport-issuingAuthority" class="input-group-addon">Орган выдавший</label>
-                <input id="user-profile-passport-issuingAuthority" type="text"
-                       ng-model="profileData.passport.issuingAuthority" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
+            <input id="user-profile-passport-issue" type="date"
+                   ng-model="profileData.passport.issue" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-passport-unitNumber" class="input-group-addon">Номер подразделения</label>
-                <input id="user-profile-passport-unitNumber" type="text"
-                       placeholder="999-999"
-                       ng-model="profileData.passport.unitNumber" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-passport-issuingAuthority" class="input-group-addon">Орган выдавший</label>
+            <input id="user-profile-passport-issuingAuthority" type="text"
+                   ng-model="profileData.passport.issuingAuthority" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-passport-birthPlace" class="input-group-addon">Место рождения</label>
-                <input id="user-profile-passport-birthPlace" type="text"
-                       ng-model="profileData.passport.birthPlace" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-passport-unitNumber" class="input-group-addon">Номер подразделения</label>
+            <input id="user-profile-passport-unitNumber" type="text"
+                   placeholder="999-999"
+                   ng-model="profileData.passport.unitNumber" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-passport-birthDate" class="input-group-addon">Дата рождения</label>
-                <input id="user-profile-passport-birthDate" type="date"
-                       ng-model="profileData.passport.birthDate" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-passport-birthPlace" class="input-group-addon">Место рождения</label>
+            <input id="user-profile-passport-birthPlace" type="text"
+                   ng-model="profileData.passport.birthPlace" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-passport-registrationType" class="input-group-addon">Вид регистрации</label>
-                <select id="user-profile-passport-registrationType"
-                        ng-model="profileData.passport.registrationType" class="form-control">
-                    <option value="temporary">Временная</option>
-                    <option value="permanent">Постоянная</option>
-                </select>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-passport-birthDate" class="input-group-addon">Дата рождения</label>
+            <input id="user-profile-passport-birthDate" type="date"
+                   ng-model="profileData.passport.birthDate" class="form-control"/>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-passport-registrationPlace" class="input-group-addon">Место регистрации</label>
-                <input id="user-profile-passport-registrationPlace" type="text"
-                       ng-model="profileData.passport.registrationPlace" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-passport-registrationType" class="input-group-addon">Вид регистрации</label>
+            <select id="user-profile-passport-registrationType"
+                    ng-model="profileData.passport.registrationType" class="form-control">
+                <option value="temporary">Временная</option>
+                <option value="permanent">Постоянная</option>
+            </select>
+        </li>
 
-            <li class="input-group">
-                <label for="user-profile-passport-registrationDate" class="input-group-addon">Дата регистрации</label>
-                <input id="user-profile-passport-registrationDate" type="date"
-                       ng-model="profileData.passport.registrationDate" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-passport-registrationPlace" class="input-group-addon">Место регистрации</label>
+            <input id="user-profile-passport-registrationPlace" type="text"
+                   ng-model="profileData.passport.registrationPlace" class="form-control"/>
+        </li>
 
-            <li style="margin: 15px 0;"><h4>Прочие данные</h4></li>
+        <li class="input-group">
+            <label for="user-profile-passport-registrationDate" class="input-group-addon">Дата регистрации</label>
+            <input id="user-profile-passport-registrationDate" type="date"
+                   ng-model="profileData.passport.registrationDate" class="form-control"/>
+        </li>
+    </ul>
 
-            <li class="input-group">
-                <label for="user-profile-snils" class="input-group-addon">СНИЛС</label>
-                <input id="user-profile-snils" type="text"
-                       ng-model="profileData.snils" class="form-control"/>
-            </li>
+    <ul class="form_list mobile_centered vertical_form_block">
+        <li class="form_header"><h4>Прочие данные</h4></li>
 
-            <li class="input-group">
-                <label for="user-profile-inn" class="input-group-addon">ИНН</label>
-                <input id="user-profile-inn" type="text"
-                       ng-model="profileData.inn" class="form-control"/>
-            </li>
+        <li class="input-group">
+            <label for="user-profile-snils" class="input-group-addon">СНИЛС</label>
+            <input id="user-profile-snils" type="text"
+                   ng-model="profileData.other.snils" class="form-control"/>
+        </li>
 
-            <li style="margin: 15px 0;"><h4>Контакты</h4></li>
-            <li style="margin: 15px 0;"><h5>Телефоны</h5></li>
+        <li class="input-group">
+            <label for="user-profile-inn" class="input-group-addon">ИНН</label>
+            <input id="user-profile-inn" type="text"
+                   ng-model="profileData.other.inn" class="form-control"/>
+        </li>
+    </ul>
 
-            <!--  <li>
-                  <ul>
-                      <li ng-repeat="phone in profileData.phones">{{phone}}</li>
-                  </ul>
-              </li>-->
+    <ul class="form_list mobile_centered vertical_form_block">
+        <li class="form_header"><h4>Контакты</h4></li>
+        <li class="form_header"><h5>Телефоны</h5></li>
 
-            <li class="input-group">
-                <label for="user-profile-phone-type" class="input-group-addon">Вид телефона</label>
-                <select id="user-profile-phone-type"
-                        ng-model="profileData.phones.temp.type" class="form-control">
-                    <option value="cell">Мобильный</option>
-                    <option value="local">Стационарный</option>
-                </select>
-            <li>
-            <li class="input-group">
-                <label for="user-profile-phone-countryCode" class="input-group-addon inline_addon">Код страны</label>
-                <input id="user-profile-phone-countryCode" type="number"
-                       placeholder="7"
-                       ng-model="profileData.phones.temp.countryCode" class="form-control"/>
-                <label for="user-profile-phone-cityCode" class="input-group-addon inline_addon">Код города</label>
-                <input id="user-profile-phone-cityCode" type="number"
-                       ng-model="profileData.phones.temp.cityCode" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-phone-number" class="input-group-addon">Номер телефона</label>
-                <input id="user-profile-phone-number" type="number"
-                       ng-model="profileData.phones.temp.number" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-phone-additionalNumber" class="input-group-addon">Добавочный</label>
-                <input id="user-profile-phone-additionalNumber" type="number"
-                       ng-model="profileData.phones.temp.additionalNumber" class="form-control"/>
-            </li>
+        <li>
+            <ul>
+                <li ng-repeat="phone in profileData.phones">
+                    <span ng-show="phone.type"><i class="glyphicon glyphicon-phone-alt"></i></span><!--TODO conditionaly show type-->
+                    <span ng-show="phone.type"><i class="glyphicon glyphicon-phone"></i></span>
+                    <span>{{phone.countryCode}}</span>
+                    <span>{{phone.cityCode}}</span>
+                    <span>{{phone.number}}</span>
+                    <span>{{phone.additionalNumber}}</span>
+                </li>
+            </ul>
+        </li>
 
-            <button class="btn btn-info">
-                <i class="glyphicon glyphicon-plus"> </i>
-                Добавить <span ng-show="profileData.phones.temp">ещё один</span> телефон
-            </button>
+        <li class="input-group">
+            <label for="user-profile-phone-type" class="input-group-addon">Вид телефона</label>
+            <select id="user-profile-phone-type"
+                    ng-model="profileData.tempPhone.type" class="form-control">
+                <option value="cell">Мобильный</option>
+                <option value="local">Стационарный</option>
+            </select>
+        <li>
+        <li class="input-group">
+            <label for="user-profile-phone-countryCode" class="input-group-addon inline_addon">Код страны</label>
+            <input id="user-profile-phone-countryCode" type="number"
+                   placeholder="7"
+                   ng-model="profileData.tempPhone.countryCode" class="form-control"/>
+            <label for="user-profile-phone-cityCode" class="input-group-addon inline_addon">Код города</label>
+            <input id="user-profile-phone-cityCode" type="number"
+                   ng-model="profileData.tempPhone.cityCode" class="form-control"/>
+        </li>
+        <li class="input-group">
+            <label for="user-profile-phone-number" class="input-group-addon">Номер телефона</label>
+            <input id="user-profile-phone-number" type="text"
+                   ng-model="profileData.tempPhone.number" class="form-control"/>
+        </li>
+        <li class="input-group">
+            <label for="user-profile-phone-additionalNumber" class="input-group-addon">Добавочный</label>
+            <input id="user-profile-phone-additionalNumber" type="text"
+                   ng-model="profileData.tempPhone.additionalNumber" class="form-control"/>
+        </li>
 
-            <li style="margin: 15px 0;"><h4>Аккаунты соцальных сетей</h4></li>
+        <button class="btn btn-info pull_right" ng-click="addPhone()">
+            <i class="glyphicon glyphicon-plus"> </i>
+            Добавить <span ng-show="profileData.phone">ещё один</span> телефон
+        </button>
+        <br style="clear: both;"/>
+    </ul>
 
-            <li class="form-group">
-                <button>asd</button>
-            </li>
+    <ul class="form_list mobile_centered vertical_form_block">
+        <li class="form_header"><h4>Аккаунты соцальных сетей</h4></li>
+
+        <li class="form-group">
+            <button>asd</button>
+        </li>
 
 
-            <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
-                {{message.msg}}
-            </alert>
+        <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+            {{message.msg}}
+        </alert>
 
-            <li>
-                <button class="btn btn-danger" ng-click="cancel()">Отменить</button>
-                <button class="btn btn-primary pull_right" ng-click="save()">Сохранить</button>
-            </li>
-        </ul>
-    </form>
+        <li>
+            <button class="btn btn-danger" ng-click="cancel()">Отменить</button>
+            <button class="btn btn-primary pull_right" ng-click="save()">Сохранить</button>
+        </li>
+    </ul>
+</form>
 </div>
 
 </div>

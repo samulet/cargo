@@ -136,6 +136,20 @@ li.input-group .input-group-addon {
     min-width: 0
 }
 
+.form_header {
+    margin: 15px 0
+}
+
+.vertical_form_block {
+    padding: 15px 30px;
+    border-top: 1px dashed #A2A2A2
+}
+
+.text_placeholder {
+    letter-spacing: 3px;
+    color: #8F8F8F
+}
+
 #sign_in_block, #sign_up_block {
     padding: 40px
 }
