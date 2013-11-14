@@ -2,6 +2,7 @@
 
 angular.module('website', [
         'ngRoute',
+        'ngAnimate',
         'env.config',
         'website.constants',
         'common.factories',
@@ -295,13 +296,13 @@ angular.module('website.user.profile', [])
         $rootScope.pageTitle = 'Профиль';
         $rootScope.bodyColor = 'filled_bg';
 
-        $scope.editMode = false;
+        $scope.editMode = true; //TODO false
 
         $scope.profileData = {
-            fio: "-",
-            email: "-",
-            passportData: "-",
-            phones: "-"
+            fio: "Petrovasiliev Alexander Fargotovitch",
+            email: "sads-dfdffsd@dsdsd.ff",
+            passportData: "34234r f s sf sdfsdfsd fsdf sd fsd fsd f",
+            phones: "324-432, 324-545"
         };
 
         $scope.startEdit = function () {

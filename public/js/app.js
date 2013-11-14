@@ -2,6 +2,7 @@
 
 angular.module('website', [
         'ngRoute',
+        'ngAnimate',
         'env.config',
         'website.constants',
         'common.factories',
@@ -51,12 +52,14 @@ angular.module('website', [
 
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', function ($rootScope, ACCESS_LEVEL, ROUTES) {
         $rootScope.ROUTES = ROUTES;
-       /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
+        /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
 
-            *//*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
-             //TODO redirect or smt else
-             }*//*
-        });*/
+         */
+        /*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
+         //TODO redirect or smt else
+         }*/
+        /*
+         });*/
 
     }])
 ;
