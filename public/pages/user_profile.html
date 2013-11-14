@@ -1,110 +1,248 @@
 <top-private-menu/></top-private-menu>
 
-<div ng-controller="userProfileController" class="unfilled_bg center_horizontal small_block form_block vertical_spaced">
+<div ng-controller="userProfileController" class="unfilled_bg center_horizontal med_block form_block vertical_spaced">
 
-    <div ng-hide="editMode">
-        <ul class="form_list">
+<div>
+    <ul id="personal_data_list" class="form_list">
+        <li>
+            <h3>Личные данные</h3>
+        </li>
+        <li>
+            <span class="description">ФИО:</span>
+            <span class="user_data_text">{{ (profileData.fio) ? profileData.fio : '—' }}</span>
+        </li>
+        <li>
+            <span class="description">Email:</span>
+            <span class="user_data_text">{{ (profileData.email) ? profileData.email : '—' }}</span>
+        </li>
+        <li>
+            <span class="description">Паспортные данные:</span>
+            <span class="user_data_text">{{ (profileData.passportData) ? profileData.passportData : '—' }}</span>
+        </li>
+        <li>
+            <span class="description">Телефоны:</span>
+            <span class="user_data_text">{{ (profileData.phones) ? profileData.phones : '—' }}</span>
+        </li>
+        <li ng-show="profileData.social.vkontakte">
+            <span class="description"><img src="/img/social/mail_ru.png"/> Mail.ru:</span>
+            {{profileData.social.mailru}}
+        </li>
+        <li ng-show="profileData.social.odnoklassniki">
+            <span class="description"><img src="/img/social/odnoklassniki2.png"/> Одноклассники:</span>
+            {{profileData.social.odnoklassniki}}
+        </li>
+        <li ng-show="profileData.social.yandex">
+            <span class="description"><img src="/img/social/yandex2.png"/> Яндекс</span>
+            {{profileData.social.yandex}}
+        </li>
+        <li ng-show="profileData.social.google">
+            <span class="description"><i class="fa fa-google-plus-square"> </i> Google</span>
+            {{profileData.social.google}}
+        </li>
+        <li ng-show="profileData.social.facebook">
+            <span class="description"><i class="fa fa-facebook-square"> </i> Facebook</span>
+            {{profileData.social.facebook}}
+        </li>
+        <li ng-show="profileData.social.vkontakte">
+            <span class="description"><<i class="fa fa-vk"> </i> Вконтакте:</span>
+            {{profileData.social.vkontakte}}
+        </li>
+        <li ng-show="profileData.social.linkedin">
+            <span class="description"><i class="fa fa-linkedin-square"> </i> Linked In:</span>
+            {{profileData.social.linkedin}}
+        </li>
+        <li>
+            <button ng-click="startEdit()" class="btn btn-primary pull_right" ng-disabled="editMode"
+                    style="margin-right: 10px;">
+                <i class="fa fa-pencil-square-o"></i> Редактировать
+            </button>
+            <br style="clear: both;"/>
+        </li>
+    </ul>
+</div>
+
+<div ng-show="editMode" class="fade_anim">
+    <form name="profileForm" role="form">
+        <ul class="form_list mobile_centered" style="padding: 15px 30px;">
+            <li class="input-group">
+                <label for="user-profile-lastName" class="input-group-addon">Фамилия</label>
+                <input id="user-profile-lastName" type="text"
+                       ng-model="profileData.lastName" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-firstName" class="input-group-addon">Имя</label>
+                <input id="user-profile-firstName" type="text"
+                       ng-model="profileData.firstName" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-middleName" class="input-group-addon">Отчество</label>
+                <input id="user-profile-middleName" type="text"
+                       ng-model="profileData.middleName" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-uniqId" class="input-group-addon">
+                    Уникальный номер
+                </label>
+                <input id="user-profile-uniqId" type="text"
+                       ng-model="profileData.uniqId" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-shortName" class="input-group-addon">Краткое имя</label>
+                <input id="user-profile-shortName" type="text"
+                       ng-model="profileData.shortName" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-docType" class="input-group-addon">Вид документа</label>
+                <select id="user-profile-docType" ng-model="profileData.docType" class="form-control">
+                    <option value="passport_rf">Паспорт РФ</option>
+                    <option value="passport_foreign">Паспорт другого государства</option>
+                    <option value="military_card">Военный билет</option>
+                    <option value="passport_international">Заграничный паспорт</option>
+                    <option value="certificate">Cправка</option>
+                </select>
+            </li>
+
+            <li style="margin: 15px 0;"><h4>Паспортные данные</h4></li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-series" class="input-group-addon inline_addon">Серия</label>
+                <input id="user-profile-passport-series" type="text"
+                       ng-model="profileData.passport.series" class="form-control"/>
+                <label for="user-profile-passport-number" class="input-group-addon inline_addon">Номер</label>
+                <input id="user-profile-passport-number" type="text"
+                       ng-model="profileData.passport.number" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
+                <input id="user-profile-passport-issue" type="date"
+                       ng-model="profileData.passport.issue" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-issuingAuthority" class="input-group-addon">Орган выдавший</label>
+                <input id="user-profile-passport-issuingAuthority" type="text"
+                       ng-model="profileData.passport.issuingAuthority" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-unitNumber" class="input-group-addon">Номер подразделения</label>
+                <input id="user-profile-passport-unitNumber" type="text"
+                       placeholder="999-999"
+                       ng-model="profileData.passport.unitNumber" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-birthPlace" class="input-group-addon">Место рождения</label>
+                <input id="user-profile-passport-birthPlace" type="text"
+                       ng-model="profileData.passport.birthPlace" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-birthDate" class="input-group-addon">Дата рождения</label>
+                <input id="user-profile-passport-birthDate" type="date"
+                       ng-model="profileData.passport.birthDate" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-registrationType" class="input-group-addon">Вид регистрации</label>
+                <select id="user-profile-passport-registrationType"
+                        ng-model="profileData.passport.registrationType" class="form-control">
+                    <option value="temporary">Временная</option>
+                    <option value="permanent">Постоянная</option>
+                </select>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-registrationPlace" class="input-group-addon">Место регистрации</label>
+                <input id="user-profile-passport-registrationPlace" type="text"
+                       ng-model="profileData.passport.registrationPlace" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-passport-registrationDate" class="input-group-addon">Дата регистрации</label>
+                <input id="user-profile-passport-registrationDate" type="date"
+                       ng-model="profileData.passport.registrationDate" class="form-control"/>
+            </li>
+
+            <li style="margin: 15px 0;"><h4>Прочие данные</h4></li>
+
+            <li class="input-group">
+                <label for="user-profile-snils" class="input-group-addon">СНИЛС</label>
+                <input id="user-profile-snils" type="text"
+                       ng-model="profileData.snils" class="form-control"/>
+            </li>
+
+            <li class="input-group">
+                <label for="user-profile-inn" class="input-group-addon">ИНН</label>
+                <input id="user-profile-inn" type="text"
+                       ng-model="profileData.inn" class="form-control"/>
+            </li>
+
+            <li style="margin: 15px 0;"><h4>Контакты</h4></li>
+            <li style="margin: 15px 0;"><h5>Телефоны</h5></li>
+
+            <!--  <li>
+                  <ul>
+                      <li ng-repeat="phone in profileData.phones">{{phone}}</li>
+                  </ul>
+              </li>-->
+
+            <li class="input-group">
+                <label for="user-profile-phone-type" class="input-group-addon">Вид телефона</label>
+                <select id="user-profile-phone-type"
+                        ng-model="profileData.phones.temp.type" class="form-control">
+                    <option value="cell">Мобильный</option>
+                    <option value="local">Стационарный</option>
+                </select>
             <li>
-                <h3>Личные данные</h3>
+            <li class="input-group">
+                <label for="user-profile-phone-countryCode" class="input-group-addon inline_addon">Код страны</label>
+                <input id="user-profile-phone-countryCode" type="number"
+                       placeholder="7"
+                       ng-model="profileData.phones.temp.countryCode" class="form-control"/>
+                <label for="user-profile-phone-cityCode" class="input-group-addon inline_addon">Код города</label>
+                <input id="user-profile-phone-cityCode" type="number"
+                       ng-model="profileData.phones.temp.cityCode" class="form-control"/>
             </li>
+            <li class="input-group">
+                <label for="user-profile-phone-number" class="input-group-addon">Номер телефона</label>
+                <input id="user-profile-phone-number" type="number"
+                       ng-model="profileData.phones.temp.number" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="user-profile-phone-additionalNumber" class="input-group-addon">Добавочный</label>
+                <input id="user-profile-phone-additionalNumber" type="number"
+                       ng-model="profileData.phones.temp.additionalNumber" class="form-control"/>
+            </li>
+
+            <button class="btn btn-info">
+                <i class="glyphicon glyphicon-plus"> </i>
+                Добавить <span ng-show="profileData.phones.temp">ещё один</span> телефон
+            </button>
+
+            <li style="margin: 15px 0;"><h4>Аккаунты соцальных сетей</h4></li>
+
+            <li class="form-group">
+                <button>asd</button>
+            </li>
+
+
+            <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+                {{message.msg}}
+            </alert>
+
             <li>
-                ФИО: {{profileData.fio}}
-            </li>
-            <li>
-                Email: {{profileData.email}}
-            </li>
-            <li>
-                Паспортные данные: {{profileData.passportData}}
-            </li>
-            <li>
-                Телефоны: {{profileData.phones}}
-            </li>
-            <li ng-show="profileData.social.vkontakte">
-                <img src="/img/social/mail_ru.png"/> Mail.ru:
-                {{profileData.social.mailru}}
-            </li>
-            <li ng-show="profileData.social.odnoklassniki">
-                <img src="/img/social/odnoklassniki2.png"/> Одноклассники:
-                {{profileData.social.odnoklassniki}}
-            </li>
-            <li ng-show="profileData.social.yandex">
-                <img src="/img/social/yandex2.png"/> Яндекс
-                {{profileData.social.yandex}}
-            </li>
-            <li ng-show="profileData.social.google">
-                <i class="fa fa-google-plus-square"> </i> Google
-                {{profileData.social.google}}
-            </li>
-            <li ng-show="profileData.social.facebook">
-                <i class="fa fa-facebook-square"> </i> Facebook
-                {{profileData.social.facebook}}
-            </li>
-            <li ng-show="profileData.social.vkontakte">
-                <i class="fa fa-vk"> </i> Вконтакте:
-                {{profileData.social.vkontakte}}
-            </li>
-            <li ng-show="profileData.social.linkedin">
-                <i class="fa fa-linkedin-square"> </i> Linked In:
-                {{profileData.social.linkedin}}
-            </li>
-            <li>
-                <button ng-click="startEdit()" class="btn btn-primary pull_right" style="margin-right: 10px;">
-                    Редактировать
-                </button>
-                <br style="clear: both;"/>
+                <button class="btn btn-danger" ng-click="cancel()">Отменить</button>
+                <button class="btn btn-primary pull_right" ng-click="save()">Сохранить</button>
             </li>
         </ul>
-    </div>
-
-    <div ng-show="editMode">
-        <form name="profileForm" role="form">
-            <ul class="form_list mobile_centered" style="padding: 15px 30px;">
-                <li id="profile_header">
-                    <span>Профиль {{username}}</span>
-                </li>
-                <li class="form-group">
-                    <input type="text" title="ФИО" alt="ФИО"
-                           placeholder="ФИО"
-                           ng-model="profileData.fio" class="form-control" required/>
-                </li>
-
-                <li class="form-group">
-                    <input type="email" title="Email" alt="Email"
-                           placeholder="Email"
-                           ng-model="profileData.email" class="form-control" required/>
-                </li>
-
-                <li class="form-group">
-                    <input type="text" title="Паспортные данные" alt="Паспортные данные"
-                           placeholder="Паспортные данные"
-                           ng-model="profileData.passportData" class="form-control" required/>
-                </li>
-
-                <li class="form-group">
-                    <input type="text" title="Телефоны" alt="Телефоны"
-                           placeholder="Телефоны"
-                           ng-model="profileData.phones" class="form-control" required/>
-                </li>
-
-                <li>
-                    <span>Аккаунты соцальных сетей</span>
-                </li>
-
-                <li class="form-group">
-                    <button>asd</button>
-                </li>
-
-
-                <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
-                    {{message.msg}}
-                </alert>
-
-                <li>
-                    <button class="btn btn-danger" ng-click="cancel()">Отменить</button>
-                    <button class="btn btn-primary pull_right" ng-click="save()">Сохранить</button>
-                </li>
-            </ul>
-        </form>
-    </div>
+    </form>
+</div>
 
 </div>

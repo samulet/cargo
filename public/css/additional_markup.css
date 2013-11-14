@@ -27,6 +27,14 @@ html, body {
     padding: 0;
 }
 
+li.input-group {
+    margin-bottom: 10px;
+}
+
+li.input-group .input-group-addon {
+    min-width: 150px;
+}
+
 /* END Elements */
 
 /* Classes */
@@ -110,6 +118,39 @@ html, body {
 
 .vertical_spaced {
     margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.user_data_text {
+
+}
+
+.description {
+    color: #525252;
+}
+
+.fade_anim {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=1);
+    opacity: 1;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    transition: all 1s ease;
+}
+
+.fade_anim.ng-hide-add,
+.fade_anim.ng-hide-remove {
+    display: block !important;
+}
+
+.fade_anim.ng-hide {
+    opacity: 0;
+}
+
+li.input-group .input-group-addon.inline_addon, .inline_addon {
+    min-width: 0;
 }
 
 /* END Classes */
@@ -139,6 +180,11 @@ html, body {
 #features_block li {
     display: inline-block;
     margin: 15px 25px;
+}
+
+#personal_data_list li {
+    margin-bottom: 5px;
+    font-size: 1.1em;
 }
 
 /* END IDs */
