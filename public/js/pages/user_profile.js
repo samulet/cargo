@@ -11,6 +11,7 @@ angular.module('website.user.profile', [])
         $scope.tempData = {
             phone: {},
             address: {},
+            site: {},
             email: {}
         };
 
@@ -20,6 +21,8 @@ angular.module('website.user.profile', [])
             passport: {},
             phones: [],
             addresses: [],
+            sites: {},
+            emails: {},
             other: {}
         };
 
