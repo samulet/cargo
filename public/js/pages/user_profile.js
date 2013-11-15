@@ -26,6 +26,15 @@ angular.module('website.user.profile', [])
             $scope.profileData.tempPhone = {};
         };
 
+        $scope.removePhone = function (phone) {
+            var index = $scope.profileData.phones.indexOf(phone);
+            if (index !== -1) {
+                $scope.profileData.phones.splice(index, 1);
+            }
+
+
+        }
+
 
     }])
 ;

@@ -69,6 +69,7 @@
 <form name="profileForm" role="form">
 
     <ul class="form_list mobile_centered vertical_form_block">
+        <!--Personal Data-->
         <li class="form_header"><h4>Личные данные</h4></li>
         <li class="input-group">
             <label for="user-profile-lastName" class="input-group-addon">Фамилия</label>
@@ -113,7 +114,9 @@
             </select>
         </li>
     </ul>
+    <!-- END Personal Data-->
 
+    <!--Passport Data-->
     <ul class="form_list mobile_centered vertical_form_block">
         <li class="form_header"><h4>Паспортные данные</h4></li>
 
@@ -180,7 +183,9 @@
                    ng-model="profileData.passport.registrationDate" class="form-control"/>
         </li>
     </ul>
+    <!--END Passport Data-->
 
+    <!--Other Data-->
     <ul class="form_list mobile_centered vertical_form_block">
         <li class="form_header"><h4>Прочие данные</h4></li>
 
@@ -196,20 +201,24 @@
                    ng-model="profileData.other.inn" class="form-control"/>
         </li>
     </ul>
+    <!--End Other Data-->
 
+    <!--Phones Data-->
     <ul class="form_list mobile_centered vertical_form_block">
-        <li class="form_header"><h4>Контакты</h4></li>
-        <li class="form_header"><h5>Телефоны</h5></li>
+        <li class="form_header"><h4>Телефоны</h4></li>
 
         <li>
-            <ul>
+            <ul class="alert alert-info" ng-show="profileData.phones.length > 0" style="list-style: none;">
                 <li ng-repeat="phone in profileData.phones">
-                    <span ng-show="phone.type"><i class="glyphicon glyphicon-phone-alt"></i></span><!--TODO conditionaly show type-->
-                    <span ng-show="phone.type"><i class="glyphicon glyphicon-phone"></i></span>
-                    <span>{{phone.countryCode}}</span>
-                    <span>{{phone.cityCode}}</span>
-                    <span>{{phone.number}}</span>
-                    <span>{{phone.additionalNumber}}</span>
+                    <span ng-show="phone.type == 'local'"><i class="glyphicon glyphicon-phone-alt"> </i></span>
+                    <span ng-show="phone.type == 'cell'"><i class="glyphicon glyphicon-phone"> </i></span>
+                    <span ng-show="phone.countryCode">{{phone.countryCode}} </span>
+                    <span ng-show="phone.cityCode">({{phone.cityCode}}) </span>
+                    <span ng-show="phone.number">{{phone.number}} </span>
+                    <span ng-show="phone.additionalNumber">{{phone.additionalNumber}}</span>
+                    <span class="pull_right clickable" ng-click="removePhone(phone)">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
                 </li>
             </ul>
         </li>
@@ -244,11 +253,13 @@
 
         <button class="btn btn-info pull_right" ng-click="addPhone()">
             <i class="glyphicon glyphicon-plus"> </i>
-            Добавить <span ng-show="profileData.phone">ещё один</span> телефон
+            Добавить <span ng-show="profileData.phones.length > 0">ещё один</span> телефон
         </button>
         <br style="clear: both;"/>
     </ul>
+    <!--END Phones Data-->
 
+    <!--Social Data-->
     <ul class="form_list mobile_centered vertical_form_block">
         <li class="form_header"><h4>Аккаунты соцальных сетей</h4></li>
 
@@ -266,6 +277,7 @@
             <button class="btn btn-primary pull_right" ng-click="save()">Сохранить</button>
         </li>
     </ul>
+    <!--END Social Data-->
 </form>
 </div>
 

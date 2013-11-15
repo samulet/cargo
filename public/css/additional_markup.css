@@ -167,6 +167,10 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     color: #8F8F8F;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /* END Classes */
 
 /* IDs */
