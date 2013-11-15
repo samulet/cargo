@@ -150,6 +150,10 @@ li.input-group .input-group-addon {
     color: #8F8F8F
 }
 
+.clickable {
+    cursor: pointer
+}
+
 #sign_in_block, #sign_up_block {
     padding: 40px
 }

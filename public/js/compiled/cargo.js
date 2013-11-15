@@ -298,12 +298,17 @@ angular.module('website.user.profile', [])
 
         $scope.editMode = true; //TODO false
 
+        $scope.tempData = {
+            phone: {},
+            address: {}
+        };
+
         $scope.profileData = {
-            tempPhone: {},
             social: {},
             personal: {},
             passport: {},
             phones: [],
+            addresses: [],
             other: {}
         };
 
@@ -312,19 +317,24 @@ angular.module('website.user.profile', [])
         };
 
         $scope.addPhone = function () {
-            $scope.profileData.phones.push($scope.profileData.tempPhone);
-            $scope.profileData.tempPhone = {};
+            $scope.profileData.phones.push($scope.tempData.phone);
+            $scope.tempData.phone = {};
+        };
+
+        $scope.addAddress = function () {
+            $scope.profileData.addresses.push($scope.tempData.address);
+            $scope.tempData.address = {};
         };
 
         $scope.removePhone = function (phone) {
             var index = $scope.profileData.phones.indexOf(phone);
-            if (index !== -1) {
-                $scope.profileData.phones.splice(index, 1);
-            }
+            if (index !== -1) $scope.profileData.phones.splice(index, 1);
+        };
 
-
-        }
-
+        $scope.removeAddress = function (address) {
+            var index = $scope.profileData.addresses.indexOf(address);
+            if (index !== -1) $scope.profileData.addresses.splice(index, 1);
+        };
 
     }])
 ;
