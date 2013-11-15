@@ -1,0 +1,21 @@
+{
+    "name": "cargo",
+    "version": "0.0.1",
+    "homepage": "https://github.com/MashaiMedvedi/cargo",
+    "authors": [
+        "Cargo team"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "public/lib",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "formatter": "~0.0.6",
+        "holderjs": "~2.2.0"
+    }
+}
