@@ -10,7 +10,8 @@ angular.module('website.user.profile', [])
 
         $scope.tempData = {
             phone: {},
-            address: {}
+            address: {},
+            email: {}
         };
 
         $scope.profileData = {

@@ -251,8 +251,8 @@
                ng-model="tempData.phone.additionalNumber" class="form-control"/>
     </li>
     <li>
-    <button class="btn btn-info pull_right" ng-click="addPhone()">
-            <i class="glyphicon glyphicon-plus"> </i>
+        <button class="btn btn-info pull_right" ng-click="addPhone()">
+        <i class="glyphicon glyphicon-plus"> </i>
             Добавить <span ng-show="profileData.phones.length > 0">ещё один</span> телефон
         </button>
         <br style="clear: both;"/>
@@ -348,6 +348,47 @@
     </li>
 </ul>
 <!--END Mail Data-->
+
+<!--Email Data-->
+<ul class="form_list mobile_centered vertical_form_block">
+    <li class="form_header"><h4>Email</h4></li>
+
+    <li>
+        <ul class="alert alert-info" ng-show="profileData.email.length > 0" style="list-style: none;">
+            <li ng-repeat="email in profileData.email">
+                <span ng-show="email.type == 'personal'"><strong>Личный</strong>: </span>
+                <span ng-show="email.type == 'legal'"><strong>Юридический</strong>: </span>
+                <span ng-show="email.address">{{email.address}},  </span>
+                    <span class="pull_right clickable" ng-click="removeEmail(address)">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+    </li>
+
+    <li class="input-group">
+        <label for="user-profile-email-type" class="input-group-addon">Вид Email адресса</label>
+        <select id="user-profile-email-type"
+                ng-model="tempData.email.type" class="form-control">
+            <option value="personal">Личный</option>
+            <option value="legal">Юридический</option>
+        </select>
+    <li>
+    <li class="input-group">
+        <label for="user-profile-email-address" class="input-group-addon">Email</label>
+        <input id="user-profile-email-address" type="text"
+               ng-model="tempData.email.address" class="form-control"/>
+    </li>
+
+    <li>
+        <button class="btn btn-info pull_right" ng-click="addEmail()">
+            <i class="glyphicon glyphicon-plus"> </i>
+            Добавить <span ng-show="profileData.addresses.length > 0">ещё один</span> email
+        </button>
+        <br style="clear: both;"/>
+    </li>
+</ul>
+<!--END Email Data-->
 
 <!--Social Data-->
 <ul class="form_list mobile_centered vertical_form_block">
