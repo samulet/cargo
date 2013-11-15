@@ -44,6 +44,10 @@
     color: #000;
 }
 
+.img-thumbnail {
+    background-color: #DBDBDB;
+}
+
 /* END Classes */
 
 /* IDs */

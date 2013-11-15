@@ -253,3 +253,7 @@ li.input-group .input-group-addon {
 .unfilled_bg .btn-invisible, .unfilled_bg a {
     color: #000
 }
+
+.img-thumbnail {
+    background-color: #DBDBDB
+}

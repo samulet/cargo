@@ -332,6 +332,8 @@ angular.module('website.user.profile', [])
             addresses: [],
             sites: {},
             emails: {},
+            photo: {},
+            eSignature: {},
             other: {}
         };
 
