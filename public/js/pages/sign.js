@@ -16,7 +16,6 @@ angular.module('website.sign', [])
         }
 
         $scope.signIn = function () {
-            console.log($scope.signInData);
             $http.post('', { //TODO still don't know what the url to login
                 email: $scope.signInData.email,
                 password: $scope.signInData.password

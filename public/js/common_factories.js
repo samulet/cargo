@@ -127,6 +127,6 @@ angular.module('common.factories', [
                     return {msg: data.error, type: type};
                 }
             }
-        }
+        };
     }])
 ;

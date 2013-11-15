@@ -55,56 +55,9 @@ angular.module('website.user.profile', [])
         $scope.progress = 0;
         $scope.avatar = '';
 
-        $scope.sendFile = function (element) {
-
-            var $form = $(element).parents('form');
-
-            if ($(element).val() == '') {
-                return false;
-            }
-
-            $form.attr('action', $scope.action);
-
-            $scope.$apply(function () {
-                $scope.progress = 0;
-            });
-
-            $form.ajaxSubmit({
-                type: 'POST',
-                uploadProgress: function (event, position, total, percentComplete) {
-
-                    $scope.$apply(function () {
-                        // upload the progress bar during the upload
-                        $scope.progress = percentComplete;
-                    });
-
-                },
-                error: function (event, statusText, responseText, form) {
-
-                    // remove the action attribute from the form
-                    $form.removeAttr('action');
-
-                    /*
-                     handle the error ...
-                     */
-
-                },
-                success: function (responseText, statusText, xhr, form) {
-
-                    var ar = $(element).val().split('\\'),
-                        filename = ar[ar.length - 1];
-
-                    // remove the action attribute from the form
-                    $form.removeAttr('action');
-
-                    $scope.$apply(function () {
-                        $scope.avatar = filename;
-                    });
-
-                }
-            });
-
-        }
+        /*$scope.sendFile = function (element) {
+            //TODO
+        };*/
 
     }])
 ;
