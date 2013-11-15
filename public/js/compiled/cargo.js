@@ -14,7 +14,7 @@ angular.module('website', [
         'website.page.errors'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
-        var pathToIncs = 'pages/';
+        var pathToIncs = 'html/pages/';
         $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.SIGN_IN});
         $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.SIGN_IN});
         $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
@@ -89,7 +89,7 @@ angular.module('common.directives', [])
     .directive('alert', function () {
         return {
             restrict: 'EA',
-            templateUrl: "",
+            templateUrl: 'html/templates/alert.html',
             transclude: true,
             replace: true,
             scope: {
@@ -106,25 +106,16 @@ angular.module('common.directives', [])
         return {
             restrict: 'E',
             scope: {
-                action: '@'
+
             },
-            controller: ['$scope', function ($scope) {
-
-                // controller:
-                // here you should define properties and methods
-                // used in the directive's scope
-
-            }],
             link: function (scope, elem, attrs, ctrl) {
-                elem.find('.fake-uploader').click(function () {
-                    elem.find('input[type="file"]').click();
-                });
+
             },
             replace: false,
-            templateUrl: 'uploader.html'
+            templateUrl: 'html/templates/uploader.html'
         };
-
-    }]);
+    }])
+;
 'use strict';
 
 angular.module('common.factories', [
@@ -259,16 +250,16 @@ angular.module('common.factories', [
 ;
 "use strict";
 
- angular.module("env.config", [])
+angular.module("env.config", [])
 
-.constant("REST_CONFIG", {
-  "PROTOCOL": "http",
-  "HOST": "localhost",
-  "HOST_CONTEXT": "",
-  "PORT": "8080",
-  "DOMAIN": "localhost",
-  "BASE_URL": "http://localhost:8080"
-})
+    .constant("REST_CONFIG", {
+        "PROTOCOL": "http",
+        "HOST": "localhost",
+        "HOST_CONTEXT": "",
+        "PORT": "8080",
+        "DOMAIN": "localhost",
+        "BASE_URL": "http://localhost:8080"
+    })
 
 ;
 'use strict';
@@ -434,7 +425,7 @@ angular.module('website.top.menu', [])
             /*scope: {
              current: '=current'
              },*/
-            templateUrl: 'partials/public/top_menu.html',
+            templateUrl: 'html/partials/public/top_menu.html',
             controller: function ($scope) {
                 //
             }
@@ -447,7 +438,7 @@ angular.module('website.top.menu', [])
             /*scope: {
              current: '=current'
              },*/
-            templateUrl: 'partials/private/top_menu.html',
+            templateUrl: 'html/partials/private/top_menu.html',
             controller: function ($scope) {
                 //
             }

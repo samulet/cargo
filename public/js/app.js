@@ -14,7 +14,7 @@ angular.module('website', [
         'website.page.errors'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
-        var pathToIncs = 'pages/';
+        var pathToIncs = 'html/pages/';
         $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.SIGN_IN});
         $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.SIGN_IN});
         $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});

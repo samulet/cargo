@@ -5,7 +5,7 @@ angular.module('common.directives', [])
     .directive('alert', function () {
         return {
             restrict: 'EA',
-            templateUrl: "",
+            templateUrl: 'html/templates/alert.html',
             transclude: true,
             replace: true,
             scope: {
@@ -22,22 +22,13 @@ angular.module('common.directives', [])
         return {
             restrict: 'E',
             scope: {
-                action: '@'
+
             },
-            controller: ['$scope', function ($scope) {
-
-                // controller:
-                // here you should define properties and methods
-                // used in the directive's scope
-
-            }],
             link: function (scope, elem, attrs, ctrl) {
-                elem.find('.fake-uploader').click(function () {
-                    elem.find('input[type="file"]').click();
-                });
+
             },
             replace: false,
-            templateUrl: 'uploader.html'
+            templateUrl: 'html/templates/uploader.html'
         };
-
-    }]);
+    }])
+;

@@ -208,8 +208,9 @@
     <li class="form_header"><h4>Телефоны</h4></li>
 
     <li>
-        <ul class="alert alert-info" ng-show="profileData.phones.length > 0" style="list-style: none;">
-            <li ng-repeat="phone in profileData.phones">
+        <ul class="alert alert-info" ng-show="profileData.phones.length > 0" style="list-style: none;"
+            aria-hidden='true'>
+        <li ng-repeat="phone in profileData.phones">
                 <span ng-show="phone.type == 'local'"><i class="glyphicon glyphicon-phone-alt"> </i></span>
                 <span ng-show="phone.type == 'cell'"><i class="glyphicon glyphicon-phone"> </i></span>
                 <span ng-show="phone.countryCode">{{phone.countryCode}} </span>
@@ -265,8 +266,9 @@
     <li class="form_header"><h4>Почтовые адреса</h4></li>
 
     <li>
-        <ul class="alert alert-info" ng-show="profileData.addresses.length > 0" style="list-style: none;">
-            <li ng-repeat="address in profileData.addresses">
+        <ul class="alert alert-info" ng-show="profileData.addresses.length > 0" style="list-style: none;"
+            aria-hidden='true'>
+        <li ng-repeat="address in profileData.addresses">
                 <span ng-show="address.type == 'physical'"><strong>Физический</strong>: </span>
                 <span ng-show="address.type == 'legal'"><strong>Юридический</strong>: </span>
                 <span ng-show="address.country">{{address.country}},  </span>
@@ -354,8 +356,9 @@
     <li class="form_header"><h4>Email</h4></li>
 
     <li>
-        <ul class="alert alert-info" ng-show="profileData.emails.length > 0" style="list-style: none;">
-            <li ng-repeat="email in profileData.email">
+        <ul class="alert alert-info" ng-show="profileData.emails.length > 0" style="list-style: none;"
+            aria-hidden='true'>
+        <li ng-repeat="email in profileData.email">
                 <span ng-show="email.type == 'personal'"><strong>Личный</strong>: </span>
                 <span ng-show="email.type == 'legal'"><strong>Юридический</strong>: </span>
                 <span ng-show="email.address">{{email.address}},  </span>
@@ -395,8 +398,9 @@
     <li class="form_header"><h4>Сайты</h4></li>
 
     <li>
-        <ul class="alert alert-info" ng-show="profileData.sites.length > 0" style="list-style: none;">
-            <li ng-repeat="site in profileData.sites">
+        <ul class="alert alert-info" ng-show="profileData.sites.length > 0" style="list-style: none;"
+            aria-hidden='true'>
+        <li ng-repeat="site in profileData.sites">
                 <span ng-show="site.type"><strong>Тип</strong>: {{site.type}}, </span>
                 <span ng-show="site.url"><strong>Адресс</strong>: {{site.url}}</span>
                     <span class="pull_right clickable" ng-click="removeSite(site)">
@@ -432,14 +436,11 @@
     <li class="form_header"><h4>Фотография профиля</h4></li>
 
     <li>
-        <uploader action="uploader.php"></uploader>
+        <img src="holder.js/200x200" class="img-thumbnail">
     </li>
 
     <li>
-        <button class="btn btn-info pull_right" ng-click="addEmail()">
-            <i class="glyphicon glyphicon-plus"> </i>
-            Добавить <span ng-show="profileData.addresses.length > 0">ещё один</span> email
-        </button>
+        <uploader action="uploader.php"></uploader>
         <br style="clear: both;"/>
     </li>
 </ul>
