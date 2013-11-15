@@ -6,6 +6,7 @@ angular.module('website', [
         'env.config',
         'website.constants',
         'common.factories',
+        'common.directives',
         'website.top.menu',
         'website.sign',
         'website.dashboard',
@@ -34,22 +35,6 @@ angular.module('website', [
             return   '/#!' + route;
         };
     })
-    .directive('alert', function () {
-        return {
-            restrict: 'EA',
-            template: "<div class='alert alert-dismissable' ng-class='type && \"alert-\" + type'>\n <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n <div ng-transclude></div>\n</div>\n",
-            transclude: true,
-            replace: true,
-            scope: {
-                type: '=',
-                close: '&'
-            },
-            link: function (scope, iElement, iAttrs) {
-                scope.closeable = "close" in iAttrs;
-            }
-        };
-    })
-
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', function ($rootScope, ACCESS_LEVEL, ROUTES) {
         $rootScope.ROUTES = ROUTES;
         /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
@@ -97,6 +82,49 @@ angular.module('website.constants', [])
         }
     })
 ;
+'use strict';
+
+angular.module('common.directives', [])
+
+    .directive('alert', function () {
+        return {
+            restrict: 'EA',
+            templateUrl: "",
+            transclude: true,
+            replace: true,
+            scope: {
+                type: '=',
+                close: '&'
+            },
+            link: function (scope, iElement, iAttrs) {
+                scope.closeable = "close" in iAttrs;
+            }
+        };
+    })
+
+    .directive('uploader', [function () {
+        return {
+            restrict: 'E',
+            scope: {
+                action: '@'
+            },
+            controller: ['$scope', function ($scope) {
+
+                // controller:
+                // here you should define properties and methods
+                // used in the directive's scope
+
+            }],
+            link: function (scope, elem, attrs, ctrl) {
+                elem.find('.fake-uploader').click(function () {
+                    elem.find('input[type="file"]').click();
+                });
+            },
+            replace: false,
+            templateUrl: 'uploader.html'
+        };
+
+    }]);
 'use strict';
 
 angular.module('common.factories', [
@@ -231,16 +259,16 @@ angular.module('common.factories', [
 ;
 "use strict";
 
-angular.module("env.config", [])
+ angular.module("env.config", [])
 
-    .constant("REST_CONFIG", {
-        "PROTOCOL": "http",
-        "HOST": "localhost",
-        "HOST_CONTEXT": "",
-        "PORT": "8080",
-        "DOMAIN": "localhost",
-        "BASE_URL": "http://localhost:8080"
-    })
+.constant("REST_CONFIG", {
+  "PROTOCOL": "http",
+  "HOST": "localhost",
+  "HOST_CONTEXT": "",
+  "PORT": "8080",
+  "DOMAIN": "localhost",
+  "BASE_URL": "http://localhost:8080"
+})
 
 ;
 'use strict';
@@ -339,6 +367,60 @@ angular.module('website.user.profile', [])
             var index = $scope.profileData.addresses.indexOf(address);
             if (index !== -1) $scope.profileData.addresses.splice(index, 1);
         };
+
+        $scope.progress = 0;
+        $scope.avatar = '';
+
+        $scope.sendFile = function (element) {
+
+            var $form = $(element).parents('form');
+
+            if ($(element).val() == '') {
+                return false;
+            }
+
+            $form.attr('action', $scope.action);
+
+            $scope.$apply(function () {
+                $scope.progress = 0;
+            });
+
+            $form.ajaxSubmit({
+                type: 'POST',
+                uploadProgress: function (event, position, total, percentComplete) {
+
+                    $scope.$apply(function () {
+                        // upload the progress bar during the upload
+                        $scope.progress = percentComplete;
+                    });
+
+                },
+                error: function (event, statusText, responseText, form) {
+
+                    // remove the action attribute from the form
+                    $form.removeAttr('action');
+
+                    /*
+                     handle the error ...
+                     */
+
+                },
+                success: function (responseText, statusText, xhr, form) {
+
+                    var ar = $(element).val().split('\\'),
+                        filename = ar[ar.length - 1];
+
+                    // remove the action attribute from the form
+                    $form.removeAttr('action');
+
+                    $scope.$apply(function () {
+                        $scope.avatar = filename;
+                    });
+
+                }
+            });
+
+        }
 
     }])
 ;

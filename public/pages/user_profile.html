@@ -420,12 +420,30 @@
     <li>
         <button class="btn btn-info pull_right" ng-click="addEmail()">
             <i class="glyphicon glyphicon-plus"> </i>
-            Добавить <span ng-show="profileData.sites.length > 0">ещё один</span> email
+            Добавить <span ng-show="profileData.sites.length > 0">ещё один</span> сайт
         </button>
         <br style="clear: both;"/>
     </li>
 </ul>
 <!--END Sites Data-->
+
+<!--Photo Data-->
+<ul class="form_list mobile_centered vertical_form_block">
+    <li class="form_header"><h4>Фотография профиля</h4></li>
+
+    <li>
+        <uploader action="uploader.php"></uploader>
+    </li>
+
+    <li>
+        <button class="btn btn-info pull_right" ng-click="addEmail()">
+            <i class="glyphicon glyphicon-plus"> </i>
+            Добавить <span ng-show="profileData.addresses.length > 0">ещё один</span> email
+        </button>
+        <br style="clear: both;"/>
+    </li>
+</ul>
+<!--END Photo Data-->
 
 <!--Social Data-->
 <ul class="form_list mobile_centered vertical_form_block">

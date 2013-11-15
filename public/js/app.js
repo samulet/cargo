@@ -6,6 +6,7 @@ angular.module('website', [
         'env.config',
         'website.constants',
         'common.factories',
+        'common.directives',
         'website.top.menu',
         'website.sign',
         'website.dashboard',
@@ -34,22 +35,6 @@ angular.module('website', [
             return   '/#!' + route;
         };
     })
-    .directive('alert', function () {
-        return {
-            restrict: 'EA',
-            template: "<div class='alert alert-dismissable' ng-class='type && \"alert-\" + type'>\n <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n <div ng-transclude></div>\n</div>\n",
-            transclude: true,
-            replace: true,
-            scope: {
-                type: '=',
-                close: '&'
-            },
-            link: function (scope, iElement, iAttrs) {
-                scope.closeable = "close" in iAttrs;
-            }
-        };
-    })
-
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', function ($rootScope, ACCESS_LEVEL, ROUTES) {
         $rootScope.ROUTES = ROUTES;
         /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
