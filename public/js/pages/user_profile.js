@@ -32,32 +32,15 @@ angular.module('website.user.profile', [])
             $scope.editMode = true;
         };
 
-        $scope.addPhone = function () {
-            $scope.profileData.phones.push($scope.tempData.phone);
-            $scope.tempData.phone = {};
+        $scope.moveToProfileData = function (item) {
+            $scope.profileData[item].push($scope.tempData[item]);
+            $scope.tempData[item] = {};
         };
 
-        $scope.addAddress = function () {
-            $scope.profileData.addresses.push($scope.tempData.address);
-            $scope.tempData.address = {};
+        $scope.remove = function (from, element) {
+            var index = $scope.profileData[from].indexOf(element);
+            if (index !== -1) $scope.profileData[from].splice(index, 1);
         };
-
-        $scope.removePhone = function (phone) {
-            var index = $scope.profileData.phones.indexOf(phone);
-            if (index !== -1) $scope.profileData.phones.splice(index, 1);
-        };
-
-        $scope.removeAddress = function (address) {
-            var index = $scope.profileData.addresses.indexOf(address);
-            if (index !== -1) $scope.profileData.addresses.splice(index, 1);
-        };
-
-        $scope.progress = 0;
-        $scope.avatar = '';
-
-        /*$scope.sendFile = function (element) {
-            //TODO
-        };*/
 
     }])
 ;

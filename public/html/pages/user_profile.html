@@ -9,22 +9,85 @@
         </li>
         <li>
             <span class="description">ФИО:</span>
-            <span class="user_data_text" ng-show="profileData.fio">{{profileData.fio}}</span>
-            <span class="text_placeholder" ng-hide="profileData.fio">______________</span>
+            <span class="user_data_text"
+                  ng-show="profileData.lastName || profileData.firstName || profileData.middleName">
+                {{profileData.lastName}} {{profileData.firstName}} {{profileData.middleName}}
+            </span>
+            <span class="text_placeholder"
+                  ng-hide="profileData.lastName || profileData.firstName || profileData.middleName">
+                ______________
+            </span>
         </li>
         <li>
             <span class="description">Email:</span>
-            <span class="user_data_text" ng-show="profileData.email">{{profileData.email}}</span>
-            <span class="text_placeholder" ng-hide="profileData.email">______________</span>
+            <span class="user_data_text" ng-show="profileData.emails.length > 0">
+                <ul>
+                    <li ng-repeat="email in profileData.emails" style="list-style: none;">
+                        <span ng-show="email.type">{{email.type}}</span>
+                        <span>{{email.address}}</span>
+                    </li>
+                </ul>
+            </span>
+            <span class="text_placeholder" ng-hide="profileData.emails.length > 0">______________</span>
         </li>
         <li>
             <span class="description">Паспортные данные:</span>
-            <span class="user_data_text" ng-show="profileData.passportData">{{profileData.passportData}}</span>
-            <span class="text_placeholder" ng-hide="profileData.passportData">______________</span>
+                <span class="user_data_text" ng-show="profileData.passport.length > 0"">
+                <span ng-show="profileData.passport.number">
+                    <strong>Номер:</strong> {{profileData.passport.number}}
+                </span>
+                <span ng-show="profileData.passport.issue">
+                    <strong>Серия:</strong> {{profileData.passport.issue}}
+                </span>
+                <span ng-show="profileData.passport.issuingAuthority">
+                    <strong>Выдавший орган:</strong> {{profileData.passport.issuingAuthority}}
+                </span>
+                <span ng-show="profileData.passport.unitNumber">
+                    <strong>Код подразделения:</strong> {{profileData.passport.unitNumber}}
+                </span>
+                <span ng-show="profileData.passport.birthPlace">
+                    <strong>Дата рождения:</strong> {{profileData.passport.birthPlace}}
+                </span>
+                <span ng-show="profileData.passport.registrationType">
+                    <strong>Тип регистрации:</strong> {{profileData.passport.registrationType}}
+                </span>
+                <span ng-show="profileData.passport.registrationPlace">
+                    <strong>Место регистрации:</strong> {{profileData.passport.registrationPlace}}
+                </span>
+                <span ng-show="profileData.passport.registrationDate">
+                    <strong>Дата регистрации:</strong> {{profileData.passport.registrationDate}}
+                </span>
+            </span>
+            <span class="text_placeholder" ng-hide="profileData.passport.length > 0">______________</span>
         </li>
         <li>
             <span class="description">Телефоны:</span>
-            <span class="user_data_text" ng-show="profileData.phones">{{profileData.phones}}</span>
+            <span class="user_data_text" ng-show="profileData.phones.length > 0">
+                <ul>
+                    <li ng-repeat="phone in profileData.phones" style="list-style: none;">
+                        <span ng-show="phone.type">Тип телефона:
+                            <span ng-show="phone.type == 'local'">
+                                <i class="glyphicon glyphicon-phone-alt"> </i> Городской
+                            </span>
+                            <span ng-show="phone.type == 'cell'">
+                                <i class="glyphicon glyphicon-phone"> </i> Мобильный
+                            </span>
+                        </span>
+                        <span ng-show="phone.countryCode">
+                            <strong>Код страны:</strong> {{phone.countryCode}}
+                        </span>
+                        <span ng-show="phone.cityCode">
+                            <strong>Код города:</strong> ({{phone.cityCode}})
+                        </span>
+                        <span ng-show="phone.number">
+                            <strong>Номер телефона:</strong> {{phone.number}}
+                        </span>
+                        <span ng-show="phone.additionalNumber">
+                            <strong>Дополнительный:</strong> {{phone.additionalNumber}}
+                        </span>
+                    </li>
+                </ul>
+            </span>
             <span class="text_placeholder" ng-hide="profileData.phones">______________</span>
         </li>
         <li ng-show="profileData.social.vkontakte">
@@ -211,13 +274,13 @@
         <ul class="alert alert-info" ng-show="profileData.phones.length > 0" style="list-style: none;"
             aria-hidden='true'>
             <li ng-repeat="phone in profileData.phones">
-            <span ng-show="phone.type == 'local'"><i class="glyphicon glyphicon-phone-alt"> </i></span>
+                <span ng-show="phone.type == 'local'"><i class="glyphicon glyphicon-phone-alt"> </i></span>
                 <span ng-show="phone.type == 'cell'"><i class="glyphicon glyphicon-phone"> </i></span>
                 <span ng-show="phone.countryCode">{{phone.countryCode}} </span>
                 <span ng-show="phone.cityCode">({{phone.cityCode}}) </span>
                 <span ng-show="phone.number">{{phone.number}}</span>
                 <span ng-show="phone.additionalNumber"> , дополнительный {{phone.additionalNumber}}</span>
-                    <span class="pull_right clickable" ng-click="removePhone(phone)">
+                    <span class="pull_right clickable" ng-click="remove('phones', phone)">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
@@ -252,7 +315,7 @@
                ng-model="tempData.phone.additionalNumber" class="form-control"/>
     </li>
     <li>
-        <button class="btn btn-info pull_right" ng-click="addPhone()">
+        <button class="btn btn-info pull_right" ng-click="moveToProfileData('phones')">
             <i class="glyphicon glyphicon-plus"> </i>
             Добавить <span ng-show="profileData.phones.length > 0">ещё один</span> телефон
         </button>
@@ -269,7 +332,7 @@
         <ul class="alert alert-info" ng-show="profileData.addresses.length > 0" style="list-style: none;"
             aria-hidden='true'>
             <li ng-repeat="address in profileData.addresses">
-            <span ng-show="address.type == 'physical'"><strong>Физический</strong>: </span>
+                <span ng-show="address.type == 'physical'"><strong>Физический</strong>: </span>
                 <span ng-show="address.type == 'legal'"><strong>Юридический</strong>: </span>
                 <span ng-show="address.country">{{address.country}},  </span>
                 <span ng-show="address.index">{{address.index}} </span>
@@ -280,7 +343,7 @@
                 <span ng-show="address.house">, дом {{address.house}}</span>
                 <span ng-show="address.housing">, корпус {{address.housing}}</span>
                 <span ng-show="address.apartment">, квартира {{address.apartment}}</span>
-                    <span class="pull_right clickable" ng-click="removeAddress(address)">
+                    <span class="pull_right clickable" ng-click="remove('addresses', address)">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
@@ -342,7 +405,7 @@
     </li>
 
     <li>
-        <button class="btn btn-info pull_right" ng-click="addAddress()">
+        <button class="btn btn-info pull_right" ng-click="moveToProfileData('addresses')">
             <i class="glyphicon glyphicon-plus"> </i>
             Добавить <span ng-show="profileData.addresses.length > 0">ещё один</span> адрес
         </button>
@@ -359,10 +422,10 @@
         <ul class="alert alert-info" ng-show="profileData.emails.length > 0" style="list-style: none;"
             aria-hidden='true'>
             <li ng-repeat="email in profileData.email">
-            <span ng-show="email.type == 'personal'"><strong>Личный</strong>: </span>
+                <span ng-show="email.type == 'personal'"><strong>Личный</strong>: </span>
                 <span ng-show="email.type == 'legal'"><strong>Юридический</strong>: </span>
                 <span ng-show="email.address">{{email.address}},  </span>
-                    <span class="pull_right clickable" ng-click="removeEmail(email)">
+                    <span class="pull_right clickable" ng-click="remove('emails', email)">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
@@ -378,13 +441,13 @@
         </select>
     <li>
     <li class="input-group">
-    <label for="user-profile-emails-address" class="input-group-addon">Email</label>
-    <input id="user-profile-emails-address" type="text"
-           ng-model="tempData.emails.address" class="form-control"/>
-</li>
+        <label for="user-profile-emails-address" class="input-group-addon">Email</label>
+        <input id="user-profile-emails-address" type="text"
+               ng-model="tempData.emails.address" class="form-control"/>
+    </li>
 
     <li>
-        <button class="btn btn-info pull_right" ng-click="addEmail()">
+        <button class="btn btn-info pull_right" ng-click="moveToProfileData('emails')">
             <i class="glyphicon glyphicon-plus"> </i>
             Добавить <span ng-show="profileData.addresses.length > 0">ещё один</span> email
         </button>
@@ -401,9 +464,9 @@
         <ul class="alert alert-info" ng-show="profileData.sites.length > 0" style="list-style: none;"
             aria-hidden='true'>
             <li ng-repeat="site in profileData.sites">
-            <span ng-show="site.type"><strong>Тип</strong>: {{site.type}}, </span>
+                <span ng-show="site.type"><strong>Тип</strong>: {{site.type}}, </span>
                 <span ng-show="site.url"><strong>Адресс</strong>: {{site.url}}</span>
-                    <span class="pull_right clickable" ng-click="removeSite(site)">
+                    <span class="pull_right clickable" ng-click="remove('sites', site)">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
@@ -422,7 +485,7 @@
     </li>
 
     <li>
-        <button class="btn btn-info pull_right" ng-click="addEmail()">
+        <button class="btn btn-info pull_right" ng-click="moveToProfileData('sites')">
             <i class="glyphicon glyphicon-plus"> </i>
             Добавить <span ng-show="profileData.sites.length > 0">ещё один</span> сайт
         </button>
