@@ -185,6 +185,12 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     line-height: 2em;
 }
 
+
+#profileSocialBlock .social_btn_desc {
+    font-size: 1em;
+    line-height: 1em;
+}
+
 .social_btn_link:hover {
     text-decoration: none;
 }

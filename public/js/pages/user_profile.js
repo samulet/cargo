@@ -21,7 +21,7 @@ angular.module('website.user.profile', [])
         $scope.tempData = tempData;
 
         $scope.profileData = {
-            social: {},
+            socials: [],
             personal: {},
             passport: {},
             phones: [],

@@ -342,7 +342,7 @@
 <form name="adressDataForm" role="form">
     <div class="form_list mobile_centered vertical_form_block">
 
-        <button class="btn btn-info margin_bottom_small pull_right" ng-click="showAddAddressForm = true;"
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddAddressForm = true;"
                 ng-show="!showAddAddressForm" style="margin-top: 10px;">
             <i class="glyphicon glyphicon-plus"> </i> Добавить
         </button>
@@ -362,13 +362,14 @@
                 <span ng-show="address.house">, дом {{address.house}}</span>
                 <span ng-show="address.housing">, корпус {{address.housing}}</span>
                 <span ng-show="address.apartment">, квартира {{address.apartment}}</span>
-                    <span class="pull_right clickable" ng-click="remove('addresses', address)" title="Удалить этот адрес">
+                    <span class="pull_right clickable" ng-click="remove('addresses', address)"
+                          title="Удалить этот адрес">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
         </ul>
 
-        <ul ng-show="showAddAddressForm" class="form_list mobile_centered clear_list" style="padding: 0;">
+        <ul ng-show="showAddAddressForm" class="form_list mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
                 <label for="user-profile-address-type" class="input-group-addon">Вид адреса</label>
                 <select id="user-profile-address-type"
@@ -441,25 +442,26 @@
 <form name="emailDataForm" role="form">
     <div class="form_list mobile_centered vertical_form_block">
 
-        <button class="btn btn-info margin_bottom_small pull_right" ng-click="showAddEmailForm = true;"
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddEmailForm = true;"
                 ng-show="!showAddEmailForm" style="margin-top: 10px;">
             <i class="glyphicon glyphicon-plus"> </i> Добавить
         </button>
         <div class="form_header"><h4>Email</h4></div>
 
-        <ul class="alert alert-info clear_list" aria-hidden='true'>
+        <ul class="alert alert-info clear_list">
             <li ng-hide="profileData.emails.length > 0" class="alert_placeholder"><i>(Нет Email'ов)</i></li>
             <li ng-show="profileData.emails.length > 0" ng-repeat="email in profileData.emails">
                 <span ng-show="email.type == 'personal'"><strong>Личный</strong>: </span>
                 <span ng-show="email.type == 'legal'"><strong>Юридический</strong>: </span>
                 <span ng-show="email.address">{{email.address}} </span>
-                    <span class="pull_right clickable" ng-click="remove('emails', email)" title="Удалить этот email адрес">
+                    <span class="pull_right clickable" ng-click="remove('emails', email)"
+                          title="Удалить этот email адрес">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
         </ul>
 
-        <ul ng-show="showAddEmailForm" class="form_list mobile_centered clear_list" style="padding: 0;">
+        <ul ng-show="showAddEmailForm" class="form_list mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
                 <label for="user-profile-email-type" class="input-group-addon">Вид Email</label>
                 <select id="user-profile-email-type"
@@ -492,7 +494,7 @@
 <form name="sitesDataForm" role="form">
     <div class="form_list mobile_centered vertical_form_block">
 
-        <button class="btn btn-info margin_bottom_small pull_right" ng-click="showAddSiteForm = true;"
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddSiteForm = true;"
                 ng-show="!showAddSiteForm" style="margin-top: 10px;">
             <i class="glyphicon glyphicon-plus"> </i> Добавить
         </button>
@@ -500,7 +502,7 @@
 
         <ul class="alert alert-info clear_list">
             <li ng-hide="profileData.sites.length > 0" class="alert_placeholder"><i>(Нет сайтов)</i></li>
-            <li ng-show="profileData.sites.length > 0"ng-repeat="site in profileData.sites">
+            <li ng-show="profileData.sites.length > 0" ng-repeat="site in profileData.sites">
                 <span ng-show="site.type"><strong>Тип</strong>: {{site.type}}, </span>
                 <span ng-show="site.url"><strong>Адресс</strong>: {{site.url}}</span>
                     <span class="pull_right clickable" ng-click="remove('sites', site)" title="Удалить этот сайт">
@@ -509,7 +511,7 @@
             </li>
         </ul>
 
-        <ul ng-show="showAddSiteForm" class="form_list mobile_centered clear_list" style="padding: 0;">
+        <ul ng-show="showAddSiteForm" class="form_list mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
                 <label for="user-profile-site-type" class="input-group-addon">Тип сайта</label>
                 <input id="user-profile-site-type" type="text"
@@ -590,33 +592,74 @@
 <!--END eSignature Data-->
 
 <!--Social Data-->
-<ul class="form_list mobile_centered vertical_form_block">
+<ul id="profileSocialBlock" class="form_list mobile_centered vertical_form_block clear_list">
     <li class="form_header"><h4>Аккаунты соцальных сетей</h4></li>
 
-    <li class="form-group">
-        <button type="button" class="btn btn-invisible btn-lg" title="Mail.ru"
-                style="line-height: 0.9;">
-            <img src="/img/social/mail_ru.png"/>
+    <ul class="alert alert-info clear_list">
+        <li ng-hide="profileData.socials.length > 0" class="alert_placeholder"><i>(Нет подключенных аккаунтов)</i></li>
+        <li ng-show="profileData.socials.length > 0" ng-repeat="social in profileData.socials">
+            <span ng-show="social.type == 'mailru'"><strong>Mail.ru</strong>: </span>
+            <span ng-show="social.type == 'oddnoklassniki'"><strong>Одноклассники</strong>: </span>
+            <span ng-show="social.type == 'yandex'"><strong>Яндекс</strong>: </span>
+            <span ng-show="social.type == 'google'"><strong>Google</strong>: </span>
+            <span ng-show="social.type == 'facebook'"><strong>Facebook</strong>: </span>
+            <span ng-show="social.type == 'vkontavke'"><strong>Вконтакте</strong>: </span>
+            <span ng-show="social.type == 'linkedin'"><strong>Linked.In</strong>: </span>
+            <span ng-show="social.name">{{social.name}} </span>
+            <span class="pull_right clickable" ng-click="remove('socials', social)" title="Удалить этот аккаунт адрес">
+                <i class="glyphicon glyphicon-remove"> </i>
+            </span>
+        </li>
+    </ul>
+
+    <li class="form_header"><h5>Добавить аккаунт социальной сети</h5></li>
+
+    <li>
+        <button type="button" class="btn btn-invisible btn-lg" title="Mail.ru">
+            <span class="big_icon pseudo_favicon" style="color: white; background-color: #000;"> M</span>
+            <span class="social_btn_desc">Mail.ru</span>
         </button>
-        <button type="button" class="btn btn-invisible btn-lg" title="Одноклассники"
-                style="line-height: 0.9;">
-            <img src="/img/social/odnoklassniki2.png"/>
+    </li>
+
+    <li>
+        <button type="button" class="btn btn-invisible btn-lg" title="Одноклассники">
+            <span class="big_icon pseudo_favicon" style="color: white; background-color: #000;"> O</span>
+            <span class="social_btn_desc">Одноклассники</span>
         </button>
-        <button type="button" class="btn btn-invisible btn-lg" title="Яндекс"
-                style="line-height: 0.9;">
-            <img src="/img/social/yandex2.png"/>
+    </li>
+
+    <li>
+        <button type="button" class="btn btn-invisible btn-lg" title="Яндекс">
+            <span class="big_icon pseudo_favicon" style="color: white; background-color: #000;"> Я</span>
+            <span class="social_btn_desc"> Яндекс</span>
         </button>
+    </li>
+
+    <li>
         <button type="button" class="btn btn-invisible btn-lg" title="Google">
-            <i class="fa fa-google-plus-square"></i>
+            <i class="fa fa-google-plus-square big_icon"></i>
+            <span class="social_btn_desc">Google</span>
         </button>
+    </li>
+
+    <li>
         <button type="button" class="btn btn-invisible btn-lg" title="Facebook">
-            <i class="fa fa-facebook-square"></i>
+            <i class="fa fa-facebook-square big_icon"></i>
+            <span class="social_btn_desc">Facebook</span>
         </button>
+    </li>
+
+    <li>
         <button type="button" class="btn btn-invisible btn-lg" title="Вконтакте">
-            <i class="fa fa-vk"></i>
+            <i class="fa fa-vk big_icon"></i>
+            <span class="social_btn_desc">Вконтакте</span>
         </button>
+    </li>
+
+    <li>
         <button type="button" class="btn btn-invisible btn-lg" title="Linked.In">
-            <i class="fa fa-linkedin-square"></i>
+            <i class="fa fa-linkedin-square big_icon"></i>
+            <span class="social_btn_desc">Linked.In</span>
         </button>
     </li>
 
@@ -624,14 +667,15 @@
     <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
         {{message.msg}}
     </alert>
+</ul>
+<!--END Social Data-->
 
+<ul class="mobile_centered vertical_form_block clear_list">
     <li>
         <button class="btn btn-danger" ng-click="cancelEdit()">Отменить</button>
         <button class="btn btn-primary pull_right" ng-click="saveEdit()">Сохранить</button>
     </li>
 </ul>
-<!--END Social Data-->
-</form>
-</div>
 
+</div>
 </div>
