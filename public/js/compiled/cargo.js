@@ -319,12 +319,14 @@ angular.module('website.user.profile', [])
         $scope.showAddAddressForm = false;
         $scope.showAddEmailForm = false;
 
-        $scope.tempData = {
+        var tempData = {
             phone: {},
             address: {},
             site: {},
             email: {}
         };
+
+        $scope.tempData = tempData;
 
         $scope.profileData = {
             social: {},
@@ -369,20 +371,19 @@ angular.module('website.user.profile', [])
             if (index !== -1) $scope.profileData[from].splice(index, 1);
         };
 
-        $scope.cancelPhoneAdding = function () {
+        $scope.cancelEdit = function () {
+            $scope.editMode = false;
             $scope.showAddPhoneForm = false;
+            $scope.showAddAddressForm = false;
+            $scope.showAddEmailForm = false;
+            $scope.tempData = tempData;
         };
 
-        $scope.cancelSitesAdding = function () {
-
-        };
-
-        $scope.cancelEmailAdding = function () {
-
-        };
-
-        $scope.cancelSitesAdding = function () {
-
+        $scope.saveEdit = function () {
+            $http.post('', $scope.profileData)
+                .success(function (data) {
+                    //storageFactory.setUser(data.user);
+                }).error(errorFactory.resolve);
         };
 
     }])

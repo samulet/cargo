@@ -137,7 +137,7 @@ li.input-group .input-group-addon {
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
-    transition: all 1s ease;
+    transition: all 0.5s ease;
 }
 
 .fade_anim.ng-hide-add,
@@ -162,6 +162,10 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     border-top: 1px dashed #A2A2A2;
 }
 
+.alert_placeholder {
+    text-align: center;
+}
+
 .text_placeholder {
     letter-spacing: 3px;
     color: #8F8F8F;
@@ -181,7 +185,7 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     line-height: 2em;
 }
 
-.social_btn_link:hover{
+.social_btn_link:hover {
     text-decoration: none;
 }
 
@@ -193,13 +197,14 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     padding: 0 3px;
 }
 
-.clear_list{
+.clear_list {
     list-style: none;
 }
 
-.margin_bottom_small{
+.margin_bottom_small {
     margin-bottom: 15px;
 }
+
 /* END Classes */
 
 /* IDs */
