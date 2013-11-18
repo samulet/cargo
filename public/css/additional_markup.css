@@ -171,9 +171,22 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     cursor: pointer;
 }
 
-.social_btn_link, .social_btn_link i {
-    line-height: 2em;
+.big_icon {
     font-size: 2em;
+    line-height: 1.8em;
+}
+
+.social_btn_desc {
+    font-size: 2em;
+    line-height: 2em;
+}
+
+.pseudo_favicon {
+    border-radius: 5px;
+    background-color: #FFF;
+    color: #008000;
+    font-size: 1.8em;
+    padding: 0 3px;
 }
 
 /* END Classes */

@@ -4,7 +4,7 @@
     <div id="sign_in_block" class="filled_bg">
         <div class="container">
             <div id="sign_in_form_block" class="pull_right">
-                <div>Выберите способ входа</div>
+
                 <form ng-submit="signIn()" name="signInForm" id="signInForm" role="form">
                     <ul class="form_list mobile_centered">
 
@@ -12,30 +12,52 @@
                             {{message.msg}}
                         </alert>
 
+                        <li>Войти, используя</li>
+
                         <li>
                             <a href="/user/login/mailru" title="Mail.ru" class="social_btn_link"
                                style="line-height: 0.9;">
-                                <img src="/img/social/mail_ru.png"/>
+                                <!--<img src="/img/social/mail_ru.png" class="big_icon"/>-->
+                                <span class="big_icon pseudo_favicon"> M</span>
+                                <span class="social_btn_desc">Mail.ru</span>
                             </a>
-                            <a href="/user/login/odnoklassniki" title="Одноклассники" class="social_btn_link"
-                               style="line-height: 0.9;">
-                                <img src="/img/social/odnoklassniki2.png"/>
+                        </li>
+                        <li>
+                            <a href="/user/login/odnoklassniki" title="Одноклассники" class="social_btn_link">
+                                <span class="big_icon pseudo_favicon"> O</span>
+                                <span class="social_btn_desc">Одноклассники</span>
                             </a>
-                            <a href="/user/login/yandex" title="Яндекс" class="social_btn_link"
-                               style="line-height: 0.9;">
-                                <img src="/img/social/yandex2.png"/>
+                        </li>
+                        <li>
+                            <a href="/user/login/yandex" title="Яндекс" style="line-height: 0.9;"
+                               class="social_btn_link">
+                                <!--<img src="/img/social/yandex2.png" class="big_icon"/>-->
+                                <span class="big_icon pseudo_favicon"> Я</span>
+                                <span class="social_btn_desc"> Яндекс</span>
                             </a>
+                        </li>
+                        <li>
                             <a href="/user/login/google" title="Google" class="social_btn_link">
-                                <i class="fa fa-google-plus-square"></i>
+                                <i class="fa fa-google-plus-square big_icon"></i>
+                                <span class="social_btn_desc">Google</span>
                             </a>
+                        </li>
+                        <li>
                             <a href="/user/login/facebook" title="Facebook" class="social_btn_link">
-                                <i class="fa fa-facebook-square"></i>
+                                <i class="fa fa-facebook-square big_icon"></i>
+                                <span class="social_btn_desc">Facebook</span>
                             </a>
+                        </li>
+                        <li>
                             <a href="/user/login/vkontakte" title="Вконтакте" class="social_btn_link">
-                                <i class="fa fa-vk"></i>
+                                <i class="fa fa-vk big_icon"></i>
+                                <span class="social_btn_desc">Вконтакте</span>
                             </a>
+                        </li>
+                        <li>
                             <a href="/user/login/linkedin" title="Linked.In" class="social_btn_link">
-                                <i class="fa fa-linkedin-square"></i>
+                                <i class="fa fa-linkedin-square big_icon"></i>
+                                <span class="social_btn_desc">Linked.In</span>
                             </a>
                         </li>
                     </ul>
