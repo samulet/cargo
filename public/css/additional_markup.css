@@ -181,6 +181,10 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     line-height: 2em;
 }
 
+.social_btn_link:hover{
+    text-decoration: none;
+}
+
 .pseudo_favicon {
     border-radius: 5px;
     background-color: #FFF;
@@ -189,6 +193,13 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     padding: 0 3px;
 }
 
+.clear_list{
+    list-style: none;
+}
+
+.margin_bottom_small{
+    margin-bottom: 15px;
+}
 /* END Classes */
 
 /* IDs */

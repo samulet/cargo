@@ -315,6 +315,9 @@ angular.module('website.user.profile', [])
         $rootScope.bodyColor = 'filled_bg';
 
         $scope.editMode = true; //TODO false
+        $scope.showAddPhoneForm = false;
+        $scope.showAddAddressForm = false;
+        $scope.showAddEmailForm = false;
 
         $scope.tempData = {
             phone: {},
@@ -329,8 +332,8 @@ angular.module('website.user.profile', [])
             passport: {},
             phones: [],
             addresses: [],
-            sites: {},
-            emails: {},
+            sites: [],
+            emails: [],
             photo: {},
             eSignature: {},
             other: {}
@@ -340,9 +343,25 @@ angular.module('website.user.profile', [])
             $scope.editMode = true;
         };
 
-        $scope.moveToProfileData = function (item) {
-            $scope.profileData[item].push($scope.tempData[item]);
-            $scope.tempData[item] = {};
+        function moveToProfileData(itemFrom, itemTo) {
+            $scope.profileData[itemTo].push($scope.tempData[itemFrom]);
+            $scope.tempData[itemFrom] = {};
+        }
+
+        $scope.addPhone = function () {
+            moveToProfileData('phone', 'phones');
+        };
+
+        $scope.addEmail = function () {
+            moveToProfileData('email', 'emails');
+        };
+
+        $scope.addAddress = function () {
+            moveToProfileData('address', 'addresses');
+        };
+
+        $scope.addSite = function () {
+            moveToProfileData('site', 'sites');
         };
 
         $scope.remove = function (from, element) {
