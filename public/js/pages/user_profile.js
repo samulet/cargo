@@ -6,7 +6,7 @@ angular.module('website.user.profile', [])
         $rootScope.pageTitle = 'Профиль';
         $rootScope.bodyColor = 'filled_bg';
 
-        $scope.editMode = false;
+        $scope.editMode = true; //TODO false
         $scope.showAddPhoneForm = false;
         $scope.showAddAddressForm = false;
         $scope.showAddEmailForm = false;
@@ -59,6 +59,22 @@ angular.module('website.user.profile', [])
         $scope.remove = function (from, element) {
             var index = $scope.profileData[from].indexOf(element);
             if (index !== -1) $scope.profileData[from].splice(index, 1);
+        };
+
+        $scope.cancelPhoneAdding = function () {
+            $scope.showAddPhoneForm = false;
+        };
+
+        $scope.cancelSitesAdding = function () {
+
+        };
+
+        $scope.cancelEmailAdding = function () {
+
+        };
+
+        $scope.cancelSitesAdding = function () {
+
         };
 
     }])
