@@ -314,7 +314,7 @@ angular.module('website.user.profile', [])
         $rootScope.pageTitle = 'Профиль';
         $rootScope.bodyColor = 'filled_bg';
 
-        $scope.editMode = true; //TODO false
+        $scope.editMode = false; 
         $scope.showAddPhoneForm = false;
         $scope.showAddAddressForm = false;
         $scope.showAddEmailForm = false;
