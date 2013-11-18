@@ -171,6 +171,11 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     cursor: pointer;
 }
 
+.social_btn_link, .social_btn_link i {
+    line-height: 2em;
+    font-size: 2em;
+}
+
 /* END Classes */
 
 /* IDs */
@@ -186,10 +191,6 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     margin-bottom: 15px;
 }
 
-#sign_in_social_buttons {
-    margin-top: 10px;
-}
-
 #self_presentation_block {
     font-size: 1.3em;
     margin: 15px 0;
@@ -203,6 +204,11 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
 #personal_data_list li {
     margin-bottom: 5px;
     font-size: 1.1em;
+}
+
+#signInForm ul {
+    border-radius: 5px;
+    padding: 15px;
 }
 
 /* END IDs */

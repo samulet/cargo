@@ -4,68 +4,39 @@
     <div id="sign_in_block" class="filled_bg">
         <div class="container">
             <div id="sign_in_form_block" class="pull_right">
-                <form ng-submit="signIn()" name="signInForm" role="form">
+                <div>Выберите способ входа</div>
+                <form ng-submit="signIn()" name="signInForm" id="signInForm" role="form">
                     <ul class="form_list mobile_centered">
-                        <li id="sign_in_header">
-                            <span>Вход</span>
-                            <a href="{{ROUTES.SIGN_UP | routeFilter}}" class="pull_right bold_text">Регистрация</a>
-                        </li>
-                        <li class="form-group">
-                            <input type="email" id="sign_in_email" title="Email" alt="Email"
-                                   placeholder="Email"
-                                   ng-model="signInData.email" class="form-control" required/>
-                        </li>
-                        <li class="form-group">
-                            <input type="password" id="sign_in_password" title="Password" alt="Password"
-                                   placeholder="Password"
-                                   ng-model="signInData.password"
-                                   class="form-control" required/>
-                        </li>
-                        <li class="form-group pull_right">
-                            <a href="#" ng-click="remindPassword()" class="bold_text">
-                                Напомнить пароль
-                            </a>
-                        </li>
-                        <li class="form-group">
-                            <label for="sign_in_remember">
-                                <input type="checkbox" id="sign_in_remember" title="Запомнить" alt="Запомнить"
-                                       ng-model="signInData.remember"/>
-                                Запомнить меня</label>
-                        </li>
 
                         <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
                             {{message.msg}}
                         </alert>
 
                         <li>
-                            <button class="btn btn-block btn-green" ng-click="signIn()">Войти</button>
-                        </li>
-                        <li id="sign_in_social_buttons">
-                            <div>Войти через</div>
-                            <button type="button" class="btn btn-default btn-lg" title="Mail.ru"
-                                    style="line-height: 0.9;">
+                            <a href="/user/login/mailru" title="Mail.ru" class="social_btn_link"
+                               style="line-height: 0.9;">
                                 <img src="/img/social/mail_ru.png"/>
-                            </button>
-                            <button type="button" class="btn btn-invisible btn-lg" title="Одноклассники"
-                                    style="line-height: 0.9;">
+                            </a>
+                            <a href="/user/login/odnoklassniki" title="Одноклассники" class="social_btn_link"
+                               style="line-height: 0.9;">
                                 <img src="/img/social/odnoklassniki2.png"/>
-                            </button>
-                            <button type="button" class="btn btn-invisible btn-lg" title="Яндекс"
-                                    style="line-height: 0.9;">
+                            </a>
+                            <a href="/user/login/yandex" title="Яндекс" class="social_btn_link"
+                               style="line-height: 0.9;">
                                 <img src="/img/social/yandex2.png"/>
-                            </button>
-                            <button type="button" class="btn btn-invisible btn-lg" title="Google">
+                            </a>
+                            <a href="/user/login/google" title="Google" class="social_btn_link">
                                 <i class="fa fa-google-plus-square"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-lg" title="Facebook">
+                            </a>
+                            <a href="/user/login/facebook" title="Facebook" class="social_btn_link">
                                 <i class="fa fa-facebook-square"></i>
-                            </button>
-                            <button type="button" class="btn btn-invisible btn-lg" title="Вконтакте">
+                            </a>
+                            <a href="/user/login/vkontakte" title="Вконтакте" class="social_btn_link">
                                 <i class="fa fa-vk"></i>
-                            </button>
-                            <button type="button" class="btn btn-invisible btn-lg" title="Linked.In">
+                            </a>
+                            <a href="/user/login/linkedin" title="Linked.In" class="social_btn_link">
                                 <i class="fa fa-linkedin-square"></i>
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </form>
