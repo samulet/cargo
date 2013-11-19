@@ -197,27 +197,19 @@
         </li>
 
         <li class="input-group">
-            <!--<label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
-            <input id="user-profile-passport-issue" type="date"
-                   placeholder="01.01.01"
-                   ng-model="profileData.passport.issue" class="form-control"/>-->
-
             <label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
             <input id="user-profile-passport-issue" class="form-control" type="text"
                    datepicker-popup="dd-MMMM-yyyy"
-                   is-open="opened"
+                   is-open="openedPassportIssueDate"
                    min="'1900-01-01'"
                    max="today"
                    datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
                    ng-model="profileData.passport.issue"/>
             <span class="input-group-btn">
-                <button class="btn btn-info" ng-click="open()">
+                <button class="btn btn-info" ng-click="openDatePopup('openedPassportIssueDate')">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </button>
             </span>
-
-
-
         </li>
 
         <li class="input-group">
@@ -241,8 +233,18 @@
 
         <li class="input-group">
             <label for="user-profile-passport-birthDate" class="input-group-addon">Дата рождения</label>
-            <input id="user-profile-passport-birthDate" type="date"
-                   ng-model="profileData.passport.birthDate" class="form-control"/>
+            <input id="user-profile-passport-birthDate" class="form-control" type="text"
+                   datepicker-popup="dd-MMMM-yyyy"
+                   is-open="openedPassportBirthdayDate"
+                   min="'1900-01-01'"
+                   max="today"
+                   datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
+                   ng-model="profileData.passport.birthDate"/>
+            <span class="input-group-btn">
+                <button class="btn btn-info" ng-click="openDatePopup('openedPassportBirthdayDate')">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </button>
+            </span>
         </li>
 
         <li class="input-group">
@@ -262,8 +264,18 @@
 
         <li class="input-group">
             <label for="user-profile-passport-registrationDate" class="input-group-addon">Дата регистрации</label>
-            <input id="user-profile-passport-registrationDate" type="date"
-                   ng-model="profileData.passport.registrationDate" class="form-control"/>
+            <input id="user-profile-passport-registrationDate" class="form-control" type="text"
+                   datepicker-popup="dd-MMMM-yyyy"
+                   is-open="openedPassportRegistrationDate"
+                   min="'1900-01-01'"
+                   max="today"
+                   datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
+                   ng-model="profileData.passport.registrationDate"/>
+            <span class="input-group-btn">
+                <button class="btn btn-info" ng-click="openDatePopup('openedPassportRegistrationDate')">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </button>
+            </span>
         </li>
     </ul>
 </form>
