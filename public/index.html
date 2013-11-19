@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" ng-app="website">
+<html lang="ru" id="ng-app" ng-app="website">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="css/cargo.min.css" rel="stylesheet" media="all">
     <link href="css/cargo.handheld.min.css" rel="stylesheet" media="handheld">
+    <script src='lib/es5shim/es5-sham.min.js' type='text/javascript'></script>
     <script src='//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' type='text/javascript'></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js" type='text/javascript'></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js" type='text/javascript'></script>
@@ -16,6 +17,7 @@
             type='text/javascript'></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" type='text/javascript'></script>
     <script src="js/compiled/cargo.js"></script>
+    <script src="lib/bootstrap-ui/ui-bootstrap-tpls-0.7.0-SNAPSHOT.min.js" type='text/javascript'></script>
     <link rel="shortcut icon" href="img/ico/favicon.ico">
     <link rel="icon" href="img/ico/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="img/ico/favicon.ico" type="image/x-icon">
@@ -35,6 +37,11 @@
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googmain_pagelecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--//TODO-->
+    <!--[if lte IE 8]>
+    <script src="lib/json3/json3.min.js"></script>
     <![endif]-->
 </head>
 <body ng-class="bodyColor">
