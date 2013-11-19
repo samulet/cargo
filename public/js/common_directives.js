@@ -2,22 +2,6 @@
 
 angular.module('common.directives', [])
 
-    .directive('alert', function () {
-        return {
-            restrict: 'EA',
-            templateUrl: 'html/templates/alert.html',
-            transclude: true,
-            replace: true,
-            scope: {
-                type: '=',
-                close: '&'
-            },
-            link: function (scope, iElement, iAttrs) {
-                scope.closeable = "close" in iAttrs;
-            }
-        };
-    })
-
     .directive('uploader', [function () {
         return {
             restrict: 'E',

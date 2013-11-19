@@ -3,6 +3,7 @@
 angular.module('website', [
         'ngRoute',
         'ngAnimate',
+        'ui.bootstrap',
         'env.config',
         'website.constants',
         'common.factories',
