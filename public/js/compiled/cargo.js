@@ -3,6 +3,7 @@
 angular.module('website', [
         'ngRoute',
         'ngAnimate',
+        'ui.bootstrap',
         'env.config',
         'website.constants',
         'common.factories',
@@ -85,22 +86,6 @@ angular.module('website.constants', [])
 'use strict';
 
 angular.module('common.directives', [])
-
-    .directive('alert', function () {
-        return {
-            restrict: 'EA',
-            templateUrl: 'html/templates/alert.html',
-            transclude: true,
-            replace: true,
-            scope: {
-                type: '=',
-                close: '&'
-            },
-            link: function (scope, iElement, iAttrs) {
-                scope.closeable = "close" in iAttrs;
-            }
-        };
-    })
 
     .directive('uploader', [function () {
         return {
@@ -310,7 +295,7 @@ angular.module('website.sign', [])
 
 angular.module('website.user.profile', [])
 
-    .controller('userProfileController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory) {
+    .controller('userProfileController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', '$timeout', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory, $timeout) {
         $rootScope.pageTitle = 'Профиль';
         $rootScope.bodyColor = 'filled_bg';
 
@@ -385,6 +370,35 @@ angular.module('website.user.profile', [])
                     //storageFactory.setUser(data.user);
                 }).error(errorFactory.resolve);
         };
+
+        $scope.open = function() {
+            $timeout(function() {
+                $scope.opened = true;
+            });
+        };
+
+        $scope.today = new Date();
+
+        function getTimestamp(aDate, callback) {
+            if (aDate) {
+                if (new Date(aDate) !== 'Invalid Date') {
+                    aDate = aDate.split("-");
+                    var newDate = aDate[2] + "/" + aDate[1] + "/" + aDate[0];
+                    return callback(new Date(newDate).getTime());
+                } else {
+                    var day = aDate.slice(0, 2);
+                    var month = aDate.slice(3, 5);
+                    var year = aDate.slice(6);
+                    var birthDate = new Date(+year, (+month) - 1, +day);
+                    if (birthDate !== 'Invalid Date') {
+                        return callback((birthDate).getTime());
+                    } else {
+                        return errorFactory.resolve({error: 'Неверный формат даты'});
+                    }
+                }
+            }
+            return callback(null);
+        }
 
     }])
 ;

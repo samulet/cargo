@@ -197,9 +197,27 @@
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
+            <!--<label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
             <input id="user-profile-passport-issue" type="date"
-                   ng-model="profileData.passport.issue" class="form-control"/>
+                   placeholder="01.01.01"
+                   ng-model="profileData.passport.issue" class="form-control"/>-->
+
+            <label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
+            <input id="user-profile-passport-issue" class="form-control" type="text"
+                   datepicker-popup="dd-MMMM-yyyy"
+                   is-open="opened"
+                   min="'1900-01-01'"
+                   max="today"
+                   datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
+                   ng-model="profileData.passport.issue"/>
+            <span class="input-group-btn">
+                <button class="btn btn-info" ng-click="open()">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </button>
+            </span>
+
+
+
         </li>
 
         <li class="input-group">
