@@ -10,7 +10,6 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineMongoODM',
-        'User',
         'ZfcAdmin',
         'EdpModuleLayouts',
         'Application',
@@ -22,7 +21,8 @@ return array(
         'Interaction',
         'Notification',
         'Excel',
-        'QueryBuilder'
+        'QueryBuilder',
+        'AuthToken',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

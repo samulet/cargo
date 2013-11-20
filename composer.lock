@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "48c69b3eed0250137a1c93113123eda1",
+    "hash": "6367c5c28cfed63c170c5987124fac6e",
     "packages": [
         {
             "name": "bladeofsteel/scn-social-auth",
@@ -685,12 +685,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "bc0e1f0cc285127a38c6c8ea88bc5dba2fd53e94"
+                "reference": "57d5a024b48709c56ce5bb93072948359220f36c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/bc0e1f0cc285127a38c6c8ea88bc5dba2fd53e94",
-                "reference": "bc0e1f0cc285127a38c6c8ea88bc5dba2fd53e94",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/57d5a024b48709c56ce5bb93072948359220f36c",
+                "reference": "57d5a024b48709c56ce5bb93072948359220f36c",
                 "shasum": ""
             },
             "require": {
@@ -734,7 +734,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2013-03-07 12:15:25"
+            "time": "2013-11-19 06:15:26"
         },
         {
             "name": "doctrine/mongodb",
@@ -919,12 +919,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "d2bef940268e4dc5f0f050e80458169a7267813a"
+                "reference": "0ccc214d2bc204a063e2d8b347806b5fc5a189e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/d2bef940268e4dc5f0f050e80458169a7267813a",
-                "reference": "d2bef940268e4dc5f0f050e80458169a7267813a",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/0ccc214d2bc204a063e2d8b347806b5fc5a189e5",
+                "reference": "0ccc214d2bc204a063e2d8b347806b5fc5a189e5",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +991,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2013-11-09 21:23:13"
+            "time": "2013-11-19 21:10:19"
         },
         {
             "name": "hybridauth/hybridauth",
@@ -1041,6 +1041,48 @@
                 "yahoo"
             ],
             "time": "2013-02-21 06:45:16"
+        },
+        {
+            "name": "masha-i-medvedi/auth-token",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:MashaiMedvedi/auth-token.git",
+                "reference": "43350009b8258a136989d558e0f891637204e949"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MashaiMedvedi/auth-token/zipball/43350009b8258a136989d558e0f891637204e949",
+                "reference": "43350009b8258a136989d558e0f891637204e949",
+                "shasum": ""
+            },
+            "require": {
+                "bladeofsteel/zfc-user-doctrine-mongo-odm": "@dev",
+                "gedmo/doctrine-extensions": "dev-master",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Oleg Lobach",
+                    "email": "oleg@lobach.info",
+                    "role": "Developer",
+                    "homepage": "http://lobach.info"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/MashaiMedvedi/auth-token/tree/master",
+                "issues": "https://github.com/MashaiMedvedi/auth-token/issues"
+            },
+            "time": "2013-11-20 12:10:50"
         },
         {
             "name": "phpoffice/phpexcel",
@@ -1147,12 +1189,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "3331d12934ea7bf4b8821b584cf7d0e3a7f393f9"
+                "reference": "846e8fa8fdb5fab85cdb053b26687dd073c33051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/3331d12934ea7bf4b8821b584cf7d0e3a7f393f9",
-                "reference": "3331d12934ea7bf4b8821b584cf7d0e3a7f393f9",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/846e8fa8fdb5fab85cdb053b26687dd073c33051",
+                "reference": "846e8fa8fdb5fab85cdb053b26687dd073c33051",
                 "shasum": ""
             },
             "require": {
@@ -1191,7 +1233,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-11-09 16:01:15"
+            "time": "2013-11-13 21:30:16"
         },
         {
             "name": "yassa/rollbar",
@@ -1249,12 +1291,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendDeveloperTools.git",
-                "reference": "8e12160731336b3f1add18958beee77e6b8418dd"
+                "reference": "8c38e67884268c94426cc4c8647d064ef13d100a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/8e12160731336b3f1add18958beee77e6b8418dd",
-                "reference": "8e12160731336b3f1add18958beee77e6b8418dd",
+                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/8c38e67884268c94426cc4c8647d064ef13d100a",
+                "reference": "8c38e67884268c94426cc4c8647d064ef13d100a",
                 "shasum": ""
             },
             "require": {
@@ -1302,7 +1344,7 @@
                 "module",
                 "zf2"
             ],
-            "time": "2013-11-08 13:06:02"
+            "time": "2013-11-13 19:43:45"
         },
         {
             "name": "zendframework/zendframework",
@@ -1599,12 +1641,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Mink.git",
-                "reference": "b775d021836f97665f245d533e6b5dc4e9845c53"
+                "reference": "988e3e14dfe6db598ab55c429a627ca58eff7012"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Mink/zipball/b775d021836f97665f245d533e6b5dc4e9845c53",
-                "reference": "b775d021836f97665f245d533e6b5dc4e9845c53",
+                "url": "https://api.github.com/repos/Behat/Mink/zipball/988e3e14dfe6db598ab55c429a627ca58eff7012",
+                "reference": "988e3e14dfe6db598ab55c429a627ca58eff7012",
                 "shasum": ""
             },
             "require": {
@@ -1646,7 +1688,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2013-10-31 18:45:53"
+            "time": "2013-11-20 08:32:10"
         },
         {
             "name": "behat/mink-browserkit-driver",
@@ -1654,16 +1696,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkBrowserKitDriver.git",
-                "reference": "6580790c180a34ae4344005bb9383b83588da851"
+                "reference": "970b510dcf5d147227066d962d61dbea53d6bec8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/6580790c180a34ae4344005bb9383b83588da851",
-                "reference": "6580790c180a34ae4344005bb9383b83588da851",
+                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/970b510dcf5d147227066d962d61dbea53d6bec8",
+                "reference": "970b510dcf5d147227066d962d61dbea53d6bec8",
                 "shasum": ""
             },
             "require": {
-                "behat/mink": "~1.5.0",
+                "behat/mink": "~1.5.0@dev",
                 "php": ">=5.3.1",
                 "symfony/browser-kit": "~2.0",
                 "symfony/dom-crawler": "~2.0"
@@ -1701,7 +1743,7 @@
                 "browser",
                 "testing"
             ],
-            "time": "2013-09-06 09:22:29"
+            "time": "2013-11-20 08:05:28"
         },
         {
             "name": "behat/mink-goutte-driver",
@@ -1760,16 +1802,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSelenium2Driver.git",
-                "reference": "2e73d8134ec8526b6e742f05c146fec2d5e1b8d6"
+                "reference": "3203a0d8326c1f3f0189a27f7b874ae8a8926d75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/2e73d8134ec8526b6e742f05c146fec2d5e1b8d6",
-                "reference": "2e73d8134ec8526b6e742f05c146fec2d5e1b8d6",
+                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/3203a0d8326c1f3f0189a27f7b874ae8a8926d75",
+                "reference": "3203a0d8326c1f3f0189a27f7b874ae8a8926d75",
                 "shasum": ""
             },
             "require": {
-                "behat/mink": "~1.5.0",
+                "behat/mink": "~1.5.0@dev",
                 "instaclick/php-webdriver": "~1.1",
                 "php": ">=5.3.1"
             },
@@ -1810,7 +1852,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2013-11-04 21:23:47"
+            "time": "2013-11-18 20:13:24"
         },
         {
             "name": "ccampbell/chromephp",
@@ -1857,23 +1899,23 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "1.7.2",
+            "version": "1.8.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "0f5fc9957ceca59039f742df2dc98722b3e33ac4"
+                "reference": "5c019b18a9fecf617951ea618d5a6ec48d037adc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/0f5fc9957ceca59039f742df2dc98722b3e33ac4",
-                "reference": "0f5fc9957ceca59039f742df2dc98722b3e33ac4",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/5c019b18a9fecf617951ea618d5a6ec48d037adc",
+                "reference": "5c019b18a9fecf617951ea618d5a6ec48d037adc",
                 "shasum": ""
             },
             "require": {
                 "behat/mink": "1.5.*",
                 "behat/mink-goutte-driver": "1.0.*",
                 "behat/mink-selenium2-driver": "1.1.*",
-                "facebook/webdriver": "*",
+                "facebook/webdriver": "< 0.3",
                 "monolog/monolog": "*",
                 "php": ">=5.3.3",
                 "phpunit/phpunit": "3.7.*",
@@ -1887,6 +1929,9 @@
                 "behat/mink-zombie-driver": "1.1.*",
                 "facebook/php-sdk": "3.*",
                 "videlalvaro/php-amqplib": "*"
+            },
+            "suggest": {
+                "codeception/phpbuiltinserver": "Extension to starts and stops PHP builtin web server for your tests"
             },
             "bin": [
                 "codecept"
@@ -1917,7 +1962,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2013-11-01 22:26:04"
+            "time": "2013-11-15 16:40:18"
         },
         {
             "name": "fabpot/goutte",
@@ -1977,20 +2022,20 @@
         },
         {
             "name": "facebook/webdriver",
-            "version": "dev-master",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "dd30a29091b50c0277c8bd54a336239a1bde9884"
+                "reference": "36bf555115da4cb03b131b4c04b681a75acd47d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/dd30a29091b50c0277c8bd54a336239a1bde9884",
-                "reference": "dd30a29091b50c0277c8bd54a336239a1bde9884",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/36bf555115da4cb03b131b4c04b681a75acd47d1",
+                "reference": "36bf555115da4cb03b131b4c04b681a75acd47d1",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.19"
+                "php": ">=5.4.20"
             },
             "type": "library",
             "autoload": {
@@ -2004,7 +2049,7 @@
             ],
             "description": "A php client for WebDriver",
             "homepage": "https://github.com/facebook/php-webdriver",
-            "time": "2013-11-09 21:20:19"
+            "time": "2013-10-15 05:25:07"
         },
         {
             "name": "guzzle/common",
@@ -2268,12 +2313,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "516447f91312924c63fafd8e6083f28013dd03d9"
+                "reference": "6225b22de9dcf36546be3a0b2fa8e3d986153f57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/516447f91312924c63fafd8e6083f28013dd03d9",
-                "reference": "516447f91312924c63fafd8e6083f28013dd03d9",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/6225b22de9dcf36546be3a0b2fa8e3d986153f57",
+                "reference": "6225b22de9dcf36546be3a0b2fa8e3d986153f57",
                 "shasum": ""
             },
             "require": {
@@ -2300,7 +2345,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                    "dev-master": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -2327,7 +2372,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-11-11 22:14:57"
+            "time": "2013-11-14 19:48:31"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2707,19 +2752,24 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "134145e8d08ddcb9bb8f49a2feb9aa1f2393650c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/134145e8d08ddcb9bb8f49a2feb9aa1f2393650c",
+                "reference": "134145e8d08ddcb9bb8f49a2feb9aa1f2393650c",
                 "shasum": ""
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Psr\\Log\\": ""
@@ -2741,7 +2791,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2013-11-19 10:21:35"
         },
         {
             "name": "symfony/browser-kit",
@@ -3161,6 +3211,7 @@
         "bladeofsteel/zfc-user-doctrine-mongo-odm": 20,
         "bladeofsteel/scn-social-auth-doctrine-mongo-odm": 20,
         "bladeofsteel/scn-social-auth": 20,
+        "masha-i-medvedi/auth-token": 20,
         "codeception/codeception": 0,
         "zendframework/zftool": 20
     },

@@ -26,6 +26,7 @@
         "yassa/rollbar": "*",
         "zf-commons/zfc-admin": "*",
         "evandotpro/edp-module-layouts": "1.*",
+        "masha-i-medvedi/auth-token": "@dev",
         "phpoffice/phpexcel": "*"
     },
     "minimum-stability": "dev",
@@ -38,6 +39,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/csanquer/PHPExcel.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/MashaiMedvedi/auth-token.git"
         }
     ],
     "autoload": {
