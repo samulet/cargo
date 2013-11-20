@@ -113,12 +113,9 @@
 запустить скрипт `run_web_tests` из папки `scripts`.
 Или выполнить: `'protractor ./node_modules/protractor/referenceConf.js'`
 
-Для запуска acceptance тестов в папке site/tests/web-test/selenium
+Для запуска acceptance тестов в папке `site/tests/web-test/selenium`
 должны лежать:
 * [Chromedriver] (http://chromedriver.storage.googleapis.com/index.html)
 * [selenium-server-standalone-2.37.0.jar] (https://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar)
 
 Для тестов используется [Protractor] (https://github.com/angular/protractor), в случаи чего смотри [Getting Started] (https://github.com/angular/protractor/blob/master/docs/getting-started.md)
-
-
-[Инструкция по установке](https://github.com/MashaiMedvedi/cargo-devenv/blob/master/README.md)
