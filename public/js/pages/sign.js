@@ -5,7 +5,7 @@ angular.module('website.sign', [])
     .controller('signUpController', ['$scope', '$http', 'storageFactory', function ($scope, $http, storageFactory) {
         //
     }])
-    .controller('signInController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory) {
+    .controller('signInController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', 'REST_CONFIG', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory, REST_CONFIG) {
         $rootScope.pageTitle = 'Вход';
 
         /*$scope.messages = []; //TODO remove this, when done
@@ -14,6 +14,14 @@ angular.module('website.sign', [])
         function onError(data, status) {
             errorFactory.resolve(data, status, true);
         }
+
+        $scope.test = function () {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts').
+                success(function (data) {
+                    console.log(data);
+                    debugger;
+                }).error(onError);
+        }();
 
         $scope.signIn = function () {
             $http.post('', { //TODO still don't know what the url to login

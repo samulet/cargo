@@ -4,11 +4,11 @@
 
 .constant("REST_CONFIG", {
   "PROTOCOL": "http",
-  "HOST": "localhost",
+  "HOST": "api.cargo",
   "HOST_CONTEXT": "",
-  "PORT": "8080",
-  "DOMAIN": "localhost",
-  "BASE_URL": "http://localhost:8080"
+  "PORT": "8000",
+  "DOMAIN": "cargo.dev",
+  "BASE_URL": "http://api.cargo.dev:8000"
 })
 
 ;

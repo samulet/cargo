@@ -94,10 +94,10 @@ module.exports = function (grunt) {
                         constants: {
                             REST_CONFIG: (function () {
                                 var PROTOCOL = 'http';
-                                var HOST = 'localhost';
-                                var ZONE = '';
+                                var HOST = 'api.cargo';
+                                var ZONE = '.dev';
                                 var HOST_CONTEXT = '';
-                                var PORT = '8080';
+                                var PORT = '8000';
                                 return {
                                     PROTOCOL: PROTOCOL,
                                     HOST: HOST,
@@ -119,7 +119,7 @@ module.exports = function (grunt) {
                             REST_CONFIG: (function () {
                                 var PROTOCOL = 'http';
                                 var HOST = 'cargo.zfprojects';
-                                var ZONE = 'info';
+                                var ZONE = '.info';
                                 var HOST_CONTEXT = '';
                                 var PORT = '';
                                 return {
