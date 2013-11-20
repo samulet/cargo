@@ -31,16 +31,6 @@ return array(
             'user' => __DIR__ . '/../view',
         ),
     ),
-    'bjyauthorize' => array(
-        'guards' => array(
-            'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'User\Controller\User', 'roles' => array('guest')),
-            ),
-            'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'user', 'roles' => array('guest')),
-            ),
-        ),
-    ),
     'service_manager' => array(
         'invokables' => array(
             'BjyAuthorize\View\RedirectionStrategy' => 'User\View\RedirectionStrategy',

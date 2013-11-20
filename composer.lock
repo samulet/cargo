@@ -3,72 +3,163 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "54e8e420814273874523fead7e7511a9",
+    "hash": "48c69b3eed0250137a1c93113123eda1",
     "packages": [
         {
-            "name": "bjyoungblood/bjy-authorize",
-            "version": "1.2.6",
+            "name": "bladeofsteel/scn-social-auth",
+            "version": "dev-social",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bjyoungblood/BjyAuthorize.git",
-                "reference": "1.2.6"
+                "url": "https://github.com/bladeofsteel/ScnSocialAuth.git",
+                "reference": "5a47682d85d28ffbc24677789e37c22196a4c5c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bjyoungblood/BjyAuthorize/zipball/1.2.6",
-                "reference": "1.2.6",
+                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuth/zipball/5a47682d85d28ffbc24677789e37c22196a4c5c2",
+                "reference": "5a47682d85d28ffbc24677789e37c22196a4c5c2",
                 "shasum": ""
             },
             "require": {
+                "hybridauth/hybridauth": "dev-master",
                 "php": ">=5.3.3",
-                "zendframework/zend-eventmanager": ">=2.1,<3.0",
-                "zendframework/zend-mvc": ">=2.1,<3.0",
-                "zendframework/zend-permissions-acl": ">=2.1,<3.0",
-                "zendframework/zend-servicemanager": ">=2.1,<3.0",
-                "zendframework/zend-view": ">=2.1,<3.0"
-            },
-            "require-dev": {
-                "doctrine/common": ">=2.3,<2.5-dev",
-                "zendframework/zend-developer-tools": "0.*",
+                "zendframework/zendframework": "2.*",
+                "zf-commons/zfc-base": "0.*",
                 "zf-commons/zfc-user": "0.*"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
+            "require-dev": {
+                "mockery/mockery": ">=0.7.2"
             },
+            "type": "library",
             "autoload": {
                 "psr-0": {
-                    "BjyAuthorize\\": "src/"
-                }
+                    "ScnSocialAuth": "src/",
+                    "ScnSocialAuthTest": "test/"
+                },
+                "classmap": [
+                    "./"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
             "authors": [
                 {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/",
+                    "name": "Nicholas Calugar",
+                    "email": "njcalugar@gmail.com",
+                    "homepage": "http://socalnick.github.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Uses the HybridAuth PHP library to Enable authentication via Google, Facebook, Twitter, Yahoo!, etc for the ZfcUser ZF2 module.",
+            "homepage": "https://github.com/SocalNick/ScnSocialAuth",
+            "keywords": [
+                "zf2"
+            ],
+            "time": "2013-11-12 20:07:52"
+        },
+        {
+            "name": "bladeofsteel/scn-social-auth-doctrine-mongo-odm",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bladeofsteel/ScnSocialAuthDoctrineMongoODM.git",
+                "reference": "ef73761423e5c65262a2b9c1d1ff805e4439c4e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bladeofsteel/ScnSocialAuthDoctrineMongoODM/zipball/ef73761423e5c65262a2b9c1d1ff805e4439c4e6",
+                "reference": "ef73761423e5c65262a2b9c1d1ff805e4439c4e6",
+                "shasum": ""
+            },
+            "require": {
+                "bladeofsteel/scn-social-auth": "dev-social",
+                "bladeofsteel/zfc-user-doctrine-mongo-odm": "dev-master",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ScnSocialAuthDoctrineMongoODM": "src/"
+                },
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Nicholas Calugar",
+                    "email": "njcalugar@gmail.com",
+                    "homepage": "http://socalnick.github.com/",
                     "role": "Developer"
                 },
                 {
-                    "name": "Ben Youngblood",
-                    "email": "bx.youngblood@gmail.com",
-                    "homepage": "http://bjyoungblood.com/",
+                    "name": "Jérémy Huet",
+                    "email": "jeremy.huet+github@gmail.com",
+                    "homepage": "http://glpl.us/jhuet",
                     "role": "Developer"
                 }
             ],
-            "description": "Zend\\Acl based firewall system for ZF2 dispatch protection",
-            "homepage": "https://github.com/bjyoungblood/BjyAuthorize",
+            "description": "An extension of ScnSocialAuth that provides integration with Doctrine2 Mongo ODM.",
+            "homepage": "https://github.com/SocalNick/ScnSocialAuthDoctrineMongoODM.git",
             "keywords": [
-                "acl",
+                "doctrine2",
+                "hybridauth",
+                "mongodb",
+                "oauth",
+                "odm",
+                "socialauth",
                 "zf2",
-                "zfc-user"
+                "zfc"
             ],
-            "time": "2013-05-12 16:07:25"
+            "time": "2013-11-13 08:04:58"
+        },
+        {
+            "name": "bladeofsteel/zfc-user-doctrine-mongo-odm",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bladeofsteel/ZfcUserDoctrineMongoODM.git",
+                "reference": "cb3071ec105457159a09c8fc3e24ced75dca3e5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bladeofsteel/ZfcUserDoctrineMongoODM/zipball/cb3071ec105457159a09c8fc3e24ced75dca3e5b",
+                "reference": "cb3071ec105457159a09c8fc3e24ced75dca3e5b",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-mongo-odm-module": "0.8.*@dev",
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "2.*",
+                "zf-commons/zfc-user": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ZfcUserDoctrineMongoODM": "src/"
+                },
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Kyle Spraggs",
+                    "email": "theman@spiffyjr.me",
+                    "homepage": "http://www.spiffyjr.me/"
+                },
+                {
+                    "name": "Evan Coury",
+                    "email": "me@evancoury.com",
+                    "homepage": "http://blog.evan.pro/"
+                }
+            ],
+            "description": "Clone of Doctrine2 MongoDB ODM storage adapter for ZfcUser with composer support.",
+            "homepage": "https://github.com/ZF-Commons/ZfcUserDoctrineMongoODM",
+            "keywords": [
+                "zf2"
+            ],
+            "time": "2013-11-10 20:34:18"
         },
         {
             "name": "doctrine/annotations",
@@ -76,12 +167,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "v1.1.2"
+                "reference": "40db0c96985aab2822edbc4848b3bd2429e02670"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/v1.1.2",
-                "reference": "v1.1.2",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/40db0c96985aab2822edbc4848b3bd2429e02670",
+                "reference": "40db0c96985aab2822edbc4848b3bd2429e02670",
                 "shasum": ""
             },
             "require": {
@@ -110,7 +201,8 @@
                 {
                     "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Guilherme Blanco",
@@ -128,7 +220,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -268,7 +360,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -364,12 +456,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineModule.git",
-                "reference": "0.7.2"
+                "reference": "78018ef568c52e65a0b17e7bd5a4c90fe6673e84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/0.7.2",
-                "reference": "0.7.2",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/78018ef568c52e65a0b17e7bd5a4c90fe6673e84",
+                "reference": "78018ef568c52e65a0b17e7bd5a4c90fe6673e84",
                 "shasum": ""
             },
             "require": {
@@ -552,9 +644,10 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Guilherme Blanco",
@@ -572,7 +665,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -631,7 +724,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -899,6 +992,55 @@
                 "uploadable"
             ],
             "time": "2013-11-09 21:23:13"
+        },
+        {
+            "name": "hybridauth/hybridauth",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hybridauth/hybridauth.git",
+                "reference": "6d89473b379fc7a904e69ee63f548af3308bd4d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/6d89473b379fc7a904e69ee63f548af3308bd4d9",
+                "reference": "6d89473b379fc7a904e69ee63f548af3308bd4d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Hybrid": "hybridauth/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(MIT or GPL-3.0+)"
+            ],
+            "authors": [
+                {
+                    "name": "Miled",
+                    "email": "hybridauth@gmail.com"
+                }
+            ],
+            "description": "Open source social sign on PHP library.",
+            "homepage": "http://hybridauth.sourceforge.net",
+            "keywords": [
+                "OpenId",
+                "facebook",
+                "google",
+                "hybridauth",
+                "login",
+                "oauth",
+                "social",
+                "twitter",
+                "yahoo"
+            ],
+            "time": "2013-02-21 06:45:16"
         },
         {
             "name": "phpoffice/phpexcel",
@@ -1336,23 +1478,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcBase.git",
-                "reference": "v0.1.2"
+                "reference": "fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcBase/zipball/v0.1.2",
-                "reference": "v0.1.2",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcBase/zipball/fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf",
+                "reference": "fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "zendframework/zend-db": ">=2.1,<3.0",
-                "zendframework/zend-eventmanager": ">=2.1,<3.0",
-                "zendframework/zend-loader": ">=2.1,<3.0",
-                "zendframework/zend-modulemanager": ">=2.1,<3.0",
-                "zendframework/zend-mvc": ">=2.1,<3.0",
-                "zendframework/zend-servicemanager": ">=2.1,<3.0",
-                "zendframework/zend-stdlib": ">=2.1,<3.0"
+                "zendframework/zend-db": "~2.1",
+                "zendframework/zend-eventmanager": "~2.1",
+                "zendframework/zend-loader": "~2.1",
+                "zendframework/zend-modulemanager": "~2.1",
+                "zendframework/zend-mvc": "~2.1",
+                "zendframework/zend-servicemanager": "~2.1",
+                "zendframework/zend-stdlib": "~2.1"
             },
             "type": "library",
             "autoload": {
@@ -1448,48 +1590,6 @@
                 "zf2"
             ],
             "time": "2013-10-16 14:49:09"
-        },
-        {
-            "name": "zf-commons/zfc-user-doctrine-mongo-odm",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/bladeofsteel/ZfcUserDoctrineMongoODM.git",
-                "reference": "4234d08a8141313beedc60f67ea9701931822a2a"
-            },
-            "require": {
-                "doctrine/doctrine-mongo-odm-module": "0.8.*@dev",
-                "php": ">=5.3.3",
-                "zendframework/zendframework": "2.*",
-                "zf-commons/zfc-user": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "ZfcUserDoctrineMongoODM": "src/"
-                },
-                "classmap": [
-                    "./"
-                ]
-            },
-            "authors": [
-                {
-                    "name": "Evan Coury",
-                    "email": "me@evancoury.com",
-                    "homepage": "http://blog.evan.pro/"
-                },
-                {
-                    "name": "Kyle Spraggs",
-                    "email": "theman@spiffyjr.me",
-                    "homepage": "http://www.spiffyjr.me/"
-                }
-            ],
-            "description": "Clone of Doctrine2 MongoDB ODM storage adapter for ZfcUser with composer support.",
-            "homepage": "https://github.com/ZF-Commons/ZfcUserDoctrineMongoODM",
-            "keywords": [
-                "zf2"
-            ],
-            "time": "2013-07-12 05:47:00"
         }
     ],
     "packages-dev": [
@@ -1825,12 +1925,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Goutte.git",
-                "reference": "6db1a02449c82f5d7957c5be9d43389306b7468e"
+                "reference": "cff6881c93791edbfef88928ca6b1dfcf60d3273"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/6db1a02449c82f5d7957c5be9d43389306b7468e",
-                "reference": "6db1a02449c82f5d7957c5be9d43389306b7468e",
+                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/cff6881c93791edbfef88928ca6b1dfcf60d3273",
+                "reference": "cff6881c93791edbfef88928ca6b1dfcf60d3273",
                 "shasum": ""
             },
             "require": {
@@ -1873,7 +1973,7 @@
             "keywords": [
                 "scraper"
             ],
-            "time": "2013-10-31 08:53:55"
+            "time": "2013-11-11 19:09:12"
         },
         {
             "name": "facebook/webdriver",
@@ -2168,12 +2268,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "a5010756d905264ea2b3f7f27c7df22fb9a3bd8e"
+                "reference": "516447f91312924c63fafd8e6083f28013dd03d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a5010756d905264ea2b3f7f27c7df22fb9a3bd8e",
-                "reference": "a5010756d905264ea2b3f7f27c7df22fb9a3bd8e",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/516447f91312924c63fafd8e6083f28013dd03d9",
+                "reference": "516447f91312924c63fafd8e6083f28013dd03d9",
                 "shasum": ""
             },
             "require": {
@@ -2181,17 +2281,21 @@
                 "psr/log": "~1.0"
             },
             "require-dev": {
+                "aws/aws-sdk-php": "~2.4.8",
                 "doctrine/couchdb": "dev-master",
                 "mlehner/gelf-php": "1.0.*",
                 "phpunit/phpunit": "~3.7.0",
-                "raven/raven": "0.5.*"
+                "raven/raven": "0.5.*",
+                "ruflin/elastica": "0.90.*"
             },
             "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "mlehner/gelf-php": "Allow sending log messages to a GrayLog2 server",
-                "raven/raven": "Allow sending log messages to a Sentry server"
+                "raven/raven": "Allow sending log messages to a Sentry server",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
             "type": "library",
             "extra": {
@@ -2223,7 +2327,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-11-04 08:48:35"
+            "time": "2013-11-11 22:14:57"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2606,13 +2710,13 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-fig/log",
-                "reference": "1.0.0"
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/php-fig/log/archive/1.0.0.zip",
-                "reference": "1.0.0",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
                 "shasum": ""
             },
             "type": "library",
@@ -2992,6 +3096,58 @@
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
             "time": "2013-10-17 11:48:11"
+        },
+        {
+            "name": "zendframework/zftool",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/ZFTool.git",
+                "reference": "8dec80747384b80483f8786b68ee707bbc0a5b2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/ZFTool/zipball/8dec80747384b80483f8786b68ee707bbc0a5b2b",
+                "reference": "8dec80747384b80483f8786b68ee707bbc0a5b2b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-code": ">=2.2.2",
+                "zendframework/zend-config": ">=2.2.2",
+                "zendframework/zend-console": ">=2.2.2",
+                "zendframework/zend-file": ">=2.2.2",
+                "zendframework/zend-form": ">=2.2.2",
+                "zendframework/zend-loader": ">=2.2.2",
+                "zendframework/zend-modulemanager": ">=2.2.2",
+                "zendframework/zend-mvc": ">=2.2.2",
+                "zendframework/zend-serializer": ">=2.2.2",
+                "zendframework/zend-servicemanager": ">=2.2.2",
+                "zendframework/zend-stdlib": ">=2.2.2",
+                "zendframework/zend-text": ">=2.2.2",
+                "zendframework/zend-version": ">=2.2.2",
+                "zendframework/zend-view": ">=2.2.2"
+            },
+            "bin": [
+                "zf.php"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ZFTool\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Utility module for Zend Framework 2 applications.",
+            "homepage": "http://framework.zend.com/",
+            "keywords": [
+                "tool",
+                "zf2"
+            ],
+            "time": "2013-10-30 21:04:40"
         }
     ],
     "aliases": [
@@ -3000,13 +3156,16 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "zendframework/zendframework": 0,
-        "zf-commons/zfc-user-doctrine-mongo-odm": 20,
         "zendframework/zend-developer-tools": 20,
         "gedmo/doctrine-extensions": 20,
-        "codeception/codeception": 0
+        "bladeofsteel/zfc-user-doctrine-mongo-odm": 20,
+        "bladeofsteel/scn-social-auth-doctrine-mongo-odm": 20,
+        "bladeofsteel/scn-social-auth": 20,
+        "codeception/codeception": 0,
+        "zendframework/zftool": 20
     },
     "platform": {
-        "php": ">=5.3.3"
+        "php": ">=5.4"
     },
     "platform-dev": [
 

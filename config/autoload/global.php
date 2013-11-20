@@ -19,6 +19,9 @@ return array(
         'aliases' => array(
             'Rollbar' => 'Yassa\Rollbar\Log\Writer\Rollbar',
         ),
+        'invokables' => array(
+            'Zend\Session\SessionManager' => 'Zend\Session\SessionManager',
+        ),
     ),
     'log' => array(
         'writers' => array(

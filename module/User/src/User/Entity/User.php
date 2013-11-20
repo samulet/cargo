@@ -2,7 +2,6 @@
 
 namespace User\Entity;
 
-use BjyAuthorize\Provider\Role\ProviderInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Zend\Form\Annotation;
@@ -13,7 +12,7 @@ use ZfcUser\Entity\UserInterface;
  * @Annotation\Name("user")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class User implements UserInterface, ProviderInterface
+class User implements UserInterface
 {
     /**
      * @ODM\Id

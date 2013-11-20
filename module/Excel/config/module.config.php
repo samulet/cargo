@@ -25,16 +25,6 @@ return array(
             ),
         ),
     ),
-    'bjyauthorize' => array(
-        'guards' => array(
-            'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'Excel\Controller\Excel', 'roles' => array('inner', 'admin')),
-            ),
-            'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'excel', 'roles' => array('inner')),
-            ),
-        ),
-    ),
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(

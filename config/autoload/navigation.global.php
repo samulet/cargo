@@ -187,20 +187,6 @@ return array(
                 'params' => array('id' => null),
                 'resource'   => 'route/interaction',
             ),
-            array(
-                'label' => 'Аукцион',
-                'type' => 'uri',
-                'uri' => '',
-                'class' => 'nav-header',
-                'resource'   => 'route/auction',
-            ),
-            array(
-                'label' => 'Аукционы',
-                'route' => 'auction',
-                'action' => 'index',
-                'params' => array('id' => null),
-                'resource'   => 'route/auction',
-            ),
         ),
         'admin' => array(
             array(
