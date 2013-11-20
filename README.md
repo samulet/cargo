@@ -47,6 +47,7 @@
 ---------
 
 Для продукции JetBrains (WebStorm, PhpStorm, etc):
+
 1. Открыть настройки (Settings, Ctrl+Alt+S)
 2. Во вкладке "Project Settings" выбрвть пунки "File Watchers"
 3. Создать новый watcher для js (зелёный плюсик ADD, Alt+Ins), выбрать тип Custom или UglifyJs (разницы нет)
