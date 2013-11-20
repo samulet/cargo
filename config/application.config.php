@@ -2,7 +2,6 @@
 return array(
     'modules' => array(
         'Yassa\Rollbar',
-        'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineMongoODMModule',
         'ScnSocialAuth',
@@ -10,18 +9,8 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineMongoODM',
-        'ZfcAdmin',
-        'EdpModuleLayouts',
         'Application',
         'User',
-        'Account',
-        'Resource',
-        'Ticket',
-        'AddList',
-        'Interaction',
-        'Notification',
-        'Excel',
-        'QueryBuilder',
         'AuthToken',
     ),
     'module_listener_options' => array(
