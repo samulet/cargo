@@ -105,8 +105,9 @@ describe('userProfilePageTest', function () {
         return ptor.findElement(protractor.By.xpath('//h' + level + '[contains(.,"' + text + '")]'));
     }
 
-    function openHiddenBlock(formName) {
+    function openHiddenBlock(formName) { //TODO fix replace with waitForVisible
         ptor.findElement(protractor.By.xpath('//form[@name="' + formName + '"]//button[contains(.,"' + addBtnName + '")]')).click();
+
     }
 
     function closeHiddenBlock(formName) {
@@ -194,7 +195,7 @@ describe('userProfilePageTest', function () {
 
         var cancelBtn = getButton(cancelBtnName);
         cancelBtn.click();
-        setTimeout(function () {
+        ptor.wait(function () {
 
             expect(getHeader(3, personalDataBlock.headerText).isDisplayed()).toBeTruthy();
             checkHeadersDisplayed(false);
@@ -224,12 +225,12 @@ describe('userProfilePageTest', function () {
         //Act & Verify
         checkAddressBlockDisplay(false);
         getButton(editBtnName).click();
-        setTimeout(function () {
+        ptor.wait(function () {
             openHiddenBlock(addressBlock.formName);
             expect(getHeader(4, addressBlock.headerText).isDisplayed()).toBeTruthy();
             checkAddressBlockDisplay(true);
             closeHiddenBlock(addressBlock.formName);
-            setTimeout(function () {
+            ptor.wait(function () {
                 checkAddressBlockDisplay(false);
             }, 3000);
         }, 3000);
@@ -241,12 +242,12 @@ describe('userProfilePageTest', function () {
         //Act & Verify
         checkEmailBlockDisplay(false);
         getButton(editBtnName).click();
-        setTimeout(function () {
+        ptor.wait(function () {
             openHiddenBlock(emailBlock.formName);
             expect(getHeader(4, emailBlock.headerText).isDisplayed()).toBeTruthy();
             checkEmailBlockDisplay(true);
             closeHiddenBlock(emailBlock.formName);
-            setTimeout(function () {
+            ptor.wait(function () {
                 checkEmailBlockDisplay(false);
             }, 3000);
         }, 3000);
@@ -258,12 +259,12 @@ describe('userProfilePageTest', function () {
         //Act & Verify
         checkSitesBlockVisibleSwitch(false);
         getButton(editBtnName).click();
-        setTimeout(function () {
+        ptor.wait(function () {
             openHiddenBlock(sitesBlock.formName);
             expect(getHeader(4, sitesBlock.headerText).isDisplayed()).toBeTruthy();
             checkSitesBlockVisibleSwitch(true);
             closeHiddenBlock(sitesBlock.formName);
-            setTimeout(function () {
+            ptor.wait(function () {
                 checkSitesBlockVisibleSwitch(false);
             }, 3000);
         }, 3000);
