@@ -98,7 +98,7 @@
 
 (Что бы консоль можно было при этом закрыть, а watcher продолжил работу, надо запускать с каким-то флагом, гугл в помощь)
 
-### Проверка кода и тесты
+### Проверка кода
 ---------
 
 Перед тем, как сливать ветку в мастер следует проверить качество js-кода:
@@ -109,13 +109,33 @@
 
 Если в консоле ошибки - поправить (ну, или спросить как быть)
 
-Для запуска acceptance тестов веб-интерфейса:
-запустить скрипт `run_web_tests` из папки `scripts`.
-Или выполнить: `'protractor ./node_modules/protractor/referenceConf.js'`
+### Запуск acceptance тестов
+---------
 
-Для запуска acceptance тестов в папке `site/tests/web-test/selenium`
-должны лежать:
-* [Chromedriver] (http://chromedriver.storage.googleapis.com/index.html)
-* [selenium-server-standalone-2.37.0.jar] (https://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar)
+#### Предварительные условия:
 
-Для тестов используется [Protractor] (https://github.com/angular/protractor), в случаи чего смотри [Getting Started] (https://github.com/angular/protractor/blob/master/docs/getting-started.md)
+ Скачать [Chromedriver] (http://chromedriver.storage.googleapis.com/index.html) для своей os в папку `site/tests/web-test/selenium`
+ Для тестов используется [Protractor] (https://github.com/angular/protractor).
+ Скачивать не надо, но если возникнут сложности - смотри [Getting Started] (https://github.com/angular/protractor/blob/master/docs/getting-started.md)
+
+#### Для WebStorm (запуск и дебаг):
+
+1. Запомнить путь до Node.js (в консоле `which node`)
+2. В WebStorm создаём новую конфигурацию (Run/Debug Configuration):
+Рядом с Зелёной стрелочкой (Run) на верхней панеле среды щёлкаем по выпадающему меню и выбираем `Edit configurations`
+3. Нажимаем "добавить" (зелёный +), выбираем  Node.js
+4. Указываем параметры:
+  * Node interpreter: `Полный путь до Node.js`
+  * Working directory: `Полный путь до директории site/tests/web-test/acceptance/pages`
+  * JavaScript file: `Полный путь до site/node_modules/protractor/lib/cli.js`
+  * Application parameters: `Полный путь до site/tests/web-test/acceptance/runner/protractorReferenceConf.js`
+
+#### Для запуска из консоли
+
+Достаточно выполнить скрипт:
+
+   ```
+   cd /tests/web-test/acceptance/runner
+   run_web_tests
+   ```
+
