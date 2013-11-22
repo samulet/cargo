@@ -591,34 +591,36 @@
 <!--END Photo Data-->
 
 <!--eSignature Data-->
-<ul class="form_list mobile_centered vertical_form_block">
-    <li class="form_header"><h4>Цифровая подпись</h4></li>
+<form name="eSignatureDataForm" role="form">
+    <ul class="form_list mobile_centered vertical_form_block">
+        <li class="form_header"><h4>Цифровая подпись</h4></li>
 
-    <li class="input-group">
-        <label for="user-profile-e-signature-exist">
-            <input id="user-profile-e-signature-exist" type="checkbox" ng-model="tempData.eSignature.exist"/>
-            Имеется цифровая подпись</label>
-    </li>
+        <li class="input-group">
+            <label for="user-profile-e-signature-exist">
+                <input id="user-profile-e-signature-exist" type="checkbox" ng-model="tempData.eSignature.exist"/>
+                Имеется цифровая подпись</label>
+        </li>
 
-    <li class="input-group">
-        <label for="user-profile-e-signature-validity" class="input-group-addon">Срок действия подписи</label>
-        <input id="user-profile-e-signature-validity" type="text"
-               ng-model="tempData.eSignature.validity" class="form-control"/>
-    </li>
+        <li class="input-group">
+            <label for="user-profile-e-signature-validity" class="input-group-addon">Срок действия подписи</label>
+            <input id="user-profile-e-signature-validity" type="text"
+                   ng-model="tempData.eSignature.validity" class="form-control"/>
+        </li>
 
-    <li class="input-group">
-        <label for="user-profile-e-signature-qualification" class="input-group-addon">Квалификация</label>
-        <input id="user-profile-e-signature-qualification" type="text"
-               ng-model="tempData.eSignature.qualification" class="form-control"/>
-    </li>
+        <li class="input-group">
+            <label for="user-profile-e-signature-qualification" class="input-group-addon">Квалификация</label>
+            <input id="user-profile-e-signature-qualification" type="text"
+                   ng-model="tempData.eSignature.qualification" class="form-control"/>
+        </li>
 
-    <li class="input-group">
-        <label for="user-profile-e-signature-powers" class="input-group-addon">Полномочия</label>
-        <input id="user-profile-e-signature-powers" type="text"
-               ng-model="tempData.eSignature.powers" class="form-control"/>
-    </li>
+        <li class="input-group">
+            <label for="user-profile-e-signature-powers" class="input-group-addon">Полномочия</label>
+            <input id="user-profile-e-signature-powers" type="text"
+                   ng-model="tempData.eSignature.powers" class="form-control"/>
+        </li>
 
-</ul>
+    </ul>
+</form>
 <!--END eSignature Data-->
 
 <!--Social Data-->
