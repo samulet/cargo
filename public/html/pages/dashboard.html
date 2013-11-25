@@ -2,4 +2,20 @@
 
 <div ng-controller="dashboardController">
     <h3>dashboard success</h3>
+
+    <div class="unfilled_bg center_horizontal med_block form_block vertical_spaced" ng-controller="dashboardController"
+         ng-show="firstTimeVisit"> <!--TODO should be at another place-->
+        <form name="accountDataForm" role="form">
+            <ul class="clear_list mobile_centered">
+                <!--Personal Data-->
+                <li class="form_header"><h4>Данные акаунта</h4></li>
+                <li class="input-group">
+                    <label for="user-account-name" class="input-group-addon">Название</label>
+                    <input id="user-account-name" type="text"
+                           ng-model="profileData.account.name" class="form-control"/>
+                </li>
+            </ul>
+        </form>
+    </div>
+
 </div>

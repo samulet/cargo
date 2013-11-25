@@ -3,7 +3,7 @@
 <div ng-controller="userProfileController" class="unfilled_bg center_horizontal med_block form_block vertical_spaced">
 
 <div>
-    <ul id="personal_data_list" class="form_list">
+    <ul id="personal_data_list" class="clear_list">
         <li>
             <h3>Личные данные</h3>
         </li>
@@ -131,7 +131,7 @@
 <div ng-show="editMode" class="fade_anim">
 
 <form name="personalDataForm" role="form">
-    <ul class="form_list mobile_centered vertical_form_block">
+    <ul class="clear_list mobile_centered vertical_form_block">
         <!--Personal Data-->
         <li class="form_header"><h4>Личные данные</h4></li>
         <li class="input-group">
@@ -182,7 +182,7 @@
 
 <!--Passport Data-->
 <form name="passportDataForm" role="form">
-    <ul class="form_list mobile_centered vertical_form_block">
+    <ul class="clear_list mobile_centered vertical_form_block">
         <li class="form_header"><h4>Паспортные данные</h4></li>
 
         <li class="input-group">
@@ -283,7 +283,7 @@
 
 <!--Misc Data-->
 <form name="miscDataForm" role="form">
-    <ul class="form_list mobile_centered vertical_form_block">
+    <ul class="clear_list mobile_centered vertical_form_block">
         <li class="form_header"><h4>Прочие данные</h4></li>
 
         <li class="input-group">
@@ -303,7 +303,7 @@
 
 <!--Phones Data-->
 <form name="phonesDataForm" role="form">
-    <div class="form_list mobile_centered vertical_form_block">
+    <div class="clear_list mobile_centered vertical_form_block">
 
         <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddPhoneForm = true;"
                 ng-show="!showAddPhoneForm" style="margin-top: 10px;">
@@ -326,7 +326,7 @@
             </li>
         </ul>
 
-        <ul ng-show="showAddPhoneForm" class="form_list mobile_centered clear_list fade_anim" style="padding: 0;">
+        <ul ng-show="showAddPhoneForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
                 <label for="user-profile-phone-type" class="input-group-addon">Вид телефона</label>
                 <select id="user-profile-phone-type"
@@ -370,7 +370,7 @@
 
 <!--Address Data-->
 <form name="adressDataForm" role="form">
-    <div class="form_list mobile_centered vertical_form_block">
+    <div class="clear_list mobile_centered vertical_form_block">
 
         <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddAddressForm = true;"
                 ng-show="!showAddAddressForm" style="margin-top: 10px;">
@@ -399,7 +399,7 @@
             </li>
         </ul>
 
-        <ul ng-show="showAddAddressForm" class="form_list mobile_centered clear_list fade_anim" style="padding: 0;">
+        <ul ng-show="showAddAddressForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
                 <label for="user-profile-address-type" class="input-group-addon">Вид адреса</label>
                 <select id="user-profile-address-type"
@@ -470,7 +470,7 @@
 
 <!--Email Data-->
 <form name="emailDataForm" role="form">
-    <div class="form_list mobile_centered vertical_form_block">
+    <div class="clear_list mobile_centered vertical_form_block">
 
         <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddEmailForm = true;"
                 ng-show="!showAddEmailForm" style="margin-top: 10px;">
@@ -491,7 +491,7 @@
             </li>
         </ul>
 
-        <ul ng-show="showAddEmailForm" class="form_list mobile_centered clear_list fade_anim" style="padding: 0;">
+        <ul ng-show="showAddEmailForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
                 <label for="user-profile-email-type" class="input-group-addon">Вид Email</label>
                 <select id="user-profile-email-type"
@@ -522,7 +522,7 @@
 
 <!--Sites Data-->
 <form name="sitesDataForm" role="form">
-    <div class="form_list mobile_centered vertical_form_block">
+    <div class="clear_list mobile_centered vertical_form_block">
 
         <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddSiteForm = true;"
                 ng-show="!showAddSiteForm" style="margin-top: 10px;">
@@ -541,7 +541,7 @@
             </li>
         </ul>
 
-        <ul ng-show="showAddSiteForm" class="form_list mobile_centered clear_list fade_anim" style="padding: 0;">
+        <ul ng-show="showAddSiteForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
                 <label for="user-profile-site-type" class="input-group-addon">Тип сайта</label>
                 <input id="user-profile-site-type" type="text"
@@ -569,7 +569,7 @@
 
 <!--Photo Data-->
 <form name="photoDataForm" role="form">
-    <ul class="form_list mobile_centered vertical_form_block">
+    <ul class="clear_list mobile_centered vertical_form_block">
         <li class="form_header"><h4>Фотография профиля</h4></li>
 
         <li class="pull_right">
@@ -592,7 +592,7 @@
 
 <!--eSignature Data-->
 <form name="eSignatureDataForm" role="form">
-    <ul class="form_list mobile_centered vertical_form_block">
+    <ul class="clear_list mobile_centered vertical_form_block">
         <li class="form_header"><h4>Цифровая подпись</h4></li>
 
         <li class="input-group">
@@ -624,7 +624,7 @@
 <!--END eSignature Data-->
 
 <!--Social Data-->
-<ul id="profileSocialBlock" class="form_list mobile_centered vertical_form_block clear_list">
+<ul id="profileSocialBlock" class="mobile_centered vertical_form_block clear_list">
     <li class="form_header"><h4>Аккаунты соцальных сетей</h4></li>
 
     <ul class="alert alert-info clear_list">
