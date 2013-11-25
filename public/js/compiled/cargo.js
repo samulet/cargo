@@ -10,8 +10,8 @@ angular.module('website', [
         'common.directives',
         'website.top.menu',
         'website.sign',
-        'website.dashboard',
         'website.user.profile',
+        'website.dash',
         'website.page.errors'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
@@ -19,10 +19,10 @@ angular.module('website', [
         $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.SIGN_IN});
         $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.SIGN_IN});
         $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
-        $routeProvider.when(ROUTES.SIGN_UP, {templateUrl: pathToIncs + 'sign_up.html', controller: 'signUpController', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
-        $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', controller: 'dashBoardController', access: ACCESS_LEVEL.AUTHORIZED});
+        $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', controller: 'dashboardController', access: ACCESS_LEVEL.AUTHORIZED});
         $routeProvider.when(ROUTES.USER_PROFILE, {templateUrl: pathToIncs + 'user_profile.html', controller: 'userProfileController', access: ACCESS_LEVEL.AUTHORIZED});
+        $routeProvider.when('/dash', {templateUrl: pathToIncs + 'dash.html', controller: 'dashController', access: ACCESS_LEVEL.AUTHORIZED});
 
         //$routeProvider.otherwise({redirectTo: '/404'});
         $routeProvider.otherwise({redirectTo: ROUTES.SIGN_IN}); //TODO remove this hack after solve redirect problem
@@ -33,19 +33,24 @@ angular.module('website', [
     }])
     .filter('routeFilter', function () {
         return function (route) {
-            return   '/#!' + route;
+            return '/#!' + route;
         };
     })
-    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', function ($rootScope, ACCESS_LEVEL, ROUTES) {
+    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'STORAGE', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, STORAGE) {
         $rootScope.ROUTES = ROUTES;
-        /* $rootScope.$on("$routeChangeStart", function (event, currRoute, prevRoute) {   //TODO or $routeChangeSuccess instead of $routeChangeStart?
 
-         */
-        /*if (currRoute.access >= ACCESS_LEVEL.AUTHORIZED && !cookieFactory.getItem(COOKIE.TOKEN)) {
-         //TODO redirect or smt else
-         }*/
-        /*
-         });*/
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+
+            var isToken = !!cookieFactory.getItem(STORAGE.COOKIE.TOKEN);
+            var isPrivatePage = (next.access >= ACCESS_LEVEL.AUTHORIZED);
+            var isSignInPage = (next.originalPath === ROUTES.SIGN_IN);
+
+            if (isToken && isSignInPage) {
+                redirectFactory.goDashboard();
+            } else if (!isToken && isPrivatePage) {
+                redirectFactory.goSignIn();
+            }
+        });
 
     }])
 ;
@@ -70,7 +75,6 @@ angular.module('website.constants', [])
     .constant('ROUTES', {
         START_PAGE: '/',
         START_PAGE_ALT: '',
-        SIGN_UP: '/sign/up',
         SIGN_IN: '/sign/in',
         DASHBOARD: '/dashboard',
         USER_PROFILE: '/user/profile',
@@ -80,6 +84,11 @@ angular.module('website.constants', [])
         ERROR: {
             UNAUTHORIZED: 'Не удалось авторизироваться',
             INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера'
+        }
+    })
+    .constant('STORAGE', {
+        COOKIE: {
+            TOKEN: 'token'
         }
     })
 ;
@@ -134,7 +143,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('redirectFactory', [function () {
+    .factory('redirectFactory', ['ROUTES', '$location', function (ROUTES, $location) {
         var isOldBrowser = navigator.userAgent.match(/MSIE\s(?!9.0)/);  // IE8 and lower
 
         function redirectOldBrowserCompatable(url) {
@@ -146,9 +155,9 @@ angular.module('common.factories', [
 
         function redirectTo(url) {
             if (isOldBrowser) {
-                redirectOldBrowserCompatable(url);
+                redirectOldBrowserCompatable('#!' + url);
             } else {
-                window.location.href = url;
+                $location.path(url);
             }
         }
 
@@ -162,16 +171,14 @@ angular.module('common.factories', [
 
         return {
             goHomePage: function () {
-                redirectTo('/');
+                redirectTo(ROUTES.SIGN_IN);
             },
             goSignIn: function () {
-                redirectTo('/sign/in');
-            },
-            goSignUp: function () {
-                redirectTo('/sign/up');
+                redirectTo(ROUTES.SIGN_IN);
             },
             goDashboard: function () {
-                redirectTo('/dashboard');
+                redirectTo('/dash');
+                //redirectTo(ROUTES.DASHBOARD);
             },
             redirectCustomPath: function (path) {
                 redirectTo(path);
@@ -193,7 +200,7 @@ angular.module('common.factories', [
 
                 str += '; path=/';
 
-                //str += '; domain=' + ; //TODO should set domain (check that it's work with 'localhost')
+                //str += '; domain=' + ; //TODO should set domain (check it with 'localhost')
 
                 if (secure)  str += '; secure';
 
@@ -242,17 +249,17 @@ angular.module('common.factories', [
   "HOST": "api.cargo",
   "HOST_CONTEXT": "",
   "PORT": "8000",
-  "DOMAIN": "cargo.dev",
+  "DOMAIN": "api.cargo.dev",
   "BASE_URL": "http://api.cargo.dev:8000"
 })
 
 ;
 'use strict';
 
-angular.module('website.dashboard', [])
+angular.module('website.dash', [])
 
-    .controller('dashBoardController', ['$scope', function ($scope) {
-
+    .controller('dashController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+        $rootScope.pageTitle = 'dash';
     }])
 ;
 'use strict';
@@ -267,36 +274,8 @@ angular.module('website.page.errors', [])
 
 angular.module('website.sign', [])
 
-    .controller('signUpController', ['$scope', '$http', 'storageFactory', function ($scope, $http, storageFactory) {
-        //
-    }])
-    .controller('signInController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', 'REST_CONFIG', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory, REST_CONFIG) {
+    .controller('signInController', ['$scope', '$rootScope', function ($scope, $rootScope) {
         $rootScope.pageTitle = 'Вход';
-
-        /*$scope.messages = []; //TODO remove this, when done
-         $scope.messages.push(errorFactory.resolve({error: 'CustomError'}, 400));*/
-
-        function onError(data, status) {
-            errorFactory.resolve(data, status, true);
-        }
-
-        $scope.test = function () {
-            $http.get(REST_CONFIG.BASE_URL + '/accounts').
-                success(function (data) {
-                    console.log(data);
-                    debugger;
-                }).error(onError);
-        }();
-
-        $scope.signIn = function () {
-            $http.post('', { //TODO still don't know what the url to login
-                email: $scope.signInData.email,
-                password: $scope.signInData.password
-            }).success(function (data) {
-                    storageFactory.setUser(data.user); //TODO hope we should save a user
-                    redirectFactory.goDashboard(); //TODO where we go now? Who knows...
-                }).error(onError);
-        };
     }])
 ;
 'use strict';

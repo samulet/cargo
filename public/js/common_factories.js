@@ -31,7 +31,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('redirectFactory', [function () {
+    .factory('redirectFactory', ['ROUTES', '$location', function (ROUTES, $location) {
         var isOldBrowser = navigator.userAgent.match(/MSIE\s(?!9.0)/);  // IE8 and lower
 
         function redirectOldBrowserCompatable(url) {
@@ -43,9 +43,9 @@ angular.module('common.factories', [
 
         function redirectTo(url) {
             if (isOldBrowser) {
-                redirectOldBrowserCompatable(url);
+                redirectOldBrowserCompatable('#!' + url);
             } else {
-                window.location.href = url;
+                $location.path(url);
             }
         }
 
@@ -59,16 +59,14 @@ angular.module('common.factories', [
 
         return {
             goHomePage: function () {
-                redirectTo('/');
+                redirectTo(ROUTES.SIGN_IN);
             },
             goSignIn: function () {
-                redirectTo('/sign/in');
-            },
-            goSignUp: function () {
-                redirectTo('/sign/up');
+                redirectTo(ROUTES.SIGN_IN);
             },
             goDashboard: function () {
-                redirectTo('/dashboard');
+                redirectTo('/dash');
+                //redirectTo(ROUTES.DASHBOARD);
             },
             redirectCustomPath: function (path) {
                 redirectTo(path);
@@ -90,7 +88,7 @@ angular.module('common.factories', [
 
                 str += '; path=/';
 
-                //str += '; domain=' + ; //TODO should set domain (check that it's work with 'localhost')
+                //str += '; domain=' + ; //TODO should set domain (check it with 'localhost')
 
                 if (secure)  str += '; secure';
 

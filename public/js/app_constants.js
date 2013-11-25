@@ -18,7 +18,6 @@ angular.module('website.constants', [])
     .constant('ROUTES', {
         START_PAGE: '/',
         START_PAGE_ALT: '',
-        SIGN_UP: '/sign/up',
         SIGN_IN: '/sign/in',
         DASHBOARD: '/dashboard',
         USER_PROFILE: '/user/profile',
@@ -28,6 +27,11 @@ angular.module('website.constants', [])
         ERROR: {
             UNAUTHORIZED: 'Не удалось авторизироваться',
             INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера'
+        }
+    })
+    .constant('STORAGE', {
+        COOKIE: {
+            TOKEN: 'token'
         }
     })
 ;
