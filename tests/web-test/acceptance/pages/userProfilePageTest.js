@@ -1,7 +1,10 @@
+/*
 describe('userProfilePageTest', function () {
-    /*var dbConnector = require('../utils/dbConnector.js');
+    */
+/*var dbConnector = require('../utils/dbConnector.js');
      dbConnector.connectDb();
-     var mongoose = dbConnector.mongoose();*/
+     var mongoose = dbConnector.mongoose();*//*
+
 
     const addBtnName = 'Добавить';
     const editBtnName = 'Редактировать';
@@ -269,4 +272,4 @@ describe('userProfilePageTest', function () {
             }, 3000);
         }, 3000);
     });
-});
+});*/
