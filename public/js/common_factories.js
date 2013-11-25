@@ -65,8 +65,7 @@ angular.module('common.factories', [
                 redirectTo(ROUTES.SIGN_IN);
             },
             goDashboard: function () {
-                redirectTo('/dash');
-                //redirectTo(ROUTES.DASHBOARD);
+                redirectTo(ROUTES.DASHBOARD);
             },
             redirectCustomPath: function (path) {
                 redirectTo(path);
