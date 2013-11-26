@@ -35,12 +35,11 @@ angular.module('website', [
             return '/#!' + route;
         };
     })
-    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'STORAGE', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, STORAGE) {
+    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory) {
         $rootScope.ROUTES = ROUTES;
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
-            var isToken = !!cookieFactory.getItem(STORAGE.COOKIE.TOKEN);
+            var isToken = !!storageFactory.getToken();
             if (isToken && (next.originalPath === ROUTES.SIGN_IN)) {
                 redirectFactory.goDashboard();
             } else if (!isToken && (next.access >= ACCESS_LEVEL.AUTHORIZED)) {

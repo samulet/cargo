@@ -45,7 +45,7 @@ angular.module('common.factories', [
                 set(storage.local.accounts, accounts);
             },
             getToken: function () {
-                getCookie(storage.cookie.token);
+                return getCookie(storage.cookie.token);
             }
         };
     }])
@@ -92,7 +92,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('cookieFactory', [function () {
+    .factory('cookieFactory', ['WEB_CONFIG', function (WEB_CONFIG) {
         return {
             setItem: function (name, value, expires, secure) {
                 if (!name || !value) return false;
@@ -105,9 +105,7 @@ angular.module('common.factories', [
                 }
 
                 str += '; path=/';
-
-                //str += '; domain=' + ; //TODO should set domain (check it with 'localhost')
-
+                str += '; domain=' + WEB_CONFIG.DOMAIN; //Attention: get exception when localhost
                 if (secure)  str += '; secure';
 
                 document.cookie = str;
