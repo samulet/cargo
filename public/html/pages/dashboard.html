@@ -2,36 +2,39 @@
 
 <div ng-controller="dashboardController">
     <h3>dashboard success</h3>
-</div>
 
-<div ng-controller="accountModalController" aria-hidden="true">
-    <script type="text/ng-template" id="accountModalContent.html">
-        <form name="accountDataForm" role="form">
-            <div class="modal-header">
-                <h4 class="modal-title">Настройка аккаунта</h4>
-            </div>
-            <div class="modal-body">
-                <ul class="clear_list vertical_form_block">
-                    <li class="form_header">
-                        <h5>Пожалуйста, укажите название аккаунта - юридическое лицо, от имени которого совершает
-                            действия</h5>
-                    </li>
-                    <li class="input-group">
-                        <label for="user-account-name" class="input-group-addon">Название аккаунта</label>
-                        <input id="user-account-name" type="text"
-                               ng-model="profileData.account.name" class="form-control" required="true"
-                               maxlength="20"/>
-                    </li>
-                    <li>
-                        <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
-                            {{message.msg}}
-                        </alert>
-                    </li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" ng-disabled="accountDataForm.$invalid" ng-click="save()">Ok</button>
-            </div>
-        </form>
-    </script>
+    <div aria-hidden="true">
+        <script type="text/ng-template" id="accountModalContent.html">
+            <form name="accountDataForm" role="form">
+                <div class="modal-header">
+                    <h4 class="modal-title">Настройка аккаунта</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="clear_list vertical_form_block">
+                        <li class="form_header">
+                            <h5>Пожалуйста, укажите название аккаунта - юридическое лицо, от имени которого совершает
+                                действия</h5>
+                        </li>
+                        <li class="input-group">
+                            <label for="accountName" class="input-group-addon">Название аккаунта</label>
+                            <input id="accountName" type="text"
+                                   ng-model="accountName" class="form-control" required
+                                   maxlength="20"/>
+                        </li>
+                        <li>
+                            <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+                                {{message.msg}}
+                            </alert>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-disabled="accountDataForm.$invalid"
+                            ng-click="save()">Ok
+                    </button>
+                </div>
+            </form>
+        </script>
+    </div>
+
 </div>
