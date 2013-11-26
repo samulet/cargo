@@ -39,7 +39,7 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-            var isToken = !!cookieFactory.getItem(storageFactory.getToken());
+            var isToken = !!storageFactory.getToken();
             if (isToken && (next.originalPath === ROUTES.SIGN_IN)) {
                 redirectFactory.goDashboard();
             } else if (!isToken && (next.access >= ACCESS_LEVEL.AUTHORIZED)) {
@@ -147,7 +147,7 @@ angular.module('common.factories', [
                 set(storage.local.accounts, accounts);
             },
             getToken: function () {
-                getCookie(storage.cookie.token);
+                return getCookie(storage.cookie.token);
             }
         };
     }])
@@ -194,7 +194,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('cookieFactory', [function () {
+    .factory('cookieFactory', ['WEB_CONFIG', function (WEB_CONFIG) {
         return {
             setItem: function (name, value, expires, secure) {
                 if (!name || !value) return false;
@@ -207,9 +207,7 @@ angular.module('common.factories', [
                 }
 
                 str += '; path=/';
-
-                //str += '; domain=' + ; //TODO should set domain (check it with 'localhost')
-
+                str += '; domain=' + WEB_CONFIG.DOMAIN; //Attention: get exception when localhost
                 if (secure)  str += '; secure';
 
                 document.cookie = str;
@@ -252,6 +250,15 @@ angular.module('common.factories', [
 
  angular.module("env.config", [])
 
+.constant("WEB_CONFIG", {
+  "PROTOCOL": "http",
+  "HOST": "cargo",
+  "HOST_CONTEXT": "",
+  "PORT": "8000",
+  "DOMAIN": "cargo.dev",
+  "BASE_URL": "http://cargo.dev:8000"
+})
+
 .constant("REST_CONFIG", {
   "PROTOCOL": "http",
   "HOST": "api.cargo",
@@ -266,14 +273,25 @@ angular.module('common.factories', [
 
 angular.module('website.dashboard', [])
 
-    .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory) {
+    .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', '$modal', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory, $modal) {
         $rootScope.pageTitle = 'dashboard';
         $rootScope.bodyColor = 'filled_bg';
         $scope.firstTimeVisit = false;
 
+        $scope.showPopup = function (){
+            $modal.open({
+                templateUrl: 'accountModalContent.html',
+                controller: 'accountModalController'
+            });
+        };
+
         function onError(data, status) {
             if (status === RESPONSE_STATUS.NOT_FOUND) {
                 $scope.firstTimeVisit = true;
+                $modal.open({
+                    templateUrl: 'accountModalContent.html',
+                    controller: 'accountModalController'
+                });
             } else {
                 errorFactory.resolve(data, status, true);
             }
@@ -287,6 +305,10 @@ angular.module('website.dashboard', [])
                     }).error(onError);
             }
         };
+    }])
+
+    .controller('accountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory) {
+
     }])
 ;
 'use strict';
