@@ -20,6 +20,16 @@ return array(
                     ),
                 ),
             ),
+            'greetings' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route' => '/greetings',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action' => 'greetings',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
