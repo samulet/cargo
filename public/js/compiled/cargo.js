@@ -35,12 +35,11 @@ angular.module('website', [
             return '/#!' + route;
         };
     })
-    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'STORAGE', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, STORAGE) {
+    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory) {
         $rootScope.ROUTES = ROUTES;
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
-            var isToken = !!cookieFactory.getItem(STORAGE.COOKIE.TOKEN);
+            var isToken = !!cookieFactory.getItem(storageFactory.getToken());
             if (isToken && (next.originalPath === ROUTES.SIGN_IN)) {
                 redirectFactory.goDashboard();
             } else if (!isToken && (next.access >= ACCESS_LEVEL.AUTHORIZED)) {
@@ -82,11 +81,6 @@ angular.module('website.constants', [])
             INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера'
         }
     })
-    .constant('STORAGE', {
-        COOKIE: {
-            TOKEN: 'token'
-        }
-    })
 ;
 'use strict';
 
@@ -111,12 +105,24 @@ angular.module('common.directives', [])
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', function ($http) {
-        var userKey = 'user';
+    .factory('storageFactory', ['$http', 'cookieFactory', function ($http, cookieFactory) {
+        var storage = {
+            cookie: {
+                token: 'token'
+            },
+            local: {
+                accounts: 'accounts',
+                user: 'user'
+            }
+        };
 
         function get(key) {
             var value = localStorage.getItem(key);
             return value ? JSON.parse(value) : null;
+        }
+
+        function getCookie(key) {
+            return cookieFactory.getItem(key);
         }
 
         function set(key, value) {
@@ -129,13 +135,20 @@ angular.module('common.factories', [
 
         return {
             getUser: function () {
-                return get(userKey);
+                return get(storage.local.user);
             },
-
             setUser: function (user) {
-                set(userKey, user);
+                set(storage.local.user, user);
+            },
+            getAccounts: function () {
+                return get(storage.local.accounts);
+            },
+            setAccounts: function (accounts) {
+                set(storage.local.accounts, accounts);
+            },
+            getToken: function () {
+                getCookie(storage.cookie.token);
             }
-
         };
     }])
 
@@ -253,10 +266,10 @@ angular.module('common.factories', [
 
 angular.module('website.dashboard', [])
 
-    .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
+    .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory) {
         $rootScope.pageTitle = 'dashboard';
         $rootScope.bodyColor = 'filled_bg';
-        $scope.firstTimeVisit = true; //TODO false
+        $scope.firstTimeVisit = false;
 
         function onError(data, status) {
             if (status === RESPONSE_STATUS.NOT_FOUND) {
@@ -267,13 +280,13 @@ angular.module('website.dashboard', [])
         }
 
         $scope.getAccounts = function () {
-            $http.get(REST_CONFIG.BASE_URL + '/accounts').
-                success(function (data) {
-
-                }).error(onError);
+            if (!storageFactory.getAccounts()) {
+                $http.get(REST_CONFIG.BASE_URL + '/accounts').
+                    success(function (accounts) {
+                        storageFactory.setAccounts(accounts);
+                    }).error(onError);
+            }
         };
-
-
     }])
 ;
 'use strict';
