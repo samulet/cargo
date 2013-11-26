@@ -92,6 +92,21 @@ module.exports = function (grunt) {
                         wrap: '"use strict";\n\n <%= __ngModule %>',
                         name: 'env.config',
                         constants: {
+                            WEB_CONFIG: ((function () {
+                                var PROTOCOL = 'http';
+                                var HOST = 'cargo';
+                                var ZONE = '.dev';
+                                var HOST_CONTEXT = '';
+                                var PORT = '8000';
+                                return {
+                                    PROTOCOL: PROTOCOL,
+                                    HOST: HOST,
+                                    HOST_CONTEXT: HOST_CONTEXT,
+                                    PORT: PORT,
+                                    DOMAIN: HOST + ZONE,
+                                    BASE_URL: PROTOCOL + "://" + HOST + ZONE + ':' + PORT + HOST_CONTEXT
+                                };
+                            })()),
                             REST_CONFIG: (function () {
                                 var PROTOCOL = 'http';
                                 var HOST = 'api.cargo';
@@ -116,6 +131,21 @@ module.exports = function (grunt) {
                         wrap: '"use strict";\n\n <%= __ngModule %>',
                         name: 'env.config',
                         constants: {
+                            WEB_CONFIG: ((function () {
+                                var PROTOCOL = 'http';
+                                var HOST = 'cargo.zfprojects';
+                                var ZONE = '.info';
+                                var HOST_CONTEXT = '';
+                                var PORT = '8000';
+                                return {
+                                    PROTOCOL: PROTOCOL,
+                                    HOST: HOST,
+                                    HOST_CONTEXT: HOST_CONTEXT,
+                                    PORT: PORT,
+                                    DOMAIN: HOST + ZONE,
+                                    BASE_URL: PROTOCOL + "://" + HOST + ZONE + ':' + PORT + HOST_CONTEXT
+                                };
+                            })()),
                             REST_CONFIG: (function () {
                                 var PROTOCOL = 'http';
                                 var HOST = 'cargo.zfprojects';
@@ -139,8 +169,23 @@ module.exports = function (grunt) {
                         dest: '<%= jsDir %>/env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
                         name: 'env.config',
-                        constants: {
-                            REST_CONFIG: (function () { //TODO fill up production settings
+                        constants: { //TODO fill up production settings
+                            WEB_CONFIG: ((function () {
+                                var PROTOCOL = '';
+                                var HOST = '';
+                                var ZONE = '';
+                                var HOST_CONTEXT = '';
+                                var PORT = '';
+                                return {
+                                    PROTOCOL: PROTOCOL,
+                                    HOST: HOST,
+                                    HOST_CONTEXT: HOST_CONTEXT,
+                                    PORT: PORT,
+                                    DOMAIN: HOST + ZONE,
+                                    BASE_URL: PROTOCOL + "://" + HOST + ZONE + ':' + PORT + HOST_CONTEXT
+                                };
+                            })()),
+                            REST_CONFIG: (function () {
                                 var PROTOCOL = '';
                                 var HOST = '';
                                 var ZONE = '';
