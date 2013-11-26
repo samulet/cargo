@@ -44,6 +44,10 @@
     color: #000;
 }
 
+.modal{
+    color: black;
+}
+
 .img-thumbnail {
     background-color: #DBDBDB;
 }
