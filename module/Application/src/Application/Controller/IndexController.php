@@ -9,7 +9,14 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $cookie = new SetCookie('Auth-Token', '2a00a56c3763253a21188619997b82877ba177dbe789ca4bfe9c3a557ed1efce', 0);
+        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->redirect()->toUrl('/');
+        }
+
+        $user = $this->zfcUserAuthentication()->getIdentity();
+        $tokenEntity = $this->getServiceLocator()->get('AuthToken\Model\AuthToken')->create($user);
+
+        $cookie = new SetCookie('token', $tokenEntity->getToken());
         $response = $this->getResponse()->getHeaders();
         $response->addHeader($cookie);
 
@@ -19,6 +26,11 @@ class IndexController extends AbstractActionController
 
     public function greetingsAction()
     {
+        /** @var \ZfcUser\Controller\Plugin\ZfcUserAuthentication $zfcUserAuth */
+        $zfcUserAuth = $this->zfcUserAuthentication();
+        if (!$zfcUserAuth->hasIdentity() || 0 != $zfcUserAuth->getIdentity()->getStatus) {
+            return $this->redirect()->toUrl('/');
+        }
         return new ViewModel();
     }
 }
