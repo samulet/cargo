@@ -50,7 +50,7 @@ $settings = array(
      * Default value: array containing 'ZfcUser\Authentication\Adapter\Db' with priority 100
      * Accepted values: array containing services that implement 'ZfcUser\Authentication\Adapter\ChainableAdapter'
      */
-    'auth_adapters' => array( 90 => 'ScnSocialAuth\Authentication\Adapter\HybridAuth'),
+    //'auth_adapters' => array( 100 => 'ZfcUser\Authentication\Adapter\Db' ),
 
     /**
      * Enable Display Name
@@ -203,7 +203,7 @@ $settings = array(
      * What state user should have upon registration?
      * Allowed value type: integer
      */
-    'default_user_state' => 1,
+    'default_user_state' => 0,
 
     /**
      * States which are allowing user to login
@@ -212,7 +212,7 @@ $settings = array(
      * Include null if you want user's with no state to login as well.
      * Allowed value types: null and integer
      */
-    'allowed_login_states' => array( null, 1, 2 ),
+    'allowed_login_states' => array( null, 0, 1, 2 ),
 
     /**
      * User table name
