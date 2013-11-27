@@ -53,7 +53,7 @@ angular.module('website.dashboard', [])
         }
     }])
 
-    .controller('accountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory) {
+    .controller('accountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
         $scope.save = function () {
             $http.post(REST_CONFIG.BASE_URL + '/accounts', {name: $scope.account.name})
                 .success(function () {

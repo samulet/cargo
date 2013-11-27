@@ -28,7 +28,6 @@ angular.module('website', [
 
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
-
     }])
     .filter('routeFilter', function () {
         return function (route) {
