@@ -1,6 +1,6 @@
 describe('userProfilePageTest', function () {
 
-    var Token = {
+    var Cookies = {
         addToken: function () {
             ptor.manage().addCookie('token', '12345');
         },
@@ -16,7 +16,7 @@ describe('userProfilePageTest', function () {
     var ptor = protractor.getInstance();
 
     beforeEach(function () {
-        Token.removeToken();
+        Cookies.removeToken();
     });
 
     it('checkNoRedirectWhenTokenNotExistAndSignInPage', function () {
@@ -29,7 +29,7 @@ describe('userProfilePageTest', function () {
 
     it('checkRedirectWhenTokenExistAndSignInPage', function () {
         //Setup
-        Token.addToken();
+        Cookies.addToken();
 
         ptor.get('#!/sign/in');
 
@@ -40,7 +40,7 @@ describe('userProfilePageTest', function () {
 
     it('checkRedirectWhenTokenExistAndDashboardPage', function () {
         //Setup
-        Token.addToken();
+        Cookies.addToken();
         ptor.get('#!/dashboard');
 
         //Act & Verify

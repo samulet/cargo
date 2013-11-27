@@ -1,7 +1,4 @@
 describe('userProfilePageTest', function () {
-    /*var dbConnector = require('../utils/dbConnector.js');
-     dbConnector.connectDb();
-     var mongoose = dbConnector.mongoose();*/
 
     const addBtnName = 'Добавить';
     const editBtnName = 'Редактировать';
