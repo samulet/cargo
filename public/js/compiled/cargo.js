@@ -277,31 +277,22 @@ angular.module('website.dashboard', [])
         $rootScope.pageTitle = 'dashboard';
         $rootScope.bodyColor = 'filled_bg';
         var accountModal;
+        $scope.account = [];
 
         checkForAccounts();
 
         function checkForAccounts() {
-           // if (!storageFactory.getAccounts()) {//TODO
+            if (!storageFactory.getAccounts()) {//TODO
                 getAccounts();
-           // }
+            }
         }
-
-        /* $scope.messages = [  //TODO Check styles of the alert
-         { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
-         { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
-         ];*/
 
         function openAccountModal() {
             accountModal = $modal.open({
                 templateUrl: 'accountModalContent.html',
                 backdrop: 'static',
                 scope: $scope,
-                controller: 'accountModalController',
-                resolve: {
-                    accountName: function () {
-                        return $scope.accountName;
-                    }
-                }
+                controller: 'accountModalController'
             });
         }
 
@@ -326,20 +317,16 @@ angular.module('website.dashboard', [])
         }
 
         function getAccounts() {
-            $http.get(REST_CONFIG.BASE_URL + '/accounts')//TODO should be /accounts
+            $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (accounts) {
-                    //storageFactory.setAccounts(accounts);//TODO
-                    console.log(accounts);
-                    onError(null, RESPONSE_STATUS.NOT_FOUND);
+                    storageFactory.setAccounts(accounts);
                 }).error(onError);
         }
-
-
     }])
 
     .controller('accountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory) {
         $scope.save = function () {
-            $http.post(REST_CONFIG.BASE_URL + '/accounts', {name: $scope.accountName})
+            $http.post(REST_CONFIG.BASE_URL + '/accounts', {name: $scope.account.name})
                 .success(function () {
                     $scope.closeAccountModal();
                     $scope.getAccounts();
