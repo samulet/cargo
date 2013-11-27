@@ -7,7 +7,7 @@ angular.module('website.dashboard', [])
         $rootScope.bodyColor = 'filled_bg';
         var accountModal;
 
-        getAccounts();//TODO Solve problem with double calling
+        getAccounts();
 
         /* $scope.messages = [  //TODO Check styles of the alert
          { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
