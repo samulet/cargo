@@ -18,10 +18,10 @@ angular.module('website', [
         var pathToIncs = 'html/pages/';
         $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.SIGN_IN});
         $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.SIGN_IN});
-        $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', controller: 'signInController', access: ACCESS_LEVEL.PUBLIC});
-        $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', controller: 'pageNotFoundController', access: ACCESS_LEVEL.PUBLIC});
-        $routeProvider.when(ROUTES.USER_PROFILE, {templateUrl: pathToIncs + 'user_profile.html', controller: 'userProfileController', access: ACCESS_LEVEL.AUTHORIZED});
-        $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', controller: 'dashboardController', access: ACCESS_LEVEL.AUTHORIZED});
+        $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.USER_PROFILE, {templateUrl: pathToIncs + 'user_profile.html', access: ACCESS_LEVEL.AUTHORIZED});
+        $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', access: ACCESS_LEVEL.AUTHORIZED});
 
         //$routeProvider.otherwise({redirectTo: '/404'});
         $routeProvider.otherwise({redirectTo: ROUTES.SIGN_IN}); //TODO remove this hack after solve redirect problem
@@ -35,12 +35,11 @@ angular.module('website', [
             return '/#!' + route;
         };
     })
-    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'STORAGE', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, STORAGE) {
+    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory) {
         $rootScope.ROUTES = ROUTES;
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
-            var isToken = !!cookieFactory.getItem(STORAGE.COOKIE.TOKEN);
+            var isToken = !!storageFactory.getToken();
             if (isToken && (next.originalPath === ROUTES.SIGN_IN)) {
                 redirectFactory.goDashboard();
             } else if (!isToken && (next.access >= ACCESS_LEVEL.AUTHORIZED)) {
@@ -82,11 +81,6 @@ angular.module('website.constants', [])
             INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера'
         }
     })
-    .constant('STORAGE', {
-        COOKIE: {
-            TOKEN: 'token'
-        }
-    })
 ;
 'use strict';
 
@@ -111,12 +105,24 @@ angular.module('common.directives', [])
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', function ($http) {
-        var userKey = 'user';
+    .factory('storageFactory', ['$http', 'cookieFactory', function ($http, cookieFactory) {
+        var storage = {
+            cookie: {
+                token: 'token'
+            },
+            local: {
+                accounts: 'accounts',
+                user: 'user'
+            }
+        };
 
         function get(key) {
             var value = localStorage.getItem(key);
             return value ? JSON.parse(value) : null;
+        }
+
+        function getCookie(key) {
+            return cookieFactory.getItem(key);
         }
 
         function set(key, value) {
@@ -129,13 +135,20 @@ angular.module('common.factories', [
 
         return {
             getUser: function () {
-                return get(userKey);
+                return get(storage.local.user);
             },
-
             setUser: function (user) {
-                set(userKey, user);
+                set(storage.local.user, user);
+            },
+            getAccounts: function () {
+                return get(storage.local.accounts);
+            },
+            setAccounts: function (accounts) {
+                set(storage.local.accounts, accounts);
+            },
+            getToken: function () {
+                return getCookie(storage.cookie.token);
             }
-
         };
     }])
 
@@ -181,7 +194,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('cookieFactory', [function () {
+    .factory('cookieFactory', ['WEB_CONFIG', function (WEB_CONFIG) {
         return {
             setItem: function (name, value, expires, secure) {
                 if (!name || !value) return false;
@@ -194,9 +207,7 @@ angular.module('common.factories', [
                 }
 
                 str += '; path=/';
-
-                //str += '; domain=' + ; //TODO should set domain (check it with 'localhost')
-
+                str += '; domain=' + WEB_CONFIG.DOMAIN; //Attention: get exception when localhost
                 if (secure)  str += '; secure';
 
                 document.cookie = str;
@@ -239,6 +250,15 @@ angular.module('common.factories', [
 
  angular.module("env.config", [])
 
+.constant("WEB_CONFIG", {
+  "PROTOCOL": "http",
+  "HOST": "cargo",
+  "HOST_CONTEXT": "",
+  "PORT": "8000",
+  "DOMAIN": "cargo.dev",
+  "BASE_URL": "http://cargo.dev:8000"
+})
+
 .constant("REST_CONFIG", {
   "PROTOCOL": "http",
   "HOST": "api.cargo",
@@ -253,8 +273,78 @@ angular.module('common.factories', [
 
 angular.module('website.dashboard', [])
 
-    .controller('dashboardController', ['$scope', '$rootScope', function ($scope, $rootScope) {
-        $rootScope.pageTitle = 'dash';
+    .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', '$modal', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory, $modal) {
+        $rootScope.pageTitle = 'dashboard';
+        $rootScope.bodyColor = 'filled_bg';
+        var accountModal;
+
+        checkForAccounts();
+
+        function checkForAccounts() {
+           // if (!storageFactory.getAccounts()) {//TODO
+                getAccounts();
+           // }
+        }
+
+        /* $scope.messages = [  //TODO Check styles of the alert
+         { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
+         { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
+         ];*/
+
+        function openAccountModal() {
+            accountModal = $modal.open({
+                templateUrl: 'accountModalContent.html',
+                backdrop: 'static',
+                scope: $scope,
+                controller: 'accountModalController',
+                resolve: {
+                    accountName: function () {
+                        return $scope.accountName;
+                    }
+                }
+            });
+        }
+
+        function closeAccountModal() {
+            accountModal.close();
+        }
+
+        $scope.closeAccountModal = function () {
+            closeAccountModal();
+        };
+
+        $scope.getAccounts = function () {
+            getAccounts();
+        };
+
+        function onError(data, status) {
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                openAccountModal();
+            } else {
+                errorFactory.resolve(data, status, true);
+            }
+        }
+
+        function getAccounts() {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts')//TODO should be /accounts
+                .success(function (accounts) {
+                    //storageFactory.setAccounts(accounts);//TODO
+                    console.log(accounts);
+                    onError(null, RESPONSE_STATUS.NOT_FOUND);
+                }).error(onError);
+        }
+
+
+    }])
+
+    .controller('accountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory) {
+        $scope.save = function () {
+            $http.post(REST_CONFIG.BASE_URL + '/accounts', {name: $scope.accountName})
+                .success(function () {
+                    $scope.closeAccountModal();
+                    $scope.getAccounts();
+                }).error(errorFactory.resolve);
+        };
     }])
 ;
 'use strict';

@@ -3,12 +3,24 @@
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', function ($http) {
-        var userKey = 'user';
+    .factory('storageFactory', ['$http', 'cookieFactory', function ($http, cookieFactory) {
+        var storage = {
+            cookie: {
+                token: 'token'
+            },
+            local: {
+                accounts: 'accounts',
+                user: 'user'
+            }
+        };
 
         function get(key) {
             var value = localStorage.getItem(key);
             return value ? JSON.parse(value) : null;
+        }
+
+        function getCookie(key) {
+            return cookieFactory.getItem(key);
         }
 
         function set(key, value) {
@@ -21,13 +33,20 @@ angular.module('common.factories', [
 
         return {
             getUser: function () {
-                return get(userKey);
+                return get(storage.local.user);
             },
-
             setUser: function (user) {
-                set(userKey, user);
+                set(storage.local.user, user);
+            },
+            getAccounts: function () {
+                return get(storage.local.accounts);
+            },
+            setAccounts: function (accounts) {
+                set(storage.local.accounts, accounts);
+            },
+            getToken: function () {
+                return getCookie(storage.cookie.token);
             }
-
         };
     }])
 
@@ -73,7 +92,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('cookieFactory', [function () {
+    .factory('cookieFactory', ['WEB_CONFIG', function (WEB_CONFIG) {
         return {
             setItem: function (name, value, expires, secure) {
                 if (!name || !value) return false;
@@ -86,9 +105,7 @@ angular.module('common.factories', [
                 }
 
                 str += '; path=/';
-
-                //str += '; domain=' + ; //TODO should set domain (check it with 'localhost')
-
+                str += '; domain=' + WEB_CONFIG.DOMAIN; //Attention: get exception when localhost
                 if (secure)  str += '; secure';
 
                 document.cookie = str;

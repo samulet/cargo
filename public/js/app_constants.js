@@ -29,9 +29,4 @@ angular.module('website.constants', [])
             INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера'
         }
     })
-    .constant('STORAGE', {
-        COOKIE: {
-            TOKEN: 'token'
-        }
-    })
 ;
