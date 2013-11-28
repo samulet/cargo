@@ -169,13 +169,13 @@ module.exports = function (grunt) {
                         dest: '<%= jsDir %>/env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
                         name: 'env.config',
-                        constants: { //TODO fill up production settings
+                        constants: {
                             WEB_CONFIG: ((function () {
-                                var PROTOCOL = '';
-                                var HOST = '';
-                                var ZONE = '';
+                                var PROTOCOL = 'http';
+                                var HOST = 'cargo.zfprojects';
+                                var ZONE = '.info';
                                 var HOST_CONTEXT = '';
-                                var PORT = '';
+                                var PORT = '80';
                                 return {
                                     PROTOCOL: PROTOCOL,
                                     HOST: HOST,
@@ -186,11 +186,11 @@ module.exports = function (grunt) {
                                 };
                             })()),
                             REST_CONFIG: (function () {
-                                var PROTOCOL = '';
-                                var HOST = '';
-                                var ZONE = '';
+                                var PROTOCOL = 'http';
+                                var HOST = 'api.cargo.zfprojects';
+                                var ZONE = '.info';
                                 var HOST_CONTEXT = '';
-                                var PORT = '';
+                                var PORT = '80';
                                 return {
                                     PROTOCOL: PROTOCOL,
                                     HOST: HOST,
