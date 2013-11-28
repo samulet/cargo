@@ -705,7 +705,9 @@
 <ul class="mobile_centered vertical_form_block bordered_top_form clear_list">
     <li>
         <button class="btn btn-danger" ng-click="cancelEdit()">Отменить</button>
-        <button class="btn btn-primary pull_right" ng-click="saveEdit()">Сохранить</button>
+        <button class="btn btn-primary pull_right" ng-click="saveEdit()" disable-until-request-done="isAjaxLoading">
+            Сохранить
+        </button>
     </li>
 </ul>
 

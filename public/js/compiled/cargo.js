@@ -28,6 +28,26 @@ angular.module('website', [
 
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
+
+        var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
+            function success(response) {
+                $rootScope.isAjaxLoading = false;
+                return response;
+            }
+
+            function error(response) {
+                $rootScope.isAjaxLoading = false;
+                return $q.reject(response);
+
+            }
+
+            return function (promise) {
+                $rootScope.isAjaxLoading = true;
+                return promise.then(success, error);
+            };
+        }];
+
+        $httpProvider.responseInterceptors.push(interceptor);
     }])
     .filter('routeFilter', function () {
         return function (route) {
@@ -36,6 +56,7 @@ angular.module('website', [
     })
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http) {
         $rootScope.ROUTES = ROUTES;
+        $rootScope.isAjaxLoading = false;
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
@@ -101,6 +122,33 @@ angular.module('common.directives', [])
             templateUrl: 'html/templates/uploader.html'
         };
     }])
+
+    .directive('disableUntilRequestDone', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                scope.$watch(attrs.disableUntilRequestDone, function (value) {
+                    var isAlreadyDisabled = elem[0].getAttribute('disabled');
+                    var ngDisabled = elem[0].getAttribute('data-ng-disabled');
+                    if (value) {
+                        if (!isAlreadyDisabled) elem.attr('disabled', !value);
+                        elem.addClass('btn-loading');
+                    } else {
+                        if (!isAlreadyDisabled && !ngDisabled) elem[0].removeAttribute('disabled');
+                        if (ngDisabled) {
+                            var isNgDisabled = scope.$eval(ngDisabled);
+                            if (isNgDisabled) {
+                                elem.attr('disabled', !value);
+                            } else {
+                                elem[0].removeAttribute('disabled');
+                            }
+                        }
+                        elem.removeClass('btn-loading');
+                    }
+                });
+            }
+        };
+    })
 ;
 'use strict';
 
@@ -284,9 +332,9 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            if (!storageFactory.getAccounts()) {//TODO
+            //if (!storageFactory.getAccounts()) {//TODO
                 getAccounts();
-            }
+           // }
         }
 
         function openAccountModal() {
@@ -311,17 +359,18 @@ angular.module('website.dashboard', [])
         };
 
         function onError(data, status) {
-            if (status === RESPONSE_STATUS.NOT_FOUND) {
+           // if (status === RESPONSE_STATUS.NOT_FOUND) {
                 openAccountModal();
-            } else {
-                errorFactory.resolve(data, status, true);
-            }
+          //  } else {
+          //      errorFactory.resolve(data, status, true);
+          //  }
         }
 
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (accounts) {
-                    storageFactory.setAccounts(accounts);
+                    openAccountModal();
+                    //storageFactory.setAccounts(accounts);
                 }).error(onError);
         }
     }])

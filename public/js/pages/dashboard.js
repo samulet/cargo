@@ -11,9 +11,9 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            if (!storageFactory.getAccounts()) {//TODO
+            //if (!storageFactory.getAccounts()) {//TODO
                 getAccounts();
-            }
+           // }
         }
 
         function openAccountModal() {
@@ -38,17 +38,18 @@ angular.module('website.dashboard', [])
         };
 
         function onError(data, status) {
-            if (status === RESPONSE_STATUS.NOT_FOUND) {
+           // if (status === RESPONSE_STATUS.NOT_FOUND) {
                 openAccountModal();
-            } else {
-                errorFactory.resolve(data, status, true);
-            }
+          //  } else {
+          //      errorFactory.resolve(data, status, true);
+          //  }
         }
 
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (accounts) {
-                    storageFactory.setAccounts(accounts);
+                    openAccountModal();
+                    //storageFactory.setAccounts(accounts);
                 }).error(onError);
         }
     }])

@@ -28,6 +28,26 @@ angular.module('website', [
 
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
+
+        var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
+            function success(response) {
+                $rootScope.isAjaxLoading = false;
+                return response;
+            }
+
+            function error(response) {
+                $rootScope.isAjaxLoading = false;
+                return $q.reject(response);
+
+            }
+
+            return function (promise) {
+                $rootScope.isAjaxLoading = true;
+                return promise.then(success, error);
+            };
+        }];
+
+        $httpProvider.responseInterceptors.push(interceptor);
     }])
     .filter('routeFilter', function () {
         return function (route) {
@@ -36,6 +56,7 @@ angular.module('website', [
     })
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http) {
         $rootScope.ROUTES = ROUTES;
+        $rootScope.isAjaxLoading = false;
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
