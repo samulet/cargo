@@ -742,12 +742,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb.git",
-                "reference": "401796e7a5ec3cea099d993fd0034235b917f1a8"
+                "reference": "58f80c00be3593aefa16c0a83357a9a8573873ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb/zipball/401796e7a5ec3cea099d993fd0034235b917f1a8",
-                "reference": "401796e7a5ec3cea099d993fd0034235b917f1a8",
+                "url": "https://api.github.com/repos/doctrine/mongodb/zipball/58f80c00be3593aefa16c0a83357a9a8573873ae",
+                "reference": "58f80c00be3593aefa16c0a83357a9a8573873ae",
                 "shasum": ""
             },
             "require": {
@@ -772,7 +772,7 @@
                     "homepage": "http://avalanche123.com"
                 },
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -795,7 +795,7 @@
                 "mongodb",
                 "persistence"
             ],
-            "time": "2013-11-01 17:12:21"
+            "time": "2013-11-26 20:46:20"
         },
         {
             "name": "doctrine/mongodb-odm",
@@ -1048,12 +1048,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:MashaiMedvedi/auth-token.git",
-                "reference": "43350009b8258a136989d558e0f891637204e949"
+                "reference": "180c4e865940b2990df2a22b231a4973c9e4ce26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MashaiMedvedi/auth-token/zipball/43350009b8258a136989d558e0f891637204e949",
-                "reference": "43350009b8258a136989d558e0f891637204e949",
+                "url": "https://api.github.com/repos/MashaiMedvedi/auth-token/zipball/180c4e865940b2990df2a22b231a4973c9e4ce26",
+                "reference": "180c4e865940b2990df2a22b231a4973c9e4ce26",
                 "shasum": ""
             },
             "require": {
@@ -1082,7 +1082,7 @@
                 "source": "https://github.com/MashaiMedvedi/auth-token/tree/master",
                 "issues": "https://github.com/MashaiMedvedi/auth-token/issues"
             },
-            "time": "2013-11-20 12:10:50"
+            "time": "2013-11-27 21:51:48"
         },
         {
             "name": "phpoffice/phpexcel",
@@ -2251,16 +2251,16 @@
         },
         {
             "name": "instaclick/php-webdriver",
-            "version": "1.1.1",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/instaclick/php-webdriver.git",
-                "reference": "3c219c223043916f51ad4c20ccf810240eb3720d"
+                "reference": "4e43ece4e3ad1c0601791bb9b376f24f51632ef5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/instaclick/php-webdriver/zipball/3c219c223043916f51ad4c20ccf810240eb3720d",
-                "reference": "3c219c223043916f51ad4c20ccf810240eb3720d",
+                "url": "https://api.github.com/repos/instaclick/php-webdriver/zipball/4e43ece4e3ad1c0601791bb9b376f24f51632ef5",
+                "reference": "4e43ece4e3ad1c0601791bb9b376f24f51632ef5",
                 "shasum": ""
             },
             "require": {
@@ -2305,7 +2305,7 @@
                 "webdriver",
                 "webtest"
             ],
-            "time": "2013-11-21 17:15:13"
+            "time": "2013-11-27 16:39:54"
         },
         {
             "name": "monolog/monolog",
