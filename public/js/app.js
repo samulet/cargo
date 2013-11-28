@@ -30,24 +30,24 @@ angular.module('website', [
         $locationProvider.hashPrefix('!');
 
         var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
-            function success(response) {
-                $rootScope.isAjaxLoading = false;
-                return response;
-            }
-
-            function error(response) {
-                $rootScope.isAjaxLoading = false;
-                return $q.reject(response);
-
-            }
-
-            return function (promise) {
-                $rootScope.isAjaxLoading = true;
-                return promise.then(success, error);
+            return {
+                'request': function (config) {
+                    $rootScope.isAjaxLoading = true;
+                    return config || $q.when(config);
+                },
+                'response': function (response) {
+                    $rootScope.isAjaxLoading = false;
+                    return response || $q.when(response);
+                },
+                'responseError': function (rejection) {
+                    $rootScope.isAjaxLoading = false;
+                    return $q.reject(rejection);
+                }
             };
         }];
 
-        $httpProvider.responseInterceptors.push(interceptor);
+        $httpProvider.interceptors.push(interceptor);
+
     }])
     .filter('routeFilter', function () {
         return function (route) {

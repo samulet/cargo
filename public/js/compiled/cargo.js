@@ -30,24 +30,24 @@ angular.module('website', [
         $locationProvider.hashPrefix('!');
 
         var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
-            function success(response) {
-                $rootScope.isAjaxLoading = false;
-                return response;
-            }
-
-            function error(response) {
-                $rootScope.isAjaxLoading = false;
-                return $q.reject(response);
-
-            }
-
-            return function (promise) {
-                $rootScope.isAjaxLoading = true;
-                return promise.then(success, error);
+            return {
+                'request': function (config) {
+                    $rootScope.isAjaxLoading = true;
+                    return config || $q.when(config);
+                },
+                'response': function (response) {
+                    $rootScope.isAjaxLoading = false;
+                    return response || $q.when(response);
+                },
+                'responseError': function (rejection) {
+                    $rootScope.isAjaxLoading = false;
+                    return $q.reject(rejection);
+                }
             };
         }];
 
-        $httpProvider.responseInterceptors.push(interceptor);
+        $httpProvider.interceptors.push(interceptor);
+
     }])
     .filter('routeFilter', function () {
         return function (route) {
@@ -123,11 +123,11 @@ angular.module('common.directives', [])
         };
     }])
 
-    .directive('disableUntilRequestDone', function () {
+    .directive('ajaxDisabler', function () {
         return {
             restrict: 'A',
             link: function (scope, elem, attrs) {
-                scope.$watch(attrs.disableUntilRequestDone, function (value) {
+                scope.$watch(attrs.ajaxDisabler, function (value) {
                     var isAlreadyDisabled = elem[0].getAttribute('disabled');
                     var ngDisabled = elem[0].getAttribute('data-ng-disabled');
                     if (value) {
@@ -332,9 +332,9 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            //if (!storageFactory.getAccounts()) {//TODO
+            if (!storageFactory.getAccounts()) {
                 getAccounts();
-           // }
+            }
         }
 
         function openAccountModal() {
@@ -359,18 +359,17 @@ angular.module('website.dashboard', [])
         };
 
         function onError(data, status) {
-           // if (status === RESPONSE_STATUS.NOT_FOUND) {
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
                 openAccountModal();
-          //  } else {
-          //      errorFactory.resolve(data, status, true);
-          //  }
+            } else {
+                errorFactory.resolve(data, status, true);
+            }
         }
 
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (accounts) {
-                    openAccountModal();
-                    //storageFactory.setAccounts(accounts);
+                    storageFactory.setAccounts(accounts);
                 }).error(onError);
         }
     }])

@@ -16,11 +16,11 @@ angular.module('common.directives', [])
         };
     }])
 
-    .directive('disableUntilRequestDone', function () {
+    .directive('ajaxDisabler', function () {
         return {
             restrict: 'A',
             link: function (scope, elem, attrs) {
-                scope.$watch(attrs.disableUntilRequestDone, function (value) {
+                scope.$watch(attrs.ajaxDisabler, function (value) {
                     var isAlreadyDisabled = elem[0].getAttribute('disabled');
                     var ngDisabled = elem[0].getAttribute('data-ng-disabled');
                     if (value) {
