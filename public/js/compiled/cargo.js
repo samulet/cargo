@@ -330,21 +330,23 @@ angular.module('website.dashboard', [])
         $rootScope.bodyColor = 'filled_bg';
         var accountModal;
         $scope.account = [];
+        $scope.today = new Date();
 
         checkForAccounts();
 
         function checkForAccounts() {
             if (!storageFactory.getAccounts()) {
+                $scope.registrationStep = 1;//TODO should be = 0
                 getAccounts();
             }
         }
 
         function openAccountModal() {
             accountModal = $modal.open({
-                templateUrl: 'accountModalContent.html',
+                templateUrl: 'registrationModalContent.html',
                 backdrop: 'static',
                 scope: $scope,
-                controller: 'accountModalController'
+                controller: 'registrationModalController'
             });
         }
 
@@ -371,17 +373,31 @@ angular.module('website.dashboard', [])
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (accounts) {
-                    storageFactory.setAccounts(accounts);
+                    //  storageFactory.setAccounts(accounts);//TODO
+                    openAccountModal();//TODO
                 }).error(onError);
         }
     }])
 
-    .controller('accountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
-        $scope.save = function () {
+    .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
+        $scope.juridicData = {};
+
+        $scope.openCatalog = function () {
+            //placeholder
+        };
+
+        $scope.openDatePopup = function (isOpen) {
+            $timeout(function () {
+                $scope[isOpen] = true;
+            });
+        };
+
+        $scope.saveAccountData = function () {
             $http.post(REST_CONFIG.BASE_URL + '/accounts', {name: $scope.account.name})
                 .success(function () {
                     $scope.closeAccountModal();
                     $scope.getAccounts();
+                    $scope.registrationStep = 1;
                 }).error(errorFactory.resolve);
         };
     }])

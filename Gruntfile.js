@@ -109,9 +109,9 @@ module.exports = function (grunt) {
                             })()),
                             REST_CONFIG: (function () {
                                 var PROTOCOL = 'http';
-                                var HOST = 'api.cargo';
+                                var HOST = 'cargo';
                                 var ZONE = '.dev';
-                                var HOST_CONTEXT = '';
+                                var HOST_CONTEXT = '/api';
                                 var PORT = '8000';
                                 return {
                                     PROTOCOL: PROTOCOL,
