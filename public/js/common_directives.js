@@ -20,22 +20,20 @@ angular.module('common.directives', [])
         return {
             restrict: 'A',
             link: function (scope, elem, attrs) {
+
+                function getNgDisabled(elem) {
+                    var ngDisabled = elem.getAttribute('ng-disabled') ? elem.getAttribute('ng-disabled') : elem.getAttribute('data-ng-disabled')
+                    return scope.$eval(ngDisabled);
+                }
+
                 scope.$watch(attrs.ajaxDisabler, function (value) {
                     var isAlreadyDisabled = elem[0].getAttribute('disabled');
-                    var ngDisabled = elem[0].getAttribute('data-ng-disabled');
+                    var isNgDisabled = getNgDisabled(elem[0]);
                     if (value) {
-                        if (!isAlreadyDisabled) elem.attr('disabled', !value);
+                        if (!isAlreadyDisabled && !isNgDisabled) elem.attr('disabled', !value);
                         elem.addClass('btn-loading');
                     } else {
-                        if (!isAlreadyDisabled && !ngDisabled) elem[0].removeAttribute('disabled');
-                        if (ngDisabled) {
-                            var isNgDisabled = scope.$eval(ngDisabled);
-                            if (isNgDisabled) {
-                                elem.attr('disabled', !value);
-                            } else {
-                                elem[0].removeAttribute('disabled');
-                            }
-                        }
+                        if (!isAlreadyDisabled && !isNgDisabled) elem[0].removeAttribute('disabled');
                         elem.removeClass('btn-loading');
                     }
                 });

@@ -29,6 +29,10 @@ angular.module('website', [
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
 
+        //$sceDelegateProvider.resourceUrlWhitelist(['self', 'http://api*.cargo.dev:8000/**']);
+        //$httpProvider.defaults.useXDomain = true;
+        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
         var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
             return {
                 'request': function (config) {
@@ -61,7 +65,7 @@ angular.module('website', [
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
             if (isToken) {
-                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+               $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
             }
             if (isToken && (next.originalPath === ROUTES.SIGN_IN)) {
                 redirectFactory.goDashboard();
