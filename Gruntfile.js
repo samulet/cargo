@@ -136,7 +136,7 @@ module.exports = function (grunt) {
                                 var HOST = 'cargo.zfprojects';
                                 var ZONE = '.info';
                                 var HOST_CONTEXT = '';
-                                var PORT = '8000';
+                                var PORT = '80';
                                 return {
                                     PROTOCOL: PROTOCOL,
                                     HOST: HOST,
@@ -150,8 +150,8 @@ module.exports = function (grunt) {
                                 var PROTOCOL = 'http';
                                 var HOST = 'cargo.zfprojects';
                                 var ZONE = '.info';
-                                var HOST_CONTEXT = '';
-                                var PORT = '';
+                                var HOST_CONTEXT = '/api';
+                                var PORT = '80';
                                 return {
                                     PROTOCOL: PROTOCOL,
                                     HOST: HOST,
@@ -187,9 +187,9 @@ module.exports = function (grunt) {
                             })()),
                             REST_CONFIG: (function () {
                                 var PROTOCOL = 'http';
-                                var HOST = 'api.cargo.zfprojects';
+                                var HOST = 'cargo.zfprojects';
                                 var ZONE = '.info';
-                                var HOST_CONTEXT = '';
+                                var HOST_CONTEXT = '/api';
                                 var PORT = '80';
                                 return {
                                     PROTOCOL: PROTOCOL,
