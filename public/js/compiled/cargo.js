@@ -336,7 +336,7 @@ angular.module('website.dashboard', [])
 
         function checkForAccounts() {
             if (!storageFactory.getAccounts()) {
-                $scope.registrationStep = 1;//TODO should be = 0
+                $scope.registrationStep = 0;//TODO should be = 0 at the end and 1 for dev for a while
                 getAccounts();
             }
         }
@@ -373,8 +373,8 @@ angular.module('website.dashboard', [])
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (accounts) {
-                    //  storageFactory.setAccounts(accounts);//TODO
-                    openAccountModal();//TODO
+                    storageFactory.setAccounts(accounts);
+                    //openAccountModal();//TODO
                 }).error(onError);
         }
     }])
