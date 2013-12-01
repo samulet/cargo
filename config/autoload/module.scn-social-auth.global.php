@@ -93,7 +93,7 @@ $settings = array(
      *
      * Please specify if Google is enabled
      */
-    //'google_enabled' => true,
+    'google_enabled' => true,
 
     /**
      * Google Scope
@@ -111,7 +111,7 @@ $settings = array(
      *
      * Please specify if LinkedIn is enabled
      */
-    //'linkedIn_enabled' => true,
+    'linkedIn_enabled' => true,
 
     /**
      * Twitter Enabled
@@ -140,6 +140,27 @@ $settings = array(
      * Please specify if Mailru is enabled
      */
     'mailru_enabled' => true,
+
+    /**
+     * Odnoklassniki Enabled
+     *
+     * Please specify if Odnoklassniki is enabled
+     */
+    'odnoklassniki_enabled' => true,
+
+    /**
+     * Vkontakte Enabled
+     *
+     * Please specify if Vkontakte is enabled
+     */
+    'vkontakte_enabled' => true,
+
+    /**
+     * Yandex Enabled
+     *
+     * Please specify if Yandex is enabled
+     */
+    'yandex_enabled' => true,
 
     /**
      * Set to true if you want to display only the social login buttons without
