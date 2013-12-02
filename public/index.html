@@ -1,23 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru" id="ng-app" ng-app="website">
+<html lang="ru">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<meta name="description" content="">-->
-    <title>Cargo - {{pageTitle}}</title>
+    <title>Cargo</title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="all">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="css/cargo.min.css" rel="stylesheet" media="all">
     <link href="css/cargo.handheld.min.css" rel="stylesheet" media="handheld">
-    <script src='lib/es5shim/es5-sham.min.js' type='text/javascript'></script>
-    <script src='//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' type='text/javascript'></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js" type='text/javascript'></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-route.min.js" type='text/javascript'></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-animate.min.js"
-            type='text/javascript'></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" type='text/javascript'></script>
-    <script src="js/compiled/cargo.js"></script>
-    <script src="lib/bootstrap-ui/ui-bootstrap-tpls-0.7.0-SNAPSHOT.min.js" type='text/javascript'></script>
     <link rel="shortcut icon" href="img/ico/favicon.ico">
     <link rel="icon" href="img/ico/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="img/ico/favicon.ico" type="image/x-icon">
@@ -37,15 +27,156 @@
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googmain_pagelecode.com/svn/trunk/html5.js"></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.1.0/es5-sham.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.1.0/es5-shim.min.js'></script>
     <![endif]-->
 
     <!--[if lte IE 8]>
     <script src="lib/json3/json3.min.js"></script>
     <![endif]-->
 </head>
-<body ng-class="bodyColor">
-<!-- Content block-->
-<div ng-view></div>
+<body>
+<div>
+    <div>
+        <div id="sign_in_block" class="filled_bg">
+            <div class="container">
+                <div id="sign_in_form_block" class="pull_right">
+
+                    <form name="signInForm" id="signInForm" role="form">
+                        <ul class="form_list mobile_centered">
+                            <li>Войти, используя</li>
+
+                            <li>
+                                <a href="/user/login/mailru" title="Mail.ru" class="social_btn_link">
+                                    <span class="big_icon pseudo_favicon"> M</span>
+                                    <span class="social_btn_desc">Mail.ru</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/login/odnoklassniki" title="Одноклассники"
+                                   class="social_btn_link">
+                                    <span class="big_icon pseudo_favicon"> O</span>
+                                    <span class="social_btn_desc">Одноклассники</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/login/yandex" title="Яндекс" class="social_btn_link">
+                                    <span class="big_icon pseudo_favicon"> Я</span>
+                                    <span class="social_btn_desc"> Яндекс</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/login/google" title="Google" class="social_btn_link">
+                                    <i class="fa fa-google-plus-square big_icon"></i>
+                                    <span class="social_btn_desc">Google</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/login/facebook" title="Facebook" class="social_btn_link">
+                                    <i class="fa fa-facebook-square big_icon"></i>
+                                    <span class="social_btn_desc">Facebook</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/login/vkontakte" title="Вконтакте"
+                                   class="social_btn_link">
+                                    <i class="fa fa-vk big_icon"></i>
+                                    <span class="social_btn_desc">Вконтакте</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/login/linkedin" title="Linked.In"
+                                   class="social_btn_link">
+                                    <i class="fa fa-linkedin-square big_icon"></i>
+                                    <span class="social_btn_desc">Linked.In</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <h1 class="marketing_header">Some inspiration wow-text.</h1>
+
+                <p class="marketing_subheader">Some short explain of who we are and etc</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div id="self_presentation_block">
+            Not so short but simple self-presentation. Few worlds about us. Not so short but simple self-presentation.
+            Few
+            self-presentation. Few worlds about us. Not so short but simple self-presentation. Few worlds about us.
+            <br/><br/>
+            so short but simple self-presentation. Few
+            self-presentation. Few worlds about us. Not so short but
+        </div>
+    </div>
+
+    <div class="filled_bg">
+        <div class="container">
+            <ul id="features_block">
+                <li>
+                    <h2>Feature 1</h2>
+
+                    <p>Our killer feature</p>
+                </li>
+                <li>
+                    <h2>Feature 2</h2>
+
+                    <p>Our killer feature</p>
+                </li>
+                <li>
+                    <h2>Feature 3</h2>
+
+                    <p>Our killer feature</p>
+                </li>
+                <li>
+                    <h2>Feature 4</h2>
+
+                    <p>Our killer feature</p>
+                </li>
+                <li>
+                    <h2>Feature 5</h2>
+
+                    <p>Our killer feature</p>
+                </li>
+                <li>
+                    <h2>Feature 6</h2>
+
+                    <p>Our killer feature</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <table id="pricing" class="table">
+            <th>Basic</th>
+            <th>Professional</th>
+            <th>Business</th>
+            <th>Enterprise</th>
+            <tr>
+                <td>$5/MO</td>
+                <td>$10/MO</td>
+                <td>$15/MO</td>
+                <td>$20/MO</td>
+            </tr>
+            <tr>
+                <td>1 route</td>
+                <td>2 routes</td>
+                <td>5 routes</td>
+                <td>100 routes</td>
+            </tr>
+            <tr>
+                <td>none</td>
+                <td>yes</td>
+                <td>yes</td>
+                <td>unlimited</td>
+            </tr>
+        </table>
+    </div>
+</div>
 <br/>
 </body>
 </html>
