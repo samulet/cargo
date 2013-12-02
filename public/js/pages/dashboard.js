@@ -12,8 +12,10 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
+            openAccountModal();//TODO remove
+            $scope.registrationStep = 1;//TODO remove
             if (!storageFactory.getAccounts()) {
-                $scope.registrationStep = 0;//TODO should be = 0 at the end and 1 for dev for a while
+                $scope.registrationStep = 0;
                 getAccounts();
             }
         }
@@ -51,13 +53,17 @@ angular.module('website.dashboard', [])
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (accounts) {
                     storageFactory.setAccounts(accounts);
-                    //openAccountModal();//TODO
                 }).error(onError);
         }
     }])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
-        $scope.juridicData = {};
+        $scope.juridicData = {
+            phones: [],
+            emails: [],
+            sites: [],
+            addresses: []
+        };
 
         $scope.openCatalog = function () {
             //placeholder
