@@ -50,7 +50,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('redirectFactory', ['ROUTES', '$location', function (ROUTES, $location) {
+    .factory('redirectFactory', ['ROUTES', '$location', 'WEB_CONFIG', function (ROUTES, $location, WEB_CONFIG) {
         var isOldBrowser = navigator.userAgent.match(/MSIE\s(?!9.0)/);  // IE8 and lower
 
         function redirectOldBrowserCompatable(url) {
@@ -68,6 +68,14 @@ angular.module('common.factories', [
             }
         }
 
+        function redirectToNonAngular(url) {
+            if (isOldBrowser) {
+                redirectOldBrowserCompatable(url);
+            } else {
+                window.location.href = url;
+            }
+        }
+
         function openNewWindow(url) {
             if (isOldBrowser) {
                 redirectOldBrowserCompatable(url);
@@ -78,13 +86,16 @@ angular.module('common.factories', [
 
         return {
             goHomePage: function () {
-                redirectTo(ROUTES.SIGN_IN);
+                redirectTo(ROUTES.START_PAGE);
             },
             goSignIn: function () {
-                redirectTo(ROUTES.SIGN_IN);
+                redirectToNonAngular(WEB_CONFIG.BASE_URL);
             },
             goDashboard: function () {
                 redirectTo(ROUTES.DASHBOARD);
+            },
+            logout: function () {
+                redirectTo(WEB_CONFIG.BASE_URL + '/user/logout');
             },
             redirectCustomPath: function (path) {
                 redirectTo(path);
@@ -132,8 +143,7 @@ angular.module('common.factories', [
                         return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
                     } else {
                         cookieFactory.removeItem("token");
-                        redirectFactory.goHomePage();
-                        return null;
+                        return redirectFactory.logout();
                     }
                 } else if (status === RESPONSE_STATUS.NOT_FOUND || status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
                     return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};

@@ -18,7 +18,6 @@ angular.module('website.constants', [])
     .constant('ROUTES', {
         START_PAGE: '/',
         START_PAGE_ALT: '',
-        SIGN_IN: '/sign/in',
         DASHBOARD: '/dashboard',
         USER_PROFILE: '/user/profile',
         NOT_FOUND: '/404'

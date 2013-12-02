@@ -16,22 +16,16 @@ angular.module('website', [
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'html/pages/';
-        $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.SIGN_IN});
-        $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.SIGN_IN});
-        $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.DASHBOARD});
+        $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.DASHBOARD});
         $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when(ROUTES.USER_PROFILE, {templateUrl: pathToIncs + 'user_profile.html', access: ACCESS_LEVEL.AUTHORIZED});
         $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', access: ACCESS_LEVEL.AUTHORIZED});
 
-        //$routeProvider.otherwise({redirectTo: '/404'});
-        $routeProvider.otherwise({redirectTo: ROUTES.SIGN_IN}); //TODO remove this hack after solve redirect problem
+        $routeProvider.otherwise({redirectTo: ROUTES.DASHBOARD});
 
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
-
-        //$sceDelegateProvider.resourceUrlWhitelist(['self', 'http://api*.cargo.dev:8000/**']);
-        //$httpProvider.defaults.useXDomain = true;
-        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
         var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
             return {
@@ -65,11 +59,8 @@ angular.module('website', [
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
             if (isToken) {
-               $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
-            }
-            if (isToken && (next.originalPath === ROUTES.SIGN_IN)) {
-                redirectFactory.goDashboard();
-            } else if (!isToken && (next.access >= ACCESS_LEVEL.AUTHORIZED)) {
+                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+            } else {
                 redirectFactory.goSignIn();
             }
         });

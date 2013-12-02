@@ -13,11 +13,11 @@
 
 .constant("REST_CONFIG", {
   "PROTOCOL": "http",
-  "HOST": "api.cargo",
-  "HOST_CONTEXT": "",
+  "HOST": "cargo",
+  "HOST_CONTEXT": "/api",
   "PORT": "8000",
-  "DOMAIN": "api.cargo.dev",
-  "BASE_URL": "http://api.cargo.dev:8000"
+  "DOMAIN": "cargo.dev",
+  "BASE_URL": "http://cargo.dev:8000/api"
 })
 
 ;
