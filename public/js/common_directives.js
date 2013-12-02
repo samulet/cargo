@@ -40,4 +40,96 @@ angular.module('common.directives', [])
             }
         };
     })
+
+    .directive('addPhoneForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addPhoneTemplate.html',
+            link: function (scope, elem, attrs) {
+                scope.showAddForm = false;
+                scope.phones = attrs.model;
+                scope.tempPhone = {};
+
+                scope.remove = function (from, element) {
+                    var index = scope.phones[from].indexOf(element);
+                    if (index !== -1) scope.phones[from].splice(index, 1);
+                };
+
+                scope.addPhone = function () {
+                    scope.phones.push(scope.tempPhone);
+                    scope.tempPhone = {};
+                };
+
+            }
+        };
+    })
+
+    .directive('addAddressForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addAddressTemplate.html',
+            link: function (scope, elem, attrs) {
+                scope.showAddForm = false;
+                scope.addresses = attrs.model;
+                scope.tempAddress = {};
+
+                scope.remove = function (from, element) {
+                    var index = scope.addresses[from].indexOf(element);
+                    if (index !== -1) scope.addresses[from].splice(index, 1);
+                };
+
+                scope.addAddress = function () {
+                    scope.addresses.push(scope.tempAddress);
+                    scope.tempAddress = {};
+                };
+
+            }
+        };
+    })
+
+    .directive('addSiteForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addSiteTemplate.html',
+            link: function (scope, elem, attrs) {
+                scope.showAddForm = false;
+                scope.sites = attrs.model;
+                scope.tempSite = {};
+
+                scope.remove = function (from, element) {
+                    var index = scope.sites[from].indexOf(element);
+                    if (index !== -1) scope.sites[from].splice(index, 1);
+                };
+
+                scope.addAddress = function () {
+                    scope.sites.push(scope.tempSite);
+                    scope.tempSite = {};
+                };
+
+            }
+        };
+    })
+
+    .directive('addEmailForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addEmailTemplate.html',
+            link: function (scope, elem, attrs) {
+                scope.showAddForm = false;
+                scope.emails = attrs.model;
+                scope.tempEmail = {};
+
+                scope.remove = function (from, element) {
+                    var index = scope.emails[from].indexOf(element);
+                    if (index !== -1) scope.emails[from].splice(index, 1);
+                };
+
+                scope.addAddress = function () {
+                    scope.emails.push(scope.tempEmail);
+                    scope.tempEmail = {};
+                };
+
+            }
+        };
+    })
 ;
