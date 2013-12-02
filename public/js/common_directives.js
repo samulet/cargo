@@ -22,7 +22,7 @@ angular.module('common.directives', [])
             link: function (scope, elem, attrs) {
 
                 function getNgDisabled(elem) {
-                    var ngDisabled = elem.getAttribute('ng-disabled') ? elem.getAttribute('ng-disabled') : elem.getAttribute('data-ng-disabled')
+                    var ngDisabled = elem.getAttribute('ng-disabled') ? elem.getAttribute('ng-disabled') : elem.getAttribute('data-ng-disabled');
                     return scope.$eval(ngDisabled);
                 }
 

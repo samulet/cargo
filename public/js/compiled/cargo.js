@@ -16,22 +16,16 @@ angular.module('website', [
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'html/pages/';
-        $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.SIGN_IN});
-        $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.SIGN_IN});
-        $routeProvider.when(ROUTES.SIGN_IN, {templateUrl: pathToIncs + 'sign_in.html', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.DASHBOARD});
+        $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.DASHBOARD});
         $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when(ROUTES.USER_PROFILE, {templateUrl: pathToIncs + 'user_profile.html', access: ACCESS_LEVEL.AUTHORIZED});
         $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', access: ACCESS_LEVEL.AUTHORIZED});
 
-        //$routeProvider.otherwise({redirectTo: '/404'});
-        $routeProvider.otherwise({redirectTo: ROUTES.SIGN_IN}); //TODO remove this hack after solve redirect problem
+        $routeProvider.otherwise({redirectTo: ROUTES.DASHBOARD});
 
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
-
-        //$sceDelegateProvider.resourceUrlWhitelist(['self', 'http://api*.cargo.dev:8000/**']);
-        //$httpProvider.defaults.useXDomain = true;
-        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
         var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
             return {
@@ -65,11 +59,8 @@ angular.module('website', [
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
             if (isToken) {
-               $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
-            }
-            if (isToken && (next.originalPath === ROUTES.SIGN_IN)) {
-                redirectFactory.goDashboard();
-            } else if (!isToken && (next.access >= ACCESS_LEVEL.AUTHORIZED)) {
+                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+            } else {
                 redirectFactory.goSignIn();
             }
         });
@@ -97,7 +88,6 @@ angular.module('website.constants', [])
     .constant('ROUTES', {
         START_PAGE: '/',
         START_PAGE_ALT: '',
-        SIGN_IN: '/sign/in',
         DASHBOARD: '/dashboard',
         USER_PROFILE: '/user/profile',
         NOT_FOUND: '/404'
@@ -133,7 +123,7 @@ angular.module('common.directives', [])
             link: function (scope, elem, attrs) {
 
                 function getNgDisabled(elem) {
-                    var ngDisabled = elem.getAttribute('ng-disabled') ? elem.getAttribute('ng-disabled') : elem.getAttribute('data-ng-disabled')
+                    var ngDisabled = elem.getAttribute('ng-disabled') ? elem.getAttribute('ng-disabled') : elem.getAttribute('data-ng-disabled');
                     return scope.$eval(ngDisabled);
                 }
 
@@ -204,7 +194,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('redirectFactory', ['ROUTES', '$location', function (ROUTES, $location) {
+    .factory('redirectFactory', ['ROUTES', '$location', 'WEB_CONFIG', function (ROUTES, $location, WEB_CONFIG) {
         var isOldBrowser = navigator.userAgent.match(/MSIE\s(?!9.0)/);  // IE8 and lower
 
         function redirectOldBrowserCompatable(url) {
@@ -222,6 +212,14 @@ angular.module('common.factories', [
             }
         }
 
+        function redirectToNonAngular(url) {
+            if (isOldBrowser) {
+                redirectOldBrowserCompatable(url);
+            } else {
+                window.location.href = url;
+            }
+        }
+
         function openNewWindow(url) {
             if (isOldBrowser) {
                 redirectOldBrowserCompatable(url);
@@ -232,13 +230,16 @@ angular.module('common.factories', [
 
         return {
             goHomePage: function () {
-                redirectTo(ROUTES.SIGN_IN);
+                redirectTo(ROUTES.START_PAGE);
             },
             goSignIn: function () {
-                redirectTo(ROUTES.SIGN_IN);
+                redirectToNonAngular(WEB_CONFIG.BASE_URL);
             },
             goDashboard: function () {
                 redirectTo(ROUTES.DASHBOARD);
+            },
+            logout: function () {
+                redirectTo(WEB_CONFIG.BASE_URL + '/user/logout');
             },
             redirectCustomPath: function (path) {
                 redirectTo(path);
@@ -286,8 +287,7 @@ angular.module('common.factories', [
                         return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
                     } else {
                         cookieFactory.removeItem("token");
-                        redirectFactory.goHomePage();
-                        return null;
+                        return redirectFactory.logout();
                     }
                 } else if (status === RESPONSE_STATUS.NOT_FOUND || status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
                     return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
@@ -313,11 +313,11 @@ angular.module('common.factories', [
 
 .constant("REST_CONFIG", {
   "PROTOCOL": "http",
-  "HOST": "api.cargo",
-  "HOST_CONTEXT": "",
+  "HOST": "cargo",
+  "HOST_CONTEXT": "/api",
   "PORT": "8000",
-  "DOMAIN": "api.cargo.dev",
-  "BASE_URL": "http://api.cargo.dev:8000"
+  "DOMAIN": "cargo.dev",
+  "BASE_URL": "http://cargo.dev:8000/api"
 })
 
 ;
@@ -366,7 +366,7 @@ angular.module('website.dashboard', [])
             if (status === RESPONSE_STATUS.NOT_FOUND) {
                 openAccountModal();
             } else {
-                errorFactory.resolve(data, status, true);
+                errorFactory.resolve(data, status);
             }
         }
 

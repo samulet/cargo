@@ -43,7 +43,7 @@ angular.module('website.dashboard', [])
             if (status === RESPONSE_STATUS.NOT_FOUND) {
                 openAccountModal();
             } else {
-                errorFactory.resolve(data, status, true);
+                errorFactory.resolve(data, status);
             }
         }
 
