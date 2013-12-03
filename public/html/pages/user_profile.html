@@ -135,15 +135,21 @@
         <!--Personal Data-->
         <li class="form_header"><h4>Личные данные</h4></li>
         <li class="input-group">
-            <label for="user-profile-lastName" class="input-group-addon">Фамилия</label>
+            <label for="user-profile-lastName" class="input-group-addon" title="Обязательное поле">
+                Фамилия<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-lastName" type="text"
-                   ng-model="profileData.personal.lastName" class="form-control"/>
+                   ng-model="profileData.personal.lastName" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-firstName" class="input-group-addon">Имя</label>
+            <label for="user-profile-firstName" class="input-group-addon" title="Обязательное поле">
+                Имя<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-firstName" type="text"
-                   ng-model="profileData.personal.firstName" class="form-control"/>
+                   ng-model="profileData.personal.firstName" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
@@ -167,8 +173,11 @@
         </li>
 
         <li class="input-group">
-            <label for="user-profile-docType" class="input-group-addon">Вид документа</label>
-            <select id="user-profile-docType" ng-model="profileData.personal.docType" class="form-control">
+            <label for="user-profile-docType" class="input-group-addon" title="Обязательное поле">
+                Вид документа<span class="required_mark">*</span>
+            </label>
+            <select id="user-profile-docType" ng-model="profileData.personal.docType" class="form-control"
+                    required>
                 <option value="passport_rf">Паспорт РФ</option>
                 <option value="passport_foreign">Паспорт другого государства</option>
                 <option value="military_card">Военный билет</option>
@@ -186,25 +195,34 @@
         <li class="form_header"><h4>Паспортные данные</h4></li>
 
         <li class="input-group">
-            <label for="user-profile-passport-series" class="input-group-addon inline_addon">Серия</label>
+            <label for="user-profile-passport-series" class="input-group-addon inline_addon" title="Обязательное поле">
+                Серия<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-series" type="text"
                    placeholder="25 01"
-                   ng-model="profileData.passport.series" class="form-control"/>
-            <label for="user-profile-passport-number" class="input-group-addon inline_addon">Номер</label>
+                   ng-model="profileData.passport.series" class="form-control"
+                   required/>
+            <label for="user-profile-passport-number" class="input-group-addon inline_addon" title="Обязательное поле">
+                Номер<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-number" type="text"
                    placeholder="999 999"
-                   ng-model="profileData.passport.number" class="form-control"/>
+                   ng-model="profileData.passport.number" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
+            <label for="user-profile-passport-issue" class="input-group-addon" title="Обязательное поле">
+                Дата выдачи<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-issue" class="form-control" type="text"
                    datepicker-popup="dd-MMMM-yyyy"
                    is-open="openedPassportIssueDate"
                    min="'1900-01-01'"
                    max="today"
                    datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
-                   ng-model="profileData.passport.issue"/>
+                   ng-model="profileData.passport.issue"
+                   required/>
             <span class="input-group-btn">
                 <button type="button" class="btn btn-info" ng-click="openDatePopup('openedPassportIssueDate')">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -213,33 +231,45 @@
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-issuingAuthority" class="input-group-addon">Орган выдавший</label>
+            <label for="user-profile-passport-issuingAuthority" class="input-group-addon" title="Обязательное поле">
+                Орган выдавший<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-issuingAuthority" type="text"
-                   ng-model="profileData.passport.issuingAuthority" class="form-control"/>
+                   ng-model="profileData.passport.issuingAuthority" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-unitNumber" class="input-group-addon">Номер подразделения</label>
+            <label for="user-profile-passport-unitNumber" class="input-group-addon" title="Обязательное поле">
+                Номер подразделения<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-unitNumber" type="text"
                    placeholder="999-999"
-                   ng-model="profileData.passport.unitNumber" class="form-control"/>
+                   ng-model="profileData.passport.unitNumber" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-birthPlace" class="input-group-addon">Место рождения</label>
+            <label for="user-profile-passport-birthPlace" class="input-group-addon" title="Обязательное поле">
+                Место рождения<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-birthPlace" type="text"
-                   ng-model="profileData.passport.birthPlace" class="form-control"/>
+                   ng-model="profileData.passport.birthPlace" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-birthDate" class="input-group-addon">Дата рождения</label>
+            <label for="user-profile-passport-birthDate" class="input-group-addon" title="Обязательное поле">
+                Дата рождения <span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-birthDate" class="form-control" type="text"
                    datepicker-popup="dd-MMMM-yyyy"
                    is-open="openedPassportBirthdayDate"
                    min="'1900-01-01'"
                    max="today"
                    datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
-                   ng-model="profileData.passport.birthDate"/>
+                   ng-model="profileData.passport.birthDate"
+                   required/>
             <span class="input-group-btn">
                 <button type="button" class="btn btn-info" ng-click="openDatePopup('openedPassportBirthdayDate')">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -301,10 +331,21 @@
 </form>
 <!--End Misc Data-->
 
-<add-phone-form model="profileData"></add-phone-form>
-<add-address-form model="profileData"></add-address-form>
-<add-email-form model="profileData"></add-email-form>
-<add-site-form model="profileData"></add-site-form>
+<!--Phones Data-->
+<add-phone-form model="profileData.phones"></add-phone-form>
+<!--END Phones Data-->
+
+<!--Address Data-->
+<add-address-form model="profileData.addresses"></add-address-form>
+<!--END Address Data-->
+
+<!--Email Data-->
+<add-email-form model="profileData.emails"></add-email-form>
+<!--END Email Data-->
+
+<!--Sites Data-->
+<add-site-form model="profileData.sites"></add-site-form>
+<!--END Sites Data-->
 
 <!--Photo Data-->
 <form name="photoDataForm" role="form">
@@ -443,8 +484,8 @@
 
 <ul class="mobile_centered vertical_form_block bordered_top_form clear_list">
     <li>
-        <button class="btn btn-danger" ng-click="cancelEdit()">Отменить</button>
-        <button class="btn btn-primary pull_right" ng-click="saveEdit()" ajax-disabler="isAjaxLoading">
+        <button type="reset" class="btn btn-danger" ng-click="cancelEdit()">Отменить</button>
+        <button type="submit" class="btn btn-primary pull_right" ng-click="saveEdit()" ajax-disabler="isAjaxLoading">
             Сохранить
         </button>
     </li>

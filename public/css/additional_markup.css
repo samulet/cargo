@@ -94,6 +94,12 @@ li.input-group .input-group-addon {
     list-style: none;
 }
 
+.required_mark{
+    color: #F00;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 .center_horizontal {
     margin: 0 auto;
 }
