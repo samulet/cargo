@@ -25,9 +25,11 @@
 
         <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
-                <label for="phone-type" class="input-group-addon">Вид телефона</label>
+                <label for="phone-type" class="input-group-addon" title="Обязательное поле">
+                    Вид телефона<span class="required_mark">*</span>
+                </label>
                 <select id="phone-type"
-                        ng-model="tempPhone.type" class="form-control">
+                        ng-model="tempPhone.type" class="form-control" required>
                     <option value="cell">Мобильный</option>
                     <option value="local">Стационарный</option>
                 </select>
@@ -43,7 +45,8 @@
             </li>
             <li class="input-group">
                 <label for="phone-number" class="input-group-addon" title="Обязательное поле">
-                    Номер телефона<span class="required_mark">*</span>
+                    Номер телефона
+                    <span class="required_mark">*</span>
                 </label>
                 <input id="phone-number" type="text"
                        ng-model="tempPhone.number" class="form-control"

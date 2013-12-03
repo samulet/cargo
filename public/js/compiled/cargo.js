@@ -157,7 +157,7 @@ angular.module('common.directives', [])
                     if (index !== -1) scope.phones.splice(index, 1);
                 };
 
-                scope.addPhone = function () {
+                scope.add = function () {
                     scope.phones.push(scope.tempPhone);
                     scope.tempPhone = {};
                 };

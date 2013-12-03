@@ -2,20 +2,6 @@
 
 angular.module('common.directives', [])
 
-    .directive('uploader', [function () {
-        return {
-            restrict: 'E',
-            scope: {
-
-            },
-            link: function (scope, elem, attrs, ctrl) {
-
-            },
-            replace: false,
-            templateUrl: 'html/templates/uploader.html'
-        };
-    }])
-
     .directive('ajaxDisabler', function () {
         return {
             restrict: 'A',
@@ -49,16 +35,16 @@ angular.module('common.directives', [])
                 phones: '=model'
             },
             link: function (scope, elem, attrs) {
-                scope.tempPhone = {};
+                scope.temp = {};
 
                 scope.remove = function (element) {
                     var index = scope.phones.indexOf(element);
                     if (index !== -1) scope.phones.splice(index, 1);
                 };
 
-                scope.addPhone = function () {
-                    scope.phones.push(scope.tempPhone);
-                    scope.tempPhone = {};
+                scope.add = function () {
+                    scope.phones.push(scope.temp);
+                    scope.temp = {};
                 };
 
             }
@@ -73,7 +59,7 @@ angular.module('common.directives', [])
                 addresses: '=model'
             },
             link: function (scope, elem, attrs) {
-                scope.tempAddress = {};
+                scope.temp = {};
 
                 scope.remove = function (element) {
                     var index = scope.addresses.indexOf(element);
@@ -81,8 +67,8 @@ angular.module('common.directives', [])
                 };
 
                 scope.add = function () {
-                    scope.addresses.push(scope.tempAddress);
-                    scope.tempAddress = {};
+                    scope.addresses.push(scope.temp);
+                    scope.temp = {};
                 };
 
             }
@@ -97,7 +83,7 @@ angular.module('common.directives', [])
                 sites: '=model'
             },
             link: function (scope, elem, attrs) {
-                scope.tempSite = {};
+                scope.temp = {};
 
                 scope.remove = function (element) {
                     var index = scope.sites.indexOf(element);
@@ -105,8 +91,8 @@ angular.module('common.directives', [])
                 };
 
                 scope.add = function () {
-                    scope.sites.push(scope.tempSite);
-                    scope.tempSite = {};
+                    scope.sites.push(scope.temp);
+                    scope.temp = {};
                 };
 
             }
@@ -121,7 +107,7 @@ angular.module('common.directives', [])
                 emails: '=model'
             },
             link: function (scope, elem, attrs) {
-                scope.tempEmail = {};
+                scope.temp = {};
 
                 scope.remove = function (element) {
                     var index = scope.emails.indexOf(element);
@@ -129,8 +115,8 @@ angular.module('common.directives', [])
                 };
 
                 scope.add = function () {
-                    scope.emails.push(scope.tempEmail);
-                    scope.tempEmail = {};
+                    scope.emails.push(scope.temp);
+                    scope.temp = {};
                 };
 
             }

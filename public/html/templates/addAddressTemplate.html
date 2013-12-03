@@ -33,7 +33,7 @@
                 <label for="address-type" class="input-group-addon" title="Обязательное поле">
                     Вид адреса<span class="required_mark">*</span>
                 </label>
-                <select id="address-type" ng-model="tempAddress.type" class="form-control" required>
+                <select id="address-type" ng-model="temp.type" class="form-control" required>
                     <option value="physical">Физический</option>
                     <option value="legal">Юридический</option>
                 </select>
@@ -43,7 +43,7 @@
                     Страна<span class="required_mark">*</span>
                 </label>
                 <input id="address-country" type="text"
-                       ng-model="tempAddress.country" class="form-control"
+                       ng-model="temp.country" class="form-control"
                        required/>
             </li>
             <li class="input-group">
@@ -51,49 +51,49 @@
                     Индекс<span class="required_mark">*</span>
                 </label>
                 <input id="address-index" type="number"
-                       ng-model="tempAddress.index" class="form-control"
+                       ng-model="temp.index" class="form-control"
                        required/>
             </li>
             <li class="input-group">
                 <label for="address-region" class="input-group-addon">Регион</label>
                 <input id="address-region" type="text"
-                       ng-model="tempAddress.region" class="form-control"/>
+                       ng-model="temp.region" class="form-control"/>
             </li>
             <li class="input-group">
                 <label for="address-city" class="input-group-addon" title="Обязательное поле">
                     Город<span class="required_mark">*</span>
                 </label>
                 <input id="address-city" type="text"
-                       ng-model="tempAddress.city" class="form-control"
+                       ng-model="temp.city" class="form-control"
                        required/>
             </li>
             <li class="input-group">
                 <label for="address-area" class="input-group-addon">Район</label>
                 <input id="address-area" type="text"
-                       ng-model="tempAddress.area" class="form-control"/>
+                       ng-model="temp.area" class="form-control"/>
             </li>
             <li class="input-group">
                 <label for="address-street" class="input-group-addon" title="Обязательное поле">
                     Улица<span class="required_mark">*</span>
                 </label>
                 <input id="address-street" type="text"
-                       ng-model="tempAddress.street" class="form-control"
+                       ng-model="temp.street" class="form-control"
                        required/>
             </li>
             <li class="input-group">
                 <label for="address-house" class="input-group-addon">Дом</label>
                 <input id="address-house" type="text"
-                       ng-model="tempAddress.house" class="form-control"/>
+                       ng-model="temp.house" class="form-control"/>
             </li>
             <li class="input-group">
                 <label for="address-housing" class="input-group-addon">Корпус</label>
                 <input id="address-housing" type="text"
-                       ng-model="tempAddress.housing" class="form-control"/>
+                       ng-model="temp.housing" class="form-control"/>
             </li>
             <li class="input-group">
                 <label for="address-apartment" class="input-group-addon">Квартира</label>
                 <input id="address-apartment" type="text"
-                       ng-model="tempAddress.apartment" class="form-control"/>
+                       ng-model="temp.apartment" class="form-control"/>
             </li>
 
             <li>
