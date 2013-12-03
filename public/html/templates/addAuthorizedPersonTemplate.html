@@ -1,0 +1,63 @@
+<form name="authorizedPersonDataForm" role="form">
+    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
+
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddForm = true;"
+                ng-show="!showAddForm" style="margin-top: 10px;">
+            <i class="glyphicon glyphicon-plus"> </i> Добавить
+        </button>
+        <div class="form_header"><h4>Уполномоченные лица</h4></div>
+
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="authorizedPersons.length > 0" class="alert_placeholder"><i>(Нет уполномоченных лиц)</i></li>
+            <li ng-show="authorizedPersons.length > 0" ng-repeat="founder in authorizedPersons">
+                <span ng-show="authorizedPerson.authorityKind">
+                    <strong>Вид полномочия</strong>: {{authorizedPerson.authorityKind}},
+                </span>
+                <span ng-show="authorizedPerson.authorityKind">
+                    <strong>Основание деятельности</strong>: {{authorizedPerson.authorityKind}}
+                </span>
+                <span ng-show="authorizedPerson.individualFaceLink">
+                    <strong>Ссылка на физ. лицо</strong>: {{authorizedPerson.individualFaceLink}}
+                </span>
+                <span class="pull_right clickable" ng-click="remove(authorizedPerson)" title="Удалить">
+                    <i class="glyphicon glyphicon-remove"> </i>
+                </span>
+            </li>
+        </ul>
+
+        <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
+            <li class="input-group">
+                <label for="authorizedPerson-authorityKind" class="input-group-addon">
+                    Вид полномочия
+                </label>
+                <input id="authorizedPerson-authorityKind" type="text"
+                       ng-model="temp.authorityKind" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="authorizedPerson-baseActivity" class="input-group-addon">
+                    Основание деятельности
+                </label>
+                <input id="authorizedPerson-baseActivity" type="text"
+                       ng-model="temp.baseActivity" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="authorizedPerson-individualFaceLink" class="input-group-addon">
+                    Ссылка на физ. лицо
+                </label>
+                <input id="authorizedPerson-individualFaceLink" type="text"
+                       ng-model="temp.individualFaceLink" class="form-control"/>
+            </li>
+
+            <li>
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="authorizedPersonDataForm.$invalid">
+                    <span ng-show="authorizedPersons.length == 0"> Сохранить</span>
+                    <span ng-show="authorizedPersons.length > 0"> Добавить ещё уполномоченое лицо</span>
+                </button>
+                <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
+                    <span> Отмена</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>
