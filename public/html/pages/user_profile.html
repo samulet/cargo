@@ -20,14 +20,15 @@
         </li>
         <li>
             <span class="description">Email:</span>
-            <span class="user_data_text" ng-show="profileData.emails.length > 0">
+
+            <div class="user_data_text" ng-show="profileData.emails.length > 0">
                 <ul class="clear_list">
                     <li ng-repeat="email in profileData.emails">
                         <span ng-show="email.type">{{email.type}}</span>
                         <span>{{email.address}}</span>
                     </li>
                 </ul>
-            </span>
+            </div>
             <span class="text_placeholder" ng-hide="profileData.emails.length > 0">______________</span>
         </li>
         <li>
@@ -62,7 +63,8 @@
         </li>
         <li>
             <span class="description">Телефоны:</span>
-            <span class="user_data_text" ng-show="profileData.phones.length > 0">
+
+            <div class="user_data_text" ng-show="profileData.phones.length > 0">
                 <ul class="clear_list">
                     <li ng-repeat="phone in profileData.phones">
                         <span ng-show="phone.type">Тип телефона:
@@ -87,7 +89,7 @@
                         </span>
                     </li>
                 </ul>
-            </span>
+            </div>
             <span class="text_placeholder" ng-hide="profileData.phones">______________</span>
         </li>
         <li ng-show="profileData.social.vkontakte">
@@ -362,7 +364,6 @@
         <li ng-hide="profileData.photo.url" class="img-thumbnail" style="width:200px; height: 200px;">&nbsp;</li>
 
         <li>
-            <!--<uploader class="pull_right"></uploader>-->
             <button class="btn btn-info pull_right" disabled>Загрузить</button>
             <br style="clear: both;"/>
         </li>
@@ -407,22 +408,25 @@
 <ul id="profileSocialBlock" class="mobile_centered vertical_form_block bordered_top_form clear_list">
     <li class="form_header"><h4>Аккаунты соцальных сетей</h4></li>
 
-    <ul class="alert alert-info clear_list">
-        <li ng-hide="profileData.socials.length > 0" class="alert_placeholder"><i>(Нет подключенных аккаунтов)</i></li>
-        <li ng-show="profileData.socials.length > 0" ng-repeat="social in profileData.socials">
-            <span ng-show="social.type == 'mailru'"><strong>Mail.ru</strong>: </span>
-            <span ng-show="social.type == 'oddnoklassniki'"><strong>Одноклассники</strong>: </span>
-            <span ng-show="social.type == 'yandex'"><strong>Яндекс</strong>: </span>
-            <span ng-show="social.type == 'google'"><strong>Google</strong>: </span>
-            <span ng-show="social.type == 'facebook'"><strong>Facebook</strong>: </span>
-            <span ng-show="social.type == 'vkontavke'"><strong>Вконтакте</strong>: </span>
-            <span ng-show="social.type == 'linkedin'"><strong>Linked.In</strong>: </span>
-            <span ng-show="social.name">{{social.name}} </span>
+    <li>
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="profileData.socials.length > 0" class="alert_placeholder"><i>(Нет подключенных аккаунтов)</i>
+            </li>
+            <li ng-show="profileData.socials.length > 0" ng-repeat="social in profileData.socials">
+                <span ng-show="social.type == 'mailru'"><strong>Mail.ru</strong>: </span>
+                <span ng-show="social.type == 'oddnoklassniki'"><strong>Одноклассники</strong>: </span>
+                <span ng-show="social.type == 'yandex'"><strong>Яндекс</strong>: </span>
+                <span ng-show="social.type == 'google'"><strong>Google</strong>: </span>
+                <span ng-show="social.type == 'facebook'"><strong>Facebook</strong>: </span>
+                <span ng-show="social.type == 'vkontavke'"><strong>Вконтакте</strong>: </span>
+                <span ng-show="social.type == 'linkedin'"><strong>Linked.In</strong>: </span>
+                <span ng-show="social.name">{{social.name}} </span>
             <span class="pull_right clickable" ng-click="remove('socials', social)" title="Удалить этот аккаунт адрес">
                 <i class="glyphicon glyphicon-remove"> </i>
             </span>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </li>
 
     <li class="form_header"><h5>Добавить аккаунт социальной сети</h5></li>
 
@@ -485,7 +489,8 @@
 <ul class="mobile_centered vertical_form_block bordered_top_form clear_list">
     <li>
         <button type="reset" class="btn btn-danger" ng-click="cancelEdit()">Отменить</button>
-        <button type="submit" class="btn btn-primary pull_right" ng-click="saveEdit()" ajax-disabler="isAjaxLoading">
+        <button type="submit" class="btn btn-primary pull_right" ng-click="saveEdit()" ajax-disabler="isAjaxLoading"
+                ng-disabled="eSignatureDataForm.$invalid && photoDataForm.$invalid &&  miscDataForm.$invalid &&  passportDataForm.$invalid &&  personalDataForm.$invalid  && isAjaxLoading">
             Сохранить
         </button>
     </li>
