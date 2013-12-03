@@ -1,4 +1,3 @@
-<!--Sites Data-->
 <form name="sitesDataForm" role="form">
     <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
 
@@ -10,13 +9,13 @@
 
         <ul class="alert alert-info clear_list">
             <li ng-hide="sites.length > 0" class="alert_placeholder"><i>(Нет сайтов)</i></li>
-            <!--<li ng-show="sites.length > 0" ng-repeat="site in sites"> //TODO fix
+            <li ng-show="sites.length > 0" ng-repeat="site in sites">
                 <span ng-show="site.type"><strong>Тип</strong>: {{site.type}}, </span>
                 <span ng-show="site.url"><strong>Адресс</strong>: {{site.url}}</span>
-                    <span class="pull_right clickable" ng-click="remove('sites', site)" title="Удалить этот сайт">
+                    <span class="pull_right clickable" ng-click="remove(site)" title="Удалить этот сайт">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
-            </li>-->
+            </li>
         </ul>
 
         <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
@@ -26,13 +25,18 @@
                        ng-model="tempSite.type" class="form-control"/>
             </li>
             <li class="input-group">
-                <label for="site-url" class="input-group-addon">Адрес</label>
-                <input id="site-url" type="email"
-                       ng-model="tempSite.url" class="form-control"/>
+                <label for="site-url" class="input-group-addon" title="Обязательное поле">
+                    Адрес<span class="required_mark">*</span>
+                </label>
+                <input id="site-url" type="url"
+                       ng-model="tempSite.url" class="form-control"
+                       placeholder="http://your.site.com"
+                       required/>
             </li>
 
             <li>
-                <button class="btn btn-success pull_right" ng-click="addSite()">
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="sitesDataForm.$invalid">
                     <span ng-show="sites.length == 0"> Сохранить</span>
                     <span ng-show="sites.length > 0"> Добавить ещё один сайт</span>
                 </button>
@@ -43,4 +47,3 @@
         </ul>
     </div>
 </form>
-<!--END Sites Data-->
