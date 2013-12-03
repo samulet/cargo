@@ -150,24 +150,25 @@
             <input id="juridicData-authorizedCapitalSize" type="text"
                    ng-model="juridicData.authorizedCapitalSize" class="form-control"/>
         </li>
-    </ul>
-</form>
-<form name="juridicFounderDataForm" role="form">
-    <ul>
-        <li class="input-group">
-            <label for="juridicData-foundersNumber" class="input-group-addon">Количество учредителей</label>
-            <input id="juridicData-foundersNumber" type="text"
-                   ng-model="juridicData.foundersNumber" class="form-control"/>
-        </li>
-        <li>
-
-        </li>
         <li class="input-group">
             <label for="juridicData-okved" class="input-group-addon">Коды ОКВЭД</label>
             <input id="juridicData-okved" type="text"
                    ng-model="juridicData.okved" class="form-control"/>
         </li>
     </ul>
+</form>
+
+<!--Founders Data-->
+<div>Количество учредителей: {{juridicData.founders.length}}</div>
+<add-founder-form model="juridicData.founders"></add-founder-form>
+<!--END Founders Data-->
+
+<!--Authorized persons-->
+<add-authorized-person-form model="juridicData.authorizedPersons"></add-authorized-person-form>
+<!--END Authorized persons-->
+
+<!--PFR-->
+<form name="juridicPfrDataForm" role="form">
     <ul class="clear_list vertical_form_block bordered_top_form">
         <li class="form_header"><h4>ПФР</h4></li>
         <li class="input-group">
@@ -198,6 +199,11 @@
                 </span>
         </li>
     </ul>
+</form>
+<!--END PFR-->
+
+<!--FMS-->
+<form name="juridicFmsDataForm" role="form">
     <ul class="clear_list vertical_form_block bordered_top_form">
         <li class="form_header"><h4>ФМС</h4></li>
         <li class="input-group">
@@ -226,12 +232,36 @@
                     </button>
                 </span>
         </li>
+    </ul>
+</form>
+<!--END FMS-->
+
+<!--Licenses-->
+<form name="juridicLicensesDataForm" role="form">
+    <ul class="clear_list vertical_form_block bordered_top_form">
+        <li class="form_header"><h4>Лицензии</h4></li>
         <li class="input-group">
             Лицензии!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         </li>
+    </ul>
+</form>
+<!--END Licenses-->
+
+<!--Registration requester-->
+<form name="juridicRegistrationRequesterDataForm" role="form">
+    <ul class="clear_list vertical_form_block bordered_top_form">
+        <li class="form_header"><h4>Заявители при регистрации</h4></li>
         <li class="input-group">
             Заявители при регистрации!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         </li>
+    </ul>
+</form>
+<!--END Registration requester-->
+
+<!--Tax details-->
+<form name="juridicRegistrationRequesterDataForm" role="form">
+    <ul class="clear_list vertical_form_block bordered_top_form">
+        <li class="form_header"><h4>Налоги</h4></li>
         <li class="input-group">
             <label for="juridicData-taxAccountingSystem" class="input-group-addon">
                 Вид системы налогового учета

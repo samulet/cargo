@@ -61,6 +61,8 @@ angular.module('website.dashboard', [])
         $scope.juridicData = {
             phones: [],
             emails: [],
+            founders: [],
+            authorizedPersons: [],
             sites: [],
             addresses: []
         };

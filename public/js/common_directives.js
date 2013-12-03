@@ -27,7 +27,7 @@ angular.module('common.directives', [])
         };
     })
 
-    .directive('addPhoneForm', function () {
+    .directive('addPhoneForm', function () { //TODO refactor this and thos directives to a common view
         return {
             restrict: 'E',
             templateUrl: 'html/templates/addPhoneTemplate.html',
@@ -116,6 +116,54 @@ angular.module('common.directives', [])
 
                 scope.add = function () {
                     scope.emails.push(scope.temp);
+                    scope.temp = {};
+                };
+
+            }
+        };
+    })
+
+    .directive('addFounderForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addFounderTemplate.html',
+            scope: {
+                founders: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.founders.indexOf(element);
+                    if (index !== -1) scope.founders.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.founders.push(scope.temp);
+                    scope.temp = {};
+                };
+
+            }
+        };
+    })
+
+    .directive('addAuthorizedPersonForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addFounderTemplate.html',
+            scope: {
+                authorizedPersons: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.authorizedPersons.indexOf(element);
+                    if (index !== -1) scope.authorizedPersons.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.authorizedPersons.push(scope.temp);
                     scope.temp = {};
                 };
 
