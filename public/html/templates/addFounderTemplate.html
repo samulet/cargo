@@ -5,14 +5,14 @@
                 ng-show="!showAddForm" style="margin-top: 10px;">
             <i class="glyphicon glyphicon-plus"> </i> Добавить
         </button>
-        <div class="form_header"><h4>Сайты</h4></div>
+        <div class="form_header"><h4>Учередители</h4></div>
 
         <ul class="alert alert-info clear_list">
-            <li ng-hide="founders.length > 0" class="alert_placeholder"><i>(Нет сайтов)</i></li>
+            <li ng-hide="founders.length > 0" class="alert_placeholder"><i>(Нет учередителей)</i></li>
             <li ng-show="founders.length > 0" ng-repeat="founder in founders">
-                <span ng-show="founder.type"><strong>Тип</strong>: {{founder.type}}, </span>
-                <span ng-show="founder.url"><strong>Адресс</strong>: {{founder.url}}</span>
-                    <span class="pull_right clickable" ng-click="remove(founder)" title="Удалить этот сайт">
+                <span ng-show="founder.type"><strong>Вид учередителя</strong>: {{founder.type}}, </span>
+                <span ng-show="founder.url"><strong>Ссылка</strong>: {{founder.url}}</span>
+                    <span class="pull_right clickable" ng-click="remove(founder)" title="Удалить">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
@@ -20,13 +20,16 @@
 
         <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
-                <label for="founder-type" class="input-group-addon">Тип сайта</label>
+                <label for="founder-type" class="input-group-addon" title="Обязательное поле">
+                    Вид учередителя<span class="required_mark">*</span>
+                </label>
                 <input id="founder-type" type="text"
-                       ng-model="temp.type" class="form-control"/>
+                       ng-model="temp.number" class="form-control"
+                       required/>
             </li>
             <li class="input-group">
                 <label for="founder-url" class="input-group-addon" title="Обязательное поле">
-                    Адрес<span class="required_mark">*</span>
+                    Ссылка на учередителя<span class="required_mark">*</span>
                 </label>
                 <input id="founder-url" type="url"
                        ng-model="temp.url" class="form-control"
@@ -35,9 +38,9 @@
 
             <li>
                 <button type="submit" class="btn btn-success pull_right" ng-click="add()"
-                        ng-disabled="foundersDataForm.$invalid">
+                        ng-disabled="founderDataForm.$invalid">
                     <span ng-show="founders.length == 0"> Сохранить</span>
-                    <span ng-show="founders.length > 0"> Добавить ещё один сайт</span>
+                    <span ng-show="founders.length > 0"> Добавить ещё одного учередителя</span>
                 </button>
                 <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
                     <span> Отмена</span>

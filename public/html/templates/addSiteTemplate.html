@@ -12,7 +12,7 @@
             <li ng-show="sites.length > 0" ng-repeat="site in sites">
                 <span ng-show="site.type"><strong>Тип</strong>: {{site.type}}, </span>
                 <span ng-show="site.url"><strong>Адресс</strong>: {{site.url}}</span>
-                    <span class="pull_right clickable" ng-click="remove(site)" title="Удалить этот сайт">
+                    <span class="pull_right clickable" ng-click="remove(site)" title="Удалить">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
@@ -20,9 +20,12 @@
 
         <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
-                <label for="site-type" class="input-group-addon">Тип сайта</label>
+                <label for="site-type" class="input-group-addon" title="Обязательное поле">
+                    Тип сайта<span class="required_mark">*</span>
+                </label>
                 <input id="site-type" type="text"
-                       ng-model="temp.type" class="form-control"/>
+                       ng-model="temp.type" class="form-control"
+                       required/>
             </li>
             <li class="input-group">
                 <label for="site-url" class="input-group-addon" title="Обязательное поле">
