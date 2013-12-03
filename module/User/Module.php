@@ -16,6 +16,7 @@ class Module
             /* @var $user \User\Entity\User */
             $user = $e->getParam('user');
             $user->addRole('user');
+            $user->setUUID();
         });
         $scnServiceEvents->attach('register.post', function ($e) use ($serviceManager) {
             /** @var \ZfcUser\Options\ModuleOptions $zfcUserModuleOptions */

@@ -6,6 +6,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Zend\Form\Annotation;
 use ZfcUser\Entity\UserInterface;
+use Zend\ServiceManager\ServiceManager;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 /**
  * @ODM\Document(collection="user")
@@ -19,44 +21,33 @@ class User implements UserInterface
      * @var int
      */
     protected $id;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $uuid;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Имя пользователя"})
      */
     protected $username;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Email"})
      */
     protected $email;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Отображаемое имя"})
      */
     protected $displayName;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Пароль"})
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      */
     protected $password;
 
@@ -81,49 +72,177 @@ class User implements UserInterface
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Выберите роль пользователя",
-     *                      "value_options" : {"forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
      */
-    protected $roles;
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
-    public $submit;
+    protected $roles = array();
     /**
      * @ODM\ObjectId
      * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Выберите организацию от которой вы работаете"})
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Attributes({"value":"0"})
      */
-    public $currentAcc;
+    protected $currentAcc;
     /**
      * @ODM\ObjectId
      * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Выберите компанию от которой вы работаете"})
-     * @Annotation\Attributes({"value":"0"})
      */
-    public $currentCom;
-
+    protected $currentCom;
     /**
-     * Initialies the roles variable.
+     * @ODM\Date
      */
-    public function __construct()
+    protected $deletedAt;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $name = array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $docs = array();
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $snils;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $inn;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $phone = array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $site = array();
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $avatar;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $sign = array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $social = array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $status = array();
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
     {
-        $this->roles = array();
+        return $this->deletedAt;
+    }
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setDocs($docs)
+    {
+        $this->docs = $docs;
+        return $this;
+    }
+    public function getDocs()
+    {
+        return $this->docs;
+    }
+
+    public function setSnils($snils)
+    {
+        $this->snils = $snils;
+        return $this;
+    }
+    public function getSnils()
+    {
+        return $this->snils;
+    }
+
+    public function setInn($inn)
+    {
+        $this->inn = $inn;
+        return $this;
+    }
+    public function getInn()
+    {
+        return $this->inn;
+    }
+
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public function setSite($site)
+    {
+        $this->site = $site;
+        return $this;
+    }
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+        return $this;
+    }
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public function getSign()
+    {
+        return $this->sign;
+    }
+    public function setSign($sign)
+    {
+        $this->sign = $sign;
+        return $this;
+    }
+
+    public function getSocial()
+    {
+        return $this->social;
+    }
+    public function setSocial($social)
+    {
+        $this->social = $social;
+        return $this;
+    }
     /**
      * Get id.
      *
@@ -254,6 +373,29 @@ class User implements UserInterface
      *
      * @return int
      */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set state.
+     *
+     * @param int $state
+     *
+     * @return UserInterface
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * Get state.
+     *
+     * @return int
+     */
     public function getState()
     {
         return $this->state;
@@ -318,4 +460,41 @@ class User implements UserInterface
     {
         $this->roles[] = $role;
     }
+    public function getUUID()
+    {
+        return $this->uuid;
+    }
+
+    public function setUUID($uuid = null)
+    {
+        if(empty($uuid)) {
+            $uuidGen = new UuidGenerator();
+            $this->uuid=$uuidGen->generateV4();
+        } else {
+            $this->uuid = $uuid;
+        }
+        return $this;
+    }
+
+
+    public function setData($data) {
+        if($data !== null && is_array($data)){
+            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
+                    $this->$key = $entity[$key];
+                }
+            }
+        }
+        return $this;
+
+    }
+
+    public function getData() {
+        $data = array();
+        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+            $data[$key]=$this->$key;
+        }
+        return $data;
+    }
+
 }
