@@ -1,0 +1,49 @@
+<form name="registrationRequesterDataForm" role="form">
+    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
+
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddForm = true;"
+                ng-show="!showAddForm" style="margin-top: 10px;">
+            <i class="glyphicon glyphicon-plus"> </i> Добавить
+        </button>
+        <div class="form_header"><h4>Заявители при регистрации</h4></div>
+
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="registrationRequesters.length > 0" class="alert_placeholder"><i>(Нет заявителей)</i></li>
+            <li ng-show="registrationRequesters.length > 0" ng-repeat="registrationRequester in registrationRequesters">
+                <span ng-show="registrationRequester.type"><strong>Вид заявителя</strong>: {{registrationRequester.type}}, </span>
+                <span ng-show="registrationRequester.link"><strong>Ссылка на заявителя</strong>: {{registrationRequester.link}}</span>
+                    <span class="pull_right clickable" ng-click="remove(registrationRequester)" title="Удалить">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+
+        <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
+            <li class="input-group">
+                <label for="registrationRequester-type" class="input-group-addon">
+                    Вид заявителя
+                </label>
+                <input id="registrationRequester-type" type="text"
+                       ng-model="temp.type" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="registrationRequester-link" class="input-group-addon">
+                    Ссылка на заявителя
+                </label>
+                <input id="registrationRequester-link" type="text"
+                       ng-model="temp.link" class="form-control"/>
+            </li>
+
+            <li>
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="registrationRequesterDataForm.$invalid">
+                    <span ng-show="registrationRequesters.length == 0"> Сохранить</span>
+                    <span ng-show="registrationRequesters.length > 0"> Добавить ещё одну заявителя при регистрации</span>
+                </button>
+                <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
+                    <span> Отмена</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>

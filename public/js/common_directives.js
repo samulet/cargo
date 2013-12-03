@@ -46,7 +46,6 @@ angular.module('common.directives', [])
                     scope.phones.push(scope.temp);
                     scope.temp = {};
                 };
-
             }
         };
     })
@@ -70,7 +69,6 @@ angular.module('common.directives', [])
                     scope.addresses.push(scope.temp);
                     scope.temp = {};
                 };
-
             }
         };
     })
@@ -94,7 +92,6 @@ angular.module('common.directives', [])
                     scope.sites.push(scope.temp);
                     scope.temp = {};
                 };
-
             }
         };
     })
@@ -118,7 +115,6 @@ angular.module('common.directives', [])
                     scope.emails.push(scope.temp);
                     scope.temp = {};
                 };
-
             }
         };
     })
@@ -142,7 +138,6 @@ angular.module('common.directives', [])
                     scope.founders.push(scope.temp);
                     scope.temp = {};
                 };
-
             }
         };
     })
@@ -150,7 +145,7 @@ angular.module('common.directives', [])
     .directive('addAuthorizedPersonForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addFounderTemplate.html',
+            templateUrl: 'html/templates/addAuthorizedPersonTemplate.html',
             scope: {
                 authorizedPersons: '=model'
             },
@@ -166,7 +161,59 @@ angular.module('common.directives', [])
                     scope.authorizedPersons.push(scope.temp);
                     scope.temp = {};
                 };
+            }
+        };
+    })
 
+    .directive('addLicenseForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addLicenseTemplate.html',
+            scope: {
+                licenses: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+                scope.today = new Date();
+
+                scope.remove = function (element) {
+                    var index = scope.licenses.indexOf(element);
+                    if (index !== -1) scope.licenses.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.licenses.push(scope.temp);
+                    scope.temp = {};
+                };
+
+                scope.openDatePopup = function(isOpen) {
+                    /* $timeout(function () { //TODO add $timeout
+                     scope[isOpen] = true;
+                     });*/
+                };
+            }
+        };
+    })
+
+    .directive('addRegistrationRequesterForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addRegistrationRequesterTemplate.html',
+            scope: {
+                registrationRequesters: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.registrationRequesters.indexOf(element);
+                    if (index !== -1) scope.registrationRequesters.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.registrationRequesters.push(scope.temp);
+                    scope.temp = {};
+                };
             }
         };
     })

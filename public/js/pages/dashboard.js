@@ -63,6 +63,8 @@ angular.module('website.dashboard', [])
             emails: [],
             founders: [],
             authorizedPersons: [],
+            licenses: [],
+            registrationRequesters: [],
             sites: [],
             addresses: []
         };

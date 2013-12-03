@@ -18,7 +18,9 @@
                     действия</h5>
             </li>
             <li class="input-group">
-                <label for="accountName" class="input-group-addon">Название аккаунта</label>
+                <label for="accountName" class="input-group-addon" title="Обязательное поле">
+                    Название аккаунта<span class="required_mark">*</span>
+                </label>
                 <input id="accountName" type="text"
                        ng-model="account.name" class="form-control" required
                        maxlength="20"/>
@@ -45,7 +47,9 @@
     <ul class="clear_list vertical_form_block">
         <li><h4>Юридическое лицо</h4></li>
         <li class="input-group">
-            <label for="juridicData-shortName" class="input-group-addon">Краткое наименование</label>
+            <label for="juridicData-shortName" class="input-group-addon" title="Обязательное поле">
+                Краткое наименование<span class="required_mark">*</span>
+            </label>
             <input id="juridicData-shortName" type="text"
                    ng-model="juridicData.shortName" class="form-control"
                    required/>
@@ -63,7 +67,9 @@
                    maxlength="13"/>
         </li>
         <li class="input-group">
-            <label for="juridicData-inn" class="input-group-addon">ИНН</label>
+            <label for="juridicData-inn" class="input-group-addon" title="Обязательное поле">
+                ИНН<span class="required_mark">*</span>
+            </label>
             <input id="juridicData-inn" type="text"
                    ng-model="juridicData.inn" class="form-control"
                    ng-minlength="10"
@@ -217,8 +223,9 @@
                    ng-model="juridicData.fmsNumber" class="form-control"/>
         </li>
         <li class="input-group">
-            <label for="juridicData-fmsRegistrationDate" class="input-group-addon">Дата постановки на учет
-                ФМС</label>
+            <label for="juridicData-fmsRegistrationDate" class="input-group-addon">
+                Дата постановки на учет ФМС
+            </label>
             <input id="juridicData-fmsRegistrationDate" class="form-control" type="text"
                    datepicker-popup="dd-MMMM-yyyy"
                    is-open="openedFmsRegistrationDate"
@@ -237,25 +244,11 @@
 <!--END FMS-->
 
 <!--Licenses-->
-<form name="juridicLicensesDataForm" role="form">
-    <ul class="clear_list vertical_form_block bordered_top_form">
-        <li class="form_header"><h4>Лицензии</h4></li>
-        <li class="input-group">
-            Лицензии!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        </li>
-    </ul>
-</form>
+<add-license-form model="juridicData.licenses"></add-license-form>
 <!--END Licenses-->
 
 <!--Registration requester-->
-<form name="juridicRegistrationRequesterDataForm" role="form">
-    <ul class="clear_list vertical_form_block bordered_top_form">
-        <li class="form_header"><h4>Заявители при регистрации</h4></li>
-        <li class="input-group">
-            Заявители при регистрации!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        </li>
-    </ul>
-</form>
+<add-registration-requester-form model="juridicData.registrationRequesters"></add-registration-requester-form>
 <!--END Registration requester-->
 
 <!--Tax details-->

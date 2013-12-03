@@ -1,0 +1,75 @@
+<form name="licenseDataForm" role="form">
+    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
+
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddForm = true;"
+                ng-show="!showAddForm" style="margin-top: 10px;">
+            <i class="glyphicon glyphicon-plus"> </i> Добавить
+        </button>
+        <div class="form_header"><h4>Лицензии</h4></div>
+
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="licenses.length > 0" class="alert_placeholder"><i>(Нет лицензий)</i></li>
+            <li ng-show="licenses.length > 0" ng-repeat="license in licenses">
+                <span ng-show="license.name"><strong>Наимнование лицензии</strong>: {{license.name}}, </span>
+                <span ng-show="license.period"><strong>Срок действия</strong>: {{license.period}}</span>
+                <span ng-show="license.issueDate"><strong>Дата выдачи</strong>: {{license.issueDate}}</span>
+                <span ng-show="license.issued"><strong>Кем выдано</strong>: {{license.issued}}</span>
+                    <span class="pull_right clickable" ng-click="remove(license)" title="Удалить">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+
+        <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
+            <li class="input-group">
+                <label for="license-name" class="input-group-addon">
+                    Наимнование лицензии
+                </label>
+                <input id="license-name" type="text"
+                       ng-model="temp.name" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="license-period" class="input-group-addon">
+                    Срок действия
+                </label>
+                <input id="license-period" type="text"
+                       ng-model="temp.period" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="license-issueDate" class="input-group-addon">
+                    Дата выдачи
+                </label>
+                <input id="license-issueDate" class="form-control" type="text"
+                       datepicker-popup="dd-MMMM-yyyy"
+                       is-open="openedLicenseIssueDate"
+                       min="'1900-01-01'"
+                       max="today"
+                       datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
+                       ng-model="profileData.passport.issue"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" ng-click="openDatePopup('openedLicenseIssueDate')">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </button>
+                </span>
+            </li>
+            <li class="input-group">
+                <label for="license-issued" class="input-group-addon">
+                    Кем выдано
+                </label>
+                <input id="license-issued" type="text"
+                       ng-model="temp.issued" class="form-control"/>
+            </li>
+
+            <li>
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="licenseDataForm.$invalid">
+                    <span ng-show="licenses.length == 0"> Сохранить</span>
+                    <span ng-show="licenses.length > 0"> Добавить ещё одну лицензию</span>
+                </button>
+                <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
+                    <span> Отмена</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>
