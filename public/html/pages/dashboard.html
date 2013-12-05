@@ -20,11 +20,11 @@
                         действия</h5>
                 </li>
                 <li class="input-group">
-                    <label for="accountName" class="input-group-addon" title="Обязательное поле">
+                    <label for="accountData-name" class="input-group-addon" title="Обязательное поле">
                         Название аккаунта<span class="required_mark">*</span>
                     </label>
-                    <input id="accountName" type="text"
-                           ng-model="account.name" class="form-control" required
+                    <input id="accountData-name" type="text"
+                           ng-model="accountData.name" class="form-control" required
                            maxlength="20"/>
                 </li>
             </ul>
@@ -34,7 +34,7 @@
     <div class="modal-footer">
        <!-- <button type="button" class="btn btn-success"
                 ng-disabled="accountDataForm.$invalid && isAjaxLoading" //TODO return
-                ng-click="saveData(account)" ajax-disabler="isAjaxLoading">-->
+                ng-click="saveData(accountData)" ajax-disabler="isAjaxLoading">-->
             <button type="button" class="btn btn-success" ng-click="skipStep()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
@@ -53,54 +53,54 @@
             <ul class="clear_list vertical_form_block">
                 <li><h4>Юридическое лицо</h4></li>
                 <li class="input-group">
-                    <label for="juridicData-shortName" class="input-group-addon" title="Обязательное поле">
+                    <label for="juridicData-common-shortName" class="input-group-addon" title="Обязательное поле">
                         Краткое наименование<span class="required_mark">*</span>
                     </label>
-                    <input id="juridicData-shortName" type="text"
-                           ng-model="juridicData.shortName" class="form-control"
+                    <input id="juridicData-common-shortName" type="text"
+                           ng-model="juridicData.common.shortName" class="form-control"
                            required/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-inn" class="input-group-addon" title="Обязательное поле">
+                    <label for="juridicData-common-inn" class="input-group-addon" title="Обязательное поле">
                         ИНН<span class="required_mark">*</span>
                     </label>
-                    <input id="juridicData-inn" type="text"
-                           ng-model="juridicData.inn" class="form-control"
+                    <input id="juridicData-common-inn" type="text"
+                           ng-model="juridicData.common.inn" class="form-control"
                            ng-minlength="10"
                            maxlength="12"
                            required/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-fullName" class="input-group-addon">Полное наименование</label>
-                    <input id="juridicData-fullName" type="text"
-                           ng-model="juridicData.fullName" class="form-control"/>
+                    <label for="juridicData-common-fullName" class="input-group-addon">Полное наименование</label>
+                    <input id="juridicData-common-fullName" type="text"
+                           ng-model="juridicData.common.fullName" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-ogrn" class="input-group-addon">ОГРН</label>
-                    <input id="juridicData-ogrn" type="text"
-                           ng-model="juridicData.ogrn" class="form-control"
+                    <label for="juridicData-common-ogrn" class="input-group-addon">ОГРН</label>
+                    <input id="juridicData-common-ogrn" type="text"
+                           ng-model="juridicData.common.ogrn" class="form-control"
                            ng-minlength="13"
                            maxlength="13"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-kpp" class="input-group-addon">КПП</label>
-                    <input id="juridicData-kpp" type="text"
-                           ng-model="juridicData.inn" class="form-control"/>
+                    <label for="juridicData-common-kpp" class="input-group-addon">КПП</label>
+                    <input id="juridicData-common-kpp" type="text"
+                           ng-model="juridicData.common.inn" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-fiscalNumber" class="input-group-addon">Номер налоговой</label>
-                    <input id="juridicData-fiscalNumber" type="text"
-                           ng-model="juridicData.fiscalNumber" class="form-control"/>
+                    <label for="juridicData-common-fiscalNumber" class="input-group-addon">Номер налоговой</label>
+                    <input id="juridicData-common-fiscalNumber" type="text"
+                           ng-model="juridicData.common.fiscalNumber" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-accountingDate" class="input-group-addon">Дата постановки на учёт</label>
-                    <input id="juridicData-accountingDate" class="form-control" type="text"
+                    <label for="juridicData-common-accountingDate" class="input-group-addon">Дата постановки на учёт</label>
+                    <input id="juridicData-common-accountingDate" class="form-control" type="text"
                            datepicker-popup="dd-MMMM-yyyy"
                            is-open="openedAccountingDate"
                            min="'1900-01-01'"
                            max="today"
                            datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
-                           ng-model="juridicData.accountingDate"/>
+                           ng-model="juridicData.common.accountingDate"/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-info" ng-click="openDatePopup('openedAccountingDate')">
                         <span class="glyphicon glyphicon-calendar"></span>
@@ -115,7 +115,7 @@
         <button type="button" class="btn btn-default" ng-click="skipStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="juridicCommonDataForm.$invalid && isAjaxLoading"
-                ng-click="saveData(juridicCommonDataForm)" ajax-disabler="isAjaxLoading">
+                ng-click="saveData(juridicData.common)" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -129,26 +129,26 @@
     </div>
     <div class="modal-body unspaced_modal-body">
         <!--Phones Data-->
-        <add-phone-form model="juridicData.phones"></add-phone-form>
+        <add-phone-form model="juridicData.contacts.phones"></add-phone-form>
         <!--END Phones Data-->
 
         <!--Address Data-->
-        <add-address-form model="juridicData.addresses"></add-address-form>
+        <add-address-form model="juridicData.contacts.addresses"></add-address-form>
         <!--END Address Data-->
 
         <!--Email Data-->
-        <add-email-form model="juridicData.emails"></add-email-form>
+        <add-email-form model="juridicData.contacts.emails"></add-email-form>
         <!--END Email Data-->
 
         <!--Sites Data-->
-        <add-site-form model="juridicData.sites"></add-site-form>
+        <add-site-form model="juridicData.contacts.sites"></add-site-form>
         <!--END Sites Data-->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="skipStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="isAjaxLoading"
-                ng-click="saveData(qqqqqqqqqqqqqq)" ajax-disabler="isAjaxLoading">
+                ng-click="saveData(juridicData.contacts)" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -165,19 +165,19 @@
         <form name="juridicDetailsDataForm" role="form">
             <ul class="clear_list vertical_form_block">
                 <li class="input-group">
-                    <label for="juridicData-formingMethod" class="input-group-addon">Способ образования</label>
-                    <input id="juridicData-formingMethod" type="text"
-                           ng-model="juridicData.formingMethod" class="form-control"/>
+                    <label for="juridicData-details-formingMethod" class="input-group-addon">Способ образования</label>
+                    <input id="juridicData-details-formingMethod" type="text"
+                           ng-model="juridicData.details.formingMethod" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-registrationDate" class="input-group-addon">Дата регистрации</label>
-                    <input id="juridicData-registrationDate" class="form-control" type="text"
+                    <label for="juridicData-details-registrationDate" class="input-group-addon">Дата регистрации</label>
+                    <input id="juridicData-details-registrationDate" class="form-control" type="text"
                            datepicker-popup="dd-MMMM-yyyy"
                            is-open="openedRegistrationDate"
                            min="'1900-01-01'"
                            max="today"
                            datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
-                           ng-model="juridicData.registrationDate"/>
+                           ng-model="juridicData.details.registrationDate"/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-info" ng-click="openDatePopup('openedRegistrationDate')">
                         <span class="glyphicon glyphicon-calendar"></span>
@@ -185,23 +185,23 @@
                 </span>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-registratorFiscalNumber" class="input-group-addon">
+                    <label for="juridicData-details-registratorFiscalNumber" class="input-group-addon">
                         Номер налоговой, где проходила регистрация
                     </label>
-                    <input id="juridicData-registratorFiscalNumber" type="text"
-                           ng-model="juridicData.registratorFiscalNumber" class="form-control"/>
+                    <input id="juridicData-details-registratorFiscalNumber" type="text"
+                           ng-model="juridicData.details.registratorFiscalNumber" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-authorizedCapitalSize" class="input-group-addon">
+                    <label for="juridicData-details-authorizedCapitalSize" class="input-group-addon">
                         Размер уставного капитала
                     </label>
-                    <input id="juridicData-authorizedCapitalSize" type="text"
-                           ng-model="juridicData.authorizedCapitalSize" class="form-control"/>
+                    <input id="juridicData-details-authorizedCapitalSize" type="text"
+                           ng-model="juridicData.details.authorizedCapitalSize" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-okved" class="input-group-addon">Коды ОКВЭД</label>
-                    <input id="juridicData-okved" type="text"
-                           ng-model="juridicData.okved" class="form-control"/>
+                    <label for="juridicData-details-okved" class="input-group-addon">Коды ОКВЭД</label>
+                    <input id="juridicData-details-okved" type="text"
+                           ng-model="juridicData.details.okved" class="form-control"/>
                 </li>
             </ul>
         </form>
@@ -211,7 +211,7 @@
         <button type="button" class="btn btn-default" ng-click="skipStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="juridicDetailsDataForm.$invalid && isAjaxLoading"
-                ng-click="saveData(qqqqqqqqqqqqqq)" ajax-disabler="isAjaxLoading">
+                ng-click="saveData(juridicData.details)" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -225,18 +225,18 @@
     </div>
     <div class="modal-body unspaced_modal-body">
         <!--Founders Data-->
-        <add-founder-form model="juridicData.founders"></add-founder-form>
+        <add-founder-form model="juridicData.persons.founders"></add-founder-form>
         <!--END Founders Data-->
 
         <!--Authorized persons-->
-        <add-authorized-person-form model="juridicData.authorizedPersons"></add-authorized-person-form>
+        <add-authorized-person-form model="juridicData.persons.authorizedPersons"></add-authorized-person-form>
         <!--END Authorized persons-->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="skipStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="isAjaxLoading"
-                ng-click="saveData(qqqqqqqqqqqqqq)" ajax-disabler="isAjaxLoading">
+                ng-click="saveData(juridicData.persons)" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -254,27 +254,27 @@
             <ul class="clear_list vertical_form_block bordered_top_form">
                 <li class="form_header"><h4>ПФР</h4></li>
                 <li class="input-group">
-                    <label for="juridicData-insuranceNumberPfr" class="input-group-addon">
+                    <label for="juridicData-pfrAndFms-pfr-insuranceNumber" class="input-group-addon">
                         Номер страхования в ПФР</label>
-                    <input id="juridicData-insuranceNumberPfr" type="text"
-                           ng-model="juridicData.insuranceNumberPfr" class="form-control"/>
+                    <input id="juridicData-pfrAndFms-pfr-insuranceNumber" type="text"
+                           ng-model="juridicData.pfrAndFms.pfr.insuranceNumber" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-pfrNumber" class="input-group-addon">Номер ПФР</label>
-                    <input id="juridicData-pfrNumber" type="text"
-                           ng-model="juridicData.pfrNumber" class="form-control"/>
+                    <label for="juridicData-pfrAndFms-pfr-number" class="input-group-addon">Номер ПФР</label>
+                    <input id="juridicData-pfrAndFms-pfr-number" type="text"
+                           ng-model="juridicData.pfrAndFms.pfr.number" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-pfrRegistrationDate" class="input-group-addon">
+                    <label for="juridicData-pfrAndFms-pfr-registrationDate" class="input-group-addon">
                         Дата постановки на учет ПФР
                     </label>
-                    <input id="juridicData-pfrRegistrationDate" class="form-control" type="text"
+                    <input id="juridicData-pfrAndFms-pfr-registrationDate" class="form-control" type="text"
                            datepicker-popup="dd-MMMM-yyyy"
                            is-open="openedPfrRegistrationDate"
                            min="'1900-01-01'"
                            max="today"
                            datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
-                           ng-model="juridicData.pfrRegistrationDate"/>
+                           ng-model="juridicData.pfrAndFms.pfr.registrationDate"/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-info" ng-click="openDatePopup('openedPfrRegistrationDate')">
                         <span class="glyphicon glyphicon-calendar"></span>
@@ -290,27 +290,27 @@
             <ul class="clear_list vertical_form_block bordered_top_form">
                 <li class="form_header"><h4>ФМС</h4></li>
                 <li class="input-group">
-                    <label for="juridicData-insuranceNumberFms" class="input-group-addon">Номер страхования в
+                    <label for="juridicData-pfrAndFms-fms-insuranceNumber" class="input-group-addon">Номер страхования в
                         ФМС</label>
-                    <input id="juridicData-insuranceNumberFms" type="text"
-                           ng-model="juridicData.insuranceNumberFms" class="form-control"/>
+                    <input id="juridicData-pfrAndFms-fms-insuranceNumber" type="text"
+                           ng-model="juridicData.pfrAndFms.fms.insuranceNumber" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-fmsNumber" class="input-group-addon">Номер ФМС</label>
-                    <input id="juridicData-fmsNumber" type="text"
-                           ng-model="juridicData.fmsNumber" class="form-control"/>
+                    <label for="juridicData-pfrAndFms-fms-number" class="input-group-addon">Номер ФМС</label>
+                    <input id="juridicData-pfrAndFms-fms-number" type="text"
+                           ng-model="juridicData.pfrAndFms.fms.number" class="form-control"/>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-fmsRegistrationDate" class="input-group-addon">
+                    <label for="juridicData-pfrAndFms-fms-registrationDate" class="input-group-addon">
                         Дата постановки на учет ФМС
                     </label>
-                    <input id="juridicData-fmsRegistrationDate" class="form-control" type="text"
+                    <input id="juridicData-pfrAndFms-fms-registrationDate" class="form-control" type="text"
                            datepicker-popup="dd-MMMM-yyyy"
                            is-open="openedFmsRegistrationDate"
                            min="'1900-01-01'"
                            max="today"
                            datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
-                           ng-model="juridicData.fmsRegistrationDate"/>
+                           ng-model="juridicData.pfrAndFms.fms.RegistrationDate"/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-info" ng-click="openDatePopup('openedFmsRegistrationDate')">
                         <span class="glyphicon glyphicon-calendar"></span>
@@ -325,7 +325,7 @@
         <button type="button" class="btn btn-default" ng-click="skipStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="juridicPfrDataForm.$invalid && juridicFmsDataForm.$invalid && isAjaxLoading"
-                ng-click="saveData(qqqqqqqqqqqqqq)" ajax-disabler="isAjaxLoading">
+                ng-click="saveData(juridicData.pfrAndFms)" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -339,18 +339,18 @@
     </div>
     <div class="modal-body unspaced_modal-body">
         <!--Licenses-->
-        <add-license-form model="juridicData.licenses"></add-license-form>
+        <add-license-form model="juridicData.licensesAndRequesters.licenses"></add-license-form>
         <!--END Licenses-->
 
         <!--Registration requester-->
-        <add-registration-requester-form model="juridicData.registrationRequesters"></add-registration-requester-form>
+        <add-registration-requester-form model="juridicData.licensesAndRequesters.registrationRequesters"></add-registration-requester-form>
         <!--END Registration requester-->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="skipStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="isAjaxLoading"
-                ng-click="saveData(qqqqqqqqqqqqqq)" ajax-disabler="isAjaxLoading">
+                ng-click="saveData(juridicData.licensesAndRequesters)" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -358,14 +358,14 @@
 <!--END Wizard Step 6-->
 
 <!--Wizard Step 7-->
-<div ng-show="registrationStep == 7">
+<div ng-show="registrationStep == 7"><!--todo current work point-->
     <div class="modal-header">
         <h4 class="modal-title">Создание Юридического лица - Налоги</h4>
     </div>
     <div class="modal-body unspaced_modal-body">
         <!--Tax details-->
         <form name="juridicTaxDataForm" role="form">
-            <ul class="clear_list vertical_form_block bordered_top_form">
+            <ul class="clear_list vertical_form_block">
                 <li class="form_header"><h4>Налоги</h4></li>
                 <li class="input-group">
                     <label for="juridicData-taxAccountingSystem" class="input-group-addon">
