@@ -73,7 +73,7 @@ angular.module('website.dashboard', [])
             pfr: {},
             fms: {},
             licenses: [],
-            registrationRequesters: [],
+            applicants: [],
             tax: {}
         };
 
