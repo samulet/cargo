@@ -508,7 +508,6 @@ angular.module('website.dashboard', [])
         var accountModal;
         $scope.account = [];
         $scope.today = new Date();
-
         checkForAccounts();
 
         function checkForAccounts() {
@@ -545,7 +544,7 @@ angular.module('website.dashboard', [])
             if (status === RESPONSE_STATUS.NOT_FOUND) {
                 openAccountModal();
             } else {
-                errorFactory.resolve(data, status);
+               // errorFactory.resolve(data, status);
             }
         }
 

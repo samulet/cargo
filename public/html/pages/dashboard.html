@@ -165,7 +165,6 @@
 </form>
 
 <!--Founders Data-->
-<div>Количество учредителей: {{juridicData.founders.length}}</div>
 <add-founder-form model="juridicData.founders"></add-founder-form>
 <!--END Founders Data-->
 
@@ -252,7 +251,7 @@
 <!--END Registration requester-->
 
 <!--Tax details-->
-<form name="juridicRegistrationRequesterDataForm" role="form">
+<form name="juridicTaxDataForm" role="form">
     <ul class="clear_list vertical_form_block bordered_top_form">
         <li class="form_header"><h4>Налоги</h4></li>
         <li class="input-group">
@@ -282,7 +281,96 @@
         </li>
     </ul>
 </form>
-<!-- END Juridic Data -->
+<!-- END Tax details -->
+
+<!--Other Juridic Data-->
+<form name="juridicTaxDataForm" role="form">
+    <ul class="clear_list vertical_form_block bordered_top_form">
+        <li class="form_header"><h4>Остальные учредительные документы</h4></li>
+        <li class="input-group">
+            <label for="juridicData-charterFilesLink" class="input-group-addon">
+                Ссылка на файлы устава
+            </label>
+            <input id="juridicData-charterFilesLink" type="text"
+                   ng-model="juridicData.charterFilesLink" class="form-control"
+                   readonly/>
+                <span class="input-group-btn">
+                    <button class="btn btn-info" ng-click="openCatalog()" disabled>
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+        </li>
+        <li class="input-group">
+            <label for="juridicData-juridicFaceDecisionDocName" class="input-group-addon">
+                Наименование документа с решением о создании юр лица
+            </label>
+            <input id="juridicData-juridicFaceDecisionDocName" type="text"
+                   ng-model="juridicData.juridicFaceDecisionDocName" class="form-control"/>
+        </li>
+        <li class="input-group">
+            <label for="juridicData-documentNumber" class="input-group-addon">Номер документа</label>
+            <input id="juridicData-documentNumber" type="text"
+                   ng-model="juridicData.documentNumber" class="form-control"/>
+        </li>
+        <li class="input-group">
+            <label for="juridicData-documentDate" class="input-group-addon">Дата документа</label>
+            <input id="juridicData-documentDate" class="form-control" type="text"
+                   datepicker-popup="dd-MMMM-yyyy"
+                   is-open="openedDocumentDate"
+                   min="'1900-01-01'"
+                   max="today"
+                   datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
+                   ng-model="juridicData.documentDate"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" ng-click="openDatePopup('openedDocumentDate')">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </button>
+                </span>
+        </li>
+        <li class="input-group">
+            <label for="juridicData-doumentScansLink" class="input-group-addon">Ссылки на файлы сканов документа</label>
+            <input id="juridicData-doumentScansLink" type="text"
+                   ng-model="juridicData.doumentScansLink" class="form-control"/>
+        </li>
+    </ul>
+</form>
+<!--END Other Juridic Data-->
+
+<!--Check Data-->
+<form name="juridicCheckDataForm" role="form">
+    <ul class="clear_list vertical_form_block bordered_top_form">
+        <li class="form_header"><h4>Для счета</h4></li>
+        <li class="input-group">
+            <label for="juridicData-checkNumber" class="input-group-addon">
+                Ссылки на номер счета
+            </label>
+            <input id="juridicData-checkNumber" type="text"
+                   ng-model="juridicData.checkNumber" class="form-control"
+                   readonly/>
+                <span class="input-group-btn">
+                    <button class="btn btn-info" ng-click="openCatalog()" disabled>
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+        </li>
+        <li class="input-group">
+            <label for="juridicData-chiefAccountant" class="input-group-addon">
+                Ссылка на главного бухгалтера
+            </label>
+            <input id="juridicData-chiefAccountant" type="text"
+                   ng-model="juridicData.chiefAccountant" class="form-control"
+                   readonly/>
+                <span class="input-group-btn">
+                    <button class="btn btn-info" ng-click="openCatalog()" disabled>
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+        </li>
+
+    </ul>
+</form>
+<!-- END Check Data -->
+
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-success"
