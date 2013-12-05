@@ -1,0 +1,57 @@
+<form name="emailDataForm" role="form">
+    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
+
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddForm = true;"
+                ng-show="!showAddForm" style="margin-top: 10px;">
+            <i class="glyphicon glyphicon-plus"> </i> Добавить
+        </button>
+        <div class="form_header"><h4>Email</h4></div>
+
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="emails.length > 0" class="alert_placeholder"><i>(Нет Email'ов)</i></li>
+            <li ng-show="emails.length > 0" ng-repeat="email in emails">
+                <span ng-show="email.type == 'personal'"><strong>Личный</strong>: </span>
+                <span ng-show="email.type == 'legal'"><strong>Юридический</strong>: </span>
+                <span ng-show="email.address">{{email.address}} </span>
+                    <span class="pull_right clickable" ng-click="remove(email)"
+                          title="Удалить">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+
+        <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
+            <li class="input-group">
+                <label for="email-type" class="input-group-addon" title="Обязательное поле">
+                    Вид Email<span class="required_mark">*</span>
+                </label>
+                <select id="email-type"
+                        ng-model="temp.type" class="form-control"
+                        required>
+                    <option value="personal">Личный</option>
+                    <option value="legal">Юридический</option>
+                </select>
+            <li>
+            <li class="input-group">
+                <label for="email-address" class="input-group-addon" title="Обязательное поле">
+                    Email<span class="required_mark">*</span>
+                </label>
+                <input id="email-address" type="email"
+                       ng-model="temp.address" class="form-control"
+                       placeholder="some@email.com"
+                       required/>
+            </li>
+
+            <li>
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="emailDataForm.$invalid">
+                    <span ng-show="emails.length == 0"> Сохранить</span>
+                    <span ng-show="emails.length > 0"> Добавить ещё один email</span>
+                </button>
+                <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
+                    <span> Отмена</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>

@@ -1,0 +1,111 @@
+<form name="addressDataForm" role="form">
+    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
+
+        <button type="button" class="btn btn-info margin_bottom_small pull_right fade_anim"
+                ng-click="showAddForm = true;"
+                ng-show="!showAddForm" style="margin-top: 10px;">
+            <i class="glyphicon glyphicon-plus"> </i> Добавить
+        </button>
+        <div class="form_header"><h4>Почтовые адреса</h4></div>
+
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="addresses.length > 0" class="alert_placeholder"><i>(Нет адресов)</i></li>
+            <li ng-show="addresses.length > 0" ng-repeat="address in addresses">
+                <span ng-show="address.type == 'physical'"><strong>Физический</strong>: </span>
+                <span ng-show="address.type == 'legal'"><strong>Юридический</strong>: </span>
+                <span ng-show="address.country">{{address.country}},  </span>
+                <span ng-show="address.index">{{address.index}} </span>
+                <span ng-show="address.region">{{address.region}}</span>
+                <span ng-show="address.city">{{address.city}}</span>
+                <span ng-show="address.area">{{address.area}}</span>
+                <span ng-show="address.street">{{address.street}}</span>
+                <span ng-show="address.house">, дом {{address.house}}</span>
+                <span ng-show="address.housing">, корпус {{address.housing}}</span>
+                <span ng-show="address.apartment">, квартира {{address.apartment}}</span>
+                    <span class="pull_right clickable" ng-click="remove(address)" title="Удалить">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+
+        <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
+            <li class="input-group">
+                <label for="address-type" class="input-group-addon" title="Обязательное поле">
+                    Вид адреса<span class="required_mark">*</span>
+                </label>
+                <select id="address-type" ng-model="temp.type" class="form-control" required>
+                    <option value="physical">Физический</option>
+                    <option value="legal">Юридический</option>
+                </select>
+            <li>
+            <li class="input-group">
+                <label for="address-country" class="input-group-addon" title="Обязательное поле">
+                    Страна<span class="required_mark">*</span>
+                </label>
+                <input id="address-country" type="text"
+                       ng-model="temp.country" class="form-control"
+                       required/>
+            </li>
+            <li class="input-group">
+                <label for="address-index" class="input-group-addon" title="Обязательное поле">
+                    Индекс<span class="required_mark">*</span>
+                </label>
+                <input id="address-index" type="number"
+                       ng-model="temp.index" class="form-control"
+                       required/>
+            </li>
+            <li class="input-group">
+                <label for="address-region" class="input-group-addon">Регион</label>
+                <input id="address-region" type="text"
+                       ng-model="temp.region" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="address-city" class="input-group-addon" title="Обязательное поле">
+                    Город<span class="required_mark">*</span>
+                </label>
+                <input id="address-city" type="text"
+                       ng-model="temp.city" class="form-control"
+                       required/>
+            </li>
+            <li class="input-group">
+                <label for="address-area" class="input-group-addon">Район</label>
+                <input id="address-area" type="text"
+                       ng-model="temp.area" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="address-street" class="input-group-addon" title="Обязательное поле">
+                    Улица<span class="required_mark">*</span>
+                </label>
+                <input id="address-street" type="text"
+                       ng-model="temp.street" class="form-control"
+                       required/>
+            </li>
+            <li class="input-group">
+                <label for="address-house" class="input-group-addon">Дом</label>
+                <input id="address-house" type="text"
+                       ng-model="temp.house" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="address-housing" class="input-group-addon">Корпус</label>
+                <input id="address-housing" type="text"
+                       ng-model="temp.housing" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="address-apartment" class="input-group-addon">Квартира</label>
+                <input id="address-apartment" type="text"
+                       ng-model="temp.apartment" class="form-control"/>
+            </li>
+
+            <li>
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="addressDataForm.$invalid">
+                    <span ng-show="addresses.length == 0"> Сохранить</span>
+                    <span ng-show="addresses.length > 0"> Добавить ещё один адрес</span>
+                </button>
+                <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
+                    <span> Отмена</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>

@@ -1,0 +1,73 @@
+<form name="phonesDataForm" role="form">
+    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
+
+        <button type="button" class="btn btn-info margin_bottom_small pull_right fade_anim"
+                ng-click="showAddForm = true;"
+                ng-show="!showAddForm" style="margin-top: 10px;">
+            <i class="glyphicon glyphicon-plus"> </i> Добавить
+        </button>
+        <div class="form_header"><h4>Телефоны</h4></div>
+
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="phones.length > 0" class="alert_placeholder"><i>(Нет телефонов)</i></li>
+            <li ng-repeat="phone in phones" ng-show="phones.length > 0">
+                <span ng-show="phone.type == 'local'"><i class="glyphicon glyphicon-phone-alt"> </i></span>
+                <span ng-show="phone.type == 'cell'"><i class="glyphicon glyphicon-phone"> </i></span>
+                <span ng-show="phone.countryCode">{{phone.countryCode}} </span>
+                <span ng-show="phone.cityCode">({{phone.cityCode}}) </span>
+                <span ng-show="phone.number">{{phone.number}}</span>
+                <span ng-show="phone.additionalNumber"> , дополнительный {{phone.additionalNumber}}</span>
+                    <span class="pull_right clickable" ng-click="remove(phone)" title="Удалить">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+
+        <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
+            <li class="input-group">
+                <label for="phone-type" class="input-group-addon" title="Обязательное поле">
+                    Вид телефона<span class="required_mark">*</span>
+                </label>
+                <select id="phone-type"
+                        ng-model="tempPhone.type" class="form-control" required>
+                    <option value="cell">Мобильный</option>
+                    <option value="local">Стационарный</option>
+                </select>
+            <li>
+            <li class="input-group">
+                <label for="phone-countryCode" class="input-group-addon inline_addon">Код страны</label>
+                <input id="phone-countryCode" type="number"
+                       placeholder="7"
+                       ng-model="tempPhone.countryCode" class="form-control"/>
+                <label for="phone-cityCode" class="input-group-addon inline_addon">Код города</label>
+                <input id="phone-cityCode" type="number"
+                       ng-model="tempPhone.cityCode" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="phone-number" class="input-group-addon" title="Обязательное поле">
+                    Номер телефона
+                    <span class="required_mark">*</span>
+                </label>
+                <input id="phone-number" type="text"
+                       ng-model="tempPhone.number" class="form-control"
+                       placeholder="1234567890"
+                       required/>
+            </li>
+            <li class="input-group">
+                <label for="phone-additionalNumber" class="input-group-addon">Добавочный</label>
+                <input id="phone-additionalNumber" type="text"
+                       ng-model="tempPhone.additionalNumber" class="form-control"/>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="phonesDataForm.$invalid">
+                    <span ng-show="phones.length === 0"> Сохранить</span>
+                    <span ng-show="phones.length > 0"> Добавить ещё один телефон</span>
+                </button>
+                <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
+                    <span> Отмена</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>

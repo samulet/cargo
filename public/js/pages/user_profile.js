@@ -7,18 +7,6 @@ angular.module('website.user.profile', [])
         $rootScope.bodyColor = 'filled_bg';
 
         $scope.editMode = false;
-        $scope.showAddPhoneForm = false;
-        $scope.showAddAddressForm = false;
-        $scope.showAddEmailForm = false;
-
-        var tempData = {
-            phone: {},
-            address: {},
-            site: {},
-            email: {}
-        };
-
-        $scope.tempData = tempData;
 
         $scope.profileData = {
             socials: [],
@@ -37,38 +25,8 @@ angular.module('website.user.profile', [])
             $scope.editMode = true;
         };
 
-        function moveToProfileData(itemFrom, itemTo) {
-            $scope.profileData[itemTo].push($scope.tempData[itemFrom]);
-            $scope.tempData[itemFrom] = {};
-        }
-
-        $scope.addPhone = function () {
-            moveToProfileData('phone', 'phones');
-        };
-
-        $scope.addEmail = function () {
-            moveToProfileData('email', 'emails');
-        };
-
-        $scope.addAddress = function () {
-            moveToProfileData('address', 'addresses');
-        };
-
-        $scope.addSite = function () {
-            moveToProfileData('site', 'sites');
-        };
-
-        $scope.remove = function (from, element) {
-            var index = $scope.profileData[from].indexOf(element);
-            if (index !== -1) $scope.profileData[from].splice(index, 1);
-        };
-
         $scope.cancelEdit = function () {
             $scope.editMode = false;
-            $scope.showAddPhoneForm = false;
-            $scope.showAddAddressForm = false;
-            $scope.showAddEmailForm = false;
-            $scope.tempData = tempData;
         };
 
         $scope.saveEdit = function () {

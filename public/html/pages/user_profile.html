@@ -20,14 +20,15 @@
         </li>
         <li>
             <span class="description">Email:</span>
-            <span class="user_data_text" ng-show="profileData.emails.length > 0">
+
+            <div class="user_data_text" ng-show="profileData.emails.length > 0">
                 <ul class="clear_list">
                     <li ng-repeat="email in profileData.emails">
                         <span ng-show="email.type">{{email.type}}</span>
                         <span>{{email.address}}</span>
                     </li>
                 </ul>
-            </span>
+            </div>
             <span class="text_placeholder" ng-hide="profileData.emails.length > 0">______________</span>
         </li>
         <li>
@@ -62,7 +63,8 @@
         </li>
         <li>
             <span class="description">Телефоны:</span>
-            <span class="user_data_text" ng-show="profileData.phones.length > 0">
+
+            <div class="user_data_text" ng-show="profileData.phones.length > 0">
                 <ul class="clear_list">
                     <li ng-repeat="phone in profileData.phones">
                         <span ng-show="phone.type">Тип телефона:
@@ -87,7 +89,7 @@
                         </span>
                     </li>
                 </ul>
-            </span>
+            </div>
             <span class="text_placeholder" ng-hide="profileData.phones">______________</span>
         </li>
         <li ng-show="profileData.social.vkontakte">
@@ -135,15 +137,21 @@
         <!--Personal Data-->
         <li class="form_header"><h4>Личные данные</h4></li>
         <li class="input-group">
-            <label for="user-profile-lastName" class="input-group-addon">Фамилия</label>
+            <label for="user-profile-lastName" class="input-group-addon" title="Обязательное поле">
+                Фамилия<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-lastName" type="text"
-                   ng-model="profileData.personal.lastName" class="form-control"/>
+                   ng-model="profileData.personal.lastName" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-firstName" class="input-group-addon">Имя</label>
+            <label for="user-profile-firstName" class="input-group-addon" title="Обязательное поле">
+                Имя<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-firstName" type="text"
-                   ng-model="profileData.personal.firstName" class="form-control"/>
+                   ng-model="profileData.personal.firstName" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
@@ -167,8 +175,11 @@
         </li>
 
         <li class="input-group">
-            <label for="user-profile-docType" class="input-group-addon">Вид документа</label>
-            <select id="user-profile-docType" ng-model="profileData.personal.docType" class="form-control">
+            <label for="user-profile-docType" class="input-group-addon" title="Обязательное поле">
+                Вид документа<span class="required_mark">*</span>
+            </label>
+            <select id="user-profile-docType" ng-model="profileData.personal.docType" class="form-control"
+                    required>
                 <option value="passport_rf">Паспорт РФ</option>
                 <option value="passport_foreign">Паспорт другого государства</option>
                 <option value="military_card">Военный билет</option>
@@ -186,25 +197,34 @@
         <li class="form_header"><h4>Паспортные данные</h4></li>
 
         <li class="input-group">
-            <label for="user-profile-passport-series" class="input-group-addon inline_addon">Серия</label>
+            <label for="user-profile-passport-series" class="input-group-addon inline_addon" title="Обязательное поле">
+                Серия<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-series" type="text"
                    placeholder="25 01"
-                   ng-model="profileData.passport.series" class="form-control"/>
-            <label for="user-profile-passport-number" class="input-group-addon inline_addon">Номер</label>
+                   ng-model="profileData.passport.series" class="form-control"
+                   required/>
+            <label for="user-profile-passport-number" class="input-group-addon inline_addon" title="Обязательное поле">
+                Номер<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-number" type="text"
                    placeholder="999 999"
-                   ng-model="profileData.passport.number" class="form-control"/>
+                   ng-model="profileData.passport.number" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-issue" class="input-group-addon">Дата выдачи</label>
+            <label for="user-profile-passport-issue" class="input-group-addon" title="Обязательное поле">
+                Дата выдачи<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-issue" class="form-control" type="text"
                    datepicker-popup="dd-MMMM-yyyy"
                    is-open="openedPassportIssueDate"
                    min="'1900-01-01'"
                    max="today"
                    datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
-                   ng-model="profileData.passport.issue"/>
+                   ng-model="profileData.passport.issue"
+                   required/>
             <span class="input-group-btn">
                 <button type="button" class="btn btn-info" ng-click="openDatePopup('openedPassportIssueDate')">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -213,33 +233,45 @@
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-issuingAuthority" class="input-group-addon">Орган выдавший</label>
+            <label for="user-profile-passport-issuingAuthority" class="input-group-addon" title="Обязательное поле">
+                Орган выдавший<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-issuingAuthority" type="text"
-                   ng-model="profileData.passport.issuingAuthority" class="form-control"/>
+                   ng-model="profileData.passport.issuingAuthority" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-unitNumber" class="input-group-addon">Номер подразделения</label>
+            <label for="user-profile-passport-unitNumber" class="input-group-addon" title="Обязательное поле">
+                Номер подразделения<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-unitNumber" type="text"
                    placeholder="999-999"
-                   ng-model="profileData.passport.unitNumber" class="form-control"/>
+                   ng-model="profileData.passport.unitNumber" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-birthPlace" class="input-group-addon">Место рождения</label>
+            <label for="user-profile-passport-birthPlace" class="input-group-addon" title="Обязательное поле">
+                Место рождения<span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-birthPlace" type="text"
-                   ng-model="profileData.passport.birthPlace" class="form-control"/>
+                   ng-model="profileData.passport.birthPlace" class="form-control"
+                   required/>
         </li>
 
         <li class="input-group">
-            <label for="user-profile-passport-birthDate" class="input-group-addon">Дата рождения</label>
+            <label for="user-profile-passport-birthDate" class="input-group-addon" title="Обязательное поле">
+                Дата рождения <span class="required_mark">*</span>
+            </label>
             <input id="user-profile-passport-birthDate" class="form-control" type="text"
                    datepicker-popup="dd-MMMM-yyyy"
                    is-open="openedPassportBirthdayDate"
                    min="'1900-01-01'"
                    max="today"
                    datepicker-options="dateOptions" date-disabled="disabled(date,mode)"
-                   ng-model="profileData.passport.birthDate"/>
+                   ng-model="profileData.passport.birthDate"
+                   required/>
             <span class="input-group-btn">
                 <button type="button" class="btn btn-info" ng-click="openDatePopup('openedPassportBirthdayDate')">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -302,269 +334,19 @@
 <!--End Misc Data-->
 
 <!--Phones Data-->
-<form name="phonesDataForm" role="form">
-    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
-
-        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddPhoneForm = true;"
-                ng-show="!showAddPhoneForm" style="margin-top: 10px;">
-            <i class="glyphicon glyphicon-plus"> </i> Добавить
-        </button>
-        <div class="form_header"><h4>Телефоны</h4></div>
-
-        <ul class="alert alert-info clear_list">
-            <li ng-hide="profileData.phones.length > 0" class="alert_placeholder"><i>(Нет телефонов)</i></li>
-            <li ng-repeat="phone in profileData.phones" ng-show="profileData.phones.length > 0">
-                <span ng-show="phone.type == 'local'"><i class="glyphicon glyphicon-phone-alt"> </i></span>
-                <span ng-show="phone.type == 'cell'"><i class="glyphicon glyphicon-phone"> </i></span>
-                <span ng-show="phone.countryCode">{{phone.countryCode}} </span>
-                <span ng-show="phone.cityCode">({{phone.cityCode}}) </span>
-                <span ng-show="phone.number">{{phone.number}}</span>
-                <span ng-show="phone.additionalNumber"> , дополнительный {{phone.additionalNumber}}</span>
-                    <span class="pull_right clickable" ng-click="remove('phones', phone)" title="Удалить этот телефон">
-                        <i class="glyphicon glyphicon-remove"> </i>
-                    </span>
-            </li>
-        </ul>
-
-        <ul ng-show="showAddPhoneForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
-            <li class="input-group">
-                <label for="user-profile-phone-type" class="input-group-addon">Вид телефона</label>
-                <select id="user-profile-phone-type"
-                        ng-model="tempData.phone.type" class="form-control">
-                    <option value="cell">Мобильный</option>
-                    <option value="local">Стационарный</option>
-                </select>
-            <li>
-            <li class="input-group">
-                <label for="user-profile-phone-countryCode" class="input-group-addon inline_addon">Код страны</label>
-                <input id="user-profile-phone-countryCode" type="number"
-                       placeholder="7"
-                       ng-model="tempData.phone.countryCode" class="form-control"/>
-                <label for="user-profile-phone-cityCode" class="input-group-addon inline_addon">Код города</label>
-                <input id="user-profile-phone-cityCode" type="number"
-                       ng-model="tempData.phone.cityCode" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-phone-number" class="input-group-addon">Номер телефона</label>
-                <input id="user-profile-phone-number" type="text"
-                       ng-model="tempData.phone.number" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-phone-additionalNumber" class="input-group-addon">Добавочный</label>
-                <input id="user-profile-phone-additionalNumber" type="text"
-                       ng-model="tempData.phone.additionalNumber" class="form-control"/>
-            </li>
-            <li>
-                <button class="btn btn-success pull_right" ng-click="addPhone()">
-                    <span ng-show="profileData.phones.length == 0"> Сохранить</span>
-                    <span ng-show="profileData.phones.length > 0"> Добавить ещё один телефон</span>
-                </button>
-                <button type="reset" class="btn btn-danger" ng-click="showAddPhoneForm = false">
-                    <span> Отмена</span>
-                </button>
-            </li>
-        </ul>
-    </div>
-</form>
+<add-phone-form model="profileData.phones"></add-phone-form>
 <!--END Phones Data-->
 
 <!--Address Data-->
-<form name="adressDataForm" role="form">
-    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
-
-        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddAddressForm = true;"
-                ng-show="!showAddAddressForm" style="margin-top: 10px;">
-            <i class="glyphicon glyphicon-plus"> </i> Добавить
-        </button>
-        <div class="form_header"><h4>Почтовые адреса</h4></div>
-
-        <ul class="alert alert-info clear_list">
-            <li ng-hide="profileData.addresses.length > 0" class="alert_placeholder"><i>(Нет адресов)</i></li>
-            <li ng-show="profileData.addresses.length > 0" ng-repeat="address in profileData.addresses">
-                <span ng-show="address.type == 'physical'"><strong>Физический</strong>: </span>
-                <span ng-show="address.type == 'legal'"><strong>Юридический</strong>: </span>
-                <span ng-show="address.country">{{address.country}},  </span>
-                <span ng-show="address.index">{{address.index}} </span>
-                <span ng-show="address.region">{{address.region}}</span>
-                <span ng-show="address.city">{{address.city}}</span>
-                <span ng-show="address.area">{{address.area}}</span>
-                <span ng-show="address.street">{{address.street}}</span>
-                <span ng-show="address.house">, дом {{address.house}}</span>
-                <span ng-show="address.housing">, корпус {{address.housing}}</span>
-                <span ng-show="address.apartment">, квартира {{address.apartment}}</span>
-                    <span class="pull_right clickable" ng-click="remove('addresses', address)"
-                          title="Удалить этот адрес">
-                        <i class="glyphicon glyphicon-remove"> </i>
-                    </span>
-            </li>
-        </ul>
-
-        <ul ng-show="showAddAddressForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
-            <li class="input-group">
-                <label for="user-profile-address-type" class="input-group-addon">Вид адреса</label>
-                <select id="user-profile-address-type"
-                        ng-model="tempData.address.type" class="form-control">
-                    <option value="physical">Физический</option>
-                    <option value="legal">Юридический</option>
-                </select>
-            <li>
-            <li class="input-group">
-                <label for="user-profile-address-country" class="input-group-addon">Страна</label>
-                <input id="user-profile-address-country" type="text"
-                       ng-model="tempData.address.country" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-address-index" class="input-group-addon">Индекс</label>
-                <input id="user-profile-address-index" type="number"
-                       ng-model="tempData.address.index" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-address-region" class="input-group-addon">Регион</label>
-                <input id="user-profile-address-region" type="text"
-                       ng-model="tempData.address.region" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-address-city" class="input-group-addon">Город</label>
-                <input id="user-profile-address-city" type="text"
-                       ng-model="tempData.address.city" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-address-area" class="input-group-addon">Район</label>
-                <input id="user-profile-address-area" type="text"
-                       ng-model="tempData.address.area" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-address-street" class="input-group-addon">Улица</label>
-                <input id="user-profile-address-street" type="text"
-                       ng-model="tempData.address.street" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-address-house" class="input-group-addon">Дом</label>
-                <input id="user-profile-address-house" type="text"
-                       ng-model="tempData.address.house" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-address-housing" class="input-group-addon">Корпус</label>
-                <input id="user-profile-address-housing" type="text"
-                       ng-model="tempData.address.housing" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-address-apartment" class="input-group-addon">Квартира</label>
-                <input id="user-profile-address-apartment" type="text"
-                       ng-model="tempData.address.apartment" class="form-control"/>
-            </li>
-
-            <li>
-                <button class="btn btn-success pull_right" ng-click="addAddress()">
-                    <span ng-show="profileData.addresses.length == 0"> Сохранить</span>
-                    <span ng-show="profileData.addresses.length > 0"> Добавить ещё один адрес</span>
-                </button>
-                <button type="reset" class="btn btn-danger" ng-click="showAddAddressForm = false">
-                    <span> Отмена</span>
-                </button>
-            </li>
-        </ul>
-    </div>
-</form>
+<add-address-form model="profileData.addresses"></add-address-form>
 <!--END Address Data-->
 
 <!--Email Data-->
-<form name="emailDataForm" role="form">
-    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
-
-        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddEmailForm = true;"
-                ng-show="!showAddEmailForm" style="margin-top: 10px;">
-            <i class="glyphicon glyphicon-plus"> </i> Добавить
-        </button>
-        <div class="form_header"><h4>Email</h4></div>
-
-        <ul class="alert alert-info clear_list">
-            <li ng-hide="profileData.emails.length > 0" class="alert_placeholder"><i>(Нет Email'ов)</i></li>
-            <li ng-show="profileData.emails.length > 0" ng-repeat="email in profileData.emails">
-                <span ng-show="email.type == 'personal'"><strong>Личный</strong>: </span>
-                <span ng-show="email.type == 'legal'"><strong>Юридический</strong>: </span>
-                <span ng-show="email.address">{{email.address}} </span>
-                    <span class="pull_right clickable" ng-click="remove('emails', email)"
-                          title="Удалить этот email адрес">
-                        <i class="glyphicon glyphicon-remove"> </i>
-                    </span>
-            </li>
-        </ul>
-
-        <ul ng-show="showAddEmailForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
-            <li class="input-group">
-                <label for="user-profile-email-type" class="input-group-addon">Вид Email</label>
-                <select id="user-profile-email-type"
-                        ng-model="tempData.email.type" class="form-control">
-                    <option value="personal">Личный</option>
-                    <option value="legal">Юридический</option>
-                </select>
-            <li>
-            <li class="input-group">
-                <label for="user-profile-email-address" class="input-group-addon">Email</label>
-                <input id="user-profile-email-address" type="text"
-                       ng-model="tempData.email.address" class="form-control"/>
-            </li>
-
-            <li>
-                <button class="btn btn-success pull_right" ng-click="addEmail()">
-                    <span ng-show="profileData.emails.length == 0"> Сохранить</span>
-                    <span ng-show="profileData.emails.length > 0"> Добавить ещё один email</span>
-                </button>
-                <button type="reset" class="btn btn-danger" ng-click="showAddEmailForm = false">
-                    <span> Отмена</span>
-                </button>
-            </li>
-        </ul>
-    </div>
-</form>
+<add-email-form model="profileData.emails"></add-email-form>
 <!--END Email Data-->
 
 <!--Sites Data-->
-<form name="sitesDataForm" role="form">
-    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
-
-        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddSiteForm = true;"
-                ng-show="!showAddSiteForm" style="margin-top: 10px;">
-            <i class="glyphicon glyphicon-plus"> </i> Добавить
-        </button>
-        <div class="form_header"><h4>Сайты</h4></div>
-
-        <ul class="alert alert-info clear_list">
-            <li ng-hide="profileData.sites.length > 0" class="alert_placeholder"><i>(Нет сайтов)</i></li>
-            <li ng-show="profileData.sites.length > 0" ng-repeat="site in profileData.sites">
-                <span ng-show="site.type"><strong>Тип</strong>: {{site.type}}, </span>
-                <span ng-show="site.url"><strong>Адресс</strong>: {{site.url}}</span>
-                    <span class="pull_right clickable" ng-click="remove('sites', site)" title="Удалить этот сайт">
-                        <i class="glyphicon glyphicon-remove"> </i>
-                    </span>
-            </li>
-        </ul>
-
-        <ul ng-show="showAddSiteForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
-            <li class="input-group">
-                <label for="user-profile-site-type" class="input-group-addon">Тип сайта</label>
-                <input id="user-profile-site-type" type="text"
-                       ng-model="tempData.site.type" class="form-control"/>
-            </li>
-            <li class="input-group">
-                <label for="user-profile-site-url" class="input-group-addon">Адрес</label>
-                <input id="user-profile-site-url" type="email"
-                       ng-model="tempData.site.url" class="form-control"/>
-            </li>
-
-            <li>
-                <button class="btn btn-success pull_right" ng-click="addSite()">
-                    <span ng-show="profileData.sites.length == 0"> Сохранить</span>
-                    <span ng-show="profileData.sites.length > 0"> Добавить ещё один сайт</span>
-                </button>
-                <button type="reset" class="btn btn-danger" ng-click="showAddSiteForm = false">
-                    <span> Отмена</span>
-                </button>
-            </li>
-        </ul>
-    </div>
-</form>
+<add-site-form model="profileData.sites"></add-site-form>
 <!--END Sites Data-->
 
 <!--Photo Data-->
@@ -582,7 +364,6 @@
         <li ng-hide="profileData.photo.url" class="img-thumbnail" style="width:200px; height: 200px;">&nbsp;</li>
 
         <li>
-            <!--<uploader class="pull_right"></uploader>-->
             <button class="btn btn-info pull_right" disabled>Загрузить</button>
             <br style="clear: both;"/>
         </li>
@@ -627,22 +408,25 @@
 <ul id="profileSocialBlock" class="mobile_centered vertical_form_block bordered_top_form clear_list">
     <li class="form_header"><h4>Аккаунты соцальных сетей</h4></li>
 
-    <ul class="alert alert-info clear_list">
-        <li ng-hide="profileData.socials.length > 0" class="alert_placeholder"><i>(Нет подключенных аккаунтов)</i></li>
-        <li ng-show="profileData.socials.length > 0" ng-repeat="social in profileData.socials">
-            <span ng-show="social.type == 'mailru'"><strong>Mail.ru</strong>: </span>
-            <span ng-show="social.type == 'oddnoklassniki'"><strong>Одноклассники</strong>: </span>
-            <span ng-show="social.type == 'yandex'"><strong>Яндекс</strong>: </span>
-            <span ng-show="social.type == 'google'"><strong>Google</strong>: </span>
-            <span ng-show="social.type == 'facebook'"><strong>Facebook</strong>: </span>
-            <span ng-show="social.type == 'vkontavke'"><strong>Вконтакте</strong>: </span>
-            <span ng-show="social.type == 'linkedin'"><strong>Linked.In</strong>: </span>
-            <span ng-show="social.name">{{social.name}} </span>
+    <li>
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="profileData.socials.length > 0" class="alert_placeholder"><i>(Нет подключенных аккаунтов)</i>
+            </li>
+            <li ng-show="profileData.socials.length > 0" ng-repeat="social in profileData.socials">
+                <span ng-show="social.type == 'mailru'"><strong>Mail.ru</strong>: </span>
+                <span ng-show="social.type == 'oddnoklassniki'"><strong>Одноклассники</strong>: </span>
+                <span ng-show="social.type == 'yandex'"><strong>Яндекс</strong>: </span>
+                <span ng-show="social.type == 'google'"><strong>Google</strong>: </span>
+                <span ng-show="social.type == 'facebook'"><strong>Facebook</strong>: </span>
+                <span ng-show="social.type == 'vkontavke'"><strong>Вконтакте</strong>: </span>
+                <span ng-show="social.type == 'linkedin'"><strong>Linked.In</strong>: </span>
+                <span ng-show="social.name">{{social.name}} </span>
             <span class="pull_right clickable" ng-click="remove('socials', social)" title="Удалить этот аккаунт адрес">
                 <i class="glyphicon glyphicon-remove"> </i>
             </span>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </li>
 
     <li class="form_header"><h5>Добавить аккаунт социальной сети</h5></li>
 
@@ -704,8 +488,9 @@
 
 <ul class="mobile_centered vertical_form_block bordered_top_form clear_list">
     <li>
-        <button class="btn btn-danger" ng-click="cancelEdit()">Отменить</button>
-        <button class="btn btn-primary pull_right" ng-click="saveEdit()" ajax-disabler="isAjaxLoading">
+        <button type="reset" class="btn btn-danger" ng-click="cancelEdit()">Отменить</button>
+        <button type="submit" class="btn btn-primary pull_right" ng-click="saveEdit()" ajax-disabler="isAjaxLoading"
+                ng-disabled="eSignatureDataForm.$invalid && photoDataForm.$invalid &&  miscDataForm.$invalid &&  passportDataForm.$invalid &&  personalDataForm.$invalid  && isAjaxLoading">
             Сохранить
         </button>
     </li>

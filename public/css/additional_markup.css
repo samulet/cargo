@@ -94,6 +94,12 @@ li.input-group .input-group-addon {
     list-style: none;
 }
 
+.required_mark {
+    color: #F00;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 .center_horizontal {
     margin: 0 auto;
 }
@@ -161,7 +167,7 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     padding: 15px 30px;
 }
 
-.bordered_top_form{
+.bordered_top_form {
     border-top: 1px dashed #A2A2A2;
 }
 
@@ -188,7 +194,6 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     line-height: 2em;
 }
 
-
 #profileSocialBlock .social_btn_desc {
     font-size: 1em;
     line-height: 1em;
@@ -212,6 +217,10 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
 
 .margin_bottom_small {
     margin-bottom: 15px;
+}
+
+.unspaced_modal-body {
+    padding: 0;
 }
 
 /* END Classes */

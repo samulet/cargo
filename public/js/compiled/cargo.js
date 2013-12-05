@@ -103,20 +103,6 @@ angular.module('website.constants', [])
 
 angular.module('common.directives', [])
 
-    .directive('uploader', [function () {
-        return {
-            restrict: 'E',
-            scope: {
-
-            },
-            link: function (scope, elem, attrs, ctrl) {
-
-            },
-            replace: false,
-            templateUrl: 'html/templates/uploader.html'
-        };
-    }])
-
     .directive('ajaxDisabler', function () {
         return {
             restrict: 'A',
@@ -138,6 +124,197 @@ angular.module('common.directives', [])
                         elem.removeClass('btn-loading');
                     }
                 });
+            }
+        };
+    })
+
+    .directive('addPhoneForm', function () { //TODO refactor this and thos directives to a common view
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addPhoneTemplate.html',
+            scope: {
+                phones: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.phones.indexOf(element);
+                    if (index !== -1) scope.phones.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.phones.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
+
+    .directive('addAddressForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addAddressTemplate.html',
+            scope: {
+                addresses: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.addresses.indexOf(element);
+                    if (index !== -1) scope.addresses.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.addresses.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
+
+    .directive('addSiteForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addSiteTemplate.html',
+            scope: {
+                sites: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.sites.indexOf(element);
+                    if (index !== -1) scope.sites.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.sites.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
+
+    .directive('addEmailForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addEmailTemplate.html',
+            scope: {
+                emails: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.emails.indexOf(element);
+                    if (index !== -1) scope.emails.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.emails.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
+
+    .directive('addFounderForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addFounderTemplate.html',
+            scope: {
+                founders: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.founders.indexOf(element);
+                    if (index !== -1) scope.founders.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.founders.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
+
+    .directive('addAuthorizedPersonForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addAuthorizedPersonTemplate.html',
+            scope: {
+                authorizedPersons: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.authorizedPersons.indexOf(element);
+                    if (index !== -1) scope.authorizedPersons.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.authorizedPersons.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
+
+    .directive('addLicenseForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addLicenseTemplate.html',
+            scope: {
+                licenses: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+                scope.today = new Date();
+
+                scope.remove = function (element) {
+                    var index = scope.licenses.indexOf(element);
+                    if (index !== -1) scope.licenses.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.licenses.push(scope.temp);
+                    scope.temp = {};
+                };
+
+                scope.openDatePopup = function(isOpen) {
+                    /* $timeout(function () { //TODO add $timeout
+                     scope[isOpen] = true;
+                     });*/
+                };
+            }
+        };
+    })
+
+    .directive('addApplicantsForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addApplicantsTemplate.html',
+            scope: {
+                registrationRequesters: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.registrationRequesters.indexOf(element);
+                    if (index !== -1) scope.registrationRequesters.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.registrationRequesters.push(scope.temp);
+                    scope.temp = {};
+                };
             }
         };
     })
@@ -329,16 +506,14 @@ angular.module('website.dashboard', [])
         $rootScope.pageTitle = 'dashboard';
         $rootScope.bodyColor = 'filled_bg';
         var accountModal;
-        $scope.account = [];
+        $scope.accountData = [];
         $scope.today = new Date();
-
+        $scope.firstAccount = null;
         checkForAccounts();
 
         function checkForAccounts() {
-            if (!storageFactory.getAccounts()) {
-                $scope.registrationStep = 0;//TODO should be = 0 at the end and 1 for dev for a while
-                getAccounts();
-            }
+            $scope.registrationStep = 0;
+            getAccounts();
         }
 
         function openAccountModal() {
@@ -362,25 +537,53 @@ angular.module('website.dashboard', [])
             getAccounts();
         };
 
+        $scope.nextStep = function () {
+            $scope.registrationStep++;
+        };
+
         function onError(data, status) {
-            if (status === RESPONSE_STATUS.NOT_FOUND) {
-                openAccountModal();
-            } else {
-                errorFactory.resolve(data, status);
-            }
+            // if (status === RESPONSE_STATUS.NOT_FOUND) { //TODO uncomment
+            openAccountModal();
+            // } else {
+            //     errorFactory.resolve(data, status);
+            // }
         }
 
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
-                .success(function (accounts) {
-                    storageFactory.setAccounts(accounts);
-                    //openAccountModal();//TODO
+                .success(function (data) {
+                    var accounts = data._embedded.accounts;
+                    if (accounts.length === 1) {
+                        $scope.firstAccount = data._embedded.accounts[0];
+                    }
                 }).error(onError);
         }
     }])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
-        $scope.juridicData = {};
+        $scope.juridicData = {
+            short: '',
+            inn: '',
+            name: '',
+            ogrn: '',
+            kpp: '',
+            forming_method: '',
+            capital: '',
+            okved: '',
+            contacts: {
+                phones: [],
+                emails: [],
+                sites: [],
+                addresses: []
+            },
+            founders: [],
+            authorizedPersons: [],
+            pfr: [],
+            fms: [],
+            licenses: [],
+            applicants: [],
+            tax: {}
+        };
 
         $scope.openCatalog = function () {
             //placeholder
@@ -393,12 +596,24 @@ angular.module('website.dashboard', [])
         };
 
         $scope.saveAccountData = function () {
-            $http.post(REST_CONFIG.BASE_URL + '/accounts', {name: $scope.account.name})
+            $http.post(REST_CONFIG.BASE_URL + '/accounts', {title: $scope.accountData.title})
                 .success(function () {
-                    $scope.closeAccountModal();
                     $scope.getAccounts();
-                    $scope.registrationStep = 1;
+                    $scope.nextStep();
                 }).error(errorFactory.resolve);
+        };
+
+        $scope.saveData = function (isLastStep) {
+            if (isLastStep) {
+                console.log($scope.juridicData.inn);
+                $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
+                    .success(function () {
+                        $scope.closeAccountModal();
+                        $scope.registrationStep = 0;
+                    }).error(errorFactory.resolve);
+            } else {
+                $scope.nextStep();
+            }
         };
     }])
 ;
@@ -427,18 +642,6 @@ angular.module('website.user.profile', [])
         $rootScope.bodyColor = 'filled_bg';
 
         $scope.editMode = false;
-        $scope.showAddPhoneForm = false;
-        $scope.showAddAddressForm = false;
-        $scope.showAddEmailForm = false;
-
-        var tempData = {
-            phone: {},
-            address: {},
-            site: {},
-            email: {}
-        };
-
-        $scope.tempData = tempData;
 
         $scope.profileData = {
             socials: [],
@@ -457,38 +660,8 @@ angular.module('website.user.profile', [])
             $scope.editMode = true;
         };
 
-        function moveToProfileData(itemFrom, itemTo) {
-            $scope.profileData[itemTo].push($scope.tempData[itemFrom]);
-            $scope.tempData[itemFrom] = {};
-        }
-
-        $scope.addPhone = function () {
-            moveToProfileData('phone', 'phones');
-        };
-
-        $scope.addEmail = function () {
-            moveToProfileData('email', 'emails');
-        };
-
-        $scope.addAddress = function () {
-            moveToProfileData('address', 'addresses');
-        };
-
-        $scope.addSite = function () {
-            moveToProfileData('site', 'sites');
-        };
-
-        $scope.remove = function (from, element) {
-            var index = $scope.profileData[from].indexOf(element);
-            if (index !== -1) $scope.profileData[from].splice(index, 1);
-        };
-
         $scope.cancelEdit = function () {
             $scope.editMode = false;
-            $scope.showAddPhoneForm = false;
-            $scope.showAddAddressForm = false;
-            $scope.showAddEmailForm = false;
-            $scope.tempData = tempData;
         };
 
         $scope.saveEdit = function () {
