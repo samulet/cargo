@@ -6,17 +6,13 @@ angular.module('website.dashboard', [])
         $rootScope.pageTitle = 'dashboard';
         $rootScope.bodyColor = 'filled_bg';
         var accountModal;
-        $scope.account = [];
+        $scope.accountData = [];
         $scope.today = new Date();
         checkForAccounts();
 
         function checkForAccounts() {
-            openAccountModal();//TODO remove
-            $scope.registrationStep = 1;//TODO remove
-            if (!storageFactory.getAccounts()) {
-                $scope.registrationStep = 0;
-                getAccounts();
-            }
+            $scope.registrationStep = 0;
+            getAccounts();
         }
 
         function openAccountModal() {
@@ -40,36 +36,55 @@ angular.module('website.dashboard', [])
             getAccounts();
         };
 
-        $scope.skipStep = function () {
+        $scope.nextStep = function () {
             $scope.registrationStep++;
         };
 
         function onError(data, status) {
-            if (status === RESPONSE_STATUS.NOT_FOUND) {
-                openAccountModal();
-            } else {
-                // errorFactory.resolve(data, status); //TODO uncomment
-            }
+            // if (status === RESPONSE_STATUS.NOT_FOUND) { //TODO uncomment
+            openAccountModal();
+            // } else {
+            //     errorFactory.resolve(data, status);
+            // }
         }
 
-        function getAccounts() {
+        function getAccounts(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (accounts) {
-                    storageFactory.setAccounts(accounts);
+                    if (callback) callback(accounts);
                 }).error(onError);
         }
     }])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
+        $scope.firstAccount = null;
+
         $scope.juridicData = {
-            phones: [],
-            emails: [],
-            founders: [],
-            authorizedPersons: [],
-            licenses: [],
-            registrationRequesters: [],
-            sites: [],
-            addresses: []
+            common: {},
+            contacts: {
+                phones: [],
+                emails: [],
+                sites: [],
+                addresses: []
+            },
+            details: {},
+            persons: {
+                founders: [],
+                authorizedPersons: []
+            },
+            pfrAndFms: {
+                pfr: {},
+                fms: {}
+            },
+            licensesAndRequesters: {
+                licenses: [],
+                registrationRequesters: []
+            },
+            misc: {
+                check: {},
+                other: {},
+                tax: {}
+            }
         };
 
         $scope.openCatalog = function () {
@@ -82,19 +97,26 @@ angular.module('website.dashboard', [])
             });
         };
 
-        $scope.saveData = function (data) {
-            $http.post(REST_CONFIG.BASE_URL + '/accounts', data)
+        $scope.saveAccountData = function () {
+            $http.post(REST_CONFIG.BASE_URL + '/accounts', {title: $scope.accountData.title})
                 .success(function () {
-                    $scope.getAccounts();
-                    $scope.registrationStep = 1;
+                    $scope.getAccounts(function (accounts) {
+                        $scope.firstAccount = accounts[0];
+                    });
+                    $scope.nextStep();
                 }).error(errorFactory.resolve);
         };
 
-        $scope.finishSaveData = function (data) {
-            $scope.saveData(data);
-            $scope.closeAccountModal();
-            $scope.registrationStep = 0;
+        $scope.saveData = function (isLastStep) {
+            if (isLastStep) {
+                $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
+                    .success(function () {
+                        $scope.closeAccountModal();
+                        $scope.registrationStep = 0;
+                    }).error(errorFactory.resolve);
+            } else {
+                $scope.nextStep();
+            }
         };
-
     }])
 ;
