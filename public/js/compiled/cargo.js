@@ -540,11 +540,15 @@ angular.module('website.dashboard', [])
             getAccounts();
         };
 
+        $scope.skipStep = function () {
+            $scope.registrationStep++;
+        };
+
         function onError(data, status) {
             if (status === RESPONSE_STATUS.NOT_FOUND) {
                 openAccountModal();
             } else {
-               // errorFactory.resolve(data, status);
+                // errorFactory.resolve(data, status); //TODO uncomment
             }
         }
 
@@ -578,14 +582,20 @@ angular.module('website.dashboard', [])
             });
         };
 
-        $scope.saveAccountData = function () {
-            $http.post(REST_CONFIG.BASE_URL + '/accounts', {name: $scope.account.name})
+        $scope.saveData = function (data) {
+            $http.post(REST_CONFIG.BASE_URL + '/accounts', data)
                 .success(function () {
-                    $scope.closeAccountModal();
                     $scope.getAccounts();
                     $scope.registrationStep = 1;
                 }).error(errorFactory.resolve);
         };
+
+        $scope.finishSaveData = function (data) {
+            $scope.saveData(data);
+            $scope.closeAccountModal();
+            $scope.registrationStep = 0;
+        };
+
     }])
 ;
 'use strict';
