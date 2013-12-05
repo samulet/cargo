@@ -195,10 +195,10 @@ angular.module('common.directives', [])
         };
     })
 
-    .directive('addRegistrationRequesterForm', function () {
+    .directive('addApplicantsForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addRegistrationRequesterTemplate.html',
+            templateUrl: 'html/templates/addApplicantsTemplate.html',
             scope: {
                 registrationRequesters: '=model'
             },
