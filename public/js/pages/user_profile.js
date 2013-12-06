@@ -36,7 +36,7 @@ angular.module('website.user.profile', [])
                 }).error(errorFactory.resolve);
         };
 
-        $scope.openDatePopup = function(isOpen) {
+        $scope.openDatePopup = function (isOpen) {
             $timeout(function () {
                 $scope[isOpen] = true;
             });

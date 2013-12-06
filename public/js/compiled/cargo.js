@@ -301,18 +301,41 @@ angular.module('common.directives', [])
             restrict: 'E',
             templateUrl: 'html/templates/addApplicantsTemplate.html',
             scope: {
-                registrationRequesters: '=model'
+                applicants: '=model'
             },
             link: function (scope, elem, attrs) {
                 scope.temp = {};
 
                 scope.remove = function (element) {
-                    var index = scope.registrationRequesters.indexOf(element);
-                    if (index !== -1) scope.registrationRequesters.splice(index, 1);
+                    var index = scope.applicants.indexOf(element);
+                    if (index !== -1) scope.applicants.splice(index, 1);
                 };
 
                 scope.add = function () {
-                    scope.registrationRequesters.push(scope.temp);
+                    scope.applicants.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
+
+    .directive('addPersonsForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addPersonsTemplate.html',
+            scope: {
+                persons: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.persons.indexOf(element);
+                    if (index !== -1) scope.persons.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.persons.push(scope.temp);
                     scope.temp = {};
                 };
             }
@@ -541,12 +564,16 @@ angular.module('website.dashboard', [])
             $scope.registrationStep++;
         };
 
+        $scope.prevStep = function () {
+            $scope.registrationStep--;
+        };
+
         function onError(data, status) {
-            // if (status === RESPONSE_STATUS.NOT_FOUND) { //TODO uncomment
-            openAccountModal();
-            // } else {
-            //     errorFactory.resolve(data, status);
-            // }
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                openAccountModal();
+            } else {
+                errorFactory.resolve(data, status);
+            }
         }
 
         function getAccounts() {
@@ -562,14 +589,6 @@ angular.module('website.dashboard', [])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
         $scope.juridicData = {
-            short: '',
-            inn: '',
-            name: '',
-            ogrn: '',
-            kpp: '',
-            forming_method: '',
-            capital: '',
-            okved: '',
             contacts: {
                 phones: [],
                 emails: [],
@@ -577,12 +596,13 @@ angular.module('website.dashboard', [])
                 addresses: []
             },
             founders: [],
-            authorizedPersons: [],
+            authorized_persons: [],
             pfr: [],
             fms: [],
             licenses: [],
             applicants: [],
-            tax: {}
+            tax: {},
+            persons: []
         };
 
         $scope.openCatalog = function () {
@@ -605,7 +625,6 @@ angular.module('website.dashboard', [])
 
         $scope.saveData = function (isLastStep) {
             if (isLastStep) {
-                console.log($scope.juridicData.inn);
                 $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
                     .success(function () {
                         $scope.closeAccountModal();
@@ -671,7 +690,7 @@ angular.module('website.user.profile', [])
                 }).error(errorFactory.resolve);
         };
 
-        $scope.openDatePopup = function(isOpen) {
+        $scope.openDatePopup = function (isOpen) {
             $timeout(function () {
                 $scope[isOpen] = true;
             });

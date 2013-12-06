@@ -42,6 +42,10 @@ li.input-group .input-group-addon {
     float: right;
 }
 
+.pull_left {
+    float: left;
+}
+
 .tiny_navbar {
     border-radius: 0;
     z-index: 0;

@@ -9,7 +9,7 @@
 
         <ul class="alert alert-info clear_list">
             <li ng-hide="authorizedPersons.length > 0" class="alert_placeholder"><i>(Нет уполномоченных лиц)</i></li>
-            <li ng-show="authorizedPersons.length > 0" ng-repeat="founder in authorizedPersons">
+            <li ng-show="authorizedPersons.length > 0" ng-repeat="authorizedPerson in authorizedPersons">
                 <span ng-show="authorizedPerson.authorityKind">
                     <strong>Вид полномочия</strong>: {{authorizedPerson.authorityKind}},
                 </span>

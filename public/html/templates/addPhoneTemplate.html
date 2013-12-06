@@ -29,7 +29,7 @@
                     Вид телефона<span class="required_mark">*</span>
                 </label>
                 <select id="phone-type"
-                        ng-model="tempPhone.type" class="form-control" required>
+                        ng-model="temp.type" class="form-control" required>
                     <option value="cell">Мобильный</option>
                     <option value="local">Стационарный</option>
                 </select>
@@ -38,10 +38,10 @@
                 <label for="phone-countryCode" class="input-group-addon inline_addon">Код страны</label>
                 <input id="phone-countryCode" type="number"
                        placeholder="7"
-                       ng-model="tempPhone.countryCode" class="form-control"/>
+                       ng-model="temp.countryCode" class="form-control"/>
                 <label for="phone-cityCode" class="input-group-addon inline_addon">Код города</label>
                 <input id="phone-cityCode" type="number"
-                       ng-model="tempPhone.cityCode" class="form-control"/>
+                       ng-model="temp.cityCode" class="form-control"/>
             </li>
             <li class="input-group">
                 <label for="phone-number" class="input-group-addon" title="Обязательное поле">
@@ -49,14 +49,14 @@
                     <span class="required_mark">*</span>
                 </label>
                 <input id="phone-number" type="text"
-                       ng-model="tempPhone.number" class="form-control"
+                       ng-model="temp.number" class="form-control"
                        placeholder="1234567890"
                        required/>
             </li>
             <li class="input-group">
                 <label for="phone-additionalNumber" class="input-group-addon">Добавочный</label>
                 <input id="phone-additionalNumber" type="text"
-                       ng-model="tempPhone.additionalNumber" class="form-control"/>
+                       ng-model="temp.additionalNumber" class="form-control"/>
             </li>
             <li>
                 <button type="submit" class="btn btn-success pull_right" ng-click="add()"

@@ -41,12 +41,16 @@ angular.module('website.dashboard', [])
             $scope.registrationStep++;
         };
 
+        $scope.prevStep = function () {
+            $scope.registrationStep--;
+        };
+
         function onError(data, status) {
-            // if (status === RESPONSE_STATUS.NOT_FOUND) { //TODO uncomment
-            openAccountModal();
-            // } else {
-            //     errorFactory.resolve(data, status);
-            // }
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                openAccountModal();
+            } else {
+                errorFactory.resolve(data, status);
+            }
         }
 
         function getAccounts() {
@@ -62,14 +66,6 @@ angular.module('website.dashboard', [])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
         $scope.juridicData = {
-            short: '',
-            inn: '',
-            name: '',
-            ogrn: '',
-            kpp: '',
-            forming_method: '',
-            capital: '',
-            okved: '',
             contacts: {
                 phones: [],
                 emails: [],
@@ -77,12 +73,13 @@ angular.module('website.dashboard', [])
                 addresses: []
             },
             founders: [],
-            authorizedPersons: [],
+            authorized_persons: [],
             pfr: [],
             fms: [],
             licenses: [],
             applicants: [],
-            tax: {}
+            tax: {},
+            persons: []
         };
 
         $scope.openCatalog = function () {
@@ -105,7 +102,6 @@ angular.module('website.dashboard', [])
 
         $scope.saveData = function (isLastStep) {
             if (isLastStep) {
-                console.log($scope.juridicData.inn);
                 $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
                     .success(function () {
                         $scope.closeAccountModal();
