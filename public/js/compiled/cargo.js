@@ -512,7 +512,7 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            $scope.registrationStep = 1;//TODO should be 0
+            $scope.registrationStep = 5;//TODO should be 0
             getAccounts();
         }
 
@@ -539,6 +539,10 @@ angular.module('website.dashboard', [])
 
         $scope.nextStep = function () {
             $scope.registrationStep++;
+        };
+
+        $scope.prevStep = function () {
+            $scope.registrationStep--;
         };
 
         function onError(data, status) {
@@ -663,7 +667,7 @@ angular.module('website.user.profile', [])
                 }).error(errorFactory.resolve);
         };
 
-        $scope.openDatePopup = function(isOpen) {
+        $scope.openDatePopup = function (isOpen) {
             $timeout(function () {
                 $scope[isOpen] = true;
             });
