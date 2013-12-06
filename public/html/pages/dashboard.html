@@ -96,13 +96,19 @@
                 </li>
                 <li class="input-group">
                     <label for="juridicData-ogrn" class="input-group-addon">ОГРН</label>
-                    <input id="juridicData-ogrn" type="text"
+                    <input id="juridicData-ogrn" type="text" name="ogrnInput"
                            ng-model="juridicData.ogrn" class="form-control"
                            minlength="13"
                            maxlength="13"
                            ng-minlength="13"
                            ng-maxlength="13"
                            ng-pattern="/\d{13}/"/>
+                </li>
+                <li>
+                    <div class="alert alert-danger fade_anim"
+                         ng-show="juridicCommonDataForm.ogrnInput.$dirty && juridicCommonDataForm.ogrnInput.$invalid">
+                        ОГРН должен состоять из 13 цифр
+                    </div>
                 </li>
                 <li class="input-group">
                     <label for="juridicData-kpp" class="input-group-addon">КПП</label>
@@ -435,7 +441,7 @@
                     <input id="juridicData-tax-agency_number" type="text"
                            ng-model="juridicData.tax.agency_number" class="form-control"/>
                 </li>
-                <li class="input-group"><!--//TODO WTF?-->
+                <li class="input-group">
                     <label for="juridicData-tax-date_accounting" class="input-group-addon">
                         Дата постановки на учёт
                     </label>
@@ -496,10 +502,10 @@
                 <li class="input-group">
                     <label for="juridicData-tax-rate" class="input-group-addon">
                         Процентная ставка налога</label>
-                    <input id="juridicData-tax-rate" type="text"
+                    <input id="juridicData-tax-rate" type="number"
                            ng-model="juridicData.tax.rate" class="form-control"/>
                 </li>
-                <li class="input-group"><!--//TODO WTF?-->
+                <li class="input-group">
                     <label for="juridicData-tax-linksEgrulEgruip" class="input-group-addon">
                         Ссылка на файлы выписки из ЕГРЮЛ/ЕГРЮИП
                     </label>

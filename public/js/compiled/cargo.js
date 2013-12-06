@@ -535,7 +535,7 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            $scope.registrationStep = 1;//TODO should be 0
+            $scope.registrationStep = 0;
             getAccounts();
         }
 
@@ -569,11 +569,11 @@ angular.module('website.dashboard', [])
         };
 
         function onError(data, status) {
-            // if (status === RESPONSE_STATUS.NOT_FOUND) { //TODO uncomment
-            openAccountModal();
-            // } else {
-            //     errorFactory.resolve(data, status);
-            // }
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                openAccountModal();
+            } else {
+                errorFactory.resolve(data, status);
+            }
         }
 
         function getAccounts() {
@@ -625,7 +625,6 @@ angular.module('website.dashboard', [])
 
         $scope.saveData = function (isLastStep) {
             if (isLastStep) {
-                console.log($scope.juridicData.inn);
                 $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
                     .success(function () {
                         $scope.closeAccountModal();
