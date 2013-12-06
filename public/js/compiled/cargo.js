@@ -301,18 +301,18 @@ angular.module('common.directives', [])
             restrict: 'E',
             templateUrl: 'html/templates/addApplicantsTemplate.html',
             scope: {
-                registrationRequesters: '=model'
+                applicants: '=model'
             },
             link: function (scope, elem, attrs) {
                 scope.temp = {};
 
                 scope.remove = function (element) {
-                    var index = scope.registrationRequesters.indexOf(element);
-                    if (index !== -1) scope.registrationRequesters.splice(index, 1);
+                    var index = scope.applicants.indexOf(element);
+                    if (index !== -1) scope.applicants.splice(index, 1);
                 };
 
                 scope.add = function () {
-                    scope.registrationRequesters.push(scope.temp);
+                    scope.applicants.push(scope.temp);
                     scope.temp = {};
                 };
             }
@@ -512,7 +512,7 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            $scope.registrationStep = 0;
+            $scope.registrationStep = 1;//TODO should be 0
             getAccounts();
         }
 
@@ -562,14 +562,6 @@ angular.module('website.dashboard', [])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
         $scope.juridicData = {
-            short: '',
-            inn: '',
-            name: '',
-            ogrn: '',
-            kpp: '',
-            forming_method: '',
-            capital: '',
-            okved: '',
             contacts: {
                 phones: [],
                 emails: [],
@@ -577,7 +569,7 @@ angular.module('website.dashboard', [])
                 addresses: []
             },
             founders: [],
-            authorizedPersons: [],
+            authorized_persons: [],
             pfr: [],
             fms: [],
             licenses: [],

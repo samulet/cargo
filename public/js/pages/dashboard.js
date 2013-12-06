@@ -12,7 +12,7 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            $scope.registrationStep = 0;
+            $scope.registrationStep = 1;//TODO should be 0
             getAccounts();
         }
 
@@ -62,14 +62,6 @@ angular.module('website.dashboard', [])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
         $scope.juridicData = {
-            short: '',
-            inn: '',
-            name: '',
-            ogrn: '',
-            kpp: '',
-            forming_method: '',
-            capital: '',
-            okved: '',
             contacts: {
                 phones: [],
                 emails: [],
@@ -77,7 +69,7 @@ angular.module('website.dashboard', [])
                 addresses: []
             },
             founders: [],
-            authorizedPersons: [],
+            authorized_persons: [],
             pfr: [],
             fms: [],
             licenses: [],

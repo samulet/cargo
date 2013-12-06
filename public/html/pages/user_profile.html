@@ -490,7 +490,7 @@
     <li>
         <button type="reset" class="btn btn-danger" ng-click="cancelEdit()">Отменить</button>
         <button type="submit" class="btn btn-primary pull_right" ng-click="saveEdit()" ajax-disabler="isAjaxLoading"
-                ng-disabled="eSignatureDataForm.$invalid && photoDataForm.$invalid &&  miscDataForm.$invalid &&  passportDataForm.$invalid &&  personalDataForm.$invalid  && isAjaxLoading">
+                ng-disabled="eSignatureDataForm.$invalid || photoDataForm.$invalid ||  miscDataForm.$invalid ||  passportDataForm.$invalid ||  personalDataForm.$invalid  || isAjaxLoading">
             Сохранить
         </button>
     </li>

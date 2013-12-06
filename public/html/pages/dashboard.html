@@ -24,8 +24,13 @@
                         Название аккаунта<span class="required_mark">*</span>
                     </label>
                     <input id="accountData-title" type="text"
-                           ng-model="accountData.title" class="form-control" required
-                           maxlength="20"/>
+                           ng-model="accountData.title" class="form-control"
+                           required
+                           maxlength="20"
+                           ng-maxlength="20"/>
+                </li>
+                <li>
+                    <span class="required_mark">*</span> - Обязательные поля
                 </li>
             </ul>
         </form>
@@ -33,7 +38,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success"
-                ng-disabled="accountDataForm.$invalid && isAjaxLoading"
+                ng-disabled="accountDataForm.$invalid || isAjaxLoading"
                 ng-click="saveAccountData()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
@@ -63,11 +68,19 @@
                     <label for="juridicData-inn" class="input-group-addon" title="Обязательное поле">
                         ИНН<span class="required_mark">*</span>
                     </label>
-                    <input id="juridicData-inn" type="text"
+                    <input id="juridicData-inn" type="text" name="innInput"
                            ng-model="juridicData.inn" class="form-control"
                            ng-minlength="10"
+                           minlength="10"
                            maxlength="12"
+                           ng-maxlength="12"
                            required/>
+                </li>
+                <li>
+                    <div class="alert alert-danger fade_anim"
+                         ng-show="juridicCommonDataForm.innInput.$dirty && juridicCommonDataForm.innInput.$invalid">
+                        ИНН юридического лица - 10 цифр, Индивидуального предпринимателя - 12 цифр
+                    </div>
                 </li>
                 <li class="input-group">
                     <label for="juridicData-name" class="input-group-addon">Полное наименование</label>
@@ -78,13 +91,18 @@
                     <label for="juridicData-ogrn" class="input-group-addon">ОГРН</label>
                     <input id="juridicData-ogrn" type="text"
                            ng-model="juridicData.ogrn" class="form-control"
+                           minlength="13"
+                           maxlength="13"
                            ng-minlength="13"
-                           maxlength="13"/>
+                           ng-maxlength="13"/>
                 </li>
                 <li class="input-group">
                     <label for="juridicData-kpp" class="input-group-addon">КПП</label>
                     <input id="juridicData-kpp" type="text"
                            ng-model="juridicData.kpp" class="form-control"/>
+                </li>
+                <li>
+                    <span class="required_mark">*</span> - Обязательные поля
                 </li>
             </ul>
         </form>
@@ -92,7 +110,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success"
-                ng-disabled="juridicCommonDataForm.$invalid && isAjaxLoading"
+                ng-disabled="juridicCommonDataForm.$invalid || isAjaxLoading"
                 ng-click="saveData()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
@@ -121,6 +139,11 @@
         <!--Sites Data-->
         <add-site-form model="juridicData.contacts.sites"></add-site-form>
         <!--END Sites Data-->
+        <ul class="clear_list">
+            <li>
+                <span class="required_mark">*</span> - Обязательные поля
+            </li>
+        </ul>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
@@ -159,6 +182,9 @@
                     <input id="juridicData-okved" type="text"
                            ng-model="juridicData.okved" class="form-control"/>
                 </li>
+                <li>
+                    <span class="required_mark">*</span> - Обязательные поля
+                </li>
             </ul>
         </form>
         <!--END Juridic details-->
@@ -166,7 +192,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
-                ng-disabled="juridicDetailsDataForm.$invalid && isAjaxLoading"
+                ng-disabled="juridicDetailsDataForm.$invalid || isAjaxLoading"
                 ng-click="saveData()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
@@ -187,6 +213,11 @@
         <!--Authorized persons-->
         <add-authorized-person-form model="juridicData.authorized_persons"></add-authorized-person-form>
         <!--END Authorized persons-->
+        <ul class="clear_list">
+            <li>
+                <span class="required_mark">*</span> - Обязательные поля
+            </li>
+        </ul>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
@@ -277,11 +308,16 @@
             </ul>
         </form>
         <!--END FMS-->
+        <ul class="clear_list">
+            <li>
+                <span class="required_mark">*</span> - Обязательные поля
+            </li>
+        </ul>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
-                ng-disabled="juridicPfrDataForm.$invalid && juridicFmsDataForm.$invalid && isAjaxLoading"
+                ng-disabled="juridicPfrDataForm.$invalid || juridicFmsDataForm.$invalid || isAjaxLoading"
                 ng-click="saveData()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
@@ -302,6 +338,11 @@
         <!--Applicants-->
         <add-applicants-form model="juridicData.applicants"></add-applicants-form>
         <!--END Applicants-->
+        <ul class="clear_list">
+            <li>
+                <span class="required_mark">*</span> - Обязательные поля
+            </li>
+        </ul>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
@@ -373,11 +414,11 @@
                 </span>
                 </li>
                 <li class="input-group">
-                    <label for="juridicData-tax-registratorFiscalNumber" class="input-group-addon">
+                    <label for="juridicData-tax-registration_agency_number" class="input-group-addon">
                         Номер налоговой, где проходила регистрация
                     </label>
-                    <input id="juridicData-tax-registratorFiscalNumber" type="text"
-                           ng-model="juridicData.tax.registratorFiscalNumber" class="form-control"/>
+                    <input id="juridicData-tax-registration_agency_number" type="text"
+                           ng-model="juridicData.tax.registration_agency_number" class="form-control"/>
                 </li>
                 <li class="input-group">
                     <label for="juridicData-tax-registrationDate" class="input-group-addon">Дата регистрации</label>
@@ -486,10 +527,15 @@
             </ul>
         </form>
         <!-- END Check Data -->
+        <ul class="clear_list">
+            <li>
+                <span class="required_mark">*</span> - Обязательные поля
+            </li>
+        </ul>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success"
-                ng-disabled="juridicTaxDataForm.$invalid && juridicOtherDataForm.$invalid && juridicCheckDataForm.$invalid && isAjaxLoading"
+                ng-disabled="juridicTaxDataForm.$invalid || juridicOtherDataForm.$invalid || juridicCheckDataForm.$invalid || isAjaxLoading"
                 ng-click="saveData(true)" ajax-disabler="isAjaxLoading"> Завершить
         </button>
     </div>
