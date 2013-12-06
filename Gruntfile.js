@@ -219,6 +219,6 @@ module.exports = function (grunt) {
     grunt.registerTask('check_js', ['jshint:beforeconcat']);
     grunt.registerTask('dev', ['ngconstant:dev', 'concat:js', 'jshint:beforeconcat', 'cssmin:minify']);
     grunt.registerTask('manual', ['ngconstant:manual', 'concat:js', 'jshint:afterconcat', 'uglify:js', 'cssmin:minify', 'clean:prod']);
-    grunt.registerTask('prod', ['ngconstant:prod', 'concat:js', 'jshint:afterconcat', 'uglify:js', 'cssmin:minify', 'clean:prod']);
+    grunt.registerTask('prod', ['ngconstant:prod', 'concat:js', 'jshint:afterconcat', 'uglify:js', 'cssmin:minify']);
 }
 ;
