@@ -13,10 +13,10 @@
             <li ng-repeat="phone in phones" ng-show="phones.length > 0">
                 <span ng-show="phone.type == 'local'"><i class="glyphicon glyphicon-phone-alt"> </i></span>
                 <span ng-show="phone.type == 'cell'"><i class="glyphicon glyphicon-phone"> </i></span>
-                <span ng-show="phone.countryCode">{{phone.countryCode}} </span>
-                <span ng-show="phone.cityCode">({{phone.cityCode}}) </span>
+                <span ng-show="phone.country_code">{{phone.country_code}} </span>
+                <span ng-show="phone.city_code">({{phone.city_code}}) </span>
                 <span ng-show="phone.number">{{phone.number}}</span>
-                <span ng-show="phone.additionalNumber"> , дополнительный {{phone.additionalNumber}}</span>
+                <span ng-show="phone.additional_number"> , дополнительный {{phone.additional_number}}</span>
                     <span class="pull_right clickable" ng-click="remove(phone)" title="Удалить">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
@@ -30,18 +30,19 @@
                 </label>
                 <select id="phone-type"
                         ng-model="temp.type" class="form-control" required>
+                        ng-model="temp.type" class="form-control" required>
                     <option value="cell">Мобильный</option>
                     <option value="local">Стационарный</option>
                 </select>
             <li>
             <li class="input-group">
-                <label for="phone-countryCode" class="input-group-addon inline_addon">Код страны</label>
-                <input id="phone-countryCode" type="number"
+                <label for="phone-country_code" class="input-group-addon inline_addon">Код страны</label>
+                <input id="phone-country_code" type="number"
                        placeholder="7"
-                       ng-model="temp.countryCode" class="form-control"/>
-                <label for="phone-cityCode" class="input-group-addon inline_addon">Код города</label>
-                <input id="phone-cityCode" type="number"
-                       ng-model="temp.cityCode" class="form-control"/>
+                       ng-model="temp.country_code" class="form-control"/>
+                <label for="phone-city_code" class="input-group-addon inline_addon">Код города</label>
+                <input id="phone-city_code" type="number"
+                       ng-model="temp.city_code" class="form-control"/>
             </li>
             <li class="input-group">
                 <label for="phone-number" class="input-group-addon" title="Обязательное поле">
@@ -54,9 +55,9 @@
                        required/>
             </li>
             <li class="input-group">
-                <label for="phone-additionalNumber" class="input-group-addon">Добавочный</label>
-                <input id="phone-additionalNumber" type="text"
-                       ng-model="temp.additionalNumber" class="form-control"/>
+                <label for="phone-additional_number" class="input-group-addon">Добавочный</label>
+                <input id="phone-additional_number" type="text"
+                       ng-model="temp.additional_number" class="form-control"/>
             </li>
             <li>
                 <button type="submit" class="btn btn-success pull_right" ng-click="add()"
