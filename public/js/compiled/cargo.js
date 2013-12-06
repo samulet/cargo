@@ -318,6 +318,29 @@ angular.module('common.directives', [])
             }
         };
     })
+
+    .directive('addPersonsForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addPersonsTemplate.html',
+            scope: {
+                persons: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.persons.indexOf(element);
+                    if (index !== -1) scope.persons.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.persons.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
 ;
 'use strict';
 
@@ -512,7 +535,7 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            $scope.registrationStep = 5;//TODO should be 0
+            $scope.registrationStep = 1;//TODO should be 0
             getAccounts();
         }
 
@@ -578,7 +601,8 @@ angular.module('website.dashboard', [])
             fms: [],
             licenses: [],
             applicants: [],
-            tax: {}
+            tax: {},
+            persons: []
         };
 
         $scope.openCatalog = function () {

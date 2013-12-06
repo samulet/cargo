@@ -20,11 +20,19 @@
 
         <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
+                <label for="founder-founder_count" class="input-group-addon">
+                    Количество учредителей
+                </label>
+                <input id="founder-founder_count" type="text"
+                       ng-model="temp.founder_count" class="form-control"
+                       required/>
+            </li>
+            <li class="input-group">
                 <label for="founder-type" class="input-group-addon" title="Обязательное поле">
                     Вид учередителя<span class="required_mark">*</span>
                 </label>
                 <input id="founder-type" type="text"
-                       ng-model="temp.number" class="form-control"
+                       ng-model="temp.type" class="form-control"
                        required/>
             </li>
             <li class="input-group">
