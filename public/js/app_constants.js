@@ -13,12 +13,14 @@ angular.module('website.constants', [])
     })
     .constant('ACCESS_LEVEL', {
         PUBLIC: 0,
-        AUTHORIZED: 1
+        AUTHORIZED: 1,
+        ADMIN: 2
     })
     .constant('ROUTES', {
         START_PAGE: '/',
         START_PAGE_ALT: '',
         DASHBOARD: '/dashboard',
+        ACCOUNT: '/account',
         USER_PROFILE: '/user/profile',
         NOT_FOUND: '/404'
     })

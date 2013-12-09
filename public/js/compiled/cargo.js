@@ -12,6 +12,7 @@ angular.module('website', [
         'website.sign',
         'website.user.profile',
         'website.dashboard',
+        'website.account',
         'website.page.errors'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
@@ -21,6 +22,7 @@ angular.module('website', [
         $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + '404.html', access: ACCESS_LEVEL.PUBLIC});
         $routeProvider.when(ROUTES.USER_PROFILE, {templateUrl: pathToIncs + 'user_profile.html', access: ACCESS_LEVEL.AUTHORIZED});
         $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', access: ACCESS_LEVEL.AUTHORIZED});
+        $routeProvider.when(ROUTES.ACCOUNT, {templateUrl: pathToIncs + 'account.html', access: ACCESS_LEVEL.AUTHORIZED});
 
         $routeProvider.otherwise({redirectTo: ROUTES.DASHBOARD});
 
@@ -83,12 +85,14 @@ angular.module('website.constants', [])
     })
     .constant('ACCESS_LEVEL', {
         PUBLIC: 0,
-        AUTHORIZED: 1
+        AUTHORIZED: 1,
+        ADMIN: 2
     })
     .constant('ROUTES', {
         START_PAGE: '/',
         START_PAGE_ALT: '',
         DASHBOARD: '/dashboard',
+        ACCOUNT: '/account',
         USER_PROFILE: '/user/profile',
         NOT_FOUND: '/404'
     })
@@ -569,6 +573,17 @@ angular.module('common.factories', [
   "BASE_URL": "http://cargo.dev:8000/api"
 })
 
+;
+'use strict';
+
+angular.module('website.dashboard', [])
+
+    .controller('accountController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', '$modal', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory, $modal) {
+        $rootScope.pageTitle = 'Аккаунт';
+        $rootScope.bodyColor = 'filled_bg';
+
+
+    }])
 ;
 'use strict';
 
