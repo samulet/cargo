@@ -69,7 +69,7 @@ angular.module('website.dashboard', [])
                 .success(function () {
                     getAccounts();
                 }).error(onError);
-        }
+        };
     }])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
