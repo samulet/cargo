@@ -10,9 +10,9 @@
         <ul class="alert alert-info clear_list">
             <li ng-hide="applicants.length > 0" class="alert_placeholder"><i>(Нет заявителей)</i></li>
             <li ng-show="applicants.length > 0" ng-repeat="applicant in applicants">
-                <span ng-show="applicant.type"><strong>Вид заявителя</strong>: {{registrationRequester.type}}, </span>
-                <span ng-show="applicant.link"><strong>Ссылка на заявителя</strong>: {{registrationRequester.link}}</span>
-                    <span class="pull_right clickable" ng-click="remove(registrationRequester)" title="Удалить">
+                <span ng-show="applicant.type"><strong>Вид заявителя</strong>: {{applicant.type}}, </span>
+                <span ng-show="applicant.link"><strong>Ссылка на заявителя</strong>: {{applicant.link}}</span>
+                    <span class="pull_right clickable" ng-click="remove(applicant)" title="Удалить">
                         <i class="glyphicon glyphicon-remove"> </i>
                     </span>
             </li>
