@@ -73,6 +73,7 @@ angular.module('website.dashboard', [])
                 addresses: []
             },
             founders: [],
+            accounts: [],
             authorized_persons: [],
             pfr: {},
             fms: {},

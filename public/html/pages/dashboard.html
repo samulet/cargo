@@ -373,39 +373,7 @@
         <!--END Applicants-->
 
         <!--Bank Accounts-->
-        <form name="juridicBankAccountsDataForm" role="form">
-            <ul class="clear_list vertical_form_block bordered_top_form">
-                <li class="form_header"><h4>Банковские реквизиты</h4></li>
-                <li class="input-group">
-                    <label for="juridicData-accounts-bank" class="input-group-addon">
-                        Название банка
-                    </label>
-                    <input id="juridicData-accounts-bank" type="text"
-                           ng-model="juridicData.accounts.bank" class="form-control"/>
-                </li>
-                <li class="input-group">
-                    <label for="juridicData-accounts-account" class="input-group-addon">
-                        Расчетный счет
-                    </label>
-                    <input id="juridicData-accounts-account" type="text"
-                           ng-model="juridicData.accounts.account" class="form-control"/>
-                </li>
-                <li class="input-group">
-                    <label for="juridicData-accounts-corresp" class="input-group-addon">
-                        Корреспондентский счет
-                    </label>
-                    <input id="juridicData-accounts-corresp" type="text"
-                           ng-model="juridicData.accounts.corresp" class="form-control"/>
-                </li>
-                <li class="input-group">
-                    <label for="juridicData-accounts-bik" class="input-group-addon">
-                        БИК
-                    </label>
-                    <input id="juridicData-accounts-bik" type="text"
-                           ng-model="juridicData.accounts.bik" class="form-control"/>
-                </li>
-            </ul>
-        </form>
+        <add-bank-account-form model="juridicData.accounts"></add-bank-account-form>
         <!--END Bank Accounts-->
         <ul class="clear_list">
             <li>

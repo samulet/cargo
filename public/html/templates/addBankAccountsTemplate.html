@@ -1,0 +1,64 @@
+<form name="juridicBankAccountDataForm" role="form">
+    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
+
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddForm = true;"
+                ng-show="!showAddForm" style="margin-top: 10px;">
+            <i class="glyphicon glyphicon-plus"> </i> Добавить
+        </button>
+        <div class="form_header"><h4>Банковские реквизиты</h4></div>
+
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="bankAccounts.length > 0" class="alert_placeholder"><i>(Нет банковских реквизитов)</i></li>
+            <li ng-show="bankAccounts.length > 0" ng-repeat="bankAccount in bankAccounts">
+                <span ng-show="bankAccount.bank"><strong>Название банка</strong>: {{bankAccount.bank}}, </span>
+                <span ng-show="bankAccount.account"><strong>Расчетный счет</strong>: {{bankAccount.account}}</span>
+                <span ng-show="bankAccount.corresp"><strong> Корреспондентский счет</strong>: {{bankAccount.corresp}}</span>
+                <span ng-show="bankAccount.bik"><strong>БИК</strong>: {{bankAccount.bik}}</span>
+                    <span class="pull_right clickable" ng-click="remove(bankAccount)" title="Удалить">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+
+        <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
+            <li class="input-group">
+                <label for="juridicData-bank" class="input-group-addon">
+                    Название банка
+                </label>
+                <input id="juridicData-bank" type="text"
+                       ng-model="temp.bank" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="bankAccount-account" class="input-group-addon">
+                    Расчетный счет
+                </label>
+                <input id="bankAccount-account" type="text"
+                       ng-model="temp.account" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="bankAccount-corresp" class="input-group-addon">
+                    Корреспондентский счет
+                </label>
+                <input id="bankAccount-corresp" type="text"
+                       ng-model="temp.corresp" class="form-control"/>
+            </li>
+            <li class="input-group">
+                <label for="bankAccount-bik" class="input-group-addon">
+                    БИК
+                </label>
+                <input id="bankAccount-bik" type="text"
+                       ng-model="temp.bik" class="form-control"/>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="juridicBankAccountDataForm.$invalid">
+                    <span ng-show="bankAccounts.length == 0"> Сохранить</span>
+                    <span ng-show="bankAccounts.length > 0"> Добавить банковские реквизиты</span>
+                </button>
+                <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
+                    <span> Отмена</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>

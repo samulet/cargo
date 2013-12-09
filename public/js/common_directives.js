@@ -266,4 +266,27 @@ angular.module('common.directives', [])
             }
         };
     })
+
+    .directive('addBankAccountForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addBankAccountsTemplate.html',
+            scope: {
+                bankAccounts: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.bankAccounts.indexOf(element);
+                    if (index !== -1) scope.bankAccounts.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    scope.bankAccounts.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
 ;
