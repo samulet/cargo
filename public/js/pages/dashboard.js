@@ -12,7 +12,7 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         function checkForAccounts() {
-            $scope.registrationStep = 3;//TODO
+            $scope.registrationStep = 0;
             getAccounts();
         }
 
@@ -74,8 +74,8 @@ angular.module('website.dashboard', [])
             },
             founders: [],
             authorized_persons: [],
-            pfr: [],
-            fms: [],
+            pfr: {},
+            fms: {},
             okved: [],
             licenses: [],
             applicants: [],
