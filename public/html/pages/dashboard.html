@@ -194,17 +194,15 @@
                     <input id="juridicData-capital" type="text"
                            ng-model="juridicData.capital" class="form-control"/>
                 </li>
-                <li class="input-group">
-                    <label for="juridicData-okved" class="input-group-addon">Коды ОКВЭД</label>
-                    <input id="juridicData-okved" type="text"
-                           ng-model="juridicData.okved" class="form-control"/>
-                </li>
                 <li>
                     <span class="required_mark">*</span> - Обязательные поля
                 </li>
             </ul>
         </form>
         <!--END Juridic details-->
+        <!--Okved Data-->
+        <add-okved-form model="juridicData.okved"></add-okved-form>
+        <!--END Okved Data-->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default pull_left" ng-click="prevStep()">

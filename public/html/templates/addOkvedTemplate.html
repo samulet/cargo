@@ -1,0 +1,101 @@
+<form name="okvedDataForm" role="form">
+    <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
+
+        <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddForm = true;"
+                ng-show="!showAddForm" style="margin-top: 10px;">
+            <i class="glyphicon glyphicon-plus"> </i> Добавить
+        </button>
+        <div class="form_header"><h4>Коды ОКВЕД</h4></div>
+
+        <ul class="alert alert-info clear_list">
+            <li ng-hide="okveds.length > 0" class="alert_placeholder"><i>(Нет кодов оквед)</i></li>
+            <li ng-show="okveds.length > 0" ng-repeat="okved in okveds">
+                <span ng-show="okved.okved">{{okved}}</span>
+                    <span class="pull_right clickable" ng-click="remove(okved)" title="Удалить">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+
+        <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim inline_list" style="padding: 0;">
+            <li class="input-group">
+            <li>Код ОКВЕД</li>
+            <li>
+                <input id="okved-part-zero" type="text"
+                       ng-model="temp.partZero" class="centered_text"
+                       ng-minlength="1"
+                       ng-maxlength="1"
+                       maxlength="1"
+                       ng-pattern="/\d{1}/"
+                       size="1"
+                        />
+            </li>
+            <li>
+                <input id="okved-part-first" type="text"
+                       ng-model="temp.partFirst" class="centered_text"
+                       ng-minlength="1"
+                       ng-maxlength="1"
+                       maxlength="1"
+                       ng-pattern="/\d{1}/"
+                       size="1"
+                        />
+            </li>
+            <li>
+                .
+            </li>
+            <li>
+                <input id="okved-part-second" type="text"
+                       ng-model="temp.partSecond" class="centered_text"
+                       ng-minlength="1"
+                       ng-maxlength="1"
+                       maxlength="1"
+                       ng-pattern="/\d{1}/"
+                       size="1"
+                        />
+            </li>
+            <li>
+                <input id="okved-part-third" type="text"
+                       ng-model="temp.partThird" class="centered_text"
+                       ng-minlength="1"
+                       ng-maxlength="1"
+                       maxlength="1"
+                       ng-pattern="/\d{1}/"
+                       size="1"
+                        />
+            </li>
+            <li>
+                .
+            </li>
+            <li>
+                <input id="okved-part-fourth" type="text"
+                       ng-model="temp.partFourth" class="centered_text"
+                       ng-minlength="1"
+                       ng-maxlength="1"
+                       maxlength="1"
+                       ng-pattern="/\d{1}/"
+                       size="1"
+                        />
+            </li>
+            <li>
+                <input id="okved-part-fifth" type="text"
+                       ng-model="temp.partFifth" class="centered_text"
+                       ng-minlength="1"
+                       ng-maxlength="1"
+                       maxlength="1"
+                       ng-pattern="/\d{1}/"
+                       size="1"
+                        />
+            </li>
+            <li style="display: block; margin-top: 15px;">
+                <button type="submit" class="btn btn-success pull_right" ng-click="add()"
+                        ng-disabled="okvedDataForm.$invalid">
+                    <span ng-show="okveds.length == 0"> Сохранить</span>
+                    <span ng-show="okveds.length > 0"> Добавить ещё один код</span>
+                </button>
+                <button type="reset" class="btn btn-danger" ng-click="showAddForm = false">
+                    <span> Отмена</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>

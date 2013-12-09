@@ -186,7 +186,7 @@ angular.module('common.directives', [])
                     scope.temp = {};
                 };
 
-                scope.openDatePopup = function(isOpen) {
+                scope.openDatePopup = function (isOpen) {
                     /* $timeout(function () { //TODO add $timeout
                      scope[isOpen] = true;
                      });*/
@@ -235,6 +235,32 @@ angular.module('common.directives', [])
 
                 scope.add = function () {
                     scope.persons.push(scope.temp);
+                    scope.temp = {};
+                };
+            }
+        };
+    })
+
+    .directive('addOkvedForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addOkvedTemplate.html',
+            scope: {
+                okveds: '=model'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+
+                scope.remove = function (element) {
+                    var index = scope.okveds.indexOf(element);
+                    if (index !== -1) scope.okveds.splice(index, 1);
+                };
+
+                scope.add = function () {
+                    var okved = scope.temp.partZero + scope.temp.partFirst + '.'
+                        + scope.temp.partSecond + scope.temp.partThird + '.'
+                        + scope.temp.partFourth + scope.temp.partFifth;
+                    scope.okveds.push(okved);
                     scope.temp = {};
                 };
             }
