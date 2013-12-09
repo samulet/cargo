@@ -20,7 +20,7 @@
                 <span ng-show="address.area">{{address.area}}</span>
                 <span ng-show="address.street">{{address.street}}</span>
                 <span ng-show="address.house">, дом {{address.house}}</span>
-                <span ng-show="address.housing">, корпус {{address.housing}}</span>
+                <span ng-show="address.building">, корпус {{address.building}}</span>
                 <span ng-show="address.apartment">, квартира {{address.apartment}}</span>
                     <span class="pull_right clickable" ng-click="remove(address)" title="Удалить">
                         <i class="glyphicon glyphicon-remove"> </i>
@@ -86,9 +86,9 @@
                        ng-model="temp.house" class="form-control"/>
             </li>
             <li class="input-group">
-                <label for="address-housing" class="input-group-addon">Корпус</label>
-                <input id="address-housing" type="text"
-                       ng-model="temp.housing" class="form-control"/>
+                <label for="address-building" class="input-group-addon">Корпус</label>
+                <input id="address-building" type="text"
+                       ng-model="temp.building" class="form-control"/>
             </li>
             <li class="input-group">
                 <label for="address-apartment" class="input-group-addon">Квартира</label>

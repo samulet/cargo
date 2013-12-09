@@ -57,9 +57,17 @@ angular.module('website.dashboard', [])
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (data) {
                     var accounts = data._embedded.accounts;
+                    $scope.accounts = accounts;
                     if (accounts.length === 1) {
                         $scope.firstAccount = data._embedded.accounts[0];
                     }
+                }).error(onError);
+        }
+
+        $scope.removeAccount = function (account) {
+            $http.delete(REST_CONFIG.BASE_URL + '/accounts/' + account.account_uuid)
+                .success(function () {
+                    getAccounts();
                 }).error(onError);
         }
     }])

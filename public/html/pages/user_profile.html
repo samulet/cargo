@@ -67,19 +67,8 @@
             <div class="user_data_text" ng-show="profileData.phones.length > 0">
                 <ul class="clear_list">
                     <li ng-repeat="phone in profileData.phones">
-                        <span ng-show="phone.type">Тип телефона:
-                            <span ng-show="phone.type == 'local'">
-                                <i class="glyphicon glyphicon-phone-alt"> </i> Городской
-                            </span>
-                            <span ng-show="phone.type == 'cell'">
-                                <i class="glyphicon glyphicon-phone"> </i> Мобильный
-                            </span>
-                        </span>
-                        <span ng-show="phone.countryCode">
-                            <strong>Код страны:</strong> {{phone.countryCode}}
-                        </span>
-                        <span ng-show="phone.cityCode">
-                            <strong>Код города:</strong> ({{phone.cityCode}})
+                        <span ng-show="phone.type">
+                            <strong>Тип телефона:</strong>{{phone.type}}
                         </span>
                         <span ng-show="phone.number">
                             <strong>Номер телефона:</strong> {{phone.number}}

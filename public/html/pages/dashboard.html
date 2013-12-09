@@ -1,7 +1,20 @@
 <top-private-menu></top-private-menu>
 
 <div ng-controller="dashboardController">
-<h3>dashboard success, prepare for registration</h3>
+<div class="container">
+    <h3>dashboard success, prepare for registration</h3>
+
+    <div class="unfilled_bg small_block form_block" style="padding: 5px 15px;">
+        <h3>Аккаунты</h3>
+        <ul>
+            <li ng-repeat="account in accounts">{{account.title}}
+            <span class="pull_right clickable" ng-click="removeAccount(account)" title="Удалить">
+                        <i class="glyphicon glyphicon-remove"> </i>
+                    </span>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div aria-hidden="true" ng-controller="registrationModalController">
 <script type="text/ng-template" id="registrationModalContent.html">

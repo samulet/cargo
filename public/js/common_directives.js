@@ -27,7 +27,7 @@ angular.module('common.directives', [])
         };
     })
 
-    .directive('addPhoneForm', function () { //TODO refactor this and thos directives to a common view
+    .directive('addPhoneForm', function () {
         return {
             restrict: 'E',
             templateUrl: 'html/templates/addPhoneTemplate.html',
