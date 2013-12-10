@@ -36,7 +36,7 @@ angular.module('common.directives', [])
                 account: '=account',
                 modal: '=modal'
             },
-            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
+            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter) {
                 $scope.today = new Date();
                 $scope.wizardStep = 0;
                 $scope.juridicData = {
@@ -51,6 +51,7 @@ angular.module('common.directives', [])
                     authorized_persons: [],
                     pfr: {},
                     fms: {},
+                    misc: {},
                     okved: [],
                     licenses: [],
                     applicants: [],
@@ -76,19 +77,30 @@ angular.module('common.directives', [])
                     $scope.wizardStep--;
                 };
 
-                $scope.saveData = function (isLastStep) {
-                    if (isLastStep) {
-                        $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.juridicData)
-                            .success(function () {
-                                if ($scope.modal) {
-                                    $scope.modal.close();
-                                }
-                                $scope.wizardStep = 0;
-                            }).error(errorFactory.resolve);
-                    } else {
-                        $scope.nextStep();
-                    }
+                $scope.saveData = function () {
+                    prepareDatesFormat();
+                    $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.juridicData)
+                        .success(function () {
+                            if ($scope.modal) {
+                                $scope.modal.close();
+                            }
+                            $scope.wizardStep = 0;
+                        }).error(errorFactory.resolve);
                 };
+
+                function prepareDatesFormat() {
+                    if ($scope.juridicData.pfr.date_registration) $scope.juridicData.pfr.date_registration = getTimestamp($scope.juridicData.pfr.date_registration);
+                    if ($scope.juridicData.fms.date_registration) $scope.juridicData.fms.date_registration = getTimestamp($scope.juridicData.fms.date_registration);
+                    if ($scope.juridicData.misc.other.documentDate) $scope.juridicData.misc.other.documentDate = getTimestamp($scope.juridicData.misc.other.documentDate);
+                    for (var k in $scope.juridicData.tax) {
+                        if ($scope.juridicData.tax[k].date_accounting) $scope.juridicData.tax[k].date_accounting = getTimestamp($scope.juridicData.fms.date_accounting);
+                        if ($scope.juridicData.tax[k].date_registration) $scope.juridicData.tax[k].date_registration = getTimestamp($scope.juridicData.fms.date_registration);
+                    }
+                }
+
+                function getTimestamp(date) {
+                    return new Date($filter('date', 'dd.MM.yyy')(date)).getTime();
+                }
             }
         };
     })

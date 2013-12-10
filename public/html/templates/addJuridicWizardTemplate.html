@@ -85,7 +85,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-success"
                 ng-disabled="juridicCommonDataForm.$invalid || isAjaxLoading"
-                ng-click="saveData()" ajax-disabler="isAjaxLoading">
+                ng-click="nextStep()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -126,7 +126,7 @@
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="isAjaxLoading"
-                ng-click="saveData()" ajax-disabler="isAjaxLoading">
+                ng-click="nextStep()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -175,7 +175,7 @@
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="juridicDetailsDataForm.$invalid || isAjaxLoading"
-                ng-click="saveData()" ajax-disabler="isAjaxLoading">
+                ng-click="nextStep()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -208,7 +208,7 @@
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="isAjaxLoading"
-                ng-click="saveData()" ajax-disabler="isAjaxLoading">
+                ng-click="nextStep()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -246,7 +246,7 @@
                     <input id="juridicData-pfr-date_registration"
                            class="form-control"
                            type="text"
-                           datepicker-popup="dd-MMMM-yyyy"
+                           datepicker-popup="dd.MM.yyyy"
                            is-open="openedPfrRegistrationDate"
                            min="'1900-01-01'"
                            max="today"
@@ -286,7 +286,7 @@
                     <input id="juridicData-fms-date_registration"
                            class="form-control"
                            type="text"
-                           datepicker-popup="dd-MMMM-yyyy"
+                           datepicker-popup="dd.MM.yyyy"
                            is-open="openedFmsRegistrationDate"
                            min="'1900-01-01'"
                            max="today"
@@ -315,7 +315,7 @@
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="juridicPfrDataForm.$invalid || juridicFmsDataForm.$invalid || isAjaxLoading"
-                ng-click="saveData()" ajax-disabler="isAjaxLoading">
+                ng-click="nextStep()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -352,7 +352,7 @@
         <button type="button" class="btn btn-default" ng-click="nextStep()">Пропустить</button>
         <button type="button" class="btn btn-success"
                 ng-disabled="juridicBankAccountsDataForm.$invalid || isAjaxLoading"
-                ng-click="saveData()" ajax-disabler="isAjaxLoading">
+                ng-click="nextStep()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
     </div>
@@ -381,7 +381,7 @@
                 <input id="juridicData-tax-date_accounting"
                        class="form-control"
                        type="text"
-                       datepicker-popup="dd-MMMM-yyyy"
+                       datepicker-popup="dd.MM.yyyy"
                        is-open="openedAccountingDate"
                        min="'1900-01-01'"
                        max="today"
@@ -399,7 +399,7 @@
                 <input id="juridicData-tax-date_registration"
                        class="form-control"
                        type="text"
-                       datepicker-popup="dd-MMMM-yyyy"
+                       datepicker-popup="dd.MM.yyyy"
                        is-open="openedRegistrationDate"
                        min="'1900-01-01'"
                        max="today"
@@ -483,7 +483,7 @@
                 <input id="juridicData-misc-other-documentDate"
                        class="form-control"
                        type="text"
-                       datepicker-popup="dd-MMMM-yyyy"
+                       datepicker-popup="dd.MM.yyyy"
                        is-open="openedDocumentDate"
                        min="'1900-01-01'"
                        max="today"
@@ -512,11 +512,11 @@
         <ul class="clear_list vertical_form_block bordered_top_form">
             <li class="form_header"><h4>Для счета</h4></li>
             <li class="input-group">
-                <label for="juridicData-misc-check-number" class="input-group-addon">
+                <label for="juridicData-misc-number" class="input-group-addon">
                     Ссылки на номер счета
                 </label>
-                <input id="juridicData-misc-check-number" type="text"
-                       ng-model="juridicData.misc.check.checkNumber" class="form-control"
+                <input id="juridicData-misc-number" type="text"
+                       ng-model="juridicData.misc.checkNumber" class="form-control"
                        readonly/>
                 <span class="input-group-btn">
                     <button class="btn btn-info" ng-click="openCatalog()" disabled>
@@ -525,11 +525,11 @@
                 </span>
             </li>
             <li class="input-group">
-                <label for="juridicData-misc-check-chiefAccountant" class="input-group-addon">
+                <label for="juridicData-misc-chiefAccountant" class="input-group-addon">
                     Ссылка на главного бухгалтера
                 </label>
-                <input id="juridicData-misc-check-chiefAccountant" type="text"
-                       ng-model="juridicData.misc.check.chiefAccountant" class="form-control"
+                <input id="juridicData-misc-chiefAccountant" type="text"
+                       ng-model="juridicData.misc.chiefAccountant" class="form-control"
                        readonly/>
                 <span class="input-group-btn">
                     <button class="btn btn-info" ng-click="openCatalog()" disabled>
@@ -558,7 +558,7 @@
     </button>
     <button type="button" class="btn btn-success"
             ng-disabled="juridicTaxDataForm.$invalid || juridicOtherDataForm.$invalid ||  juridicPersonsDataForm.$invalid || isAjaxLoading"
-            ng-click="saveData(true)" ajax-disabler="isAjaxLoading"> Завершить
+            ng-click="saveData()" ajax-disabler="isAjaxLoading"> Завершить
     </button>
 </div>
 </div>
