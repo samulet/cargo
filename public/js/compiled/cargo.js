@@ -196,7 +196,7 @@ angular.module('common.directives', [])
                 function prepareDatesFormat() {
                     if ($scope.juridicData.pfr.date_registration) $scope.juridicData.pfr.date_registration = getTimestamp($scope.juridicData.pfr.date_registration);
                     if ($scope.juridicData.fms.date_registration) $scope.juridicData.fms.date_registration = getTimestamp($scope.juridicData.fms.date_registration);
-                    if ($scope.juridicData.misc.other.documentDate) $scope.juridicData.misc.other.documentDate = getTimestamp($scope.juridicData.misc.other.documentDate);
+                    if ($scope.juridicData.misc.documentDate) $scope.juridicData.misc.documentDate = getTimestamp($scope.juridicData.misc.documentDate);
                     for (var k in $scope.juridicData.tax) {
                         if ($scope.juridicData.tax[k].date_accounting) $scope.juridicData.tax[k].date_accounting = getTimestamp($scope.juridicData.fms.date_accounting);
                         if ($scope.juridicData.tax[k].date_registration) $scope.juridicData.tax[k].date_registration = getTimestamp($scope.juridicData.fms.date_registration);
