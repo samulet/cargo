@@ -13,14 +13,25 @@
                             class="btn btn-warning pull_right"
                             ajax-disabler="isAjaxLoading"
                             ng-disabled="isAjaxLoading">
-                        <i class="glyphicon glyphicon-remove"> </i>Удалить
+                        <i class="glyphicon glyphicon-remove"> </i> Удалить
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="addCompany(account)">
+                        <i class="glyphicon glyphicon-plus"> </i> Добавить Юр. Лицо
                     </button>
                 </li>
             </ul>
         </div>
-
-        <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-remove"> </i> Добавить</button>
     </div>
 
+
+    <div aria-hidden="true" ng-controller="addCompanyModalController">
+        <script type="text/ng-template" id="addCompanyModalContent.html">
+            <add-juridic-wizard model="companyData"
+                                account="selectedAccount"
+                                ng-show="showJuridicWizard"
+                                modal="companyModal"></add-juridic-wizard>
+
+        </script>
+    </div>
 
 </div>

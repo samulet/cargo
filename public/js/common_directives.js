@@ -99,7 +99,7 @@ angular.module('common.directives', [])
                 }
 
                 function getTimestamp(date) {
-                    return new Date($filter('date', 'dd.MM.yyy')(date)).getTime();
+                    return (new Date($filter('date', 'dd.MM.yyy')(date)).getTime() / 1000);
                 }
             }
         };
