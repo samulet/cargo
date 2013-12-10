@@ -1,4 +1,3 @@
-<div ng-show="isShowIndicator" aria-hidden="true">
 <!--Wizard Step 0-->
 <div ng-show="wizardStep == 0">
     <div class="modal-header">
@@ -32,11 +31,17 @@
                     <label for="juridicData-inn" class="input-group-addon" title="Обязательное поле">
                         ИНН<span class="required_mark">*</span>
                     </label>
-                    <input id="juridicData-inn" type="text" name="innInput"
-                           ng-model="juridicData.inn" class="form-control"
+                    <input id="juridicData-inn"
+                           type="text"
+                           name="innInput"
+                           ng-model="juridicData.inn"
+                           class="form-control"
+                           minlength="10"
                            ng-minlength="10"
+                           maxlength="12"
                            ng-maxlength="12"
                            ng-pattern="/\d{10,12}/"
+                           pattern="/\d{10,12}/"
                            required/>
                 </li>
                 <li>
@@ -47,10 +52,16 @@
                 </li>
                 <li class="input-group">
                     <label for="juridicData-ogrn" class="input-group-addon">ОГРН</label>
-                    <input id="juridicData-ogrn" type="text" name="ogrnInput"
-                           ng-model="juridicData.ogrn" class="form-control"
+                    <input id="juridicData-ogrn"
+                           type="text"
+                           name="ogrnInput"
+                           ng-model="juridicData.ogrn"
+                           class="form-control"
+                           minlength="13"
                            ng-minlength="13"
+                           maxlength="13"
                            ng-maxlength="13"
+                           pattern="/\d{13}/"
                            ng-pattern="/\d{13}/"/>
                 </li>
                 <li>
@@ -133,8 +144,10 @@
             <ul class="clear_list vertical_form_block">
                 <li class="input-group">
                     <label for="juridicData-forming_method" class="input-group-addon">Способ образования</label>
-                    <input id="juridicData-forming_method" type="text"
-                           ng-model="juridicData.forming_method" class="form-control"/>
+                    <input id="juridicData-forming_method"
+                           type="text"
+                           ng-model="juridicData.forming_method"
+                           class="form-control"/>
                 </li>
                 <li class="input-group">
                     <label for="juridicData-capital" class="input-group-addon">
@@ -216,8 +229,10 @@
                     <label for="juridicData-pfr-insurance" class="input-group-addon">
                         Номер страхования в ПФР
                     </label>
-                    <input id="juridicData-pfr-insurance" type="text"
-                           ng-model="juridicData.pfr.insurance" class="form-control"/>
+                    <input id="juridicData-pfr-insurance"
+                           type="text"
+                           ng-model="juridicData.pfr.insurance"
+                           class="form-control"/>
                 </li>
                 <li class="input-group">
                     <label for="juridicData-pfr-number" class="input-group-addon">Номер ПФР</label>
@@ -548,4 +563,3 @@
 </div>
 </div>
 <!--END Wizard Step 6-->
-</div>
