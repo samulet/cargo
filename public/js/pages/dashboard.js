@@ -5,7 +5,7 @@ angular.module('website.dashboard', [])
     .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', '$modal', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory, $modal) {
         $rootScope.pageTitle = 'dashboard';
         $rootScope.bodyColor = 'filled_bg';
-        var accountModal;
+        $scope.accountModal = null;
         $scope.accountData = [];
         $scope.firstAccount = null;
         $scope.showAccountRegistration = false;
@@ -18,7 +18,7 @@ angular.module('website.dashboard', [])
         }
 
         function openAccountModal() {
-            accountModal = $modal.open({
+            $scope.accountModal = $modal.open({
                 templateUrl: 'registrationModalContent.html',
                 backdrop: 'static',
                 scope: $scope,
@@ -27,7 +27,7 @@ angular.module('website.dashboard', [])
         }
 
         function closeAccountModal() {
-            accountModal.close();
+            $scope.accountModal.close();
         }
 
         $scope.closeAccountModal = function () {

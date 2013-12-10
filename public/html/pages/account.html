@@ -7,10 +7,14 @@
         <div class="unfilled_bg small_block form_block" style="padding: 5px 15px;">
             <h3>Аккаунты</h3>
             <ul>
-                <li ng-repeat="account in accounts">{{account.title}}
-                    <span class="pull_right clickable" ng-click="removeAccount(account)" title="Удалить">
-                        <i class="glyphicon glyphicon-remove"> </i>
-                    </span>
+                <li ng-repeat="account in accounts" style="line-height: 35px;">{{account.title}}
+                    <button type="button"
+                            ng-click="removeAccount(account)"
+                            class="btn btn-warning pull_right"
+                            ajax-disabler="isAjaxLoading"
+                            ng-disabled="isAjaxLoading">
+                        <i class="glyphicon glyphicon-remove"> </i>Удалить
+                    </button>
                 </li>
             </ul>
         </div>

@@ -32,10 +32,9 @@ angular.module('common.directives', [])
             restrict: 'E',
             templateUrl: 'html/templates/addJuridicWizardTemplate.html',
             scope: {
-                juridicData: '=model'
-            },
-            link: function (scope, elem, attrs) {
-                scope.temp = {};
+                juridicData: '=model',
+                account: '=account',
+                modal: '=modal'
             },
             controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
                 $scope.today = new Date();
@@ -79,9 +78,11 @@ angular.module('common.directives', [])
 
                 $scope.saveData = function (isLastStep) {
                     if (isLastStep) {
-                        $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
+                        $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.juridicData)
                             .success(function () {
-                                $scope.closeAccountModal();
+                                if ($scope.modal) {
+                                    $scope.modal.close();
+                                }
                                 $scope.wizardStep = 0;
                             }).error(errorFactory.resolve);
                     } else {

@@ -137,10 +137,9 @@ angular.module('common.directives', [])
             restrict: 'E',
             templateUrl: 'html/templates/addJuridicWizardTemplate.html',
             scope: {
-                juridicData: '=model'
-            },
-            link: function (scope, elem, attrs) {
-                scope.temp = {};
+                juridicData: '=model',
+                account: '=account',
+                modal: '=modal'
             },
             controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
                 $scope.today = new Date();
@@ -184,9 +183,11 @@ angular.module('common.directives', [])
 
                 $scope.saveData = function (isLastStep) {
                     if (isLastStep) {
-                        $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
+                        $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.juridicData)
                             .success(function () {
-                                $scope.closeAccountModal();
+                                if ($scope.modal) {
+                                    $scope.modal.close();
+                                }
                                 $scope.wizardStep = 0;
                             }).error(errorFactory.resolve);
                     } else {
@@ -657,7 +658,7 @@ angular.module('website.dashboard', [])
     .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', '$modal', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory, $modal) {
         $rootScope.pageTitle = 'dashboard';
         $rootScope.bodyColor = 'filled_bg';
-        var accountModal;
+        $scope.accountModal = null;
         $scope.accountData = [];
         $scope.firstAccount = null;
         $scope.showAccountRegistration = false;
@@ -670,7 +671,7 @@ angular.module('website.dashboard', [])
         }
 
         function openAccountModal() {
-            accountModal = $modal.open({
+            $scope.accountModal = $modal.open({
                 templateUrl: 'registrationModalContent.html',
                 backdrop: 'static',
                 scope: $scope,
@@ -679,7 +680,7 @@ angular.module('website.dashboard', [])
         }
 
         function closeAccountModal() {
-            accountModal.close();
+            $scope.accountModal.close();
         }
 
         $scope.closeAccountModal = function () {
