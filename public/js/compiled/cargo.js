@@ -132,6 +132,72 @@ angular.module('common.directives', [])
         };
     })
 
+    .directive('addJuridicWizard', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addJuridicWizardTemplate.html',
+            scope: {
+                juridicData: '=model',
+                isShowIndicator: '=show'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+            },
+            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
+                $scope.today = new Date();
+
+                $scope.juridicData = {
+                    contacts: {
+                        phones: [],
+                        emails: [],
+                        sites: [],
+                        addresses: []
+                    },
+                    founders: [],
+                    accounts: [],
+                    authorized_persons: [],
+                    pfr: {},
+                    fms: {},
+                    okved: [],
+                    licenses: [],
+                    applicants: [],
+                    tax: {},
+                    persons: []
+                };
+
+                $scope.openCatalog = function () {
+                    //placeholder
+                };
+
+                $scope.openDatePopup = function (isOpen) {
+                    $timeout(function () {
+                        $scope[isOpen] = true;
+                    });
+                };
+
+                $scope.nextStep = function () {
+                    $scope.addJuridicStep++;
+                };
+
+                $scope.prevStep = function () {
+                    $scope.addJuridicStep--;
+                };
+
+                $scope.saveData = function (isLastStep) {
+                    if (isLastStep) {
+                        $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
+                            .success(function () {
+                                $scope.closeAccountModal();
+                                $scope.addJuridicStep = 0;
+                            }).error(errorFactory.resolve);
+                    } else {
+                        $scope.nextStep();
+                    }
+                };
+            }
+        };
+    })
+
     .directive('addPhoneForm', function () {
         return {
             restrict: 'E',
@@ -582,31 +648,7 @@ angular.module('website.account', [])
         $rootScope.pageTitle = 'Аккаунт';
         $rootScope.bodyColor = 'filled_bg';
 
-        function getAccounts() {
-            $http.get(REST_CONFIG.BASE_URL + '/accounts')
-                .success(function (data) {
-                    var accounts = data._embedded.accounts;
-                    $scope.accounts = accounts;
-                    if (accounts.length === 1) {
-                        $scope.firstAccount = data._embedded.accounts[0];
-                    }
-                }).error(onError);
-        }
 
-        $scope.removeAccount = function (account) {
-            $http.delete(REST_CONFIG.BASE_URL + '/accounts/' + account.account_uuid)
-                .success(function () {
-                    getAccounts();
-                }).error(onError);
-        };
-
-        $scope.saveAccountData = function () {
-            $http.post(REST_CONFIG.BASE_URL + '/accounts', {title: $scope.accountData.title})
-                .success(function () {
-                    $scope.getAccounts();
-                    $scope.nextStep();
-                }).error(errorFactory.resolve);
-        };
     }])
 ;
 'use strict';
@@ -618,12 +660,13 @@ angular.module('website.dashboard', [])
         $rootScope.bodyColor = 'filled_bg';
         var accountModal;
         $scope.accountData = [];
-        $scope.today = new Date();
         $scope.firstAccount = null;
+        $scope.showAccountRegistration = false;
+        $scope.showJuridicWizard = false;
         checkForAccounts();
 
         function checkForAccounts() {
-            $scope.registrationStep = 0;
+            $scope.showAccountRegistration = true;
             getAccounts();
         }
 
@@ -646,14 +689,6 @@ angular.module('website.dashboard', [])
 
         $scope.getAccounts = function () {
             getAccounts();
-        };
-
-        $scope.nextStep = function () {
-            $scope.registrationStep++;
-        };
-
-        $scope.prevStep = function () {
-            $scope.registrationStep--;
         };
 
         function onError(data, status) {
@@ -684,24 +719,6 @@ angular.module('website.dashboard', [])
     }])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
-        $scope.juridicData = {
-            contacts: {
-                phones: [],
-                emails: [],
-                sites: [],
-                addresses: []
-            },
-            founders: [],
-            accounts: [],
-            authorized_persons: [],
-            pfr: {},
-            fms: {},
-            okved: [],
-            licenses: [],
-            applicants: [],
-            tax: {},
-            persons: []
-        };
 
         $scope.openCatalog = function () {
             //placeholder
@@ -717,20 +734,9 @@ angular.module('website.dashboard', [])
             $http.post(REST_CONFIG.BASE_URL + '/accounts', {title: $scope.accountData.title})
                 .success(function () {
                     $scope.getAccounts();
-                    $scope.nextStep();
+                    $scope.showAccountRegistration = false;
+                    $scope.showJuridicWizard = true;
                 }).error(errorFactory.resolve);
-        };
-
-        $scope.saveData = function (isLastStep) {
-            if (isLastStep) {
-                $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
-                    .success(function () {
-                        $scope.closeAccountModal();
-                        $scope.registrationStep = 0;
-                    }).error(errorFactory.resolve);
-            } else {
-                $scope.nextStep();
-            }
         };
     }])
 ;

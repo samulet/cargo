@@ -7,12 +7,13 @@ angular.module('website.dashboard', [])
         $rootScope.bodyColor = 'filled_bg';
         var accountModal;
         $scope.accountData = [];
-        $scope.today = new Date();
         $scope.firstAccount = null;
+        $scope.showAccountRegistration = false;
+        $scope.showJuridicWizard = false;
         checkForAccounts();
 
         function checkForAccounts() {
-            $scope.registrationStep = 0;
+            $scope.showAccountRegistration = true;
             getAccounts();
         }
 
@@ -35,14 +36,6 @@ angular.module('website.dashboard', [])
 
         $scope.getAccounts = function () {
             getAccounts();
-        };
-
-        $scope.nextStep = function () {
-            $scope.registrationStep++;
-        };
-
-        $scope.prevStep = function () {
-            $scope.registrationStep--;
         };
 
         function onError(data, status) {
@@ -73,24 +66,6 @@ angular.module('website.dashboard', [])
     }])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
-        $scope.juridicData = {
-            contacts: {
-                phones: [],
-                emails: [],
-                sites: [],
-                addresses: []
-            },
-            founders: [],
-            accounts: [],
-            authorized_persons: [],
-            pfr: {},
-            fms: {},
-            okved: [],
-            licenses: [],
-            applicants: [],
-            tax: {},
-            persons: []
-        };
 
         $scope.openCatalog = function () {
             //placeholder
@@ -106,20 +81,9 @@ angular.module('website.dashboard', [])
             $http.post(REST_CONFIG.BASE_URL + '/accounts', {title: $scope.accountData.title})
                 .success(function () {
                     $scope.getAccounts();
-                    $scope.nextStep();
+                    $scope.showAccountRegistration = false;
+                    $scope.showJuridicWizard = true;
                 }).error(errorFactory.resolve);
-        };
-
-        $scope.saveData = function (isLastStep) {
-            if (isLastStep) {
-                $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
-                    .success(function () {
-                        $scope.closeAccountModal();
-                        $scope.registrationStep = 0;
-                    }).error(errorFactory.resolve);
-            } else {
-                $scope.nextStep();
-            }
         };
     }])
 ;

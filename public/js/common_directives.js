@@ -27,6 +27,72 @@ angular.module('common.directives', [])
         };
     })
 
+    .directive('addJuridicWizard', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/addJuridicWizardTemplate.html',
+            scope: {
+                juridicData: '=model',
+                isShowIndicator: '=show'
+            },
+            link: function (scope, elem, attrs) {
+                scope.temp = {};
+            },
+            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
+                $scope.today = new Date();
+
+                $scope.juridicData = {
+                    contacts: {
+                        phones: [],
+                        emails: [],
+                        sites: [],
+                        addresses: []
+                    },
+                    founders: [],
+                    accounts: [],
+                    authorized_persons: [],
+                    pfr: {},
+                    fms: {},
+                    okved: [],
+                    licenses: [],
+                    applicants: [],
+                    tax: {},
+                    persons: []
+                };
+
+                $scope.openCatalog = function () {
+                    //placeholder
+                };
+
+                $scope.openDatePopup = function (isOpen) {
+                    $timeout(function () {
+                        $scope[isOpen] = true;
+                    });
+                };
+
+                $scope.nextStep = function () {
+                    $scope.addJuridicStep++;
+                };
+
+                $scope.prevStep = function () {
+                    $scope.addJuridicStep--;
+                };
+
+                $scope.saveData = function (isLastStep) {
+                    if (isLastStep) {
+                        $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.firstAccount['account_uuid'] + '/companies', $scope.juridicData)
+                            .success(function () {
+                                $scope.closeAccountModal();
+                                $scope.addJuridicStep = 0;
+                            }).error(errorFactory.resolve);
+                    } else {
+                        $scope.nextStep();
+                    }
+                };
+            }
+        };
+    })
+
     .directive('addPhoneForm', function () {
         return {
             restrict: 'E',
