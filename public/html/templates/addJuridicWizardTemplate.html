@@ -88,6 +88,9 @@
                 ng-click="nextStep()" ajax-disabler="isAjaxLoading">
             Далее <i class="glyphicon glyphicon-arrow-right"> </i>
         </button>
+        <button type="button" class="btn btn-warning pull_left" ng-click="close()()" ng-show="closable">
+            Закрыть
+        </button>
     </div>
 </div>
 <!--END Wizard Step 0-->

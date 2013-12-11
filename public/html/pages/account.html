@@ -15,7 +15,7 @@
                             ng-disabled="isAjaxLoading">
                         <i class="glyphicon glyphicon-remove"> </i> Удалить
                     </button>
-                    <button type="button" class="btn btn-primary" ng-click="addCompany(account)">
+                    <button type="button" class="btn btn-primary" ng-click="prepareAddCompany(account)">
                         <i class="glyphicon glyphicon-plus"> </i> Добавить Юр. Лицо
                     </button>
                 </li>
@@ -26,10 +26,26 @@
 
     <div aria-hidden="true" ng-controller="addCompanyModalController">
         <script type="text/ng-template" id="addCompanyModalContent.html">
+
+            <div ng-show="showConfirmationModal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Создание Юридического лица</h4>
+                </div>
+                <div class="modal-body unspaced_modal-body">
+                    <p>Действительно ли Вы являетесь официальным представителем данного юридического лица?</p>
+                    <a href="#!{{ROUTES.PUBLIC_OFFER}}">Договор-оффера</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="launchCompanyWizard()">Да</button>
+                    <button type="button" class="btn btn-warning pull_left" ng-click="closeCompanyModal()">Нет</button>
+                </div>
+            </div>
+
             <add-juridic-wizard model="companyData"
                                 account="selectedAccount"
                                 ng-show="showJuridicWizard"
-                                modal="companyModal"></add-juridic-wizard>
+                                modal="companyModal"
+                                close="closeCompanyModal"></add-juridic-wizard>
 
         </script>
     </div>

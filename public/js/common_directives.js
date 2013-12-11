@@ -34,7 +34,8 @@ angular.module('common.directives', [])
             scope: {
                 juridicData: '=model',
                 account: '=account',
-                modal: '=modal'
+                modal: '=modal',
+                close: '&close'
             },
             controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter) {
                 $scope.today = new Date();
@@ -58,6 +59,8 @@ angular.module('common.directives', [])
                     tax: {},
                     persons: []
                 };
+
+                $scope.closable = $scope.close() ? true : false;
 
                 $scope.openCatalog = function () {
                     //placeholder

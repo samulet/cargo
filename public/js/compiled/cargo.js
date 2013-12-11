@@ -13,6 +13,7 @@ angular.module('website', [
         'website.user.profile',
         'website.dashboard',
         'website.account',
+        'website.public.offer',
         'website.page.errors'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
@@ -23,6 +24,7 @@ angular.module('website', [
         $routeProvider.when(ROUTES.USER_PROFILE, {templateUrl: pathToIncs + 'user_profile.html', access: ACCESS_LEVEL.AUTHORIZED});
         $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard.html', access: ACCESS_LEVEL.AUTHORIZED});
         $routeProvider.when(ROUTES.ACCOUNT, {templateUrl: pathToIncs + 'account.html', access: ACCESS_LEVEL.AUTHORIZED});
+        $routeProvider.when(ROUTES.PUBLIC_OFFER, {templateUrl: pathToIncs + 'public_offer.html', access: ACCESS_LEVEL.PUBLIC});
 
         $routeProvider.otherwise({redirectTo: ROUTES.DASHBOARD});
 
@@ -93,6 +95,7 @@ angular.module('website.constants', [])
         START_PAGE_ALT: '',
         DASHBOARD: '/dashboard',
         ACCOUNT: '/account',
+        PUBLIC_OFFER: '/public/offer',
         USER_PROFILE: '/user/profile',
         NOT_FOUND: '/404'
     })
@@ -139,7 +142,8 @@ angular.module('common.directives', [])
             scope: {
                 juridicData: '=model',
                 account: '=account',
-                modal: '=modal'
+                modal: '=modal',
+                close: '&close'
             },
             controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter) {
                 $scope.today = new Date();
@@ -163,6 +167,8 @@ angular.module('common.directives', [])
                     tax: {},
                     persons: []
                 };
+
+                $scope.closable = $scope.close() ? true : false;
 
                 $scope.openCatalog = function () {
                     //placeholder
@@ -662,17 +668,22 @@ angular.module('website.account', [])
         $scope.companyModal = null;
         $scope.selectedAccount = null;
         $scope.showJuridicWizard = false;
+        $scope.showConfirmationModal = false;
 
-        $scope.addCompany = function (account) {
+        $scope.prepareAddCompany = function (account) {
+            $scope.showConfirmationModal = true;
             $scope.selectedAccount = account;
-            $scope.showJuridicWizard = true;
             openCompanyModal();
+        };
+
+        $scope.launchCompanyWizard = function () {
+            $scope.showConfirmationModal = false;
+            $scope.showJuridicWizard = true;
         };
 
         function openCompanyModal() {
             $scope.companyModal = $modal.open({
                 templateUrl: 'addCompanyModalContent.html',
-                backdrop: 'static',
                 scope: $scope,
                 controller: 'addCompanyModalController'
             });
@@ -680,6 +691,9 @@ angular.module('website.account', [])
 
         function closeCompanyModal() {
             $scope.companyModal.close();
+            $scope.selectedAccount = null;
+            $scope.showConfirmationModal = false;
+            $scope.showJuridicWizard = false;
         }
 
         $scope.closeCompanyModal = function () {
@@ -829,6 +843,15 @@ angular.module('website.page.errors', [])
 
     .controller('pageNotFoundController', ['$scope', function ($scope) {
         //
+    }])
+;
+'use strict';
+
+angular.module('website.public.offer', [])
+
+    .controller('publicOfferController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+        $rootScope.pageTitle = 'Аккаунт';
+        $rootScope.bodyColor = 'filled_bg';
     }])
 ;
 'use strict';
