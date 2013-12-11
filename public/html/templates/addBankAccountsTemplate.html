@@ -49,6 +49,13 @@
                 <input id="bankAccount-bik" type="text"
                        ng-model="temp.bik" class="form-control"/>
             </li>
+            <li class="input-group">
+                <label for="bankAccount-inn" class="input-group-addon">
+                    ИНН банка
+                </label>
+                <input id="bankAccount-inn" type="text"
+                       ng-model="temp.inn" class="form-control"/>
+            </li>
             <li>
                 <button type="submit" class="btn btn-success pull_right" ng-click="add()"
                         ng-disabled="juridicBankAccountDataForm.$invalid">
