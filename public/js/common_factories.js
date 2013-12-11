@@ -10,7 +10,9 @@ angular.module('common.factories', [
             },
             local: {
                 accounts: 'accounts',
-                user: 'user'
+                user: 'user',
+                selectedAccount: 'selected_account',
+                selectedCompany: 'selected_company'
             }
         };
 
@@ -46,6 +48,18 @@ angular.module('common.factories', [
             },
             getToken: function () {
                 return getCookie(storage.cookie.token);
+            },
+            setSelectedAccount: function (account) {
+                set(storage.local.selectedAccount, account);
+            },
+            getSelectedAccount: function () {
+                return get(storage.local.selectedAccount);
+            },
+            setSelectedCompany: function (company) {
+                set(storage.local.selectedCompany, company);
+            },
+            getSelectedCompany: function () {
+                return get(storage.local.selectedCompany);
             }
         };
     }])

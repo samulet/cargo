@@ -64,6 +64,8 @@ angular.module('website', [
             var isToken = !!storageFactory.getToken();
             if (isToken) {
                 $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+                $http.defaults.headers.common['X-App-Account'] = storageFactory.getSelectedAccount();
+                $http.defaults.headers.common['X-App-Company'] = storageFactory.getSelectedCompany();
             } else {
                 redirectFactory.goSignIn();
             }
@@ -491,7 +493,9 @@ angular.module('common.factories', [
             },
             local: {
                 accounts: 'accounts',
-                user: 'user'
+                user: 'user',
+                selectedAccount: 'selected_account',
+                selectedCompany: 'selected_company'
             }
         };
 
@@ -527,6 +531,18 @@ angular.module('common.factories', [
             },
             getToken: function () {
                 return getCookie(storage.cookie.token);
+            },
+            setSelectedAccount: function (account) {
+                set(storage.local.selectedAccount, account);
+            },
+            getSelectedAccount: function () {
+                return get(storage.local.selectedAccount);
+            },
+            setSelectedCompany: function (company) {
+                set(storage.local.selectedCompany, company);
+            },
+            getSelectedCompany: function () {
+                return get(storage.local.selectedCompany);
             }
         };
     }])

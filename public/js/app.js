@@ -64,6 +64,8 @@ angular.module('website', [
             var isToken = !!storageFactory.getToken();
             if (isToken) {
                 $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+                $http.defaults.headers.common['X-App-Account'] = storageFactory.getSelectedAccount();
+                $http.defaults.headers.common['X-App-Company'] = storageFactory.getSelectedCompany();
             } else {
                 redirectFactory.goSignIn();
             }
