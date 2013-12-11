@@ -21,6 +21,7 @@ angular.module('website.constants', [])
         START_PAGE_ALT: '',
         DASHBOARD: '/dashboard',
         ACCOUNT: '/account',
+        PUBLIC_OFFER: '/public/offer',
         USER_PROFILE: '/user/profile',
         NOT_FOUND: '/404'
     })
