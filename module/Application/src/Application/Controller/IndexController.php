@@ -28,7 +28,7 @@ class IndexController extends AbstractActionController
     {
         /** @var \ZfcUser\Controller\Plugin\ZfcUserAuthentication $zfcUserAuth */
         $zfcUserAuth = $this->zfcUserAuthentication();
-        if (!$zfcUserAuth->hasIdentity() || 0 != $zfcUserAuth->getIdentity()->getStatus) {
+        if (!$zfcUserAuth->hasIdentity() || 1 !== $zfcUserAuth->getIdentity()->getState()) {
             return $this->redirect()->toUrl('/');
         }
         return new ViewModel();
