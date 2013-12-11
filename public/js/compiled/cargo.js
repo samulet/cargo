@@ -60,12 +60,24 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
+        $rootScope.$watch(function () { //TODO check a performance here
+            return localStorage.getItem('selected_account'); //TODO check with storageFactory.getSelectedAccount();
+        }, function (newValue) {
+            $rootScope.selectedAccount = newValue;
+            $http.defaults.headers.common['X-App-Account'] = newValue;
+        });
+
+        $rootScope.$watch(function () {
+            return localStorage.getItem('selected_company'); //TODO check with storageFactory.getSelectedCompany();
+        }, function (newValue) {
+            $rootScope.selectedCompany = newValue;
+            $http.defaults.headers.common['X-App-Company'] = newValue;
+        });
+
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
             if (isToken) {
                 $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
-                $http.defaults.headers.common['X-App-Account'] = storageFactory.getSelectedAccount();
-                $http.defaults.headers.common['X-App-Company'] = storageFactory.getSelectedCompany();
             } else {
                 redirectFactory.goSignIn();
             }
@@ -147,7 +159,7 @@ angular.module('common.directives', [])
                 modal: '=modal',
                 close: '&close'
             },
-            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter) {
+            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter, storageFactory) {
                 $scope.today = new Date();
                 $scope.wizardStep = 0;
                 $scope.juridicData = {
@@ -190,6 +202,18 @@ angular.module('common.directives', [])
                     $scope.wizardStep--;
                 };
 
+                function getCompanies() {
+                    $http.get(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies')
+                        .success(function (data) {
+                            var companies = data._embedded.companies;
+                            if (companies.length === 1) {
+                                storageFactory.setSelectedCompany(companies[0]);
+                            } else if (companies.length === 0) {
+                                storageFactory.setSelectedCompany(null);
+                            }
+                        }).error(errorFactory.resolve);
+                }
+
                 $scope.saveData = function () {
                     prepareDatesFormat();
                     $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.juridicData)
@@ -197,6 +221,7 @@ angular.module('common.directives', [])
                             if ($scope.modal) {
                                 $scope.modal.close();
                             }
+                            getCompanies();
                             $scope.wizardStep = 0;
                         }).error(errorFactory.resolve);
                 };
@@ -819,6 +844,10 @@ angular.module('website.dashboard', [])
                     $scope.accounts = accounts;
                     if (accounts.length === 1) {
                         $scope.firstAccount = data._embedded.accounts[0];
+                        storageFactory.setSelectedAccount($scope.firstAccount);
+                    } else if (accounts.length === 0){
+                        storageFactory.setSelectedAccount(null);
+                        storageFactory.setSelectedCompany(null);
                     }
                 }).error(onError);
         }

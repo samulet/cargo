@@ -60,12 +60,24 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
+        $rootScope.$watch(function () { //TODO check a performance here
+            return localStorage.getItem('selected_account'); //TODO check with storageFactory.getSelectedAccount();
+        }, function (newValue) {
+            $rootScope.selectedAccount = newValue;
+            $http.defaults.headers.common['X-App-Account'] = newValue;
+        });
+
+        $rootScope.$watch(function () {
+            return localStorage.getItem('selected_company'); //TODO check with storageFactory.getSelectedCompany();
+        }, function (newValue) {
+            $rootScope.selectedCompany = newValue;
+            $http.defaults.headers.common['X-App-Company'] = newValue;
+        });
+
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
             if (isToken) {
                 $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
-                $http.defaults.headers.common['X-App-Account'] = storageFactory.getSelectedAccount();
-                $http.defaults.headers.common['X-App-Company'] = storageFactory.getSelectedCompany();
             } else {
                 redirectFactory.goSignIn();
             }

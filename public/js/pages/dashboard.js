@@ -53,6 +53,10 @@ angular.module('website.dashboard', [])
                     $scope.accounts = accounts;
                     if (accounts.length === 1) {
                         $scope.firstAccount = data._embedded.accounts[0];
+                        storageFactory.setSelectedAccount($scope.firstAccount);
+                    } else if (accounts.length === 0){
+                        storageFactory.setSelectedAccount(null);
+                        storageFactory.setSelectedCompany(null);
                     }
                 }).error(onError);
         }
