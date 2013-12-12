@@ -9,7 +9,7 @@ angular.module('website.dashboard', [])
         $scope.accountData = [];
         $scope.firstAccount = null;
         $scope.showAccountRegistration = false;
-        $scope.showJuridicWizard = false;
+        $scope.showCompanyWizard = false;
         checkForAccounts();
 
         function checkForAccounts() {
@@ -86,7 +86,7 @@ angular.module('website.dashboard', [])
                 .success(function () {
                     $scope.getAccounts();
                     $scope.showAccountRegistration = false;
-                    $scope.showJuridicWizard = true;
+                    $scope.showCompanyWizard = true;
                 }).error(errorFactory.resolve);
         };
     }])

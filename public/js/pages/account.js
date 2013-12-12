@@ -7,7 +7,7 @@ angular.module('website.account', [])
         $rootScope.bodyColor = 'filled_bg';
         $scope.companyModal = null;
         $scope.selectedAccount = null;
-        $scope.showJuridicWizard = false;
+        $scope.showCompanyWizard = false;
         $scope.showConfirmationModal = false;
 
         $scope.prepareAddCompany = function (account) {
@@ -18,7 +18,7 @@ angular.module('website.account', [])
 
         $scope.launchCompanyWizard = function () {
             $scope.showConfirmationModal = false;
-            $scope.showJuridicWizard = true;
+            $scope.showCompanyWizard = true;
         };
 
         function openCompanyModal() {
@@ -33,7 +33,7 @@ angular.module('website.account', [])
             $scope.companyModal.close();
             $scope.selectedAccount = null;
             $scope.showConfirmationModal = false;
-            $scope.showJuridicWizard = false;
+            $scope.showCompanyWizard = false;
         }
 
         $scope.closeCompanyModal = function () {
@@ -83,7 +83,7 @@ angular.module('website.account', [])
          .success(function () {
          $scope.getAccounts();
          $scope.showAccountRegistration = false;
-         $scope.showJuridicWizard = true;
+         $scope.showCompanyWizard = true;
          }).error(errorFactory.resolve);
          };*/
     }])

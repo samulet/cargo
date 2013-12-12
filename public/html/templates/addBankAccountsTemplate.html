@@ -1,4 +1,4 @@
-<form name="juridicBankAccountDataForm" role="form">
+<form name="companyBankAccountDataForm" role="form">
     <div class="clear_list mobile_centered vertical_form_block bordered_top_form">
 
         <button class="btn btn-info margin_bottom_small pull_right fade_anim" ng-click="showAddForm = true;"
@@ -22,10 +22,10 @@
 
         <ul ng-show="showAddForm" class="mobile_centered clear_list fade_anim" style="padding: 0;">
             <li class="input-group">
-                <label for="juridicData-bank" class="input-group-addon">
+                <label for="companyData-bank" class="input-group-addon">
                     Название банка
                 </label>
-                <input id="juridicData-bank" type="text"
+                <input id="companyData-bank" type="text"
                        ng-model="temp.bank" class="form-control"/>
             </li>
             <li class="input-group">
@@ -58,7 +58,7 @@
             </li>
             <li>
                 <button type="submit" class="btn btn-success pull_right" ng-click="add()"
-                        ng-disabled="juridicBankAccountDataForm.$invalid">
+                        ng-disabled="companyBankAccountDataForm.$invalid">
                     <span ng-show="bankAccounts.length == 0"> Сохранить</span>
                     <span ng-show="bankAccounts.length > 0"> Добавить банковские реквизиты</span>
                 </button>

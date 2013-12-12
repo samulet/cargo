@@ -27,12 +27,12 @@ angular.module('common.directives', [])
         };
     })
 
-    .directive('addJuridicWizard', function () {
+    .directive('addCompanyWizard', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addJuridicWizardTemplate.html',
+            templateUrl: 'html/templates/addCompanyWizardTemplate.html',
             scope: {
-                juridicData: '=model',
+                companyData: '=model',
                 account: '=account',
                 modal: '=modal',
                 close: '&close'
@@ -40,7 +40,7 @@ angular.module('common.directives', [])
             controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter, storageFactory) {
                 $scope.today = new Date();
                 $scope.wizardStep = 0;
-                $scope.juridicData = {
+                $scope.companyData = {
                     contacts: {
                         phones: [],
                         emails: [],
@@ -82,7 +82,7 @@ angular.module('common.directives', [])
 
                 $scope.saveData = function () {
                     prepareDatesFormat();
-                    $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.juridicData)
+                    $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.companyData)
                         .success(function () {
                             if ($scope.modal) {
                                 $scope.modal.close();
@@ -92,12 +92,12 @@ angular.module('common.directives', [])
                 };
 
                 function prepareDatesFormat() {
-                    if ($scope.juridicData.pfr.date_registration) $scope.juridicData.pfr.date_registration = getTimestamp($scope.juridicData.pfr.date_registration);
-                    if ($scope.juridicData.fms.date_registration) $scope.juridicData.fms.date_registration = getTimestamp($scope.juridicData.fms.date_registration);
-                    if ($scope.juridicData.misc.documentDate) $scope.juridicData.misc.documentDate = getTimestamp($scope.juridicData.misc.documentDate);
-                    for (var k in $scope.juridicData.tax) {
-                        if ($scope.juridicData.tax[k].date_accounting) $scope.juridicData.tax[k].date_accounting = getTimestamp($scope.juridicData.fms.date_accounting);
-                        if ($scope.juridicData.tax[k].date_registration) $scope.juridicData.tax[k].date_registration = getTimestamp($scope.juridicData.fms.date_registration);
+                    if ($scope.companyData.pfr.date_registration) $scope.companyData.pfr.date_registration = getTimestamp($scope.companyData.pfr.date_registration);
+                    if ($scope.companyData.fms.date_registration) $scope.companyData.fms.date_registration = getTimestamp($scope.companyData.fms.date_registration);
+                    if ($scope.companyData.misc.documentDate) $scope.companyData.misc.documentDate = getTimestamp($scope.companyData.misc.documentDate);
+                    for (var k in $scope.companyData.tax) {
+                        if ($scope.companyData.tax[k].date_accounting) $scope.companyData.tax[k].date_accounting = getTimestamp($scope.companyData.fms.date_accounting);
+                        if ($scope.companyData.tax[k].date_registration) $scope.companyData.tax[k].date_registration = getTimestamp($scope.companyData.fms.date_registration);
                     }
                 }
 
