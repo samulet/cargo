@@ -56,21 +56,23 @@ angular.module('website', [
             return '/#!' + route;
         };
     })
-    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http) {
+    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', 'userParamsFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http, userParamsFactory) {
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
+        userParamsFactory.prepareUser();
+
         $rootScope.$watch(function () { //TODO check a performance here
-            return localStorage.getItem('selected_account'); //TODO check with storageFactory.getSelectedAccount();
+            return localStorage.getItem(storageFactory.storage.local.selectedAccount);
         }, function (newValue) {
-            $rootScope.selectedAccount = newValue;
+            console.log('X-App-Account: ' + newValue);
             $http.defaults.headers.common['X-App-Account'] = newValue;
         });
 
         $rootScope.$watch(function () {
-            return localStorage.getItem('selected_company'); //TODO check with storageFactory.getSelectedCompany();
+            return localStorage.getItem(storageFactory.storage.local.selectedCompany);
         }, function (newValue) {
-            $rootScope.selectedCompany = newValue;
+            console.log('X-App-Company: ' + newValue);
             $http.defaults.headers.common['X-App-Company'] = newValue;
         });
 
@@ -202,18 +204,6 @@ angular.module('common.directives', [])
                     $scope.wizardStep--;
                 };
 
-                function getCompanies() {
-                    $http.get(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies')
-                        .success(function (data) {
-                            var companies = data._embedded.companies;
-                            if (companies.length === 1) {
-                                storageFactory.setSelectedCompany(companies[0]);
-                            } else if (companies.length === 0) {
-                                storageFactory.setSelectedCompany(null);
-                            }
-                        }).error(errorFactory.resolve);
-                }
-
                 $scope.saveData = function () {
                     prepareDatesFormat();
                     $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.juridicData)
@@ -221,8 +211,7 @@ angular.module('common.directives', [])
                             if ($scope.modal) {
                                 $scope.modal.close();
                             }
-                            getCompanies();
-                            $scope.wizardStep = 0;
+                            $scope.wizardStep = -1;
                         }).error(errorFactory.resolve);
                 };
 
@@ -511,7 +500,7 @@ angular.module('common.directives', [])
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', 'cookieFactory', function ($http, cookieFactory) {
+    .factory('storageFactory', ['$http', 'cookieFactory', '$rootScope', function ($http, cookieFactory, $rootScope) {
         var storage = {
             cookie: {
                 token: 'token'
@@ -541,7 +530,8 @@ angular.module('common.factories', [
             localStorage.removeItem(key);
         }
 
-        return {
+        return { //TODO add fallback to cookies
+            storage: storage,
             getUser: function () {
                 return get(storage.local.user);
             },
@@ -674,6 +664,47 @@ angular.module('common.factories', [
                 }
             }
         };
+    }])
+
+    .factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
+        function getAccounts() {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts')
+                .success(function (data) {
+                    var accounts = data['_embedded'].accounts;
+                    if (accounts.length === 1) {
+                        storageFactory.setSelectedAccount(accounts[0]);
+                        getCompanies(accounts[0], true);
+                    } else if (accounts.length === 0) {
+                        storageFactory.setSelectedAccount(null);
+                        storageFactory.setSelectedCompany(null);
+                    } else {
+                        //TODO show "Select Account" dialog
+                    }
+                }).error(errorFactory.resolve);
+        }
+
+        function getCompanies(account, isSetSelected) {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'] + '/companies')
+                .success(function (data) {
+                    var companies = data['_embedded'].companies;
+                    if (companies.length === 1 && isSetSelected === true) {
+                        storageFactory.setSelectedCompany(companies[0]);
+                    } else if (companies.length > 1) {
+                        //TODO show "Select Company" dialog
+                    }
+                }).error(errorFactory.resolve);
+        }
+
+        return {
+            prepareUser: function () {
+                var selectedAccount = storageFactory.getSelectedAccount();
+                var selectedCompany = storageFactory.setSelectedCompany();
+                if (!selectedAccount || !selectedCompany) {
+                    getAccounts();
+                }
+
+            }
+        }
     }])
 ;
 "use strict";

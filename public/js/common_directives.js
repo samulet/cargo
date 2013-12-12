@@ -80,18 +80,6 @@ angular.module('common.directives', [])
                     $scope.wizardStep--;
                 };
 
-                function getCompanies() {
-                    $http.get(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies')
-                        .success(function (data) {
-                            var companies = data._embedded.companies;
-                            if (companies.length === 1) {
-                                storageFactory.setSelectedCompany(companies[0]);
-                            } else if (companies.length === 0) {
-                                storageFactory.setSelectedCompany(null);
-                            }
-                        }).error(errorFactory.resolve);
-                }
-
                 $scope.saveData = function () {
                     prepareDatesFormat();
                     $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.juridicData)
@@ -99,8 +87,7 @@ angular.module('common.directives', [])
                             if ($scope.modal) {
                                 $scope.modal.close();
                             }
-                            getCompanies();
-                            $scope.wizardStep = 0;
+                            $scope.wizardStep = -1;
                         }).error(errorFactory.resolve);
                 };
 

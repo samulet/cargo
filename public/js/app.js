@@ -56,21 +56,23 @@ angular.module('website', [
             return '/#!' + route;
         };
     })
-    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http) {
+    .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', 'userParamsFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http, userParamsFactory) {
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
+        userParamsFactory.prepareUser();
+
         $rootScope.$watch(function () { //TODO check a performance here
-            return localStorage.getItem('selected_account'); //TODO check with storageFactory.getSelectedAccount();
+            return localStorage.getItem(storageFactory.storage.local.selectedAccount);
         }, function (newValue) {
-            $rootScope.selectedAccount = newValue;
+            console.log('X-App-Account: ' + newValue);
             $http.defaults.headers.common['X-App-Account'] = newValue;
         });
 
         $rootScope.$watch(function () {
-            return localStorage.getItem('selected_company'); //TODO check with storageFactory.getSelectedCompany();
+            return localStorage.getItem(storageFactory.storage.local.selectedCompany);
         }, function (newValue) {
-            $rootScope.selectedCompany = newValue;
+            console.log('X-App-Company: ' + newValue);
             $http.defaults.headers.common['X-App-Company'] = newValue;
         });
 

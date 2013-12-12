@@ -3,7 +3,7 @@
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', 'cookieFactory', function ($http, cookieFactory) {
+    .factory('storageFactory', ['$http', 'cookieFactory', '$rootScope', function ($http, cookieFactory, $rootScope) {
         var storage = {
             cookie: {
                 token: 'token'
@@ -33,7 +33,8 @@ angular.module('common.factories', [
             localStorage.removeItem(key);
         }
 
-        return {
+        return { //TODO add fallback to cookies
+            storage: storage,
             getUser: function () {
                 return get(storage.local.user);
             },
@@ -166,5 +167,46 @@ angular.module('common.factories', [
                 }
             }
         };
+    }])
+
+    .factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
+        function getAccounts() {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts')
+                .success(function (data) {
+                    var accounts = data['_embedded'].accounts;
+                    if (accounts.length === 1) {
+                        storageFactory.setSelectedAccount(accounts[0]);
+                        getCompanies(accounts[0], true);
+                    } else if (accounts.length === 0) {
+                        storageFactory.setSelectedAccount(null);
+                        storageFactory.setSelectedCompany(null);
+                    } else {
+                        //TODO show "Select Account" dialog
+                    }
+                }).error(errorFactory.resolve);
+        }
+
+        function getCompanies(account, isSetSelected) {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'] + '/companies')
+                .success(function (data) {
+                    var companies = data['_embedded'].companies;
+                    if (companies.length === 1 && isSetSelected === true) {
+                        storageFactory.setSelectedCompany(companies[0]);
+                    } else if (companies.length > 1) {
+                        //TODO show "Select Company" dialog
+                    }
+                }).error(errorFactory.resolve);
+        }
+
+        return {
+            prepareUser: function () {
+                var selectedAccount = storageFactory.getSelectedAccount();
+                var selectedCompany = storageFactory.setSelectedCompany();
+                if (!selectedAccount || !selectedCompany) {
+                    getAccounts();
+                }
+
+            }
+        }
     }])
 ;
