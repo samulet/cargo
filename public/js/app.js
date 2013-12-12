@@ -51,18 +51,14 @@ angular.module('website', [
         $httpProvider.interceptors.push(interceptor);
 
     }])
-    .filter('routeFilter', function () {
-        return function (route) {
-            return '/#!' + route;
-        };
-    })
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', 'userParamsFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http, userParamsFactory) {
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
-
+        debugger; //problems start here
+        userParamsFactory.getApiRoutes(); //TODO fix it and check for an username
         userParamsFactory.prepareUser();
 
-        $rootScope.$watch(function () { //TODO check a performance here
+        $rootScope.$watch(function () {
             return localStorage.getItem(storageFactory.storage.local.selectedAccount);
         }, function (newValue) {
             console.log('X-App-Account: ' + newValue);

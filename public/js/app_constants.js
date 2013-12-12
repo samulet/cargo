@@ -23,6 +23,7 @@ angular.module('website.constants', [])
         ACCOUNT: '/account',
         PUBLIC_OFFER: '/public/offer',
         USER_PROFILE: '/user/profile',
+        LOGOUT: '/user/logout',
         NOT_FOUND: '/404'
     })
     .constant('MESSAGES', {

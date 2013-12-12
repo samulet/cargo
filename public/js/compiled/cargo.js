@@ -51,18 +51,14 @@ angular.module('website', [
         $httpProvider.interceptors.push(interceptor);
 
     }])
-    .filter('routeFilter', function () {
-        return function (route) {
-            return '/#!' + route;
-        };
-    })
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', 'userParamsFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http, userParamsFactory) {
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
-
+        debugger; //problems start here
+        userParamsFactory.getApiRoutes(); //TODO fix it and check for an username
         userParamsFactory.prepareUser();
 
-        $rootScope.$watch(function () { //TODO check a performance here
+        $rootScope.$watch(function () {
             return localStorage.getItem(storageFactory.storage.local.selectedAccount);
         }, function (newValue) {
             console.log('X-App-Account: ' + newValue);
@@ -113,6 +109,7 @@ angular.module('website.constants', [])
         ACCOUNT: '/account',
         PUBLIC_OFFER: '/public/offer',
         USER_PROFILE: '/user/profile',
+        LOGOUT: '/user/logout',
         NOT_FOUND: '/404'
     })
     .constant('MESSAGES', {
@@ -507,6 +504,7 @@ angular.module('common.factories', [
             },
             local: {
                 accounts: 'accounts',
+                apiRoutes: 'api_routes',
                 user: 'user',
                 selectedAccount: 'selected_account',
                 selectedCompany: 'selected_company'
@@ -532,6 +530,12 @@ angular.module('common.factories', [
 
         return { //TODO add fallback to cookies
             storage: storage,
+            getApiRoutes: function () {
+                return get(storage.local.apiRoutes);
+            },
+            setApiRoutes: function (routes) {
+                set(storage.local.apiRoutes, routes);
+            },
             getUser: function () {
                 return get(storage.local.user);
             },
@@ -677,8 +681,6 @@ angular.module('common.factories', [
                     } else if (accounts.length === 0) {
                         storageFactory.setSelectedAccount(null);
                         storageFactory.setSelectedCompany(null);
-                    } else {
-                        //TODO show "Select Account" dialog
                     }
                 }).error(errorFactory.resolve);
         }
@@ -689,20 +691,33 @@ angular.module('common.factories', [
                     var companies = data['_embedded'].companies;
                     if (companies.length === 1 && isSetSelected === true) {
                         storageFactory.setSelectedCompany(companies[0]);
-                    } else if (companies.length > 1) {
-                        //TODO show "Select Company" dialog
                     }
                 }).error(errorFactory.resolve);
         }
 
+        function getApiRoutes() {
+            $http.get(REST_CONFIG.BASE_URL + '/api/').success(function (data) {//TODO some problem here
+                storageFactory.setApiRoutes(data);
+            }).error(errorFactory.resolve);
+        }
+
         return {
+            getApiRoutes: function (isForce) {
+                if (isForce !== true) {
+                    var routes = storageFactory.getApiRoutes();
+                    if (!routes) {
+                        getApiRoutes();
+                    }
+                } else {
+                    getApiRoutes();
+                }
+            },
             prepareUser: function () {
                 var selectedAccount = storageFactory.getSelectedAccount();
                 var selectedCompany = storageFactory.setSelectedCompany();
                 if (!selectedAccount || !selectedCompany) {
                     getAccounts();
                 }
-
             }
         }
     }])
@@ -1023,6 +1038,16 @@ angular.module('website.top.menu', [])
                         return ""
                     }
                 }
+            }
+        };
+    })
+
+    .directive('userMenu', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/partials/private/user_menu.html',
+            controller: function ($scope, $location) {
+              //TODO
             }
         };
     })
