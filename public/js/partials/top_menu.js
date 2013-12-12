@@ -17,4 +17,14 @@ angular.module('website.top.menu', [])
             }
         };
     })
+
+    .directive('userMenu', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/partials/private/user_menu.html',
+            controller: function ($scope, $location) {
+              //TODO
+            }
+        };
+    })
 ;
