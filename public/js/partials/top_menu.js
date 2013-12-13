@@ -58,4 +58,12 @@ angular.module('website.top.menu', [])
             }
         };
     })
+
+    .controller('selectAccountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
+        //TODO
+    }])
+
+    .controller('selectCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
+        //TODO
+    }])
 ;

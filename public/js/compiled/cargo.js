@@ -55,7 +55,7 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
-        userParamsFactory.getApiRoutes(); //TODO fix
+        //userParamsFactory.getApiRoutes(); //TODO fix it when server works done
         userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
@@ -525,6 +525,8 @@ angular.module('common.factories', [
         }
 
         function set(key, value) {
+            if (!key) throw "Invalid key for a value: " + value;
+            if (!value) throw "Invalid value for a key :" + key;
             localStorage.setItem(key, JSON.stringify(value));
         }
 
@@ -703,7 +705,7 @@ angular.module('common.factories', [
         }
 
         function getApiRoutes() {
-            $http.get(REST_CONFIG.BASE_URL + '/api/').success(function (data) {//TODO some problem here
+            $http.get(REST_CONFIG.BASE_URL).success(function (data) {//TODO some problem here
                 storageFactory.setApiRoutes(data);
             }).error(errorFactory.resolve);
         }
@@ -721,7 +723,7 @@ angular.module('common.factories', [
             },
             prepareUser: function () {
                 var selectedAccount = storageFactory.getSelectedAccount();
-                var selectedCompany = storageFactory.setSelectedCompany();
+                var selectedCompany = storageFactory.getSelectedCompany();
                 if (!selectedAccount || !selectedCompany) {
                     getAccounts();
                 }
@@ -1079,4 +1081,12 @@ angular.module('website.top.menu', [])
             }
         };
     })
+
+    .controller('selectAccountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
+        //TODO
+    }])
+
+    .controller('selectCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
+        //TODO
+    }])
 ;

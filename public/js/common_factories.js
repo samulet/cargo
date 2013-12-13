@@ -31,6 +31,8 @@ angular.module('common.factories', [
         }
 
         function set(key, value) {
+            if (!key) throw "Invalid key for a value: " + value;
+            if (!value) throw "Invalid value for a key :" + key;
             localStorage.setItem(key, JSON.stringify(value));
         }
 
@@ -209,7 +211,7 @@ angular.module('common.factories', [
         }
 
         function getApiRoutes() {
-            $http.get(REST_CONFIG.BASE_URL + '/api/').success(function (data) {//TODO some problem here
+            $http.get(REST_CONFIG.BASE_URL).success(function (data) {//TODO some problem here
                 storageFactory.setApiRoutes(data);
             }).error(errorFactory.resolve);
         }
@@ -227,7 +229,7 @@ angular.module('common.factories', [
             },
             prepareUser: function () {
                 var selectedAccount = storageFactory.getSelectedAccount();
-                var selectedCompany = storageFactory.setSelectedCompany();
+                var selectedCompany = storageFactory.getSelectedCompany();
                 if (!selectedAccount || !selectedCompany) {
                     getAccounts();
                 }
