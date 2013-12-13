@@ -1,18 +1,20 @@
-<ul class="dropdown nav navbar-nav pull_right">
+<ul class="dropdown nav navbar-nav">
     <li>
         <a class="dropdown-toggle">
-            {{user.displayName}}
+            {{displayedName}}
         </a>
         <ul class="dropdown-menu">
             <li role="presentation">
-                <button type="button" role="menuitem"></button>
+                Аккаунт: {{accountName}}
+                <button type="button" role="menuitem" ng-click="showSelectAccountPopup()" title="Изменить текущий аккаунт">Изменить</button>
             </li>
             <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="">Another action</a>
+                Юр. Лицо: {{companyShortName}}
+                <button type="button" role="menuitem" ng-click="showSelectCompanyPopup()" title="Изменить текущее Юридическое лицо">Изменить</button>
             </li>
             <li role="presentation" class="divider"></li>
             <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="#!{{ROUTES.LOGOUT}}">Выход</a>
+                <a role="menuitem" tabindex="-1" ng-click="logout()">Выход</a>
             </li>
         </ul>
     </li>
