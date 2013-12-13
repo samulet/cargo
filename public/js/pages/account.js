@@ -76,15 +76,5 @@ angular.module('website.account', [])
                 $scope[isOpen] = true;
             });
         };
-
-        /*
-         $scope.saveAccountData = function () {
-         $http.post(REST_CONFIG.BASE_URL + '/accounts', {title: $scope.accountData.title})
-         .success(function () {
-         $scope.getAccounts();
-         $scope.showAccountRegistration = false;
-         $scope.showCompanyWizard = true;
-         }).error(errorFactory.resolve);
-         };*/
     }])
 ;

@@ -54,8 +54,8 @@ angular.module('website', [
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', 'userParamsFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http, userParamsFactory) {
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
-        debugger; //problems start here
-        userParamsFactory.getApiRoutes(); //TODO fix it and check for an username
+
+        userParamsFactory.getApiRoutes(); //TODO fix
         userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {

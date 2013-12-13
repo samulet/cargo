@@ -54,8 +54,8 @@ angular.module('website', [
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', 'userParamsFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http, userParamsFactory) {
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
-        debugger; //problems start here
-        userParamsFactory.getApiRoutes(); //TODO fix it and check for an username
+
+        userParamsFactory.getApiRoutes(); //TODO fix
         userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
@@ -520,6 +520,10 @@ angular.module('common.factories', [
             return cookieFactory.getItem(key);
         }
 
+        function removeCookie(key) {
+            return cookieFactory.removeItem(key);
+        }
+
         function set(key, value) {
             localStorage.setItem(key, JSON.stringify(value));
         }
@@ -550,6 +554,9 @@ angular.module('common.factories', [
             },
             getToken: function () {
                 return getCookie(storage.cookie.token);
+            },
+            removeToken: function () {
+                return removeCookie(storage.cookie.token);
             },
             setSelectedAccount: function (account) {
                 set(storage.local.selectedAccount, account);
@@ -823,16 +830,6 @@ angular.module('website.account', [])
                 $scope[isOpen] = true;
             });
         };
-
-        /*
-         $scope.saveAccountData = function () {
-         $http.post(REST_CONFIG.BASE_URL + '/accounts', {title: $scope.accountData.title})
-         .success(function () {
-         $scope.getAccounts();
-         $scope.showAccountRegistration = false;
-         $scope.showCompanyWizard = true;
-         }).error(errorFactory.resolve);
-         };*/
     }])
 ;
 'use strict';
@@ -1030,7 +1027,18 @@ angular.module('website.top.menu', [])
         return {
             restrict: 'E',
             templateUrl: 'html/partials/private/top_menu.html',
-            controller: function ($scope, $location) {
+            controller: function ($scope, $location, storageFactory) {
+                var user = storageFactory.getUser();
+                var selectedAccount = storageFactory.getSelectedAccount();
+                var selectedCompany = storageFactory.getSelectedCompany();
+
+                $scope.accountShowModal = false;
+                $scope.companyShowModal = false;
+
+                $scope.displayName = (user) ? user.name : 'Пользователь';
+                $scope.accountName = (selectedAccount) ? selectedAccount.title : '(Нет аккаунта)';
+                $scope.companyShortName = (selectedCompany) ? selectedCompany.short : '(Юр. Лицо не выбрано)';
+
                 $scope.getClass = function (path) {
                     if ('/' + $location.path().substr(1, path.length) == path) {
                         return "active"
@@ -1046,8 +1054,28 @@ angular.module('website.top.menu', [])
         return {
             restrict: 'E',
             templateUrl: 'html/partials/private/user_menu.html',
-            controller: function ($scope, $location) {
-              //TODO
+            scope: {
+                accountShowModal: '=accountShowModal',
+                companyShowModal: '=companyShowModal',
+                displayedName: '=displayedName',
+                accountName: '=accountName',
+                companyShortName: '=companyShortName'
+
+            },
+            controller: function ($scope, redirectFactory, storageFactory) {
+                $scope.showSelectAccountPopup = function () {
+                    $scope.accountShowModal = true;
+                };
+
+                $scope.showSelectCompanyPopup = function () {
+                    $scope.companyShowModal = true;
+                };
+
+                $scope.logout = function () {
+                    storageFactory.removeToken();
+                    localStorage.clear();
+                    redirectFactory.logout();
+                }
             }
         };
     })

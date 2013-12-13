@@ -26,6 +26,10 @@ angular.module('common.factories', [
             return cookieFactory.getItem(key);
         }
 
+        function removeCookie(key) {
+            return cookieFactory.removeItem(key);
+        }
+
         function set(key, value) {
             localStorage.setItem(key, JSON.stringify(value));
         }
@@ -56,6 +60,9 @@ angular.module('common.factories', [
             },
             getToken: function () {
                 return getCookie(storage.cookie.token);
+            },
+            removeToken: function () {
+                return removeCookie(storage.cookie.token);
             },
             setSelectedAccount: function (account) {
                 set(storage.local.selectedAccount, account);
