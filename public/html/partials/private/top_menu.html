@@ -33,14 +33,14 @@
 
     <div aria-hidden="true" ng-controller="selectAccountModalController">
         <script type="text/ng-template" id="selectAccountModalContent.html">
-            <div ng-show="accountShowModal">
+            <div>
                 <div class="modal-header">
                     <h4 class="modal-title">Выбор Аккаунта</h4>
                 </div>
                 <div class="modal-body">
-                    <!--<select title="Выберите текущий аккаунт">
+                    <select title="Выберите текущий аккаунт">
                         <option ng-repeat="account in accounts">{{account.title}}</option>
-                    </select>-->
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" ng-click="selectAccount()">Ok</button>
@@ -52,14 +52,14 @@
 
     <div aria-hidden="true" ng-controller="selectCompanyModalController">
         <script type="text/ng-template" id="selectCompanyModalContent.html">
-            <div ng-show="companyShowModal">
+            <div>
                 <div class="modal-header">
                     <h4 class="modal-title">Выбор Юридического лица</h4>
                 </div>
                 <div class="modal-body">
-                    <!--<select title="Выберите юридическое лицо, от имени которого совершаются действия">
+                    <select title="Выберите юридическое лицо, от имени которого совершаются действия">
                         <option ng-repeat="company in companies">{{company.title}}</option>
-                    </select>-->
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" ng-click="selectCompany()">Ok</button>
