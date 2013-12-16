@@ -211,7 +211,7 @@ angular.module('common.factories', [
         }
 
         function getApiRoutes() {
-            $http.get(REST_CONFIG.BASE_URL).success(function (data) {//TODO some problem here
+            $http.get(REST_CONFIG.BASE_URL + '/').success(function (data) {//TODO some problem here
                 storageFactory.setApiRoutes(data);
             }).error(errorFactory.resolve);
         }

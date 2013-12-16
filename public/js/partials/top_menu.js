@@ -14,7 +14,7 @@ angular.module('website.top.menu', [])
                 $scope.accountShowModal = false;
                 $scope.companyShowModal = false;
 
-                $scope.displayName = (user) ? user.name : 'Пользователь';
+                $scope.displayedName = (user) ? user.name : 'Пользователь';
                 $scope.accountName = (selectedAccount) ? selectedAccount.title : '(Нет аккаунта)';
                 $scope.companyShortName = (selectedCompany) ? selectedCompany.short : '(Юр. Лицо не выбрано)';
 
@@ -39,7 +39,6 @@ angular.module('website.top.menu', [])
                 displayedName: '=displayedName',
                 accountName: '=accountName',
                 companyShortName: '=companyShortName'
-
             },
             controller: function ($scope, redirectFactory, storageFactory) {
                 $scope.showSelectAccountPopup = function () {

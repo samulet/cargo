@@ -1,16 +1,28 @@
-<ul class="dropdown nav navbar-nav">
+<ul class="dropdown nav navbar-nav" style="color: black; text-align: center;">
     <li>
         <a class="dropdown-toggle">
             {{displayedName}}
         </a>
         <ul class="dropdown-menu">
             <li role="presentation">
-                Аккаунт: {{accountName}}
-                <button type="button" role="menuitem" ng-click="showSelectAccountPopup()" title="Изменить текущий аккаунт">Изменить</button>
+                <span>{{accountName}}</span>
+                <button type="button" role="menuitem"
+                        class="btn btn-xs btn-info"
+                        ng-click="showSelectAccountPopup()"
+                        title="Изменить текущий аккаунт"
+                        style="width: 100%; border-radius: 0;">Изменить аккаунт
+                </button>
             </li>
+            <li role="presentation" class="divider"></li>
+
             <li role="presentation">
-                Юр. Лицо: {{companyShortName}}
-                <button type="button" role="menuitem" ng-click="showSelectCompanyPopup()" title="Изменить текущее Юридическое лицо">Изменить</button>
+                <span>{{companyShortName}}</span>
+                <button type="button" role="menuitem"
+                        class="btn btn-xs btn-info"
+                        ng-click="showSelectCompanyPopup()"
+                        title="Изменить текущее Юридическое лицо"
+                        style="width: 100%; border-radius: 0;">Изменить юр.лицо
+                </button>
             </li>
             <li role="presentation" class="divider"></li>
             <li role="presentation">

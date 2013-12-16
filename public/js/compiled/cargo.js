@@ -55,21 +55,25 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
-        //userParamsFactory.getApiRoutes(); //TODO fix it when server works done
+        userParamsFactory.getApiRoutes(); //TODO fix it when server works done
         userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
             return localStorage.getItem(storageFactory.storage.local.selectedAccount);
         }, function (newValue) {
-            console.log('X-App-Account: ' + newValue);
-            $http.defaults.headers.common['X-App-Account'] = newValue;
+            if (newValue) {
+                console.log('X-App-Account: ' + JSON.parse(newValue)['account_uuid']);//TODO remove
+                $http.defaults.headers.common['X-App-Account'] = JSON.parse(newValue)['account_uuid'];
+            }
         });
 
         $rootScope.$watch(function () {
             return localStorage.getItem(storageFactory.storage.local.selectedCompany);
         }, function (newValue) {
-            console.log('X-App-Company: ' + newValue);
-            $http.defaults.headers.common['X-App-Company'] = newValue;
+            if (newValue) {
+                console.log('X-App-Company: ' + JSON.parse(newValue)['company_uuid']);//TODO remove
+                $http.defaults.headers.common['X-App-Company'] = JSON.parse(newValue)['company_uuid'];
+            }
         });
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -705,7 +709,7 @@ angular.module('common.factories', [
         }
 
         function getApiRoutes() {
-            $http.get(REST_CONFIG.BASE_URL).success(function (data) {//TODO some problem here
+            $http.get(REST_CONFIG.BASE_URL + '/').success(function (data) {//TODO some problem here
                 storageFactory.setApiRoutes(data);
             }).error(errorFactory.resolve);
         }
@@ -1037,7 +1041,7 @@ angular.module('website.top.menu', [])
                 $scope.accountShowModal = false;
                 $scope.companyShowModal = false;
 
-                $scope.displayName = (user) ? user.name : 'Пользователь';
+                $scope.displayedName = (user) ? user.name : 'Пользователь';
                 $scope.accountName = (selectedAccount) ? selectedAccount.title : '(Нет аккаунта)';
                 $scope.companyShortName = (selectedCompany) ? selectedCompany.short : '(Юр. Лицо не выбрано)';
 
@@ -1062,7 +1066,6 @@ angular.module('website.top.menu', [])
                 displayedName: '=displayedName',
                 accountName: '=accountName',
                 companyShortName: '=companyShortName'
-
             },
             controller: function ($scope, redirectFactory, storageFactory) {
                 $scope.showSelectAccountPopup = function () {
