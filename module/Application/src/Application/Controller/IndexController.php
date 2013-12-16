@@ -25,11 +25,13 @@ class IndexController extends AbstractActionController
 
     public function greetingsAction()
     {
-        /** @var \ZfcUser\Controller\Plugin\ZfcUserAuthentication $zfcUserAuth */
-        $zfcUserAuth = $this->zfcUserAuthentication();
-        if (!$zfcUserAuth->hasIdentity() || 1 !== $zfcUserAuth->getIdentity()->getState()) {
+        /** @var \User\Entity\User $user */
+        $user = $this->zfcUserAuthentication()->getIdentity();
+        if (empty($user) || 1 !== $user->getState()) {
             return $this->redirect()->toUrl('/');
         }
-        return new ViewModel();
+        $viewModel = new ViewModel();
+        $viewModel->setTerminal(true);
+        return $viewModel;
     }
 }
