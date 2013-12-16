@@ -5,23 +5,26 @@
         </a>
         <ul class="dropdown-menu">
             <li role="presentation">
-                <span>{{accountName}}</span>
-                <button type="button" role="menuitem"
-                        class="btn btn-xs btn-info"
-                        ng-click="showSelectAccountPopup()"
-                        title="Изменить текущий аккаунт"
-                        style="width: 100%; border-radius: 0;">Изменить аккаунт
-                </button>
+                Аккаунт
+            </li>
+            <li role="presentation">
+                {{accountName}}
             </li>
             <li role="presentation" class="divider"></li>
-
             <li role="presentation">
-                <span>{{companyShortName}}</span>
+                Юридическое лицо
+            </li>
+            <li role="presentation">
+                {{companyShortName}}
+            </li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation">
+                <span></span>
                 <button type="button" role="menuitem"
                         class="btn btn-xs btn-info"
-                        ng-click="showSelectCompanyPopup()"
-                        title="Изменить текущее Юридическое лицо"
-                        style="width: 100%; border-radius: 0;">Изменить юр.лицо
+                        ng-click="showSelectAccountAndCompanyModal()"
+                        title="Изменить текущий аккаунт"
+                        style="width: 100%; border-radius: 0;">Изменить аккаунт и компанию
                 </button>
             </li>
             <li role="presentation" class="divider"></li>

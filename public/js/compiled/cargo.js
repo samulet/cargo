@@ -716,8 +716,8 @@ angular.module('common.factories', [
         }
 
         function getApiRoutes() {
-            $http.get(REST_CONFIG.BASE_URL + '/').success(function (data) {//TODO some problem here
-                storageFactory.setApiRoutes(data);
+            $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
+                storageFactory.setApiRoutes(data['_embedded']['resource_meta']);
             }).error(errorFactory.resolve);
         }
 
@@ -1071,19 +1071,11 @@ angular.module('website.top.menu', [])
             },
             controller: function ($scope, redirectFactory, storageFactory, $modal) {
 
-                function openSelectCompanyModal() {
-                    $scope.selectCompanyModal = $modal.open({
-                        templateUrl: 'selectCompanyModalContent.html',
+                function openSelectAccountAndCompanyModal() {
+                    $scope.selectAccountAndCompanyModal = $modal.open({
+                        templateUrl: 'selectAccountAndCompanyModalContent.html',
                         scope: $scope,
-                        controller: 'selectCompanyModalController'
-                    });
-                }
-
-                function openSelectAccountModal() {
-                    $scope.selectAccountModal = $modal.open({
-                        templateUrl: 'selectAccountModalContent.html',
-                        scope: $scope,
-                        controller: 'selectAccountModalController'
+                        controller: 'selectAccountAndCompanyModalController'
                     });
                 }
 
@@ -1099,20 +1091,12 @@ angular.module('website.top.menu', [])
                     //TODO
                 };
 
-                $scope.closeSelectCompanyModal = function () {
-                    closeModal($scope.selectCompanyModal);
+                $scope.closeSelectAccountAndCompanyModal = function () {
+                    closeModal($scope.selectAccountAndCompanyModal);
                 };
 
-                $scope.closeSelectAccountModal = function () {
-                    closeModal($scope.selectAccountModal);
-                };
-
-                $scope.showSelectAccountPopup = function () {
-                    openSelectCompanyModal();
-                };
-
-                $scope.showSelectCompanyPopup = function () {
-                    openSelectAccountModal();
+                $scope.showSelectAccountAndCompanyModal = function () {
+                    openSelectAccountAndCompanyModal();
                 };
 
                 $scope.logout = function () {
@@ -1122,20 +1106,22 @@ angular.module('website.top.menu', [])
         };
     })
 
-    .controller('selectAccountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
+    .controller('selectAccountAndCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
+        $scope.tempSelectedAccount = [];
+
         $http.get(REST_CONFIG.BASE_URL + '/accounts')
             .success(function (data) {
                 $scope.accounts = data['_embedded'].accounts;
             }).error(errorFactory.resolve);
-    }])
 
-    .controller('selectCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
-        var selectedAccount = storageFactory.getSelectedAccount();
-        if (selectedAccount) {
-            $http.get(REST_CONFIG.BASE_URL + '/accounts/' + selectedAccount['account_uuid'] + '/companies')
-                .success(function (data) {
-                    $scope.companies = data['_embedded'].companies;
-                }).error(errorFactory.resolve);
+        $scope.getCompanies = function (selectedAccount) {
+            if (selectedAccount) {
+                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + selectedAccount['account_uuid'] + '/companies')
+                    .success(function (data) {
+                        $scope.companies = data['_embedded'].companies;
+                    }).error(errorFactory.resolve);
+            }
         }
+
     }])
 ;

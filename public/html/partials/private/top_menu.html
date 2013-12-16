@@ -31,39 +31,45 @@
         </div>
     </div>
 
-    <div aria-hidden="true" ng-controller="selectAccountModalController">
-        <script type="text/ng-template" id="selectAccountModalContent.html">
+    <div aria-hidden="true" ng-controller="selectAccountAndCompanyModalController">
+        <script type="text/ng-template" id="selectAccountAndCompanyModalContent.html">
             <div>
                 <div class="modal-header">
-                    <h4 class="modal-title">Выбор Аккаунта</h4>
+                    <h4 class="modal-title">Выбор Аккаунта и юридического лица</h4>
                 </div>
                 <div class="modal-body">
-                    <select title="Выберите текущий аккаунт">
-                        <option ng-repeat="account in accounts">{{account.title}}</option>
-                    </select>
+                    <ul class="clear_list vertical_form_block">
+                        <li class="input-group" style="width: 100%;">
+                            <label for="accountData-title">
+                                Аккаунт
+                            </label>
+                            <select title="Выберите текущий аккаунт" class="form-control"
+                                    ng-model="tempSelectedAccount"
+                                    ng-disabled="isAjaxLoading"
+                                    size="4"
+                                    ng-options="account as account.title for account in accounts"
+                                    ng-click="getCompanies(tempSelectedAccount)">
+                            </select>
+                        </li>
+                        <li class="input-group" style="width: 100%;">
+                            <label for="accountData-title" title="Обязательное поле">
+                                Юридическое лицо
+                            </label>
+                            <select title="Выберите юридическое лицо, от имени которого совершаются действия"
+                                    class="form-control"
+                                    size="4"
+                                    ng-disabled="!tempSelectedAccount || isAjaxLoading"
+                                    ng-options="company as company.title for company in companies">
+                            </select>
+                        </li>
+                    </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="selectAccount()">Ok</button>
-                    <button type="button" class="btn btn-warning pull_left" ng-click="closeSelectAccountModal()">Отмена</button>
-                </div>
-            </div>
-        </script>
-    </div>
-
-    <div aria-hidden="true" ng-controller="selectCompanyModalController">
-        <script type="text/ng-template" id="selectCompanyModalContent.html">
-            <div>
-                <div class="modal-header">
-                    <h4 class="modal-title">Выбор Юридического лица</h4>
-                </div>
-                <div class="modal-body">
-                    <select title="Выберите юридическое лицо, от имени которого совершаются действия">
-                        <option ng-repeat="company in companies">{{company.title}}</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="selectCompany()">Ok</button>
-                    <button type="button" class="btn btn-warning pull_left" ng-click="closeSelectCompanyModal()">Отмена</button>
+                    <button type="button" class="btn btn-success" ng-click="selectAccountAndCompany()">Ok</button>
+                    <button type="button" class="btn btn-warning pull_left"
+                            ng-click="closeSelectAccountAndCompanyModal()">
+                        Отмена
+                    </button>
                 </div>
             </div>
         </script>

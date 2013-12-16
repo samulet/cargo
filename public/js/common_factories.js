@@ -218,8 +218,8 @@ angular.module('common.factories', [
         }
 
         function getApiRoutes() {
-            $http.get(REST_CONFIG.BASE_URL + '/').success(function (data) {//TODO some problem here
-                storageFactory.setApiRoutes(data);
+            $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
+                storageFactory.setApiRoutes(data['_embedded']['resource_meta']);
             }).error(errorFactory.resolve);
         }
 
