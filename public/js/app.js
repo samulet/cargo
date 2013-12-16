@@ -55,21 +55,25 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
-        //userParamsFactory.getApiRoutes(); //TODO fix it when server works done
+        userParamsFactory.getApiRoutes(); //TODO fix it when server works done
         userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
             return localStorage.getItem(storageFactory.storage.local.selectedAccount);
         }, function (newValue) {
-            console.log('X-App-Account: ' + newValue);
-            $http.defaults.headers.common['X-App-Account'] = newValue;
+            if (newValue) {
+                console.log('X-App-Account: ' + JSON.parse(newValue)['account_uuid']);//TODO remove
+                $http.defaults.headers.common['X-App-Account'] = JSON.parse(newValue)['account_uuid'];
+            }
         });
 
         $rootScope.$watch(function () {
             return localStorage.getItem(storageFactory.storage.local.selectedCompany);
         }, function (newValue) {
-            console.log('X-App-Company: ' + newValue);
-            $http.defaults.headers.common['X-App-Company'] = newValue;
+            if (newValue) {
+                console.log('X-App-Company: ' + JSON.parse(newValue)['company_uuid']);//TODO remove
+                $http.defaults.headers.common['X-App-Company'] = JSON.parse(newValue)['company_uuid'];
+            }
         });
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
