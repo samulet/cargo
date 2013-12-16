@@ -6,7 +6,8 @@ angular.module('common.factories', [
     .factory('storageFactory', ['$http', 'cookieFactory', '$rootScope', function ($http, cookieFactory, $rootScope) {
         var storage = {
             cookie: {
-                token: 'token'
+                token: 'token',
+                sessionId: 'PHPSESSID'
             },
             local: {
                 accounts: 'accounts',
@@ -63,6 +64,10 @@ angular.module('common.factories', [
             getToken: function () {
                 return getCookie(storage.cookie.token);
             },
+            removeSessionId: function () {
+                return removeCookie(storage.cookie.sessionId);
+            },
+
             removeToken: function () {
                 return removeCookie(storage.cookie.token);
             },
@@ -81,7 +86,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('redirectFactory', ['ROUTES', '$location', 'WEB_CONFIG', function (ROUTES, $location, WEB_CONFIG) {
+    .factory('redirectFactory', ['ROUTES', '$location', 'WEB_CONFIG', 'storageFactory', function (ROUTES, $location, WEB_CONFIG, storageFactory) {
         var isOldBrowser = navigator.userAgent.match(/MSIE\s(?!9.0)/);  // IE8 and lower
 
         function redirectOldBrowserCompatable(url) {
@@ -126,6 +131,9 @@ angular.module('common.factories', [
                 redirectTo(ROUTES.DASHBOARD);
             },
             logout: function () {
+                storageFactory.removeToken();
+                storageFactory.removeSessionId();
+                localStorage.clear();
                 redirectTo(WEB_CONFIG.BASE_URL + '/user/logout');
             },
             redirectCustomPath: function (path) {
@@ -164,7 +172,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('errorFactory', ['RESPONSE_STATUS', 'MESSAGES', '$rootScope', 'redirectFactory', 'cookieFactory', function (RESPONSE_STATUS, MESSAGES, $rootScope, redirectFactory, cookieFactory) {
+    .factory('errorFactory', ['RESPONSE_STATUS', 'MESSAGES', '$rootScope', 'redirectFactory', function (RESPONSE_STATUS, MESSAGES, $rootScope, redirectFactory) {
         return {
             resolve: function (data, status, isLoginPage) {
                 var type = (status >= 400) ? 'danger' : 'success';
@@ -173,7 +181,6 @@ angular.module('common.factories', [
                     if (isLoginPage === true) {
                         return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
                     } else {
-                        cookieFactory.removeItem("token");
                         return redirectFactory.logout();
                     }
                 } else if (status === RESPONSE_STATUS.NOT_FOUND || status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
