@@ -11,9 +11,6 @@ angular.module('website.top.menu', [])
                 var selectedAccount = storageFactory.getSelectedAccount();
                 var selectedCompany = storageFactory.getSelectedCompany();
 
-                $scope.accountShowModal = false;
-                $scope.companyShowModal = false;
-
                 $scope.displayedName = (user) ? user.name : 'Пользователь';
                 $scope.accountName = (selectedAccount) ? selectedAccount.title : '(Нет аккаунта)';
                 $scope.companyShortName = (selectedCompany) ? selectedCompany.short : '(Юр. Лицо не выбрано)';
@@ -34,24 +31,57 @@ angular.module('website.top.menu', [])
             restrict: 'E',
             templateUrl: 'html/partials/private/user_menu.html',
             scope: {
-                accountShowModal: '=accountShowModal',
-                companyShowModal: '=companyShowModal',
                 displayedName: '=displayedName',
                 accountName: '=accountName',
                 companyShortName: '=companyShortName'
             },
-            controller: function ($scope, redirectFactory, storageFactory) {
+            controller: function ($scope, redirectFactory, storageFactory, $modal) {
+
+                function openSelectCompanyModal() {
+                    $scope.selectCompanyModal = $modal.open({
+                        templateUrl: 'selectCompanyModalContent.html',
+                        scope: $scope,
+                        controller: 'selectCompanyModalController'
+                    });
+                }
+
+                function openSelectAccountModal() {
+                    $scope.selectAccountModal = $modal.open({
+                        templateUrl: 'selectAccountModalContent.html',
+                        scope: $scope,
+                        controller: 'selectAccountModalController'
+                    });
+                }
+
+                function closeModal(modal) {
+                    modal.close();
+                }
+
+                $scope.selectAccount = function () {
+                    //TODO
+                };
+
+                $scope.selectCompany = function () {
+                    //TODO
+                };
+
+                $scope.closeSelectCompanyModal = function () {
+                    closeModal($scope.selectCompanyModal);
+                };
+
+                $scope.closeSelectAccountModal = function () {
+                    closeModal($scope.selectAccountModal);
+                };
+
                 $scope.showSelectAccountPopup = function () {
-                    $scope.accountShowModal = true;
+                    openSelectCompanyModal();
                 };
 
                 $scope.showSelectCompanyPopup = function () {
-                    $scope.companyShowModal = true;
+                    openSelectAccountModal();
                 };
 
                 $scope.logout = function () {
-                    storageFactory.removeToken();
-                    localStorage.clear();
                     redirectFactory.logout();
                 }
             }
@@ -59,10 +89,19 @@ angular.module('website.top.menu', [])
     })
 
     .controller('selectAccountModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
-        //TODO
+        $http.get(REST_CONFIG.BASE_URL + '/accounts')
+            .success(function (data) {
+                $scope.accounts = data['_embedded'].accounts;
+            }).error(errorFactory.resolve);
     }])
 
-    .controller('selectCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
-        //TODO
+    .controller('selectCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
+        var selectedAccount = storageFactory.getSelectedAccount();
+        if (selectedAccount) {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts/' + selectedAccount['account_uuid'] + '/companies')
+                .success(function (data) {
+                    $scope.companies = data['_embedded'].companies;
+                }).error(errorFactory.resolve);
+        }
     }])
 ;
