@@ -55,7 +55,7 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
-        userParamsFactory.getApiRoutes(); //TODO fix it when server works done
+        userParamsFactory.getApiRoutes();
         userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
@@ -1041,14 +1041,7 @@ angular.module('website.top.menu', [])
         return {
             restrict: 'E',
             templateUrl: 'html/partials/private/top_menu.html',
-            controller: function ($scope, $location, storageFactory) {
-                var user = storageFactory.getUser();
-                var selectedAccount = storageFactory.getSelectedAccount();
-                var selectedCompany = storageFactory.getSelectedCompany();
-
-                $scope.accountName = (selectedAccount) ? selectedAccount.title : '(Нет аккаунта)';
-                $scope.companyShortName = (selectedCompany) ? selectedCompany.short : '(Юр. Лицо не выбрано)';
-
+            controller: function ($scope, $location) {
                 $scope.getClass = function (path) {
                     if ('/' + $location.path().substr(1, path.length) == path) {
                         return "active"
@@ -1064,13 +1057,20 @@ angular.module('website.top.menu', [])
         return {
             restrict: 'E',
             templateUrl: 'html/partials/private/user_menu.html',
-            scope: {
-                accountName: '=accountName',
-                companyShortName: '=companyShortName'
-            },
-            controller: function ($scope, redirectFactory, storageFactory, $modal) {
-
+            controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
                 $scope.isModalOpened = false;
+
+                $rootScope.$watch(function () {
+                    return localStorage.getItem(storageFactory.storage.local.selectedAccount);
+                }, function (newValue) {
+                    $scope.accountName = (newValue) ? JSON.parse(newValue).title : '(Нет аккаунта)';
+                });
+
+                $rootScope.$watch(function () {
+                    return localStorage.getItem(storageFactory.storage.local.selectedCompany);
+                }, function (newValue) {
+                    $scope.companyShortName = (newValue) ? JSON.parse(newValue).short : '(Юр. Лицо не выбрано)'
+                });
 
                 function openSelectAccountAndCompanyModal() {
                     $scope.isModalOpened = true;

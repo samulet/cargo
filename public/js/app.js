@@ -55,7 +55,7 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
-        userParamsFactory.getApiRoutes(); //TODO fix it when server works done
+        userParamsFactory.getApiRoutes();
         userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
