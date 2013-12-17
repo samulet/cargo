@@ -1108,19 +1108,46 @@ angular.module('website.top.menu', [])
 
     .controller('selectAccountAndCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
         $scope.tempSelectedAccount = [];
+        $scope.options = [];
 
-        $http.get(REST_CONFIG.BASE_URL + '/accounts')
-            .success(function (data) {
-                $scope.accounts = data['_embedded'].accounts;
-            }).error(errorFactory.resolve);
+        getCompaniesForAccounts();
 
-        $scope.getCompanies = function (selectedAccount) {
-            if (selectedAccount) {
-                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + selectedAccount['account_uuid'] + '/companies')
+        function getAccounts(callback) {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts')
+                .success(function (data) {
+                    $scope.accounts = data['_embedded'].accounts;
+                    callback($scope.accounts);
+                }).error(errorFactory.resolve);
+        }
+
+        function getCompanies(account, callback) {
+            if (account) {
+                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'] + '/companies')
                     .success(function (data) {
                         $scope.companies = data['_embedded'].companies;
+                        callback($scope.companies);
                     }).error(errorFactory.resolve);
             }
+        }
+
+        function getCompaniesForAccounts() {
+            getAccounts(function (accounts) {
+                for (var k in accounts) {
+                    getCompanies(accounts[k], function (companies) {
+                        for (var j in companies) {
+                            $scope.options.push(
+                                {
+                                    accountUuid: accounts[k]['account_uuid'],
+                                    accountTitle: accounts[k]['title'],
+                                    companyUuid: companies[j]['company_uuid'],
+                                    short: companies[j]['short']
+                                }
+                            );
+                        }
+                    });
+
+                }
+            });
         }
 
     }])
