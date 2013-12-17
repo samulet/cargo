@@ -1046,7 +1046,6 @@ angular.module('website.top.menu', [])
                 var selectedAccount = storageFactory.getSelectedAccount();
                 var selectedCompany = storageFactory.getSelectedCompany();
 
-                $scope.displayedName = (user) ? user.name : 'Пользователь';
                 $scope.accountName = (selectedAccount) ? selectedAccount.title : '(Нет аккаунта)';
                 $scope.companyShortName = (selectedCompany) ? selectedCompany.short : '(Юр. Лицо не выбрано)';
 
@@ -1066,7 +1065,6 @@ angular.module('website.top.menu', [])
             restrict: 'E',
             templateUrl: 'html/partials/private/user_menu.html',
             scope: {
-                displayedName: '=displayedName',
                 accountName: '=accountName',
                 companyShortName: '=companyShortName'
             },
