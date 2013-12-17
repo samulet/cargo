@@ -240,6 +240,7 @@ angular.module('common.factories', [
                 if (!selectedAccount || !selectedCompany) {
                     getAccounts();
                 }
+
             }
         }
     }])

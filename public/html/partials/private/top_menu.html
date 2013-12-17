@@ -47,15 +47,22 @@
                                     ng-model="option"
                                     ng-disabled="isAjaxLoading"
                                     size="8"
-                                    ng-options="option as option.company.short group by option.accountTitle for option in options"
-                                    ng-change="selectOption(option)">
+                                    ng-options="option as option.company.short group by option.account.title for option in options"
+                                    ng-change="selectOption(option)"
+                                    ajax-disabler="isAjaxLoading">
                                 <option value="">---</option>
                             </select>
+                        </li>
+                        <li>
+                            <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+                                {{message.msg}}
+                            </alert>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()">Ok</button>
+                    <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()"
+                            ajax-disabler="isAjaxLoading">Ok</button>
                     <button type="button" class="btn btn-warning pull_left"
                             ng-click="closeSelectAccountAndCompanyModal()">
                         Отмена

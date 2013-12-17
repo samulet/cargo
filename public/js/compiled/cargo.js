@@ -738,6 +738,7 @@ angular.module('common.factories', [
                 if (!selectedAccount || !selectedCompany) {
                     getAccounts();
                 }
+
             }
         }
     }])
@@ -1102,7 +1103,6 @@ angular.module('website.top.menu', [])
     })
 
     .controller('selectAccountAndCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
-        $scope.tempSelectedAccount;
         $scope.options = [];
 
         if ($scope.isModalOpened) {
@@ -1155,6 +1155,7 @@ angular.module('website.top.menu', [])
                 storageFactory.setSelectedAccount(null);
                 storageFactory.setSelectedCompany(null);
             }
+            $scope.closeSelectAccountAndCompanyModal();
         };
 
     }])
