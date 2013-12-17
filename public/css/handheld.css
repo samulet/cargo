@@ -21,3 +21,11 @@
 .vertical_spaced {
     margin-top: 0;
 }
+
+.mobile_text_left{
+    text-align: left;
+}
+
+.mobile_full_width{
+    width: 100%;
+}

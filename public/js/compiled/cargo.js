@@ -55,7 +55,7 @@ angular.module('website', [
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
 
-        userParamsFactory.getApiRoutes(); //TODO fix it when server works done
+        userParamsFactory.getApiRoutes();
         userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
@@ -738,6 +738,7 @@ angular.module('common.factories', [
                 if (!selectedAccount || !selectedCompany) {
                     getAccounts();
                 }
+
             }
         }
     }])
@@ -1040,15 +1041,7 @@ angular.module('website.top.menu', [])
         return {
             restrict: 'E',
             templateUrl: 'html/partials/private/top_menu.html',
-            controller: function ($scope, $location, storageFactory) {
-                var user = storageFactory.getUser();
-                var selectedAccount = storageFactory.getSelectedAccount();
-                var selectedCompany = storageFactory.getSelectedCompany();
-
-                $scope.displayedName = (user) ? user.name : 'Пользователь';
-                $scope.accountName = (selectedAccount) ? selectedAccount.title : '(Нет аккаунта)';
-                $scope.companyShortName = (selectedCompany) ? selectedCompany.short : '(Юр. Лицо не выбрано)';
-
+            controller: function ($scope, $location) {
                 $scope.getClass = function (path) {
                     if ('/' + $location.path().substr(1, path.length) == path) {
                         return "active"
@@ -1064,14 +1057,23 @@ angular.module('website.top.menu', [])
         return {
             restrict: 'E',
             templateUrl: 'html/partials/private/user_menu.html',
-            scope: {
-                displayedName: '=displayedName',
-                accountName: '=accountName',
-                companyShortName: '=companyShortName'
-            },
-            controller: function ($scope, redirectFactory, storageFactory, $modal) {
+            controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
+                $scope.isModalOpened = false;
+
+                $rootScope.$watch(function () {
+                    return localStorage.getItem(storageFactory.storage.local.selectedAccount);
+                }, function (newValue) {
+                    $scope.accountName = (newValue) ? JSON.parse(newValue).title : '(Нет аккаунта)';
+                });
+
+                $rootScope.$watch(function () {
+                    return localStorage.getItem(storageFactory.storage.local.selectedCompany);
+                }, function (newValue) {
+                    $scope.companyShortName = (newValue) ? JSON.parse(newValue).short : '(Юр. Лицо не выбрано)'
+                });
 
                 function openSelectAccountAndCompanyModal() {
+                    $scope.isModalOpened = true;
                     $scope.selectAccountAndCompanyModal = $modal.open({
                         templateUrl: 'selectAccountAndCompanyModalContent.html',
                         scope: $scope,
@@ -1082,14 +1084,6 @@ angular.module('website.top.menu', [])
                 function closeModal(modal) {
                     modal.close();
                 }
-
-                $scope.selectAccount = function () {
-                    //TODO
-                };
-
-                $scope.selectCompany = function () {
-                    //TODO
-                };
 
                 $scope.closeSelectAccountAndCompanyModal = function () {
                     closeModal($scope.selectAccountAndCompanyModal);
@@ -1107,21 +1101,60 @@ angular.module('website.top.menu', [])
     })
 
     .controller('selectAccountAndCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
-        $scope.tempSelectedAccount = [];
+        $scope.options = [];
 
-        $http.get(REST_CONFIG.BASE_URL + '/accounts')
-            .success(function (data) {
-                $scope.accounts = data['_embedded'].accounts;
-            }).error(errorFactory.resolve);
+        if ($scope.isModalOpened) {
+            getCompaniesForAccounts();
+        }
 
-        $scope.getCompanies = function (selectedAccount) {
-            if (selectedAccount) {
-                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + selectedAccount['account_uuid'] + '/companies')
+        function getAccounts(callback) {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts')
+                .success(function (data) {
+                    $scope.accounts = data['_embedded'].accounts;
+                    callback($scope.accounts);
+                }).error(errorFactory.resolve);
+        }
+
+        function getCompanies(account, callback) {
+            if (account) {
+                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'] + '/companies')
                     .success(function (data) {
                         $scope.companies = data['_embedded'].companies;
+                        callback($scope.companies);
                     }).error(errorFactory.resolve);
             }
         }
+
+        function getCompaniesForAccounts() {
+            getAccounts(function (accounts) {
+                for (var k in accounts) {
+                    getCompanies(accounts[k], function (companies) {
+                        for (var j in companies) {
+                            $scope.options.push({
+                                account: accounts[k],
+                                company: companies[j]
+                            });
+                        }
+                    });
+
+                }
+            });
+        }
+
+        $scope.selectOption = function (option) {
+            $scope.tempSelectedAccount = option;
+        };
+
+        $scope.saveAccountAndCompany = function () {
+            if ($scope.tempSelectedAccount) {
+                storageFactory.setSelectedAccount($scope.tempSelectedAccount.account);
+                storageFactory.setSelectedCompany($scope.tempSelectedAccount.company);
+            } else {
+                storageFactory.setSelectedAccount(null);
+                storageFactory.setSelectedCompany(null);
+            }
+            $scope.closeSelectAccountAndCompanyModal();
+        };
 
     }])
 ;

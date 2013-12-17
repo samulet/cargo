@@ -467,11 +467,11 @@
             <span class="social_btn_desc">Linked.In</span>
         </button>
     </li>
-
-
-    <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
-        {{message.msg}}
-    </alert>
+    <li>
+        <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+            {{message.msg}}
+        </alert>
+    </li>
 </ul>
 <!--END Social Data-->
 

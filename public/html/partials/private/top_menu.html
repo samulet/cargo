@@ -22,12 +22,7 @@
                     <a href="#!{{ROUTES.USER_PROFILE}}">Профиль</a>
                 </li>
             </ul>
-            <user-menu class="pull_right"
-                       account-show-modal="accountShowModal"
-                       company-show-modal="companyShowModal"
-                       displayed-name="displayedName"
-                       account-name="accountName"
-                       company-short-name="companyShortName"></user-menu>
+            <user-menu class="pull_right mobile_full_width"></user-menu>
         </div>
     </div>
 
@@ -41,31 +36,28 @@
                     <ul class="clear_list vertical_form_block">
                         <li class="input-group" style="width: 100%;">
                             <label for="accountData-title">
-                                Аккаунт
+                                Выберите юридическое лицо от имени которого совершается действие
                             </label>
                             <select title="Выберите текущий аккаунт" class="form-control"
-                                    ng-model="tempSelectedAccount"
+                                    ng-model="option"
                                     ng-disabled="isAjaxLoading"
-                                    size="4"
-                                    ng-options="account as account.title for account in accounts"
-                                    ng-click="getCompanies(tempSelectedAccount)">
+                                    size="8"
+                                    ng-options="option as option.company.short group by option.account.title for option in options"
+                                    ng-change="selectOption(option)"
+                                    ajax-disabler="isAjaxLoading">
+                                <option value="">---</option>
                             </select>
                         </li>
-                        <li class="input-group" style="width: 100%;">
-                            <label for="accountData-title" title="Обязательное поле">
-                                Юридическое лицо
-                            </label>
-                            <select title="Выберите юридическое лицо, от имени которого совершаются действия"
-                                    class="form-control"
-                                    size="4"
-                                    ng-disabled="!tempSelectedAccount || isAjaxLoading"
-                                    ng-options="company as company.title for company in companies">
-                            </select>
+                        <li>
+                            <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+                                {{message.msg}}
+                            </alert>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="selectAccountAndCompany()">Ok</button>
+                    <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()"
+                            ajax-disabler="isAjaxLoading">Ok</button>
                     <button type="button" class="btn btn-warning pull_left"
                             ng-click="closeSelectAccountAndCompanyModal()">
                         Отмена

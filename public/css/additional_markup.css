@@ -297,6 +297,14 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     .vertical_spaced {
         margin-top: 0;
     }
+
+    .mobile_text_left{
+        text-align: left;
+    }
+
+    .mobile_full_width{
+        width: 100%;
+    }
 }
 
 @media (min-width: 681px) and (max-width: 989px) {

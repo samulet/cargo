@@ -1,31 +1,11 @@
-<ul class="dropdown nav navbar-nav" style="color: black; text-align: center;">
+<ul class="dropdown nav navbar-nav mobile_text_left" style="color: black;">
     <li class="clickable">
         <a class="dropdown-toggle">
-            {{displayedName}}
+            <i class="fa fa-briefcase"> </i> {{accountName}} / {{companyShortName}} <i class="fa fa-caret-down"> </i>
         </a>
         <ul class="dropdown-menu">
             <li role="presentation">
-                Аккаунт
-            </li>
-            <li role="presentation">
-                {{accountName}}
-            </li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation">
-                Юридическое лицо
-            </li>
-            <li role="presentation">
-                {{companyShortName}}
-            </li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation">
-                <span></span>
-                <button type="button" role="menuitem"
-                        class="btn btn-xs btn-info"
-                        ng-click="showSelectAccountAndCompanyModal()"
-                        title="Изменить текущий аккаунт"
-                        style="width: 100%; border-radius: 0;">Изменить аккаунт и компанию
-                </button>
+                <a role="menuitem" ng-click="showSelectAccountAndCompanyModal()">Изменить аккаунт и компанию</a>
             </li>
             <li role="presentation" class="divider"></li>
             <li role="presentation">
