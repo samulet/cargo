@@ -41,19 +41,21 @@
                     <ul class="clear_list vertical_form_block">
                         <li class="input-group" style="width: 100%;">
                             <label for="accountData-title">
-                                Аккаунт и Юридическое лицо
+                                Выберите юридическое лицо от имени которого совершается действие
                             </label>
                             <select title="Выберите текущий аккаунт" class="form-control"
-                                    ng-model="tempSelectedAccount"
+                                    ng-model="option"
                                     ng-disabled="isAjaxLoading"
                                     size="8"
-                                    ng-options="option as option.accountTitle for option in options">
+                                    ng-options="option as option.company.short group by option.accountTitle for option in options"
+                                    ng-change="selectOption(option)">
+                                <option value="">---</option>
                             </select>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="selectAccountAndCompany()">Ok</button>
+                    <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()">Ok</button>
                     <button type="button" class="btn btn-warning pull_left"
                             ng-click="closeSelectAccountAndCompanyModal()">
                         Отмена

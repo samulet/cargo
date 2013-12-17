@@ -1071,7 +1071,10 @@ angular.module('website.top.menu', [])
             },
             controller: function ($scope, redirectFactory, storageFactory, $modal) {
 
+                $scope.isModalOpened = false;
+
                 function openSelectAccountAndCompanyModal() {
+                    $scope.isModalOpened = true;
                     $scope.selectAccountAndCompanyModal = $modal.open({
                         templateUrl: 'selectAccountAndCompanyModalContent.html',
                         scope: $scope,
@@ -1082,14 +1085,6 @@ angular.module('website.top.menu', [])
                 function closeModal(modal) {
                     modal.close();
                 }
-
-                $scope.selectAccount = function () {
-                    //TODO
-                };
-
-                $scope.selectCompany = function () {
-                    //TODO
-                };
 
                 $scope.closeSelectAccountAndCompanyModal = function () {
                     closeModal($scope.selectAccountAndCompanyModal);
@@ -1107,10 +1102,12 @@ angular.module('website.top.menu', [])
     })
 
     .controller('selectAccountAndCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
-        $scope.tempSelectedAccount = [];
+        $scope.tempSelectedAccount;
         $scope.options = [];
 
-        getCompaniesForAccounts();
+        if ($scope.isModalOpened) {
+            getCompaniesForAccounts();
+        }
 
         function getAccounts(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
@@ -1135,20 +1132,30 @@ angular.module('website.top.menu', [])
                 for (var k in accounts) {
                     getCompanies(accounts[k], function (companies) {
                         for (var j in companies) {
-                            $scope.options.push(
-                                {
-                                    accountUuid: accounts[k]['account_uuid'],
-                                    accountTitle: accounts[k]['title'],
-                                    companyUuid: companies[j]['company_uuid'],
-                                    short: companies[j]['short']
-                                }
-                            );
+                            $scope.options.push({
+                                account: accounts[k],
+                                company: companies[j]
+                            });
                         }
                     });
 
                 }
             });
         }
+
+        $scope.selectOption = function (option) {
+            $scope.tempSelectedAccount = option;
+        };
+
+        $scope.saveAccountAndCompany = function () {
+            if ($scope.tempSelectedAccount) {
+                storageFactory.setSelectedAccount($scope.tempSelectedAccount.account);
+                storageFactory.setSelectedCompany($scope.tempSelectedAccount.company);
+            } else {
+                storageFactory.setSelectedAccount(null);
+                storageFactory.setSelectedCompany(null);
+            }
+        };
 
     }])
 ;
