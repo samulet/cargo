@@ -1,0 +1,8 @@
+<h4><span class="header">{{title}}</span></h4>
+
+<p ng-repeat="route in routes">
+    <span class="description"><b>{{route.method}}</b> {{route.url}}</span>
+    <span class="status" ng-show="!route.status">Loading...</span>
+    <span class="status" ng-show="route.status == 'ok'">Ok</span>
+    <span class="status" ng-show="route.status == 'failed'">Failed</span>
+</p>
