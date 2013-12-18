@@ -26,7 +26,7 @@ angular.module('test', [])
             templateUrl: 'tile_template.html',
             scope: {
                 title: '=title',
-                route: '=route'
+                routes: '=routes'
             },
             link: function (scope, elem, attrs) {
 
@@ -42,7 +42,7 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/',
+                        url: '/meta',
                         status: null
                     }
                 ]
@@ -52,21 +52,45 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/accounts{/uuid}',
+                        url: '/accounts{/uuid}',
                         status: null
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/accounts{/uuid}',
+                        url: '/accounts{/uuid}',
                         status: null
                     },
                     {
                         method: 'PATCH',
-                        url: '/api/accounts{/uuid}',
+                        url: '/accounts{/uuid}',
                         status: null
                     }
                 ]
             }
-        ]
+        ];
+
+        for (var k in $scope.api) {
+            if ($scope.api.hasOwnProperty(k)) {
+                for (var j in $scope.api[k].routes) {
+                    if ($scope.api[k].routes.hasOwnProperty(j)) {
+                        var params = {
+                            method: $scope.api[k].routes[j].method,
+                            url: REST_CONFIG.BASE_URL + $scope.api[k].routes[j].url
+                        };
+
+                        (function (k, j) {
+                            $http(params).success(function (data, status, headers, config) {
+                                $scope.api[k].routes[j].status = 'ok';
+                                $scope.api[k].routes[j].code = status;
+                            }).error(function (data, status, headers, config) {
+                                    $scope.api[k].routes[j].status = 'failed';
+                                    $scope.api[k].routes[j].code = status;
+                                });
+                        })(k, j);
+                    }
+                }
+            }
+        }
+
     }])
 ;
