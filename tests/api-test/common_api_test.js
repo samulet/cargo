@@ -23,6 +23,9 @@ angular.module('test', [])
         var companyUuid = '56789';
         var uuid = '012345';
         var code = '678901';
+        var token = 'ef32b5d575b528582924588093da0d491b85a5ac507330bcc0a5b11feaf6ed4f';
+        var selectedAccount = 'aa38c4511de0409787baf55a83f03452';
+        var selectedCompany = 'eaf4befff8aa4a0090e86cb9821026a0';
 
         $scope.api = [
             {
@@ -39,15 +42,30 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/accounts/' + uuid
+                        url: '/api/accounts/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/accounts/' + uuid
+                        url: '/api/accounts/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'PATCH',
-                        url: '/api/accounts/' + uuid
+                        url: '/api/accounts/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
                 ]
             },
@@ -56,7 +74,12 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'DELETE',
-                        url: '/api/accounts/' + accountUuid + '/companies/' + companyUuid
+                        url: '/api/accounts/' + accountUuid + '/companies/' + companyUuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
                 ]
             },
@@ -65,7 +88,12 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'POST',
-                        url: '/api/accounts/' + accountUuid + '/companies'
+                        url: '/api/accounts/' + accountUuid + '/companies',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
                 ]
             },
@@ -74,15 +102,30 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/profiles/' + uuid
+                        url: '/api/profiles/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/profiles/' + uuid
+                        url: '/api/profiles/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'PATCH',
-                        url: '/api/profiles/' + uuid
+                        url: '/api/profiles/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
                 ]
             },
@@ -91,15 +134,30 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/companies/' + uuid
+                        url: '/api/companies/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/companies/' + uuid
+                        url: '/api/companies/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'PATCH',
-                        url: '/api/companies/' + uuid
+                        url: '/api/companies/' + uuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
                 ]
             },
@@ -108,11 +166,21 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/ref/product-group/' + code
+                        url: '/api/ref/product-group/' + code,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/ref/product-group/' + code
+                        url: '/api/ref/product-group/' + code,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
                 ]
             },
@@ -121,15 +189,30 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/ref/product-group'
+                        url: '/api/ref/product-group',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'POST',
-                        url: '/api/ref/product-group'
+                        url: '/api/ref/product-group',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'PUT',
-                        url: '/api/ref/product-group'
+                        url: '/api/ref/product-group',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
 
                 ]
@@ -139,7 +222,12 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/service/import/company'
+                        url: '/api/service/import/company',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
                 ]
             },
@@ -148,38 +236,65 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/service/import/company-intersect'
+                        url: '/api/service/import/company-intersect',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'POST',
-                        url: '/api/service/import/company-intersect'
+                        url: '/api/service/import/company-intersect',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/service/import/company-intersect'
+                        url: '/api/service/import/company-intersect',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
                     }
                 ]
             }
         ];
 
-        for (var k in $scope.api) {
-            if ($scope.api.hasOwnProperty(k)) {
-                for (var j in $scope.api[k].routes) {
-                    if ($scope.api[k].routes.hasOwnProperty(j)) {
+        for (var i in $scope.api) {
+            if ($scope.api.hasOwnProperty(i)) {
+                var routes = $scope.api[i].routes;
+                for (var j in routes) {
+                    if (routes.hasOwnProperty(j)) {
                         var params = {
-                            method: $scope.api[k].routes[j].method,
-                            url: serverUrl + $scope.api[k].routes[j].url
+                            method: routes[j].method,
+                            url: serverUrl + routes[j].url
                         };
 
-                        (function (k, j) {
-                            $http(params).success(function (data, status, headers, config) {
-                                $scope.api[k].routes[j].status = 'ok';
-                                $scope.api[k].routes[j].code = status;
-                            }).error(function (data, status, headers, config) {
-                                    $scope.api[k].routes[j].status = 'failed';
-                                    $scope.api[k].routes[j].code = status;
+                        if (routes[j].headers) {
+                            params.headers = {};
+                            var header = routes[j].headers;
+                            for (var k in header) {
+                                if (header.hasOwnProperty(k)) {
+                                    params.headers[k] = header[k];
+                                }
+                            }
+                        }
+
+
+                        (function (routes, i, j) {
+                            $http(params).success(function (data, status) {
+                                routes[j].status = 'ok';
+                                routes[j].code = status;
+                            }).error(function (data, status) {
+                                    routes[j].status = 'failed';
+                                    routes[j].code = status;
                                 });
-                        })(k, j);
+                        })(routes, i, j);
                     }
                 }
             }
