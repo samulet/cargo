@@ -2,24 +2,6 @@
 
 angular.module('test', [])
 
-    .constant("WEB_CONFIG", {
-        "PROTOCOL": "http",
-        "HOST": "cargo",
-        "HOST_CONTEXT": "",
-        "PORT": "8000",
-        "DOMAIN": "cargo.dev",
-        "BASE_URL": "http://cargo.dev:8000"
-    })
-
-    .constant("REST_CONFIG", {
-        "PROTOCOL": "http",
-        "HOST": "cargo",
-        "HOST_CONTEXT": "/api",
-        "PORT": "8000",
-        "DOMAIN": "cargo.dev",
-        "BASE_URL": "http://cargo.dev:8000/api"
-    })
-
     .directive('tile', function () {
         return {
             restrict: 'E',
@@ -34,7 +16,13 @@ angular.module('test', [])
         };
     })
 
-    .controller('apiTestController', ['$scope', '$http', 'REST_CONFIG', function ($scope, $http, REST_CONFIG) {
+    .controller('apiTestController', ['$scope', '$http', function ($scope, $http) {
+
+        var serverUrl = 'http://cargo.dev:8000';
+        var accountUuid = '12345';
+        var companyUuid = '56789';
+        var uuid = '012345';
+        var code = '678901';
 
         $scope.api = [
             {
@@ -42,8 +30,7 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/meta',
-                        status: null
+                        url: '/api/meta'
                     }
                 ]
             },
@@ -52,18 +39,124 @@ angular.module('test', [])
                 routes: [
                     {
                         method: 'GET',
-                        url: '/accounts{/uuid}',
-                        status: null
+                        url: '/api/accounts/' + uuid
                     },
                     {
                         method: 'DELETE',
-                        url: '/accounts{/uuid}',
-                        status: null
+                        url: '/api/accounts/' + uuid
                     },
                     {
                         method: 'PATCH',
-                        url: '/accounts{/uuid}',
-                        status: null
+                        url: '/api/accounts/' + uuid
+                    }
+                ]
+            },
+            {
+                title: 'Account Company',
+                routes: [
+                    {
+                        method: 'DELETE',
+                        url: '/api/accounts/' + accountUuid + '/companies/' + companyUuid
+                    }
+                ]
+            },
+            {
+                title: 'Account Companies',
+                routes: [
+                    {
+                        method: 'POST',
+                        url: '/api/accounts/' + accountUuid + '/companies'
+                    }
+                ]
+            },
+            {
+                title: 'Profile',
+                routes: [
+                    {
+                        method: 'GET',
+                        url: '/api/profiles/' + uuid
+                    },
+                    {
+                        method: 'DELETE',
+                        url: '/api/profiles/' + uuid
+                    },
+                    {
+                        method: 'PATCH',
+                        url: '/api/profiles/' + uuid
+                    }
+                ]
+            },
+            {
+                title: 'Company',
+                routes: [
+                    {
+                        method: 'GET',
+                        url: '/api/companies/' + uuid
+                    },
+                    {
+                        method: 'DELETE',
+                        url: '/api/companies/' + uuid
+                    },
+                    {
+                        method: 'PATCH',
+                        url: '/api/companies/' + uuid
+                    }
+                ]
+            },
+            {
+                title: 'Product Group Reference',
+                routes: [
+                    {
+                        method: 'GET',
+                        url: '/api/ref/product-group/' + code
+                    },
+                    {
+                        method: 'DELETE',
+                        url: '/api/ref/product-group/' + code
+                    }
+                ]
+            },
+            {
+                title: 'Product Group Reference Collection',
+                routes: [
+                    {
+                        method: 'GET',
+                        url: '/api/ref/product-group'
+                    },
+                    {
+                        method: 'POST',
+                        url: '/api/ref/product-group'
+                    },
+                    {
+                        method: 'PUT',
+                        url: '/api/ref/product-group'
+                    }
+
+                ]
+            },
+            {
+                title: 'Company import service',
+                routes: [
+                    {
+                        method: 'GET',
+                        url: '/api/service/import/company'
+                    }
+                ]
+            },
+            {
+                title: 'Link companies with external records',
+                routes: [
+                    {
+                        method: 'GET',
+                        url: '/api/service/import/company-intersect'
+                    },
+                    {
+                        method: 'POST',
+                        url: '/api/service/import/company-intersect'
+                    },
+                    {
+                        method: 'DELETE',
+                        url: '/api/service/import/company-intersect'
                     }
                 ]
             }
@@ -75,7 +168,7 @@ angular.module('test', [])
                     if ($scope.api[k].routes.hasOwnProperty(j)) {
                         var params = {
                             method: $scope.api[k].routes[j].method,
-                            url: REST_CONFIG.BASE_URL + $scope.api[k].routes[j].url
+                            url: serverUrl + $scope.api[k].routes[j].url
                         };
 
                         (function (k, j) {
