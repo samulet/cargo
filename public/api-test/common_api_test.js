@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('test', [
-    'env.config'
+        'env.config'
     ])
 
     .directive('tile', function () {
@@ -28,6 +28,45 @@ angular.module('test', [
         var token = 'db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2';
         var selectedAccount = 'b21295c8a94c4bb0a4de07bd2d76ed38';
         var selectedCompany = 'eaf4befff8aa4a0090e86cb9821026a0';
+
+        $scope.passedTestsPercent = 0;
+        $scope.inProgressTestsPercent = 100;
+        $scope.failedTestsPercent = 0;
+        $scope.api = [];
+
+        var passedTests = 0;
+        var failedTests = 0;
+        var totalTests = null;
+
+        function getTotalTestsCount() {
+            if (totalTests) return totalTests;
+
+            var count = 0;
+            var api = $scope.api;
+            for (i in api) {
+                if (api.hasOwnProperty(i)) {
+                    for (j in api[i].routes) {
+                        if (api[i].routes.hasOwnProperty(j)) count++;
+                    }
+                }
+            }
+            totalTests = count;
+            return count;
+        }
+
+        function setTestPassed(isTestPassed) {
+            var totalTests = getTotalTestsCount();
+
+            if (isTestPassed) {
+                passedTests++;
+            } else {
+                failedTests++;
+            }
+            $scope.passedTestsPercent = ((passedTests * 100) / totalTests).toFixed(0);
+            $scope.failedTestsPercent = ((failedTests * 100) / totalTests).toFixed(0);
+            var inProgressTests = (totalTests - (passedTests + failedTests));
+            $scope.inProgressTestsPercent = ((inProgressTests * 100) / totalTests).toFixed(0);
+        }
 
         $scope.api = [
             {
@@ -292,9 +331,11 @@ angular.module('test', [
                             $http(params).success(function (data, status) {
                                 routes[j].status = 'ok';
                                 routes[j].code = status;
+                                setTestPassed(true);
                             }).error(function (data, status) {
                                     routes[j].status = 'failed';
                                     routes[j].code = status;
+                                    setTestPassed(false);
                                 });
                         })(routes, i, j);
                     }
