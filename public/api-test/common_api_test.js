@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('test', [])
+angular.module('test', [
+    'env.config'
+    ])
 
     .directive('tile', function () {
         return {
@@ -16,9 +18,9 @@ angular.module('test', [])
         };
     })
 
-    .controller('apiTestController', ['$scope', '$http', function ($scope, $http) {
+    .controller('apiTestController', ['$scope', '$http', 'REST_CONFIG', function ($scope, $http, REST_CONFIG) {
 
-        var serverUrl = 'http://cargo.dev:8000';
+        var serverUrl = REST_CONFIG.PROTOCOL + "://" + REST_CONFIG.DOMAIN + ':' + REST_CONFIG.PORT;
         var accountUuid = 'b21295c8a94c4bb0a4de07bd2d76ed38';
         var companyUuid = '1e35ef244bb044bd989e9013594699e3';
         var userUuid = '93456a97789c4538ba8d0e8d7419e658';
