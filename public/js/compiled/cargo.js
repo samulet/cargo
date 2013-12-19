@@ -1058,7 +1058,7 @@ angular.module('website.top.menu', [])
             restrict: 'E',
             templateUrl: 'html/partials/private/user_menu.html',
             controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
-                $scope.isModalOpened = false;
+                $scope.isSelectAccountAndCompanyModalOpened = false;
 
                 $rootScope.$watch(function () {
                     return localStorage.getItem(storageFactory.storage.local.selectedAccount);
@@ -1073,11 +1073,20 @@ angular.module('website.top.menu', [])
                 });
 
                 function openSelectAccountAndCompanyModal() {
-                    $scope.isModalOpened = true;
+                    $scope.isSelectAccountAndCompanyModalOpened = true;
                     $scope.selectAccountAndCompanyModal = $modal.open({
                         templateUrl: 'selectAccountAndCompanyModalContent.html',
                         scope: $scope,
                         controller: 'selectAccountAndCompanyModalController'
+                    });
+                }
+
+                function openImportCompaniesModal() {
+                    $scope.isImportCompaniesModalOpened = true;
+                    $scope.importCompaniesModal = $modal.open({
+                        templateUrl: 'importCompaniesModalContent.html',
+                        scope: $scope,
+                        controller: 'importCompaniesModalController'
                     });
                 }
 
@@ -1093,6 +1102,10 @@ angular.module('website.top.menu', [])
                     openSelectAccountAndCompanyModal();
                 };
 
+                $scope.showImportCompaniesModal = function () {
+                    openImportCompaniesModal();
+                };
+
                 $scope.logout = function () {
                     redirectFactory.logout();
                 }
@@ -1103,7 +1116,7 @@ angular.module('website.top.menu', [])
     .controller('selectAccountAndCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
         $scope.options = [];
 
-        if ($scope.isModalOpened) {
+        if ($scope.isSelectAccountAndCompanyModalOpened) {
             getCompaniesForAccounts();
         }
 
