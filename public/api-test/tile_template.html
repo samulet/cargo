@@ -1,11 +1,11 @@
-<h4><span class="header">{{title}}</span></h4>
+<h4><span class="header" title="{{title}}">{{title}}</span></h4>
 <p ng-repeat="route in routes">
-    <span class="description"><b>{{route.method}}</b> {{route.url}}</span>
-    <span class="status" ng-show="!route.status">Loading...</span>
-    <span class="status" ng-show="route.status == 'ok'" style="color: #00A800;">
+    <span class="description" title="{{route.method}}: {{route.url}}"><b>{{route.method}}</b> {{route.url}}</span>
+    <span class="status" ng-show="!route.status" title="Loading...">Loading...</span>
+    <span class="status" ng-show="route.status == 'ok'" title="Ok (status: {{route.code}})" style="color: #00A800;">
         <i class="glyphicon glyphicon-check"> </i> Ok (status: {{route.code}})
     </span>
-    <span class="status" ng-show="route.status == 'failed'" style="color: red;">
+    <span class="status" ng-show="route.status == 'failed'" title="Failed (status: {{route.code}})" style="color: red;">
        <i class="glyphicon glyphicon-fire"> </i> Failed (status: {{route.code}})
     </span>
 </p>

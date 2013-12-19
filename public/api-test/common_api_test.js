@@ -28,6 +28,7 @@ angular.module('test', [
         var token = 'db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2';
         var selectedAccount = 'b21295c8a94c4bb0a4de07bd2d76ed38';
         var selectedCompany = 'eaf4befff8aa4a0090e86cb9821026a0';
+        var sourceId = '123';
 
         $scope.passedTestsPercent = 0;
         $scope.inProgressTestsPercent = 100;
@@ -91,7 +92,7 @@ angular.module('test', [
                         }
                     },
                     {
-                        method: 'DELETE',
+                        method: 'PATCH',
                         url: '/api/accounts/' + accountUuid,
                         headers: {
                             'X-Auth-UserToken': token,
@@ -100,8 +101,32 @@ angular.module('test', [
                         }
                     },
                     {
-                        method: 'PATCH',
+                        method: 'DELETE',
                         url: '/api/accounts/' + accountUuid,
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
+                    }
+                ]
+            },
+            {
+                title: 'Accounts Collection',
+                routes: [
+                    {
+                        method: 'GET',
+                        url: '/api/accounts',
+                        headers: {
+                            'X-Auth-UserToken': token,
+                            'X-App-Account': selectedAccount,
+                            'X-App-Company': selectedCompany
+                        }
+                    },
+                    {
+                        method: 'POST',
+                        url: '/api/accounts',
+                        data: JSON.stringify({title: 'demo'}),
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -130,6 +155,7 @@ angular.module('test', [
                     {
                         method: 'POST',
                         url: '/api/accounts/' + accountUuid + '/companies',
+                        data: JSON.stringify({short: 'demo', inn: '1111111111'}),
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -151,7 +177,7 @@ angular.module('test', [
                         }
                     },
                     {
-                        method: 'DELETE',
+                        method: 'PATCH',
                         url: '/api/profiles/' + userUuid,
                         headers: {
                             'X-Auth-UserToken': token,
@@ -160,7 +186,7 @@ angular.module('test', [
                         }
                     },
                     {
-                        method: 'PATCH',
+                        method: 'DELETE',
                         url: '/api/profiles/' + userUuid,
                         headers: {
                             'X-Auth-UserToken': token,
@@ -183,7 +209,7 @@ angular.module('test', [
                         }
                     },
                     {
-                        method: 'DELETE',
+                        method: 'PATCH',
                         url: '/api/companies/' + companyUuid,
                         headers: {
                             'X-Auth-UserToken': token,
@@ -192,7 +218,7 @@ angular.module('test', [
                         }
                     },
                     {
-                        method: 'PATCH',
+                        method: 'DELETE',
                         url: '/api/companies/' + companyUuid,
                         headers: {
                             'X-Auth-UserToken': token,
@@ -240,6 +266,7 @@ angular.module('test', [
                     {
                         method: 'POST',
                         url: '/api/ref/product-group',
+                        data: JSON.stringify({"code": "milk", "title": "Молочные продукты"}),
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -277,7 +304,7 @@ angular.module('test', [
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/service/import/company-intersect',
+                        url: '/api/service/import/company-intersect/' + sourceId,
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -286,7 +313,12 @@ angular.module('test', [
                     },
                     {
                         method: 'POST',
-                        url: '/api/service/import/company-intersect',
+                        url: '/api/service/import/company-intersect/' + sourceId,
+                        data: JSON.stringify({
+                            "source": "vesta",
+                            "id": 123,
+                            "company": companyUuid
+                        }),
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -295,7 +327,7 @@ angular.module('test', [
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/service/import/company-intersect',
+                        url: '/api/service/import/company-intersect/' + sourceId,
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -305,6 +337,23 @@ angular.module('test', [
                 ]
             }
         ];
+
+        function setHeaders(headers) {
+            if (headers) {
+                params.headers = {};
+                for (var k in headers) {
+                    if (headers.hasOwnProperty(k)) {
+                        params.headers[k] = headers[k];
+                    }
+                }
+            }
+        }
+
+        function setDataParams(data){
+            if (data) {
+                params.data = data
+            }
+        }
 
         for (var i in $scope.api) {
             if ($scope.api.hasOwnProperty(i)) {
@@ -316,16 +365,8 @@ angular.module('test', [
                             url: serverUrl + routes[j].url
                         };
 
-                        if (routes[j].headers) {
-                            params.headers = {};
-                            var header = routes[j].headers;
-                            for (var k in header) {
-                                if (header.hasOwnProperty(k)) {
-                                    params.headers[k] = header[k];
-                                }
-                            }
-                        }
-
+                        setHeaders(routes[j].headers);
+                        setDataParams(routes[j].data);
 
                         (function (routes, i, j) {
                             $http(params).success(function (data, status) {
