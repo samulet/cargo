@@ -9,6 +9,7 @@
           media="all">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js" type='text/javascript'></script>
     <script src="common_api_test.js" type='text/javascript'></script>
+    <script src="../js/env_config.js" type='text/javascript'></script>
 </head>
 <body ng-class="bodyColor" style="background-color: #6DB700">
 
@@ -38,14 +39,34 @@
     .status {
         font-style: italic;
     }
+
+    .big_percent {
+        font-weight: bold;
+        font-size: 2.1em;
+    }
+
+    .statistic_header {
+        text-align: center;
+    }
+
+    .statistic_header > span {
+        margin: 0 30px;
+    }
 </style>
 
 <!-- Content block-->
 <div class="container" ng-controller="apiTestController">
 
     <ul class="clear_list">
+        <li style="margin: 15px;">
+            <h2 class="statistic_header">
+                <span style="color: #00A800;"><span class="big_percent">{{passedTestsPercent}}%</span> Passed</span>
+                <span><span class="big_percent">{{inProgressTestsPercent}}%</span> In progress...</span>
+                <span style="color: red;"><span class="big_percent">{{failedTestsPercent}}%</span> Failed</span>
+            </h2>
+        </li>
         <li ng-repeat="item in api" style="margin: 15px;">
-            <tile title="item.title" routes="item.routes"></tile>
+            <tile name="item.title" title="{{item.title}}" routes="item.routes"></tile>
         </li>
     </ul>
 
