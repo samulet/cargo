@@ -9,7 +9,7 @@ angular.module('test', [
             restrict: 'E',
             templateUrl: 'tile_template.html',
             scope: {
-                title: '=title',
+                name: '=name',
                 routes: '=routes'
             },
             link: function (scope, elem, attrs) {

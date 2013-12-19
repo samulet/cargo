@@ -40,15 +40,16 @@
         font-style: italic;
     }
 
-    .big_percent{
+    .big_percent {
         font-weight: bold;
         font-size: 2.1em;
     }
 
-    .statistic_header{
+    .statistic_header {
         text-align: center;
     }
-    .statistic_header>span{
+
+    .statistic_header > span {
         margin: 0 30px;
     }
 </style>
@@ -65,7 +66,7 @@
             </h2>
         </li>
         <li ng-repeat="item in api" style="margin: 15px;">
-            <tile title="item.title" routes="item.routes"></tile>
+            <tile name="item.title" title="{{item.title}}" routes="item.routes"></tile>
         </li>
     </ul>
 
