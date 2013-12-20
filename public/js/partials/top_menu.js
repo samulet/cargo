@@ -203,7 +203,7 @@ angular.module('website.top.menu', [])
         $scope.importPlaces = function () {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/place')
                 .success(function (data) {
-                    $scope.isImportComplete = true;
+                    $scope.isImportPlacesComplete = true;
                     $scope.extServicePlaces = data['_embedded']['ext_service_places'];
                 }).error(function (data, status) {
                     onError(data, status)
