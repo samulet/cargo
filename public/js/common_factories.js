@@ -220,7 +220,10 @@ angular.module('common.factories', [
                         storageFactory.setSelectedAccount(null);
                         storageFactory.setSelectedCompany(null);
                     }
-                }).error(errorFactory.resolve(data, status));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status)
+                }
+            );
         }
 
         function getCompanies(account, isSetSelected) {
@@ -230,13 +233,19 @@ angular.module('common.factories', [
                     if (companies.length === 1 && isSetSelected === true) {
                         storageFactory.setSelectedCompany(companies[0]);
                     }
-                }).error(errorFactory.resolve(data, status));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status)
+                }
+            );
         }
 
         function getApiRoutes() {
             $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
                 storageFactory.setApiRoutes(data['_embedded']['resource_meta']);
-            }).error(errorFactory.resolve(data, status));
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status)
+                }
+            );
         }
 
         return {

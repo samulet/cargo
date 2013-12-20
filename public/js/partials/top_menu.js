@@ -55,6 +55,15 @@ angular.module('website.top.menu', [])
                     });
                 }
 
+                function openImportPlacesModal() {
+                    $scope.isImportPlacesModalOpened = true;
+                    $scope.importPlacesModal = $modal.open({
+                        templateUrl: 'importPlacesModalContent.html',
+                        scope: $scope,
+                        controller: 'importPlacesModalController'
+                    });
+                }
+
                 function closeModal(modal) {
                     modal.close();
                 }
@@ -69,6 +78,10 @@ angular.module('website.top.menu', [])
 
                 $scope.showImportCompaniesModal = function () {
                     openImportCompaniesModal();
+                };
+
+                $scope.showImportPlacesModal = function () {
+                    openImportPlacesModal();
                 };
 
                 $scope.closeImportCompaniesModal = function () {
@@ -95,7 +108,10 @@ angular.module('website.top.menu', [])
                 .success(function (data) {
                     $scope.accounts = data['_embedded'].accounts;
                     callback($scope.accounts);
-                }).error(errorFactory.resolve(data, status,  $scope.selectAccountAndCompanyMessages));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.selectAccountAndCompanyMessages)
+                }
+            );
         }
 
         function getCompanies(account, callback) {
@@ -104,7 +120,10 @@ angular.module('website.top.menu', [])
                     .success(function (data) {
                         $scope.companies = data['_embedded'].companies;
                         callback($scope.companies);
-                    }).error(errorFactory.resolve(data, status,  $scope.selectAccountAndCompanyMessages));
+                    }).error(function (data, status) {
+                        errorFactory.resolve(data, status, $scope.selectAccountAndCompanyMessages)
+                    }
+                );
             }
         }
 
@@ -141,17 +160,34 @@ angular.module('website.top.menu', [])
 
     }])
 
-    .controller('importCompaniesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, storageFactory) {
+    .controller('importCompaniesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory) {
         $scope.importCompaniesMessages = [];
-
 
         $scope.importCompanies = function () {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company')
                 .success(function (data) {
-                    $scope.isImportComplete = true;
+                    $scope.isImportCompaniesComplete = true;
                     $scope.extServiceCompanies = data['_embedded']['ext_service_company'];
-                }).error(errorFactory.resolve(data, status,  $scope.importCompaniesMessages));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.importCompaniesMessages)
+                }
+            );
         }
+    }])
 
+    .controller('importPlacesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory) {
+        $scope.importPlacesMessages = [];
+
+        $scope.importPlaces = function () {
+            $http.get(REST_CONFIG.BASE_URL + '/service/import/place')
+                .success(function (data) {
+                    $scope.isImportComplete = true;
+                    console.log(data['_embedded']); //TODO
+                    $scope.extServicePlaces = data['_embedded']['ext_service_places'];
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.importPlacesMessages)
+                }
+            );
+        }
     }])
 ;
