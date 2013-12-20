@@ -1165,6 +1165,10 @@ angular.module('website.top.menu', [])
                     closeModal($scope.importCompaniesModal);
                 };
 
+                $scope.closeImportPlacesModal = function () {
+                    closeModal($scope.importPlacesModal);
+                };
+
                 $scope.logout = function () {
                     redirectFactory.logout();
                 }
@@ -1237,8 +1241,17 @@ angular.module('website.top.menu', [])
 
     }])
 
-    .controller('importCompaniesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory) {
+    .controller('importCompaniesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
         $scope.importCompaniesMessages = [];
+        $scope.noCompaniesToImport = false;
+
+        function onError(data, status) {
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                $scope.noCompaniesToImport = true;
+            } else {
+                errorFactory.resolve(data, status, $scope.importCompaniesMessages);
+            }
+        }
 
         $scope.importCompanies = function () {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company')
@@ -1246,23 +1259,31 @@ angular.module('website.top.menu', [])
                     $scope.isImportCompaniesComplete = true;
                     $scope.extServiceCompanies = data['_embedded']['ext_service_company'];
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.importCompaniesMessages)
+                    onError(data, status)
                 }
             );
         }
     }])
 
-    .controller('importPlacesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory) {
+    .controller('importPlacesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
         $scope.importPlacesMessages = [];
+        $scope.noPlacesToImport = false;
+
+        function onError(data, status) {
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                $scope.noPlacesToImport = true;
+            } else {
+                errorFactory.resolve(data, status, $scope.importPlacesMessages);
+            }
+        }
 
         $scope.importPlaces = function () {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/place')
                 .success(function (data) {
                     $scope.isImportComplete = true;
-                    console.log(data['_embedded']); //TODO
                     $scope.extServicePlaces = data['_embedded']['ext_service_places'];
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.importPlacesMessages)
+                    onError(data, status)
                 }
             );
         }

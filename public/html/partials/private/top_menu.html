@@ -75,8 +75,9 @@
                     <h4 class="modal-title">Импорт юридических лиц</h4>
                 </div>
                 <div class="modal-body">
-                    <span ng-show="!isImportCompaniesComplete">Импортировать юридические лица?</span>
-                    <span ng-show="isImportCompaniesComplete">Импорт завершён:</span>
+                    <span ng-show="!isImportCompaniesComplete && !noCompaniesToImport">Импортировать юридические лица?</span>
+                    <span ng-show="isImportCompaniesComplete && !noCompaniesToImport">Импорт завершён:</span>
+                    <span ng-show="noCompaniesToImport">Нечего импортировать</span>
                     <ul class="vertical_form_block" ng-show="isImportComplete">
                         <li ng-repeat="extServiceCompany in extServiceCompanies">
                             {{extServiceCompany.ext_service_company_code}}
@@ -116,8 +117,9 @@
                     <h4 class="modal-title">Импорт пунктов доставки</h4>
                 </div>
                 <div class="modal-body">
-                    <span ng-show="!isImportComplete">Импортировать пункты доставки?</span>
-                    <span ng-show="isImportComplete">Импорт завершён:</span>
+                    <span ng-show="!isImportComplete && !noPlacesToImport">Импортировать пункты доставки?</span>
+                    <span ng-show="isImportComplete && !noPlacesToImport">Импорт завершён:</span>
+                    <span ng-show="noPlacesToImport">Нечего импортировать</span>
                     <!--<ul class="vertical_form_block" ng-show="isImportComplete">
                         <li ng-repeat="extServicePlace in extServicePlaces">
                             {{extServicePlace.ext_service_place_code}}
