@@ -88,6 +88,10 @@ angular.module('website.top.menu', [])
                     closeModal($scope.importCompaniesModal);
                 };
 
+                $scope.closeImportPlacesModal = function () {
+                    closeModal($scope.importPlacesModal);
+                };
+
                 $scope.logout = function () {
                     redirectFactory.logout();
                 }
