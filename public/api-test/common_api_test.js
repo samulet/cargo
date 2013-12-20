@@ -14,15 +14,6 @@ angular.module('test', [
             },
             link: function (scope, elem, attrs) {
                 scope.isShowResponse = false;
-
-                scope.showResponse = function () {
-                    scope.isShowResponse = true;
-                };
-
-                scope.hideResponse = function () {
-                    scope.isShowResponse = false;
-                };
-
             }
         };
     })

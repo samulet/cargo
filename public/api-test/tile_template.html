@@ -13,13 +13,13 @@
         <i class="glyphicon glyphicon-fire"> </i> Failed (status: {{route.code}})
         </span>
         <button style="float: right;background: none;border: none;color: #615B5B;"
-                ng-show="isShowResponse == false"
-                ng-click="showResponse()">
+                ng-show="!isShowResponse"
+                ng-click="isShowResponse = true">
             show response <i class="fa fa-caret-down"> </i>
         </button>
         <button style="float: right;background: none;border: none;color: #615B5B;"
-                ng-show="isShowResponse == true"
-                ng-click="hideResponse()">
+                ng-show="isShowResponse"
+                ng-click="isShowResponse = false">
             hide response <i class="fa fa-caret-up"> </i>
         </button>
     </span>
