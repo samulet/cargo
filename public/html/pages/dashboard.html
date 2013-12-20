@@ -32,8 +32,8 @@
                         <ul class="clear_list vertical_form_block">
                             <li class="form_header">
                                 <h5>Пожалуйста, укажите название аккаунта - юридическое лицо, от имени которого
-                                    совершаются
-                                    действия</h5>
+                                    совершаются действия
+                                </h5>
                             </li>
                             <li class="input-group">
                                 <label for="accountData-title" class="input-group-addon" title="Обязательное поле">
@@ -44,6 +44,11 @@
                                        required
                                        maxlength="20"
                                        ng-maxlength="20"/>
+                            </li>
+                            <li>
+                                <alert ng-repeat="message in registrationModalMessages" type="message.type" close="closeAlert($index)">
+                                    {{message.msg}}
+                                </alert>
                             </li>
                             <li>
                                 <span class="required_mark">*</span> - Обязательные поля

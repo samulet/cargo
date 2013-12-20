@@ -70,6 +70,7 @@ angular.module('website.dashboard', [])
     }])
 
     .controller('registrationModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', '$timeout', function ($scope, $http, REST_CONFIG, errorFactory, $timeout) {
+        $scope.registrationModalMessages = [];
 
         $scope.openCatalog = function () {
             //placeholder
@@ -87,7 +88,7 @@ angular.module('website.dashboard', [])
                     $scope.getAccounts();
                     $scope.showAccountRegistration = false;
                     $scope.showCompanyWizard = true;
-                }).error(errorFactory.resolve);
+                }).error(errorFactory.resolve(data, status, $scope.registrationModalMessages));
         };
     }])
 ;

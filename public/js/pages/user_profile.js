@@ -33,7 +33,7 @@ angular.module('website.user.profile', [])
             $http.post('', $scope.profileData)
                 .success(function (data) {
                     //storageFactory.setUser(data.user);
-                }).error(errorFactory.resolve);
+                }).error(errorFactory.resolve(data, status));
         };
 
         $scope.openDatePopup = function (isOpen) {

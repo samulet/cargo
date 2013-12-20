@@ -54,6 +54,7 @@ angular.module('website', [
     .run(['$rootScope', 'ACCESS_LEVEL', 'ROUTES', 'cookieFactory', 'redirectFactory', 'storageFactory', '$http', 'userParamsFactory', function ($rootScope, ACCESS_LEVEL, ROUTES, cookieFactory, redirectFactory, storageFactory, $http, userParamsFactory) {
         $rootScope.ROUTES = ROUTES;
         $rootScope.isAjaxLoading = false;
+        $rootScope.messages = [];
 
         userParamsFactory.getApiRoutes();
         userParamsFactory.prepareUser();
