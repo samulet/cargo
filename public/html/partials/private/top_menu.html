@@ -49,7 +49,7 @@
                             </select>
                         </li>
                         <li>
-                            <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+                            <alert ng-repeat="message in selectAccountAndCompanyMessages" type="message.type" close="closeAlert($index)">
                                 {{message.msg}}
                             </alert>
                         </li>
@@ -57,7 +57,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()"
-                            ajax-disabler="isAjaxLoading">Ok</button>
+                            ajax-disabler="isAjaxLoading" ng-disabled="isAjaxLoading">Ok
+                    </button>
                     <button type="button" class="btn btn-warning pull_left"
                             ng-click="closeSelectAccountAndCompanyModal()">
                         Отмена
@@ -74,14 +75,34 @@
                     <h4 class="modal-title">Импорт юридических лиц</h4>
                 </div>
                 <div class="modal-body">
-                    ыфвфывв
+                    <span ng-show="!isImportComplete">Хотите импортировать юридические лица?</span>
+                    <span ng-show="isImportComplete">Импорт завершён:</span>
+                    <ul class="vertical_form_block" ng-show="isImportComplete">
+                        <li ng-repeat="extServiceCompany in extServiceCompanies">
+                            {{extServiceCompany.ext_service_company_code}}
+                        </li>
+                    </ul>
+                    <alert ng-repeat="message in importCompaniesMessages" type="message.type" close="closeAlert($index)">
+                        {{message.msg}}
+                    </alert>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()"
-                            ajax-disabler="isAjaxLoading">Ok</button>
+                    <button type="button" class="btn btn-primary"
+                            ng-show="!isImportComplete"
+                            ng-click="importCompanies()"
+                            ajax-disabler="isAjaxLoading"
+                            ng-disabled="isAjaxLoading">
+                        Да
+                    </button>
                     <button type="button" class="btn btn-warning pull_left"
-                            ng-click="closeSelectAccountAndCompanyModal()">
-                        Отмена
+                            ng-show="!isImportComplete"
+                            ng-click="closeImportCompaniesModal()">
+                        Нет
+                    </button>
+                    <button type="button" class="btn btn-success"
+                            ng-show="isImportComplete"
+                            ng-click="closeImportCompaniesModal()">
+                        Готово
                     </button>
                 </div>
             </div>

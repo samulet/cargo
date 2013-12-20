@@ -71,6 +71,10 @@ angular.module('website.top.menu', [])
                     openImportCompaniesModal();
                 };
 
+                $scope.closeImportCompaniesModal = function () {
+                    closeModal($scope.importCompaniesModal);
+                };
+
                 $scope.logout = function () {
                     redirectFactory.logout();
                 }
@@ -80,6 +84,7 @@ angular.module('website.top.menu', [])
 
     .controller('selectAccountAndCompanyModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $http, REST_CONFIG, errorFactory, storageFactory) {
         $scope.options = [];
+        $scope.selectAccountAndCompanyMessages = [];
 
         if ($scope.isSelectAccountAndCompanyModalOpened) {
             getCompaniesForAccounts();
@@ -90,7 +95,7 @@ angular.module('website.top.menu', [])
                 .success(function (data) {
                     $scope.accounts = data['_embedded'].accounts;
                     callback($scope.accounts);
-                }).error(errorFactory.resolve);
+                }).error(errorFactory.resolve(data, status,  $scope.selectAccountAndCompanyMessages));
         }
 
         function getCompanies(account, callback) {
@@ -99,7 +104,7 @@ angular.module('website.top.menu', [])
                     .success(function (data) {
                         $scope.companies = data['_embedded'].companies;
                         callback($scope.companies);
-                    }).error(errorFactory.resolve);
+                    }).error(errorFactory.resolve(data, status,  $scope.selectAccountAndCompanyMessages));
             }
         }
 
@@ -133,6 +138,20 @@ angular.module('website.top.menu', [])
             }
             $scope.closeSelectAccountAndCompanyModal();
         };
+
+    }])
+
+    .controller('importCompaniesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, storageFactory) {
+        $scope.importCompaniesMessages = [];
+
+
+        $scope.importCompanies = function () {
+            $http.get(REST_CONFIG.BASE_URL + '/service/import/company')
+                .success(function (data) {
+                    $scope.isImportComplete = true;
+                    $scope.extServiceCompanies = data['_embedded']['ext_service_company'];
+                }).error(errorFactory.resolve(data, status,  $scope.importCompaniesMessages));
+        }
 
     }])
 ;
