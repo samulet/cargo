@@ -173,26 +173,42 @@ angular.module('common.factories', [
     }])
 
     .factory('errorFactory', ['RESPONSE_STATUS', 'MESSAGES', '$rootScope', 'redirectFactory', function (RESPONSE_STATUS, MESSAGES, $rootScope, redirectFactory) {
-        return {
-            resolve: function (data, status, isLoginPage) {
-                var type = (status >= 400) ? 'danger' : 'success';
 
-                if (status === RESPONSE_STATUS.UNAUTHORIZED) {
-                    if (isLoginPage === true) {
-                        return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
-                    } else {
-                        return redirectFactory.logout();
+        function getError(status, data) {
+            var type = (status >= 400) ? 'danger' : 'success';
+
+            if (status === RESPONSE_STATUS.UNAUTHORIZED) {
+                return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
+            }
+
+            if (status === RESPONSE_STATUS.NOT_FOUND || status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
+                return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
+            }
+
+            return {msg: data.error, type: type};
+        }
+
+        return {
+            resolve: function (data, status, container, isLoginPage) {
+                if (status === RESPONSE_STATUS.UNAUTHORIZED && !isLoginPage) {
+                    return redirectFactory.logout();
+                }
+
+                if (container) {
+                    if (angular.isArray(container) && container.length > 0) {
+                        container.push(getError(status, data));
                     }
-                } else if (status === RESPONSE_STATUS.NOT_FOUND || status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
-                    return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
+                    container.push(getError(status, data));
                 } else {
-                    return {msg: data.error, type: type};
+                    $rootScope.messages.push(getError(status, data));
                 }
             }
-        };
+        }
+            ;
     }])
 
-    .factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
+    .
+    factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (data) {
@@ -204,7 +220,7 @@ angular.module('common.factories', [
                         storageFactory.setSelectedAccount(null);
                         storageFactory.setSelectedCompany(null);
                     }
-                }).error(errorFactory.resolve);
+                }).error(errorFactory.resolve(data, status));
         }
 
         function getCompanies(account, isSetSelected) {
@@ -214,13 +230,13 @@ angular.module('common.factories', [
                     if (companies.length === 1 && isSetSelected === true) {
                         storageFactory.setSelectedCompany(companies[0]);
                     }
-                }).error(errorFactory.resolve);
+                }).error(errorFactory.resolve(data, status));
         }
 
         function getApiRoutes() {
             $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
                 storageFactory.setApiRoutes(data['_embedded']['resource_meta']);
-            }).error(errorFactory.resolve);
+            }).error(errorFactory.resolve(data, status));
         }
 
         return {

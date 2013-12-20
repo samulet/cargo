@@ -1,11 +1,31 @@
 <h4><span class="header" title="{{name}}">{{name}}</span></h4>
 <p ng-repeat="route in routes">
-    <span class="description" title="{{route.method}}: {{route.url}}"><b>{{route.method}}</b> {{route.url}}</span>
-    <span class="status" ng-show="!route.status" title="Loading...">Loading...</span>
-    <span class="status" ng-show="route.status == 'ok'" title="Ok (status: {{route.code}})" style="color: #00A800;">
-        <i class="glyphicon glyphicon-check"> </i> Ok (status: {{route.code}})
+    <span style="display: block;">
+        <span class="description" title="{{route.method}}: {{route.url}}" style="cursor: pointer;"><b>
+            {{route.method}}</b> {{route.url}}
+        </span>
+        <span class="status" ng-show="!route.status" title="Loading...">Loading...</span>
+        <span class="status" ng-show="route.status == 'ok'" title="Ok (status: {{route.code}})" style="color: #00A800;">
+            <i class="glyphicon glyphicon-check"> </i> Ok (status: {{route.code}})
+        </span>
+        <span class="status" ng-show="route.status == 'failed'" title="Failed (status: {{route.code}})"
+              style="color: red;">
+        <i class="glyphicon glyphicon-fire"> </i> Failed (status: {{route.code}})
+        </span>
+        <button style="float: right;background: none;border: none;color: #615B5B;"
+                ng-show="!isShowResponse"
+                ng-click="isShowResponse = true">
+            show response <i class="fa fa-caret-down"> </i>
+        </button>
+        <button style="float: right;background: none;border: none;color: #615B5B;"
+                ng-show="isShowResponse"
+                ng-click="isShowResponse = false">
+            hide response <i class="fa fa-caret-up"> </i>
+        </button>
     </span>
-    <span class="status" ng-show="route.status == 'failed'" title="Failed (status: {{route.code}})" style="color: red;">
-       <i class="glyphicon glyphicon-fire"> </i> Failed (status: {{route.code}})
+    <span ng-show="isShowResponse"
+          style="margin: 10px; padding: 5px; border: 1px solid #BBB; border-radius: 5px; background-color: #F7F7F7;
+            display: block;">
+        {{route.response}}
     </span>
 </p>

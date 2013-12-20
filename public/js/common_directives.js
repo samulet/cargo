@@ -88,7 +88,7 @@ angular.module('common.directives', [])
                                 $scope.modal.close();
                             }
                             $scope.wizardStep = -1;
-                        }).error(errorFactory.resolve);
+                        }).error(errorFactory.resolve(data, status));
                 };
 
                 function prepareDatesFormat() {
