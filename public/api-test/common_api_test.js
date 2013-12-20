@@ -13,6 +13,15 @@ angular.module('test', [
                 routes: '=routes'
             },
             link: function (scope, elem, attrs) {
+                scope.isShowResponse = false;
+
+                scope.showResponse = function () {
+                    scope.isShowResponse = true;
+                };
+
+                scope.hideResponse = function () {
+                    scope.isShowResponse = false;
+                };
 
             }
         };
@@ -349,7 +358,7 @@ angular.module('test', [
             }
         }
 
-        function setDataParams(data){
+        function setDataParams(data) {
             if (data) {
                 params.data = data
             }
@@ -372,10 +381,12 @@ angular.module('test', [
                             $http(params).success(function (data, status) {
                                 routes[j].status = 'ok';
                                 routes[j].code = status;
+                                routes[j].response = data;
                                 setTestPassed(true);
                             }).error(function (data, status) {
                                     routes[j].status = 'failed';
                                     routes[j].code = status;
+                                    routes[j].response = data;
                                     setTestPassed(false);
                                 });
                         })(routes, i, j);
