@@ -21,14 +21,21 @@ angular.module('test', [
     .controller('apiTestController', ['$scope', '$http', 'REST_CONFIG', function ($scope, $http, REST_CONFIG) {
 
         var serverUrl = REST_CONFIG.PROTOCOL + "://" + REST_CONFIG.DOMAIN + ':' + REST_CONFIG.PORT;
-        var accountUuid = 'b21295c8a94c4bb0a4de07bd2d76ed38';
-        var companyUuid = '1e35ef244bb044bd989e9013594699e3';
+        var accountUuid = [
+            'b21295c8a94c4bb0a4de07bd2d76ed38',
+            'e1c9c7a50e2c446e9864b29e1064ad39',
+            'a2c9c7a50e2c446e9864b29e1064ad40'
+        ];
+        var companyUuid = [
+            '7e7f422230554465b121c6bb8b313554',
+            '7fa1a29e95c949c8ae27ca0d6bfd0e70'
+        ];
         var userUuid = '93456a97789c4538ba8d0e8d7419e658';
         var productGroupCode = 'PLACEHOLDER'; //TODO no product group yet
         var token = 'db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2';
         var selectedAccount = 'b21295c8a94c4bb0a4de07bd2d76ed38';
         var selectedCompany = 'eaf4befff8aa4a0090e86cb9821026a0';
-        var sourceId = '123';
+        var sourceId = 'prodrezerv/6';
 
         $scope.passedTestsPercent = 0;
         $scope.inProgressTestsPercent = 100;
@@ -84,7 +91,7 @@ angular.module('test', [
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/accounts/' + accountUuid,
+                        url: '/api/accounts/' + accountUuid[0],
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -93,7 +100,7 @@ angular.module('test', [
                     },
                     {
                         method: 'PATCH',
-                        url: '/api/accounts/' + accountUuid,
+                        url: '/api/accounts/' + accountUuid[1],
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -102,7 +109,7 @@ angular.module('test', [
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/accounts/' + accountUuid,
+                        url: '/api/accounts/' + accountUuid[2],
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -140,7 +147,7 @@ angular.module('test', [
                 routes: [
                     {
                         method: 'DELETE',
-                        url: '/api/accounts/' + accountUuid + '/companies/' + companyUuid,
+                        url: '/api/accounts/' + accountUuid[0] + '/companies/' + companyUuid[1],
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -154,7 +161,7 @@ angular.module('test', [
                 routes: [
                     {
                         method: 'POST',
-                        url: '/api/accounts/' + accountUuid + '/companies',
+                        url: '/api/accounts/' + accountUuid[0] + '/companies',
                         data: JSON.stringify({short: 'demo', inn: '1111111111'}),
                         headers: {
                             'X-Auth-UserToken': token,
@@ -201,7 +208,7 @@ angular.module('test', [
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/companies/' + companyUuid,
+                        url: '/api/companies/' + companyUuid[0],
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -210,7 +217,7 @@ angular.module('test', [
                     },
                     {
                         method: 'PATCH',
-                        url: '/api/companies/' + companyUuid,
+                        url: '/api/companies/' + companyUuid[0],
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -219,7 +226,7 @@ angular.module('test', [
                     },
                     {
                         method: 'DELETE',
-                        url: '/api/companies/' + companyUuid,
+                        url: '/api/companies/' + companyUuid[1],
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -317,7 +324,7 @@ angular.module('test', [
                         data: JSON.stringify({
                             "source": "vesta",
                             "id": 123,
-                            "company": companyUuid
+                            "company": companyUuid[0]
                         }),
                         headers: {
                             'X-Auth-UserToken': token,
