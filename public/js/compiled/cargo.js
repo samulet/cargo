@@ -1127,6 +1127,7 @@ angular.module('website.top.menu', [])
                     $scope.selectAccountAndCompanyModal = $modal.open({
                         templateUrl: 'selectAccountAndCompanyModalContent.html',
                         scope: $scope,
+                        backdrop: 'static',
                         controller: 'selectAccountAndCompanyModalController'
                     });
                 }
@@ -1136,6 +1137,7 @@ angular.module('website.top.menu', [])
                     $scope.importCompaniesModal = $modal.open({
                         templateUrl: 'importCompaniesModalContent.html',
                         scope: $scope,
+                        backdrop: 'static',
                         controller: 'importCompaniesModalController'
                     });
                 }
@@ -1145,6 +1147,7 @@ angular.module('website.top.menu', [])
                     $scope.importPlacesModal = $modal.open({
                         templateUrl: 'importPlacesModalContent.html',
                         scope: $scope,
+                        backdrop: 'static',
                         controller: 'importPlacesModalController'
                     });
                 }
