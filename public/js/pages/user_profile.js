@@ -2,7 +2,7 @@
 
 angular.module('website.user.profile', [])
 
-    .controller('userProfileController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', '$timeout', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory, $timeout) {
+    .controller('userProfileController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', '$timeout', 'REST_CONFIG', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory, $timeout, REST_CONFIG) {
         $rootScope.pageTitle = 'Профиль';
         $rootScope.bodyColor = 'filled_bg';
 
@@ -30,7 +30,7 @@ angular.module('website.user.profile', [])
         };
 
         $scope.saveEdit = function () {
-            $http.post('', $scope.profileData)
+            $http.post(REST_CONFIG.BASE_URL + '/profiles' + storageFactory.getUser(), $scope.profileData)
                 .success(function (data) {
                     //storageFactory.setUser(data.user);
                 }).error(function (data, status) {

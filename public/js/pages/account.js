@@ -55,7 +55,7 @@ angular.module('website.account', [])
                         $scope.firstAccount = data['_embedded'].accounts[0];
                     }
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status)
+                    errorFactory.resolve(data, status);
                 }
             );
         }
@@ -65,7 +65,7 @@ angular.module('website.account', [])
                 .success(function () {
                     getAccounts();
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status)
+                    errorFactory.resolve(data, status);
                 }
             );
         };

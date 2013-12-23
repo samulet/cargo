@@ -89,7 +89,7 @@ angular.module('website.dashboard', [])
                     $scope.showAccountRegistration = false;
                     $scope.showCompanyWizard = true;
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.registrationModalMessages)
+                    errorFactory.resolve(data, status, $scope.registrationModalMessages);
                 }
             );
         };

@@ -100,6 +100,7 @@ angular.module('website.constants', [])
         FORBIDDEN: 403,
         NOT_FOUND: 404,
         METHOD_NOT_ALLOWED: 405,
+        PROXY_AUTHENTICATION_REQUIRED: 407,
         INTERNAL_SERVER_ERROR: 500
     })
     .constant('ACCESS_LEVEL', {
@@ -120,7 +121,8 @@ angular.module('website.constants', [])
     .constant('MESSAGES', {
         ERROR: {
             UNAUTHORIZED: 'Не удалось авторизироваться',
-            INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера'
+            INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера',
+            UNKNOWN_ERROR: 'Неизвестная ошибка, попробуйте позже'
         }
     })
 ;
@@ -505,7 +507,7 @@ angular.module('common.directives', [])
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', 'cookieFactory', '$rootScope', function ($http, cookieFactory, $rootScope) {
+    .factory('storageFactory', ['$http', 'cookieFactory', function ($http, cookieFactory) {
         var storage = {
             cookie: {
                 token: 'token',
@@ -676,10 +678,14 @@ angular.module('common.factories', [
 
     .factory('errorFactory', ['RESPONSE_STATUS', 'MESSAGES', '$rootScope', 'redirectFactory', function (RESPONSE_STATUS, MESSAGES, $rootScope, redirectFactory) {
 
+        function isUnauthorized(status) {
+            return (status === RESPONSE_STATUS.UNAUTHORIZED || status === RESPONSE_STATUS.FORBIDDEN || status === RESPONSE_STATUS.PROXY_AUTHENTICATION_REQUIRED);
+        }
+
         function getError(status, data) {
             var type = (status >= 400) ? 'danger' : 'success';
 
-            if (status === RESPONSE_STATUS.UNAUTHORIZED) {
+            if (isUnauthorized(status)) {
                 return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
             }
 
@@ -695,7 +701,7 @@ angular.module('common.factories', [
                 return {msg: data.error, type: type};
             }
 
-            return {msg: 'Неизвестная ошибка, попробуйте позже', type: type}
+            return {msg: MESSAGES.ERROR.UNKNOWN_ERROR, type: type}
         }
 
         return {
@@ -712,13 +718,22 @@ angular.module('common.factories', [
                 } else {
                     $rootScope.messages.push(getError(status, data));
                 }
+            },
+            isUnauthorized: function (status) {
+                return isUnauthorized(status);
             }
-        }
-            ;
+        };
     }])
 
     .
-    factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
+    factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', 'RESPONSE_STATUS', function ($http, storageFactory, errorFactory, REST_CONFIG, RESPONSE_STATUS) {
+
+        function onError(data, status) {
+            if (!errorFactory.isUnauthorized(status)) {
+                errorFactory.resolve(data, status);
+            }
+        }
+
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (data) {
@@ -731,7 +746,7 @@ angular.module('common.factories', [
                         storageFactory.setSelectedCompany(null);
                     }
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status)
+                    onError(data, status);
                 }
             );
         }
@@ -743,8 +758,9 @@ angular.module('common.factories', [
                     if (companies.length === 1 && isSetSelected === true) {
                         storageFactory.setSelectedCompany(companies[0]);
                     }
+                    getUser();
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status)
+                    onError(data, status);
                 }
             );
         }
@@ -754,6 +770,15 @@ angular.module('common.factories', [
                 storageFactory.setApiRoutes(data['_embedded']['resource_meta']);
             }).error(function (data, status) {
                     errorFactory.resolve(data, status)
+                }
+            );
+        }
+
+        function getUser() {//TODO api didn't work yet
+            $http.get(REST_CONFIG.BASE_URL + '/profile').success(function (data) {
+               // storageFactory.setUser(data['_embedded']['user']);
+            }).error(function (data, status) {
+                  // errorFactory.resolve(data, status)
                 }
             );
         }
@@ -776,6 +801,9 @@ angular.module('common.factories', [
                     getAccounts();
                 }
 
+                if (!storageFactory.getUser()) {
+                    getUser();
+                }
             }
         }
     }])
@@ -860,7 +888,7 @@ angular.module('website.account', [])
                         $scope.firstAccount = data['_embedded'].accounts[0];
                     }
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status)
+                    errorFactory.resolve(data, status);
                 }
             );
         }
@@ -870,7 +898,7 @@ angular.module('website.account', [])
                 .success(function () {
                     getAccounts();
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status)
+                    errorFactory.resolve(data, status);
                 }
             );
         };
@@ -980,7 +1008,7 @@ angular.module('website.dashboard', [])
                     $scope.showAccountRegistration = false;
                     $scope.showCompanyWizard = true;
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.registrationModalMessages)
+                    errorFactory.resolve(data, status, $scope.registrationModalMessages);
                 }
             );
         };
@@ -1015,7 +1043,7 @@ angular.module('website.sign', [])
 
 angular.module('website.user.profile', [])
 
-    .controller('userProfileController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', '$timeout', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory, $timeout) {
+    .controller('userProfileController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', '$timeout', 'REST_CONFIG', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory, $timeout, REST_CONFIG) {
         $rootScope.pageTitle = 'Профиль';
         $rootScope.bodyColor = 'filled_bg';
 
@@ -1043,7 +1071,7 @@ angular.module('website.user.profile', [])
         };
 
         $scope.saveEdit = function () {
-            $http.post('', $scope.profileData)
+            $http.post(REST_CONFIG.BASE_URL + '/profiles' + storageFactory.getUser(), $scope.profileData)
                 .success(function (data) {
                     //storageFactory.setUser(data.user);
                 }).error(function (data, status) {

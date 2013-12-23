@@ -9,6 +9,7 @@ angular.module('website.constants', [])
         FORBIDDEN: 403,
         NOT_FOUND: 404,
         METHOD_NOT_ALLOWED: 405,
+        PROXY_AUTHENTICATION_REQUIRED: 407,
         INTERNAL_SERVER_ERROR: 500
     })
     .constant('ACCESS_LEVEL', {
@@ -29,7 +30,8 @@ angular.module('website.constants', [])
     .constant('MESSAGES', {
         ERROR: {
             UNAUTHORIZED: 'Не удалось авторизироваться',
-            INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера'
+            INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера',
+            UNKNOWN_ERROR: 'Неизвестная ошибка, попробуйте позже'
         }
     })
 ;
