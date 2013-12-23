@@ -687,7 +687,15 @@ angular.module('common.factories', [
                 return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
             }
 
-            return {msg: data.error, type: type};
+            if (data.message) {
+                return {msg: data.message, type: type};
+            }
+
+            if (data.error) {
+                return {msg: data.error, type: type};
+            }
+
+            return {msg: 'Неизвестная ошибка, попробуйте позже', type: type}
         }
 
         return {
