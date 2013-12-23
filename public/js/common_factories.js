@@ -185,7 +185,15 @@ angular.module('common.factories', [
                 return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
             }
 
-            return {msg: data.error, type: type};
+            if (data.message) {
+                return {msg: data.message, type: type};
+            }
+
+            if (data.error) {
+                return {msg: data.error, type: type};
+            }
+
+            return {msg: 'Неизвестная ошибка, попробуйте позже', type: type}
         }
 
         return {
@@ -220,7 +228,10 @@ angular.module('common.factories', [
                         storageFactory.setSelectedAccount(null);
                         storageFactory.setSelectedCompany(null);
                     }
-                }).error(errorFactory.resolve(data, status));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status)
+                }
+            );
         }
 
         function getCompanies(account, isSetSelected) {
@@ -230,13 +241,19 @@ angular.module('common.factories', [
                     if (companies.length === 1 && isSetSelected === true) {
                         storageFactory.setSelectedCompany(companies[0]);
                     }
-                }).error(errorFactory.resolve(data, status));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status)
+                }
+            );
         }
 
         function getApiRoutes() {
             $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
                 storageFactory.setApiRoutes(data['_embedded']['resource_meta']);
-            }).error(errorFactory.resolve(data, status));
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status)
+                }
+            );
         }
 
         return {

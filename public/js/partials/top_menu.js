@@ -42,6 +42,7 @@ angular.module('website.top.menu', [])
                     $scope.selectAccountAndCompanyModal = $modal.open({
                         templateUrl: 'selectAccountAndCompanyModalContent.html',
                         scope: $scope,
+                        backdrop: 'static',
                         controller: 'selectAccountAndCompanyModalController'
                     });
                 }
@@ -51,7 +52,18 @@ angular.module('website.top.menu', [])
                     $scope.importCompaniesModal = $modal.open({
                         templateUrl: 'importCompaniesModalContent.html',
                         scope: $scope,
+                        backdrop: 'static',
                         controller: 'importCompaniesModalController'
+                    });
+                }
+
+                function openImportPlacesModal() {
+                    $scope.isImportPlacesModalOpened = true;
+                    $scope.importPlacesModal = $modal.open({
+                        templateUrl: 'importPlacesModalContent.html',
+                        scope: $scope,
+                        backdrop: 'static',
+                        controller: 'importPlacesModalController'
                     });
                 }
 
@@ -71,8 +83,16 @@ angular.module('website.top.menu', [])
                     openImportCompaniesModal();
                 };
 
+                $scope.showImportPlacesModal = function () {
+                    openImportPlacesModal();
+                };
+
                 $scope.closeImportCompaniesModal = function () {
                     closeModal($scope.importCompaniesModal);
+                };
+
+                $scope.closeImportPlacesModal = function () {
+                    closeModal($scope.importPlacesModal);
                 };
 
                 $scope.logout = function () {
@@ -95,7 +115,10 @@ angular.module('website.top.menu', [])
                 .success(function (data) {
                     $scope.accounts = data['_embedded'].accounts;
                     callback($scope.accounts);
-                }).error(errorFactory.resolve(data, status,  $scope.selectAccountAndCompanyMessages));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.selectAccountAndCompanyMessages)
+                }
+            );
         }
 
         function getCompanies(account, callback) {
@@ -104,7 +127,10 @@ angular.module('website.top.menu', [])
                     .success(function (data) {
                         $scope.companies = data['_embedded'].companies;
                         callback($scope.companies);
-                    }).error(errorFactory.resolve(data, status,  $scope.selectAccountAndCompanyMessages));
+                    }).error(function (data, status) {
+                        errorFactory.resolve(data, status, $scope.selectAccountAndCompanyMessages)
+                    }
+                );
             }
         }
 
@@ -141,17 +167,51 @@ angular.module('website.top.menu', [])
 
     }])
 
-    .controller('importCompaniesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'storageFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, storageFactory) {
+    .controller('importCompaniesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
         $scope.importCompaniesMessages = [];
+        $scope.noCompaniesToImport = false;
 
+        function onError(data, status) {
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                $scope.noCompaniesToImport = true;
+            } else {
+                errorFactory.resolve(data, status, $scope.importCompaniesMessages);
+            }
+        }
 
         $scope.importCompanies = function () {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company')
                 .success(function (data) {
-                    $scope.isImportComplete = true;
+                    $scope.isImportCompaniesComplete = true;
                     $scope.extServiceCompanies = data['_embedded']['ext_service_company'];
-                }).error(errorFactory.resolve(data, status,  $scope.importCompaniesMessages));
+                }).error(function (data, status) {
+                    onError(data, status)
+                }
+            );
+        }
+    }])
+
+    .controller('importPlacesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
+        $scope.importPlacesMessages = [];
+        $scope.noPlacesToImport = false;
+
+        function onError(data, status) {
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                $scope.noPlacesToImport = true;
+            } else {
+                errorFactory.resolve(data, status, $scope.importPlacesMessages);
+            }
         }
 
+        $scope.importPlaces = function () {
+            $http.get(REST_CONFIG.BASE_URL + '/service/import/place')
+                .success(function (data) {
+                    $scope.isImportPlacesComplete = true;
+                    $scope.extServicePlaces = data['_embedded']['ext_service_places'];
+                }).error(function (data, status) {
+                    onError(data, status)
+                }
+            );
+        }
     }])
 ;

@@ -57,10 +57,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()"
-                            ajax-disabler="isAjaxLoading" ng-disabled="isAjaxLoading">Ok
+                            ajax-disabler="isAjaxLoading" ng-disabled="isAjaxLoading">
+                        Ok
                     </button>
-                    <button type="button" class="btn btn-warning pull_left"
-                            ng-click="closeSelectAccountAndCompanyModal()">
+                    <button type="button" class="btn btn-warning pull_left" ng-click="closeSelectAccountAndCompanyModal()"
+                            ajax-disabler="isAjaxLoading" ng-disabled="isAjaxLoading">
                         Отмена
                     </button>
                 </div>
@@ -75,9 +76,10 @@
                     <h4 class="modal-title">Импорт юридических лиц</h4>
                 </div>
                 <div class="modal-body">
-                    <span ng-show="!isImportComplete">Хотите импортировать юридические лица?</span>
-                    <span ng-show="isImportComplete">Импорт завершён:</span>
-                    <ul class="vertical_form_block" ng-show="isImportComplete">
+                    <span ng-show="!isImportCompaniesComplete && !noCompaniesToImport">Импортировать юридические лица?</span>
+                    <span ng-show="isImportCompaniesComplete && !noCompaniesToImport">Импорт завершён:</span>
+                    <span ng-show="noCompaniesToImport">Нечего импортировать</span>
+                    <ul class="vertical_form_block" ng-show="isImportCompaniesComplete">
                         <li ng-repeat="extServiceCompany in extServiceCompanies">
                             {{extServiceCompany.ext_service_company_code}}
                         </li>
@@ -88,20 +90,62 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary"
-                            ng-show="!isImportComplete"
+                            ng-show="!isImportCompaniesComplete && !noCompaniesToImport"
                             ng-click="importCompanies()"
                             ajax-disabler="isAjaxLoading"
                             ng-disabled="isAjaxLoading">
                         Да
                     </button>
                     <button type="button" class="btn btn-warning pull_left"
-                            ng-show="!isImportComplete"
+                            ng-show="!isImportCompaniesComplete && !noCompaniesToImport"
                             ng-click="closeImportCompaniesModal()">
                         Нет
                     </button>
                     <button type="button" class="btn btn-success"
-                            ng-show="isImportComplete"
+                            ng-show="isImportCompaniesComplete && !noCompaniesToImport"
                             ng-click="closeImportCompaniesModal()">
+                        Готово
+                    </button>
+                </div>
+            </div>
+        </script>
+    </div>
+
+    <div aria-hidden="true" ng-controller="importPlacesModalController">
+        <script type="text/ng-template" id="importPlacesModalContent.html">
+            <div>
+                <div class="modal-header">
+                    <h4 class="modal-title">Импорт пунктов доставки</h4>
+                </div>
+                <div class="modal-body">
+                    <span ng-show="!isImportPlacesComplete && !noPlacesToImport">Импортировать пункты доставки?</span>
+                    <span ng-show="isImportPlacesComplete && !noPlacesToImport">Импорт завершён</span>
+                    <span ng-show="noPlacesToImport">Нечего импортировать</span>
+                    <ul class="vertical_form_block" ng-show="isImportComplete">
+                        <li ng-repeat="extServicePlace in extServicePlaces">
+                            {{extServicePlace.ext_service_place_code}}
+                        </li>
+                    </ul>
+                    <alert ng-repeat="message in importPlacesMessages" type="message.type" close="closeAlert($index)">
+                        {{message.msg}}
+                    </alert>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            ng-show="!isImportPlacesComplete && !noPlacesToImport"
+                            ng-click="importPlaces()"
+                            ajax-disabler="isAjaxLoading"
+                            ng-disabled="isAjaxLoading">
+                        Да
+                    </button>
+                    <button type="button" class="btn btn-warning pull_left"
+                            ng-show="!isImportPlacesComplete && !noPlacesToImport"
+                            ng-click="closeImportPlacesModal()">
+                        Нет
+                    </button>
+                    <button type="button" class="btn btn-success"
+                            ng-show="isImportPlacesComplete || noPlacesToImport"
+                            ng-click="closeImportPlacesModal()">
                         Готово
                     </button>
                 </div>

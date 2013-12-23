@@ -54,14 +54,20 @@ angular.module('website.account', [])
                     if (accounts.length === 1) {
                         $scope.firstAccount = data['_embedded'].accounts[0];
                     }
-                }).error(errorFactory.resolve(data, status));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status)
+                }
+            );
         }
 
         $scope.removeAccount = function (account) {
             $http.delete(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'])
                 .success(function () {
                     getAccounts();
-                }).error(errorFactory.resolve(data, status));
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status)
+                }
+            );
         };
     }])
 
