@@ -171,11 +171,11 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     padding: 15px 30px;
 }
 
-.centered_text{
+.centered_text {
     text-align: center;
 }
 
-.inline_list li{
+.inline_list li {
     display: inline-block;
 }
 
@@ -233,6 +233,18 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
 
 .unspaced_modal-body {
     padding: 0;
+}
+
+.menu_spinner {
+    background: url('/img/spinner_deactive.gif') no-repeat center;
+}
+
+.menu_spinner.active_spinner {
+    background: url('/img/spinner_active.gif') no-repeat center;
+}
+
+.menu_spinner a {
+    font-weight: bold;
 }
 
 /* END Classes */
@@ -298,11 +310,11 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
         margin-top: 0;
     }
 
-    .mobile_text_left{
+    .mobile_text_left {
         text-align: left;
     }
 
-    .mobile_full_width{
+    .mobile_full_width {
         width: 100%;
     }
 }

@@ -21,6 +21,12 @@
                 <li ng-class="getClass('{{ROUTES.USER_PROFILE}}')" role="menuitem">
                     <a href="#!{{ROUTES.USER_PROFILE}}">Профиль</a>
                 </li>
+               <!-- <li class="menu_spinner">
+                    <a href>0</a>
+                </li>
+                <li class="menu_spinner active_spinner">
+                    <a href>3</a>
+                </li>-->
             </ul>
             <user-menu class="pull_right mobile_full_width"></user-menu>
         </div>
@@ -77,13 +83,13 @@
                 </div>
                 <div class="modal-body">
                     <span ng-show="!isImportCompaniesComplete && !noCompaniesToImport">Импортировать юридические лица?</span>
-                    <span ng-show="isImportCompaniesComplete && !noCompaniesToImport">Импорт завершён:</span>
+                    <span ng-show="isImportCompaniesComplete && !noCompaniesToImport">Импорт успешно завершён</span>
                     <span ng-show="noCompaniesToImport">Нечего импортировать</span>
-                    <ul class="vertical_form_block" ng-show="isImportCompaniesComplete">
+                    <!--<ul class="vertical_form_block" ng-show="isImportCompaniesComplete">
                         <li ng-repeat="extServiceCompany in extServiceCompanies">
-                            {{extServiceCompany.ext_service_company_code}}
+                            {{extServiceCompany.external_code}}
                         </li>
-                    </ul>
+                    </ul>-->
                     <alert ng-repeat="message in importCompaniesMessages" type="message.type" close="closeAlert($index)">
                         {{message.msg}}
                     </alert>
@@ -94,12 +100,12 @@
                             ng-click="importCompanies()"
                             ajax-disabler="isAjaxLoading"
                             ng-disabled="isAjaxLoading">
-                        Да
+                        Импорт
                     </button>
                     <button type="button" class="btn btn-warning pull_left"
                             ng-show="!isImportCompaniesComplete && !noCompaniesToImport"
                             ng-click="closeImportCompaniesModal()">
-                        Нет
+                        Отмена
                     </button>
                     <button type="button" class="btn btn-success"
                             ng-show="isImportCompaniesComplete && !noCompaniesToImport"
@@ -119,7 +125,7 @@
                 </div>
                 <div class="modal-body">
                     <span ng-show="!isImportPlacesComplete && !noPlacesToImport">Импортировать пункты доставки?</span>
-                    <span ng-show="isImportPlacesComplete && !noPlacesToImport">Импорт завершён</span>
+                    <span ng-show="isImportPlacesComplete && !noPlacesToImport">Импорт успешно завершён</span>
                     <span ng-show="noPlacesToImport">Нечего импортировать</span>
                     <ul class="vertical_form_block" ng-show="isImportComplete">
                         <li ng-repeat="extServicePlace in extServicePlaces">
@@ -136,12 +142,12 @@
                             ng-click="importPlaces()"
                             ajax-disabler="isAjaxLoading"
                             ng-disabled="isAjaxLoading">
-                        Да
+                        Импорт
                     </button>
                     <button type="button" class="btn btn-warning pull_left"
                             ng-show="!isImportPlacesComplete && !noPlacesToImport"
                             ng-click="closeImportPlacesModal()">
-                        Нет
+                        Отмена
                     </button>
                     <button type="button" class="btn btn-success"
                             ng-show="isImportPlacesComplete || noPlacesToImport"
