@@ -1137,6 +1137,7 @@ angular.module('website.top.menu', [])
             templateUrl: 'html/partials/private/user_menu.html',
             controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
                 $scope.isSelectAccountAndCompanyModalOpened = false;
+                $scope.isCompaniesManagementOpened = false;
 
                 $rootScope.$watch(function () {
                     return localStorage.getItem(storageFactory.storage.local.selectedAccount);
@@ -1351,7 +1352,6 @@ angular.module('website.top.menu', [])
 
 
     .controller('companiesManagementController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
-        $scope.isCompaniesManagementOpened = false;
         $scope.companiesManagementMessages = [];
         $scope.importedCompanies = [];
         $scope.existedCompanies = [];
@@ -1413,7 +1413,7 @@ angular.module('website.top.menu', [])
         function getImportedCompanies() {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
                 .success(function (data) {
-                    $scope.importedCompanies = data['_embedded']['companies'];
+                    $scope.importedCompanies = data['_embedded']['ext_service_company_intersect'];
                 }).error(function (data, status) {
                     onError(data, status)
                 }

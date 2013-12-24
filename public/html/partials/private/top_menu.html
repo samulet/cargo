@@ -188,7 +188,7 @@
                             ng-model="linkedCompany"
                             ng-disabled="isAjaxLoading"
                             size="8"
-                            ng-options="linkedCompany as linkedCompany.name for linkedCompany in linkedCompanies"
+                            ng-options="linkedCompany as linkedCompany.short for linkedCompany in linkedCompanies"
                             ng-change="selectLinkedCompany(linkedCompany)"
                             ajax-disabler="isAjaxLoading">
                         <option value="">---</option>
@@ -198,7 +198,7 @@
                             ng-model="existedCompany"
                             ng-disabled="isAjaxLoading"
                             size="8"
-                            ng-options="existedCompany as existedCompany.name for existedCompany in existedCompanies"
+                            ng-options="existedCompany as existedCompany.short for existedCompany in existedCompanies"
                             ng-change="selectExistedCompany(existedCompany)"
                             ajax-disabler="isAjaxLoading">
                         <option value="">---</option>
