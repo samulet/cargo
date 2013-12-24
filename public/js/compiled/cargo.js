@@ -1453,8 +1453,15 @@ angular.module('website.top.menu', [])
             );
         };
 
-        function getLinkedCompanies(existedCompany) {
-            //TODO  123
+        function getLinkedCompanies() {
+            $scope.linkedCompanies = [];
+            var existedCompany = $scope.existedCompany;
+            var importedCompanies = $scope.importedCompanies;
+            for (var k in importedCompanies) {
+                if (importedCompanies.hasOwnProperty(k) && importedCompanies[k].link === existedCompany.uuid) {
+                    $scope.linkedCompanies.push(importedCompanies[k]);
+                }
+            }
         }
 
         $scope.selectImportedCompany = function (company) {
@@ -1467,7 +1474,7 @@ angular.module('website.top.menu', [])
 
         $scope.selectExistedCompany = function (company) {
             $scope.existedCompany = company;
-            getLinkedCompanies(company);
+            getLinkedCompanies();
         };
     }])
 ;

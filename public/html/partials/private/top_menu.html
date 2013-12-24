@@ -171,6 +171,9 @@
             <div class="modal-body">
                 <ul class="vertical_form_block clear_list med_select_width pull_right">
                     <li>
+                        <h5>Импортированные юридические лица</h5>
+                    </li>
+                    <li>
                         <select title="Выберите существующую компанию" class="form-control"
                                 ng-model="existedCompany"
                                 ng-disabled="isAjaxLoading"
@@ -183,6 +186,9 @@
                 </ul>
 
                 <ul class="vertical_form_block clear_list med_select_width">
+                    <li>
+                        <h5>Существующие юридические лица</h5>
+                    </li>
                     <li>
                         <select title="Выберите импортированную компанию" class="form-control"
                                 ng-model="importedCompany"
@@ -197,11 +203,14 @@
 
                 <ul class="vertical_form_block clear_list">
                     <li>
+                        <h5>Существующие связи для выбранного юридического лица</h5>
+                    </li>
+                    <li>
                         <select title="Выберите связвнные компании" class="form-control"
                                 ng-model="linkedCompany"
                                 ng-disabled="isAjaxLoading"
                                 size="4"
-                                ng-options="linkedCompany as linkedCompany.short for linkedCompany in linkedCompanies"
+                                ng-options="linkedCompany as linkedCompany.name for linkedCompany in linkedCompanies"
                                 ng-change="selectLinkedCompany(linkedCompany)"
                                 ajax-disabler="isAjaxLoading">
                         </select>
