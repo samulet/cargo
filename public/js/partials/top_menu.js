@@ -238,10 +238,16 @@ angular.module('website.top.menu', [])
 
 
     .controller('companiesManagementController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
+        $scope.isCompaniesManagementOpened = false;
         $scope.companiesManagementMessages = [];
         $scope.importedCompanies = [];
         $scope.existedCompanies = [];
         $scope.linkedCompanies = [];
+
+        if ($scope.isCompaniesManagementOpened) {
+            getCompaniesForAccounts();
+            getImportedCompanies();
+        }
 
         function onError(data, status) {
             if (status === RESPONSE_STATUS.NOT_FOUND) {
@@ -251,7 +257,47 @@ angular.module('website.top.menu', [])
             }
         }
 
-        $scope.getImportedCompanies = function () {
+        function getAccounts(callback) {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts')
+                .success(function (data) {
+                    $scope.accounts = data['_embedded'].accounts;
+                    callback($scope.accounts);
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.companiesManagementMessages)
+                }
+            );
+        }
+
+        function getCompanies(account, callback) {
+            if (account) {
+                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'] + '/companies')
+                    .success(function (data) {
+                        $scope.companies = data['_embedded'].companies;
+                        callback($scope.companies);
+                    }).error(function (data, status) {
+                        errorFactory.resolve(data, status, $scope.companiesManagementMessages)
+                    }
+                );
+            }
+        }
+
+        function getCompaniesForAccounts() {
+            getAccounts(function (accounts) {
+                for (var k in accounts) {
+                    if (accounts.hasOwnProperty(k)) {
+                        getCompanies(accounts[k], function (companies) {
+                            for (var j in companies) {
+                                if (companies.hasOwnProperty(j)) {
+                                    $scope.existedCompanies.push(companies[j]);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function getImportedCompanies() {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
                 .success(function (data) {
                     $scope.importedCompanies = data['_embedded']['companies'];
@@ -259,30 +305,40 @@ angular.module('website.top.menu', [])
                     onError(data, status)
                 }
             );
+        }
+
+        $scope.getImportedCompanies = function () {
+            getImportedCompanies();
         };
 
         $scope.getExistedCompanies = function () {
-            $http.get(REST_CONFIG.BASE_URL + '????????????????????????????')
-                .success(function (data) {
-                    console.log.(data);
-                    $scope.existedCompanies = data['_embedded']['companies'];
-                }).error(function (data, status) {
-                    onError(data, status)
-                }
-            );
+            getCompaniesForAccounts();
         };
 
         $scope.addCompaniesLink = function (importedCompany, existedCompany) {
             $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect', {source: importedCompany.source, id: importedCompany.id, company: existedCompany.company})
                 .success(function (data) {
-                    //TODO
-                    console.log.(data);
+                    console.log(data);//TODO
                     // $scope.existedCompanies = data['_embedded']['companies'];
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.companiesManagementMessages);
                 }
             );
         };
+
+        $scope.removeCompaniesLink = function (importedCompany) {
+            $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + importedCompany.source + '/' + importedCompany.id)
+                .success(function (data) {
+                    console.log(data);  //TODO
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.companiesManagementMessages);
+                }
+            );
+        };
+
+        function getLinkedCompanies(existedCompany) {
+            //TODO  123
+        }
 
         $scope.selectImportedCompany = function (company) {
             $scope.importedCompany = company;
@@ -294,6 +350,7 @@ angular.module('website.top.menu', [])
 
         $scope.selectExistedCompany = function (company) {
             $scope.existedCompany = company;
+            getLinkedCompanies(company);
         };
     }])
 ;
