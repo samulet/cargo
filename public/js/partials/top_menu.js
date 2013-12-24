@@ -74,6 +74,7 @@ angular.module('website.top.menu', [])
                         templateUrl: 'companiesManagementContent.html',
                         scope: $scope,
                         backdrop: 'static',
+                        windowClass: 'modal_huge',
                         controller: 'companiesManagementController'
                     });
                 }
@@ -288,7 +289,10 @@ angular.module('website.top.menu', [])
                         getCompanies(accounts[k], function (companies) {
                             for (var j in companies) {
                                 if (companies.hasOwnProperty(j)) {
-                                    $scope.existedCompanies.push(companies[j]);
+                                    $scope.existedCompanies.push({
+                                        account: accounts[k],
+                                        company: companies[j]
+                                    });
                                 }
                             }
                         });

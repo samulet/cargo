@@ -243,10 +243,18 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     background: url('/img/spinner_active.gif') no-repeat center;
 }
 
+.modal_huge .modal-dialog {
+    width: 900px;
+}
+
 .menu_spinner a {
     font-weight: bold;
 }
 
+
+.med_select_width{
+    width: 400px;
+}
 /* END Classes */
 
 /* IDs */
@@ -317,11 +325,19 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     .mobile_full_width {
         width: 100%;
     }
+
+    .modal_huge .modal-dialog {
+        width: 600px;
+    }
 }
 
 @media (min-width: 681px) and (max-width: 989px) {
     .marketing_header {
         font-size: 3em;
+    }
+
+    .modal_huge .modal-dialog {
+        width: 700px;
     }
 }
 
