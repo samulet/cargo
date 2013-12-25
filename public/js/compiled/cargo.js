@@ -1397,6 +1397,7 @@ angular.module('website.top.menu', [])
 
         function getCompaniesForAccounts() {
             getAccounts(function (accounts) {
+                $scope.existedCompanies = [];
                 for (var k in accounts) {
                     if (accounts.hasOwnProperty(k)) {
                         getCompanies(accounts[k], function (companies) {
@@ -1432,11 +1433,13 @@ angular.module('website.top.menu', [])
             getCompaniesForAccounts();
         };
 
-        $scope.addCompaniesLink = function (importedCompany, existedCompany) {
-            $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect', {source: importedCompany.source, id: importedCompany.id, company: existedCompany.company})
-                .success(function (data) {
-                    console.log(data);//TODO
-                    // $scope.existedCompanies = data['_embedded']['companies'];
+        $scope.addCompaniesLink = function () {
+            var company = $scope.existedCompany ? $scope.existedCompany.company.uuid : null;
+            $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect',
+                {source: $scope.importedCompany.source, id: $scope.importedCompany.id, company: company})
+                .success(function () {
+                    getLinkedCompanies();
+                    getCompaniesForAccounts();
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.companiesManagementMessages);
                 }
@@ -1458,6 +1461,9 @@ angular.module('website.top.menu', [])
             var existedCompany = $scope.existedCompany;
             var importedCompanies = $scope.importedCompanies;
             for (var k in importedCompanies) {
+                if (importedCompanies[k].link) {
+                    console.log(importedCompanies[k].link);
+                }
                 if (importedCompanies.hasOwnProperty(k) && importedCompanies[k].link === existedCompany.uuid) {
                     $scope.linkedCompanies.push(importedCompanies[k]);
                 }
@@ -1475,7 +1481,6 @@ angular.module('website.top.menu', [])
         $scope.selectExistedCompany = function (company) {
             $scope.existedCompany = company;
             getLinkedCompanies();
-            if ( $scope.linkedCompanies){}
         };
     }])
 ;
