@@ -347,9 +347,11 @@ angular.module('website.top.menu', [])
             $scope.linkedCompanies = [];
             var existedCompany = $scope.existedCompany;
             var importedCompanies = $scope.importedCompanies;
-            for (var k in importedCompanies) {
-                if (importedCompanies.hasOwnProperty(k) && importedCompanies[k].link === existedCompany.company.uuid) {
-                    $scope.linkedCompanies.push(importedCompanies[k]);
+            if (importedCompanies && existedCompany) {
+                for (var k in importedCompanies) {
+                    if (importedCompanies.hasOwnProperty(k) && importedCompanies[k].link === existedCompany.company.uuid) {
+                        $scope.linkedCompanies.push(importedCompanies[k]);
+                    }
                 }
             }
         }
