@@ -1,6 +1,5 @@
-/*
 describe('dashboardPageTest', function () {
-
+    var common = require('./common.js');
     var okButtonName = 'Ok';
 
     var localStorage = {
@@ -15,29 +14,12 @@ describe('dashboardPageTest', function () {
         }
     };
 
-    var Cookies = {
-        addToken: function () {
-            ptor.manage().addCookie('token', '12345');
-        },
-        removeToken: function () {
-            ptor.manage().deleteCookie('token');
-        }
-    };
-
-    function getHeader(level, text) {
-        return ptor.findElement(protractor.By.xpath('//h' + level + '[contains(.,"' + text + '")]'));
-    }
-
-    function getButton(name) {
-        return ptor.findElement(protractor.By.xpath('//button[contains(.,"' + name + '")]'));
-    }
-
     var ptor = protractor.getInstance();
     var driver = ptor.driver;
 
     beforeEach(function () {
         ptor.get('/#!');
-        Cookies.addToken();
+        common.cookies.addToken(ptor, '12345');
         localStorage.removeAccount();
     });
 
@@ -46,8 +28,8 @@ describe('dashboardPageTest', function () {
         ptor.get('#!/dashboard');
 
         //Act & Verify
-        expect(getHeader(4, 'Настройка аккаунта').isDisplayed()).toBeTruthy();
-        expect(getHeader(5, 'Пожалуйста, укажите название аккаунта - юридическое лицо, от имени которого совершаются действия').isDisplayed()).toBeTruthy();
+        expect(common.getHeader(ptor, 4, 'Настройка аккаунта').isDisplayed()).toBeTruthy();
+        expect(common.getHeader(ptor, 5, 'Пожалуйста, укажите название аккаунта - юридическое лицо, от имени которого совершаются действия').isDisplayed()).toBeTruthy();
         expect(ptor.findElement(protractor.By.input('account.name')).isDisplayed()).toBeTruthy();
     });
 
@@ -57,8 +39,8 @@ describe('dashboardPageTest', function () {
         localStorage.addAccount('{name: "someName"}');
 
         //Act & Verify
-        expect(getHeader(4, 'Настройка аккаунта').isDisplayed()).toBeFalsy();
-        expect(getHeader(5, 'Пожалуйста, укажите название аккаунта - юридическое лицо, от имени которого совершаются действия').isDisplayed()).toBeFalsy();
+        expect(common.getHeader(ptor, 4, 'Настройка аккаунта').isDisplayed()).toBeFalsy();
+        expect(common.getHeader(ptor, 5, 'Пожалуйста, укажите название аккаунта - юридическое лицо, от имени которого совершаются действия').isDisplayed()).toBeFalsy();
         expect(ptor.findElement(protractor.By.input('account.name')).isDisplayed()).toBeFalsy();
     });
 
@@ -69,11 +51,11 @@ describe('dashboardPageTest', function () {
 
         //Act & Verify
         ptor.findElement(protractor.By.input('account.name')).sendKeys(newAccountName);
-        getButton(okButtonName).click();
+        common.getButton(ptor, okButtonName).click();
         ptor.wait(function () {
             expect(localStorage.getAccount()).toBe('smt'); //TODO
             //TODO check DB
         }, 2000)
     });
 
-});*/
+});

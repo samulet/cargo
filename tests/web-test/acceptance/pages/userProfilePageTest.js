@@ -162,21 +162,21 @@ describe('userProfilePageTest', function () {
         checkHeadersDisplayed(false);
     });
 
-    /*it('checkSwitchEditMode', function () {
+    it('checkSwitchEditMode', function () {
         //Setup
 
         //Act & Verify
-        var editBtn = common.getButton(editBtnName);
+        var editBtn = common.getButton(ptor, editBtnName);
         editBtn.click();
 
-        expect(common.getHeader(3, personalDataBlock.headerText).isDisplayed()).toBeTruthy();
+        expect(common.getHeader(ptor, 3, personalDataBlock.headerText).isDisplayed()).toBeTruthy();
         checkHeadersDisplayed(true);
 
-        var cancelBtn = common.getButton(cancelBtnName);
+        var cancelBtn = common.getButton(ptor, cancelBtnName);
         cancelBtn.click();
         ptor.wait(function () {
 
-            expect(common.getHeader(3, personalDataBlock.headerText).isDisplayed()).toBeTruthy();
+            expect(common.getHeader(ptor, 3, personalDataBlock.headerText).isDisplayed()).toBeTruthy();
             checkHeadersDisplayed(false);
         }, 5000);
     });
@@ -186,12 +186,12 @@ describe('userProfilePageTest', function () {
 
         //Act & Verify
         checkPhonesBlockDisplay(false);
-        common.getButton(editBtnName).click();
+        common.getButton(ptor, editBtnName).click();
         setTimeout(function () {
-            common.openHiddenBlock(phonesBlock.formName);
-            expect(common.getHeader(4, phonesBlock.headerText).isDisplayed()).toBeTruthy();
+            common.openHiddenBlock(ptor, phonesBlock.formName);
+            expect(common.getHeader(ptor, 4, phonesBlock.headerText).isDisplayed()).toBeTruthy();
             checkPhonesBlockDisplay(true);
-            common.closeHiddenBlock(phonesBlock.formName);
+            common.closeHiddenBlock(ptor, phonesBlock.formName);
             setTimeout(function () {
                 checkPhonesBlockDisplay(false);
             }, 3000);
@@ -203,12 +203,12 @@ describe('userProfilePageTest', function () {
 
         //Act & Verify
         checkAddressBlockDisplay(false);
-        common.getButton(editBtnName).click();
+        common.getButton(ptor, editBtnName).click();
         ptor.wait(function () {
             common.openHiddenBlock(addressBlock.formName);
-            expect(common.getHeader(4, addressBlock.headerText).isDisplayed()).toBeTruthy();
+            expect(common.getHeader(ptor, 4, addressBlock.headerText).isDisplayed()).toBeTruthy();
             checkAddressBlockDisplay(true);
-            common.closeHiddenBlock(addressBlock.formName);
+            common.closeHiddenBlock(ptor, addressBlock.formName);
             ptor.wait(function () {
                 checkAddressBlockDisplay(false);
             }, 3000);
@@ -220,12 +220,12 @@ describe('userProfilePageTest', function () {
 
         //Act & Verify
         checkEmailBlockDisplay(false);
-        common.getButton(editBtnName).click();
+        common.getButton(ptor, editBtnName).click();
         ptor.wait(function () {
             common.openHiddenBlock(emailBlock.formName);
-            expect(common.getHeader(4, emailBlock.headerText).isDisplayed()).toBeTruthy();
+            expect(common.getHeader(ptor, 4, emailBlock.headerText).isDisplayed()).toBeTruthy();
             checkEmailBlockDisplay(true);
-            common.closeHiddenBlock(emailBlock.formName);
+            common.closeHiddenBlock(ptor, emailBlock.formName);
             ptor.wait(function () {
                 checkEmailBlockDisplay(false);
             }, 3000);
@@ -237,15 +237,15 @@ describe('userProfilePageTest', function () {
 
         //Act & Verify
         checkSitesBlockVisibleSwitch(false);
-        common.getButton(editBtnName).click();
+        common.getButton(ptor, editBtnName).click();
         ptor.wait(function () {
             common.openHiddenBlock(sitesBlock.formName);
-            expect(common.getHeader(4, sitesBlock.headerText).isDisplayed()).toBeTruthy();
+            expect(common.getHeader(ptor, 4, sitesBlock.headerText).isDisplayed()).toBeTruthy();
             checkSitesBlockVisibleSwitch(true);
-            common.closeHiddenBlock(sitesBlock.formName);
+            common.closeHiddenBlock(ptor, sitesBlock.formName);
             ptor.wait(function () {
                 checkSitesBlockVisibleSwitch(false);
             }, 3000);
         }, 3000);
-    });*/
+    });
 });

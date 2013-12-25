@@ -1,31 +1,97 @@
-/*
 describe('linkCompaniesTest', function () {
-
-    var Cookies = {
-        addToken: function () {
-            ptor.manage().addCookie('token', '12345');
-        },
-        removeToken: function () {
-            ptor.manage().deleteCookie('token');
-        }
-    };
-
-    function getHeader(level, text) {
-        return ptor.findElement(protractor.By.xpath('//h' + level + '[contains(.,"' + text + '")]'));
-    }
+    var common = require('./common.js');
 
     var ptor = protractor.getInstance();
 
     beforeEach(function () {
-        ptor.get('#!/dashboard');
+        common.cookies.addToken(ptor, '12345');
+        //TODO add headers
+        ptor.get('office#!/dashboard');
     });
 
-    it('checkNoRedirectWhenTokenNotExistAndSignInPage', function () {
+    it('checkLinkCompaniesMenuItemDisplayed', function () {
         //Setup
 
         //Act & Verify
-        expect(getHeader(1, 'Some inspiration wow-text.').isDisplayed()).toBeTruthy();
+
+    });
+
+    it('checkLinkCompaniesPopup', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkDefaultImportSelectValueWhenImportedCompaniesExist', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkDefaultImportSelectValueWhenImportedCompaniesNotExist', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkDefaultExistedSelectValueWhenExistedCompaniesExist', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkDefaultExistedSelectValueWhenExistedCompaniesNotExist', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkDefaultLinkedSelectValue', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkDefaultLinkedSelectValueWhenChooseCompanyWithLinks', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkDefaultLinkedSelectValueWhenChooseCompanyWithNoLinks', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkLinkCompanies', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkCreateNewCompany', function () {
+        //Setup
+
+        //Act & Verify
+
+    });
+
+    it('checkUnlinkCompanies', function () {
+        //Setup
+
+        //Act & Verify
+
     });
 
 
-});*/
+});
