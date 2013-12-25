@@ -214,6 +214,7 @@
                                 ng-options="linkedCompany as linkedCompany.name for linkedCompany in linkedCompanies"
                                 ng-change="selectLinkedCompany(linkedCompany)"
                                 ajax-disabler="isAjaxLoading">
+                            <option value="">---</option>
                         </select>
                     </li>
                     <li style="vertical-align: bottom;">

@@ -333,10 +333,10 @@ angular.module('website.top.menu', [])
             );
         };
 
-        $scope.removeCompaniesLink = function (importedCompany) {
-            $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + importedCompany.source + '/' + importedCompany.id)
-                .success(function (data) {
-                    console.log(data);  //TODO
+        $scope.removeCompaniesLink = function () {
+            $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedCompany.source + '/' + $scope.linkedCompany.id)
+                .success(function () {
+                    getLinkedCompanies();
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.companiesManagementMessages);
                 }
@@ -348,10 +348,7 @@ angular.module('website.top.menu', [])
             var existedCompany = $scope.existedCompany;
             var importedCompanies = $scope.importedCompanies;
             for (var k in importedCompanies) {
-                if (importedCompanies[k].link) {
-                    console.log(importedCompanies[k].link);
-                }
-                if (importedCompanies.hasOwnProperty(k) && importedCompanies[k].link === existedCompany.uuid) {
+                if (importedCompanies.hasOwnProperty(k) && importedCompanies[k].link === existedCompany.company.uuid) {
                     $scope.linkedCompanies.push(importedCompanies[k]);
                 }
             }
