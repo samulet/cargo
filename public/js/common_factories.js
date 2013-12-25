@@ -271,12 +271,12 @@ angular.module('common.factories', [
         }
 
         function getUser() {//TODO api didn't work yet
-            $http.get(REST_CONFIG.BASE_URL + '/profile').success(function (data) {
-               // storageFactory.setUser(data['_embedded']['user']);
-            }).error(function (data, status) {
-                  // errorFactory.resolve(data, status)
-                }
-            );
+            // $http.get(REST_CONFIG.BASE_URL + '/profile').success(function (data) {
+            // storageFactory.setUser(data['_embedded']['user']);
+            //}).error(function (data, status) {
+            // errorFactory.resolve(data, status)
+            //     }
+            // );
         }
 
         return {
