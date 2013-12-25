@@ -1,3 +1,4 @@
+/*
 describe('userProfilePageTest', function () {
 
     var Cookies = {
@@ -56,4 +57,4 @@ describe('userProfilePageTest', function () {
         expect(getHeader(1, 'Some inspiration wow-text.').isDisplayed()).toBeTruthy();
         expect(ptor.isElementPresent(protractor.By.xpath('//h1[contains(.,"dashboard success")]'))).toBeFalsy();
     });
-});
+});*/
