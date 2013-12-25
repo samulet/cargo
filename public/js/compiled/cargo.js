@@ -1475,6 +1475,7 @@ angular.module('website.top.menu', [])
         $scope.selectExistedCompany = function (company) {
             $scope.existedCompany = company;
             getLinkedCompanies();
+            if ( $scope.linkedCompanies){}
         };
     }])
 ;

@@ -169,27 +169,10 @@
                 <h4 class="modal-title">Управление юридическими лицами</h4>
             </div>
             <div class="modal-body">
-                <ul class="vertical_form_block clear_list med_select_width pull_right">
-                    <li>
-                        <h5>Импортированные юридические лица</h5>
-                    </li>
-                    <li>
-                        <select title="Выберите существующую компанию" class="form-control"
-                                ng-model="existedCompany"
-                                ng-disabled="isAjaxLoading"
-                                size="8"
-                                ng-options="existedCompany as existedCompany.company.short group by existedCompany.account.title for existedCompany in existedCompanies"
-                                ng-change="selectExistedCompany(existedCompany)"
-                                ajax-disabler="isAjaxLoading">
-                        </select>
-                    </li>
-                </ul>
+                <ul class="horizontal_list clear_list">
 
-                <ul class="vertical_form_block clear_list med_select_width">
-                    <li>
-                        <h5>Существующие юридические лица</h5>
-                    </li>
-                    <li>
+                    <li class="small_select_width">
+                        <h5>Импортированные юридические лица</h5>
                         <select title="Выберите импортированную компанию" class="form-control"
                                 ng-model="importedCompany"
                                 ng-disabled="isAjaxLoading"
@@ -199,13 +182,33 @@
                                 ajax-disabler="isAjaxLoading">
                         </select>
                     </li>
+
+                    <li id="button_add_link">
+                        <button type="button" class="btn btn-primary" ng-click="addCompaniesLink()"
+                                style="min-width: 171px;">
+                            <i class="glyphicon glyphicon-plus"> </i>
+                            <span ng-show="existedCompany">Добавить связь</span>
+                            <span ng-show="!existedCompany">Добавить юр. лицо</span>
+                        </button>
+                    </li>
+
+                    <li class="small_select_width">
+                        <h5>Существующие юридические лица</h5>
+                        <select title="Выберите существующую компанию" class="form-control"
+                                ng-model="existedCompany"
+                                ng-disabled="isAjaxLoading"
+                                size="8"
+                                ng-options="existedCompany as existedCompany.company.short group by existedCompany.account.title for existedCompany in existedCompanies"
+                                ng-change="selectExistedCompany(existedCompany)"
+                                ajax-disabler="isAjaxLoading">
+                            <option value="">---</option>
+                        </select>
+                    </li>
                 </ul>
 
-                <ul class="vertical_form_block clear_list">
-                    <li>
+                <ul class="horizontal_list clear_list big_select_width">
+                    <li class="small_select_width">
                         <h5>Существующие связи для выбранного юридического лица</h5>
-                    </li>
-                    <li>
                         <select title="Выберите связвнные компании" class="form-control"
                                 ng-model="linkedCompany"
                                 ng-disabled="isAjaxLoading"
@@ -215,13 +218,15 @@
                                 ajax-disabler="isAjaxLoading">
                         </select>
                     </li>
-                    <li>
-                        <button type="button" ng-click="addCompaniesLink()">
-                            <span>Связать</span>
-                            <span>Добавить</span>
+                    <li style="vertical-align: bottom;">
+                        <button type="button" class="btn btn-default" ng-click="removeCompaniesLink()"
+                                ng-disabled="!existedCompany">
+                            <i class="glyphicon glyphicon-minus"> </i>
+                            Убрать связь
                         </button>
                     </li>
                 </ul>
+
                 <alert ng-repeat="message in companiesManagementMessages" type="message.type"
                        close="closeAlert($index)">
                     {{message.msg}}

@@ -171,6 +171,15 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     padding: 15px 30px;
 }
 
+.horizontal_list {
+    padding: 0;
+}
+
+ul.horizontal_list li {
+    display: inline-block;
+    padding: 5px 10px;
+}
+
 .centered_text {
     text-align: center;
 }
@@ -251,10 +260,22 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     font-weight: bold;
 }
 
+.inline_block {
+    display: inline-block;
+}
 
-.med_select_width{
+.small_select_width {
+    width: 325px;
+}
+
+.med_select_width {
     width: 400px;
 }
+
+.big_select_width {
+    width: 500px;
+}
+
 /* END Classes */
 
 /* IDs */
@@ -288,6 +309,12 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
 #signInForm ul {
     border-radius: 5px;
     padding: 15px;
+}
+
+#button_add_link {
+    vertical-align: bottom;
+    width: 195px;
+    text-align: center;
 }
 
 /* END IDs */
