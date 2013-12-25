@@ -171,6 +171,15 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     padding: 15px 30px;
 }
 
+.horizontal_list {
+    padding: 0;
+}
+
+ul.horizontal_list li {
+    display: inline-block;
+    padding: 5px 10px;
+}
+
 .centered_text {
     text-align: center;
 }
@@ -243,8 +252,28 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     background: url('/img/spinner_active.gif') no-repeat center;
 }
 
+.modal_huge .modal-dialog {
+    width: 900px;
+}
+
 .menu_spinner a {
     font-weight: bold;
+}
+
+.inline_block {
+    display: inline-block;
+}
+
+.small_select_width {
+    width: 325px;
+}
+
+.med_select_width {
+    width: 400px;
+}
+
+.big_select_width {
+    width: 500px;
 }
 
 /* END Classes */
@@ -282,6 +311,12 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     padding: 15px;
 }
 
+#button_add_link {
+    vertical-align: bottom;
+    width: 195px;
+    text-align: center;
+}
+
 /* END IDs */
 
 /* Screen-specified options */
@@ -317,11 +352,19 @@ li.input-group .input-group-addon.inline_addon, .inline_addon {
     .mobile_full_width {
         width: 100%;
     }
+
+    .modal_huge .modal-dialog {
+        width: 600px;
+    }
 }
 
 @media (min-width: 681px) and (max-width: 989px) {
     .marketing_header {
         font-size: 3em;
+    }
+
+    .modal_huge .modal-dialog {
+        width: 700px;
     }
 }
 

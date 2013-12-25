@@ -1137,6 +1137,7 @@ angular.module('website.top.menu', [])
             templateUrl: 'html/partials/private/user_menu.html',
             controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
                 $scope.isSelectAccountAndCompanyModalOpened = false;
+                $scope.isCompaniesManagementOpened = false;
 
                 $rootScope.$watch(function () {
                     return localStorage.getItem(storageFactory.storage.local.selectedAccount);
@@ -1180,6 +1181,17 @@ angular.module('website.top.menu', [])
                     });
                 }
 
+                function openCompaniesManagementModal() {
+                    $scope.isCompaniesManagementOpened = true;
+                    $scope.companiesManagementModal = $modal.open({
+                        templateUrl: 'companiesManagementContent.html',
+                        scope: $scope,
+                        backdrop: 'static',
+                        windowClass: 'modal_huge',
+                        controller: 'companiesManagementController'
+                    });
+                }
+
                 function closeModal(modal) {
                     modal.close();
                 }
@@ -1194,6 +1206,14 @@ angular.module('website.top.menu', [])
 
                 $scope.showImportCompaniesModal = function () {
                     openImportCompaniesModal();
+                };
+
+                $scope.showCompaniesManagementModal = function () {
+                    openCompaniesManagementModal();
+                };
+
+                $scope.closeCompaniesManagementModal = function () {
+                    closeModal($scope.companiesManagementModal);
                 };
 
                 $scope.showImportPlacesModal = function () {
@@ -1250,15 +1270,18 @@ angular.module('website.top.menu', [])
         function getCompaniesForAccounts() {
             getAccounts(function (accounts) {
                 for (var k in accounts) {
-                    getCompanies(accounts[k], function (companies) {
-                        for (var j in companies) {
-                            $scope.options.push({
-                                account: accounts[k],
-                                company: companies[j]
-                            });
-                        }
-                    });
-
+                    if (accounts.hasOwnProperty(k)) {
+                        getCompanies(accounts[k], function (companies) {
+                            for (var j in companies) {
+                                if (companies.hasOwnProperty(j)) {
+                                    $scope.options.push({
+                                        account: accounts[k],
+                                        company: companies[j]
+                                    });
+                                }
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -1326,5 +1349,135 @@ angular.module('website.top.menu', [])
                 }
             );
         }
+    }])
+
+
+    .controller('companiesManagementController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
+        $scope.companiesManagementMessages = [];
+        $scope.importedCompanies = [];
+        $scope.existedCompanies = [];
+        $scope.linkedCompanies = [];
+
+        if ($scope.isCompaniesManagementOpened) {
+            getCompaniesForAccounts();
+            getImportedCompanies();
+        }
+
+        function onError(data, status) {
+            if (status === RESPONSE_STATUS.NOT_FOUND) {
+                $scope.noPlacesToImport = true;//TODO
+            } else {
+                errorFactory.resolve(data, status, $scope.companiesManagementMessages);
+            }
+        }
+
+        function getAccounts(callback) {
+            $http.get(REST_CONFIG.BASE_URL + '/accounts')
+                .success(function (data) {
+                    $scope.accounts = data['_embedded'].accounts;
+                    callback($scope.accounts);
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.companiesManagementMessages)
+                }
+            );
+        }
+
+        function getCompanies(account, callback) {
+            if (account) {
+                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'] + '/companies')
+                    .success(function (data) {
+                        $scope.companies = data['_embedded'].companies;
+                        callback($scope.companies);
+                    }).error(function (data, status) {
+                        errorFactory.resolve(data, status, $scope.companiesManagementMessages)
+                    }
+                );
+            }
+        }
+
+        function getCompaniesForAccounts() {
+            getAccounts(function (accounts) {
+                $scope.existedCompanies = [];
+                for (var k in accounts) {
+                    if (accounts.hasOwnProperty(k)) {
+                        getCompanies(accounts[k], function (companies) {
+                            for (var j in companies) {
+                                if (companies.hasOwnProperty(j)) {
+                                    $scope.existedCompanies.push({
+                                        account: accounts[k],
+                                        company: companies[j]
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function getImportedCompanies() {
+            $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
+                .success(function (data) {
+                    $scope.importedCompanies = data['_embedded']['ext_service_company_intersect'];
+                }).error(function (data, status) {
+                    onError(data, status)
+                }
+            );
+        }
+
+        $scope.getImportedCompanies = function () {
+            getImportedCompanies();
+        };
+
+        $scope.getExistedCompanies = function () {
+            getCompaniesForAccounts();
+        };
+
+        $scope.addCompaniesLink = function () {
+            var company = $scope.existedCompany ? $scope.existedCompany.company.uuid : null;
+            $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect',
+                {source: $scope.importedCompany.source, id: $scope.importedCompany.id, company: company})
+                .success(function () {
+                    getLinkedCompanies();
+                    getCompaniesForAccounts();
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.companiesManagementMessages);
+                }
+            );
+        };
+
+        $scope.removeCompaniesLink = function () {
+            $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedCompany.source + '/' + $scope.linkedCompany.id)
+                .success(function () {
+                    getLinkedCompanies();
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.companiesManagementMessages);
+                }
+            );
+        };
+
+        function getLinkedCompanies() {
+            $scope.linkedCompanies = [];
+            var existedCompany = $scope.existedCompany;
+            var importedCompanies = $scope.importedCompanies;
+            for (var k in importedCompanies) {
+                if (importedCompanies.hasOwnProperty(k) && importedCompanies[k].link === existedCompany.company.uuid) {
+                    $scope.linkedCompanies.push(importedCompanies[k]);
+                }
+            }
+        }
+
+        $scope.selectImportedCompany = function (company) {
+            $scope.importedCompany = company;
+        };
+
+        $scope.selectLinkedCompany = function (company) {
+            $scope.linkedCompany = company;
+        };
+
+        $scope.selectExistedCompany = function (company) {
+            $scope.existedCompany = company;
+            getLinkedCompanies();
+        };
     }])
 ;
