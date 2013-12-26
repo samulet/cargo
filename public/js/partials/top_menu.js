@@ -82,7 +82,7 @@ angular.module('website.top.menu', [])
                 function openPlacesManagementModal() {
                     $scope.isPlacesManagementOpened = true;
                     $scope.placesManagementModal = $modal.open({
-                        templateUrl: 'companiesPlacesContent.html',
+                        templateUrl: 'placesManagementContent.html',
                         scope: $scope,
                         backdrop: 'static',
                         windowClass: 'modal_huge',
