@@ -186,7 +186,7 @@
                     <li id="button_add_link">
                         <button type="button" class="btn btn-primary" ng-click="addCompaniesLink()"
                                 ajax-disabler="isAjaxLoading"
-                                ng-disabled="!importedCompany || isAjaxLoading || importedCompany.link == existedCompany.company.uuid"
+                                ng-disabled="!importedCompany || isAjaxLoading || importedCompany.link == existedCompany.uuid"
                                 style="min-width: 171px;">
                             <i class="glyphicon glyphicon-plus"> </i> Добавить
                             <span ng-show="existedCompany && importedCompany"> связь</span>
@@ -199,7 +199,7 @@
                         <select title="Выберите существующую компанию" class="form-control"
                                 ng-model="existedCompany"
                                 size="8"
-                                ng-options="existedCompany as existedCompany.company.short group by existedCompany.account.title for existedCompany in existedCompanies"
+                                ng-options="existedCompany as existedCompany.short for existedCompany in existedCompanies"
                                 ng-change="selectExistedCompany(existedCompany)"
                                 ajax-disabler="isAjaxLoading">
                             <option value="">---</option>
