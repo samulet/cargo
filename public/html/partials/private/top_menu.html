@@ -179,12 +179,14 @@
                                 ng-options="importedCompany as importedCompany.name group by importedCompany.source for importedCompany in importedCompanies"
                                 ng-change="selectImportedCompany(importedCompany)"
                                 ajax-disabler="isAjaxLoading">
+                            <option value="">---</option>
                         </select>
                     </li>
 
                     <li id="button_add_link">
                         <button type="button" class="btn btn-primary" ng-click="addCompaniesLink()"
-                                ajax-disabler="isAjaxLoading" ng-disabled="!importedCompany || isAjaxLoading"
+                                ajax-disabler="isAjaxLoading"
+                                ng-disabled="!importedCompany || isAjaxLoading || importedCompany.link == existedCompany.company.uuid"
                                 style="min-width: 171px;">
                             <i class="glyphicon glyphicon-plus"> </i> Добавить
                             <span ng-show="existedCompany && importedCompany"> связь</span>
@@ -210,8 +212,8 @@
                         <h5>Существующие связи для выбранного юридического лица</h5>
                         <select title="Выберите связвнные компании" class="form-control"
                                 ng-model="linkedCompany"
-                                size="4"
-                                ng-options="linkedCompany as linkedCompany.name for linkedCompany in linkedCompanies"
+                                size="8"
+                                ng-options="linkedCompany as linkedCompany.name  group by linkedCompany.source for linkedCompany in linkedCompanies"
                                 ng-change="selectLinkedCompany(linkedCompany)"
                                 ajax-disabler="isAjaxLoading">
                             <option value="">---</option>
@@ -219,7 +221,8 @@
                     </li>
                     <li style="vertical-align: bottom;">
                         <button type="button" class="btn btn-default" ng-click="removeCompaniesLink()"
-                                ng-disabled="!existedCompany || !linkedCompany || isAjaxLoading" ajax-disabler="isAjaxLoading">
+                                ng-disabled="!existedCompany || !linkedCompany || isAjaxLoading"
+                                ajax-disabler="isAjaxLoading">
                             <i class="glyphicon glyphicon-minus"> </i>
                             Убрать связь
                         </button>

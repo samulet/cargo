@@ -1415,10 +1415,26 @@ angular.module('website.top.menu', [])
             });
         }
 
-        function getImportedCompanies() {
+        /*function getImportedCompanyById(id) {
+            for (var k in $scope.importedCompanies) {
+                if ($scope.importedCompanies.hasOwnProperty(k)) {
+                    if ($scope.importedCompanies[k].id === id) {
+                        return $scope.importedCompanies[k];
+                    }
+                }
+            }
+        }*/
+
+        function getImportedCompanies(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
                 .success(function (data) {
-                    $scope.importedCompanies = data['_embedded']['ext_service_company_intersect'];
+                    $scope.importedCompanies = data['_embedded']['external_service_company_intersect'];
+                   /* if ($scope.importedCompany) {
+                        $scope.importedCompany = getImportedCompanyById($scope.importedCompany.id);
+                    }*/
+                    if (callback) {
+                        callback();
+                    }
                 }).error(function (data, status) {
                     onError(data, status)
                 }
@@ -1434,12 +1450,13 @@ angular.module('website.top.menu', [])
         };
 
         $scope.addCompaniesLink = function () {
-            var company = $scope.existedCompany ? $scope.existedCompany.company.uuid : null;
+            var companyUuid = $scope.existedCompany ? $scope.existedCompany.company.uuid : null;
             $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect',
-                {source: $scope.importedCompany.source, id: $scope.importedCompany.id, company: company})
+                {source: $scope.importedCompany.source, id: $scope.importedCompany.id, company: companyUuid})
                 .success(function () {
-                    getLinkedCompanies();
-                    getCompaniesForAccounts();
+                    getImportedCompanies(function () {
+                        getLinkedCompanies();
+                    });
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.companiesManagementMessages);
                 }
@@ -1449,7 +1466,9 @@ angular.module('website.top.menu', [])
         $scope.removeCompaniesLink = function () {
             $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedCompany.source + '/' + $scope.linkedCompany.id)
                 .success(function () {
-                    getLinkedCompanies();
+                    getImportedCompanies(function () {
+                        getLinkedCompanies();
+                    });
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.companiesManagementMessages);
                 }
