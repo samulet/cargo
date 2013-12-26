@@ -25,6 +25,7 @@ angular.module('website.account', [])
             $scope.companyModal = $modal.open({
                 templateUrl: 'addCompanyModalContent.html',
                 scope: $scope,
+                backdrop: 'static',
                 controller: 'addCompanyModalController'
             });
         }
