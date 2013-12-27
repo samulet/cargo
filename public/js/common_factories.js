@@ -189,6 +189,10 @@ angular.module('common.factories', [
                 return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
             }
 
+            if (status === RESPONSE_STATUS.UNPROCESSABLE_ENTITY) {
+                return {msg: MESSAGES.ERROR.CANNOT_BE_DONE_ERROR, type: type};
+            }
+
             if (data.message) {
                 return {msg: data.message, type: type};
             }
