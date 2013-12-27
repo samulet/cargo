@@ -25,6 +25,7 @@ angular.module('website.top.menu', [])
             controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
                 $scope.isSelectAccountAndCompanyModalOpened = false;
                 $scope.isCompaniesManagementOpened = false;
+                $scope.isPlacesManagementOpened = false;
 
                 $rootScope.$watch(function () {
                     return localStorage.getItem(storageFactory.storage.local.selectedAccount);
@@ -78,6 +79,16 @@ angular.module('website.top.menu', [])
                         controller: 'companiesManagementController'
                     });
                 }
+                function openPlacesManagementModal() {
+                    $scope.isPlacesManagementOpened = true;
+                    $scope.placesManagementModal = $modal.open({
+                        templateUrl: 'placesManagementContent.html',
+                        scope: $scope,
+                        backdrop: 'static',
+                        windowClass: 'modal_huge',
+                        controller: 'placesManagementController'
+                    });
+                }
 
                 function closeModal(modal) {
                     modal.close();
@@ -99,8 +110,16 @@ angular.module('website.top.menu', [])
                     openCompaniesManagementModal();
                 };
 
+                $scope.showPlacesManagementModal = function () {
+                    openPlacesManagementModal();
+                };
+
                 $scope.closeCompaniesManagementModal = function () {
                     closeModal($scope.companiesManagementModal);
+                };
+
+                $scope.closePlacesManagementModal = function () {
+                    closeModal($scope.placesManagementModal);
                 };
 
                 $scope.showImportPlacesModal = function () {
@@ -265,23 +284,10 @@ angular.module('website.top.menu', [])
             );
         }
 
-        /*function getImportedCompanyById(id) {
-         for (var k in $scope.importedCompanies) {
-         if ($scope.importedCompanies.hasOwnProperty(k)) {
-         if ($scope.importedCompanies[k].id === id) {
-         return $scope.importedCompanies[k];
-         }
-         }
-         }
-         }*/
-
         function getImportedCompanies(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
                 .success(function (data) {
                     $scope.importedCompanies = data['_embedded']['external_service_company_intersect'];
-                    /* if ($scope.importedCompany) {
-                     $scope.importedCompany = getImportedCompanyById($scope.importedCompany.id);
-                     }*/
                     if (callback) {
                         callback();
                     }
@@ -349,6 +355,107 @@ angular.module('website.top.menu', [])
         $scope.selectExistedCompany = function (company) {
             $scope.existedCompany = company;
             getLinkedCompanies();
+        };
+    }
+    ])
+
+    .controller('placesManagementController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
+        $scope.placesManagementMessages = [];
+        $scope.importedPlaces = [];
+        $scope.existedPlaces = [];
+        $scope.linkedPlaces = [];
+
+        if ($scope.isPlacesManagementOpened) {
+            getAllSystemPlaces();
+            getImportedPlaces();
+        }
+
+        function onError(data, status) {
+            if (status != RESPONSE_STATUS.NOT_FOUND) {
+                errorFactory.resolve(data, status, $scope.placesManagementMessages);
+            }
+        }
+
+        function getAllSystemPlaces() {
+            $http.get(REST_CONFIG.BASE_URL + '/places').success(function (data) {
+                $scope.existedPlaces = data['_embedded'].places;
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.placesManagementMessages)
+                }
+            );
+        }
+
+        function getImportedPlaces(callback) {
+            $http.get(REST_CONFIG.BASE_URL + '/service/import/place-intersect')
+                .success(function (data) {
+                    $scope.importedPlaces = data['_embedded']['external_service_place_intersect'];
+                    if (callback) {
+                        callback();
+                    }
+                }).error(function (data, status) {
+                    onError(data, status)
+                }
+            );
+        }
+
+        $scope.getImportedPlaces = function () {
+            getImportedPlaces();
+        };
+
+        $scope.getExistedPlaces = function () {
+            getAllSystemPlaces();
+        };
+
+        $scope.addPlacesLink = function () {
+            var placeUuid = $scope.existedPlace ? $scope.existedPlace.uuid : null;
+            $http.post(REST_CONFIG.BASE_URL + '/service/import/place-intersect',
+                {source: $scope.importedPlace.source, id: $scope.importedPlace.id, place: placeUuid})
+                .success(function () {
+                    getImportedPlaces(function () {
+                        getLinkedPlaces();
+                    });
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
+                }
+            );
+        };
+
+        $scope.removePlacesLink = function () {
+            $http.delete(REST_CONFIG.BASE_URL + '/service/import/place-intersect/' + $scope.linkedPlace.source + '/' + $scope.linkedPlace.id)
+                .success(function () {
+                    getImportedPlaces(function () {
+                        getLinkedPlaces();
+                    });
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
+                }
+            );
+        };
+
+        function getLinkedPlaces() {
+            $scope.linkedPlaces = [];
+            var existedPlace = $scope.existedPlace;
+            var importedPlaces = $scope.importedPlaces;
+            if (importedPlaces && existedPlace) {
+                for (var k in importedPlaces) {
+                    if (importedPlaces.hasOwnProperty(k) && importedPlaces[k].link === existedPlace.uuid) {
+                        $scope.linkedPlaces.push(importedPlaces[k]);
+                    }
+                }
+            }
+        }
+
+        $scope.selectImportedPlace = function (place) {
+            $scope.importedPlace = place;
+        };
+
+        $scope.selectLinkedPlace = function (place) {
+            $scope.linkedPlace = place;
+        };
+
+        $scope.selectExistedPlace = function (place) {
+            $scope.existedPlace = place;
+            getLinkedPlaces();
         };
     }
     ])

@@ -189,6 +189,10 @@ angular.module('common.factories', [
                 return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
             }
 
+            if (status === RESPONSE_STATUS.UNPROCESSABLE_ENTITY) {
+                return {msg: MESSAGES.ERROR.CANNOT_BE_DONE_ERROR, type: type};
+            }
+
             if (data.message) {
                 return {msg: data.message, type: type};
             }
@@ -203,14 +207,20 @@ angular.module('common.factories', [
         return {
             resolve: function (data, status, container, isLoginPage) {
                 if (status === RESPONSE_STATUS.UNAUTHORIZED && !isLoginPage) {
-                    return redirectFactory.logout();
+                    redirectFactory.logout();
                 }
 
                 if (container) {
                     if (angular.isArray(container) && container.length > 0) {
+                        for (var i = 0; i <= container.length; i++) {
+                            if (container[i].msg === getError(status, data).msg) {
+                                return;
+                            }
+                        }
+                        container.push(getError(status, data));
+                    } else {
                         container.push(getError(status, data));
                     }
-                    container.push(getError(status, data));
                 } else {
                     $rootScope.messages.push(getError(status, data));
                 }

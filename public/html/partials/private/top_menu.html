@@ -243,5 +243,86 @@
     </script>
 </div>
 
+<div aria-hidden="true" ng-controller="placesManagementController">
+    <script type="text/ng-template" id="placesManagementContent.html">
+        <div>
+            <div class="modal-header">
+                <h4 class="modal-title">Управление пунктами доставки</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="horizontal_list clear_list">
+
+                    <li class="small_select_width">
+                        <h5>Импортированные пункты доставки</h5>
+                        <select title="Выберите импортированную компанию" class="form-control"
+                                ng-model="importedPlace"
+                                size="8"
+                                ng-options="importedPlace as importedPlace.name group by importedPlace.source for importedPlace in importedPlaces"
+                                ng-change="selectImportedPlace(importedPlace)"
+                                ajax-disabler="isAjaxLoading">
+                            <option value="">---</option>
+                        </select>
+                    </li>
+
+                    <li id="button_add_link">
+                        <button type="button" class="btn btn-primary" ng-click="addPlacesLink()"
+                                ajax-disabler="isAjaxLoading"
+                                ng-disabled="!importedPlace || isAjaxLoading || importedPlace.link == existedPlace.uuid"
+                                style="min-width: 171px;">
+                            <i class="glyphicon glyphicon-plus"> </i> Добавить
+                            <span ng-show="existedPlace && importedPlace"> связь</span>
+                            <span ng-show="!existedPlace && importedPlace"> юр. лицо</span>
+                        </button>
+                    </li>
+
+                    <li class="small_select_width">
+                        <h5>Существующие пункты доставки</h5>
+                        <select title="Выберите существующую компанию" class="form-control"
+                                ng-model="existedPlace"
+                                size="8"
+                                ng-options="existedPlace as existedPlace.short for existedPlace in existedPlaces"
+                                ng-change="selectExistedPlace(existedPlace)"
+                                ajax-disabler="isAjaxLoading">
+                            <option value="">---</option>
+                        </select>
+                    </li>
+                </ul>
+
+                <ul class="horizontal_list clear_list big_select_width">
+                    <li class="small_select_width">
+                        <h5>Существующие связи для выбранного пункта доставки</h5>
+                        <select title="Выберите связвнные компании" class="form-control"
+                                ng-model="linkedPlace"
+                                size="8"
+                                ng-options="linkedPlace as linkedPlace.name  group by linkedPlace.source for linkedPlace in linkedPlaces"
+                                ng-change="selectLinkedPlace(linkedPlace)"
+                                ajax-disabler="isAjaxLoading">
+                            <option value="">---</option>
+                        </select>
+                    </li>
+                    <li style="vertical-align: bottom;">
+                        <button type="button" class="btn btn-default" ng-click="removePlacesLink()"
+                                ng-disabled="!existedPlace || !linkedPlace || isAjaxLoading"
+                                ajax-disabler="isAjaxLoading">
+                            <i class="glyphicon glyphicon-minus"> </i>
+                            Убрать связь
+                        </button>
+                    </li>
+                </ul>
+
+                <alert ng-repeat="message in placesManagementMessages" type="message.type"
+                       close="closeAlert($index)">
+                    {{message.msg}}
+                </alert>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="closePlacesManagementModal()">
+                    Готово
+                </button>
+            </div>
+        </div>
+    </script>
+</div>
+
 </div>
 <!--END Top menu-->

@@ -94,6 +94,7 @@ angular.module('website.constants', [])
         OK: 200,
         CREATED: 201,
         ACCEPTED: 202,
+        NO_CONTENT: 204,
         NOT_MODIFIED: 304,
         BAD_REQUEST: 400,
         UNAUTHORIZED: 401,
@@ -101,6 +102,7 @@ angular.module('website.constants', [])
         NOT_FOUND: 404,
         METHOD_NOT_ALLOWED: 405,
         PROXY_AUTHENTICATION_REQUIRED: 407,
+        UNPROCESSABLE_ENTITY: 422,
         INTERNAL_SERVER_ERROR: 500
     })
     .constant('ACCESS_LEVEL', {
@@ -122,7 +124,8 @@ angular.module('website.constants', [])
         ERROR: {
             UNAUTHORIZED: 'Не удалось авторизироваться',
             INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера',
-            UNKNOWN_ERROR: 'Неизвестная ошибка, попробуйте позже'
+            UNKNOWN_ERROR: 'Неизвестная ошибка, попробуйте позже',
+            CANNOT_BE_DONE_ERROR: 'Невозможно выполнить операцию, попробуйте позже'
         }
     })
 ;
@@ -693,6 +696,10 @@ angular.module('common.factories', [
                 return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
             }
 
+            if (status === RESPONSE_STATUS.UNPROCESSABLE_ENTITY) {
+                return {msg: MESSAGES.ERROR.CANNOT_BE_DONE_ERROR, type: type};
+            }
+
             if (data.message) {
                 return {msg: data.message, type: type};
             }
@@ -707,14 +714,20 @@ angular.module('common.factories', [
         return {
             resolve: function (data, status, container, isLoginPage) {
                 if (status === RESPONSE_STATUS.UNAUTHORIZED && !isLoginPage) {
-                    return redirectFactory.logout();
+                    redirectFactory.logout();
                 }
 
                 if (container) {
                     if (angular.isArray(container) && container.length > 0) {
+                        for (var i = 0; i <= container.length; i++) {
+                            if (container[i].msg === getError(status, data).msg) {
+                                return;
+                            }
+                        }
+                        container.push(getError(status, data));
+                    } else {
                         container.push(getError(status, data));
                     }
-                    container.push(getError(status, data));
                 } else {
                     $rootScope.messages.push(getError(status, data));
                 }
@@ -1139,6 +1152,7 @@ angular.module('website.top.menu', [])
             controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
                 $scope.isSelectAccountAndCompanyModalOpened = false;
                 $scope.isCompaniesManagementOpened = false;
+                $scope.isPlacesManagementOpened = false;
 
                 $rootScope.$watch(function () {
                     return localStorage.getItem(storageFactory.storage.local.selectedAccount);
@@ -1192,6 +1206,16 @@ angular.module('website.top.menu', [])
                         controller: 'companiesManagementController'
                     });
                 }
+                function openPlacesManagementModal() {
+                    $scope.isPlacesManagementOpened = true;
+                    $scope.placesManagementModal = $modal.open({
+                        templateUrl: 'placesManagementContent.html',
+                        scope: $scope,
+                        backdrop: 'static',
+                        windowClass: 'modal_huge',
+                        controller: 'placesManagementController'
+                    });
+                }
 
                 function closeModal(modal) {
                     modal.close();
@@ -1213,8 +1237,16 @@ angular.module('website.top.menu', [])
                     openCompaniesManagementModal();
                 };
 
+                $scope.showPlacesManagementModal = function () {
+                    openPlacesManagementModal();
+                };
+
                 $scope.closeCompaniesManagementModal = function () {
                     closeModal($scope.companiesManagementModal);
+                };
+
+                $scope.closePlacesManagementModal = function () {
+                    closeModal($scope.placesManagementModal);
                 };
 
                 $scope.showImportPlacesModal = function () {
@@ -1379,23 +1411,10 @@ angular.module('website.top.menu', [])
             );
         }
 
-        /*function getImportedCompanyById(id) {
-         for (var k in $scope.importedCompanies) {
-         if ($scope.importedCompanies.hasOwnProperty(k)) {
-         if ($scope.importedCompanies[k].id === id) {
-         return $scope.importedCompanies[k];
-         }
-         }
-         }
-         }*/
-
         function getImportedCompanies(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
                 .success(function (data) {
                     $scope.importedCompanies = data['_embedded']['external_service_company_intersect'];
-                    /* if ($scope.importedCompany) {
-                     $scope.importedCompany = getImportedCompanyById($scope.importedCompany.id);
-                     }*/
                     if (callback) {
                         callback();
                     }
@@ -1463,6 +1482,107 @@ angular.module('website.top.menu', [])
         $scope.selectExistedCompany = function (company) {
             $scope.existedCompany = company;
             getLinkedCompanies();
+        };
+    }
+    ])
+
+    .controller('placesManagementController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
+        $scope.placesManagementMessages = [];
+        $scope.importedPlaces = [];
+        $scope.existedPlaces = [];
+        $scope.linkedPlaces = [];
+
+        if ($scope.isPlacesManagementOpened) {
+            getAllSystemPlaces();
+            getImportedPlaces();
+        }
+
+        function onError(data, status) {
+            if (status != RESPONSE_STATUS.NOT_FOUND) {
+                errorFactory.resolve(data, status, $scope.placesManagementMessages);
+            }
+        }
+
+        function getAllSystemPlaces() {
+            $http.get(REST_CONFIG.BASE_URL + '/places').success(function (data) {
+                $scope.existedPlaces = data['_embedded'].places;
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.placesManagementMessages)
+                }
+            );
+        }
+
+        function getImportedPlaces(callback) {
+            $http.get(REST_CONFIG.BASE_URL + '/service/import/place-intersect')
+                .success(function (data) {
+                    $scope.importedPlaces = data['_embedded']['external_service_place_intersect'];
+                    if (callback) {
+                        callback();
+                    }
+                }).error(function (data, status) {
+                    onError(data, status)
+                }
+            );
+        }
+
+        $scope.getImportedPlaces = function () {
+            getImportedPlaces();
+        };
+
+        $scope.getExistedPlaces = function () {
+            getAllSystemPlaces();
+        };
+
+        $scope.addPlacesLink = function () {
+            var placeUuid = $scope.existedPlace ? $scope.existedPlace.uuid : null;
+            $http.post(REST_CONFIG.BASE_URL + '/service/import/place-intersect',
+                {source: $scope.importedPlace.source, id: $scope.importedPlace.id, place: placeUuid})
+                .success(function () {
+                    getImportedPlaces(function () {
+                        getLinkedPlaces();
+                    });
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
+                }
+            );
+        };
+
+        $scope.removePlacesLink = function () {
+            $http.delete(REST_CONFIG.BASE_URL + '/service/import/place-intersect/' + $scope.linkedPlace.source + '/' + $scope.linkedPlace.id)
+                .success(function () {
+                    getImportedPlaces(function () {
+                        getLinkedPlaces();
+                    });
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
+                }
+            );
+        };
+
+        function getLinkedPlaces() {
+            $scope.linkedPlaces = [];
+            var existedPlace = $scope.existedPlace;
+            var importedPlaces = $scope.importedPlaces;
+            if (importedPlaces && existedPlace) {
+                for (var k in importedPlaces) {
+                    if (importedPlaces.hasOwnProperty(k) && importedPlaces[k].link === existedPlace.uuid) {
+                        $scope.linkedPlaces.push(importedPlaces[k]);
+                    }
+                }
+            }
+        }
+
+        $scope.selectImportedPlace = function (place) {
+            $scope.importedPlace = place;
+        };
+
+        $scope.selectLinkedPlace = function (place) {
+            $scope.linkedPlace = place;
+        };
+
+        $scope.selectExistedPlace = function (place) {
+            $scope.existedPlace = place;
+            getLinkedPlaces();
         };
     }
     ])
