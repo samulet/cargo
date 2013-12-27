@@ -4,7 +4,6 @@ angular.module('website.dashboard', [])
 
     .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', '$modal', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory, $modal) {
         $rootScope.pageTitle = 'dashboard';
-        $rootScope.bodyColor = 'filled_bg';
         $scope.accountModal = null;
         $scope.accountData = [];
         $scope.firstAccount = null;
