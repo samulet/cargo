@@ -850,7 +850,6 @@ angular.module('website.account', [])
 
     .controller('accountController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', '$modal', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory, $modal) {
         $rootScope.pageTitle = 'Аккаунт';
-        $rootScope.bodyColor = 'filled_bg';
         $scope.companyModal = null;
         $scope.selectedAccount = null;
         $scope.showCompanyWizard = false;
@@ -937,7 +936,6 @@ angular.module('website.dashboard', [])
 
     .controller('dashboardController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', 'storageFactory', '$modal', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, storageFactory, $modal) {
         $rootScope.pageTitle = 'dashboard';
-        $rootScope.bodyColor = 'filled_bg';
         $scope.accountModal = null;
         $scope.accountData = [];
         $scope.firstAccount = null;
@@ -1042,7 +1040,6 @@ angular.module('website.public.offer', [])
 
     .controller('publicOfferController', ['$scope', '$rootScope', function ($scope, $rootScope) {
         $rootScope.pageTitle = 'Аккаунт';
-        $rootScope.bodyColor = 'filled_bg';
     }])
 ;
 'use strict';
@@ -1059,7 +1056,6 @@ angular.module('website.user.profile', [])
 
     .controller('userProfileController', ['$scope', '$rootScope', '$http', 'storageFactory', 'errorFactory', 'redirectFactory', '$timeout', 'REST_CONFIG', function ($scope, $rootScope, $http, storageFactory, errorFactory, redirectFactory, $timeout, REST_CONFIG) {
         $rootScope.pageTitle = 'Профиль';
-        $rootScope.bodyColor = 'filled_bg';
 
         $scope.editMode = false;
 
