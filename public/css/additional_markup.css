@@ -252,6 +252,42 @@ ul.horizontal_list li {
     background: url('/img/spinner_active.gif') no-repeat center;
 }
 
+.no_opacity {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+
+.opacity_transition_fast{
+    -webkit-transition: opacity 0.6s ease;
+    -moz-transition: opacity 0.6s ease;
+    -o-transition: opacity 0.6s ease;
+    -webkit-transition: opacity 0.6s ease;
+    transition: opacity 0.6s ease;
+}
+
+.opacity_transition_med{
+    -webkit-transition: opacity 1s ease;
+    -moz-transition: opacity 1s ease;
+    -o-transition: opacity 1s ease;
+    -webkit-transition: opacity 1s ease;
+    transition: opacity 1s ease;
+}
+
+.opacity_transition_long{
+    -webkit-transition: opacity 2s ease;
+    -moz-transition: opacity 2s ease;
+    -o-transition: opacity 2s ease;
+    -webkit-transition: opacity 2s ease;
+    transition: opacity 2s ease;
+}
+
+.smooth_opacity {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
 .modal_huge .modal-dialog {
     width: 900px;
 }
