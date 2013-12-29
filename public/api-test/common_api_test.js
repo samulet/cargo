@@ -35,7 +35,7 @@ angular.module('test', [
         var token = 'db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2';
         var selectedAccount = 'b21295c8a94c4bb0a4de07bd2d76ed38';
         var selectedCompany = 'eaf4befff8aa4a0090e86cb9821026a0';
-        var sourceId = 'prodrezerv/6';
+        var sourceId = 'vesta-9';
 
         $scope.passedTestsPercent = 0;
         $scope.inProgressTestsPercent = 100;
@@ -283,6 +283,7 @@ angular.module('test', [
                     {
                         method: 'PUT',
                         url: '/api/ref/product-group',
+                        data: JSON.stringify({"code": "milk", "title": "Молочные продукты"}),
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -293,25 +294,11 @@ angular.module('test', [
                 ]
             },
             {
-                title: 'Company import service',
-                routes: [
-                    {
-                        method: 'GET',
-                        url: '/api/service/import/company',
-                        headers: {
-                            'X-Auth-UserToken': token,
-                            'X-App-Account': selectedAccount,
-                            'X-App-Company': selectedCompany
-                        }
-                    }
-                ]
-            },
-            {
                 title: 'Link companies with external records',
                 routes: [
                     {
                         method: 'GET',
-                        url: '/api/service/import/company-intersect/' + sourceId,
+                        url: '/api/service/import/company-intersect',
                         headers: {
                             'X-Auth-UserToken': token,
                             'X-App-Account': selectedAccount,
@@ -320,10 +307,10 @@ angular.module('test', [
                     },
                     {
                         method: 'POST',
-                        url: '/api/service/import/company-intersect/' + sourceId,
+                        url: '/api/service/import/company-intersect',
                         data: JSON.stringify({
                             "source": "vesta",
-                            "id": 123,
+                            "id": 28,
                             "company": companyUuid[0]
                         }),
                         headers: {
