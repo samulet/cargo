@@ -14,7 +14,8 @@ angular.module('website', [
         'website.dashboard',
         'website.account',
         'website.public.offer',
-        'website.page.errors'
+        'website.page.errors',
+        'ui.select2'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'html/pages/';
