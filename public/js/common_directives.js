@@ -82,14 +82,14 @@ angular.module('common.directives', [])
 
                 $scope.saveData = function () {
                     prepareDatesFormat();
-                    $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account['account_uuid'] + '/companies', $scope.companyData)
+                    $http.post(REST_CONFIG.BASE_URL + '/accounts/' + $scope.account.account_uuid + '/companies', $scope.companyData)
                         .success(function () {
                             if ($scope.modal) {
                                 $scope.modal.close();
                             }
                             $scope.wizardStep = -1;
                         }).error(function (data, status) {
-                            errorFactory.resolve(data, status)
+                            errorFactory.resolve(data, status);
                         }
                     );
                 };
@@ -341,9 +341,9 @@ angular.module('common.directives', [])
                 };
 
                 scope.add = function () {
-                    var okved = scope.temp.partZero + scope.temp.partFirst + '.'
-                        + scope.temp.partSecond + scope.temp.partThird + '.'
-                        + scope.temp.partFourth + scope.temp.partFifth;
+                    var okved = scope.temp.partZero + scope.temp.partFirst +
+                        '.' + scope.temp.partSecond + scope.temp.partThird +
+                        '.' + scope.temp.partFourth + scope.temp.partFifth;
                     scope.okveds.push(okved);
                     scope.temp = {};
                 };

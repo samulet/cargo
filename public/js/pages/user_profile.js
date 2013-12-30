@@ -33,7 +33,7 @@ angular.module('website.user.profile', [])
                 .success(function (data) {
                     //storageFactory.setUser(data.user);
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status)
+                    errorFactory.resolve(data, status);
                 }
             );
         };

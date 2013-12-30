@@ -52,7 +52,7 @@ angular.module('website.account', [])
                     var accounts = data._embedded.accounts;
                     $scope.accounts = accounts;
                     if (accounts.length === 1) {
-                        $scope.firstAccount = data['_embedded'].accounts[0];
+                        $scope.firstAccount = data._embedded.accounts[0];
                     }
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status);
@@ -61,7 +61,7 @@ angular.module('website.account', [])
         }
 
         $scope.removeAccount = function (account) {
-            $http.delete(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'])
+            $http.delete(REST_CONFIG.BASE_URL + '/accounts/' + account.account_uuid)
                 .success(function () {
                     getAccounts();
                 }).error(function (data, status) {

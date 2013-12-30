@@ -9,11 +9,11 @@ angular.module('website.top.menu', [])
             controller: function ($scope, $location) {
                 $scope.getClass = function (path) {
                     if ('/' + $location.path().substr(1, path.length) == path) {
-                        return "active"
+                        return "active";
                     } else {
-                        return ""
+                        return "";
                     }
-                }
+                };
             }
         };
     })
@@ -36,7 +36,7 @@ angular.module('website.top.menu', [])
                 $rootScope.$watch(function () {
                     return localStorage.getItem(storageFactory.storage.local.selectedCompany);
                 }, function (newValue) {
-                    $scope.companyShortName = (newValue) ? JSON.parse(newValue).short : '(Юр. Лицо не выбрано)'
+                    $scope.companyShortName = (newValue) ? JSON.parse(newValue).short : '(Юр. Лицо не выбрано)';
                 });
 
                 function openSelectAccountAndCompanyModal() {
@@ -79,6 +79,7 @@ angular.module('website.top.menu', [])
                         controller: 'companiesManagementController'
                     });
                 }
+
                 function openPlacesManagementModal() {
                     $scope.isPlacesManagementOpened = true;
                     $scope.placesManagementModal = $modal.open({
@@ -136,7 +137,7 @@ angular.module('website.top.menu', [])
 
                 $scope.logout = function () {
                     redirectFactory.logout();
-                }
+                };
             }
         };
     })
@@ -152,24 +153,35 @@ angular.module('website.top.menu', [])
         function getAccounts(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (data) {
-                    $scope.accounts = data['_embedded'].accounts;
+                    $scope.accounts = data._embedded.accounts;
                     callback($scope.accounts);
                 }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.selectAccountAndCompanyMessages)
+                    errorFactory.resolve(data, status, $scope.selectAccountAndCompanyMessages);
                 }
             );
         }
 
         function getCompanies(account, callback) {
             if (account) {
-                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'] + '/companies')
+                $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account.account_uuid + '/companies')
                     .success(function (data) {
-                        $scope.companies = data['_embedded'].companies;
-                        callback($scope.companies);
+                        $scope.companies = data._embedded.companies;
+                        callback($scope.companies, account);
                     }).error(function (data, status) {
-                        errorFactory.resolve(data, status, $scope.selectAccountAndCompanyMessages)
+                        errorFactory.resolve(data, status, $scope.selectAccountAndCompanyMessages);
                     }
                 );
+            }
+        }
+
+        function pushCompaniesAndAccount(companies, account) {
+            for (var j in companies) {
+                if (companies.hasOwnProperty(j)) {
+                    $scope.options.push({
+                        account: account,
+                        company: companies[j]
+                    });
+                }
             }
         }
 
@@ -177,16 +189,7 @@ angular.module('website.top.menu', [])
             getAccounts(function (accounts) {
                 for (var k in accounts) {
                     if (accounts.hasOwnProperty(k)) {
-                        getCompanies(accounts[k], function (companies) {
-                            for (var j in companies) {
-                                if (companies.hasOwnProperty(j)) {
-                                    $scope.options.push({
-                                        account: accounts[k],
-                                        company: companies[j]
-                                    });
-                                }
-                            }
-                        });
+                        getCompanies(accounts[k], pushCompaniesAndAccount);//todo check !!!!!!!!
                     }
                 }
             });
@@ -225,12 +228,12 @@ angular.module('website.top.menu', [])
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company')
                 .success(function (data) {
                     $scope.isImportCompaniesComplete = true;
-                    $scope.extServiceCompanies = data['_embedded']['ext_service_company'];
+                    $scope.extServiceCompanies = data._embedded.ext_service_company;
                 }).error(function (data, status) {
-                    onError(data, status)
+                    onError(data, status);
                 }
             );
-        }
+        };
     }])
 
     .controller('importPlacesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
@@ -249,12 +252,12 @@ angular.module('website.top.menu', [])
             $http.get(REST_CONFIG.BASE_URL + '/service/import/place')
                 .success(function (data) {
                     $scope.isImportPlacesComplete = true;
-                    $scope.extServicePlaces = data['_embedded']['ext_service_places'];
+                    $scope.extServicePlaces = data._embedded.ext_service_places;
                 }).error(function (data, status) {
-                    onError(data, status)
+                    onError(data, status);
                 }
             );
-        }
+        };
     }])
 
 
@@ -277,9 +280,9 @@ angular.module('website.top.menu', [])
 
         function getAllSystemCompanies() {
             $http.get(REST_CONFIG.BASE_URL + '/companies').success(function (data) {
-                $scope.existedCompanies = data['_embedded'].companies;
+                $scope.existedCompanies = data._embedded.companies;
             }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.companiesManagementMessages)
+                    errorFactory.resolve(data, status, $scope.companiesManagementMessages);
                 }
             );
         }
@@ -287,12 +290,12 @@ angular.module('website.top.menu', [])
         function getImportedCompanies(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
                 .success(function (data) {
-                    $scope.importedCompanies = data['_embedded']['companies'];
+                    $scope.importedCompanies = data._embedded.companies;
                     if (callback) {
                         callback();
                     }
                 }).error(function (data, status) {
-                    onError(data, status)
+                    onError(data, status);
                 }
             );
         }
@@ -306,14 +309,21 @@ angular.module('website.top.menu', [])
         };
 
         $scope.addCompaniesLink = function () {
-            var companyUuid = $scope.existedCompany ? $scope.existedCompany.uuid : null;
-            $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect',
-                {source: $scope.importedCompany.source, id: $scope.importedCompany.id, company: companyUuid})
-                .success(function () {
-                    getImportedCompanies(function () {
-                        getLinkedCompanies();
-                    });
-                }).error(function (data, status) {
+            var params = {
+                source: $scope.importedCompany.source,
+                id: $scope.importedCompany.id
+            };
+
+            if ($scope.existedCompany) {
+                params.company = $scope.existedCompany.uuid;
+            }
+
+            $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect', params).success(function () {
+                getImportedCompanies(function () {
+                    getLinkedCompanies();
+                    getAllSystemCompanies();
+                });
+            }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.companiesManagementMessages);
                 }
             );
@@ -378,9 +388,9 @@ angular.module('website.top.menu', [])
 
         function getAllSystemPlaces() {
             $http.get(REST_CONFIG.BASE_URL + '/places').success(function (data) {
-                $scope.existedPlaces = data['_embedded'].places;
+                $scope.existedPlaces = data._embedded.places;
             }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.placesManagementMessages)
+                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
                 }
             );
         }
@@ -388,12 +398,12 @@ angular.module('website.top.menu', [])
         function getImportedPlaces(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/place-intersect')
                 .success(function (data) {
-                    $scope.importedPlaces = data['_embedded']['external_service_place_intersect'];
+                    $scope.importedPlaces = data._embedded.external_service_place_intersect;
                     if (callback) {
                         callback();
                     }
                 }).error(function (data, status) {
-                    onError(data, status)
+                    onError(data, status);
                 }
             );
         }

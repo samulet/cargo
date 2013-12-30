@@ -207,7 +207,7 @@ angular.module('common.factories', [
                 return {msg: data.error, type: type};
             }
 
-            return {msg: MESSAGES.ERROR.UNKNOWN_ERROR, type: type}
+            return {msg: MESSAGES.ERROR.UNKNOWN_ERROR, type: type};
         }
 
         return {
@@ -238,7 +238,7 @@ angular.module('common.factories', [
     }])
 
     .
-    factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', 'RESPONSE_STATUS', function ($http, storageFactory, errorFactory, REST_CONFIG, RESPONSE_STATUS) {
+    factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
 
         function onError(data, status) {
             if (!errorFactory.isUnauthorized(status)) {
@@ -249,7 +249,7 @@ angular.module('common.factories', [
         function getAccounts() {
             $http.get(REST_CONFIG.BASE_URL + '/accounts')
                 .success(function (data) {
-                    var accounts = data['_embedded'].accounts;
+                    var accounts = data._embedded.accounts;
                     if (accounts.length === 1) {
                         storageFactory.setSelectedAccount(accounts[0]);
                         getCompanies(accounts[0], true);
@@ -264,9 +264,9 @@ angular.module('common.factories', [
         }
 
         function getCompanies(account, isSetSelected) {
-            $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account['account_uuid'] + '/companies')
+            $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account.account_uuid + '/companies')
                 .success(function (data) {
-                    var companies = data['_embedded'].companies;
+                    var companies = data._embedded.companies;
                     if (companies.length === 1 && isSetSelected === true) {
                         storageFactory.setSelectedCompany(companies[0]);
                     }
@@ -279,16 +279,16 @@ angular.module('common.factories', [
 
         function getApiRoutes() {
             $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
-                storageFactory.setApiRoutes(data['_embedded']['resource_meta']);
+                storageFactory.setApiRoutes(data._embedded.resource_meta);
             }).error(function (data, status) {
-                    errorFactory.resolve(data, status)
+                    errorFactory.resolve(data, status);
                 }
             );
         }
 
         function getUser() {//TODO api didn't work yet
             // $http.get(REST_CONFIG.BASE_URL + '/profile').success(function (data) {
-            // storageFactory.setUser(data['_embedded']['user']);
+            // storageFactory.setUser(data._embedded.user);
             //}).error(function (data, status) {
             // errorFactory.resolve(data, status)
             //     }
@@ -318,6 +318,6 @@ angular.module('common.factories', [
                     getUser();
                 }
             }
-        }
+        };
     }])
 ;

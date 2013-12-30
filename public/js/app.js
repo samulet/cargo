@@ -63,8 +63,8 @@ angular.module('website', [
             return localStorage.getItem(storageFactory.storage.local.selectedAccount);
         }, function (newValue) {
             if (newValue) {
-                console.log('X-App-Account: ' + JSON.parse(newValue)['account_uuid']);//TODO remove
-                $http.defaults.headers.common['X-App-Account'] = JSON.parse(newValue)['account_uuid'];
+                console.log('X-App-Account: ' + JSON.parse(newValue).account_uuid);//TODO remove
+                $http.defaults.headers.common['X-App-Account'] = JSON.parse(newValue).account_uuid;
             }
         });
 
@@ -72,8 +72,8 @@ angular.module('website', [
             return localStorage.getItem(storageFactory.storage.local.selectedCompany);
         }, function (newValue) {
             if (newValue) {
-                console.log('X-App-Company: ' + JSON.parse(newValue)['uuid']);//TODO remove
-                $http.defaults.headers.common['X-App-Company'] = JSON.parse(newValue)['uuid'];
+                console.log('X-App-Company: ' + JSON.parse(newValue).uuid);//TODO remove
+                $http.defaults.headers.common['X-App-Company'] = JSON.parse(newValue).uuid;
             }
         });
 
