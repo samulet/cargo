@@ -14,7 +14,8 @@ angular.module('website', [
         'website.dashboard',
         'website.account',
         'website.public.offer',
-        'website.page.errors'
+        'website.page.errors',
+        'ui.select2'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'html/pages/';
@@ -57,7 +58,6 @@ angular.module('website', [
         $rootScope.messages = [];
 
         userParamsFactory.getApiRoutes();
-        userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
             return localStorage.getItem(storageFactory.storage.local.selectedAccount);
@@ -86,6 +86,7 @@ angular.module('website', [
             }
         });
 
+        userParamsFactory.prepareUser();
     }])
 ;
 
@@ -545,7 +546,7 @@ angular.module('common.factories', [
         }
 
         function remove(key) {
-            localStorage.removeItem(key);
+            return localStorage.removeItem(key);
         }
 
         return { //TODO add fallback to cookies
@@ -584,11 +585,17 @@ angular.module('common.factories', [
             getSelectedAccount: function () {
                 return get(storage.local.selectedAccount);
             },
+            removeSelectedAccount: function () {
+                return remove(storage.local.selectedAccount);
+            },
             setSelectedCompany: function (company) {
                 set(storage.local.selectedCompany, company);
             },
             getSelectedCompany: function () {
                 return get(storage.local.selectedCompany);
+            },
+            removeSelectedCompany: function () {
+                return remove(storage.local.selectedCompany);
             }
         };
     }])
@@ -755,8 +762,8 @@ angular.module('common.factories', [
                         storageFactory.setSelectedAccount(accounts[0]);
                         getCompanies(accounts[0], true);
                     } else if (accounts.length === 0) {
-                        storageFactory.setSelectedAccount(null);
-                        storageFactory.setSelectedCompany(null);
+                        storageFactory.removeSelectedAccount();
+                        storageFactory.removeSelectedCompany();
                     }
                 }).error(function (data, status) {
                     onError(data, status);
@@ -808,6 +815,7 @@ angular.module('common.factories', [
                 }
             },
             prepareUser: function () {
+                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
                 var selectedAccount = storageFactory.getSelectedAccount();
                 var selectedCompany = storageFactory.getSelectedCompany();
                 if (!selectedAccount || !selectedCompany) {
@@ -985,12 +993,18 @@ angular.module('website.dashboard', [])
                     if (accounts.length === 1) {
                         $scope.firstAccount = data._embedded.accounts[0];
                         storageFactory.setSelectedAccount($scope.firstAccount);
-                    } else if (accounts.length === 0){
-                        storageFactory.setSelectedAccount(null);
-                        storageFactory.setSelectedCompany(null);
+                    } else if (accounts.length === 0) {
+                        storageFactory.removeSelectedAccount();
+                        storageFactory.removeSelectedCompany();
                     }
                 }).error(onError);
         }
+
+        $scope.addAccount = function () {
+            $scope.showAccountRegistration = true;
+            $scope.showCompanyWizard = false;
+            openAccountModal();
+        };
 
         $scope.removeAccount = function (account) {
             $http.delete(REST_CONFIG.BASE_URL + '/accounts/' + account.account_uuid)
@@ -1324,8 +1338,8 @@ angular.module('website.top.menu', [])
                 storageFactory.setSelectedAccount($scope.tempSelectedAccount.account);
                 storageFactory.setSelectedCompany($scope.tempSelectedAccount.company);
             } else {
-                storageFactory.setSelectedAccount(null);
-                storageFactory.setSelectedCompany(null);
+                storageFactory.removeSelectedAccount();
+                storageFactory.removeSelectedCompany();
             }
             $scope.closeSelectAccountAndCompanyModal();
         };

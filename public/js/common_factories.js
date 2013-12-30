@@ -307,6 +307,7 @@ angular.module('common.factories', [
                 }
             },
             prepareUser: function () {
+                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
                 var selectedAccount = storageFactory.getSelectedAccount();
                 var selectedCompany = storageFactory.getSelectedCompany();
                 if (!selectedAccount || !selectedCompany) {

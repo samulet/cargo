@@ -58,7 +58,6 @@ angular.module('website', [
         $rootScope.messages = [];
 
         userParamsFactory.getApiRoutes();
-        userParamsFactory.prepareUser();
 
         $rootScope.$watch(function () {
             return localStorage.getItem(storageFactory.storage.local.selectedAccount);
@@ -87,5 +86,6 @@ angular.module('website', [
             }
         });
 
+        userParamsFactory.prepareUser();
     }])
 ;
