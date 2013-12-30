@@ -201,8 +201,8 @@ angular.module('website.top.menu', [])
                 storageFactory.setSelectedAccount($scope.tempSelectedAccount.account);
                 storageFactory.setSelectedCompany($scope.tempSelectedAccount.company);
             } else {
-                storageFactory.setSelectedAccount(null);
-                storageFactory.setSelectedCompany(null);
+                storageFactory.removeSelectedAccount();
+                storageFactory.removeSelectedCompany();
             }
             $scope.closeSelectAccountAndCompanyModal();
         };

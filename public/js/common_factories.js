@@ -38,7 +38,7 @@ angular.module('common.factories', [
         }
 
         function remove(key) {
-            localStorage.removeItem(key);
+            return localStorage.removeItem(key);
         }
 
         return { //TODO add fallback to cookies
@@ -77,11 +77,17 @@ angular.module('common.factories', [
             getSelectedAccount: function () {
                 return get(storage.local.selectedAccount);
             },
+            removeSelectedAccount: function () {
+                return remove(storage.local.selectedAccount);
+            },
             setSelectedCompany: function (company) {
                 set(storage.local.selectedCompany, company);
             },
             getSelectedCompany: function () {
                 return get(storage.local.selectedCompany);
+            },
+            removeSelectedCompany: function () {
+                return remove(storage.local.selectedCompany);
             }
         };
     }])
@@ -248,8 +254,8 @@ angular.module('common.factories', [
                         storageFactory.setSelectedAccount(accounts[0]);
                         getCompanies(accounts[0], true);
                     } else if (accounts.length === 0) {
-                        storageFactory.setSelectedAccount(null);
-                        storageFactory.setSelectedCompany(null);
+                        storageFactory.removeSelectedAccount();
+                        storageFactory.removeSelectedCompany();
                     }
                 }).error(function (data, status) {
                     onError(data, status);

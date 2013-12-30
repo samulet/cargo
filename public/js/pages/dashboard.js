@@ -53,12 +53,18 @@ angular.module('website.dashboard', [])
                     if (accounts.length === 1) {
                         $scope.firstAccount = data._embedded.accounts[0];
                         storageFactory.setSelectedAccount($scope.firstAccount);
-                    } else if (accounts.length === 0){
-                        storageFactory.setSelectedAccount(null);
-                        storageFactory.setSelectedCompany(null);
+                    } else if (accounts.length === 0) {
+                        storageFactory.removeSelectedAccount();
+                        storageFactory.removeSelectedCompany();
                     }
                 }).error(onError);
         }
+
+        $scope.addAccount = function () {
+            $scope.showAccountRegistration = true;
+            $scope.showCompanyWizard = false;
+            openAccountModal();
+        };
 
         $scope.removeAccount = function (account) {
             $http.delete(REST_CONFIG.BASE_URL + '/accounts/' + account.account_uuid)
