@@ -186,11 +186,17 @@
                     <li id="button_add_link">
                         <button type="button" class="btn btn-primary" ng-click="addCompaniesLink()"
                                 ajax-disabler="isAjaxLoading"
-                                ng-disabled="!importedCompany || isAjaxLoading || importedCompany.link == existedCompany.uuid"
+                                ng-disabled="!importedCompany || isAjaxLoading"
                                 style="min-width: 171px;">
                             <i class="glyphicon glyphicon-plus"> </i> Добавить
                             <span ng-show="existedCompany && importedCompany"> связь</span>
                             <span ng-show="!existedCompany && importedCompany"> юр. лицо</span>
+                        </button>
+                        <button type="button" class="btn btn-warning" ng-click="removeCompany()"
+                                ajax-disabler="isAjaxLoading"
+                                ng-disabled="!existedCompany || isAjaxLoading"
+                                style="min-width: 171px;">
+                            <i class="glyphicon glyphicon-minus"> </i> Удалить юр. лицо
                         </button>
                     </li>
 

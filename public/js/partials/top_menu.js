@@ -266,6 +266,8 @@ angular.module('website.top.menu', [])
         $scope.importedCompanies = [];
         $scope.existedCompanies = [];
         $scope.linkedCompanies = [];
+        var unlinkedImportedCompanies = [];
+        var linkedImportedCompanies = [];
 
         if ($scope.isCompaniesManagementOpened) {
             getAllSystemCompanies();
@@ -280,6 +282,7 @@ angular.module('website.top.menu', [])
 
         function getAllSystemCompanies() {
             $http.get(REST_CONFIG.BASE_URL + '/companies').success(function (data) {
+                $scope.existedCompany = null;
                 $scope.existedCompanies = data._embedded.companies;
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.companiesManagementMessages);
@@ -288,13 +291,23 @@ angular.module('website.top.menu', [])
         }
 
         function getImportedCompanies(callback) {
-            $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
-                .success(function (data) {
-                    $scope.importedCompanies = data._embedded.companies;
-                    if (callback) {
-                        callback();
+            $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect').success(function (data) {
+                $scope.importedCompany = null;
+                var importedCompanies = data._embedded.companies;
+                unlinkedImportedCompanies = [];
+                linkedImportedCompanies = [];
+                for (var i = 0; i <= importedCompanies.length - 1; i++) {
+                    if (!importedCompanies[i].link) {
+                        unlinkedImportedCompanies.push(importedCompanies[i]);
+                    } else {
+                        linkedImportedCompanies.push(importedCompanies[i]);
                     }
-                }).error(function (data, status) {
+                }
+                $scope.importedCompanies = unlinkedImportedCompanies;
+                if (callback) {
+                    callback();
+                }
+            }).error(function (data, status) {
                     onError(data, status);
                 }
             );
@@ -334,7 +347,20 @@ angular.module('website.top.menu', [])
                 .success(function () {
                     getImportedCompanies(function () {
                         getLinkedCompanies();
+                        getAllSystemCompanies();
                     });
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.companiesManagementMessages);
+                }
+            );
+        };
+
+        $scope.removeCompany = function () {
+            $http.delete(REST_CONFIG.BASE_URL + '/companies/' + $scope.existedCompany.uuid)
+                .success(function () {
+                    getImportedCompanies();
+                    getLinkedCompanies();
+                    getAllSystemCompanies();
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.companiesManagementMessages);
                 }
@@ -344,11 +370,10 @@ angular.module('website.top.menu', [])
         function getLinkedCompanies() {
             $scope.linkedCompanies = [];
             var existedCompany = $scope.existedCompany;
-            var importedCompanies = $scope.importedCompanies;
-            if (importedCompanies && existedCompany) {
-                for (var k in importedCompanies) {
-                    if (importedCompanies.hasOwnProperty(k) && importedCompanies[k].link === existedCompany.uuid) {
-                        $scope.linkedCompanies.push(importedCompanies[k]);
+            if (linkedImportedCompanies.length > 0 && existedCompany) {
+                for (var k in linkedImportedCompanies) {
+                    if (linkedImportedCompanies.hasOwnProperty(k) && linkedImportedCompanies[k].link === existedCompany.uuid) {
+                        $scope.linkedCompanies.push(linkedImportedCompanies[k]);
                     }
                 }
             }
