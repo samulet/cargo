@@ -1424,7 +1424,7 @@ angular.module('website.top.menu', [])
         function getImportedCompanies(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
                 .success(function (data) {
-                    $scope.importedCompanies = data['_embedded']['external_service_company_intersect'];
+                    $scope.importedCompanies = data['_embedded']['companies'];
                     if (callback) {
                         callback();
                     }
@@ -1457,7 +1457,7 @@ angular.module('website.top.menu', [])
         };
 
         $scope.removeCompaniesLink = function () {
-            $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedCompany.source + '/' + $scope.linkedCompany.id)
+            $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedCompany.source + '-' + $scope.linkedCompany.id)
                 .success(function () {
                     getImportedCompanies(function () {
                         getLinkedCompanies();
