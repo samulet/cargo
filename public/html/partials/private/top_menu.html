@@ -86,6 +86,12 @@
             <div class="modal-body">
                 <span ng-show="!isImportCompaniesComplete && !noCompaniesToImport">Импортировать юридические лица?</span>
                 <span ng-show="isImportCompaniesComplete && !noCompaniesToImport">Импорт успешно завершён</span>
+                <ul ng-show="isImportCompaniesComplete && !noCompaniesToImport">
+                    <li>Новых: {{stat.newCompanies}} </li>
+                    <li>Изменённых: {{stat.changedCompanies}} </li>
+                    <li>Добавлено: {{stat.processedCompanies}} </li>
+                    <li>Всего: {{stat.existsCompanies}} </li>
+                </ul>
                 <span ng-show="noCompaniesToImport">Нечего импортировать</span>
                 <!--<ul class="vertical_form_block" ng-show="isImportCompaniesComplete">
                     <li ng-repeat="extServiceCompany in extServiceCompanies">

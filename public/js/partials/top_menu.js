@@ -189,7 +189,7 @@ angular.module('website.top.menu', [])
             getAccounts(function (accounts) {
                 for (var k in accounts) {
                     if (accounts.hasOwnProperty(k)) {
-                        getCompanies(accounts[k], pushCompaniesAndAccount);//todo check !!!!!!!!
+                        getCompanies(accounts[k], pushCompaniesAndAccount);
                     }
                 }
             });
@@ -215,6 +215,12 @@ angular.module('website.top.menu', [])
     .controller('importCompaniesModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
         $scope.importCompaniesMessages = [];
         $scope.noCompaniesToImport = false;
+        $scope.stat = {
+            newCompanies: 0,
+            changedCompanies: 0,
+            existsCompanies: 0,
+            processedCompanies: 0
+        };
 
         function onError(data, status) {
             if (status === RESPONSE_STATUS.NOT_FOUND) {
@@ -224,11 +230,22 @@ angular.module('website.top.menu', [])
             }
         }
 
+        function fetchImportStatistic() {
+            for (var i = 0; i <= 0; i++) {
+                var externalService = $scope.extServiceCompanies[i];
+                $scope.stat.newCompanies = $scope.stat.newCompanies + externalService.stat.new;
+                $scope.stat.changedCompanies = $scope.stat.changedCompanies + externalService.stat.changed;
+                $scope.stat.existsCompanies = $scope.stat.existsCompanies + externalService.stat.exists;
+                $scope.stat.processedCompanies = $scope.stat.processedCompanies + externalService.stat.processed;
+            }
+        }
+
         $scope.importCompanies = function () {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/company')
                 .success(function (data) {
                     $scope.isImportCompaniesComplete = true;
                     $scope.extServiceCompanies = data._embedded.ext_service_company;
+                    fetchImportStatistic();
                 }).error(function (data, status) {
                     onError(data, status);
                 }
