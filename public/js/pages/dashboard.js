@@ -13,12 +13,15 @@ angular.module('website.dashboard', [])
 
         //TODO remove (just demo for a catalogs tests)
         $scope.catalogModel = null;
-        $scope.catalog = [
-            {value: 1, description:'First'},
-            {value: 2, description:'Second'},
-            {value: 3, description:'Third'},
-            {value: 4, description:'Четвёртый'}
-        ];
+
+        $scope.getData = function () {
+            return [
+                {value: 1, description: 'First'},
+                {value: 2, description: 'Second'},
+                {value: 3, description: 'Third'},
+                {value: 4, description: 'Четвёртый'}
+            ];
+        };
         //TODO END remove
 
         function checkForAccounts() {

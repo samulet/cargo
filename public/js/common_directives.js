@@ -376,20 +376,51 @@ angular.module('common.directives', [])
 
     .directive('catalogue', function () {
         return {
-            restrict: 'E',
+            restrict: 'A',
             templateUrl: 'html/templates/catalog.html',
             scope: {
-                placeholder: '@placeholder',
-                data: '=data',
-                model: '=model',
-                options: '=options'
+                getData: '=catalogue',
+                options: '=catalogOptions'
             },
-            controller: function ($scope, $http, errorFactory) {
-                console.log($scope.placeholder);
-                console.log($scope.data);
-                console.log($scope.model);
+            controller: function ($scope, $http, $modal, errorFactory) {
+
+                $scope.data = $scope.getData();
+
+                function openCatalogueModal() {
+                    $scope.catalogueModal = $modal.open({
+                        templateUrl: 'catalogueModalContent.html',
+                        backdrop: 'static',
+                        scope: $scope,
+                        controller: 'catalogueModalController'
+                    });
+                }
+
+                function closeCatalogueModal() {
+                    $scope.catalogueModal.close();
+                }
+
+                $scope.closeCatalogue = function () {
+                    closeCatalogueModal();
+                };
+
+                $scope.openCatalogue = function () {
+                    openCatalogueModal();
+                };
+
+                $scope.setSelectedOptions = function () {
+                    //TODO
+                };
+
                 console.log($scope.options);
+            },
+            link: function (scope, elem, attrs) {
+                elem[0].setAttribute('readonly');
+              //  elem[0].setAttribute('ng-click', 'openCatalogue()');
             }
         };
     })
+
+    .controller('catalogueModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
+
+    }])
 ;
