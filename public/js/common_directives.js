@@ -373,4 +373,17 @@ angular.module('common.directives', [])
             }
         };
     })
+
+    .directive('catalogue', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/catalog.html',
+            scope: {
+
+            },
+            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter, storageFactory) {
+
+            }
+        };
+    })
 ;
