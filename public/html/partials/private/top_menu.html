@@ -135,6 +135,12 @@
             <div class="modal-body">
                 <span ng-show="!isImportPlacesComplete && !noPlacesToImport">Импортировать пункты доставки?</span>
                 <span ng-show="isImportPlacesComplete && !noPlacesToImport">Импорт успешно завершён</span>
+                <ul ng-show="isImportPlacesComplete && !noPlacesToImport">
+                    <li>Новых: {{stat.newPlaces}} </li>
+                    <li>Изменённых: {{stat.changedPlaces}} </li>
+                    <li>Добавлено: {{stat.processedPlaces}} </li>
+                    <li>Всего: {{stat.existsPlaces}} </li>
+                </ul>
                 <span ng-show="noPlacesToImport">Нечего импортировать</span>
                 <ul class="vertical_form_block" ng-show="isImportComplete">
                     <li ng-repeat="extServicePlace in extServicePlaces">
