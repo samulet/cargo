@@ -17,7 +17,18 @@
                     </button>
                 </li>
             </ul>
-            <div><button type="button" class="btn btn-default btn-block" ng-click="addAccount()">Добавить аккаунт</button> </div>
+            <div>
+                <button type="button" class="btn btn-default btn-block" ng-click="addAccount()">Добавить аккаунт
+                </button>
+            </div>
+            <!--TODO remove (just demo for a catalogs tests) -->
+            <catalogue data-placeholder="Got it"
+                       data="catalog"
+                       model="catalogModel"
+                       options="{multiple: false}"
+                       >
+            </catalogue>
+            <!--TODO END remove-->
         </div>
     </div>
 
@@ -47,7 +58,8 @@
                                        ng-maxlength="20"/>
                             </li>
                             <li>
-                                <alert ng-repeat="message in registrationModalMessages" type="message.type" close="closeAlert($index)">
+                                <alert ng-repeat="message in registrationModalMessages" type="message.type"
+                                       close="closeAlert($index)">
                                     {{message.msg}}
                                 </alert>
                             </li>

@@ -1,1 +1,4 @@
-<div>CATALOG</div>
+<select ui-select2="options" ng-model="model" data-placeholder="{{placeholder}}" class="select2-drop-mask" width="element">
+    <option value="">---</option>
+    <option ng-repeat="item in data" value="{{item.value}}">{{item.description}}</option>
+</select>

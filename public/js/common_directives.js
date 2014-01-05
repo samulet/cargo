@@ -37,7 +37,7 @@ angular.module('common.directives', [])
                 modal: '=modal',
                 close: '&close'
             },
-            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter, storageFactory) {
+            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter) {
                 $scope.today = new Date();
                 $scope.wizardStep = 0;
                 $scope.companyData = {
@@ -379,10 +379,16 @@ angular.module('common.directives', [])
             restrict: 'E',
             templateUrl: 'html/templates/catalog.html',
             scope: {
-
+                placeholder: '@placeholder',
+                data: '=data',
+                model: '=model',
+                options: '=options'
             },
-            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter, storageFactory) {
-
+            controller: function ($scope, $http, errorFactory) {
+                console.log($scope.placeholder);
+                console.log($scope.data);
+                console.log($scope.model);
+                console.log($scope.options);
             }
         };
     })

@@ -169,7 +169,7 @@ angular.module('common.directives', [])
                 modal: '=modal',
                 close: '&close'
             },
-            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter, storageFactory) {
+            controller: function ($scope, $http, REST_CONFIG, errorFactory, $timeout, $filter) {
                 $scope.today = new Date();
                 $scope.wizardStep = 0;
                 $scope.companyData = {
@@ -502,6 +502,25 @@ angular.module('common.directives', [])
                     scope.bankAccounts.push(scope.temp);
                     scope.temp = {};
                 };
+            }
+        };
+    })
+
+    .directive('catalogue', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/catalog.html',
+            scope: {
+                placeholder: '@placeholder',
+                data: '=data',
+                model: '=model',
+                options: '=options'
+            },
+            controller: function ($scope, $http, errorFactory) {
+                console.log($scope.placeholder);
+                console.log($scope.data);
+                console.log($scope.model);
+                console.log($scope.options);
             }
         };
     })
@@ -950,6 +969,16 @@ angular.module('website.dashboard', [])
         $scope.showAccountRegistration = false;
         $scope.showCompanyWizard = false;
         checkForAccounts();
+
+        //TODO remove (just demo for a catalogs tests)
+        $scope.catalogModel = null;
+        $scope.catalog = [
+            {value: 1, description:'First'},
+            {value: 2, description:'Second'},
+            {value: 3, description:'Third'},
+            {value: 4, description:'Четвёртый'}
+        ];
+        //TODO END remove
 
         function checkForAccounts() {
             $scope.showAccountRegistration = true;
