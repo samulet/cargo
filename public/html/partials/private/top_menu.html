@@ -87,10 +87,10 @@
                 <span ng-show="!isImportCompaniesComplete && !noCompaniesToImport">Импортировать юридические лица?</span>
                 <span ng-show="isImportCompaniesComplete && !noCompaniesToImport">Импорт успешно завершён</span>
                 <ul ng-show="isImportCompaniesComplete && !noCompaniesToImport">
-                    <li>Новых: {{stat.newCompanies}} </li>
-                    <li>Изменённых: {{stat.changedCompanies}} </li>
-                    <li>Добавлено: {{stat.processedCompanies}} </li>
-                    <li>Всего: {{stat.existsCompanies}} </li>
+                    <li>Новых: {{stat.newCompanies}}</li>
+                    <li>Изменённых: {{stat.changedCompanies}}</li>
+                    <li>Добавлено: {{stat.processedCompanies}}</li>
+                    <li>Всего: {{stat.existsCompanies}}</li>
                 </ul>
                 <span ng-show="noCompaniesToImport">Нечего импортировать</span>
                 <!--<ul class="vertical_form_block" ng-show="isImportCompaniesComplete">
@@ -136,10 +136,10 @@
                 <span ng-show="!isImportPlacesComplete && !noPlacesToImport">Импортировать пункты доставки?</span>
                 <span ng-show="isImportPlacesComplete && !noPlacesToImport">Импорт успешно завершён</span>
                 <ul ng-show="isImportPlacesComplete && !noPlacesToImport">
-                    <li>Новых: {{stat.newPlaces}} </li>
-                    <li>Изменённых: {{stat.changedPlaces}} </li>
-                    <li>Добавлено: {{stat.processedPlaces}} </li>
-                    <li>Всего: {{stat.existsPlaces}} </li>
+                    <li>Новых: {{stat.newPlaces}}</li>
+                    <li>Изменённых: {{stat.changedPlaces}}</li>
+                    <li>Добавлено: {{stat.processedPlaces}}</li>
+                    <li>Всего: {{stat.existsPlaces}}</li>
                 </ul>
                 <span ng-show="noPlacesToImport">Нечего импортировать</span>
                 <ul class="vertical_form_block" ng-show="isImportComplete">
@@ -285,11 +285,11 @@
                     <li id="button_add_link">
                         <button type="button" class="btn btn-primary" ng-click="addPlacesLink()"
                                 ajax-disabler="isAjaxLoading"
-                                ng-disabled="!importedPlace || isAjaxLoading || importedPlace.link == existedPlace.uuid"
+                                ng-disabled="!importedPlace || isAjaxLoading"
                                 style="min-width: 171px;">
                             <i class="glyphicon glyphicon-plus"> </i> Добавить
                             <span ng-show="existedPlace && importedPlace"> связь</span>
-                            <span ng-show="!existedPlace && importedPlace"> юр. лицо</span>
+                            <span ng-show="!existedPlace && importedPlace"> пункт</span>
                         </button>
                     </li>
 

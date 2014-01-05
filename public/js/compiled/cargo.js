@@ -1594,7 +1594,7 @@ angular.module('website.top.menu', [])
         function getImportedPlaces(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/place-intersect')
                 .success(function (data) {
-                    $scope.importedPlaces = data._embedded.external_service_place_intersect;
+                    $scope.importedPlaces = data._embedded.places;
                     if (callback) {
                         callback();
                     }
