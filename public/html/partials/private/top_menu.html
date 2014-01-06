@@ -291,6 +291,12 @@
                             <span ng-show="existedPlace && importedPlace"> связь</span>
                             <span ng-show="!existedPlace && importedPlace"> пункт</span>
                         </button>
+                        <button type="button" class="btn btn-warning" ng-click="removePlace()"
+                                ajax-disabler="isAjaxLoading"
+                                ng-disabled="!existedPlace || isAjaxLoading"
+                                style="min-width: 171px;">
+                            <i class="glyphicon glyphicon-minus"> </i> Удалить пункт
+                        </button>
                     </li>
 
                     <li class="small_select_width">

@@ -1647,7 +1647,7 @@ angular.module('website.top.menu', [])
 
         function getAllSystemPlaces() {
             $http.get(REST_CONFIG.BASE_URL + '/places').success(function (data) {
-                $scope.existedPlaces = data._embedded.places;
+              //  $scope.existedPlaces = data._embedded.places; //TODO api didn't work yet
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.placesManagementMessages);
                 }
@@ -1683,6 +1683,18 @@ angular.module('website.top.menu', [])
                     getImportedPlaces(function () {
                         getLinkedPlaces();
                     });
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
+                }
+            );
+        };
+
+        $scope.removePlace = function () {
+            $http.delete(REST_CONFIG.BASE_URL + '/places/' + $scope.existedPlace.uuid)
+                .success(function () {
+                    getImportedPlaces();
+                    getLinkedPlaces();
+                    getAllSystemPlaces();
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.placesManagementMessages);
                 }
