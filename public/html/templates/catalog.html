@@ -1,19 +1,16 @@
-
-
 <div aria-hidden="true" ng-controller="catalogueModalController">
     <script type="text/ng-template" id="catalogueModalContent.html">
         <div class="modal-header">
-            <h4 class="modal-title">Настройка аккаунта</h4>
+            <h4 class="modal-title">Выберите из списка</h4>
         </div>
         <div class="modal-body">
-            <select ui-select2="options" ng-model="model" data-placeholder="---" class="select2-drop-mask"
-                    width="element">
-                <option value="">---</option>
+            <select ui-select2="options" size="4" ng-model="model" data-placeholder="Выберите значение из списка" class="select2-drop-mask">
+                <option value=""></option>
                 <option ng-repeat="item in data" value="{{item.value}}">{{item.description}}</option>
             </select>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary"
+            <button type="button" class="btn btn-default pull_left"
                     ng-disabled="isAjaxLoading"
                     ajax-disabler="isAjaxLoading"
                     ng-click="closeCatalogue()">
@@ -22,7 +19,7 @@
             <button type="button" class="btn btn-primary"
                     ng-disabled="isAjaxLoading"
                     ajax-disabler="isAjaxLoading"
-                    ng-click="saveAccountData()">
+                    ng-click="setSelectedOptions()">
                 Ok
             </button>
         </div>

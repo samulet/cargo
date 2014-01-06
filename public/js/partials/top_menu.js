@@ -447,7 +447,7 @@ angular.module('website.top.menu', [])
 
         function getAllSystemPlaces() {
             $http.get(REST_CONFIG.BASE_URL + '/places').success(function (data) {
-              //  $scope.existedPlaces = data._embedded.places; //TODO api didn't work yet
+                $scope.existedPlaces = data._embedded.places;
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.placesManagementMessages);
                 }

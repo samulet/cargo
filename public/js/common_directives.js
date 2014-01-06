@@ -413,9 +413,14 @@ angular.module('common.directives', [])
 
                 console.log($scope.options);
             },
-            link: function (scope, elem, attrs) {
-                elem[0].setAttribute('readonly');
-              //  elem[0].setAttribute('ng-click', 'openCatalogue()');
+            compile: function (scope, element, attrs) {
+                return function (scope, elem) {
+                    element.$$element[0].setAttribute('readonly', 'true');
+                    element.$$element.on('click', function (event) {
+                        event.preventDefault();
+                        scope.openCatalogue();
+                    });
+                }
             }
         };
     })

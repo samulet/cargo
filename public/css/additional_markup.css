@@ -112,6 +112,11 @@ li.input-group .input-group-addon {
     width: 400px;
 }
 
+.form-control[catalogue] {
+    cursor: auto;
+    background-color: white;
+}
+
 .med_block {
     width: 600px;
 }
@@ -258,7 +263,7 @@ ul.horizontal_list li {
     opacity: 0;
 }
 
-.opacity_transition_fast{
+.opacity_transition_fast {
     -webkit-transition: opacity 0.6s ease;
     -moz-transition: opacity 0.6s ease;
     -o-transition: opacity 0.6s ease;
@@ -266,7 +271,7 @@ ul.horizontal_list li {
     transition: opacity 0.6s ease;
 }
 
-.opacity_transition_med{
+.opacity_transition_med {
     -webkit-transition: opacity 1s ease;
     -moz-transition: opacity 1s ease;
     -o-transition: opacity 1s ease;
@@ -274,7 +279,7 @@ ul.horizontal_list li {
     transition: opacity 1s ease;
 }
 
-.opacity_transition_long{
+.opacity_transition_long {
     -webkit-transition: opacity 2s ease;
     -moz-transition: opacity 2s ease;
     -o-transition: opacity 2s ease;
