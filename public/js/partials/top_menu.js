@@ -405,9 +405,9 @@ angular.module('website.top.menu', [])
             $scope.linkedCompanies = [];
             var existedCompany = $scope.existedCompany;
             if (linkedImportedCompanies.length > 0 && existedCompany) {
-                for (var k in linkedImportedCompanies) {
-                    if (linkedImportedCompanies.hasOwnProperty(k) && linkedImportedCompanies[k].link === existedCompany.uuid) {
-                        $scope.linkedCompanies.push(linkedImportedCompanies[k]);
+                for (var i=0; i<= linkedImportedCompanies.length-1; i++) {
+                    if (linkedImportedCompanies[i].link === existedCompany.uuid) {
+                        $scope.linkedCompanies.push(linkedImportedCompanies[i]);
                     }
                 }
             }
@@ -433,6 +433,8 @@ angular.module('website.top.menu', [])
         $scope.importedPlaces = [];
         $scope.existedPlaces = [];
         $scope.linkedPlaces = [];
+        var unlinkedImportedPlaces = [];
+        var linkedImportedPlaces = [];
 
         if ($scope.isPlacesManagementOpened) {
             getAllSystemPlaces();
@@ -457,7 +459,18 @@ angular.module('website.top.menu', [])
         function getImportedPlaces(callback) {
             $http.get(REST_CONFIG.BASE_URL + '/service/import/place-intersect')
                 .success(function (data) {
-                    $scope.importedPlaces = data._embedded.places;
+                    $scope.importedPlaces = null;
+                    var importedPlaces = data._embedded.places;
+                    unlinkedImportedPlaces = [];
+                    linkedImportedPlaces = [];
+                    for (var i = 0; i <= importedPlaces.length - 1; i++) {
+                        if (!importedPlaces[i].link) {
+                            unlinkedImportedPlaces.push(importedPlaces[i]);
+                        } else {
+                            linkedImportedPlaces.push(importedPlaces[i]);
+                        }
+                    }
+                    $scope.importedPlaces = unlinkedImportedPlaces;
                     if (callback) {
                         callback();
                     }
@@ -478,10 +491,14 @@ angular.module('website.top.menu', [])
         $scope.addPlacesLink = function () {
             var placeUuid = $scope.existedPlace ? $scope.existedPlace.uuid : null;
             $http.post(REST_CONFIG.BASE_URL + '/service/import/place-intersect',
-                {source: $scope.importedPlace.source, id: $scope.importedPlace.id, place: placeUuid})
+                {source: $scope.importedPlace.source,
+                    id: $scope.importedPlace.id,
+                    place: placeUuid,
+                    type: $scope.importedPlace.type})
                 .success(function () {
                     getImportedPlaces(function () {
                         getLinkedPlaces();
+                        getAllSystemPlaces();
                     });
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.placesManagementMessages);
@@ -502,10 +519,11 @@ angular.module('website.top.menu', [])
         };
 
         $scope.removePlacesLink = function () {
-            $http.delete(REST_CONFIG.BASE_URL + '/service/import/place-intersect/' + $scope.linkedPlace.source + '/' + $scope.linkedPlace.id)
+            $http.delete(REST_CONFIG.BASE_URL + '/service/import/place-intersect/' + $scope.linkedPlace.source + '-' + $scope.linkedPlace.type + '-' + $scope.linkedPlace.id)
                 .success(function () {
                     getImportedPlaces(function () {
                         getLinkedPlaces();
+                        getAllSystemPlaces();
                     });
                 }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.placesManagementMessages);
@@ -516,11 +534,10 @@ angular.module('website.top.menu', [])
         function getLinkedPlaces() {
             $scope.linkedPlaces = [];
             var existedPlace = $scope.existedPlace;
-            var importedPlaces = $scope.importedPlaces;
-            if (importedPlaces && existedPlace) {
-                for (var k in importedPlaces) {
-                    if (importedPlaces.hasOwnProperty(k) && importedPlaces[k].link === existedPlace.uuid) {
-                        $scope.linkedPlaces.push(importedPlaces[k]);
+            if (linkedImportedPlaces.length > 0 && existedPlace) {
+                for (var i=0; i<= linkedImportedPlaces.length-1; i++) {
+                    if (linkedImportedPlaces[i].link === existedPlace.uuid) {
+                        $scope.linkedPlaces.push(linkedImportedPlaces[i]);
                     }
                 }
             }

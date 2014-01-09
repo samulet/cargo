@@ -304,7 +304,7 @@
                         <select title="Выберите существующую компанию" class="form-control"
                                 ng-model="existedPlace"
                                 size="8"
-                                ng-options="existedPlace as existedPlace.short for existedPlace in existedPlaces"
+                                ng-options="existedPlace as existedPlace.name for existedPlace in existedPlaces"
                                 ng-change="selectExistedPlace(existedPlace)"
                                 ajax-disabler="isAjaxLoading">
                             <option value="">---</option>
