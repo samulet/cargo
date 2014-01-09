@@ -5,8 +5,8 @@
         </div>
         <div class="modal-body">
             <ul class="clear_list vertical_form_block">
-                <li>
-                    <select ui-select2="options" size="4" ng-model="model"
+                <li> ssdsd {{selected}}
+                    <select ui-select2="options" size="4" ng-model="selected" ng-change="getSelectedValueByKey()"
                             data-placeholder="Выберите значение из списка"
                             class="catalogue_body select2-drop-mask">
                         <option value=""></option>
@@ -18,21 +18,21 @@
                         <tbody>
                         <tr>
                             <td class="table_header">Имя:</td>
-                            <td>Василий</td>
+                            <td>{{firstName}}</td>
                         </tr>
                         <tr>
                             <td class="table_header">Фамилия:</td>
-                            <td>Иванов</td>
+                            <td>{{lastName}}</td>
                         </tr>
                         <tr>
                             <td class="table_header">Возраст:</td>
-                            <td>37</td>
+                            <td>{{age}}</td>
                         </tr>
                         </tbody>
                     </table>
                 </li>
                 <li>
-                    <div class="btn btn-info"><i class="glyphicon glyphicon-plus"> </i> Добавить новое значение в справочник</div>
+                    <div class="btn btn-info"><i class="glyphicon glyphicon-plus"> </i> Создать новое значение в справочник</div>
                 </li>
             </ul>
         </div>

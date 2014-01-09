@@ -15,7 +15,8 @@ angular.module('website', [
         'website.account',
         'website.public.offer',
         'website.page.errors',
-        'ui.select2'
+        'ui.select2',
+        'catalogue'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'html/pages/';
@@ -129,6 +130,105 @@ angular.module('website.constants', [])
             CANNOT_BE_DONE_ERROR: 'Невозможно выполнить операцию, попробуйте позже'
         }
     })
+;
+'use strict';
+
+angular.module('catalogue', [])
+
+    .directive('catalogue', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                getData: '=catalogue',
+                options: '=catalogOptions'
+            },
+            controller: function ($scope, $modal) {
+                function openCatalogueModal() {
+                    $scope.isCatalogueModalOpened = true;
+                    $scope.catalogueModal = $modal.open({
+                        templateUrl: 'catalogueModalContent.html',
+                        backdrop: 'static',
+                        scope: $scope,
+                        controller: 'catalogueModalController'
+                    });
+                }
+
+                $scope.openCatalogue = function () {
+                    openCatalogueModal();
+                };
+
+                function closeCatalogueModal() {
+                    $scope.catalogueModal.close();
+                }
+
+                $scope.closeCatalogue = function () {
+                    closeCatalogueModal();
+                };
+            },
+            compile: function (scope, element, attrs) {
+                return function (scope, elem) {
+                    element.$$element[0].setAttribute('readonly', 'true');
+                    element.$$element.on('click', function (event) {
+                        event.preventDefault();
+                        scope.openCatalogue();
+                    });
+                }
+            }
+        };
+    })
+
+    .directive('catalogueModal', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/catalog.html'/*,
+             scope: {},
+             controller: function ($scope, $modal) {
+             $scope.isCatalogueModalOpened = false;
+             }*/
+        };
+    })
+
+    .controller('catalogueModalController', ['$scope', function ($scope) {
+        $scope.selected;
+        $scope.details = {};
+
+        /*scope.$watch(attrs.uiSelect2, function(opts) {
+         elm.select2(opts);
+         }, true);*/
+
+        if ($scope.isCatalogueModalOpened) {
+            $scope.data = $scope.getData();
+            //jQuery('.select2-no-results').setAttr('onclick="alert(1);"');
+        }
+
+        function updateOptionDetails(option) {
+            $scope.details.firstname = option.firstname;
+            $scope.details.lastName = option.lastName;
+            $scope.details.age = option.age;
+        }
+
+        function findSelectedOption() {
+            for (var i = 0; i <= $scope.data.length - 1; i++) {
+                if ($scope.selected && $scope.data[i].value === $scope.selected) {
+                    return $scope.data[i];
+                }
+            }
+            return null;
+        }
+
+        $scope.getSelectedValueByKey = function () {
+            var selectedOption = findSelectedOption();
+            if (selectedOption) {
+                updateOptionDetails(selectedOption);
+            }
+        };
+
+        $scope.setSelectedOptions = function () {
+            $scope.selectedOption = $scope.selected;
+            $scope.closeCatalogue();
+        };
+
+    }])
 ;
 'use strict';
 
@@ -505,78 +605,6 @@ angular.module('common.directives', [])
             }
         };
     })
-
-    .directive('catalogue', function () {
-        return {
-            restrict: 'A',
-            scope: {
-                getData: '=catalogue',
-                options: '=catalogOptions'
-            },
-            controller: function ($scope, $rootScope, $http, $modal, errorFactory) {
-
-            },
-            compile: function (scope, element, attrs) {
-                return function (scope, elem) {
-                    element.$$element[0].setAttribute('readonly', 'true');
-                    element.$$element.on('click', function (event) {
-                        event.preventDefault();
-                        scope.openCatalogue();
-                    });
-                }
-            }
-        };
-    })
-
-    .directive('catalogueModal', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'html/templates/catalog.html',
-            scope: {},
-            controller: function ($scope, $rootScope, $http, $modal) {
-                $rootScope.isCatalogueModalOpened = false;
-
-                function openCatalogueModal() {
-                    $rootScope.isCatalogueModalOpened = true;
-                    $scope.catalogueModal = $modal.open({
-                        templateUrl: 'catalogueModalContent.html',
-                        backdrop: 'static',
-                        scope: $scope,
-                        controller: 'catalogueModalController'
-                    });
-                }
-
-                function closeCatalogueModal() {
-                    $scope.catalogueModal.close();
-                }
-
-                $scope.closeCatalogue = function () {
-                    closeCatalogueModal();
-                };
-
-                $rootScope.openCatalogue = function (dataSource, options) {
-                    $scope.getData = dataSource;
-                    $scope.options = options;
-                    openCatalogueModal();
-                };
-
-                $scope.setSelectedOptions = function () {
-                    $rootScope.selectedCatalogueValue = model;
-                    closeCatalogueModal();
-                };
-
-                console.log($scope.options);
-            }
-        };
-    })
-
-    .controller('catalogueModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory) {
-        if ($rootScope.isCatalogueModalOpened) {
-            $scope.data = $scope.getData();
-            //jQuery('.select2-no-results').setAttr('onclick="alert(1);"');
-        }
-
-    }])
 ;
 'use strict';
 
@@ -903,25 +931,25 @@ angular.module('common.factories', [
 ;
 "use strict";
 
- angular.module("env.config", [])
+angular.module("env.config", [])
 
-.constant("WEB_CONFIG", {
-  "PROTOCOL": "http",
-  "HOST": "cargo",
-  "HOST_CONTEXT": "",
-  "PORT": "8000",
-  "DOMAIN": "cargo.dev",
-  "BASE_URL": "http://cargo.dev:8000"
-})
+    .constant("WEB_CONFIG", {
+        "PROTOCOL": "http",
+        "HOST": "cargo",
+        "HOST_CONTEXT": "",
+        "PORT": "8000",
+        "DOMAIN": "cargo.dev",
+        "BASE_URL": "http://cargo.dev:8000"
+    })
 
-.constant("REST_CONFIG", {
-  "PROTOCOL": "http",
-  "HOST": "cargo",
-  "HOST_CONTEXT": "/api",
-  "PORT": "8000",
-  "DOMAIN": "cargo.dev",
-  "BASE_URL": "http://cargo.dev:8000/api"
-})
+    .constant("REST_CONFIG", {
+        "PROTOCOL": "http",
+        "HOST": "cargo",
+        "HOST_CONTEXT": "/api",
+        "PORT": "8000",
+        "DOMAIN": "cargo.dev",
+        "BASE_URL": "http://cargo.dev:8000/api"
+    })
 
 ;
 'use strict';
@@ -1028,13 +1056,11 @@ angular.module('website.dashboard', [])
 
         $scope.getData = function () {
             return [
-                {value: 1, description: 'First'},
-                {value: 2, description: 'Second'},
-                {value: 3, description: 'Third'},
-                {value: 4, description: 'Четвёртый'},
-                {value: 5, description: '5'},
-                {value: 6, description: 'Шестой'},
-                {value: 7, description: 'Seventh'}
+                {value: 1, description: 'Петров В.', firstname: 'Василий', lastName: 'Петров', age: '21' },
+                {value: 1, description: 'Антонов К.', firstname: 'Константин', lastName: 'Антонов', age: '37' },
+                {value: 1, description: 'Яковлев Б.', firstname: 'Борис', lastName: 'Яковлев', age: '17' },
+                {value: 1, description: 'Туполев М.', firstname: 'Туполев', lastName: 'Марат', age: '33' },
+                {value: 1, description: 'Лавочкин С.', firstname: 'Серафим', lastName: 'Лавочкин', age: '24' }
             ];
         };
         //TODO END remove

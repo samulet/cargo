@@ -16,13 +16,11 @@ angular.module('website.dashboard', [])
 
         $scope.getData = function () {
             return [
-                {value: 1, description: 'First'},
-                {value: 2, description: 'Second'},
-                {value: 3, description: 'Third'},
-                {value: 4, description: 'Четвёртый'},
-                {value: 5, description: '5'},
-                {value: 6, description: 'Шестой'},
-                {value: 7, description: 'Seventh'}
+                {value: 1, description: 'Петров В.', firstname: 'Василий', lastName: 'Петров', age: '21' },
+                {value: 1, description: 'Антонов К.', firstname: 'Константин', lastName: 'Антонов', age: '37' },
+                {value: 1, description: 'Яковлев Б.', firstname: 'Борис', lastName: 'Яковлев', age: '17' },
+                {value: 1, description: 'Туполев М.', firstname: 'Туполев', lastName: 'Марат', age: '33' },
+                {value: 1, description: 'Лавочкин С.', firstname: 'Серафим', lastName: 'Лавочкин', age: '24' }
             ];
         };
         //TODO END remove
