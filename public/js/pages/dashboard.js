@@ -19,7 +19,10 @@ angular.module('website.dashboard', [])
                 {value: 1, description: 'First'},
                 {value: 2, description: 'Second'},
                 {value: 3, description: 'Third'},
-                {value: 4, description: 'Четвёртый'}
+                {value: 4, description: 'Четвёртый'},
+                {value: 5, description: '5'},
+                {value: 6, description: 'Шестой'},
+                {value: 7, description: 'Seventh'}
             ];
         };
         //TODO END remove

@@ -515,10 +515,10 @@ angular.module('common.directives', [])
                 options: '=catalogOptions'
             },
             controller: function ($scope, $http, $modal, errorFactory) {
-
-                $scope.data = $scope.getData();
+                $scope.isCatalogueModalOpened = false;
 
                 function openCatalogueModal() {
+                    $scope.isCatalogueModalOpened = true;
                     $scope.catalogueModal = $modal.open({
                         templateUrl: 'catalogueModalContent.html',
                         backdrop: 'static',
@@ -558,6 +558,10 @@ angular.module('common.directives', [])
     })
 
     .controller('catalogueModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
+        if ($scope.isCatalogueModalOpened) {
+            $scope.data = $scope.getData();
+            //jQuery('.select2-no-results').setAttr('onclick="alert(1);"');
+        }
 
     }])
 ;
@@ -1014,7 +1018,10 @@ angular.module('website.dashboard', [])
                 {value: 1, description: 'First'},
                 {value: 2, description: 'Second'},
                 {value: 3, description: 'Third'},
-                {value: 4, description: 'Четвёртый'}
+                {value: 4, description: 'Четвёртый'},
+                {value: 5, description: '5'},
+                {value: 6, description: 'Шестой'},
+                {value: 7, description: 'Seventh'}
             ];
         };
         //TODO END remove

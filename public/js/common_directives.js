@@ -383,10 +383,10 @@ angular.module('common.directives', [])
                 options: '=catalogOptions'
             },
             controller: function ($scope, $http, $modal, errorFactory) {
-
-                $scope.data = $scope.getData();
+                $scope.isCatalogueModalOpened = false;
 
                 function openCatalogueModal() {
+                    $scope.isCatalogueModalOpened = true;
                     $scope.catalogueModal = $modal.open({
                         templateUrl: 'catalogueModalContent.html',
                         backdrop: 'static',
@@ -426,6 +426,10 @@ angular.module('common.directives', [])
     })
 
     .controller('catalogueModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
+        if ($scope.isCatalogueModalOpened) {
+            $scope.data = $scope.getData();
+            //jQuery('.select2-no-results').setAttr('onclick="alert(1);"');
+        }
 
     }])
 ;
