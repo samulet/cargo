@@ -291,6 +291,12 @@
                             <span ng-show="existedPlace && importedPlace"> связь</span>
                             <span ng-show="!existedPlace && importedPlace"> пункт</span>
                         </button>
+                        <button type="button" class="btn btn-warning" ng-click="removePlace()"
+                                ajax-disabler="isAjaxLoading"
+                                ng-disabled="!existedPlace || isAjaxLoading"
+                                style="min-width: 171px;">
+                            <i class="glyphicon glyphicon-minus"> </i> Удалить пункт
+                        </button>
                     </li>
 
                     <li class="small_select_width">
@@ -298,7 +304,7 @@
                         <select title="Выберите существующую компанию" class="form-control"
                                 ng-model="existedPlace"
                                 size="8"
-                                ng-options="existedPlace as existedPlace.short for existedPlace in existedPlaces"
+                                ng-options="existedPlace as existedPlace.name for existedPlace in existedPlaces"
                                 ng-change="selectExistedPlace(existedPlace)"
                                 ajax-disabler="isAjaxLoading">
                             <option value="">---</option>

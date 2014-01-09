@@ -11,6 +11,19 @@ angular.module('website.dashboard', [])
         $scope.showCompanyWizard = false;
         checkForAccounts();
 
+        //TODO remove (just demo for a catalogs tests)
+        $scope.catalogModel = null;
+
+        $scope.getData = function () {
+            return [
+                {value: 1, description: 'First'},
+                {value: 2, description: 'Second'},
+                {value: 3, description: 'Third'},
+                {value: 4, description: 'Четвёртый'}
+            ];
+        };
+        //TODO END remove
+
         function checkForAccounts() {
             $scope.showAccountRegistration = true;
             getAccounts();
