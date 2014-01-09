@@ -377,16 +377,35 @@ angular.module('common.directives', [])
     .directive('catalogue', function () {
         return {
             restrict: 'A',
-            templateUrl: 'html/templates/catalog.html',
             scope: {
                 getData: '=catalogue',
                 options: '=catalogOptions'
             },
-            controller: function ($scope, $http, $modal, errorFactory) {
-                $scope.isCatalogueModalOpened = false;
+            controller: function ($scope, $rootScope, $http, $modal, errorFactory) {
+
+            },
+            compile: function (scope, element, attrs) {
+                return function (scope, elem) {
+                    element.$$element[0].setAttribute('readonly', 'true');
+                    element.$$element.on('click', function (event) {
+                        event.preventDefault();
+                        scope.openCatalogue();
+                    });
+                }
+            }
+        };
+    })
+
+    .directive('catalogueModal', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/catalog.html',
+            scope: {},
+            controller: function ($scope, $rootScope, $http, $modal) {
+                $rootScope.isCatalogueModalOpened = false;
 
                 function openCatalogueModal() {
-                    $scope.isCatalogueModalOpened = true;
+                    $rootScope.isCatalogueModalOpened = true;
                     $scope.catalogueModal = $modal.open({
                         templateUrl: 'catalogueModalContent.html',
                         backdrop: 'static',
@@ -403,30 +422,24 @@ angular.module('common.directives', [])
                     closeCatalogueModal();
                 };
 
-                $scope.openCatalogue = function () {
+                $rootScope.openCatalogue = function (dataSource, options) {
+                    $scope.getData = dataSource;
+                    $scope.options = options;
                     openCatalogueModal();
                 };
 
                 $scope.setSelectedOptions = function () {
-                    //TODO
+                    $rootScope.selectedCatalogueValue = model;
+                    closeCatalogueModal();
                 };
 
                 console.log($scope.options);
-            },
-            compile: function (scope, element, attrs) {
-                return function (scope, elem) {
-                    element.$$element[0].setAttribute('readonly', 'true');
-                    element.$$element.on('click', function (event) {
-                        event.preventDefault();
-                        scope.openCatalogue();
-                    });
-                }
             }
         };
     })
 
-    .controller('catalogueModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
-        if ($scope.isCatalogueModalOpened) {
+    .controller('catalogueModalController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory) {
+        if ($rootScope.isCatalogueModalOpened) {
             $scope.data = $scope.getData();
             //jQuery('.select2-no-results').setAttr('onclick="alert(1);"');
         }
