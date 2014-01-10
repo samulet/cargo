@@ -1,13 +1,44 @@
 <div aria-hidden="true" ng-controller="catalogueModalController">
     <script type="text/ng-template" id="catalogueModalContent.html">
         <div class="modal-header">
-            <h4 class="modal-title">Выберите из списка</h4>
+            <h4 class="modal-title">Выбор из справочника</h4>
         </div>
         <div class="modal-body">
-            <select ui-select2="options" size="4" ng-model="model" data-placeholder="Выберите значение из списка" class="select2-drop-mask">
-                <option value=""></option>
-                <option ng-repeat="item in data" value="{{item.value}}">{{item.description}}</option>
-            </select>
+            <ul class="clear_list vertical_form_block">
+                <li>
+                    <select ui-select2="options" size="4"
+                            ng-model="selectedModel"
+                            ng-change="changeSelectedOption(selectedModel)"
+                            data-placeholder="Выберите значение из списка"
+                            class="catalogue_body select2-drop-mask">
+                        <option value=""></option>
+                        <option ng-repeat="item in data" value="{{item.value}}">{{item.description}}</option>
+                    </select>
+                </li>
+                <li>
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td class="table_header">Имя:</td>
+                            <td>{{details.firstName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="table_header">Фамилия:</td>
+                            <td>{{details.lastName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="table_header">Возраст:</td>
+                            <td>{{details.age}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li>
+                    <div class="btn btn-info"><i class="glyphicon glyphicon-plus"> </i>
+                        Создать новое значение в справочнике
+                    </div>
+                </li>
+            </ul>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull_left"

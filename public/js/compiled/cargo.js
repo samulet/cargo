@@ -15,7 +15,8 @@ angular.module('website', [
         'website.account',
         'website.public.offer',
         'website.page.errors',
-        'ui.select2'
+        'ui.select2',
+        'catalogue'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'html/pages/';
@@ -129,6 +130,106 @@ angular.module('website.constants', [])
             CANNOT_BE_DONE_ERROR: 'Невозможно выполнить операцию, попробуйте позже'
         }
     })
+;
+'use strict';
+
+angular.module('catalogue', [])
+
+    .directive('catalogue', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                getData: '=catalogue',
+            },
+            controller: function ($scope, $modal) {
+                $scope.details = {};
+
+                function openCatalogueModal() {
+                    $scope.isCatalogueModalOpened = true;
+                    $scope.catalogueModal = $modal.open({
+                        templateUrl: 'catalogueModalContent.html',
+                        backdrop: 'static',
+                        scope: $scope,
+                        controller: 'catalogueModalController'
+                    });
+                }
+
+                $scope.openCatalogue = function () {
+                    if ($scope.details.value) {
+                        $scope.selectedModel = $scope.details.value;
+                        $scope.selectedOption = $scope.details;
+                    }
+                    openCatalogueModal();
+                };
+
+                function closeCatalogueModal() {
+                    $scope.catalogueModal.close();
+                }
+
+                $scope.closeCatalogue = function () {
+                    closeCatalogueModal();
+                };
+            },
+            compile: function (scope, element) {
+                return function (scope, elem) {
+                    scope.catalogueElement = element;
+                    element.$$element[0].setAttribute('readonly', 'true');
+                    element.$$element.on('click', function (event) {
+                        event.preventDefault();
+                        scope.openCatalogue();
+                    });
+                };
+            }
+        };
+    })
+
+    .
+    directive('catalogueModal', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'html/templates/catalog.html'
+        };
+    })
+
+    .controller('catalogueModalController', ['$scope', function ($scope) {
+
+        if ($scope.isCatalogueModalOpened) {
+            $scope.data = $scope.getData();
+        }
+
+        function updateOptionDetails(option) {
+            $scope.details.firstName = option.firstName;
+            $scope.details.lastName = option.lastName;
+            $scope.details.age = option.age;
+            $scope.details.value = option.value;
+            $scope.details.description = option.description;
+        }
+
+        function findSelectedOption(value) {
+            for (var i = 0; i <= $scope.data.length - 1; i++) {
+                if (value && $scope.data[i].value === +value) {
+                    return $scope.data[i];
+                }
+            }
+            return null;
+        }
+
+        $scope.changeSelectedOption = function (value) {
+            if (value) {
+                $scope.selectedOption = findSelectedOption(value);
+                updateOptionDetails($scope.selectedOption);
+            }
+        };
+
+        $scope.setSelectedOptions = function () {
+            if ($scope.selectedOption) {
+                $scope.catalogueElement.$$element[0].value = $scope.selectedOption.description;
+            } else {
+                $scope.catalogueElement.$$element[0].value = "";
+            }
+            $scope.closeCatalogue();
+        };
+    }])
 ;
 'use strict';
 
@@ -505,61 +606,6 @@ angular.module('common.directives', [])
             }
         };
     })
-
-    .directive('catalogue', function () {
-        return {
-            restrict: 'A',
-            templateUrl: 'html/templates/catalog.html',
-            scope: {
-                getData: '=catalogue',
-                options: '=catalogOptions'
-            },
-            controller: function ($scope, $http, $modal, errorFactory) {
-
-                $scope.data = $scope.getData();
-
-                function openCatalogueModal() {
-                    $scope.catalogueModal = $modal.open({
-                        templateUrl: 'catalogueModalContent.html',
-                        backdrop: 'static',
-                        scope: $scope,
-                        controller: 'catalogueModalController'
-                    });
-                }
-
-                function closeCatalogueModal() {
-                    $scope.catalogueModal.close();
-                }
-
-                $scope.closeCatalogue = function () {
-                    closeCatalogueModal();
-                };
-
-                $scope.openCatalogue = function () {
-                    openCatalogueModal();
-                };
-
-                $scope.setSelectedOptions = function () {
-                    //TODO
-                };
-
-                console.log($scope.options);
-            },
-            compile: function (scope, element, attrs) {
-                return function (scope, elem) {
-                    element.$$element[0].setAttribute('readonly', 'true');
-                    element.$$element.on('click', function (event) {
-                        event.preventDefault();
-                        scope.openCatalogue();
-                    });
-                }
-            }
-        };
-    })
-
-    .controller('catalogueModalController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', function ($scope, $http, REST_CONFIG, errorFactory) {
-
-    }])
 ;
 'use strict';
 
@@ -886,25 +932,25 @@ angular.module('common.factories', [
 ;
 "use strict";
 
- angular.module("env.config", [])
+angular.module("env.config", [])
 
-.constant("WEB_CONFIG", {
-  "PROTOCOL": "http",
-  "HOST": "cargo",
-  "HOST_CONTEXT": "",
-  "PORT": "8000",
-  "DOMAIN": "cargo.dev",
-  "BASE_URL": "http://cargo.dev:8000"
-})
+    .constant("WEB_CONFIG", {
+        "PROTOCOL": "http",
+        "HOST": "cargo",
+        "HOST_CONTEXT": "",
+        "PORT": "8000",
+        "DOMAIN": "cargo.dev",
+        "BASE_URL": "http://cargo.dev:8000"
+    })
 
-.constant("REST_CONFIG", {
-  "PROTOCOL": "http",
-  "HOST": "cargo",
-  "HOST_CONTEXT": "/api",
-  "PORT": "8000",
-  "DOMAIN": "cargo.dev",
-  "BASE_URL": "http://cargo.dev:8000/api"
-})
+    .constant("REST_CONFIG", {
+        "PROTOCOL": "http",
+        "HOST": "cargo",
+        "HOST_CONTEXT": "/api",
+        "PORT": "8000",
+        "DOMAIN": "cargo.dev",
+        "BASE_URL": "http://cargo.dev:8000/api"
+    })
 
 ;
 'use strict';
@@ -1011,10 +1057,11 @@ angular.module('website.dashboard', [])
 
         $scope.getData = function () {
             return [
-                {value: 1, description: 'First'},
-                {value: 2, description: 'Second'},
-                {value: 3, description: 'Third'},
-                {value: 4, description: 'Четвёртый'}
+                {value: 1, description: 'Петров В.', firstName: 'Василий', lastName: 'Петров', age: '21' },
+                {value: 2, description: 'Антонов К.', firstName: 'Константин', lastName: 'Антонов', age: '37' },
+                {value: 3, description: 'Яковлев Б.', firstName: 'Борис', lastName: 'Яковлев', age: '17' },
+                {value: 4, description: 'Туполев М.', firstName: 'Марат', lastName: 'Туполев', age: '33' },
+                {value: 5, description: 'Лавочкин С.', firstName: 'Серафим', lastName: 'Лавочкин', age: '24' }
             ];
         };
         //TODO END remove
