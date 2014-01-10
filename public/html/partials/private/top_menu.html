@@ -89,8 +89,8 @@
                 <ul ng-show="isImportCompaniesComplete && !noCompaniesToImport">
                     <li>Новых: {{stat.new}}</li>
                     <li>Изменённых: {{stat.changed}}</li>
-                    <li>Добавлено: {{stat.processed}}</li>
-                    <li>Всего: {{stat.exists}}</li>
+                    <li>Повторных: {{stat.exists}}</li>
+                    <li>Всего: {{stat.processed}}</li>
                 </ul>
                 <span ng-show="noCompaniesToImport">Нечего импортировать</span>
                 <!--<ul class="vertical_form_block" ng-show="isImportCompaniesComplete">
@@ -138,8 +138,8 @@
                 <ul ng-show="isImportPlacesComplete && !noPlacesToImport">
                     <li>Новых: {{stat.new}}</li>
                     <li>Изменённых: {{stat.changed}}</li>
-                    <li>Добавлено: {{stat.processed}}</li>
-                    <li>Всего: {{stat.exists}}</li>
+                    <li>Повторных: {{stat.exists}}</li>
+                    <li>Всего: {{stat.processed}}</li>
                 </ul>
                 <span ng-show="noPlacesToImport">Нечего импортировать</span>
                 <ul class="vertical_form_block" ng-show="isImportComplete">
