@@ -28,6 +28,46 @@
                  <a href>3</a>
              </li>-->
         </ul>
+        <ul class="dropdown nav navbar-nav mobile_text_left" style="color: black;">
+            <li class="clickable">
+                <a class="dropdown-toggle">
+                    Справочники <i class="fa fa-caret-down"> </i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li role="presentation" ng-repeat="catalogue in catalogues">
+                        <a ng-click="openCatalogueCard(catalogue);">{{catalogue.title}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="dropdown nav navbar-nav mobile_text_left" style="color: black;">
+            <li class="clickable">
+                <a class="dropdown-toggle">
+                    Юр. Лица <i class="fa fa-caret-down"> </i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li role="presentation" ng-repeat="company in companies">
+                        <a ng-click="openCompanyCard(company);">{{company.short}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="dropdown nav navbar-nav mobile_text_left" style="color: black;">
+            <li class="clickable">
+                <a class="dropdown-toggle">
+                    Пункты доставки <i class="fa fa-caret-down"> </i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li role="presentation" ng-repeat="place in places">
+                        <a ng-click="openPlaceCard(place);">
+                            <span ng-show="place.name">{{place.name}}</span>
+                            <span ng-show="place.address && place.address.city">, {{place.address.city}}</span>
+                            <span ng-show="place.company && place.company.name">, {{place.company.name}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
         <user-menu class="pull_right mobile_full_width"></user-menu>
     </div>
 </div>
