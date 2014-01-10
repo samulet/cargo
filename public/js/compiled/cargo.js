@@ -612,7 +612,7 @@ angular.module('common.directives', [])
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', 'cookieFactory', function ($http, cookieFactory) {
+    .factory('storageFactory', ['$http', 'cookieFactory', '$rootScope', function ($http, cookieFactory, $rootScope) {
         var storage = {
             cookie: {
                 token: 'token',
@@ -623,7 +623,10 @@ angular.module('common.factories', [
                 apiRoutes: 'api_routes',
                 user: 'user',
                 selectedAccount: 'selected_account',
-                selectedCompany: 'selected_company'
+                selectedCompany: 'selected_company',
+                companies: 'companies',
+                catalogues: 'catalogues',
+                places: 'places'
             }
         };
 
@@ -634,6 +637,14 @@ angular.module('common.factories', [
 
         function getCookie(key) {
             return cookieFactory.getItem(key);
+        }
+
+        function setValueForSession(key, value) {
+            $rootScope.key = value;
+        }
+
+        function addCookie(key, value, expires, secure) {
+            return cookieFactory.setItem(key, value, expires, secure);
         }
 
         function removeCookie(key) {
@@ -676,7 +687,6 @@ angular.module('common.factories', [
             removeSessionId: function () {
                 return removeCookie(storage.cookie.sessionId);
             },
-
             removeToken: function () {
                 return removeCookie(storage.cookie.token);
             },
@@ -697,6 +707,24 @@ angular.module('common.factories', [
             },
             removeSelectedCompany: function () {
                 return remove(storage.local.selectedCompany);
+            },
+            setCompaniesForSession: function (companies) {
+                setValueForSession(storage.local.companies, companies);
+            },
+            setPlacesForSession: function (places) {
+                setValueForSession(storage.local.places, places);
+            },
+            setCataloguesForSession: function (catalogues) {
+                setValueForSession(storage.local.catalogues, catalogues);
+            },
+            getCompanies: function () {
+                return getCookie(storage.cookie.companies);
+            },
+            getPlaces: function () {
+                return getCookie(storage.cookie.places);
+            },
+            getCatalogues: function () {
+                return getCookie(storage.cookie.catalogues);
             }
         };
     }])
@@ -1258,13 +1286,73 @@ angular.module('website.top.menu', [])
         return {
             restrict: 'E',
             templateUrl: 'html/partials/private/top_menu.html',
-            controller: function ($scope, $location) {
+            controller: function ($scope, $http, $location, REST_CONFIG, storageFactory, errorFactory) {
                 $scope.getClass = function (path) {
                     if ('/' + $location.path().substr(1, path.length) == path) {
                         return "active";
                     } else {
                         return "";
                     }
+                };
+
+                (function fetDropdownData() {
+                    getCompanies();
+                    getCatalogues();
+                    getPlaces();
+                })();
+
+                function getCatalogues() {
+                    $scope.catalogues = storageFactory.getCatalogues();
+                    if (!$scope.catalogues) {
+                        $http.get(REST_CONFIG.BASE_URL + '/ref')
+                            .success(function (data) {
+                                $scope.catalogues = data._embedded.references;
+                                storageFactory.setCataloguesForSession($scope.catalogues);
+                            }).error(function (data, status) {
+                                errorFactory.resolve(data, status);
+                            }
+                        );
+                    }
+                }
+
+                function getCompanies() {
+                    $scope.companies = storageFactory.getCompanies();
+                    if (!$scope.companies) {
+                        $http.get(REST_CONFIG.BASE_URL + '/companies')
+                            .success(function (data) {
+                                $scope.companies = data._embedded.companies;
+                                storageFactory.setCompaniesForSession($scope.companies);
+                            }).error(function (data, status) {
+                                errorFactory.resolve(data, status);
+                            }
+                        );
+                    }
+                }
+
+                function getPlaces() {
+                    $scope.places = storageFactory.getPlaces();
+                    if (!$scope.places) {
+                        $http.get(REST_CONFIG.BASE_URL + '/places')
+                            .success(function (data) {
+                                $scope.places = data._embedded.places;
+                                storageFactory.setPlacesForSession($scope.places);
+                            }).error(function (data, status) {
+                                errorFactory.resolve(data, status);
+                            }
+                        );
+                    }
+                }
+
+                $scope.openCatalogueCard = function (company) {
+                    //TODO placeholder
+                };
+
+                $scope.openCompanyCard = function (company) {
+                    //TODO placeholder
+                };
+
+                $scope.openPlaceCard = function (company) {
+                    //TODO placeholder
                 };
             }
         };
@@ -1657,7 +1745,7 @@ angular.module('website.top.menu', [])
             $scope.linkedCompanies = [];
             var existedCompany = $scope.existedCompany;
             if (linkedImportedCompanies.length > 0 && existedCompany) {
-                for (var i=0; i<= linkedImportedCompanies.length-1; i++) {
+                for (var i = 0; i <= linkedImportedCompanies.length - 1; i++) {
                     if (linkedImportedCompanies[i].link === existedCompany.uuid) {
                         $scope.linkedCompanies.push(linkedImportedCompanies[i]);
                     }
@@ -1787,7 +1875,7 @@ angular.module('website.top.menu', [])
             $scope.linkedPlaces = [];
             var existedPlace = $scope.existedPlace;
             if (linkedImportedPlaces.length > 0 && existedPlace) {
-                for (var i=0; i<= linkedImportedPlaces.length-1; i++) {
+                for (var i = 0; i <= linkedImportedPlaces.length - 1; i++) {
                     if (linkedImportedPlaces[i].link === existedPlace.uuid) {
                         $scope.linkedPlaces.push(linkedImportedPlaces[i]);
                     }

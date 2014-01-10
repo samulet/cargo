@@ -3,7 +3,7 @@
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', 'cookieFactory', function ($http, cookieFactory) {
+    .factory('storageFactory', ['$http', 'cookieFactory', '$rootScope', function ($http, cookieFactory, $rootScope) {
         var storage = {
             cookie: {
                 token: 'token',
@@ -14,7 +14,10 @@ angular.module('common.factories', [
                 apiRoutes: 'api_routes',
                 user: 'user',
                 selectedAccount: 'selected_account',
-                selectedCompany: 'selected_company'
+                selectedCompany: 'selected_company',
+                companies: 'companies',
+                catalogues: 'catalogues',
+                places: 'places'
             }
         };
 
@@ -25,6 +28,14 @@ angular.module('common.factories', [
 
         function getCookie(key) {
             return cookieFactory.getItem(key);
+        }
+
+        function setValueForSession(key, value) {
+            $rootScope.key = value;
+        }
+
+        function addCookie(key, value, expires, secure) {
+            return cookieFactory.setItem(key, value, expires, secure);
         }
 
         function removeCookie(key) {
@@ -67,7 +78,6 @@ angular.module('common.factories', [
             removeSessionId: function () {
                 return removeCookie(storage.cookie.sessionId);
             },
-
             removeToken: function () {
                 return removeCookie(storage.cookie.token);
             },
@@ -88,6 +98,24 @@ angular.module('common.factories', [
             },
             removeSelectedCompany: function () {
                 return remove(storage.local.selectedCompany);
+            },
+            setCompaniesForSession: function (companies) {
+                setValueForSession(storage.local.companies, companies);
+            },
+            setPlacesForSession: function (places) {
+                setValueForSession(storage.local.places, places);
+            },
+            setCataloguesForSession: function (catalogues) {
+                setValueForSession(storage.local.catalogues, catalogues);
+            },
+            getCompanies: function () {
+                return getCookie(storage.cookie.companies);
+            },
+            getPlaces: function () {
+                return getCookie(storage.cookie.places);
+            },
+            getCatalogues: function () {
+                return getCookie(storage.cookie.catalogues);
             }
         };
     }])
