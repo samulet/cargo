@@ -143,6 +143,8 @@ angular.module('catalogue', [])
                 options: '=catalogOptions'
             },
             controller: function ($scope, $modal) {
+                $scope.details = {};
+
                 function openCatalogueModal() {
                     $scope.isCatalogueModalOpened = true;
                     $scope.catalogueModal = $modal.open({
@@ -154,6 +156,10 @@ angular.module('catalogue', [])
                 }
 
                 $scope.openCatalogue = function () {
+                    if ($scope.details.value) {
+                        $scope.selectedModel = $scope.details.value;
+                        $scope.selectedOption = $scope.details;
+                    }
                     openCatalogueModal();
                 };
 
@@ -168,11 +174,12 @@ angular.module('catalogue', [])
             compile: function (scope, element, attrs) {
                 return function (scope, elem) {
                     element.$$element[0].setAttribute('readonly', 'true');
+                    scope.catalogueElement = element;
                     element.$$element.on('click', function (event) {
                         event.preventDefault();
                         scope.openCatalogue();
                     });
-                }
+                };
             }
         };
     })
@@ -180,54 +187,48 @@ angular.module('catalogue', [])
     .directive('catalogueModal', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/catalog.html'/*,
-             scope: {},
-             controller: function ($scope, $modal) {
-             $scope.isCatalogueModalOpened = false;
-             }*/
+            templateUrl: 'html/templates/catalog.html'
         };
     })
 
     .controller('catalogueModalController', ['$scope', function ($scope) {
-        $scope.selected;
-        $scope.details = {};
-
-        /*scope.$watch(attrs.uiSelect2, function(opts) {
-         elm.select2(opts);
-         }, true);*/
 
         if ($scope.isCatalogueModalOpened) {
             $scope.data = $scope.getData();
-            //jQuery('.select2-no-results').setAttr('onclick="alert(1);"');
         }
 
         function updateOptionDetails(option) {
-            $scope.details.firstname = option.firstname;
+            $scope.details.firstName = option.firstName;
             $scope.details.lastName = option.lastName;
             $scope.details.age = option.age;
+            $scope.details.value = option.value;
+            $scope.details.description = option.description;
         }
 
-        function findSelectedOption() {
+        function findSelectedOption(value) {
             for (var i = 0; i <= $scope.data.length - 1; i++) {
-                if ($scope.selected && $scope.data[i].value === $scope.selected) {
+                if (value && $scope.data[i].value === +value) {
                     return $scope.data[i];
                 }
             }
             return null;
         }
 
-        $scope.getSelectedValueByKey = function () {
-            var selectedOption = findSelectedOption();
-            if (selectedOption) {
-                updateOptionDetails(selectedOption);
+        $scope.changeSelectedOption = function (value) {
+            if (value) {
+                $scope.selectedOption = findSelectedOption(value);
+                updateOptionDetails($scope.selectedOption);
             }
         };
 
         $scope.setSelectedOptions = function () {
-            $scope.selectedOption = $scope.selected;
+            if ($scope.selectedOption) {
+                $scope.catalogueElement.$$element[0].value = $scope.selectedOption.description;
+            } else {
+                $scope.catalogueElement.$$element[0].value = "";
+            }
             $scope.closeCatalogue();
         };
-
     }])
 ;
 'use strict';
@@ -1056,11 +1057,11 @@ angular.module('website.dashboard', [])
 
         $scope.getData = function () {
             return [
-                {value: 1, description: 'Петров В.', firstname: 'Василий', lastName: 'Петров', age: '21' },
-                {value: 1, description: 'Антонов К.', firstname: 'Константин', lastName: 'Антонов', age: '37' },
-                {value: 1, description: 'Яковлев Б.', firstname: 'Борис', lastName: 'Яковлев', age: '17' },
-                {value: 1, description: 'Туполев М.', firstname: 'Туполев', lastName: 'Марат', age: '33' },
-                {value: 1, description: 'Лавочкин С.', firstname: 'Серафим', lastName: 'Лавочкин', age: '24' }
+                {value: 1, description: 'Петров В.', firstName: 'Василий', lastName: 'Петров', age: '21' },
+                {value: 2, description: 'Антонов К.', firstName: 'Константин', lastName: 'Антонов', age: '37' },
+                {value: 3, description: 'Яковлев Б.', firstName: 'Борис', lastName: 'Яковлев', age: '17' },
+                {value: 4, description: 'Туполев М.', firstName: 'Марат', lastName: 'Туполев', age: '33' },
+                {value: 5, description: 'Лавочкин С.', firstName: 'Серафим', lastName: 'Лавочкин', age: '24' }
             ];
         };
         //TODO END remove
