@@ -7,7 +7,6 @@ angular.module('catalogue', [])
             restrict: 'A',
             scope: {
                 getData: '=catalogue',
-                options: '=catalogOptions'
             },
             controller: function ($scope, $modal) {
                 $scope.details = {};
@@ -38,10 +37,10 @@ angular.module('catalogue', [])
                     closeCatalogueModal();
                 };
             },
-            compile: function (scope, element, attrs) {
+            compile: function (scope, element) {
                 return function (scope, elem) {
-                    element.$$element[0].setAttribute('readonly', 'true');
                     scope.catalogueElement = element;
+                    element.$$element[0].setAttribute('readonly', 'true');
                     element.$$element.on('click', function (event) {
                         event.preventDefault();
                         scope.openCatalogue();
@@ -51,7 +50,8 @@ angular.module('catalogue', [])
         };
     })
 
-    .directive('catalogueModal', function () {
+    .
+    directive('catalogueModal', function () {
         return {
             restrict: 'E',
             templateUrl: 'html/templates/catalog.html'
