@@ -28,42 +28,35 @@
                  <a href>3</a>
              </li>-->
         </ul>
-        <ul ng-show="showCataloguesDropDown" class="dropdown nav navbar-nav mobile_text_left no_display fade_anim" style="color: black;">
+        <ul class="dropdown nav navbar-nav mobile_text_left no_display fade_anim"
+            style="color: black;">
             <li class="clickable">
                 <a class="dropdown-toggle">
                     Справочники <i class="fa fa-caret-down"> </i>
                 </a>
                 <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#" class="fade_anim" ng-show="showCompaniesDropDown">Юр. Лица</a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation" ng-repeat="company in companies">
+                                <a ng-click="openCompanyCard(company);">{{company.short}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#" class="fade_anim" ng-show="showPlacesDropDown">Пункты доставки</a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation" ng-repeat="place in places">
+                                <a ng-click="openPlaceCard(place);">
+                                    <span ng-show="place.name">{{place.name}}</span>
+                                    <span ng-show="place.address && place.address.city">, {{place.address.city}}</span>
+                                    <span ng-show="place.company && place.company.name">, {{place.company.name}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li role="presentation" ng-repeat="catalogue in catalogues">
                         <a ng-click="openCatalogueCard(catalogue);">{{catalogue.title}}</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul ng-show="showCompaniesDropDown" class="dropdown nav navbar-nav mobile_text_left fade_anim" style="color: black;">
-            <li class="clickable">
-                <a class="dropdown-toggle">
-                    Юр. Лица <i class="fa fa-caret-down"> </i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li role="presentation" ng-repeat="company in companies">
-                        <a ng-click="openCompanyCard(company);">{{company.short}}</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul ng-show="showPlacesDropDown" class="dropdown nav navbar-nav mobile_text_left fade_anim" style="color: black;">
-            <li class="clickable">
-                <a class="dropdown-toggle">
-                    Пункты доставки <i class="fa fa-caret-down"> </i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li role="presentation" ng-repeat="place in places">
-                        <a ng-click="openPlaceCard(place);">
-                            <span ng-show="place.name">{{place.name}}</span>
-                            <span ng-show="place.address && place.address.city">, {{place.address.city}}</span>
-                            <span ng-show="place.company && place.company.name">, {{place.company.name}}</span>
-                        </a>
                     </li>
                 </ul>
             </li>

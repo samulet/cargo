@@ -11,8 +11,6 @@ angular.module('website.top.menu', [])
                 $scope.showCompaniesDropDown = false;
                 $scope.showPlacesDropDown = false;
 
-                console.log($scope.isAjaxLoading);
-
                 $scope.getClass = function (path) {
                     if ('/' + $location.path().substr(1, path.length) == path) {
                         return "active";
