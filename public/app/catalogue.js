@@ -2,7 +2,7 @@
 
 angular.module('catalogue', [])
 
-    .directive('catalogue', function () {
+    .directive('website.catalogue', function () {
         return {
             restrict: 'A',
             scope: {
@@ -50,8 +50,7 @@ angular.module('catalogue', [])
         };
     })
 
-    .
-    directive('catalogueModal', function () {
+    .directive('catalogueModal', function () {
         return {
             restrict: 'E',
             templateUrl: 'html/templates/catalog.html'

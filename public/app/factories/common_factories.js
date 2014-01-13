@@ -3,7 +3,7 @@
 angular.module('common.factories', [
         'website.constants'
     ])
-    .factory('storageFactory', ['$http', 'cookieFactory', '$rootScope', function ($http, cookieFactory, $rootScope) {
+    .factory('storageFactory', ['$http', 'cookiesFactory', '$rootScope', function ($http, cookiesFactory, $rootScope) {
         var storage = {
             cookie: {
                 token: 'token',
@@ -29,7 +29,7 @@ angular.module('common.factories', [
         }
 
         function getCookie(key) {
-            return cookieFactory.getItem(key);
+            return cookiesFactory.getItem(key);
         }
 
         function setValueForSession(key, value) {
@@ -41,11 +41,11 @@ angular.module('common.factories', [
         }
 
         function addCookie(key, value, expires, secure) {
-            return cookieFactory.setItem(key, value, expires, secure);
+            return cookiesFactory.setItem(key, value, expires, secure);
         }
 
         function removeCookie(key) {
-            return cookieFactory.removeItem(key);
+            return cookiesFactory.removeItem(key);
         }
 
         function set(key, value) {
@@ -182,7 +182,7 @@ angular.module('common.factories', [
         };
     }])
 
-    .factory('cookieFactory', ['WEB_CONFIG', function (WEB_CONFIG) {
+    .factory('cookiesFactory', ['WEB_CONFIG', function (WEB_CONFIG) {
         return {
             setItem: function (name, value, expires, secure) {
                 if (!name || !value) return false;
