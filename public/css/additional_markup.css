@@ -144,6 +144,12 @@ li.input-group .input-group-addon {
     color: #525252;
 }
 
+.navbar-inverse.btn-loading .navbar-nav > .active > a,
+.navbar-inverse.btn-loading .navbar-nav > .active > a:hover,
+.navbar-inverse.btn-loading .navbar-nav > .active > a:focus {
+    background-color: rgba(0, 0, 0, 0.56);
+}
+
 .fade_anim {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=1);
