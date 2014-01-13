@@ -7,6 +7,12 @@ angular.module('website.top.menu', [])
             restrict: 'E',
             templateUrl: 'html/partials/private/top_menu.html',
             controller: function ($scope, $http, $location, REST_CONFIG, storageFactory, errorFactory) {
+                $scope.showCataloguesDropDown = false;
+                $scope.showCompaniesDropDown = false;
+                $scope.showPlacesDropDown = false;
+
+                console.log($scope.isAjaxLoading);
+
                 $scope.getClass = function (path) {
                     if ('/' + $location.path().substr(1, path.length) == path) {
                         return "active";
@@ -22,44 +28,53 @@ angular.module('website.top.menu', [])
                 })();
 
                 function getCatalogues() {
-                    $scope.catalogues = storageFactory.getCatalogues();
+                    $scope.catalogues = storageFactory.getSessionCatalogues();
                     if (!$scope.catalogues) {
                         $http.get(REST_CONFIG.BASE_URL + '/ref')
                             .success(function (data) {
                                 $scope.catalogues = data._embedded.references;
                                 storageFactory.setCataloguesForSession($scope.catalogues);
+                                $scope.showCataloguesDropDown = true;
                             }).error(function (data, status) {
                                 errorFactory.resolve(data, status);
                             }
                         );
+                    } else {
+                        $scope.showCataloguesDropDown = true;
                     }
                 }
 
                 function getCompanies() {
-                    $scope.companies = storageFactory.getCompanies();
+                    $scope.companies = storageFactory.getSessionCompanies();
                     if (!$scope.companies) {
                         $http.get(REST_CONFIG.BASE_URL + '/companies')
                             .success(function (data) {
                                 $scope.companies = data._embedded.companies;
                                 storageFactory.setCompaniesForSession($scope.companies);
+                                $scope.showCompaniesDropDown = true;
                             }).error(function (data, status) {
                                 errorFactory.resolve(data, status);
                             }
                         );
+                    } else {
+                        $scope.showCompaniesDropDown = true;
                     }
                 }
 
                 function getPlaces() {
-                    $scope.places = storageFactory.getPlaces();
+                    $scope.places = storageFactory.getSessionPlaces();
                     if (!$scope.places) {
                         $http.get(REST_CONFIG.BASE_URL + '/places')
                             .success(function (data) {
                                 $scope.places = data._embedded.places;
                                 storageFactory.setPlacesForSession($scope.places);
+                                $scope.showPlacesDropDown = true;
                             }).error(function (data, status) {
                                 errorFactory.resolve(data, status);
                             }
                         );
+                    } else {
+                        $scope.showPlacesDropDown = true;
                     }
                 }
 

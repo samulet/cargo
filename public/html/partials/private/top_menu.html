@@ -1,5 +1,5 @@
 <!--Top menu-->
-<div class="navbar navbar-inverse tiny_navbar" role="navigation">
+<div class="navbar navbar-inverse tiny_navbar" role="navigation" ajax-disabler="isAjaxLoading">
 <div class="container">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -28,7 +28,7 @@
                  <a href>3</a>
              </li>-->
         </ul>
-        <ul class="dropdown nav navbar-nav mobile_text_left" style="color: black;">
+        <ul ng-show="showCataloguesDropDown" class="dropdown nav navbar-nav mobile_text_left no_display fade_anim" style="color: black;">
             <li class="clickable">
                 <a class="dropdown-toggle">
                     Справочники <i class="fa fa-caret-down"> </i>
@@ -40,7 +40,7 @@
                 </ul>
             </li>
         </ul>
-        <ul class="dropdown nav navbar-nav mobile_text_left" style="color: black;">
+        <ul ng-show="showCompaniesDropDown" class="dropdown nav navbar-nav mobile_text_left fade_anim" style="color: black;">
             <li class="clickable">
                 <a class="dropdown-toggle">
                     Юр. Лица <i class="fa fa-caret-down"> </i>
@@ -52,7 +52,7 @@
                 </ul>
             </li>
         </ul>
-        <ul class="dropdown nav navbar-nav mobile_text_left" style="color: black;">
+        <ul ng-show="showPlacesDropDown" class="dropdown nav navbar-nav mobile_text_left fade_anim" style="color: black;">
             <li class="clickable">
                 <a class="dropdown-toggle">
                     Пункты доставки <i class="fa fa-caret-down"> </i>

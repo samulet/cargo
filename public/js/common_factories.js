@@ -14,7 +14,9 @@ angular.module('common.factories', [
                 apiRoutes: 'api_routes',
                 user: 'user',
                 selectedAccount: 'selected_account',
-                selectedCompany: 'selected_company',
+                selectedCompany: 'selected_company'
+            },
+            rootScope: {
                 companies: 'companies',
                 catalogues: 'catalogues',
                 places: 'places'
@@ -31,7 +33,11 @@ angular.module('common.factories', [
         }
 
         function setValueForSession(key, value) {
-            $rootScope.key = value;
+            $rootScope[key] = value;
+        }
+
+        function getSessionValue(key) {
+            return $rootScope[key];
         }
 
         function addCookie(key, value, expires, secure) {
@@ -100,22 +106,22 @@ angular.module('common.factories', [
                 return remove(storage.local.selectedCompany);
             },
             setCompaniesForSession: function (companies) {
-                setValueForSession(storage.local.companies, companies);
+                setValueForSession(storage.rootScope.companies, companies);
             },
             setPlacesForSession: function (places) {
-                setValueForSession(storage.local.places, places);
+                setValueForSession(storage.rootScope.places, places);
             },
             setCataloguesForSession: function (catalogues) {
-                setValueForSession(storage.local.catalogues, catalogues);
+                setValueForSession(storage.rootScope.catalogues, catalogues);
             },
-            getCompanies: function () {
-                return getCookie(storage.cookie.companies);
+            getSessionCompanies: function () {
+                return getSessionValue(storage.rootScope.companies);
             },
-            getPlaces: function () {
-                return getCookie(storage.cookie.places);
+            getSessionPlaces: function () {
+                return getSessionValue(storage.rootScope.places);
             },
-            getCatalogues: function () {
-                return getCookie(storage.cookie.catalogues);
+            getSessionCatalogues: function () {
+                return getSessionValue(storage.rootScope.catalogues);
             }
         };
     }])
