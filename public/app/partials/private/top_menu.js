@@ -5,7 +5,7 @@ angular.module('website.top.menu', [])
     .directive('topPrivateMenu', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/partials/private/top_menu.html',
+            templateUrl: 'app/partials/private/top_menu.html',
             controller: function ($scope, $http, $location, REST_CONFIG, storageFactory, errorFactory) {
                 $scope.showCataloguesDropDown = false;
                 $scope.showCompaniesDropDown = false;
@@ -94,7 +94,7 @@ angular.module('website.top.menu', [])
     .directive('userMenu', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/partials/private/user_menu.html',
+            templateUrl: 'app/partials/private/user_menu.html',
             controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
                 $scope.isSelectAccountAndCompanyModalOpened = false;
                 $scope.isCompaniesManagementOpened = false;

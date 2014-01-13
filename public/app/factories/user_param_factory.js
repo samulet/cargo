@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('website.user.param,', [])
+angular.module('website.user.param', [])
     .factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
         function onError(data, status) {
             if (!errorFactory.isUnauthorized(status)) {

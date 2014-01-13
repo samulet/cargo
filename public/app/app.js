@@ -7,13 +7,11 @@ angular.module('website', [
         'env.config',
         'website.constants',
         'website.top.menu',
-        'website.sign',
         'website.user.profile',
         'website.user.param',
         'website.dashboard',
         'website.account',
         'website.public.offer',
-        'website.page.errors',
         'website.custom.attrs',
         'website.storage',
         'website.error',
@@ -24,7 +22,7 @@ angular.module('website', [
         'website.catalogue'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
-        var pathToIncs = 'html/pages/';
+        var pathToIncs = 'app/pages/';
         $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.DASHBOARD});
         $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.DASHBOARD});
         $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + 'errors/404.html', access: ACCESS_LEVEL.PUBLIC});

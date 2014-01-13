@@ -30,7 +30,7 @@ angular.module('common.directives', [])
     .directive('addCompanyWizard', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addCompanyWizardTemplate.html',
+            templateUrl: 'app/templates/addCompanyWizardTemplate.html',
             scope: {
                 companyData: '=model',
                 account: '=account',
@@ -114,7 +114,7 @@ angular.module('common.directives', [])
     .directive('addPhoneForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addPhoneTemplate.html',
+            templateUrl: 'app/templates/addPhoneTemplate.html',
             scope: {
                 phones: '=model'
             },
@@ -137,7 +137,7 @@ angular.module('common.directives', [])
     .directive('addAddressForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addAddressTemplate.html',
+            templateUrl: 'app/templates/addAddressTemplate.html',
             scope: {
                 addresses: '=model'
             },
@@ -160,7 +160,7 @@ angular.module('common.directives', [])
     .directive('addSiteForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addSiteTemplate.html',
+            templateUrl: 'app/templates/addSiteTemplate.html',
             scope: {
                 sites: '=model'
             },
@@ -183,7 +183,7 @@ angular.module('common.directives', [])
     .directive('addEmailForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addEmailTemplate.html',
+            templateUrl: 'app/templates/addEmailTemplate.html',
             scope: {
                 emails: '=model'
             },
@@ -206,7 +206,7 @@ angular.module('common.directives', [])
     .directive('addFounderForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addFounderTemplate.html',
+            templateUrl: 'app/templates/addFounderTemplate.html',
             scope: {
                 founders: '=model'
             },
@@ -229,7 +229,7 @@ angular.module('common.directives', [])
     .directive('addAuthorizedPersonForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addAuthorizedPersonTemplate.html',
+            templateUrl: 'app/templates/addAuthorizedPersonTemplate.html',
             scope: {
                 authorizedPersons: '=model'
             },
@@ -252,7 +252,7 @@ angular.module('common.directives', [])
     .directive('addLicenseForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addLicenseTemplate.html',
+            templateUrl: 'app/templates/addLicenseTemplate.html',
             scope: {
                 licenses: '=model'
             },
@@ -282,7 +282,7 @@ angular.module('common.directives', [])
     .directive('addApplicantsForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addApplicantsTemplate.html',
+            templateUrl: 'app/templates/addApplicantsTemplate.html',
             scope: {
                 applicants: '=model'
             },
@@ -305,7 +305,7 @@ angular.module('common.directives', [])
     .directive('addPersonsForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addPersonsTemplate.html',
+            templateUrl: 'app/templates/addPersonsTemplate.html',
             scope: {
                 persons: '=model'
             },
@@ -328,7 +328,7 @@ angular.module('common.directives', [])
     .directive('addOkvedForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addOkvedTemplate.html',
+            templateUrl: 'app/templates/addOkvedTemplate.html',
             scope: {
                 okveds: '=model'
             },
@@ -354,7 +354,7 @@ angular.module('common.directives', [])
     .directive('addBankAccountForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addBankAccountsTemplate.html',
+            templateUrl: 'app/templates/addBankAccountsTemplate.html',
             scope: {
                 bankAccounts: '=model'
             },

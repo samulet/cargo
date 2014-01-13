@@ -7,13 +7,11 @@ angular.module('website', [
         'env.config',
         'website.constants',
         'website.top.menu',
-        'website.sign',
         'website.user.profile',
         'website.user.param',
         'website.dashboard',
         'website.account',
         'website.public.offer',
-        'website.page.errors',
         'website.custom.attrs',
         'website.storage',
         'website.error',
@@ -24,7 +22,7 @@ angular.module('website', [
         'website.catalogue'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
-        var pathToIncs = 'html/pages/';
+        var pathToIncs = 'app/pages/';
         $routeProvider.when(ROUTES.START_PAGE, {redirectTo: ROUTES.DASHBOARD});
         $routeProvider.when(ROUTES.START_PAGE_ALT, {redirectTo: ROUTES.DASHBOARD});
         $routeProvider.when(ROUTES.NOT_FOUND, {templateUrl: pathToIncs + 'errors/404.html', access: ACCESS_LEVEL.PUBLIC});
@@ -136,13 +134,13 @@ angular.module('website.constants', [])
 ;
 'use strict';
 
-angular.module('catalogue', [])
+angular.module('website.catalogue', [])
 
-    .directive('website.catalogue', function () {
+    .directive('catalogue', function () {
         return {
             restrict: 'A',
             scope: {
-                getData: '=catalogue',
+                getData: '=catalogue'
             },
             controller: function ($scope, $modal) {
                 $scope.details = {};
@@ -189,7 +187,7 @@ angular.module('catalogue', [])
     .directive('catalogueModal', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/catalog.html'
+            templateUrl: 'app/templates/catalog.html'
         };
     })
 
@@ -317,7 +315,7 @@ angular.module('common.directives', [])
     .directive('addCompanyWizard', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addCompanyWizardTemplate.html',
+            templateUrl: 'app/templates/addCompanyWizardTemplate.html',
             scope: {
                 companyData: '=model',
                 account: '=account',
@@ -401,7 +399,7 @@ angular.module('common.directives', [])
     .directive('addPhoneForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addPhoneTemplate.html',
+            templateUrl: 'app/templates/addPhoneTemplate.html',
             scope: {
                 phones: '=model'
             },
@@ -424,7 +422,7 @@ angular.module('common.directives', [])
     .directive('addAddressForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addAddressTemplate.html',
+            templateUrl: 'app/templates/addAddressTemplate.html',
             scope: {
                 addresses: '=model'
             },
@@ -447,7 +445,7 @@ angular.module('common.directives', [])
     .directive('addSiteForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addSiteTemplate.html',
+            templateUrl: 'app/templates/addSiteTemplate.html',
             scope: {
                 sites: '=model'
             },
@@ -470,7 +468,7 @@ angular.module('common.directives', [])
     .directive('addEmailForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addEmailTemplate.html',
+            templateUrl: 'app/templates/addEmailTemplate.html',
             scope: {
                 emails: '=model'
             },
@@ -493,7 +491,7 @@ angular.module('common.directives', [])
     .directive('addFounderForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addFounderTemplate.html',
+            templateUrl: 'app/templates/addFounderTemplate.html',
             scope: {
                 founders: '=model'
             },
@@ -516,7 +514,7 @@ angular.module('common.directives', [])
     .directive('addAuthorizedPersonForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addAuthorizedPersonTemplate.html',
+            templateUrl: 'app/templates/addAuthorizedPersonTemplate.html',
             scope: {
                 authorizedPersons: '=model'
             },
@@ -539,7 +537,7 @@ angular.module('common.directives', [])
     .directive('addLicenseForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addLicenseTemplate.html',
+            templateUrl: 'app/templates/addLicenseTemplate.html',
             scope: {
                 licenses: '=model'
             },
@@ -569,7 +567,7 @@ angular.module('common.directives', [])
     .directive('addApplicantsForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addApplicantsTemplate.html',
+            templateUrl: 'app/templates/addApplicantsTemplate.html',
             scope: {
                 applicants: '=model'
             },
@@ -592,7 +590,7 @@ angular.module('common.directives', [])
     .directive('addPersonsForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addPersonsTemplate.html',
+            templateUrl: 'app/templates/addPersonsTemplate.html',
             scope: {
                 persons: '=model'
             },
@@ -615,7 +613,7 @@ angular.module('common.directives', [])
     .directive('addOkvedForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addOkvedTemplate.html',
+            templateUrl: 'app/templates/addOkvedTemplate.html',
             scope: {
                 okveds: '=model'
             },
@@ -641,7 +639,7 @@ angular.module('common.directives', [])
     .directive('addBankAccountForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/addBankAccountsTemplate.html',
+            templateUrl: 'app/templates/addBankAccountsTemplate.html',
             scope: {
                 bankAccounts: '=model'
             },
@@ -688,363 +686,6 @@ angular.module('common.directives', [])
             }
         };
     })
-;
-'use strict';
-
-angular.module('common.factories', [
-        'website.constants'
-    ])
-    .factory('storageFactory', ['$http', 'cookiesFactory', '$rootScope', function ($http, cookiesFactory, $rootScope) {
-        var storage = {
-            cookie: {
-                token: 'token',
-                sessionId: 'PHPSESSID'
-            },
-            local: {
-                accounts: 'accounts',
-                apiRoutes: 'api_routes',
-                user: 'user',
-                selectedAccount: 'selected_account',
-                selectedCompany: 'selected_company'
-            },
-            rootScope: {
-                companies: 'companies',
-                catalogues: 'catalogues',
-                places: 'places'
-            }
-        };
-
-        function get(key) {
-            var value = localStorage.getItem(key);
-            return value ? JSON.parse(value) : null;
-        }
-
-        function getCookie(key) {
-            return cookiesFactory.getItem(key);
-        }
-
-        function setValueForSession(key, value) {
-            $rootScope[key] = value;
-        }
-
-        function getSessionValue(key) {
-            return $rootScope[key];
-        }
-
-        function addCookie(key, value, expires, secure) {
-            return cookiesFactory.setItem(key, value, expires, secure);
-        }
-
-        function removeCookie(key) {
-            return cookiesFactory.removeItem(key);
-        }
-
-        function set(key, value) {
-            if (!key) throw "Invalid key for a value: " + value;
-            if (!value) throw "Invalid value for a key :" + key;
-            localStorage.setItem(key, JSON.stringify(value));
-        }
-
-        function remove(key) {
-            return localStorage.removeItem(key);
-        }
-
-        return { //TODO add fallback to cookies
-            storage: storage,
-            getApiRoutes: function () {
-                return get(storage.local.apiRoutes);
-            },
-            setApiRoutes: function (routes) {
-                set(storage.local.apiRoutes, routes);
-            },
-            getUser: function () {
-                return get(storage.local.user);
-            },
-            setUser: function (user) {
-                set(storage.local.user, user);
-            },
-            getAccounts: function () {
-                return get(storage.local.accounts);
-            },
-            setAccounts: function (accounts) {
-                set(storage.local.accounts, accounts);
-            },
-            getToken: function () {
-                return getCookie(storage.cookie.token);
-            },
-            removeSessionId: function () {
-                return removeCookie(storage.cookie.sessionId);
-            },
-            removeToken: function () {
-                return removeCookie(storage.cookie.token);
-            },
-            setSelectedAccount: function (account) {
-                set(storage.local.selectedAccount, account);
-            },
-            getSelectedAccount: function () {
-                return get(storage.local.selectedAccount);
-            },
-            removeSelectedAccount: function () {
-                return remove(storage.local.selectedAccount);
-            },
-            setSelectedCompany: function (company) {
-                set(storage.local.selectedCompany, company);
-            },
-            getSelectedCompany: function () {
-                return get(storage.local.selectedCompany);
-            },
-            removeSelectedCompany: function () {
-                return remove(storage.local.selectedCompany);
-            },
-            setCompaniesForSession: function (companies) {
-                setValueForSession(storage.rootScope.companies, companies);
-            },
-            setPlacesForSession: function (places) {
-                setValueForSession(storage.rootScope.places, places);
-            },
-            setCataloguesForSession: function (catalogues) {
-                setValueForSession(storage.rootScope.catalogues, catalogues);
-            },
-            getSessionCompanies: function () {
-                return getSessionValue(storage.rootScope.companies);
-            },
-            getSessionPlaces: function () {
-                return getSessionValue(storage.rootScope.places);
-            },
-            getSessionCatalogues: function () {
-                return getSessionValue(storage.rootScope.catalogues);
-            }
-        };
-    }])
-
-    .factory('redirectFactory', ['ROUTES', '$location', 'WEB_CONFIG', 'storageFactory', function (ROUTES, $location, WEB_CONFIG, storageFactory) {
-        var isOldBrowser = navigator.userAgent.match(/MSIE\s(?!9.0)/);  // IE8 and lower
-
-        function redirectOldBrowserCompatable(url) {
-            var referLink = document.createElement('a');
-            referLink.href = url;
-            document.body.appendChild(referLink);
-            referLink.click();
-        }
-
-        function redirectTo(url) {
-            if (isOldBrowser) {
-                redirectOldBrowserCompatable('#!' + url);
-            } else {
-                $location.path(url);
-            }
-        }
-
-        function redirectToNonAngular(url) {
-            if (isOldBrowser) {
-                redirectOldBrowserCompatable(url);
-            } else {
-                window.location.href = url;
-            }
-        }
-
-        function openNewWindow(url) {
-            if (isOldBrowser) {
-                redirectOldBrowserCompatable(url);
-            } else {
-                window.open(url);
-            }
-        }
-
-        return {
-            goHomePage: function () {
-                redirectTo(ROUTES.START_PAGE);
-            },
-            goSignIn: function () {
-                redirectToNonAngular(WEB_CONFIG.BASE_URL);
-            },
-            goDashboard: function () {
-                redirectTo(ROUTES.DASHBOARD);
-            },
-            logout: function () {
-                storageFactory.removeToken();
-                storageFactory.removeSessionId();
-                localStorage.clear();
-                redirectTo(WEB_CONFIG.BASE_URL + '/user/logout');
-            },
-            redirectCustomPath: function (path) {
-                redirectTo(path);
-            }
-        };
-    }])
-
-    .factory('cookiesFactory', ['WEB_CONFIG', function (WEB_CONFIG) {
-        return {
-            setItem: function (name, value, expires, secure) {
-                if (!name || !value) return false;
-                var str = name + '=' + encodeURIComponent(value);
-
-                if (expires) {
-                    var now = new Date();
-                    now.setTime(now.getTime() + (expires * 24 * 60 * 60 * 1000));
-                    str += '; expires=' + now.toUTCString();
-                }
-
-                str += '; path=/';
-                str += '; domain=' + WEB_CONFIG.DOMAIN; //Attention: get exception when localhost
-                if (secure)  str += '; secure';
-
-                document.cookie = str;
-                return true;
-            },
-            getItem: function (name) {
-                var r = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-                if (r) return r[2];
-                else return null;
-            },
-            removeItem: function (name) {
-                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
-            }
-        };
-    }])
-
-    .factory('errorFactory', ['RESPONSE_STATUS', 'MESSAGES', '$rootScope', 'redirectFactory', function (RESPONSE_STATUS, MESSAGES, $rootScope, redirectFactory) {
-
-        function isUnauthorized(status) {
-            return (status === RESPONSE_STATUS.UNAUTHORIZED || status === RESPONSE_STATUS.FORBIDDEN || status === RESPONSE_STATUS.PROXY_AUTHENTICATION_REQUIRED);
-        }
-
-        function getError(status, data) {
-            var type = (status >= 400) ? 'danger' : 'success';
-
-            if (isUnauthorized(status)) {
-                return {msg: MESSAGES.ERROR.UNAUTHORIZED, type: type};
-            }
-
-            if (status === RESPONSE_STATUS.NOT_FOUND || status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
-                return {msg: MESSAGES.ERROR.INTERNAL_SERVER_ERROR, type: type};
-            }
-
-            if (status === RESPONSE_STATUS.UNPROCESSABLE_ENTITY) {
-                return {msg: MESSAGES.ERROR.CANNOT_BE_DONE_ERROR, type: type};
-            }
-
-            if (data.message) {
-                return {msg: data.message, type: type};
-            }
-
-            if (data.error) {
-                return {msg: data.error, type: type};
-            }
-
-            return {msg: MESSAGES.ERROR.UNKNOWN_ERROR, type: type};
-        }
-
-        return {
-            resolve: function (data, status, container, isLoginPage) {
-                if (status === RESPONSE_STATUS.UNAUTHORIZED && !isLoginPage) {
-                    redirectFactory.logout();
-                }
-
-                if (container) {
-                    if (angular.isArray(container) && container.length > 0) {
-                        for (var i = 0; i <= container.length; i++) {
-                            if (container[i].msg === getError(status, data).msg) {
-                                return;
-                            }
-                        }
-                        container.push(getError(status, data));
-                    } else {
-                        container.push(getError(status, data));
-                    }
-                } else {
-                    $rootScope.messages.push(getError(status, data));
-                }
-            },
-            isUnauthorized: function (status) {
-                return isUnauthorized(status);
-            }
-        };
-    }])
-
-    .
-    factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
-
-        function onError(data, status) {
-            if (!errorFactory.isUnauthorized(status)) {
-                errorFactory.resolve(data, status);
-            }
-        }
-
-        function getAccounts() {
-            $http.get(REST_CONFIG.BASE_URL + '/accounts')
-                .success(function (data) {
-                    var accounts = data._embedded.accounts;
-                    if (accounts.length === 1) {
-                        storageFactory.setSelectedAccount(accounts[0]);
-                        getCompanies(accounts[0], true);
-                    } else if (accounts.length === 0) {
-                        storageFactory.removeSelectedAccount();
-                        storageFactory.removeSelectedCompany();
-                    }
-                }).error(function (data, status) {
-                    onError(data, status);
-                }
-            );
-        }
-
-        function getCompanies(account, isSetSelected) {
-            $http.get(REST_CONFIG.BASE_URL + '/accounts/' + account.account_uuid + '/companies')
-                .success(function (data) {
-                    var companies = data._embedded.companies;
-                    if (companies.length === 1 && isSetSelected === true) {
-                        storageFactory.setSelectedCompany(companies[0]);
-                    }
-                    getUser();
-                }).error(function (data, status) {
-                    onError(data, status);
-                }
-            );
-        }
-
-        function getApiRoutes() {
-            $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
-                storageFactory.setApiRoutes(data._embedded.resource_meta);
-            }).error(function (data, status) {
-                    errorFactory.resolve(data, status);
-                }
-            );
-        }
-
-        function getUser() {//TODO api didn't work yet
-            // $http.get(REST_CONFIG.BASE_URL + '/profile').success(function (data) {
-            // storageFactory.setUser(data._embedded.user);
-            //}).error(function (data, status) {
-            // errorFactory.resolve(data, status)
-            //     }
-            // );
-        }
-
-        return {
-            getApiRoutes: function (isForce) {
-                if (isForce !== true) {
-                    var routes = storageFactory.getApiRoutes();
-                    if (!routes) {
-                        getApiRoutes();
-                    }
-                } else {
-                    getApiRoutes();
-                }
-            },
-            prepareUser: function () {
-                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
-                var selectedAccount = storageFactory.getSelectedAccount();
-                var selectedCompany = storageFactory.getSelectedCompany();
-                if (!selectedAccount || !selectedCompany) {
-                    getAccounts();
-                }
-
-                if (!storageFactory.getUser()) {
-                    getUser();
-                }
-            }
-        };
-    }])
 ;
 'use strict';
 
@@ -1329,7 +970,7 @@ angular.module('website.storage', [])
 ;
 'use strict';
 
-angular.module('website.user.param,', [])
+angular.module('website.user.param', [])
     .factory('userParamsFactory', ['$http', 'storageFactory', 'errorFactory', 'REST_CONFIG', function ($http, storageFactory, errorFactory, REST_CONFIG) {
         function onError(data, status) {
             if (!errorFactory.isUnauthorized(status)) {
@@ -1700,7 +1341,7 @@ angular.module('website.top.menu', [])
     .directive('topPrivateMenu', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/partials/private/top_menu.html',
+            templateUrl: 'app/partials/private/top_menu.html',
             controller: function ($scope, $http, $location, REST_CONFIG, storageFactory, errorFactory) {
                 $scope.showCataloguesDropDown = false;
                 $scope.showCompaniesDropDown = false;
@@ -1789,7 +1430,7 @@ angular.module('website.top.menu', [])
     .directive('userMenu', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/partials/private/user_menu.html',
+            templateUrl: 'app/partials/private/user_menu.html',
             controller: function ($scope, $rootScope, redirectFactory, storageFactory, $modal) {
                 $scope.isSelectAccountAndCompanyModalOpened = false;
                 $scope.isCompaniesManagementOpened = false;

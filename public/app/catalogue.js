@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('catalogue', [])
+angular.module('website.catalogue', [])
 
-    .directive('website.catalogue', function () {
+    .directive('catalogue', function () {
         return {
             restrict: 'A',
             scope: {
-                getData: '=catalogue',
+                getData: '=catalogue'
             },
             controller: function ($scope, $modal) {
                 $scope.details = {};
@@ -53,7 +53,7 @@ angular.module('catalogue', [])
     .directive('catalogueModal', function () {
         return {
             restrict: 'E',
-            templateUrl: 'html/templates/catalog.html'
+            templateUrl: 'app/templates/catalog.html'
         };
     })
 
