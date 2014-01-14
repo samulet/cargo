@@ -19,6 +19,8 @@ angular.module('website', [
         'website.cookies',
         'website.modal',
         'website.catalogue',
+        'website.import',
+        'website.entities.linking',
         'ui.bootstrap',
         'ui.select2',
         'ngGrid'
