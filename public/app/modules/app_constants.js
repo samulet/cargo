@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('website.constants', [])
     .constant('RESPONSE_STATUS', {
         OK: 200,
@@ -18,16 +20,6 @@ angular.module('website.constants', [])
         PUBLIC: 0,
         AUTHORIZED: 1,
         ADMIN: 2
-    })
-    .constant('ROUTES', {
-        START_PAGE: '/',
-        START_PAGE_ALT: '',
-        DASHBOARD: '/dashboard',
-        ACCOUNT: '/account',
-        PUBLIC_OFFER: '/public/offer',
-        USER_PROFILE: '/user/profile',
-        LOGOUT: '/user/logout',
-        NOT_FOUND: '/404'
     })
     .constant('MESSAGES', {
         ERROR: {

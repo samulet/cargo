@@ -4,6 +4,8 @@ angular.module('website', [
         'ngRoute',
         'ngAnimate',
         'website.env.config',
+        'website.routes',
+        'website.linking',
         'website.constants',
         'website.top.menu',
         'website.user.profile',
@@ -20,7 +22,6 @@ angular.module('website', [
         'website.modal',
         'website.catalogue',
         'website.import',
-        'website.entities.linking',
         'ui.bootstrap',
         'ui.select2',
         'ngGrid'
@@ -34,6 +35,7 @@ angular.module('website', [
         $routeProvider.when(ROUTES.DASHBOARD, {templateUrl: pathToIncs + 'dashboard/dashboard.html', access: ACCESS_LEVEL.AUTHORIZED});
         $routeProvider.when(ROUTES.ACCOUNT, {templateUrl: pathToIncs + 'account/account.html', access: ACCESS_LEVEL.AUTHORIZED});
         $routeProvider.when(ROUTES.PUBLIC_OFFER, {templateUrl: pathToIncs + 'public_offer/public_offer.html', access: ACCESS_LEVEL.PUBLIC});
+        $routeProvider.when(ROUTES.LINKING, {templateUrl: pathToIncs + 'linking/linking.html', access: ACCESS_LEVEL.AUTHORIZED});
 
         $routeProvider.otherwise({redirectTo: ROUTES.DASHBOARD});
 
