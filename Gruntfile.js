@@ -11,8 +11,7 @@ module.exports = function (grunt) {
             compiledMinJs: '<%= productionDir %>cargo.min.js',
             devJsSources: [
                 '<%= appDir %>*.js',
-                '<%= appDir %>directives/**/*.js',
-                '<%= appDir %>factories/**/*.js',
+                '<%= appDir %>modules/**/*.js',
                 '<%= appDir %>pages/**/*.js',
                 '<%= appDir %>partials/**/*.js'
             ],
@@ -93,7 +92,7 @@ module.exports = function (grunt) {
                     {
                         dest: '<%= appDir %>env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
-                        name: 'env.config',
+                        name: 'website.env.config',
                         constants: {
                             WEB_CONFIG: ((function () {
                                 var PROTOCOL = 'http';

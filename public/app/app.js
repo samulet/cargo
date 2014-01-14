@@ -18,10 +18,10 @@ angular.module('website', [
         'website.redirect',
         'website.cookies',
         'website.modal',
+        'website.catalogue',
         'ui.bootstrap',
         'ui.select2',
-        'ngGrid',
-        'website.catalogue'
+        'ngGrid'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'app/pages/';
