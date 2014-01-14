@@ -3,11 +3,11 @@
 angular.module('website', [
         'ngRoute',
         'ngAnimate',
-        'ui.bootstrap',
-        'env.config',
+        'website.env.config',
         'website.constants',
         'website.top.menu',
         'website.user.profile',
+        'website.form.blocks',
         'website.user.param',
         'website.dashboard',
         'website.account',
@@ -17,6 +17,8 @@ angular.module('website', [
         'website.error',
         'website.redirect',
         'website.cookies',
+        'website.modal',
+        'ui.bootstrap',
         'ui.select2',
         'ngGrid',
         'website.catalogue'

@@ -1,6 +1,6 @@
 "use strict";
 
- angular.module("env.config", [])
+ angular.module("website.env.config", [])
 
 .constant("WEB_CONFIG", {
   "PROTOCOL": "http",

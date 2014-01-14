@@ -53,7 +53,7 @@ angular.module('website.catalogue', [])
     .directive('catalogueModal', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/catalog.html'
+            templateUrl: 'app/modules/catalogue/catalogue.html'
         };
     })
 

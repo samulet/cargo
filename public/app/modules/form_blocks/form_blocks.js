@@ -1,36 +1,11 @@
 'use strict';
 
-angular.module('common.directives', [])
-
-    .directive('ajaxDisabler', function () {
-        return {
-            restrict: 'A',
-            link: function (scope, elem, attrs) {
-
-                function getNgDisabled(elem) {
-                    var ngDisabled = elem.getAttribute('ng-disabled') ? elem.getAttribute('ng-disabled') : elem.getAttribute('data-ng-disabled');
-                    return scope.$eval(ngDisabled);
-                }
-
-                scope.$watch(attrs.ajaxDisabler, function (value) {
-                    var isAlreadyDisabled = elem[0].getAttribute('disabled');
-                    var isNgDisabled = getNgDisabled(elem[0]);
-                    if (value) {
-                        if (!isAlreadyDisabled && !isNgDisabled) elem.attr('disabled', !value);
-                        elem.addClass('btn-loading');
-                    } else {
-                        if (!isAlreadyDisabled && !isNgDisabled) elem[0].removeAttribute('disabled');
-                        elem.removeClass('btn-loading');
-                    }
-                });
-            }
-        };
-    })
+angular.module('website.form.blocks', [])
 
     .directive('addCompanyWizard', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addCompanyWizardTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addCompanyWizardTemplate.html',
             scope: {
                 companyData: '=model',
                 account: '=account',
@@ -99,8 +74,10 @@ angular.module('common.directives', [])
                     if ($scope.companyData.fms.date_registration) $scope.companyData.fms.date_registration = getTimestamp($scope.companyData.fms.date_registration);
                     if ($scope.companyData.misc.documentDate) $scope.companyData.misc.documentDate = getTimestamp($scope.companyData.misc.documentDate);
                     for (var k in $scope.companyData.tax) {
-                        if ($scope.companyData.tax[k].date_accounting) $scope.companyData.tax[k].date_accounting = getTimestamp($scope.companyData.fms.date_accounting);
-                        if ($scope.companyData.tax[k].date_registration) $scope.companyData.tax[k].date_registration = getTimestamp($scope.companyData.fms.date_registration);
+                        if ($scope.companyData.tax.hasOwnProperty(k)) {
+                            if ($scope.companyData.tax[k].date_accounting) $scope.companyData.tax[k].date_accounting = getTimestamp($scope.companyData.fms.date_accounting);
+                            if ($scope.companyData.tax[k].date_registration) $scope.companyData.tax[k].date_registration = getTimestamp($scope.companyData.fms.date_registration);
+                        }
                     }
                 }
 
@@ -114,7 +91,7 @@ angular.module('common.directives', [])
     .directive('addPhoneForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addPhoneTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addPhoneTemplate.html',
             scope: {
                 phones: '=model'
             },
@@ -137,7 +114,7 @@ angular.module('common.directives', [])
     .directive('addAddressForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addAddressTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addAddressTemplate.html',
             scope: {
                 addresses: '=model'
             },
@@ -160,7 +137,7 @@ angular.module('common.directives', [])
     .directive('addSiteForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addSiteTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addSiteTemplate.html',
             scope: {
                 sites: '=model'
             },
@@ -183,7 +160,7 @@ angular.module('common.directives', [])
     .directive('addEmailForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addEmailTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addEmailTemplate.html',
             scope: {
                 emails: '=model'
             },
@@ -206,7 +183,7 @@ angular.module('common.directives', [])
     .directive('addFounderForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addFounderTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addFounderTemplate.html',
             scope: {
                 founders: '=model'
             },
@@ -229,7 +206,7 @@ angular.module('common.directives', [])
     .directive('addAuthorizedPersonForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addAuthorizedPersonTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addAuthorizedPersonTemplate.html',
             scope: {
                 authorizedPersons: '=model'
             },
@@ -252,7 +229,7 @@ angular.module('common.directives', [])
     .directive('addLicenseForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addLicenseTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addLicenseTemplate.html',
             scope: {
                 licenses: '=model'
             },
@@ -282,7 +259,7 @@ angular.module('common.directives', [])
     .directive('addApplicantsForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addApplicantsTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addApplicantsTemplate.html',
             scope: {
                 applicants: '=model'
             },
@@ -305,7 +282,7 @@ angular.module('common.directives', [])
     .directive('addPersonsForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addPersonsTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addPersonsTemplate.html',
             scope: {
                 persons: '=model'
             },
@@ -328,7 +305,7 @@ angular.module('common.directives', [])
     .directive('addOkvedForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addOkvedTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addOkvedTemplate.html',
             scope: {
                 okveds: '=model'
             },
@@ -354,7 +331,7 @@ angular.module('common.directives', [])
     .directive('addBankAccountForm', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/addBankAccountsTemplate.html',
+            templateUrl: 'app/modules/form_blocks/addBankAccountsTemplate.html',
             scope: {
                 bankAccounts: '=model'
             },
@@ -370,34 +347,6 @@ angular.module('common.directives', [])
                     scope.bankAccounts.push(scope.temp);
                     scope.temp = {};
                 };
-            }
-        };
-    })
-
-    .directive("modalShow", function ($parse) {
-        return {
-            restrict: "A",
-            link: function (scope, element, attrs) {
-
-                scope.showModal = function (visible, elem) {
-                    if (!elem)
-                        elem = element;
-
-                    if (visible)
-                        elem.modal("show");
-                    else
-                        elem.modal("hide");
-                };
-
-                scope.$watch(attrs.modalShow, function (newValue, oldValue) {
-                    scope.showModal(newValue, attrs.$$element);
-                });
-
-                element.bind("hide.bs.modal", function () {
-                    $parse(attrs.modalShow).assign(scope, false);
-                    if (!scope.$$phase && !scope.$root.$$phase)
-                        scope.$apply();
-                });
             }
         };
     })
