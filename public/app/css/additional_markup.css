@@ -108,6 +108,12 @@ li.input-group .input-group-addon {
     margin: 0 auto;
 }
 
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 600px;
+    height: 300px;
+}
+
 .small_block {
     width: 400px;
 }

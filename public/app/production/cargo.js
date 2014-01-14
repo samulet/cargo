@@ -1646,137 +1646,199 @@ angular.module('website.dashboard', [])
 angular.module('website.linking', [])
 
     .controller('linkingController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', '$routeParams', function ($scope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, $routeParams) {
-     $scope.linkingProcessMessages = [];
-     $scope.importedCompanies = [];
-     $scope.existedCompanies = [];
-     $scope.linkedCompanies = [];
-     var unlinkedImportedCompanies = [];
-     var linkedImportedCompanies = [];
+        $scope.linkingProcessMessages = [];
+        $scope.importedCompanies = [];
+        $scope.existedCompanies = [];
+        $scope.linkedCompanies = [];
+        var unlinkedImportedCompanies = [];
+        var linkedImportedCompanies = [];
 
-     console.log($routeParams.param1);
+        //console.log($routeParams.param1);
 
-     getAllSystemCompanies();
-     getImportedCompanies();
+        /*TODO test*/
+        $scope.filterOptions = {
+            filterText: "",
+            useExternalFilter: true
+        };
+        $scope.totalServerItems = 0;
+        $scope.pagingOptions = {
+            pageSizes: [250, 500, 1000],
+            pageSize: 250,
+            currentPage: 1
+        };
+        $scope.setPagingData = function (data, page, pageSize) {
+            var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+            $scope.myData = pagedData;
+            $scope.totalServerItems = data.length;
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        };
+        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
+            setTimeout(function () {
+                var data;
+                if (searchText) {
+                    var ft = searchText.toLowerCase();
+                    $http.get('jsonFiles/largeLoad.json').success(function (largeLoad) {
+                        data = largeLoad.filter(function (item) {
+                            return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
+                        });
+                        $scope.setPagingData(data, page, pageSize);
+                    });
+                } else {
+                    $http.get('jsonFiles/largeLoad.json').success(function (largeLoad) {
+                        $scope.setPagingData(largeLoad, page, pageSize);
+                    });
+                }
+            }, 100);
+        };
 
-     function onError(data, status) {
-     if (status != RESPONSE_STATUS.NOT_FOUND) {
-     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-     }
-     }
+        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
-     function getAllSystemCompanies() {
-     $http.get(REST_CONFIG.BASE_URL + '/companies').success(function (data) {
-     $scope.existedCompany = null;
-     $scope.existedCompanies = data._embedded.companies;
-     }).error(function (data, status) {
-     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-     }
-     );
-     }
+        $scope.$watch('pagingOptions', function (newVal, oldVal) {
+            if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
+                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+            }
+        }, true);
+        $scope.$watch('filterOptions', function (newVal, oldVal) {
+            if (newVal !== oldVal) {
+                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+            }
+        }, true);
 
-     function getImportedCompanies(callback) {
-     $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect').success(function (data) {
-     $scope.importedCompany = null;
-     var importedCompanies = data._embedded.companies;
-     unlinkedImportedCompanies = [];
-     linkedImportedCompanies = [];
-     for (var i = 0; i <= importedCompanies.length - 1; i++) {
-     if (!importedCompanies[i].link) {
-     unlinkedImportedCompanies.push(importedCompanies[i]);
-     } else {
-     linkedImportedCompanies.push(importedCompanies[i]);
-     }
-     }
-     $scope.importedCompanies = unlinkedImportedCompanies;
-     if (callback) {
-     callback();
-     }
-     }).error(function (data, status) {
-     onError(data, status);
-     }
-     );
-     }
+        $scope.gridOptions = {
+            data: 'myData',
+            enablePaging: true,
+            showFooter: true,
+            totalServerItems: 'totalServerItems',
+            pagingOptions: $scope.pagingOptions,
+            filterOptions: $scope.filterOptions
+        };
+        /*TODO end test*/
 
-     $scope.getImportedCompanies = function () {
-     getImportedCompanies();
-     };
 
-     $scope.getExistedCompanies = function () {
-     getAllSystemCompanies();
-     };
+        getAllSystemCompanies();
+        getImportedCompanies();
 
-     $scope.addCompaniesLink = function () {
-     var params = {
-     source: $scope.importedCompany.source,
-     id: $scope.importedCompany.id
-     };
+        function onError(data, status) {
+            if (status != RESPONSE_STATUS.NOT_FOUND) {
+                errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+            }
+        }
 
-     if ($scope.existedCompany) {
-     params.company = $scope.existedCompany.uuid;
-     }
+        function getAllSystemCompanies() {
+            $http.get(REST_CONFIG.BASE_URL + '/companies').success(function (data) {
+                $scope.existedCompany = null;
+                $scope.existedCompanies = data._embedded.companies;
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
 
-     $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect', params).success(function () {
-     getImportedCompanies(function () {
-     getLinkedCompanies();
-     getAllSystemCompanies();
-     });
-     }).error(function (data, status) {
-     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-     }
-     );
-     };
+        function getImportedCompanies(callback) {
+            $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect').success(function (data) {
+                $scope.importedCompany = null;
+                var importedCompanies = data._embedded.companies;
+                unlinkedImportedCompanies = [];
+                linkedImportedCompanies = [];
+                for (var i = 0; i <= importedCompanies.length - 1; i++) {
+                    if (!importedCompanies[i].link) {
+                        unlinkedImportedCompanies.push(importedCompanies[i]);
+                    } else {
+                        linkedImportedCompanies.push(importedCompanies[i]);
+                    }
+                }
+                $scope.importedCompanies = unlinkedImportedCompanies;
+                if (callback) {
+                    callback();
+                }
+            }).error(function (data, status) {
+                    onError(data, status);
+                }
+            );
+        }
 
-     $scope.removeCompaniesLink = function () {
-     $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedCompany.source + '-' + $scope.linkedCompany.id)
-     .success(function () {
-     getImportedCompanies(function () {
-     getLinkedCompanies();
-     getAllSystemCompanies();
-     });
-     }).error(function (data, status) {
-     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-     }
-     );
-     };
+        $scope.getImportedCompanies = function () {
+            getImportedCompanies();
+        };
 
-     $scope.removeCompany = function () {
-     $http.delete(REST_CONFIG.BASE_URL + '/companies/' + $scope.existedCompany.uuid)
-     .success(function () {
-     getImportedCompanies();
-     getLinkedCompanies();
-     getAllSystemCompanies();
-     }).error(function (data, status) {
-     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-     }
-     );
-     };
+        $scope.getExistedCompanies = function () {
+            getAllSystemCompanies();
+        };
 
-     function getLinkedCompanies() {
-     $scope.linkedCompanies = [];
-     var existedCompany = $scope.existedCompany;
-     if (linkedImportedCompanies.length > 0 && existedCompany) {
-     for (var i = 0; i <= linkedImportedCompanies.length - 1; i++) {
-     if (linkedImportedCompanies[i].link === existedCompany.uuid) {
-     $scope.linkedCompanies.push(linkedImportedCompanies[i]);
-     }
-     }
-     }
-     }
+        $scope.addCompaniesLink = function () {
+            var params = {
+                source: $scope.importedCompany.source,
+                id: $scope.importedCompany.id
+            };
 
-     $scope.selectImportedCompany = function (company) {
-     $scope.importedCompany = company;
-     };
+            if ($scope.existedCompany) {
+                params.company = $scope.existedCompany.uuid;
+            }
 
-     $scope.selectLinkedCompany = function (company) {
-     $scope.linkedCompany = company;
-     };
+            $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect', params).success(function () {
+                getImportedCompanies(function () {
+                    getLinkedCompanies();
+                    getAllSystemCompanies();
+                });
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        };
 
-     $scope.selectExistedCompany = function (company) {
-     $scope.existedCompany = company;
-     getLinkedCompanies();
-     };
-     }
-     ])
+        $scope.removeCompaniesLink = function () {
+            $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedCompany.source + '-' + $scope.linkedCompany.id)
+                .success(function () {
+                    getImportedCompanies(function () {
+                        getLinkedCompanies();
+                        getAllSystemCompanies();
+                    });
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        };
+
+        $scope.removeCompany = function () {
+            $http.delete(REST_CONFIG.BASE_URL + '/companies/' + $scope.existedCompany.uuid)
+                .success(function () {
+                    getImportedCompanies();
+                    getLinkedCompanies();
+                    getAllSystemCompanies();
+                }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        };
+
+        function getLinkedCompanies() {
+            $scope.linkedCompanies = [];
+            var existedCompany = $scope.existedCompany;
+            if (linkedImportedCompanies.length > 0 && existedCompany) {
+                for (var i = 0; i <= linkedImportedCompanies.length - 1; i++) {
+                    if (linkedImportedCompanies[i].link === existedCompany.uuid) {
+                        $scope.linkedCompanies.push(linkedImportedCompanies[i]);
+                    }
+                }
+            }
+        }
+
+        $scope.selectImportedCompany = function (company) {
+            $scope.importedCompany = company;
+        };
+
+        $scope.selectLinkedCompany = function (company) {
+            $scope.linkedCompany = company;
+        };
+
+        $scope.selectExistedCompany = function (company) {
+            $scope.existedCompany = company;
+            getLinkedCompanies();
+        };
+    }
+    ])
 
     .controller('companiesManagementController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
         $scope.linkingProcessMessages = [];
