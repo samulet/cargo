@@ -1686,17 +1686,24 @@ angular.module('website.linking', [])
 
         $scope.totalServerItems = 0;
 
-        $scope.pagingOptions = {
-            pageSizes: [10, 30, 100],
-            pageSize: 10,
-            currentPage: 1
+        var pagingOptions = {
+            constructor: function (pageSizes, pageSize, currentPage) {
+                this.pageSizes = pageSizes;
+                this.pageSize = pageSize;
+                this.currentPage = currentPage;
+                return this;
+            }
         };
+
+        $scope.importedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
+        $scope.existedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
+        $scope.linkedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
 
         var importedItemsUrl = REST_CONFIG.BASE_URL + '/service/import/company-intersect'; //TODO
         var existedItemsUrl = REST_CONFIG.BASE_URL + '/companies'; //TODO
         var itemsName = 'companies'; //TODO
 
-        function getDataByPage(data, page, pageSize) {
+        function getDataByPage(data, page, pageSize) { //todo works now only with single grid
             var pageData = data.slice((page - 1) * pageSize, page * pageSize);
             $scope.totalServerItems = data.length;
             $scope.pagingOptions.pageSizes.push($scope.totalServerItems);
@@ -1760,39 +1767,58 @@ angular.module('website.linking', [])
             }
         }
 
-        $scope.$watch('pagingOptions', function (newVal, oldVal) {
+        $scope.$watch('importedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
-                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+                getImportedItems($scope.importedPagingOptions.pageSize, $scope.importedPagingOptions.currentPage);
             }
         }, true);
 
-        $scope.$watch('filterOptions.filterText', function (newVal, oldVal) {
+        $scope.$watch('existedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
-                filterResults($scope.filterOptions.filterText);
+                getExistedItems($scope.existedPagingOptions.pageSize, $scope.existedPagingOptions.currentPage);
             }
         }, true);
 
-        function filterResults(filterText) {
+        $scope.$watch('linkedPagingOptions', function (newVal, oldVal) {
+            if (newVal !== oldVal) {
+                getLinkedItems($scope.linkedPagingOptions.pageSize, $scope.linkedPagingOptions.currentPage);
+            }
+        }, true);
 
-        }
+        /*$scope.$watch('filterOptions.filterText', function (newVal, oldVal) {
+         if (newVal !== oldVal) {
+         filterResults($scope.filterOptions.filterText);
+         }
+         }, true);
+
+         function filterResults(filterText) {
+
+         }*/
 
         $scope.gridOptions = {
-            data: 'myData',
+            constructor: function (data, columnDefs, totalServerItems, pagingOptions, filterOptions) {
+                this.data = data;
+                this.columnDefs = columnDefs;
+                this.totalServerItems = totalServerItems;
+                this.pagingOptions = pagingOptions;
+                this.filterOptions = filterOptions;
+                return this;
+            },
             enablePaging: true,
             enableSorting: true,
             multiSelect: false,
             showFooter: true,
             //showFilter: true,
             showColumnMenu: true,
-            columnDefs: [
-                { field: "name", displayName: 'Название'},
-                { field: "source", displayName: 'Источник'}
-            ],
-            totalServerItems: 'totalServerItems',
-            pagingOptions: $scope.pagingOptions,
             showSelectionCheckbox: true,
-            filterOptions: $scope.filterOptions
         };
+
+        $scope.importedGridOptions = bject.create(pagingOptions).constructor($scope.items.imported.unlinked, [
+            { field: "name", displayName: 'Название'},
+            { field: "source", displayName: 'Источник'}
+        ], $scope.totalServerItems, $scope.importedPagingOptions, $scope.filterOptions);//TODO replace $scope.totalServerItems and $scope.filterOptions
+
+
     }
     ])
 
