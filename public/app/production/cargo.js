@@ -1646,13 +1646,6 @@ angular.module('website.dashboard', [])
 angular.module('website.linking', [])
 
     .controller('linkingController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', '$routeParams', function ($scope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, $routeParams) {
-        $scope.linkingProcessMessages = [];
-        $scope.importedItems = [];
-        $scope.existedItems = [];
-        $scope.linkedItems = [];
-        var unlinkedImportedItems = [];
-        var linkedImportedItems = [];
-
         window.ngGrid.i18n['ru'] = {
             ngAggregateLabel: 'элементы',
             ngGroupPanelDescription: 'Перетащите сюда заголовок колонки для группировки по этой колонке.',
@@ -1669,6 +1662,23 @@ angular.module('website.linking', [])
         };
         window.ngGrid.i18n['en'] = window.ngGrid.i18n['ru'];
 
+        $scope.linkingProcessMessages = [];
+        $scope.items = {
+            imported: {
+                linked: [],
+                unlinked: []
+            },
+            existed: {},
+            linkedForSelectedExisted: {},
+            selectedExistedItem: null,
+            selectedUnlinkedItem: null,
+            selectedLinkedItem: null
+        };
+
+        $scope.importedPageData = [];
+        $scope.existedPageData = [];
+        $scope.linkedForSelectedExistedPageData = [];
+
         $scope.filterOptions = {
             filterText: "",
             useExternalFilter: true
@@ -1682,48 +1692,79 @@ angular.module('website.linking', [])
             currentPage: 1
         };
 
-        $scope.setPagingData = function (data, page, pageSize) {
-            $scope.myData = data.slice((page - 1) * pageSize, page * pageSize);
+        var importedItemsUrl = REST_CONFIG.BASE_URL + '/service/import/company-intersect'; //TODO
+        var existedItemsUrl = REST_CONFIG.BASE_URL + '/companies'; //TODO
+        var itemsName = 'companies'; //TODO
+
+        function getDataByPage(data, page, pageSize) {
+            var pageData = data.slice((page - 1) * pageSize, page * pageSize);
             $scope.totalServerItems = data.length;
+            $scope.pagingOptions.pageSizes.push($scope.totalServerItems);
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
-        };
 
+            return pageData;
+        }
 
+        function splitItemsByLink(items) {
+            var resultItems = {
+                linkedItems: [],
+                unlinkedItems: []
+            };
 
-        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-            var data;
-            if (searchText) {
-                var ft = searchText.toLowerCase();
-                $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
-                    .success(function (largeLoad) {
-                        data = largeLoad.filter(function (item) {
-                            return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
-                        });
-                        $scope.setPagingData(data._embedded.companies, page, pageSize);
-                    });
-            } else {
-                $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect')
-                    .success(function (data) {
-                        $scope.setPagingData(data._embedded.companies, page, pageSize);
-                    });
+            for (var i = 0; i <= items.length - 1; i++) {
+                if (!items[i].link) {
+                    resultItems.unlinkedItems.push(items[i]);
+                } else {
+                    resultItems.linkedItems.push(items[i]);
+                }
             }
-        };
 
-        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+            return resultItems;
+        }
+
+        function getImportedItems(page, pageSize) {
+            $http.get(importedItemsUrl).success(function (data) {
+                var resultItems = splitItemsByLink(data._embedded[itemsName]);
+                $scope.items.imported.linked = resultItems.linkedItems;
+                $scope.items.imported.unlinked = resultItems.unlinkedItems;
+                $scope.importedPageData = getDataByPage($scope.importedItems.unlinkedItems, page, pageSize);
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        function getExistedItems(page, pageSize) {
+            $http.get(existedItemsUrl).success(function (data) {
+                $scope.existedItems = data._embedded[itemsName];
+                $scope.importedPageData = getDataByPage($scope.existedItems, page, pageSize)
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        function getLinkedItems(page, pageSize) {
+            $scope.items.linkedForSelectedExisted = [];
+            var selectedExistedItem = $scope.selectedExistedItem;
+            var linkedItems = $scope.imported.linked;
+            if (linkedItems.length > 0 && selectedExistedItem) {
+                for (var i = 0; i <= linkedItems.length - 1; i++) {
+                    if (linkedItems[i].link === selectedExistedItem.uuid) {
+                        $scope.items.linkedForSelectedExisted.push(linkedItems[i]);
+                        $scope.linkedForSelectedExistedPageData = getDataByPage($scope.items.linkedForSelectedExisted, page, pageSize);
+                    }
+                }
+            }
+        }
 
         $scope.$watch('pagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
                 $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
             }
         }, true);
-
-        /*$scope.$watch('filterOptions', function (newVal, oldVal) {
-         if (newVal !== oldVal) {
-         $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-         }
-         }, true);*/
 
         $scope.$watch('filterOptions.filterText', function (newVal, oldVal) {
             if (newVal !== oldVal) {
@@ -1741,7 +1782,7 @@ angular.module('website.linking', [])
             enableSorting: true,
             multiSelect: false,
             showFooter: true,
-            showFilter: true,
+            //showFilter: true,
             showColumnMenu: true,
             columnDefs: [
                 { field: "name", displayName: 'Название'},
