@@ -3,7 +3,7 @@
 angular.module('website.linking', [])
 
     .controller('linkingController', ['$scope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', '$routeParams', function ($scope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS, $routeParams) {
-        window.ngGrid.i18n['ru'] = {
+        window.ngGrid.i18n.ru = {
             ngAggregateLabel: 'элементы',
             ngGroupPanelDescription: 'Перетащите сюда заголовок колонки для группировки по этой колонке.',
             ngSearchPlaceHolder: 'Поиск...',
@@ -17,7 +17,7 @@ angular.module('website.linking', [])
             ngPagerPrevTitle: 'Предведущая',
             ngPagerLastTitle: 'Последняя'
         };
-        window.ngGrid.i18n['en'] = window.ngGrid.i18n['ru'];
+        window.ngGrid.i18n.en = window.ngGrid.i18n.ru;
 
         $scope.linkingProcessMessages = [];
         $scope.items = {
@@ -36,12 +36,35 @@ angular.module('website.linking', [])
         $scope.existedPageData = [];
         $scope.linkedForSelectedExistedPageData = [];
 
-        $scope.filterOptions = {
-            filterText: "",
-            useExternalFilter: true
+        var filterOptions = {
+            constructor: function (filterText, useExternalFilter) {
+                this.filterText = filterText;
+                this.useExternalFilter = useExternalFilter;
+                return this;
+            }
         };
 
-        $scope.totalServerItems = 0;
+        var gridOptions = {
+            constructor: function (data, columnDefs, totalServerItems, pagingOptions, filterOptions) {
+                this.data = data;
+                this.columnDefs = columnDefs;
+                this.totalServerItems = totalServerItems;
+                this.pagingOptions = pagingOptions;
+                this.filterOptions = filterOptions;
+                this.enablePaging = true;
+                this.enableSorting = true;
+                this.multiSelect = false;
+                this.showFooter = true;
+                //this.showFilter= true;
+                this.showColumnMenu = true;
+                this.showSelectionCheckbox = true;
+                return this;
+            }
+        };
+
+        $scope.importTotalServerItems = 0;
+        $scope.existedTotalServerItems = 0;
+        $scope.linkedForSelectedExistedTotalServerItems = 0;
 
         var pagingOptions = {
             constructor: function (pageSizes, pageSize, currentPage) {
@@ -54,16 +77,18 @@ angular.module('website.linking', [])
 
         $scope.importedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
         $scope.existedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
-        $scope.linkedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
+        $scope.linkedForSelectedExistedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
+
+        $scope.importedFilterOptions = Object.create(filterOptions).constructor("", true);
+        $scope.existedFilterOptions = Object.create(filterOptions).constructor("", true);
+        $scope.linkedForSelectedExistedFilterOptions = Object.create(filterOptions).constructor("", true);
 
         var importedItemsUrl = REST_CONFIG.BASE_URL + '/service/import/company-intersect'; //TODO
         var existedItemsUrl = REST_CONFIG.BASE_URL + '/companies'; //TODO
         var itemsName = 'companies'; //TODO
 
-        function getDataByPage(data, page, pageSize) { //todo works now only with single grid
+        function getDataByPage(data, page, pageSize) {
             var pageData = data.slice((page - 1) * pageSize, page * pageSize);
-            $scope.totalServerItems = data.length;
-            $scope.pagingOptions.pageSizes.push($scope.totalServerItems);
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
@@ -93,7 +118,9 @@ angular.module('website.linking', [])
                 var resultItems = splitItemsByLink(data._embedded[itemsName]);
                 $scope.items.imported.linked = resultItems.linkedItems;
                 $scope.items.imported.unlinked = resultItems.unlinkedItems;
-                $scope.importedPageData = getDataByPage($scope.importedItems.unlinkedItems, page, pageSize);
+                $scope.importedPageData = getDataByPage($scope.items.imported.unlinked, page, pageSize);
+                $scope.importedTotalServerItems = $scope.items.imported.unlinked.length;
+                setImportGrid();
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
                 }
@@ -102,8 +129,10 @@ angular.module('website.linking', [])
 
         function getExistedItems(page, pageSize) {
             $http.get(existedItemsUrl).success(function (data) {
-                $scope.existedItems = data._embedded[itemsName];
-                $scope.importedPageData = getDataByPage($scope.existedItems, page, pageSize)
+                $scope.items.existed = data._embedded[itemsName];
+                $scope.existedPageData = getDataByPage($scope.items.existed, page, pageSize);
+                $scope.existedTotalServerItems = $scope.items.existed.length;
+                setExistedGrid();
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
                 }
@@ -113,332 +142,62 @@ angular.module('website.linking', [])
         function getLinkedItems(page, pageSize) {
             $scope.items.linkedForSelectedExisted = [];
             var selectedExistedItem = $scope.selectedExistedItem;
-            var linkedItems = $scope.imported.linked;
+            var linkedItems = $scope.items.imported.linked;
             if (linkedItems.length > 0 && selectedExistedItem) {
                 for (var i = 0; i <= linkedItems.length - 1; i++) {
                     if (linkedItems[i].link === selectedExistedItem.uuid) {
                         $scope.items.linkedForSelectedExisted.push(linkedItems[i]);
-                        $scope.linkedForSelectedExistedPageData = getDataByPage($scope.items.linkedForSelectedExisted, page, pageSize);
                     }
                 }
             }
+            $scope.linkedForSelectedExistedPageData = getDataByPage($scope.items.linkedForSelectedExisted, page, pageSize);
+            $scope.linkedForSelectedExistedTotalServerItems = $scope.items.linkedForSelectedExisted.length;
+            setLinkedForSelectedExistedGrid();
+        }
+
+        setImportGrid();
+        getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
+        getExistedItems($scope.existedPagingOptions.currentPage, $scope.existedPagingOptions.pageSize);
+        getLinkedItems($scope.linkedForSelectedExistedPagingOptions.currentPage, $scope.linkedForSelectedExistedPagingOptions.pageSize);
+
+        function setImportGrid() {
+            $scope.importedGridOptions = Object.create(gridOptions).constructor($scope.importedPageData, [
+                { field: "name", displayName: 'Название'},
+                { field: "source", displayName: 'Источник'}
+            ], $scope.importTotalServerItems, $scope.importedPagingOptions, $scope.importedFilterOptions);
+        }
+
+        function setExistedGrid() {
+            $scope.existedGridOptions = Object.create(gridOptions).constructor($scope.items.existed, [
+                { field: "short", displayName: 'Название'},
+                { field: "inn", displayName: 'ИНН'}
+            ], $scope.existedTotalServerItems, $scope.existedPagingOptions, $scope.existedFilterOptions);
+        }
+
+        function setLinkedForSelectedExistedGrid() {
+            $scope.linkedForSelectedExistedGridOptions = Object.create(gridOptions).constructor($scope.items.linkedForSelectedExisted, [
+                { field: "name", displayName: 'Название'},
+                { field: "source", displayName: 'Источник'}
+            ], $scope.linkedForSelectedExistedTotalServerItems, $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions);
         }
 
         $scope.$watch('importedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
-                getImportedItems($scope.importedPagingOptions.pageSize, $scope.importedPagingOptions.currentPage);
+                getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
             }
         }, true);
 
         $scope.$watch('existedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
-                getExistedItems($scope.existedPagingOptions.pageSize, $scope.existedPagingOptions.currentPage);
+                getExistedItems($scope.existedPagingOptions.currentPage, $scope.existedPagingOptions.pageSize);
             }
         }, true);
 
-        $scope.$watch('linkedPagingOptions', function (newVal, oldVal) {
+        $scope.$watch('linkedForSelectedExistedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
-                getLinkedItems($scope.linkedPagingOptions.pageSize, $scope.linkedPagingOptions.currentPage);
+                getLinkedItems($scope.linkedForSelectedExistedPagingOptions.currentPage, $scope.linkedForSelectedExistedPagingOptions.pageSize);
             }
         }, true);
-
-        /*$scope.$watch('filterOptions.filterText', function (newVal, oldVal) {
-         if (newVal !== oldVal) {
-         filterResults($scope.filterOptions.filterText);
-         }
-         }, true);
-
-         function filterResults(filterText) {
-
-         }*/
-
-        $scope.gridOptions = {
-            constructor: function (data, columnDefs, totalServerItems, pagingOptions, filterOptions) {
-                this.data = data;
-                this.columnDefs = columnDefs;
-                this.totalServerItems = totalServerItems;
-                this.pagingOptions = pagingOptions;
-                this.filterOptions = filterOptions;
-                return this;
-            },
-            enablePaging: true,
-            enableSorting: true,
-            multiSelect: false,
-            showFooter: true,
-            //showFilter: true,
-            showColumnMenu: true,
-            showSelectionCheckbox: true,
-        };
-
-        $scope.importedGridOptions = bject.create(pagingOptions).constructor($scope.items.imported.unlinked, [
-            { field: "name", displayName: 'Название'},
-            { field: "source", displayName: 'Источник'}
-        ], $scope.totalServerItems, $scope.importedPagingOptions, $scope.filterOptions);//TODO replace $scope.totalServerItems and $scope.filterOptions
-
-
-    }
-    ])
-
-    .controller('companiesManagementController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
-        $scope.linkingProcessMessages = [];
-        $scope.importedCompanies = [];
-        $scope.existedCompanies = [];
-        $scope.linkedCompanies = [];
-        var unlinkedImportedCompanies = [];
-        var linkedImportedCompanies = [];
-
-        if ($scope.isCompaniesManagementOpened) {
-            getAllSystemCompanies();
-            getImportedCompanies();
-        }
-
-        function onError(data, status) {
-            if (status != RESPONSE_STATUS.NOT_FOUND) {
-                errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-            }
-        }
-
-        function getAllSystemCompanies() {
-            $http.get(REST_CONFIG.BASE_URL + '/companies').success(function (data) {
-                $scope.existedCompany = null;
-                $scope.existedCompanies = data._embedded.companies;
-            }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                }
-            );
-        }
-
-        function getImportedCompanies(callback) {
-            $http.get(REST_CONFIG.BASE_URL + '/service/import/company-intersect').success(function (data) {
-                $scope.importedCompany = null;
-                var importedCompanies = data._embedded.companies;
-                unlinkedImportedCompanies = [];
-                linkedImportedCompanies = [];
-                for (var i = 0; i <= importedCompanies.length - 1; i++) {
-                    if (!importedCompanies[i].link) {
-                        unlinkedImportedCompanies.push(importedCompanies[i]);
-                    } else {
-                        linkedImportedCompanies.push(importedCompanies[i]);
-                    }
-                }
-                $scope.importedCompanies = unlinkedImportedCompanies;
-                if (callback) {
-                    callback();
-                }
-            }).error(function (data, status) {
-                    onError(data, status);
-                }
-            );
-        }
-
-        $scope.getImportedCompanies = function () {
-            getImportedCompanies();
-        };
-
-        $scope.getExistedCompanies = function () {
-            getAllSystemCompanies();
-        };
-
-        $scope.addCompaniesLink = function () {
-            var params = {
-                source: $scope.importedCompany.source,
-                id: $scope.importedCompany.id
-            };
-
-            if ($scope.existedCompany) {
-                params.company = $scope.existedCompany.uuid;
-            }
-
-            $http.post(REST_CONFIG.BASE_URL + '/service/import/company-intersect', params).success(function () {
-                getImportedCompanies(function () {
-                    getLinkedCompanies();
-                    getAllSystemCompanies();
-                });
-            }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                }
-            );
-        };
-
-        $scope.removeCompaniesLink = function () {
-            $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedCompany.source + '-' + $scope.linkedCompany.id)
-                .success(function () {
-                    getImportedCompanies(function () {
-                        getLinkedCompanies();
-                        getAllSystemCompanies();
-                    });
-                }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                }
-            );
-        };
-
-        $scope.removeCompany = function () {
-            $http.delete(REST_CONFIG.BASE_URL + '/companies/' + $scope.existedCompany.uuid)
-                .success(function () {
-                    getImportedCompanies();
-                    getLinkedCompanies();
-                    getAllSystemCompanies();
-                }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                }
-            );
-        };
-
-        function getLinkedCompanies() {
-            $scope.linkedCompanies = [];
-            var existedCompany = $scope.existedCompany;
-            if (linkedImportedCompanies.length > 0 && existedCompany) {
-                for (var i = 0; i <= linkedImportedCompanies.length - 1; i++) {
-                    if (linkedImportedCompanies[i].link === existedCompany.uuid) {
-                        $scope.linkedCompanies.push(linkedImportedCompanies[i]);
-                    }
-                }
-            }
-        }
-
-        $scope.selectImportedCompany = function (company) {
-            $scope.importedCompany = company;
-        };
-
-        $scope.selectLinkedCompany = function (company) {
-            $scope.linkedCompany = company;
-        };
-
-        $scope.selectExistedCompany = function (company) {
-            $scope.existedCompany = company;
-            getLinkedCompanies();
-        };
-    }
-    ])
-
-    .controller('placesManagementController', ['$scope', '$rootScope', '$http', 'REST_CONFIG', 'errorFactory', 'RESPONSE_STATUS', function ($scope, $rootScope, $http, REST_CONFIG, errorFactory, RESPONSE_STATUS) {
-        $scope.placesManagementMessages = [];
-        $scope.importedPlaces = [];
-        $scope.existedPlaces = [];
-        $scope.linkedPlaces = [];
-        var unlinkedImportedPlaces = [];
-        var linkedImportedPlaces = [];
-
-        if ($scope.isPlacesManagementOpened) {
-            getAllSystemPlaces();
-            getImportedPlaces();
-        }
-
-        function onError(data, status) {
-            if (status != RESPONSE_STATUS.NOT_FOUND) {
-                errorFactory.resolve(data, status, $scope.placesManagementMessages);
-            }
-        }
-
-        function getAllSystemPlaces() {
-            $http.get(REST_CONFIG.BASE_URL + '/places').success(function (data) {
-                $scope.existedPlaces = data._embedded.places;
-            }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
-                }
-            );
-        }
-
-        function getImportedPlaces(callback) {
-            $http.get(REST_CONFIG.BASE_URL + '/service/import/place-intersect')
-                .success(function (data) {
-                    $scope.importedPlaces = null;
-                    var importedPlaces = data._embedded.places;
-                    unlinkedImportedPlaces = [];
-                    linkedImportedPlaces = [];
-                    for (var i = 0; i <= importedPlaces.length - 1; i++) {
-                        if (!importedPlaces[i].link) {
-                            unlinkedImportedPlaces.push(importedPlaces[i]);
-                        } else {
-                            linkedImportedPlaces.push(importedPlaces[i]);
-                        }
-                    }
-                    $scope.importedPlaces = unlinkedImportedPlaces;
-                    if (callback) {
-                        callback();
-                    }
-                }).error(function (data, status) {
-                    onError(data, status);
-                }
-            );
-        }
-
-        $scope.getImportedPlaces = function () {
-            getImportedPlaces();
-        };
-
-        $scope.getExistedPlaces = function () {
-            getAllSystemPlaces();
-        };
-
-        $scope.addPlacesLink = function () {
-            var placeUuid = $scope.existedPlace ? $scope.existedPlace.uuid : null;
-            $http.post(REST_CONFIG.BASE_URL + '/service/import/place-intersect',
-                {source: $scope.importedPlace.source,
-                    id: $scope.importedPlace.id,
-                    place: placeUuid,
-                    type: $scope.importedPlace.type})
-                .success(function () {
-                    getImportedPlaces(function () {
-                        getLinkedPlaces();
-                        getAllSystemPlaces();
-                    });
-                }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
-                }
-            );
-        };
-
-        $scope.removePlace = function () {
-            $http.delete(REST_CONFIG.BASE_URL + '/places/' + $scope.existedPlace.uuid)
-                .success(function () {
-                    getImportedPlaces();
-                    getLinkedPlaces();
-                    getAllSystemPlaces();
-                }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
-                }
-            );
-        };
-
-        $scope.removePlacesLink = function () {
-            $http.delete(REST_CONFIG.BASE_URL + '/service/import/place-intersect/' + $scope.linkedPlace.source + '-' + $scope.linkedPlace.type + '-' + $scope.linkedPlace.id)
-                .success(function () {
-                    getImportedPlaces(function () {
-                        getLinkedPlaces();
-                        getAllSystemPlaces();
-                    });
-                }).error(function (data, status) {
-                    errorFactory.resolve(data, status, $scope.placesManagementMessages);
-                }
-            );
-        };
-
-        function getLinkedPlaces() {
-            $scope.linkedPlaces = [];
-            var existedPlace = $scope.existedPlace;
-            if (linkedImportedPlaces.length > 0 && existedPlace) {
-                for (var i = 0; i <= linkedImportedPlaces.length - 1; i++) {
-                    if (linkedImportedPlaces[i].link === existedPlace.uuid) {
-                        $scope.linkedPlaces.push(linkedImportedPlaces[i]);
-                    }
-                }
-            }
-        }
-
-        $scope.selectImportedPlace = function (place) {
-            $scope.importedPlace = place;
-        };
-
-        $scope.selectLinkedPlace = function (place) {
-            $scope.linkedPlace = place;
-        };
-
-        $scope.selectExistedPlace = function (place) {
-            $scope.existedPlace = place;
-            getLinkedPlaces();
-        };
     }
     ])
 ;
