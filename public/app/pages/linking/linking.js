@@ -36,29 +36,27 @@ angular.module('website.linking', [])
         $scope.existedPageData = [];
         $scope.linkedForSelectedExistedPageData = [];
 
-        var filterOptions = {
-            constructor: function (filterText, useExternalFilter) {
-                this.filterText = filterText;
-                this.useExternalFilter = useExternalFilter;
-                return this;
+        var FilterOptions = function (filterText, useExternalFilter) {
+            return {
+                filterText: filterText,
+                useExternalFilter: useExternalFilter
             }
         };
 
-        var gridOptions = {
-            constructor: function (data, columnDefs, totalServerItems, pagingOptions, filterOptions) {
-                this.data = data;
-                this.columnDefs = columnDefs;
-                this.totalServerItems = totalServerItems;
-                this.pagingOptions = pagingOptions;
-                this.filterOptions = filterOptions;
-                this.enablePaging = true;
-                this.enableSorting = true;
-                this.multiSelect = false;
-                this.showFooter = true;
-                //this.showFilter= true;
-                this.showColumnMenu = true;
-                this.showSelectionCheckbox = true;
-                return this;
+        var GridOptions = function (data, columnDefs, totalServerItems, pagingOptions, filterOptions) {
+            return {
+                data: data,
+                columnDefs: columnDefs,
+                totalServerItems: totalServerItems,
+                pagingOptions: pagingOptions,
+                filterOptions: filterOptions,
+                enablePaging: true,
+                enableSorting: true,
+                multiSelect: false,
+                showFooter: true,
+                //showFilter= true,
+                showColumnMenu: true,
+                showSelectionCheckbox: true
             }
         };
 
@@ -66,22 +64,21 @@ angular.module('website.linking', [])
         $scope.existedTotalServerItems = 0;
         $scope.linkedForSelectedExistedTotalServerItems = 0;
 
-        var pagingOptions = {
-            constructor: function (pageSizes, pageSize, currentPage) {
-                this.pageSizes = pageSizes;
-                this.pageSize = pageSize;
-                this.currentPage = currentPage;
-                return this;
+        var PagingOptions = function (pageSizes, pageSize, currentPage) {
+            return {
+                pageSizes: pageSizes,
+                pageSize: pageSize,
+                currentPage: currentPage
             }
         };
 
-        $scope.importedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
-        $scope.existedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
-        $scope.linkedForSelectedExistedPagingOptions = Object.create(pagingOptions).constructor([10, 30, 100], 10, 1);
+        $scope.importedPagingOptions = new PagingOptions([10, 30, 100], 10, 1);
+        $scope.existedPagingOptions = new PagingOptions([10, 30, 100], 10, 1);
+        $scope.linkedForSelectedExistedPagingOptions = new PagingOptions([10, 30, 100], 10, 1);
 
-        $scope.importedFilterOptions = Object.create(filterOptions).constructor("", true);
-        $scope.existedFilterOptions = Object.create(filterOptions).constructor("", true);
-        $scope.linkedForSelectedExistedFilterOptions = Object.create(filterOptions).constructor("", true);
+        $scope.importedFilterOptions = new FilterOptions("", true);
+        $scope.existedFilterOptions = new FilterOptions("", true);
+        $scope.linkedForSelectedExistedFilterOptions = new FilterOptions("", true);
 
         var importedItemsUrl = REST_CONFIG.BASE_URL + '/service/import/company-intersect'; //TODO
         var existedItemsUrl = REST_CONFIG.BASE_URL + '/companies'; //TODO
@@ -120,7 +117,6 @@ angular.module('website.linking', [])
                 $scope.items.imported.unlinked = resultItems.unlinkedItems;
                 $scope.importedPageData = getDataByPage($scope.items.imported.unlinked, page, pageSize);
                 $scope.importedTotalServerItems = $scope.items.imported.unlinked.length;
-                setImportGrid();
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
                 }
@@ -132,7 +128,6 @@ angular.module('website.linking', [])
                 $scope.items.existed = data._embedded[itemsName];
                 $scope.existedPageData = getDataByPage($scope.items.existed, page, pageSize);
                 $scope.existedTotalServerItems = $scope.items.existed.length;
-                setExistedGrid();
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
                 }
@@ -152,34 +147,27 @@ angular.module('website.linking', [])
             }
             $scope.linkedForSelectedExistedPageData = getDataByPage($scope.items.linkedForSelectedExisted, page, pageSize);
             $scope.linkedForSelectedExistedTotalServerItems = $scope.items.linkedForSelectedExisted.length;
-            setLinkedForSelectedExistedGrid();
         }
 
-        setImportGrid();
         getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
         getExistedItems($scope.existedPagingOptions.currentPage, $scope.existedPagingOptions.pageSize);
         getLinkedItems($scope.linkedForSelectedExistedPagingOptions.currentPage, $scope.linkedForSelectedExistedPagingOptions.pageSize);
 
-        function setImportGrid() {
-            $scope.importedGridOptions = Object.create(gridOptions).constructor($scope.importedPageData, [
-                { field: "name", displayName: 'Название'},
-                { field: "source", displayName: 'Источник'}
-            ], $scope.importTotalServerItems, $scope.importedPagingOptions, $scope.importedFilterOptions);
-        }
 
-        function setExistedGrid() {
-            $scope.existedGridOptions = Object.create(gridOptions).constructor($scope.items.existed, [
-                { field: "short", displayName: 'Название'},
-                { field: "inn", displayName: 'ИНН'}
-            ], $scope.existedTotalServerItems, $scope.existedPagingOptions, $scope.existedFilterOptions);
-        }
+        $scope.importedGridOptions = new GridOptions('importedPageData', [
+            { field: "name", displayName: 'Название'},
+            { field: "source", displayName: 'Источник'}
+        ], $scope.importTotalServerItems, $scope.importedPagingOptions, $scope.importedFilterOptions);
 
-        function setLinkedForSelectedExistedGrid() {
-            $scope.linkedForSelectedExistedGridOptions = Object.create(gridOptions).constructor($scope.items.linkedForSelectedExisted, [
-                { field: "name", displayName: 'Название'},
-                { field: "source", displayName: 'Источник'}
-            ], $scope.linkedForSelectedExistedTotalServerItems, $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions);
-        }
+        $scope.existedGridOptions = new GridOptions('items.existed', [
+            { field: "short", displayName: 'Название'},
+            { field: "inn", displayName: 'ИНН'}
+        ], $scope.existedTotalServerItems, $scope.existedPagingOptions, $scope.existedFilterOptions);
+
+        $scope.linkedForSelectedExistedGridOptions = new GridOptions('items.linkedForSelectedExisted', [
+            { field: "name", displayName: 'Название'},
+            { field: "source", displayName: 'Источник'}
+        ], $scope.linkedForSelectedExistedTotalServerItems, $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions);
 
         $scope.$watch('importedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
