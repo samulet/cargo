@@ -27,9 +27,9 @@ angular.module('website.linking', [])
             },
             existed: {},
             linkedForSelectedExisted: {},
-            selectedExistedItem: null,
-            selectedUnlinkedItem: null,
-            selectedLinkedItem: null
+            selectedExistedItem: [],
+            selectedImportedItem: [],
+            selectedLinkedForSelectedExisted: []
         };
 
         $scope.importedPageData = [];
@@ -43,13 +43,14 @@ angular.module('website.linking', [])
             }
         };
 
-        var GridOptions = function (data, columnDefs, totalServerItems, pagingOptions, filterOptions) {
+        var GridOptions = function (data, columnDefs, totalServerItems, pagingOptions, filterOptions, selectedItems) {
             return {
                 data: data,
                 columnDefs: columnDefs,
                 totalServerItems: totalServerItems,
                 pagingOptions: pagingOptions,
                 filterOptions: filterOptions,
+                selectedItems: selectedItems,
                 enablePaging: true,
                 enableSorting: true,
                 multiSelect: false,
@@ -83,6 +84,7 @@ angular.module('website.linking', [])
         var importedItemsUrl = REST_CONFIG.BASE_URL + '/service/import/company-intersect'; //TODO
         var existedItemsUrl = REST_CONFIG.BASE_URL + '/companies'; //TODO
         var itemsName = 'companies'; //TODO
+        var specificParams = []; //TODO itemName and type
 
         function getDataByPage(data, page, pageSize) {
             var pageData = data.slice((page - 1) * pageSize, page * pageSize);
@@ -136,12 +138,18 @@ angular.module('website.linking', [])
 
         function getLinkedItems(page, pageSize) {
             $scope.items.linkedForSelectedExisted = [];
-            var selectedExistedItem = $scope.selectedExistedItem;
-            var linkedItems = $scope.items.imported.linked;
-            if (linkedItems.length > 0 && selectedExistedItem) {
-                for (var i = 0; i <= linkedItems.length - 1; i++) {
-                    if (linkedItems[i].link === selectedExistedItem.uuid) {
-                        $scope.items.linkedForSelectedExisted.push(linkedItems[i]);
+            var selectedExistedItem = $scope.items.selectedExistedItem;
+            if (selectedExistedItem.length > 0) {
+                for (var k in selectedExistedItem) {
+                    if (selectedExistedItem.hasOwnProperty(k)) {
+                        var linkedItems = $scope.items.imported.linked;
+                        if (linkedItems.length > 0) {
+                            for (var i = 0; i <= linkedItems.length - 1; i++) {
+                                if (linkedItems[i].link === selectedExistedItem[k].uuid) {
+                                    $scope.items.linkedForSelectedExisted.push(linkedItems[i]);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -151,23 +159,72 @@ angular.module('website.linking', [])
 
         getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
         getExistedItems($scope.existedPagingOptions.currentPage, $scope.existedPagingOptions.pageSize);
-        getLinkedItems($scope.linkedForSelectedExistedPagingOptions.currentPage, $scope.linkedForSelectedExistedPagingOptions.pageSize);
 
+        function addSpecificItemParams(params) {
+            params[specificParams.itemName] = $scope.items.selectedExistedItem ? $scope.items.selectedExistedItem.uuid : null;
+
+            if (specificParams.type) {
+                params[specificParams.type] = $scope.items.selectedImportedItem.type;
+            }
+        }
+
+        $scope.addItemsLink = function () {
+            var params = {
+                source: $scope.items.selectedImportedItem.source,
+                id: $scope.items.selectedImportedItem.id
+            };
+
+            addSpecificItemParams(params);
+
+            $http.post(importedItemsUrl, params).success(function () {
+                getImportedItems();//TODO need optimization here (overkill queries to a server)
+                getLinkedItems();
+                getExistedItems();
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        };
+
+        /*$scope.removeItemsLink = function () {
+         $http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedItem.source + '-' + $scope.linkedItem.id)
+         .success(function () {
+         getImportedItems(function () {
+         getLinkedItems();
+         getAllSystemItems();
+         });
+         }).error(function (data, status) {
+         errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+         }
+         );
+         };
+
+         $scope.removeItem = function () {
+         $http.delete(REST_CONFIG.BASE_URL + '/companies/' + $scope.existedItem.uuid)
+         .success(function () {
+         getImportedItems();
+         getLinkedItems();
+         getAllSystemItems();
+         }).error(function (data, status) {
+         errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+         }
+         );
+         };*/
 
         $scope.importedGridOptions = new GridOptions('importedPageData', [
             { field: "name", displayName: 'Название'},
             { field: "source", displayName: 'Источник'}
-        ], $scope.importTotalServerItems, $scope.importedPagingOptions, $scope.importedFilterOptions);
+        ], $scope.importTotalServerItems, $scope.importedPagingOptions, $scope.importedFilterOptions, $scope.items.selectedImportedItem);
 
         $scope.existedGridOptions = new GridOptions('items.existed', [
             { field: "short", displayName: 'Название'},
             { field: "inn", displayName: 'ИНН'}
-        ], $scope.existedTotalServerItems, $scope.existedPagingOptions, $scope.existedFilterOptions);
+        ], $scope.existedTotalServerItems, $scope.existedPagingOptions, $scope.existedFilterOptions, $scope.items.selectedExistedItem);
 
         $scope.linkedForSelectedExistedGridOptions = new GridOptions('items.linkedForSelectedExisted', [
             { field: "name", displayName: 'Название'},
             { field: "source", displayName: 'Источник'}
-        ], $scope.linkedForSelectedExistedTotalServerItems, $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions);
+        ], $scope.linkedForSelectedExistedTotalServerItems, $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions, $scope.items.selectedLinkedForSelectedExisted);
 
         $scope.$watch('importedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
@@ -182,6 +239,12 @@ angular.module('website.linking', [])
         }, true);
 
         $scope.$watch('linkedForSelectedExistedPagingOptions', function (newVal, oldVal) {
+            if (newVal !== oldVal) {
+                getLinkedItems($scope.linkedForSelectedExistedPagingOptions.currentPage, $scope.linkedForSelectedExistedPagingOptions.pageSize);
+            }
+        }, true);
+
+        $scope.$watch('items.selectedExistedItem', function (newVal, oldVal) {
             if (newVal !== oldVal) {
                 getLinkedItems($scope.linkedForSelectedExistedPagingOptions.currentPage, $scope.linkedForSelectedExistedPagingOptions.pageSize);
             }
