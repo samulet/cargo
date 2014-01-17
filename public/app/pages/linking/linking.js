@@ -40,7 +40,7 @@ angular.module('website.linking', [])
             return {
                 filterText: filterText,
                 useExternalFilter: useExternalFilter
-            }
+            };
         };
 
         var GridOptions = function (data, columnDefs, totalServerItems, pagingOptions, filterOptions, selectedItems) {
@@ -58,7 +58,7 @@ angular.module('website.linking', [])
                 //showFilter= true,
                 showColumnMenu: true,
                 showSelectionCheckbox: true
-            }
+            };
         };
 
         $scope.importedTotalServerItems = 0;
@@ -70,7 +70,7 @@ angular.module('website.linking', [])
                 pageSizes: pageSizes,
                 pageSize: pageSize,
                 currentPage: currentPage
-            }
+            };
         };
 
         $scope.importedPagingOptions = new PagingOptions([10, 30, 100], 10, 1);
@@ -100,7 +100,7 @@ angular.module('website.linking', [])
                 existedItemsUrl = REST_CONFIG.BASE_URL + '/places';
                 itemsName = 'places';
                 itemName = 'place';
-                specificParams.push(type, 'type');
+                specificParams.push('type', 'type');
             }
         }
 
@@ -190,12 +190,11 @@ angular.module('website.linking', [])
 
         }
 
-        function moveUnlinkedItemToLinked(selectedImportedItem) {
+        function moveUnlinkedItemToLinked(selectedImportedItem) {//TODO
 //            $scope.items.selectedImportedItem[itemNumber]
 //            $scope.items.imported.linked.push();
 //            $scope.items.imported.unlinked
-            var res = jQuery.inArray($scope.items.selectedImportedItem[itemNumber], $scope.items.imported.unlinked);
-            console.log(res);
+            //var res = jQuery.inArray($scope.items.selectedImportedItem[itemNumber], $scope.items.imported.unlinked);
 //            $scope.items.importedPageData
 //            $scope.items.importedPageData
 //            delete $scope.items.selectedImportedItem[itemNumber];
@@ -221,7 +220,7 @@ angular.module('website.linking', [])
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
                 }
-            )
+            );
         }
 
         $scope.removeItemsLink = function () { //TODO
