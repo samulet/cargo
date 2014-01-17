@@ -4,14 +4,16 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
             pkg: grunt.file.readJSON('package.json'),
-            jsDir: ['public/js/'],
-            cssDir: 'public/css/',
-            compiledJs: '<%= jsDir %>compiled/cargo.js',
-            compiledMinJs: '<%= jsDir %>compiled/cargo.min.js',
+            appDir: ['public/app/'],
+            cssDir: 'public/app/css/',
+            productionDir: '<%= appDir %>production/',
+            compiledJs: '<%= productionDir %>cargo.js',
+            compiledMinJs: '<%= productionDir %>cargo.min.js',
             devJsSources: [
-                '<%= jsDir %>*.js',
-                '<%= jsDir %>/pages/*.js',
-                '<%= jsDir %>/partials/*.js'
+                '<%= appDir %>*.js',
+                '<%= appDir %>modules/**/*.js',
+                '<%= appDir %>pages/**/*.js',
+                '<%= appDir %>partials/**/*.js'
             ],
 
             concat: {
@@ -57,7 +59,7 @@ module.exports = function (grunt) {
             },
             watch: {
                 js: {
-                    files: ['<%= jsDir %>/**/*.js'],
+                    files: ['<%= appDir %>**/*.js'],
                     tasks: 'concat'
                 },
                 css: {
@@ -77,8 +79,8 @@ module.exports = function (grunt) {
             cssmin: {
                 minify: {
                     files: {
-                        '<%= cssDir %>/cargo.min.css': ['<%= cssDir %>/additional_markup.css', '<%= cssDir %>/theme.css'],
-                        '<%= cssDir %>/cargo.handheld.min.css': ['<%= cssDir %>/handheld.css']
+                        '<%= productionDir %>cargo.min.css': ['<%= cssDir %>/additional_markup.css', '<%= cssDir %>/theme.css'],
+                        '<%= productionDir %>cargo.handheld.min.css': ['<%= cssDir %>/handheld.css']
                     }
                 }
             },
@@ -88,9 +90,9 @@ module.exports = function (grunt) {
                 },
                 dev: [
                     {
-                        dest: '<%= jsDir %>/env_config.js',
+                        dest: '<%= appDir %>env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
-                        name: 'env.config',
+                        name: 'website.env.config',
                         constants: {
                             WEB_CONFIG: ((function () {
                                 var PROTOCOL = 'http';
@@ -127,7 +129,7 @@ module.exports = function (grunt) {
                 ],
                 manual: [
                     {
-                        dest: '<%= jsDir %>/env_config.js',
+                        dest: '<%= appDir %>env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
                         name: 'env.config',
                         constants: {
@@ -166,7 +168,7 @@ module.exports = function (grunt) {
                 ],
                 prod: [
                     {
-                        dest: '<%= jsDir %>/env_config.js',
+                        dest: '<%= appDir %>env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
                         name: 'env.config',
                         constants: {

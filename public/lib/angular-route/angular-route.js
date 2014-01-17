@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.7-build.2026+sha.7d6e5a2
+ * @license AngularJS v1.2.9-build.2122+sha.34fee06
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -83,8 +83,7 @@ function $RouteProvider(){
    *    - `controllerAs` – `{string=}` – A controller alias name. If present the controller will be
    *      published to scope under the `controllerAs` name.
    *    - `template` – `{string=|function()=}` – html template as a string or a function that
-   *      returns an html template as a string which should be used by {@link
-   *      ngRoute.directive:ngView ngView} or {@link ng.directive:ngInclude ngInclude} directives.
+   *      returns an html template as a string which should be used by {@link ngRoute.directive:ngView ngView} or {@link ng.directive:ngInclude ngInclude} directives.
    *      This property takes precedence over `templateUrl`.
    *
    *      If `template` is a function, it will be called with the following parameters:
@@ -448,6 +447,7 @@ function $RouteProvider(){
           }
         };
 
+    updateRoute();
     $rootScope.$on('$locationChangeSuccess', updateRoute);
 
     return $route;
@@ -669,6 +669,15 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
  *
  * @scope
  * @priority 400
+ * @param {string=} onload Expression to evaluate whenever the view updates.
+ *
+ * @param {string=} autoscroll Whether `ngView` should call {@link ng.$anchorScroll
+ *                  $anchorScroll} to scroll the viewport after the view is updated.
+ *
+ *                  - If the attribute is not set, disable scrolling.
+ *                  - If the attribute is set without value, enable scrolling.
+ *                  - Otherwise enable scrolling only if the `autoscroll` attribute value evaluated
+ *                    as an expression yields a truthy value.
  * @example
     <example module="ngViewExample" deps="angular-route.js" animations="true">
       <file name="index.html">
@@ -842,7 +851,7 @@ function ngViewFactory(   $route,   $anchorScroll,   $animate) {
           var locals = $route.current && $route.current.locals,
               template = locals && locals.$template;
 
-          if (template) {
+          if (angular.isDefined(template)) {
             var newScope = scope.$new();
             var current = $route.current;
 

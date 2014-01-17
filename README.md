@@ -58,12 +58,12 @@
   * File Type: `JavsScript files`
   * Program: `путь до скрипта uglify_js в папке scripts проекта`
   * Working directory: `$FileDir$`
-  * Output paths to refresh: `полный путь до /js/compiled/cargo.js`
+  * Output paths to refresh: `полный путь до site/public/app/prodution/cargo.js`
 
   * После этого надо создать scope в этом же окошке:
   Напротив поля `Scope` нажать кнопку `...`.  Добавить новый Scope (зелёный плюсик, Ins)
   * Name: `dev_js`
-  * Pattern: `file:site/public/js//*&&!file:site/public/js/compiled//*`
+  * Pattern: `file:site/public/app//*&&!file:site/public/app/production/*`
 
   Сохранить Scope, сохранить созданный watcher.
 
@@ -76,11 +76,11 @@
   * Program: `путь до скрипта minify_css в папке scripts проекта`
   * Arguments: `$FileName$ -o $FileNameWithoutExtension$.min.css`
   * Working directory: `$FileDir$`
-  * Output paths to refresh: `$FileNameWithoutExtension$.min.css`
+  * Output paths to refresh: `site/public/app/prodution/cargo.min.css`
 
   Добавляем новый Scope:
   * Name: `dev_css`
-  * Pattern: `file:site/public/css//*&&!file:site/public/css/cargo.handheld.min.css&&!file:site/public/css/cargo.min.css`
+  * Pattern: `file:site/public/app/css//*`
 
 Если используется другая среда разработки, или описаный выше способ не подходит, можно запускать команды для сборки из консоли:
 
