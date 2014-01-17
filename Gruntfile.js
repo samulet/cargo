@@ -52,7 +52,8 @@ module.exports = function (grunt) {
                             localStorage: true,
                             document: true,
                             window: true,
-                            navigator: true
+                            navigator: true,
+                            jQuery: true
                         }
                     },
                     src: ['<%= compiledJs %>']
