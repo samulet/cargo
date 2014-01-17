@@ -133,7 +133,7 @@ module.exports = function (grunt) {
                     {
                         dest: '<%= appDir %>env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
-                        name: 'env.config',
+                        name: 'website.env.config',
                         constants: {
                             WEB_CONFIG: ((function () {
                                 var PROTOCOL = 'http';
@@ -172,7 +172,7 @@ module.exports = function (grunt) {
                     {
                         dest: '<%= appDir %>env_config.js',
                         wrap: '"use strict";\n\n <%= __ngModule %>',
-                        name: 'env.config',
+                        name: 'website.env.config',
                         constants: {
                             WEB_CONFIG: ((function () {
                                 var PROTOCOL = 'http';
