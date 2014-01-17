@@ -3,24 +3,43 @@
 <div ng-controller="linkingController">
     <div>
         <div style="display: inline-block;">
-            <h3>Импортированные</h3>
-
+            <div class="linking_table_header">Импортированные</div>
             <div class="gridStyle" ng-grid="importedGridOptions"></div>
         </div>
 
         <div style="display: inline-block;">
-            <h3>Существующие</h3>
-
+            <div class="linking_table_header">Существующие</div>
             <div class="gridStyle" ng-grid="existedGridOptions"></div>
         </div>
 
     </div>
     <div>
         <div style="display: inline-block;">
-            <h3>Связанные</h3>
-
+            <div class="linking_table_header">Связанные</div>
             <div class="gridStyle" ng-grid="linkedForSelectedExistedGridOptions"></div>
         </div>
-        <button type="button" class="btn btn-primary" ng-click="addItemsLink()">Добавить связь</button>
+        <div style="display: inline-block;">
+            <button type="button"
+                    class="btn btn-primary"
+                    ng-click="addItemsLink()"
+                    ajax-disabler="isAjaxLoading"
+                    ng-disabled="items.selectedImportedItem.length == 0 || isAjaxLoading">
+                <i class="glyphicon glyphicon-plus"> </i> Добавить
+            </button>
+            <button type="button"
+                    class="btn btn-warning"
+                    ng-click="removeItem()"
+                    ajax-disabler="isAjaxLoading"
+                    ng-disabled="items.selectedExistedItem == 0 || isAjaxLoading">
+                <i class="glyphicon glyphicon-minus"> </i> Удалить
+            </button>
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="removeItemsLink()"
+                    ng-disabled="items.selectedImportedItem.length == 0  || !items.selectedLinkedForSelectedExisted || isAjaxLoading"
+                    ajax-disabler="isAjaxLoading">
+                <i class="glyphicon glyphicon-minus"> </i> Убрать связь
+            </button>
+        </div>
     </div>
 </div>

@@ -108,8 +108,14 @@ li.input-group .input-group-addon {
     margin: 0 auto;
 }
 
+.linking_table_header {
+    background-color: #353535;
+    text-align: center;
+    font-size: 1.5em;
+}
+
 .gridStyle {
-    border: 1px solid rgb(212,212,212);
+    border: 1px solid rgb(212, 212, 212);
     color: #333;
     width: 600px;
     height: 300px;
