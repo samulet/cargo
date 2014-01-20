@@ -1866,7 +1866,8 @@ angular.module('website.linking', [])
                 };
 
                 addSpecificItemParams(params, i);
-                sendLinkItemsQuery(params, refreshGrids(i));
+                $scope.items.selectedImportedItem[i].link = $scope.items.selectedExistedItem[i] ? $scope.items.selectedExistedItem[i].uuid : 'some';
+                sendLinkItemsQuery(params, refreshGrids);
             }
         };
 
@@ -1881,30 +1882,31 @@ angular.module('website.linking', [])
             );
         }
 
-        function refreshGrids(i) {//TODO
-            $scope.items.selectedImportedItem[i].link = $scope.items.selectedExistedItem[i] ? $scope.items.selectedExistedItem[i].uuid : 'some';
+        function refreshGrids() {//TODO check how it works
             getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
-            getLinkedItems();
+            getLinkedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
+            getExistedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
             //$scope.items.selectedImportedItem = [];
             //$scope.items.selectedLinkedForSelectedExisted = [];
         }
 
-        /*function getElementByValue() {
-
-         }*/
-
-        $scope.removeItemsLink = function () { //TODO
-            /*$http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedItem.source + '-' + $scope.linkedItem.id)
-             .success(function () {
-             getImportedItems(function () {
-             getLinkedItems();
-             getAllSystemItems();
-             });
-             }).error(function (data, status) {
-             errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-             }
-             );*/
+        $scope.removeItemsLink = function () {
+            for (var i = 0; i <= $scope.items.selectedLinkedForSelectedExisted.length - 1; i++) {
+                $scope.items.selectedLinkedForSelectedExisted[i].link = null;
+                sendUnlinkItemsQuery($scope.items.selectedLinkedForSelectedExisted[i].source, $scope.items.selectedLinkedForSelectedExisted[i].id, refreshGrids);
+            }
         };
+
+        function sendUnlinkItemsQuery(source, linkedItemId, callback) {
+            $http.delete(importedItemsUrl + '/' + source + '-' + linkedItemId).success(function () {
+                if (callback) {
+                    callback();
+                }
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
 
         $scope.removeItem = function () {//TODO
             /* $http.delete(REST_CONFIG.BASE_URL + '/companies/' + $scope.existedItem.uuid)

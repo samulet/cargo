@@ -30,13 +30,13 @@
                     class="btn btn-warning"
                     ng-click="removeItem()"
                     ajax-disabler="isAjaxLoading"
-                    ng-disabled="items.selectedExistedItem == 0 || isAjaxLoading">
+                    ng-disabled="items.selectedExistedItem.length == 0 || isAjaxLoading">
                 <i class="glyphicon glyphicon-minus"> </i> Удалить
             </button>
             <button type="button"
                     class="btn btn-default"
                     ng-click="removeItemsLink()"
-                    ng-disabled="items.selectedImportedItem.length == 0  || !items.selectedLinkedForSelectedExisted || isAjaxLoading"
+                    ng-disabled="items.selectedExistedItem.length == 0  || items.selectedLinkedForSelectedExisted.length == 0 || isAjaxLoading"
                     ajax-disabler="isAjaxLoading">
                 <i class="glyphicon glyphicon-minus"> </i> Убрать связь
             </button>
