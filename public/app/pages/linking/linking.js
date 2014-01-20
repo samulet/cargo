@@ -149,7 +149,7 @@ angular.module('website.linking', [])
 
         function getImportedItems(page, pageSize) {
             if ($scope.items.imported.linked.length > 0 || $scope.items.imported.unlinked.length > 0) {
-                manageImportedItemsByLinking($scope.items.imported, page, pageSize)
+                manageImportedItemsByLinking($scope.items.imported, page, pageSize);
             } else {
                 $http.get(importedItemsUrl).success(function (data) {
                     manageImportedItemsByLinking(data._embedded[itemsName], page, pageSize);

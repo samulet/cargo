@@ -88,7 +88,7 @@ angular.module('website', [
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
             if (isToken) {
-                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+                $http.defaults.headers.common.Authorization = storageFactory.getToken();
             } else {
                 redirectFactory.goSignIn();
             }
@@ -1020,7 +1020,12 @@ angular.module('website.storage', [])
                 set(storage.local.accounts, accounts);
             },
             getToken: function () {
-                return getCookie(storage.cookie.token);
+                var token = getCookie(storage.cookie.token) ? getCookie(storage.cookie.token) : null;
+                if (token) {
+                    return 'Token token = ' + getCookie(storage.cookie.token);
+                } else {
+                    return null;
+                }
             },
             removeSessionId: function () {
                 return removeCookie(storage.cookie.sessionId);
@@ -1396,6 +1401,7 @@ angular.module('website.user.param', [])
         }
 
         function getApiRoutes() {
+            $http.defaults.headers.common.Authorization = storageFactory.getToken();
             $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
                 storageFactory.setApiRoutes(data._embedded.resource_meta);
             }).error(function (data, status) {
@@ -1425,7 +1431,7 @@ angular.module('website.user.param', [])
                 }
             },
             prepareUser: function () {
-                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+                $http.defaults.headers.common.Authorization = storageFactory.getToken();
                 var selectedAccount = storageFactory.getSelectedAccount();
                 var selectedCompany = storageFactory.getSelectedCompany();
                 if (!selectedAccount || !selectedCompany) {
@@ -1792,7 +1798,7 @@ angular.module('website.linking', [])
 
         function getImportedItems(page, pageSize) {
             if ($scope.items.imported.linked.length > 0 || $scope.items.imported.unlinked.length > 0) {
-                manageImportedItemsByLinking($scope.items.imported, page, pageSize)
+                manageImportedItemsByLinking($scope.items.imported, page, pageSize);
             } else {
                 $http.get(importedItemsUrl).success(function (data) {
                     manageImportedItemsByLinking(data._embedded[itemsName], page, pageSize);

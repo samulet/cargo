@@ -88,7 +88,7 @@ angular.module('website', [
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             var isToken = !!storageFactory.getToken();
             if (isToken) {
-                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+                $http.defaults.headers.common.Authorization = storageFactory.getToken();
             } else {
                 redirectFactory.goSignIn();
             }

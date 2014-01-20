@@ -77,7 +77,12 @@ angular.module('website.storage', [])
                 set(storage.local.accounts, accounts);
             },
             getToken: function () {
-                return getCookie(storage.cookie.token);
+                var token = getCookie(storage.cookie.token) ? getCookie(storage.cookie.token) : null;
+                if (token) {
+                    return 'Token token = ' + getCookie(storage.cookie.token);
+                } else {
+                    return null;
+                }
             },
             removeSessionId: function () {
                 return removeCookie(storage.cookie.sessionId);

@@ -40,6 +40,7 @@ angular.module('website.user.param', [])
         }
 
         function getApiRoutes() {
+            $http.defaults.headers.common.Authorization = storageFactory.getToken();
             $http.get(REST_CONFIG.BASE_URL + '/meta').success(function (data) {
                 storageFactory.setApiRoutes(data._embedded.resource_meta);
             }).error(function (data, status) {
@@ -69,7 +70,7 @@ angular.module('website.user.param', [])
                 }
             },
             prepareUser: function () {
-                $http.defaults.headers.common['X-Auth-UserToken'] = storageFactory.getToken();
+                $http.defaults.headers.common.Authorization = storageFactory.getToken();
                 var selectedAccount = storageFactory.getSelectedAccount();
                 var selectedCompany = storageFactory.getSelectedCompany();
                 if (!selectedAccount || !selectedCompany) {
