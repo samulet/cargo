@@ -259,16 +259,15 @@ angular.module('website.linking', [])
             );
         }
 
-        $scope.removeItem = function () {//TODO
-            /* $http.delete(REST_CONFIG.BASE_URL + '/companies/' + $scope.existedItem.uuid)
-             .success(function () {
-             getImportedItems();
-             getLinkedItems();
-             getAllSystemItems();
-             }).error(function (data, status) {
-             errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-             }
-             );*/
+        $scope.removeItem = function () { //TODO split existed to removed and really existed (need to refresh existed grid )
+            for (var i = 0; i <= $scope.items.selectedExistedItem.length - 1; i++) {
+                $http.delete(existedItemsUrl + '/' + $scope.items.selectedExistedItem[i].uuid).success(function () {
+                    refreshGrids();
+                }).error(function (data, status) {
+                        errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                    }
+                );
+            }
         };
 
         $scope.importedGridOptions = new GridOptions('importedPageData', [
