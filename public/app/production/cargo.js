@@ -1921,17 +1921,17 @@ angular.module('website.linking', [])
         $scope.importedGridOptions = new GridOptions('importedPageData', [
             { field: "name", displayName: 'Название'},
             { field: "source", displayName: 'Источник'}
-        ], $scope.importedTotalServerItems, $scope.importedPagingOptions, $scope.importedFilterOptions, $scope.items.selectedImportedItem);
+        ], 'importedTotalServerItems', $scope.importedPagingOptions, $scope.importedFilterOptions, $scope.items.selectedImportedItem);
 
         $scope.existedGridOptions = new GridOptions('items.existed', [
             { field: "short", displayName: 'Название'},
             { field: "inn", displayName: 'ИНН'}
-        ], $scope.existedTotalServerItems, $scope.existedPagingOptions, $scope.existedFilterOptions, $scope.items.selectedExistedItem);
+        ], 'existedTotalServerItems', $scope.existedPagingOptions, $scope.existedFilterOptions, $scope.items.selectedExistedItem);
 
         $scope.linkedForSelectedExistedGridOptions = new GridOptions('items.linkedForSelectedExisted', [
             { field: "name", displayName: 'Название'},
             { field: "source", displayName: 'Источник'}
-        ], $scope.linkedForSelectedExistedTotalServerItems, $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions, $scope.items.selectedLinkedForSelectedExisted);
+        ], 'linkedForSelectedExistedTotalServerItems', $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions, $scope.items.selectedLinkedForSelectedExisted);
 
         $scope.$watch('importedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
