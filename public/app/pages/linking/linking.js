@@ -149,7 +149,7 @@ angular.module('website.linking', [])
 
         function getImportedItems(page, pageSize) {
             if ($scope.items.imported.linked.length > 0 || $scope.items.imported.unlinked.length > 0) {
-                manageImportedItemsByLinking($scope.items.imported, page, pageSize)
+                manageImportedItemsByLinking($scope.items.imported, page, pageSize);
             } else {
                 $http.get(importedItemsUrl).success(function (data) {
                     manageImportedItemsByLinking(data._embedded[itemsName], page, pageSize);
@@ -272,17 +272,17 @@ angular.module('website.linking', [])
         $scope.importedGridOptions = new GridOptions('importedPageData', [
             { field: "name", displayName: 'Название'},
             { field: "source", displayName: 'Источник'}
-        ], $scope.importedTotalServerItems, $scope.importedPagingOptions, $scope.importedFilterOptions, $scope.items.selectedImportedItem);
+        ], 'importedTotalServerItems', $scope.importedPagingOptions, $scope.importedFilterOptions, $scope.items.selectedImportedItem);
 
         $scope.existedGridOptions = new GridOptions('items.existed', [
             { field: "short", displayName: 'Название'},
             { field: "inn", displayName: 'ИНН'}
-        ], $scope.existedTotalServerItems, $scope.existedPagingOptions, $scope.existedFilterOptions, $scope.items.selectedExistedItem);
+        ], 'existedTotalServerItems', $scope.existedPagingOptions, $scope.existedFilterOptions, $scope.items.selectedExistedItem);
 
         $scope.linkedForSelectedExistedGridOptions = new GridOptions('items.linkedForSelectedExisted', [
             { field: "name", displayName: 'Название'},
             { field: "source", displayName: 'Источник'}
-        ], $scope.linkedForSelectedExistedTotalServerItems, $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions, $scope.items.selectedLinkedForSelectedExisted);
+        ], 'linkedForSelectedExistedTotalServerItems', $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions, $scope.items.selectedLinkedForSelectedExisted);
 
         $scope.$watch('importedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
