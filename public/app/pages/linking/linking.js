@@ -147,32 +147,44 @@ angular.module('website.linking', [])
             $scope.importedTotalServerItems = $scope.items.imported.unlinked.length;
         }
 
-        function getImportedItems(page, pageSize) {
-            if ($scope.items.imported.linked.length > 0 || $scope.items.imported.unlinked.length > 0) {
-                manageImportedItemsByLinking($scope.items.imported, page, pageSize);
+        function sendGetImportedItemsQuery(page, pageSize) {
+            $http.get(importedItemsUrl).success(function (data) {
+                manageImportedItemsByLinking(data._embedded[itemsName], page, pageSize);
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        function getImportedItems(page, pageSize, isForce) {
+            if (isForce) {
+                sendGetImportedItemsQuery(page, pageSize);
+            } else if (!isForce || $scope.items.existed.length === 0) {
+                sendGetImportedItemsQuery(page, pageSize);
             } else {
-                $http.get(importedItemsUrl).success(function (data) {
-                    manageImportedItemsByLinking(data._embedded[itemsName], page, pageSize);
-                }).error(function (data, status) {
-                        errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                    }
-                );
+                manageImportedItemsByLinking($scope.items.imported, page, pageSize);
             }
         }
 
-        function getExistedItems(page, pageSize) {
-            if ($scope.items.existed.length > 0) {
+        function sendGetExistedItemsQuery(page, pageSize) {
+            $http.get(existedItemsUrl).success(function (data) {
+                $scope.items.existed = data._embedded[itemsName];
                 $scope.existedPageData = getDataByPage($scope.items.existed, page, pageSize);
                 $scope.existedTotalServerItems = $scope.items.existed.length;
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        function getExistedItems(page, pageSize, isForce) {
+            if (isForce) {
+                sendGetExistedItemsQuery(page, pageSize);
+            } else if (!isForce || $scope.items.existed.length === 0) {
+                sendGetExistedItemsQuery(page, pageSize);
             } else {
-                $http.get(existedItemsUrl).success(function (data) {
-                    $scope.items.existed = data._embedded[itemsName];
-                    $scope.existedPageData = getDataByPage($scope.items.existed, page, pageSize);
-                    $scope.existedTotalServerItems = $scope.items.existed.length;
-                }).error(function (data, status) {
-                        errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                    }
-                );
+                $scope.existedPageData = getDataByPage($scope.items.existed, page, pageSize);
+                $scope.existedTotalServerItems = $scope.items.existed.length;
             }
         }
 
@@ -198,7 +210,7 @@ angular.module('website.linking', [])
         }
 
         getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
-        getExistedItems($scope.existedPagingOptions.currentPage, $scope.existedPagingOptions.pageSize);
+        getExistedItems($scope.existedPagingOptions.currentPage, $scope.existedPagingOptions.pageSize, true);
 
         function addSpecificItemParams(params, i) {
             params[itemName] = $scope.items.selectedExistedItem[i] ? $scope.items.selectedExistedItem[i].uuid : null;
@@ -218,9 +230,13 @@ angular.module('website.linking', [])
 
                 addSpecificItemParams(params, i);
                 $scope.items.selectedImportedItem[i].link = $scope.items.selectedExistedItem[i] ? $scope.items.selectedExistedItem[i].uuid : 'some';
-                sendLinkItemsQuery(params, refreshGrids);
+                sendLinkItemsQuery(params, refreshForce);
             }
         };
+
+        function refreshForce() {
+            refreshGrids(true, true)
+        }
 
         function sendLinkItemsQuery(params, callback) {
             $http.post(importedItemsUrl, params).success(function () {
@@ -233,12 +249,10 @@ angular.module('website.linking', [])
             );
         }
 
-        function refreshGrids() {//TODO check how it works
-            getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
+        function refreshGrids(getImportedForce, getExistedForce) {
+            getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize, getImportedForce);
             getLinkedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
-            getExistedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
-            //$scope.items.selectedImportedItem = [];
-            //$scope.items.selectedLinkedForSelectedExisted = [];
+            getExistedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize, getExistedForce);
         }
 
         $scope.removeItemsLink = function () {
@@ -272,15 +286,14 @@ angular.module('website.linking', [])
 
         $scope.removeItem = function () {
             for (var i = 0; i <= $scope.items.selectedExistedItem.length - 1; i++) {
-                sendRemoveItemQuery($scope.items.selectedExistedItem[i].uuid, removeAndRefresh($scope.items.existed, $scope.items.selectedExistedItem[i]));
+                $scope.tempSelectedExistedItem = $scope.items.selectedExistedItem[i];
+                sendRemoveItemQuery($scope.items.selectedExistedItem[i].uuid, removeAndRefresh);
             }
         };
 
-        function removeAndRefresh(existed, selectedExistedItem) {
-            removeItemFromArray(existed, selectedExistedItem);
-            $scope.items.selectedExistedItem = [];
-            $scope.items.selectedLinkedForSelectedExisted = [];
-            refreshGrids();
+        function removeAndRefresh() {
+            removeItemFromArray($scope.items.existed, $scope.tempSelectedExistedItem);
+            refreshGrids(false, false);
         }
 
         function removeItemFromArray(array, item) {
@@ -290,6 +303,7 @@ angular.module('website.linking', [])
                     return array;
                 }
             }
+            return null;
         }
 
         $scope.importedGridOptions = new GridOptions('importedPageData', [
@@ -331,5 +345,6 @@ angular.module('website.linking', [])
             }
         }, true);
     }
+
     ])
 ;
