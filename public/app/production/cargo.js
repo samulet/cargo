@@ -1908,16 +1908,38 @@ angular.module('website.linking', [])
             );
         }
 
-        $scope.removeItem = function () { //TODO split existed to removed and really existed (need to refresh existed grid )
+        function sendRemoveItemQuery(uuid, callback) {
+            $http.delete(existedItemsUrl + '/' + uuid).success(function () {
+                if (callback) {
+                    callback();
+                }
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        $scope.removeItem = function () {
             for (var i = 0; i <= $scope.items.selectedExistedItem.length - 1; i++) {
-                $http.delete(existedItemsUrl + '/' + $scope.items.selectedExistedItem[i].uuid).success(function () {
-                    refreshGrids();
-                }).error(function (data, status) {
-                        errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                    }
-                );
+                sendRemoveItemQuery($scope.items.selectedExistedItem[i].uuid, removeAndRefresh($scope.items.existed, $scope.items.selectedExistedItem[i]));
             }
         };
+
+        function removeAndRefresh(existed, selectedExistedItem) {
+            removeItemFromArray(existed, selectedExistedItem);
+            $scope.items.selectedExistedItem = [];
+            $scope.items.selectedLinkedForSelectedExisted = [];
+            refreshGrids();
+        }
+
+        function removeItemFromArray(array, item) {
+            for (var i = 0; i <= array.length - 1; i++) {
+                if (array[i].uuid == item.uuid) {
+                    array.splice(i, 1);
+                    return array;
+                }
+            }
+        }
 
         $scope.importedGridOptions = new GridOptions('importedPageData', [
             { field: "name", displayName: 'Название'},
