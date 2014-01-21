@@ -1812,6 +1812,7 @@ angular.module('website.linking', [])
                 sendGetImportedItemsQuery(page, pageSize);
             } else {
                 manageImportedItemsByLinking($scope.items.imported, page, pageSize);
+                getLinkedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
             }
         }
 
@@ -1900,7 +1901,6 @@ angular.module('website.linking', [])
 
         function refreshGrids(getImportedForce, getExistedForce) {
             getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize, getImportedForce);
-            getLinkedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
             getExistedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize, getExistedForce);
         }
 
