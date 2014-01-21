@@ -147,32 +147,45 @@ angular.module('website.linking', [])
             $scope.importedTotalServerItems = $scope.items.imported.unlinked.length;
         }
 
-        function getImportedItems(page, pageSize) {
-            if ($scope.items.imported.linked.length > 0 || $scope.items.imported.unlinked.length > 0) {
-                manageImportedItemsByLinking($scope.items.imported, page, pageSize);
+        function sendGetImportedItemsQuery(page, pageSize) {
+            $http.get(importedItemsUrl).success(function (data) {
+                manageImportedItemsByLinking(data._embedded[itemsName], page, pageSize);
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        function getImportedItems(page, pageSize, isForce) {
+            if (isForce) {
+                sendGetImportedItemsQuery(page, pageSize);
+            } else if (!isForce || $scope.items.existed.length === 0) {
+                sendGetImportedItemsQuery(page, pageSize);
             } else {
-                $http.get(importedItemsUrl).success(function (data) {
-                    manageImportedItemsByLinking(data._embedded[itemsName], page, pageSize);
-                }).error(function (data, status) {
-                        errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                    }
-                );
+                manageImportedItemsByLinking($scope.items.imported, page, pageSize);
+                getLinkedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
             }
         }
 
-        function getExistedItems(page, pageSize) {
-            if ($scope.items.existed.length > 0) {
+        function sendGetExistedItemsQuery(page, pageSize) {
+            $http.get(existedItemsUrl).success(function (data) {
+                $scope.items.existed = data._embedded[itemsName];
                 $scope.existedPageData = getDataByPage($scope.items.existed, page, pageSize);
                 $scope.existedTotalServerItems = $scope.items.existed.length;
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        function getExistedItems(page, pageSize, isForce) {
+            if (isForce) {
+                sendGetExistedItemsQuery(page, pageSize);
+            } else if (!isForce || $scope.items.existed.length === 0) {
+                sendGetExistedItemsQuery(page, pageSize);
             } else {
-                $http.get(existedItemsUrl).success(function (data) {
-                    $scope.items.existed = data._embedded[itemsName];
-                    $scope.existedPageData = getDataByPage($scope.items.existed, page, pageSize);
-                    $scope.existedTotalServerItems = $scope.items.existed.length;
-                }).error(function (data, status) {
-                        errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-                    }
-                );
+                $scope.existedPageData = getDataByPage($scope.items.existed, page, pageSize);
+                $scope.existedTotalServerItems = $scope.items.existed.length;
             }
         }
 
@@ -198,7 +211,7 @@ angular.module('website.linking', [])
         }
 
         getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
-        getExistedItems($scope.existedPagingOptions.currentPage, $scope.existedPagingOptions.pageSize);
+        getExistedItems($scope.existedPagingOptions.currentPage, $scope.existedPagingOptions.pageSize, true);
 
         function addSpecificItemParams(params, i) {
             params[itemName] = $scope.items.selectedExistedItem[i] ? $scope.items.selectedExistedItem[i].uuid : null;
@@ -217,9 +230,14 @@ angular.module('website.linking', [])
                 };
 
                 addSpecificItemParams(params, i);
-                sendLinkItemsQuery(params, refreshGrids(i));
+                $scope.items.selectedImportedItem[i].link = $scope.items.selectedExistedItem[i] ? $scope.items.selectedExistedItem[i].uuid : 'some';
+                sendLinkItemsQuery(params, refreshForce);
             }
         };
+
+        function refreshForce() {
+            refreshGrids(true, true)
+        }
 
         function sendLinkItemsQuery(params, callback) {
             $http.post(importedItemsUrl, params).success(function () {
@@ -232,42 +250,61 @@ angular.module('website.linking', [])
             );
         }
 
-        function refreshGrids(i) {//TODO
-            $scope.items.selectedImportedItem[i].link = $scope.items.selectedExistedItem[i] ? $scope.items.selectedExistedItem[i].uuid : 'some';
-            getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
-            getLinkedItems();
-            //$scope.items.selectedImportedItem = [];
-            //$scope.items.selectedLinkedForSelectedExisted = [];
+        function refreshGrids(getImportedForce, getExistedForce) {
+            getImportedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize, getImportedForce);
+            getExistedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize, getExistedForce);
         }
 
-        /*function getElementByValue() {
-
-         }*/
-
-        $scope.removeItemsLink = function () { //TODO
-            /*$http.delete(REST_CONFIG.BASE_URL + '/service/import/company-intersect/' + $scope.linkedItem.source + '-' + $scope.linkedItem.id)
-             .success(function () {
-             getImportedItems(function () {
-             getLinkedItems();
-             getAllSystemItems();
-             });
-             }).error(function (data, status) {
-             errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-             }
-             );*/
+        $scope.removeItemsLink = function () {
+            for (var i = 0; i <= $scope.items.selectedLinkedForSelectedExisted.length - 1; i++) {
+                $scope.items.selectedLinkedForSelectedExisted[i].link = null;
+                sendUnlinkItemsQuery($scope.items.selectedLinkedForSelectedExisted[i].source, $scope.items.selectedLinkedForSelectedExisted[i].id, refreshGrids);
+            }
         };
 
-        $scope.removeItem = function () {//TODO
-            /* $http.delete(REST_CONFIG.BASE_URL + '/companies/' + $scope.existedItem.uuid)
-             .success(function () {
-             getImportedItems();
-             getLinkedItems();
-             getAllSystemItems();
-             }).error(function (data, status) {
-             errorFactory.resolve(data, status, $scope.linkingProcessMessages);
-             }
-             );*/
+        function sendUnlinkItemsQuery(source, linkedItemId, callback) {
+            $http.delete(importedItemsUrl + '/' + source + '-' + linkedItemId).success(function () {
+                if (callback) {
+                    callback();
+                }
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        function sendRemoveItemQuery(uuid, callback) {
+            $http.delete(existedItemsUrl + '/' + uuid).success(function () {
+                if (callback) {
+                    callback();
+                }
+            }).error(function (data, status) {
+                    errorFactory.resolve(data, status, $scope.linkingProcessMessages);
+                }
+            );
+        }
+
+        $scope.removeItem = function () {
+            for (var i = 0; i <= $scope.items.selectedExistedItem.length - 1; i++) {
+                $scope.tempSelectedExistedItem = $scope.items.selectedExistedItem[i];
+                sendRemoveItemQuery($scope.items.selectedExistedItem[i].uuid, removeAndRefresh);
+            }
         };
+
+        function removeAndRefresh() {
+            removeItemFromArray($scope.items.existed, $scope.tempSelectedExistedItem);
+            refreshGrids(false, false);
+        }
+
+        function removeItemFromArray(array, item) {
+            for (var i = 0; i <= array.length - 1; i++) {
+                if (array[i].uuid == item.uuid) {
+                    array.splice(i, 1);
+                    return array;
+                }
+            }
+            return null;
+        }
 
         $scope.importedGridOptions = new GridOptions('importedPageData', [
             { field: "name", displayName: 'Название'},
@@ -308,5 +345,6 @@ angular.module('website.linking', [])
             }
         }, true);
     }
+
     ])
 ;
