@@ -8,58 +8,43 @@ angular.module('website.catalogue', [])
             templateUrl: 'app/modules/catalogue/catalogue.html',
             scope: {
                 dataUrl: '=dataUrl',
+                itemsName: '=itemsName',
                 model: '=model'
             },
-            controller: function ($scope, $http, $modal) {
+            controller: function ($scope, $http) {
                 $scope.details = {};
+                $scope.data = [];
 
-                function openCatalogueModal() {
-                    $scope.isCatalogueModalOpened = true;
-                    $scope.catalogueModal = $modal.open({
-                        templateUrl: 'catalogueModalContent.html',
-                        backdrop: 'static',
-                        scope: $scope,
-                        controller: 'catalogueModalController'
-                    });
-                }
+                $scope.select2Options = {
+                    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                        url: $scope.dataUrl,
+                        dataType: 'json',
+                        data: function (term, page) {
+                            return {
+                                q: term, // search term
+                                page_limit: 10,
+                                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
+                            };
+                        },
+                        results: function (data, page) {
+                            return {
+                                results: data._embedded[$scope.itemsName]
+                            };
+                        }
+                    }
+                };
 
-                function getCompanies() {
+                function getData() {
                     $http.get($scope.dataUrl)
                         .success(function (data) {
-                            $scope.companies = data._embedded.companies;
-                            storageFactory.setCompaniesForSession($scope.companies);
-                            $scope.showCompaniesDropDown = true;
+                            $scope.data = data._embedded[$scope.itemsName];
                         }).error(function (data, status) {
-                            errorFactory.resolve(data, status);
+                            //TODO
                         }
                     );
                 }
 
-                $scope.openCatalogue = function () {
-                    if ($scope.details.value) {
-                        $scope.selectedModel = $scope.details.value;
-                        $scope.selectedOption = $scope.details;
-                    }
-                    openCatalogueModal();
-                };
 
-                function closeCatalogueModal() {
-                    $scope.catalogueModal.close();
-                }
-
-                $scope.closeCatalogue = function () {
-                    closeCatalogueModal();
-                };
-            },
-            compile: function (scope, element) {
-                return function (scope, elem) {
-                    scope.catalogueElement = element;
-                    element.$$element[0].setAttribute('readonly', 'true');
-                    element.$$element.on('click', function (event) {
-                        event.preventDefault();
-                        scope.openCatalogue();
-                    });
-                };
             }
         };
     })
