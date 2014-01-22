@@ -1799,6 +1799,7 @@ angular.module('website.linking', [])
         function sendGetImportedItemsQuery(page, pageSize) {
             $http.get(importedItemsUrl).success(function (data) {
                 manageImportedItemsByLinking(data._embedded[itemsName], page, pageSize);
+                getLinkedItems($scope.importedPagingOptions.currentPage, $scope.importedPagingOptions.pageSize);
             }).error(function (data, status) {
                     errorFactory.resolve(data, status, $scope.linkingProcessMessages);
                 }
