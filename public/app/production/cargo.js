@@ -1885,7 +1885,7 @@ angular.module('website.linking', [])
         };
 
         function refreshForce() {
-            refreshGrids(true, true)
+            refreshGrids(true, true);
         }
 
         function sendLinkItemsQuery(params, callback) {

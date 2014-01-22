@@ -1,45 +1,60 @@
 <top-private-menu></top-private-menu>
 
+<style>
+    .filled_bg {
+        background-color: #838080;
+    }
+</style>
+
 <div ng-controller="linkingController">
     <div>
-        <div style="display: inline-block;">
+        <div class="grid_block">
             <div class="linking_table_header">Импортированные</div>
-            <div class="gridStyle" ng-grid="importedGridOptions"></div>
+            <div class="grid_style" ng-grid="importedGridOptions"></div>
         </div>
 
-        <div style="display: inline-block;">
+        <div class="grid_block">
             <div class="linking_table_header">Существующие</div>
-            <div class="gridStyle" ng-grid="existedGridOptions"></div>
+            <div class="grid_style" ng-grid="existedGridOptions"></div>
         </div>
-
     </div>
     <div>
-        <div style="display: inline-block;">
+        <div class="grid_block" style="overflow: auto;">
             <div class="linking_table_header">Связанные</div>
-            <div class="gridStyle" ng-grid="linkedForSelectedExistedGridOptions"></div>
+            <div class="grid_style" ng-grid="linkedForSelectedExistedGridOptions"></div>
         </div>
-        <div style="display: inline-block;">
-            <button type="button"
-                    class="btn btn-primary"
-                    ng-click="addItemsLink()"
-                    ajax-disabler="isAjaxLoading"
-                    ng-disabled="items.selectedImportedItem.length == 0 || isAjaxLoading">
-                <i class="glyphicon glyphicon-plus"> </i> Добавить
-            </button>
-            <button type="button"
-                    class="btn btn-warning"
-                    ng-click="removeItem()"
-                    ajax-disabler="isAjaxLoading"
-                    ng-disabled="items.selectedExistedItem.length == 0 || isAjaxLoading">
-                <i class="glyphicon glyphicon-minus"> </i> Удалить
-            </button>
-            <button type="button"
-                    class="btn btn-default"
-                    ng-click="removeItemsLink()"
-                    ng-disabled="items.selectedExistedItem.length == 0  || items.selectedLinkedForSelectedExisted.length == 0 || isAjaxLoading"
-                    ajax-disabler="isAjaxLoading">
-                <i class="glyphicon glyphicon-minus"> </i> Убрать связь
-            </button>
+        <div class="grid_block" style="overflow: auto;">
+            <div class="grid_style">
+                <ul class="spaced_list clear_list">
+                    <li>
+                        <button type="button"
+                                class="btn btn-primary  btn-lg btn_170w"
+                                ng-click="addItemsLink()"
+                                ajax-disabler="isAjaxLoading"
+                                ng-disabled="items.selectedImportedItem.length == 0 || isAjaxLoading">
+                            <i class="glyphicon glyphicon-plus"> </i> Добавить
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button"
+                                class="btn btn-warning  btn-lg btn_170w"
+                                ng-click="removeItem()"
+                                ajax-disabler="isAjaxLoading"
+                                ng-disabled="items.selectedExistedItem.length == 0 || isAjaxLoading">
+                            <i class="glyphicon glyphicon-minus"> </i> Удалить
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button"
+                                class="btn btn-default  btn-lg btn_170w"
+                                ng-click="removeItemsLink()"
+                                ng-disabled="items.selectedExistedItem.length == 0  || items.selectedLinkedForSelectedExisted.length == 0 || isAjaxLoading"
+                                ajax-disabler="isAjaxLoading">
+                            <i class="glyphicon glyphicon-minus"> </i> Убрать связь
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
