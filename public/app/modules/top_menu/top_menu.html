@@ -1,213 +1,199 @@
 <!--Top menu-->
 <div class="navbar navbar-inverse tiny_navbar" role="navigation" ajax-disabler="isAjaxLoading">
-<div class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Открыть меню</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#!{{ROUTES.DASHBOARD}}">Cargo</a>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Открыть меню</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#!{{ROUTES.DASHBOARD}}">Cargo</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" role="menu">
+                <li ng-class="getClass('{{ROUTES.DASHBOARD}}')" role="menuitem">
+                    <a href="#!{{ROUTES.DASHBOARD}}">Личный кабинет</a>
+                </li>
+                <li ng-class="getClass('{{ROUTES.ACCOUNT}}')" role="menuitem">
+                    <a href="#!{{ROUTES.ACCOUNT}}">Аккаунт</a>
+                </li>
+                <li ng-class="getClass('{{ROUTES.USER_PROFILE}}')" role="menuitem">
+                    <a href="#!{{ROUTES.USER_PROFILE}}">Профиль</a>
+                </li>
+                <!-- <li class="menu_spinner">
+                     <a href>0</a>
+                 </li>
+                 <li class="menu_spinner active_spinner">
+                     <a href>3</a>
+                 </li>-->
+            </ul>
+            <ul class="dropdown nav navbar-nav mobile_text_left no_display fade_anim"
+                style="color: black;">
+                <li class="clickable">
+                    <a class="dropdown-toggle">
+                        Справочники <i class="fa fa-caret-down"> </i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li role="presentation">
+                            <a ng-click="openCatalogueCard('companies');">Юр. лица</a>
+                        </li>
+                        <li role="presentation">
+                            <a ng-click="openCatalogueCard('places');">Пункты доставки</a>
+                        </li>
+                        <li role="presentation" ng-repeat="catalogue in catalogues">
+                            <a ng-click="openCatalogueCard(catalogue);">{{catalogue.title}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <user-menu class="pull_right mobile_full_width"></user-menu>
+        </div>
     </div>
-    <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav" role="menu">
-            <li ng-class="getClass('{{ROUTES.DASHBOARD}}')" role="menuitem">
-                <a href="#!{{ROUTES.DASHBOARD}}">Личный кабинет</a>
-            </li>
-            <li ng-class="getClass('{{ROUTES.ACCOUNT}}')" role="menuitem">
-                <a href="#!{{ROUTES.ACCOUNT}}">Аккаунт</a>
-            </li>
-            <li ng-class="getClass('{{ROUTES.USER_PROFILE}}')" role="menuitem">
-                <a href="#!{{ROUTES.USER_PROFILE}}">Профиль</a>
-            </li>
-            <!-- <li class="menu_spinner">
-                 <a href>0</a>
-             </li>
-             <li class="menu_spinner active_spinner">
-                 <a href>3</a>
-             </li>-->
-        </ul>
-        <ul class="dropdown nav navbar-nav mobile_text_left no_display fade_anim"
-            style="color: black;">
-            <li class="clickable">
-                <a class="dropdown-toggle">
-                    Справочники <i class="fa fa-caret-down"> </i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#" class="fade_anim" ng-show="showCompaniesDropDown">Юр. Лица</a>
-                        <ul class="dropdown-menu">
-                            <li role="presentation" ng-repeat="company in companies">
-                                <a ng-click="openCompanyCard(company);">{{company.short}}</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#" class="fade_anim" ng-show="showPlacesDropDown">Пункты доставки</a>
-                        <ul class="dropdown-menu">
-                            <li role="presentation" ng-repeat="place in places">
-                                <a ng-click="openPlaceCard(place);">
-                                    <span ng-show="place.name">{{place.name}}</span>
-                                    <span ng-show="place.address && place.address.city">, {{place.address.city}}</span>
-                                    <span ng-show="place.company && place.company.name">, {{place.company.name}}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li role="presentation" ng-repeat="catalogue in catalogues">
-                        <a ng-click="openCatalogueCard(catalogue);">{{catalogue.title}}</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <user-menu class="pull_right mobile_full_width"></user-menu>
+
+    <div aria-hidden="true" ng-controller="selectAccountAndCompanyModalController">
+        <script type="text/ng-template" id="selectAccountAndCompanyModalContent.html">
+            <div>
+                <div class="modal-header">
+                    <h4 class="modal-title">Выбор Аккаунта и юридического лица</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="clear_list vertical_form_block">
+                        <li class="input-group" style="width: 100%;">
+                            <label for="accountData-title">
+                                Выберите юридическое лицо от имени которого совершается действие
+                            </label>
+                            <select title="Выберите текущий аккаунт" class="form-control"
+                                    ng-model="option"
+                                    ng-disabled="isAjaxLoading"
+                                    size="8"
+                                    ng-options="option as option.company.short group by option.account.title for option in options"
+                                    ng-change="selectOption(option)"
+                                    ajax-disabler="isAjaxLoading">
+                                <option value="">---</option>
+                            </select>
+                        </li>
+                        <li>
+                            <alert ng-repeat="message in selectAccountAndCompanyMessages" type="message.type"
+                                   close="closeAlert($index)">
+                                {{message.msg}}
+                            </alert>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()"
+                            ajax-disabler="isAjaxLoading" ng-disabled="isAjaxLoading">
+                        Ok
+                    </button>
+                    <button type="button" class="btn btn-warning pull_left"
+                            ng-click="closeSelectAccountAndCompanyModal()"
+                            ajax-disabler="isAjaxLoading" ng-disabled="isAjaxLoading">
+                        Отмена
+                    </button>
+                </div>
+            </div>
+        </script>
     </div>
-</div>
 
-<div aria-hidden="true" ng-controller="selectAccountAndCompanyModalController">
-    <script type="text/ng-template" id="selectAccountAndCompanyModalContent.html">
-        <div>
-            <div class="modal-header">
-                <h4 class="modal-title">Выбор Аккаунта и юридического лица</h4>
+    <div aria-hidden="true" ng-controller="importCompaniesModalController">
+        <script type="text/ng-template" id="importCompaniesModalContent.html">
+            <div>
+                <div class="modal-header">
+                    <h4 class="modal-title">Импорт юридических лиц</h4>
+                </div>
+                <div class="modal-body">
+                    <span ng-show="!isImportCompaniesComplete && !noCompaniesToImport">Импортировать юридические лица?</span>
+                    <span ng-show="isImportCompaniesComplete && !noCompaniesToImport">Импорт успешно завершён</span>
+                    <ul ng-show="isImportCompaniesComplete && !noCompaniesToImport">
+                        <li>Новых: {{stat.new}}</li>
+                        <li>Изменённых: {{stat.changed}}</li>
+                        <li>Повторных: {{stat.exists}}</li>
+                        <li>Всего: {{stat.processed}}</li>
+                    </ul>
+                    <span ng-show="noCompaniesToImport">Нечего импортировать</span>
+                    <!--<ul class="vertical_form_block" ng-show="isImportCompaniesComplete">
+                        <li ng-repeat="extServiceCompany in extServiceCompanies">
+                            {{extServiceCompany.external_code}}
+                        </li>
+                    </ul>-->
+                    <alert ng-repeat="message in importCompaniesMessages" type="message.type"
+                           close="closeAlert($index)">
+                        {{message.msg}}
+                    </alert>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            ng-show="!isImportCompaniesComplete && !noCompaniesToImport"
+                            ng-click="importCompanies()"
+                            ajax-disabler="isAjaxLoading"
+                            ng-disabled="isAjaxLoading">
+                        Импорт
+                    </button>
+                    <button type="button" class="btn btn-warning pull_left"
+                            ng-show="!isImportCompaniesComplete && !noCompaniesToImport"
+                            ng-click="closeImportCompaniesModal()">
+                        Отмена
+                    </button>
+                    <button type="button" class="btn btn-success"
+                            ng-show="isImportCompaniesComplete && !noCompaniesToImport"
+                            ng-click="closeImportCompaniesModal()">
+                        Готово
+                    </button>
+                </div>
             </div>
-            <div class="modal-body">
-                <ul class="clear_list vertical_form_block">
-                    <li class="input-group" style="width: 100%;">
-                        <label for="accountData-title">
-                            Выберите юридическое лицо от имени которого совершается действие
-                        </label>
-                        <select title="Выберите текущий аккаунт" class="form-control"
-                                ng-model="option"
-                                ng-disabled="isAjaxLoading"
-                                size="8"
-                                ng-options="option as option.company.short group by option.account.title for option in options"
-                                ng-change="selectOption(option)"
-                                ajax-disabler="isAjaxLoading">
-                            <option value="">---</option>
-                        </select>
-                    </li>
-                    <li>
-                        <alert ng-repeat="message in selectAccountAndCompanyMessages" type="message.type"
-                               close="closeAlert($index)">
-                            {{message.msg}}
-                        </alert>
-                    </li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" ng-click="saveAccountAndCompany()"
-                        ajax-disabler="isAjaxLoading" ng-disabled="isAjaxLoading">
-                    Ok
-                </button>
-                <button type="button" class="btn btn-warning pull_left"
-                        ng-click="closeSelectAccountAndCompanyModal()"
-                        ajax-disabler="isAjaxLoading" ng-disabled="isAjaxLoading">
-                    Отмена
-                </button>
-            </div>
-        </div>
-    </script>
-</div>
+        </script>
+    </div>
 
-<div aria-hidden="true" ng-controller="importCompaniesModalController">
-    <script type="text/ng-template" id="importCompaniesModalContent.html">
-        <div>
-            <div class="modal-header">
-                <h4 class="modal-title">Импорт юридических лиц</h4>
+    <div aria-hidden="true" ng-controller="importPlacesModalController">
+        <script type="text/ng-template" id="importPlacesModalContent.html">
+            <div>
+                <div class="modal-header">
+                    <h4 class="modal-title">Импорт пунктов доставки</h4>
+                </div>
+                <div class="modal-body">
+                    <span ng-show="!isImportPlacesComplete && !noPlacesToImport">Импортировать пункты доставки?</span>
+                    <span ng-show="isImportPlacesComplete && !noPlacesToImport">Импорт успешно завершён</span>
+                    <ul ng-show="isImportPlacesComplete && !noPlacesToImport">
+                        <li>Новых: {{stat.new}}</li>
+                        <li>Изменённых: {{stat.changed}}</li>
+                        <li>Повторных: {{stat.exists}}</li>
+                        <li>Всего: {{stat.processed}}</li>
+                    </ul>
+                    <span ng-show="noPlacesToImport">Нечего импортировать</span>
+                    <ul class="vertical_form_block" ng-show="isImportComplete">
+                        <li ng-repeat="extServicePlace in extServicePlaces">
+                            {{extServicePlace.ext_service_place_code}}
+                        </li>
+                    </ul>
+                    <alert ng-repeat="message in importPlacesMessages" type="message.type" close="closeAlert($index)">
+                        {{message.msg}}
+                    </alert>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            ng-show="!isImportPlacesComplete && !noPlacesToImport"
+                            ng-click="importPlaces()"
+                            ajax-disabler="isAjaxLoading"
+                            ng-disabled="isAjaxLoading">
+                        Импорт
+                    </button>
+                    <button type="button" class="btn btn-warning pull_left"
+                            ng-show="!isImportPlacesComplete && !noPlacesToImport"
+                            ng-click="closeImportPlacesModal()">
+                        Отмена
+                    </button>
+                    <button type="button" class="btn btn-success"
+                            ng-show="isImportPlacesComplete || noPlacesToImport"
+                            ng-click="closeImportPlacesModal()">
+                        Готово
+                    </button>
+                </div>
             </div>
-            <div class="modal-body">
-                <span ng-show="!isImportCompaniesComplete && !noCompaniesToImport">Импортировать юридические лица?</span>
-                <span ng-show="isImportCompaniesComplete && !noCompaniesToImport">Импорт успешно завершён</span>
-                <ul ng-show="isImportCompaniesComplete && !noCompaniesToImport">
-                    <li>Новых: {{stat.new}}</li>
-                    <li>Изменённых: {{stat.changed}}</li>
-                    <li>Повторных: {{stat.exists}}</li>
-                    <li>Всего: {{stat.processed}}</li>
-                </ul>
-                <span ng-show="noCompaniesToImport">Нечего импортировать</span>
-                <!--<ul class="vertical_form_block" ng-show="isImportCompaniesComplete">
-                    <li ng-repeat="extServiceCompany in extServiceCompanies">
-                        {{extServiceCompany.external_code}}
-                    </li>
-                </ul>-->
-                <alert ng-repeat="message in importCompaniesMessages" type="message.type"
-                       close="closeAlert($index)">
-                    {{message.msg}}
-                </alert>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary"
-                        ng-show="!isImportCompaniesComplete && !noCompaniesToImport"
-                        ng-click="importCompanies()"
-                        ajax-disabler="isAjaxLoading"
-                        ng-disabled="isAjaxLoading">
-                    Импорт
-                </button>
-                <button type="button" class="btn btn-warning pull_left"
-                        ng-show="!isImportCompaniesComplete && !noCompaniesToImport"
-                        ng-click="closeImportCompaniesModal()">
-                    Отмена
-                </button>
-                <button type="button" class="btn btn-success"
-                        ng-show="isImportCompaniesComplete && !noCompaniesToImport"
-                        ng-click="closeImportCompaniesModal()">
-                    Готово
-                </button>
-            </div>
-        </div>
-    </script>
-</div>
+        </script>
+    </div>
 
-<div aria-hidden="true" ng-controller="importPlacesModalController">
-    <script type="text/ng-template" id="importPlacesModalContent.html">
-        <div>
-            <div class="modal-header">
-                <h4 class="modal-title">Импорт пунктов доставки</h4>
-            </div>
-            <div class="modal-body">
-                <span ng-show="!isImportPlacesComplete && !noPlacesToImport">Импортировать пункты доставки?</span>
-                <span ng-show="isImportPlacesComplete && !noPlacesToImport">Импорт успешно завершён</span>
-                <ul ng-show="isImportPlacesComplete && !noPlacesToImport">
-                    <li>Новых: {{stat.new}}</li>
-                    <li>Изменённых: {{stat.changed}}</li>
-                    <li>Повторных: {{stat.exists}}</li>
-                    <li>Всего: {{stat.processed}}</li>
-                </ul>
-                <span ng-show="noPlacesToImport">Нечего импортировать</span>
-                <ul class="vertical_form_block" ng-show="isImportComplete">
-                    <li ng-repeat="extServicePlace in extServicePlaces">
-                        {{extServicePlace.ext_service_place_code}}
-                    </li>
-                </ul>
-                <alert ng-repeat="message in importPlacesMessages" type="message.type" close="closeAlert($index)">
-                    {{message.msg}}
-                </alert>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary"
-                        ng-show="!isImportPlacesComplete && !noPlacesToImport"
-                        ng-click="importPlaces()"
-                        ajax-disabler="isAjaxLoading"
-                        ng-disabled="isAjaxLoading">
-                    Импорт
-                </button>
-                <button type="button" class="btn btn-warning pull_left"
-                        ng-show="!isImportPlacesComplete && !noPlacesToImport"
-                        ng-click="closeImportPlacesModal()">
-                    Отмена
-                </button>
-                <button type="button" class="btn btn-success"
-                        ng-show="isImportPlacesComplete || noPlacesToImport"
-                        ng-click="closeImportPlacesModal()">
-                    Готово
-                </button>
-            </div>
-        </div>
-    </script>
-</div>
-
-<catalogue-modal></catalogue-modal>
+    <catalogue-modal></catalogue-modal>
 
 </div>
 <!--END Top menu-->

@@ -19,11 +19,7 @@ angular.module('website.top.menu', [])
                     }
                 };
 
-                (function fetDropdownData() {
-                    getCompanies();
-                    getCatalogues();
-                    getPlaces();
-                })();
+                getCatalogues();
 
                 function getCatalogues() {
                     $scope.catalogues = storageFactory.getSessionCatalogues();
@@ -42,50 +38,14 @@ angular.module('website.top.menu', [])
                     }
                 }
 
-                function getCompanies() {
-                    $scope.companies = storageFactory.getSessionCompanies();
-                    if (!$scope.companies) {
-                        $http.get(REST_CONFIG.BASE_URL + '/companies')
-                            .success(function (data) {
-                                $scope.companies = data._embedded.companies;
-                                storageFactory.setCompaniesForSession($scope.companies);
-                                $scope.showCompaniesDropDown = true;
-                            }).error(function (data, status) {
-                                errorFactory.resolve(data, status);
-                            }
-                        );
+                $scope.openCatalogueCard = function (catalogue) {//TODO placeholder
+                    if (catalogue === 'companies') {
+
+                    } else if (catalogue === 'places') {
+
                     } else {
-                        $scope.showCompaniesDropDown = true;
+
                     }
-                }
-
-                function getPlaces() {
-                    $scope.places = storageFactory.getSessionPlaces();
-                    if (!$scope.places) {
-                        $http.get(REST_CONFIG.BASE_URL + '/places')
-                            .success(function (data) {
-                                $scope.places = data._embedded.places;
-                                storageFactory.setPlacesForSession($scope.places);
-                                $scope.showPlacesDropDown = true;
-                            }).error(function (data, status) {
-                                errorFactory.resolve(data, status);
-                            }
-                        );
-                    } else {
-                        $scope.showPlacesDropDown = true;
-                    }
-                }
-
-                $scope.openCatalogueCard = function (company) {
-                    //TODO placeholder
-                };
-
-                $scope.openCompanyCard = function (company) {
-                    //TODO placeholder
-                };
-
-                $scope.openPlaceCard = function (company) {
-                    //TODO placeholder
                 };
             }
         };
