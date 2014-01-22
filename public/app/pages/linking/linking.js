@@ -86,7 +86,12 @@ angular.module('website.linking', [])
         var existedItemsUrl;
         var itemsName;
         var itemName;
-        var specificParams = [];
+        var specificParams = {};
+
+        var importedColumnDefs = [];
+        var existedColumnDefs = [];
+        var linkedForSelectedExistedColumnDefs = [];
+        var removeParams = {};
 
         checkRouteParams();
 
@@ -96,12 +101,44 @@ angular.module('website.linking', [])
                 existedItemsUrl = REST_CONFIG.BASE_URL + '/companies';
                 itemsName = 'companies';
                 itemName = 'company';
+
+                importedColumnDefs = [
+                    { field: "name", displayName: 'Название'},
+                    { field: "source", displayName: 'Источник'}
+                ];
+
+                existedColumnDefs = [
+                    { field: "short", displayName: 'Название'},
+                    { field: "inn", displayName: 'ИНН'}
+                ];
+
+                linkedForSelectedExistedColumnDefs = [
+                    { field: "name", displayName: 'Название'},
+                    { field: "source", displayName: 'Источник'}
+                ];
+
             } else if ($routeParams.type == 'places') {
                 importedItemsUrl = REST_CONFIG.BASE_URL + '/service/import/place-intersect';
                 existedItemsUrl = REST_CONFIG.BASE_URL + '/places';
                 itemsName = 'places';
                 itemName = 'place';
-                specificParams.push('type', 'type');
+                specificParams.type = 'type';
+
+                var ColumnDefs = function () {
+                    return [
+                        { field: "name", displayName: 'Название'},
+                        { field: "city.name", displayName: 'Город'},
+                        { field: "source", displayName: 'Источник'},
+                        { field: "legal.name", displayName: 'Юр. лицо'}
+                    ];
+                };
+
+                importedColumnDefs = new ColumnDefs();
+                linkedForSelectedExistedColumnDefs = new ColumnDefs();
+                existedColumnDefs = [
+                    { field: "name", displayName: 'Название'},
+                    { field: "company.name", displayName: 'Юр. лицо'}
+                ];
             }
         }
 
@@ -259,12 +296,19 @@ angular.module('website.linking', [])
         $scope.removeItemsLink = function () {
             for (var i = 0; i <= $scope.items.selectedLinkedForSelectedExisted.length - 1; i++) {
                 $scope.items.selectedLinkedForSelectedExisted[i].link = null;
-                sendUnlinkItemsQuery($scope.items.selectedLinkedForSelectedExisted[i].source, $scope.items.selectedLinkedForSelectedExisted[i].id, refreshGrids);
+                sendUnlinkItemsQuery($scope.items.selectedLinkedForSelectedExisted[i].source, $scope.items.selectedLinkedForSelectedExisted[i].type, $scope.items.selectedLinkedForSelectedExisted[i].id, refreshGrids);
             }
         };
 
-        function sendUnlinkItemsQuery(source, linkedItemId, callback) {
-            $http.delete(importedItemsUrl + '/' + source + '-' + linkedItemId).success(function () {
+        function getRemoveItemParams(source, type, linkedItemId) {
+            var result = '/' + source;
+            result = type ? result + '-' + type : result;
+            result = result + '-' + linkedItemId;
+            return result;
+        }
+
+        function sendUnlinkItemsQuery(source, type, linkedItemId, callback) {
+            $http.delete(importedItemsUrl + getRemoveItemParams(source, type, linkedItemId)).success(function () {
                 if (callback) {
                     callback();
                 }
@@ -307,20 +351,11 @@ angular.module('website.linking', [])
             return null;
         }
 
-        $scope.importedGridOptions = new GridOptions('importedPageData', [
-            { field: "name", displayName: 'Название'},
-            { field: "source", displayName: 'Источник'}
-        ], 'importedTotalServerItems', $scope.importedPagingOptions, $scope.importedFilterOptions, $scope.items.selectedImportedItem);
+        $scope.importedGridOptions = new GridOptions('importedPageData', importedColumnDefs, 'importedTotalServerItems', $scope.importedPagingOptions, $scope.importedFilterOptions, $scope.items.selectedImportedItem);
 
-        $scope.existedGridOptions = new GridOptions('items.existed', [
-            { field: "short", displayName: 'Название'},
-            { field: "inn", displayName: 'ИНН'}
-        ], 'existedTotalServerItems', $scope.existedPagingOptions, $scope.existedFilterOptions, $scope.items.selectedExistedItem);
+        $scope.existedGridOptions = new GridOptions('items.existed', existedColumnDefs, 'existedTotalServerItems', $scope.existedPagingOptions, $scope.existedFilterOptions, $scope.items.selectedExistedItem);
 
-        $scope.linkedForSelectedExistedGridOptions = new GridOptions('items.linkedForSelectedExisted', [
-            { field: "name", displayName: 'Название'},
-            { field: "source", displayName: 'Источник'}
-        ], 'linkedForSelectedExistedTotalServerItems', $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions, $scope.items.selectedLinkedForSelectedExisted);
+        $scope.linkedForSelectedExistedGridOptions = new GridOptions('items.linkedForSelectedExisted', linkedForSelectedExistedColumnDefs, 'linkedForSelectedExistedTotalServerItems', $scope.linkedForSelectedExistedPagingOptions, $scope.linkedForSelectedExistedFilterOptions, $scope.items.selectedLinkedForSelectedExisted);
 
         $scope.$watch('importedPagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal) {
