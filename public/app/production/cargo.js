@@ -159,11 +159,13 @@ angular.module('website.catalogue', [])
 
     .directive('catalogue', function () {
         return {
-            restrict: 'A',
+            restrict: 'E',
+            templateUrl: 'app/modules/catalogue/catalogue.html',
             scope: {
-                getData: '=catalogue'
+                dataUrl: '=dataUrl',
+                model: '=model'
             },
-            controller: function ($scope, $modal) {
+            controller: function ($scope, $http, $modal) {
                 $scope.details = {};
 
                 function openCatalogueModal() {
@@ -174,6 +176,18 @@ angular.module('website.catalogue', [])
                         scope: $scope,
                         controller: 'catalogueModalController'
                     });
+                }
+
+                function getCompanies() {
+                    $http.get($scope.dataUrl)
+                        .success(function (data) {
+                            $scope.companies = data._embedded.companies;
+                            storageFactory.setCompaniesForSession($scope.companies);
+                            $scope.showCompaniesDropDown = true;
+                        }).error(function (data, status) {
+                            errorFactory.resolve(data, status);
+                        }
+                    );
                 }
 
                 $scope.openCatalogue = function () {
@@ -202,13 +216,6 @@ angular.module('website.catalogue', [])
                     });
                 };
             }
-        };
-    })
-
-    .directive('catalogueModal', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'app/modules/catalogue/catalogue.html'
         };
     })
 
@@ -1505,17 +1512,7 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         //TODO remove (just demo for a catalogs tests)
-        $scope.catalogModel = null;
-
-        $scope.getData = function () {
-            return [
-                {value: 1, description: 'Петров В.', firstName: 'Василий', lastName: 'Петров', age: '21' },
-                {value: 2, description: 'Антонов К.', firstName: 'Константин', lastName: 'Антонов', age: '37' },
-                {value: 3, description: 'Яковлев Б.', firstName: 'Борис', lastName: 'Яковлев', age: '17' },
-                {value: 4, description: 'Туполев М.', firstName: 'Марат', lastName: 'Туполев', age: '33' },
-                {value: 5, description: 'Лавочкин С.', firstName: 'Серафим', lastName: 'Лавочкин', age: '24' }
-            ];
-        };
+        $scope.companiesDataUrl = REST_CONFIG.BASE_URL + '/companies';
         //TODO END remove
 
         function checkForAccounts() {

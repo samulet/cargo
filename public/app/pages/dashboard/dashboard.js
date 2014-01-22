@@ -12,17 +12,7 @@ angular.module('website.dashboard', [])
         checkForAccounts();
 
         //TODO remove (just demo for a catalogs tests)
-        $scope.catalogModel = null;
-
-        $scope.getData = function () {
-            return [
-                {value: 1, description: 'Петров В.', firstName: 'Василий', lastName: 'Петров', age: '21' },
-                {value: 2, description: 'Антонов К.', firstName: 'Константин', lastName: 'Антонов', age: '37' },
-                {value: 3, description: 'Яковлев Б.', firstName: 'Борис', lastName: 'Яковлев', age: '17' },
-                {value: 4, description: 'Туполев М.', firstName: 'Марат', lastName: 'Туполев', age: '33' },
-                {value: 5, description: 'Лавочкин С.', firstName: 'Серафим', lastName: 'Лавочкин', age: '24' }
-            ];
-        };
+        $scope.companiesDataUrl = REST_CONFIG.BASE_URL + '/companies';
         //TODO END remove
 
         function checkForAccounts() {

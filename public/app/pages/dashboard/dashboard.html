@@ -24,20 +24,7 @@
             <!--TODO remove (just demo for a catalogs tests) -->
             <ul class="vertical_form_block" style="padding: 15px 0;">
                 <li class="input-group">
-                    <label for="demoCatalogue" class="input-group-addon">
-                        Демо каталог
-                    </label>
-                    <input id="demoCatalogue"
-                           type="text"
-                           ng-model="catalogModel"
-                           class="form-control"
-                           catalogue="getData"
-                            value="{{uglyHack}}">
-                <span class="input-group-btn">
-                    <button class="btn btn-info">
-                        <span class="glyphicon glyphicon-search"> </span>
-                    </button>
-                </span>
+                    <catalogue dataUrl="companiesDataUrl" model="companyCatalogueModel"></catalogue>
                 </li>
             </ul>
             <!--TODO END remove-->

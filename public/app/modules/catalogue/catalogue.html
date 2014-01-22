@@ -1,3 +1,25 @@
+<div class="input-group">
+    <label for="catalogue" class="input-group-addon">
+        Юр лица
+    </label>
+    <select id="catalogue"
+            ui-select2="options"
+            size="4"
+            ng-model="selectedModel"
+            ng-change="changeSelectedOption(selectedModel)"
+            data-placeholder=".........."
+            class="catalogue_body select2-drop-mask">
+        <option value=""></option>
+        <option ng-repeat="item in data" value="{{item.value}}">{{item.description}}</option>
+    </select>
+    <span class="input-group-btn">
+        <button class="btn btn-info">
+            <span class="glyphicon glyphicon-search"> </span>
+        </button>
+    </span>
+</div>
+
+<!--
 <div aria-hidden="true" ng-controller="catalogueModalController">
     <script type="text/ng-template" id="catalogueModalContent.html">
         <div class="modal-header">
@@ -5,16 +27,6 @@
         </div>
         <div class="modal-body">
             <ul class="clear_list vertical_form_block">
-                <li>
-                    <select ui-select2="options" size="4"
-                            ng-model="selectedModel"
-                            ng-change="changeSelectedOption(selectedModel)"
-                            data-placeholder="Выберите значение из списка"
-                            class="catalogue_body select2-drop-mask">
-                        <option value=""></option>
-                        <option ng-repeat="item in data" value="{{item.value}}">{{item.description}}</option>
-                    </select>
-                </li>
                 <li>
                     <table class="table table-striped">
                         <tbody>
@@ -55,4 +67,4 @@
             </button>
         </div>
     </script>
-</div>
+</div>-->

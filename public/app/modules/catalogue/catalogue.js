@@ -4,11 +4,13 @@ angular.module('website.catalogue', [])
 
     .directive('catalogue', function () {
         return {
-            restrict: 'A',
+            restrict: 'E',
+            templateUrl: 'app/modules/catalogue/catalogue.html',
             scope: {
-                getData: '=catalogue'
+                dataUrl: '=dataUrl',
+                model: '=model'
             },
-            controller: function ($scope, $modal) {
+            controller: function ($scope, $http, $modal) {
                 $scope.details = {};
 
                 function openCatalogueModal() {
@@ -19,6 +21,18 @@ angular.module('website.catalogue', [])
                         scope: $scope,
                         controller: 'catalogueModalController'
                     });
+                }
+
+                function getCompanies() {
+                    $http.get($scope.dataUrl)
+                        .success(function (data) {
+                            $scope.companies = data._embedded.companies;
+                            storageFactory.setCompaniesForSession($scope.companies);
+                            $scope.showCompaniesDropDown = true;
+                        }).error(function (data, status) {
+                            errorFactory.resolve(data, status);
+                        }
+                    );
                 }
 
                 $scope.openCatalogue = function () {
@@ -47,13 +61,6 @@ angular.module('website.catalogue', [])
                     });
                 };
             }
-        };
-    })
-
-    .directive('catalogueModal', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'app/modules/catalogue/catalogue.html'
         };
     })
 
