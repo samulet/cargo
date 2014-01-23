@@ -163,98 +163,90 @@ angular.module('website.catalogue', [])
             templateUrl: 'app/modules/catalogue/catalogue.html',
             scope: {
                 url: '=',
-                itemsName: '=',
+                itemsName: '@',
                 model: '=',
-                stringSearch: '='
+                stringSearch: '=', //TODO make if true, send search text to the server
+                searchField: '='
             },
             controller: function ($scope, $http) {
-                var ajaxParams = {
-                    url: $scope.url,
-                    dataType: 'json',
-                    results: getResults
-                };
-
                 $scope.details = {};
                 $scope.data = [];
 
-                if ($scope.stringSearch === true) {
-                    ajaxParams.data = getQueryParams;
-                }else{
-                    
+                if (!$scope.searchField) {
+                    $scope.searchField = 'name';
+                }
+
+                function getData(query) {
+                    $http.get($scope.url).success(function (data) {
+                        var resultItems = {
+                            results: []
+                        };
+
+                        var items = data._embedded[$scope.itemsName];
+
+                        for (var i = 0; i <= items.length - 1; i++) {
+                            var text = items[i][$scope.searchField];
+                            if (query.matcher(query.term, text)) {
+                                resultItems.results.push({
+                                    text: text, //TODO should be key and value in server's response
+                                    id: items[i].uuid
+                                });
+                            }
+                        }
+
+                        query.callback(resultItems);
+                    }).error(function (data) {
+                            console.log('error ' + data);//TODO
+                        });
                 }
 
                 $scope.select2Options = {
-                    minimumInputLength: 3,
-                    ajax: ajaxParams
+                    minimumInputLength: 2,
+                    allowClear: true,
+                    query: getData
                 };
-
-                function getResults(data, page) {
-                    return {
-                        results: data._embedded[$scope.itemsName]
-                    };
-                }
-
-                function getQueryParams(text, page) {
-                    return {
-                        search: text,
-                        page: page,
-                        page_limit: 10
-                    };
-                }
-
-                function getData() {
-                    $http.get($scope.url)
-                        .success(function (data) {
-                            $scope.data = data._embedded[$scope.itemsName];
-                        }).error(function (data, status) {
-                            //TODO
-                        }
-                    );
-                }
-
-
             }
         };
     })
 
     .controller('catalogueModalController', ['$scope', function ($scope) {
 
-        if ($scope.isCatalogueModalOpened) {
-            $scope.data = $scope.getData();
-        }
+        /* if ($scope.isCatalogueModalOpened) {
+         $scope.data = $scope.getData();
+         }
 
-        function updateOptionDetails(option) {
-            $scope.details.firstName = option.firstName;
-            $scope.details.lastName = option.lastName;
-            $scope.details.age = option.age;
-            $scope.details.value = option.value;
-            $scope.details.description = option.description;
-        }
+         function updateOptionDetails(option) {
+         $scope.details.firstName = option.firstName;
+         $scope.details.lastName = option.lastName;
+         $scope.details.age = option.age;
+         $scope.details.value = option.value;
+         $scope.details.description = option.description;
+         }
 
-        function findSelectedOption(value) {
-            for (var i = 0; i <= $scope.data.length - 1; i++) {
-                if (value && $scope.data[i].value === +value) {
-                    return $scope.data[i];
-                }
-            }
-            return null;
-        }
+         function findSelectedOption(value) {
+         for (var i = 0; i <= $scope.data.length - 1; i++) {
+         if (value && $scope.data[i].value === +value) {
+         return $scope.data[i];
+         }
+         }
+         return null;
+         }
 
-        $scope.changeSelectedOption = function (value) {
-            if (value) {
-                $scope.selectedOption = findSelectedOption(value);
-                updateOptionDetails($scope.selectedOption);
-            }
-        };
+         $scope.changeSelectedOption = function (value) {
+         if (value) {
+         $scope.selectedOption = findSelectedOption(value);
+         updateOptionDetails($scope.selectedOption);
+         }
+         };
 
-        $scope.setSelectedOptions = function () {
-            if ($scope.selectedOption) {
-                $scope.catalogueElement.$$element[0].value = $scope.selectedOption.description;
-            } else {
-                $scope.catalogueElement.$$element[0].value = "";
-            }
-            $scope.closeCatalogue();
-        };
+         $scope.setSelectedOptions = function () {
+         if ($scope.selectedOption) {
+         $scope.catalogueElement.$$element[0].value = $scope.selectedOption.description;
+         } else {
+         $scope.catalogueElement.$$element[0].value = "";
+         }
+         $scope.closeCatalogue();
+         };*/
     }])
 ;
 'use strict';

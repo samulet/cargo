@@ -176,6 +176,11 @@ li.input-group .input-group-addon {
     background-color: rgba(0, 0, 0, 0.56);
 }
 
+.select2-container .select2-choice {
+    height: 34px;
+    padding: 4px 0 0 8px;
+}
+
 .dropdown-submenu {
     position: relative;
 }
