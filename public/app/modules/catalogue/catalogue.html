@@ -2,13 +2,15 @@
     <label for="catalogue" class="input-group-addon">
         Юр лица
     </label>
-    <select id="catalogue"
+    <input type="hidden"
+            id="catalogue"
             ui-select2="select2Options"
             size="4"
             ng-model="selectedModel"
             ng-change="changeSelectedOption(selectedModel)"
             data-placeholder=".........."
-            class="catalogue_body select2-drop-mask">
+            class="catalogue_body select2-drop-mask"/>
+    <select>
         <option value=""></option>
         <option ng-repeat="item in data" value="{{item.value}}">{{item.description}}</option>
     </select>

@@ -162,35 +162,48 @@ angular.module('website.catalogue', [])
             restrict: 'E',
             templateUrl: 'app/modules/catalogue/catalogue.html',
             scope: {
-                dataUrl: '=dataUrl',
-                itemsName: '=itemsName',
-                model: '=model'
+                url: '=',
+                itemsName: '=',
+                model: '=',
+                stringSearch: '='
             },
             controller: function ($scope, $http) {
+                var ajaxParams = {
+                    url: $scope.url,
+                    dataType: 'json',
+                    results: getResults
+                };
+
                 $scope.details = {};
                 $scope.data = [];
 
+                if ($scope.stringSearch === true) {
+                    ajaxParams.data = getQueryParams;
+                }else{
+                    
+                }
+
                 $scope.select2Options = {
-                    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-                        url: $scope.dataUrl,
-                        dataType: 'json',
-                        data: function (term, page) {
-                            return {
-                                q: term, // search term
-                                page_limit: 10,
-                                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
-                            };
-                        },
-                        results: function (data, page) {
-                            return {
-                                results: data._embedded[$scope.itemsName]
-                            };
-                        }
-                    }
+                    minimumInputLength: 3,
+                    ajax: ajaxParams
                 };
 
+                function getResults(data, page) {
+                    return {
+                        results: data._embedded[$scope.itemsName]
+                    };
+                }
+
+                function getQueryParams(text, page) {
+                    return {
+                        search: text,
+                        page: page,
+                        page_limit: 10
+                    };
+                }
+
                 function getData() {
-                    $http.get($scope.dataUrl)
+                    $http.get($scope.url)
                         .success(function (data) {
                             $scope.data = data._embedded[$scope.itemsName];
                         }).error(function (data, status) {
