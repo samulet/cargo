@@ -16,6 +16,7 @@ angular.module('website.catalogue', [])
             controller: function ($scope, $http) {
                 $scope.details = {};
                 $scope.data = [];
+                $scope.showCatalogueModal = false;
 
                 if (!$scope.searchField) {
                     $scope.searchField = 'name';
@@ -49,6 +50,12 @@ angular.module('website.catalogue', [])
                     minimumInputLength: 2,
                     allowClear: true,
                     query: getData
+                };
+
+                $scope.showModal = function (type) {
+                    if (type === 'catalog') {
+                        $scope.showCatalogueModal = true;
+                    }
                 };
             }
         };
