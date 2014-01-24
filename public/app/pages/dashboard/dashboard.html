@@ -31,6 +31,18 @@
                                search-field="name"></catalogue>
                 </li>
             </ul>
+
+            <!-- Button to trigger a default modal with a scope as an object {title:'', content:'', etc.} -->
+            <button type="button" class="btn btn-lg btn-primary" data-placement="center" data-animation="animation-fadeAndScale" bs-modal="modal">Click to toggle modal
+                <br>
+                <small>(using an object)</small>
+            </button>
+
+            <!-- You can use a custom html template with the `data-template` attr -->
+            <button type="button" class="btn btn-lg btn-danger" data-animation="animation-flipX" data-template="modal/docs/modal.tpl.demo.html" bs-modal="modal">Custom Modal
+                <br>
+                <small>(using data-template)</small>
+            </button>
             <!--TODO END remove-->
         </div>
     </div>

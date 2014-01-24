@@ -1,28 +1,29 @@
 {
-    "name": "cargo",
-    "version": "0.0.1",
-    "homepage": "https://github.com/MashaiMedvedi/cargo",
-    "authors": [
-        "Cargo team"
-    ],
-    "license": "MIT",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "public/lib",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "bootstrap": "~3.0.3",
-        "jquery": "~1.9.1",
-        "angular": "~1.2.8",
-        "angular-route": "~1.2.8",
-        "angular-animate": "~1.2.8",
-        "select2": "~3.4.5",
-        "angular-ui-select2": "~0.0.5",
-        "es5-shim": "~1.2.8",
-        "json3": "~3.2.6"
-    }
+  "name": "cargo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/MashaiMedvedi/cargo",
+  "authors": [
+    "Cargo team"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.0.3",
+    "jquery": "~1.9.1",
+    "angular": "~1.2.9",
+    "angular-route": "~1.2.9",
+    "angular-animate": "~1.2.9",
+    "select2": "~3.4.5",
+    "angular-ui-select2": "~0.0.5",
+    "es5-shim": "~1.2.8",
+    "json3": "~3.2.6",
+    "angular-strap": "~2.0.0"
+  }
 }

@@ -24,7 +24,8 @@ angular.module('website', [
         'website.import',
         'ui.bootstrap',
         'ui.select2',
-        'ngGrid'
+        'ngGrid',
+        'mgcrea.ngStrap'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'app/pages/';
@@ -1510,6 +1511,11 @@ angular.module('website.dashboard', [])
 
         //TODO remove (just demo for a catalogs tests)
         $scope.companiesDataUrl = REST_CONFIG.BASE_URL + '/companies';
+
+        $scope.modal = {
+            "title": "Title",
+            "content": "Hello Modal<br />This is a multiline message!"
+        };
         //TODO END remove
 
         function checkForAccounts() {

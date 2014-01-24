@@ -126,11 +126,11 @@ li.input-group .input-group-addon {
     margin-right: -2px;
 }
 
-.spaced_list li{
+.spaced_list li {
     margin: 15px;
 }
 
-.btn_170w{
+.btn_170w {
     min-width: 170px;
 }
 
@@ -183,6 +183,24 @@ li.input-group .input-group-addon {
 
 .dropdown-submenu {
     position: relative;
+}
+
+.modal-backdrop.animation-fade {
+    opacity: .5;
+    -webkit-transition: opacity .15s linear;
+    transition: opacity .15s linear
+}
+
+.modal-backdrop.animation-fade.ng-enter {
+    opacity: 0
+}
+
+.modal-backdrop.animation-fade.ng-enter.ng-enter-active, .modal-backdrop.animation-fade.ng-leave {
+    opacity: .5
+}
+
+.modal-backdrop.animation-fade.ng-leave.ng-leave-active {
+    opacity: 0
 }
 
 .dropdown-submenu > .dropdown-menu {
