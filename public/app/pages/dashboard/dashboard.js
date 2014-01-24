@@ -13,11 +13,6 @@ angular.module('website.dashboard', [])
 
         //TODO remove (just demo for a catalogs tests)
         $scope.companiesDataUrl = REST_CONFIG.BASE_URL + '/companies';
-
-        $scope.modal = {
-            "title": "Title",
-            "content": "Hello Modal<br />This is a multiline message!"
-        };
         //TODO END remove
 
         function checkForAccounts() {

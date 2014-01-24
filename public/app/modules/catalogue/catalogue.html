@@ -10,16 +10,22 @@
            ng-change="changeSelectedOption(selectedModel)"
            data-placeholder=".............................."
            class="catalogue_body select2-drop-mask"/>
-    <span class="input-group-btn">
-        <button class="btn btn-info" ng-click="showModal(catalog)">
+    <span class="input-group-btn"  ng-click='showModal()'>
+        <button class="btn btn-info">
             <span class="glyphicon glyphicon-plus"> </span>
         </button>
-        <button class="btn btn-info" ng-click="showModal(catalog)">
+        <button class="btn btn-info" ng-click='showModal()'>
             <span class="glyphicon glyphicon-search"> </span>
         </button>
     </span>
 </div>
 
+<div modal-show='modalShown'>
+    <p>
+        Modal Content Goes here
+
+    <p>
+</div>
 
 <!--
 <div aria-hidden="true" ng-controller="catalogueModalController">

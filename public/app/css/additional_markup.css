@@ -185,22 +185,8 @@ li.input-group .input-group-addon {
     position: relative;
 }
 
-.modal-backdrop.animation-fade {
-    opacity: .5;
-    -webkit-transition: opacity .15s linear;
-    transition: opacity .15s linear
-}
-
-.modal-backdrop.animation-fade.ng-enter {
-    opacity: 0
-}
-
-.modal-backdrop.animation-fade.ng-enter.ng-enter-active, .modal-backdrop.animation-fade.ng-leave {
-    opacity: .5
-}
-
-.modal-backdrop.animation-fade.ng-leave.ng-leave-active {
-    opacity: 0
+.display_block {
+    display: block !important;
 }
 
 .dropdown-submenu > .dropdown-menu {

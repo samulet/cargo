@@ -177,6 +177,13 @@ angular.module('website.catalogue', [])
                     $scope.searchField = 'name';
                 }
 
+                $scope.modalShown = false;
+                $scope.showModal = function () {
+                    $scope.modalShown = true;
+                };
+
+                $scope.showModal();
+
                 function getData(query) {
                     $http.get($scope.url).success(function (data) {
                         var resultItems = {
@@ -822,30 +829,26 @@ angular.module('website.import', [])
 'use strict';
 
 angular.module('website.modal', [])
-    .directive("modalShow", function ($parse) {
+    .directive('modalShow', function () {
         return {
-            restrict: "A",
-            link: function (scope, element, attrs) {
+            restrict: 'A',
+            scope: {
+                modalShow: '='
+            },
+            templateUrl: 'app/modules/modal/modal.html',
+            replace: true,
+            transclude: true,
+            controller: function ($scope) {
+                $scope.showClass = null;
 
-                scope.showModal = function (visible, elem) {
-                    if (!elem)
-                        elem = element;
+                $scope.$watch($scope.modalShow, function (value) {
+                    if ($scope.modalShow) {
+                        $scope.showClass = 'in display_block';
+                    } else {
 
-                    if (visible)
-                        elem.modal("show");
-                    else
-                        elem.modal("hide");
-                };
-
-                scope.$watch(attrs.modalShow, function (newValue, oldValue) {
-                    scope.showModal(newValue, attrs.$$element);
+                    }
                 });
 
-                element.bind("hide.bs.modal", function () {
-                    $parse(attrs.modalShow).assign(scope, false);
-                    if (!scope.$$phase && !scope.$root.$$phase)
-                        scope.$apply();
-                });
             }
         };
     })
@@ -1510,11 +1513,6 @@ angular.module('website.dashboard', [])
 
         //TODO remove (just demo for a catalogs tests)
         $scope.companiesDataUrl = REST_CONFIG.BASE_URL + '/companies';
-
-        $scope.modal = {
-            "title": "Title",
-            "content": "Hello Modal<br />This is a multiline message!"
-        };
         //TODO END remove
 
         function checkForAccounts() {

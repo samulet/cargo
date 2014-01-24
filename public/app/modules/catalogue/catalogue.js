@@ -22,6 +22,13 @@ angular.module('website.catalogue', [])
                     $scope.searchField = 'name';
                 }
 
+                $scope.modalShown = false;
+                $scope.showModal = function () {
+                    $scope.modalShown = true;
+                };
+
+                $scope.showModal();
+
                 function getData(query) {
                     $http.get($scope.url).success(function (data) {
                         var resultItems = {
