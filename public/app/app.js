@@ -24,8 +24,7 @@ angular.module('website', [
         'website.import',
         'ui.bootstrap',
         'ui.select2',
-        'ngGrid',
-        'mgcrea.ngStrap'
+        'ngGrid'
     ])
     .config(['$routeProvider', '$httpProvider', '$locationProvider', 'ACCESS_LEVEL', 'ROUTES', function ($routeProvider, $httpProvider, $locationProvider, ACCESS_LEVEL, ROUTES) {
         var pathToIncs = 'app/pages/';
