@@ -177,13 +177,6 @@ angular.module('website.catalogue', [])
                     $scope.searchField = 'name';
                 }
 
-                $scope.modalShown = false;
-                $scope.showModal = function () {
-                    $scope.modalShown = true;
-                };
-
-                $scope.showModal();
-
                 function getData(query) {
                     $http.get($scope.url).success(function (data) {
                         var resultItems = {
@@ -214,54 +207,12 @@ angular.module('website.catalogue', [])
                     query: getData
                 };
 
-                $scope.showModal = function (type) {
-                    if (type === 'catalog') {
-                        $scope.showCatalogueModal = true;
-                    }
+                $scope.showModal = function () {
+                    $scope.showCatalogueModal = true;
                 };
             }
         };
     })
-
-    .controller('catalogueModalController', ['$scope', function ($scope) {
-
-        /* if ($scope.isCatalogueModalOpened) {
-         $scope.data = $scope.getData();
-         }
-
-         function updateOptionDetails(option) {
-         $scope.details.firstName = option.firstName;
-         $scope.details.lastName = option.lastName;
-         $scope.details.age = option.age;
-         $scope.details.value = option.value;
-         $scope.details.description = option.description;
-         }
-
-         function findSelectedOption(value) {
-         for (var i = 0; i <= $scope.data.length - 1; i++) {
-         if (value && $scope.data[i].value === +value) {
-         return $scope.data[i];
-         }
-         }
-         return null;
-         }
-
-         $scope.changeSelectedOption = function (value) {
-         if (value) {
-         $scope.selectedOption = findSelectedOption(value);
-         updateOptionDetails($scope.selectedOption);
-         }
-         };
-
-         $scope.setSelectedOptions = function () {
-         if ($scope.selectedOption) {
-         $scope.catalogueElement.$$element[0].value = $scope.selectedOption.description;
-         } else {
-         $scope.catalogueElement.$$element[0].value = "";
-         }
-         $scope.closeCatalogue();
-         };*/
-    }])
 ;
 'use strict';
 
@@ -832,25 +783,69 @@ angular.module('website.modal', [])
     .directive('modalShow', function () {
         return {
             restrict: 'A',
-            scope: {
-                modalShow: '='
-            },
             templateUrl: 'app/modules/modal/modal.html',
             replace: true,
-            transclude: true,
-            controller: function ($scope) {
+            //transclude: true,
+            /*link: function (scope, elem, attrs) {
+             scope.showClass = null;
+
+             function closeModal() {
+             attrs.ariaHidden = "true";
+             scope.showClass = null;
+             attrs.modalShow = false;
+             }
+
+             scope.closeModal = function () {
+             closeModal();
+             };
+
+             scope.$watch(attrs.modalShow, function (value) {
+             if (value) {
+             attrs.ariaHidden = "false";
+             scope.showClass = 'display_block modal_background';
+             setTimeout(function(){
+             scope.showClass = scope.showClass + ' in';
+             scope.$apply();
+             }, 500);
+             } else {
+             //closeModal();
+             }
+             });
+
+             }*/
+            link: function (scope, elem, attrs) {
+                scope.modalShow = attrs.modalShow;
+            },
+            controller: function ($scope, $timeout) {
                 $scope.showClass = null;
 
-                $scope.$watch($scope.modalShow, function (value) {
-                    if ($scope.modalShow) {
-                        $scope.showClass = 'in display_block';
-                    } else {
+                function closeModal() {
+                    // attrs.ariaHidden = "true";
+                    $scope.showClass = null;
+                    $scope.modalShow = false;
+                }
 
+                $scope.closeModal = function () {
+                    closeModal();
+                };
+
+                $scope.$watch(function () {
+                        return $scope.modalShow;
+                    }, function (value) {
+                        if ($scope[value] === true) {
+                            //attrs.ariaHidden = "false";
+                            $scope.showClass = 'display_block modal_background';
+                            $timeout(function () {
+                                $scope.showClass = $scope.showClass + ' in';
+                            }, 200);
+                        } else {
+                            //closeModal();
+                        }
                     }
-                });
-
+                );
             }
-        };
+        }
+            ;
     })
 ;
 'use strict';

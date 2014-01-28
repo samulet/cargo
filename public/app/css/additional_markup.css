@@ -233,6 +233,10 @@ li.input-group .input-group-addon {
     border-radius: 6px 0 6px 6px;
 }
 
+.modal_background {
+    background-color: rgba(0, 0, 0, 0.53);
+}
+
 .fade_anim {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=1);
@@ -389,6 +393,14 @@ ul.horizontal_list li {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
     opacity: 1;
+}
+
+.fade.in{
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    -webkit-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .modal_huge .modal-dialog {

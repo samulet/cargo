@@ -10,7 +10,7 @@
            ng-change="changeSelectedOption(selectedModel)"
            data-placeholder=".............................."
            class="catalogue_body select2-drop-mask"/>
-    <span class="input-group-btn"  ng-click='showModal()'>
+    <span class="input-group-btn" >
         <button class="btn btn-info">
             <span class="glyphicon glyphicon-plus"> </span>
         </button>
@@ -20,59 +20,8 @@
     </span>
 </div>
 
-<div modal-show='modalShown'>
+<div modal-show='showCatalogueModal'>
     <p>
         Modal Content Goes here
-
     <p>
 </div>
-
-<!--
-<div aria-hidden="true" ng-controller="catalogueModalController">
-    <script type="text/ng-template" id="catalogueModalContent.html">
-        <div class="modal-header">
-            <h4 class="modal-title">Выбор из справочника</h4>
-        </div>
-        <div class="modal-body">
-            <ul class="clear_list vertical_form_block">
-                <li>
-                    <table class="table table-striped">
-                        <tbody>
-                        <tr>
-                            <td class="table_header">Имя:</td>
-                            <td>{{details.firstName}}</td>
-                        </tr>
-                        <tr>
-                            <td class="table_header">Фамилия:</td>
-                            <td>{{details.lastName}}</td>
-                        </tr>
-                        <tr>
-                            <td class="table_header">Возраст:</td>
-                            <td>{{details.age}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </li>
-                <li>
-                    <div class="btn btn-info"><i class="glyphicon glyphicon-plus"> </i>
-                        Создать новое значение в справочнике
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default pull_left"
-                    ng-disabled="isAjaxLoading"
-                    ajax-disabler="isAjaxLoading"
-                    ng-click="closeCatalogue()">
-                Отмена
-            </button>
-            <button type="button" class="btn btn-primary"
-                    ng-disabled="isAjaxLoading"
-                    ajax-disabler="isAjaxLoading"
-                    ng-click="setSelectedOptions()">
-                Ok
-            </button>
-        </div>
-    </script>
-</div>-->
